@@ -71,9 +71,9 @@ pair<int, int> getMaxRepeatedPrefixString(string s, int start) {
 }
 
 
-// find maximum repeated string (ex: "XabababY" => (1, 2, 3))
+// find maximum repeated string (ex: "XabababY" => (1, 2, 3) - "ab" x 3 at position 1)
 // (first pos, (pattern length, pattern count))
-pair<int, pair<int, int>> getMaxRepeatedString(string s) {
+pair<int, pair<int, int>> getMaxRepeatedSubstring(string s) {
     int repLen = 0;
     pair<int, pair<int, int>> res(-1, pair<int, int>(-1, -1));
     for (int i = 0; i < (int)s.length(); i++) {
@@ -146,18 +146,18 @@ static ostream& operator <<(ostream& os, vector<int>& rhs) {
 void testPrefixFunction() {
     return; // skip this test...
 
-    cout << "-- getRepeatedPattern() ---------" << endl;            
+    cout << "-- checkRepeatedString() ---------" << endl;            
     cout << checkRepeatedString("abcdefg") << endl;                 // (-1, -1)
     cout << checkRepeatedString("abcabc") << endl;                  // (3, 2)
     cout << checkRepeatedString("abacdacdb") << endl;               // (-1, -1)
     cout << checkRepeatedString("aaaaaaaa") << endl;                // (1, 8)
     cout << checkRepeatedString("abcabcabcabc") << endl;            // (3, 4)
-    cout << "-- findMaxRepeatedString() ---------" << endl;
-    cout << getMaxRepeatedString("abcdefg") << endl;                // (-1, -1, -1)
-    cout << getMaxRepeatedString("ababcabcab") << endl;             // (2, (3, 2))
-    cout << getMaxRepeatedString("abacdacdb") << endl;              // (2, (3, 2))
-    cout << getMaxRepeatedString("aaaaaaaa") << endl;               // (0, (1, 8))
-    cout << getMaxRepeatedString("xabcabcabcabcx") << endl;         // (1, (3, 4))
+    cout << "-- getMaxRepeatedSubstring() ---------" << endl;
+    cout << getMaxRepeatedSubstring("abcdefg") << endl;             // (-1, -1, -1)
+    cout << getMaxRepeatedSubstring("ababcabcab") << endl;          // (2, (3, 2))
+    cout << getMaxRepeatedSubstring("abacdacdb") << endl;           // (2, (3, 2))
+    cout << getMaxRepeatedSubstring("aaaaaaaa") << endl;            // (0, (1, 8))
+    cout << getMaxRepeatedSubstring("xabcabcabcabcx") << endl;      // (1, (3, 4))
     cout << "-- kmp() ---------" << endl;
     cout << kmp("abcdefg", "cd") << endl;                           // (2)
     cout << kmp("ababcabcab", "ab") << endl;                        // (0, 2, 5, 8)
