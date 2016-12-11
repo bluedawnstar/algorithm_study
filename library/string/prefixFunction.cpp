@@ -94,19 +94,54 @@ pair<int, pair<int, int>> getMaxRepeatedString(string s) {
 }
 
 
+vector<int> kmp(string s, string p) {
+    vector<int> res;
+    vector<int> pref = prefixFunction(p);
+
+    int n = (int)s.size(), m = (int)p.size(), j = 0;
+    for (int i = 0; i < n; i++) {
+        while (j > 0 && s[i] != p[j])
+            j = pref[j - 1];
+
+        if (s[i] == p[j]) {
+            if (j == m - 1) {
+                res.push_back(i - m + 1);
+                j = pref[j];
+            } else {
+                j++;
+            }
+        }
+    }
+
+    return res;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 
-ostream& operator <<(ostream& os, const pair<int,int>& rhs) {
+static ostream& operator <<(ostream& os, const pair<int,int>& rhs) {
     cout << "(" << rhs.first << ", " << rhs.second << ")";
     return os;
 }
 
-ostream& operator <<(ostream& os, const pair<int,pair<int, int>>& rhs) {
+static ostream& operator <<(ostream& os, const pair<int,pair<int, int>>& rhs) {
     cout << "(" << rhs.first << ", " << rhs.second.first << ", " << rhs.second.second << ")";
     return os;
 }
+
+static ostream& operator <<(ostream& os, vector<int>& rhs) {
+    cout << "(";
+    if (!rhs.empty())
+        cout << rhs[0];
+    for (int i = 1; i < (int)rhs.size(); i++)
+        cout << ", " << rhs[i];
+    cout << ")";
+
+    return os;
+}
+
 
 void testPrefixFunction() {
     return; // skip this test...
@@ -123,4 +158,11 @@ void testPrefixFunction() {
     cout << getMaxRepeatedString("abacdacdb") << endl;              // (2, (3, 2))
     cout << getMaxRepeatedString("aaaaaaaa") << endl;               // (0, (1, 8))
     cout << getMaxRepeatedString("xabcabcabcabcx") << endl;         // (1, (3, 4))
+    cout << "-- kmp() ---------" << endl;
+    cout << kmp("abcdefg", "cd") << endl;                           // (2)
+    cout << kmp("ababcabcab", "ab") << endl;                        // (0, 2, 5, 8)
+    cout << kmp("abacdacdb", "ac") << endl;                         // (2, 5)
+    cout << kmp("aaaaaaaa", "a") << endl;                           // (0, 1, 2, 3, 4, 5, 6, 7)
+    cout << kmp("aaaaaaaa", "aaa") << endl;                         // (0, 1, 2, 3, 4, 5)
+    cout << kmp("xabcabcabcabcx", "abc") << endl;                   // (1, 4, 7, 10)
 }
