@@ -1,7 +1,8 @@
 ## Number Theory
 
-### <primeNumberBasic.cpp>
+### primeNumberBasic.cpp
 basic functions for prime numbers (not fast but basic)
+
 1. bool isPrimeNumber(int n)
  - n이 소수인지 확인
 2. vector<int> getPrimeFactor(n)
