@@ -7,5 +7,5 @@ using namespace std;
 
 int main(void) {
     TEST(PrimeNumberBasic);
-    //TEST(PrimeNumberRange);
+    TEST(PrimeNumberEratosthenes);
 }

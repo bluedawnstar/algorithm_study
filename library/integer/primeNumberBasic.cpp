@@ -24,7 +24,7 @@ bool isPrimeNumber(int n) {
 }
 
 // return prime factors of n
-vector<int> getPrimeFactor(int n) {
+vector<int> getPrimeFactors(int n) {
     vector<int> res;
 
     int root = int(sqrt(n));
@@ -49,7 +49,7 @@ vector<int> getPrimeFactor(int n) {
 }
 
 // return prime factor and power of n
-vector<pair<int, int>> getPrimeFactor2(int n) {
+vector<pair<int, int>> getPrimeFactors2(int n) {
     vector<pair<int, int>> res;
 
     int root = int(sqrt(n));
@@ -79,6 +79,66 @@ vector<pair<int, int>> getPrimeFactor2(int n) {
     return res;
 }
 
+// return all prime numbers from 1 to n
+vector<int> findPrimeNumbers(int n) {
+    vector<int> res;
+    if (n < 2)
+        return res;
+
+    if (n >= 2)
+        res.push_back(2);
+
+    for (int i = 3; i <= n; i += 2) {
+        bool isPrime = true;
+        int root = int(sqrt(i));
+        for (int j = 0; res[j] <= root; j++) {
+            if (i % res[j] == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime)
+            res.push_back(i);
+    }
+
+    return res;
+}
+
+// return all prime numbers and prime factors from 1 to n
+void getPrimeFactors(int n, vector<int>& primes,
+                     vector<vector<pair<int, int>>>& primeFactors) {
+    primes.clear();
+    primeFactors = vector<vector<pair<int, int>>>(n + 1);
+    if (n < 2)
+        return;
+
+    if (n >= 2) {
+        primes.push_back(2);
+        primeFactors[2].push_back(make_pair(2, 1));
+    }
+
+    for (int i = 3; i <= n; i++) {
+        bool isPrime = true;
+        int root = int(sqrt(i));
+        for (int j = 0; primes[j] <= root; j++) {
+            if (i % primes[j] == 0) {
+                primeFactors[i] = primeFactors[i / primes[j]];
+                if (primeFactors[i][0].first == primes[j])
+                    primeFactors[i][0].second++;
+                else
+                    primeFactors[i].insert(primeFactors[i].begin(),
+                                           make_pair(primes[j], 1));
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime) {
+            primes.push_back(i);
+            primeFactors[i].push_back(make_pair(i, 1));
+        }
+    }
+}
+
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -100,23 +160,46 @@ void testPrimeNumberBasic() {
     }
     cout << endl;
 
-    cout << "--- test getPrimeFactor() from 0 to 100 ---" << endl;
+    cout << "--- test getPrimeFactors() from 0 to 100 ---" << endl;
     for (int i = 0; i <= 100; i++)
-        cout << i << ": " << getPrimeFactor(i) << endl;
+        cout << i << ": " << getPrimeFactors(i) << endl;
 
-    cout << "--- test getPrimeFactor2() from 0 to 100 ---" << endl;
+    cout << "--- test getPrimeFactors2() from 0 to 100 ---" << endl;
     for (int i = 0; i <= 100; i++)
-        cout << i << ": " << getPrimeFactor2(i) << endl;
+        cout << i << ": " << getPrimeFactors2(i) << endl;
+
+    cout << "--- test findPrimeNumbers() from 0 to 100 ---" << endl;
+    cout << findPrimeNumbers(100) << endl;;
+
+    cout << "--- test getPrimeFactors(n,primes,factors) from 0 to 100 ---" << endl;
+    {
+        vector<int> primes;
+        vector<vector<pair<int, int>>> primeFactors;
+        getPrimeFactors(100, primes, primeFactors);
+        cout << primeFactors << endl;
+    }
 
     cout << "--- performance test about prime factorization functions ---" << endl;
 
     start = clock();
     for (int i = 0; i <= NN; i++)
-        getPrimeFactor(i);
+        getPrimeFactors(i);
     cout << "getPrimeFactor()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 
     start = clock();
     for (int i = 0; i <= NN; i++)
-        getPrimeFactor2(i);
+        getPrimeFactors2(i);
     cout << "getPrimeFactor2()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
+
+    start = clock();
+    findPrimeNumbers(NN);
+    cout << "findPrimeNumbers()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
+
+    start = clock();
+    {
+        vector<int> primes;
+        vector<vector<pair<int, int>>> primeFactors;
+        getPrimeFactors(NN, primes, primeFactors);
+    }
+    cout << "getPrimeFactors(n,primes,factors)'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 }

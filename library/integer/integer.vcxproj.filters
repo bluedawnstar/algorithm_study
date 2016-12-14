@@ -21,5 +21,8 @@
     <ClCompile Include="primeNumberBasic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="primeNumberEratosthenes.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

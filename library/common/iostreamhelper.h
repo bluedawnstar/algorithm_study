@@ -30,6 +30,12 @@ static ostream& operator <<(ostream& os, vector<pair<int, int>>& rhs) {
     return os;
 }
 
+static ostream& operator <<(ostream& os, vector<vector<pair<int, int>>>& rhs) {
+    for (int i = 0; i < (int)rhs.size(); i++)
+        cout << i << ": " << rhs[i] << endl;
+    return os;
+}
+
 static ostream& operator <<(ostream& os, vector<string>& rhs) {
     cout << "(";
     if (!rhs.empty())
