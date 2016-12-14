@@ -1,5 +1,5 @@
-# functions and classes for string manipulation
+## functions and classes for string manipulation
 
-1. prefixFunction
+* prefixFunction
 
-2. split
+* split

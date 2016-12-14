@@ -120,28 +120,7 @@ vector<int> kmp(string s, string p) {
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <iostream>
-
-static ostream& operator <<(ostream& os, const pair<int,int>& rhs) {
-    cout << "(" << rhs.first << ", " << rhs.second << ")";
-    return os;
-}
-
-static ostream& operator <<(ostream& os, const pair<int,pair<int, int>>& rhs) {
-    cout << "(" << rhs.first << ", " << rhs.second.first << ", " << rhs.second.second << ")";
-    return os;
-}
-
-static ostream& operator <<(ostream& os, vector<int>& rhs) {
-    cout << "(";
-    if (!rhs.empty())
-        cout << rhs[0];
-    for (int i = 1; i < (int)rhs.size(); i++)
-        cout << ", " << rhs[i];
-    cout << ")";
-
-    return os;
-}
-
+#include "../common/iostreamhelper.h"
 
 void testPrefixFunction() {
     return; //TODO: if you want to test string functions, make this line to a comment.

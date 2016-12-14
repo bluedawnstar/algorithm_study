@@ -21,17 +21,7 @@ vector<string> split(string s, char c) {
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <iostream>
-
-static ostream& operator <<(ostream& os, vector<string>& rhs) {
-    cout << "(";
-    if (!rhs.empty())
-        cout << "\"" << rhs[0] << "\"";
-    for (int i = 1; i < (int)rhs.size(); i++)
-        cout << ", " << "\"" << rhs[i] << "\"";
-    cout << ")";
-
-    return os;
-}
+#include "../common/iostreamhelper.h"
 
 void testSplit() {
     return; //TODO: if you want to test a split function, make this line to a comment.

@@ -1,5 +1,5 @@
-# algorithm libraries
+## algorithm libraries
 
-1. string
+* string
 
-2. ...
+* ...
