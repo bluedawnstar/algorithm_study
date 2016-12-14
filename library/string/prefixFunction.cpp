@@ -117,7 +117,7 @@ vector<int> kmp(string s, string p) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
+/////////// For Testing ///////////////////////////////////////////////////////
 
 #include <iostream>
 
@@ -144,7 +144,7 @@ static ostream& operator <<(ostream& os, vector<int>& rhs) {
 
 
 void testPrefixFunction() {
-    return; // skip this test...
+    return; //TODO: if you want to test string functions, make this line to a comment.
 
     cout << "-- checkRepeatedString() ---------" << endl;            
     cout << checkRepeatedString("abcdefg") << endl;                 // (-1, -1)

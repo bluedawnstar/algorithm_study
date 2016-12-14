@@ -18,7 +18,7 @@ vector<string> split(string s, char c) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
+/////////// For Testing ///////////////////////////////////////////////////////
 
 #include <iostream>
 
@@ -34,7 +34,7 @@ static ostream& operator <<(ostream& os, vector<string>& rhs) {
 }
 
 void testSplit() {
-    return; // skip this test...
+    return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "-- split() ---------" << endl;
     cout << split("a.b.c..", '.') << endl;
