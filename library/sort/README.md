@@ -9,7 +9,7 @@ MO's algorithm이라고 하는 것인데, query 쌍의 시작 위치가 sqrt(N) 
 이를 위해서 query를 정렬해야하는데, 그 방법을 함수로 구현한 것이다.
 
 `template <typename T> void sortSqrt(vector<pair<T, T>>& vec, int blockSize)`
- - pair<T,T> 쌍으로 되어있는 vector를 정렬한다.
+ - `pair<T,T>` 쌍으로 되어있는 vector를 정렬한다.
 
 `template <typename T, typename U> void sortSqrt(vector<pair<T, T>, U>& vec, int blockSize)`
- - pair<pair<T,T>, U> 쌍으로 되어있는 vector를 정렬한다. (L, R) 쌍과 그와 관련된 데이터가 있을 때 사용하면 된다.
+ - `pair<pair<T,T>, U>` 쌍으로 되어있는 vector를 정렬한다. (L, R) 쌍과 그와 관련된 데이터가 있을 때 사용하면 된다.
