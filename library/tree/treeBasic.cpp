@@ -1,0 +1,279 @@
+#include <memory.h>
+#include <vector>
+#include <queue>
+#include <stack>
+#include <algorithm>
+
+using namespace std;
+
+//--------- Common ------------------------------------------------------------
+
+#define MAXN    10000
+#define LOGN    15              // log2(MAXN)
+
+// <Node ID>
+// 0 : null node
+// 1 : root node
+// 2 ~ N : internal or leaf nodes
+
+int gN;
+
+vector<int> gE[MAXN + 1];
+int gLevel[MAXN + 1];           // depth (root is 0)
+
+int gP[LOGN][MAXN + 1];         // parent & acestors
+
+void clear() {
+    if (gN <= 0)
+        return;
+
+    for (int i = 1; i <= gN; i++)
+        gE[i].clear();
+    memset(gLevel, 0, sizeof(gLevel));
+    memset(gP, 0, sizeof(gP));
+}
+
+//--------- DFS ---------------------------------------------------------------
+
+void dfs(int u, int parent) {
+    gP[0][u] = parent;
+
+    for (int v : gE[u]) {
+        if (v == parent)
+            continue;
+        
+        gLevel[v] = gLevel[u] + 1;
+        dfs(v, u);
+    }
+}
+
+void dfsIter(int root) {
+    struct Item {
+        int u;
+        int parent;
+        int vi;         // child index
+    };
+    vector<Item> st;
+    st.reserve(gN + 1);
+
+    st.push_back(Item{ root, 0, -1 });
+    while (!st.empty()) {
+        Item& it = st.back();
+        if (++it.vi == 0) {
+            // enter ...
+            gP[0][it.u] = it.parent;
+        }
+        if (it.vi >= (int)gE[it.u].size()) {
+            // leave ...
+            st.pop_back();
+        } else if (gE[it.u][it.vi] != it.parent) {
+            // recursion
+            int v = gE[it.u][it.vi];
+            gLevel[v] = gLevel[it.u] + 1;
+            st.push_back(Item{ v, it.u, -1 });
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------
+
+void bfs(int root) {
+    queue<int> Q;
+    Q.push(root);
+    while (!Q.empty()) {
+        int u = Q.front();
+        Q.pop();
+
+        for (int v : gE[u]) {
+            if (v == u)
+                continue;
+
+            gP[0][v] = u;
+            gLevel[v] = gLevel[u] + 1;
+            Q.push(v);
+        }
+    }
+}
+
+//--------- LCA ---------------------------------------------------------------
+
+void makeLcaTable() {
+    for (int i = 1; i < LOGN; i++) {
+        for (int j = 1; j <= gN; j++) {
+            gP[i][j] = gP[i - 1][gP[i - 1][j]];
+        }
+    }
+}
+
+int climbTree(int node, int dist) {
+    if (dist <= 0)
+        return node;
+    
+    for (int i = 0; dist > 0; i++) {
+        if (dist & 1)
+            node = gP[i][node];
+        dist >>= 1;
+    }
+
+    return node;
+}
+
+int findLCA(int A, int B) {
+    if (gLevel[A] < gLevel[B])
+        swap(A, B);
+
+    A = climbTree(A, gLevel[A] - gLevel[B]);
+
+    if (A == B)
+        return A;
+
+    int bitCnt = 0;
+    for (int x = gLevel[A]; x; x >>= 1)
+        bitCnt++;
+
+    for (int i = bitCnt - 1; i >= 0; i--) {
+        if (gP[i][A] > 0 && gP[i][A] != gP[i][B]) {
+            A = gP[i][A];
+            B = gP[i][B];
+        }
+    }
+
+    return gP[0][A];
+}
+
+
+/////////// For Testing ///////////////////////////////////////////////////////
+
+#include <time.h>
+#include <cassert>
+#include <string>
+#include <iostream>
+#include "../common/iostreamhelper.h"
+
+void makeTree() {
+    gN = 10;
+    
+    gE[1].push_back(2); gE[2].push_back(1);
+    gE[1].push_back(4); gE[4].push_back(1);
+    gE[2].push_back(5); gE[5].push_back(2);
+    gE[2].push_back(3); gE[3].push_back(2);
+    gE[4].push_back(7); gE[7].push_back(4);
+    gE[4].push_back(8); gE[8].push_back(4);
+    gE[5].push_back(10); gE[10].push_back(5);
+    gE[3].push_back(9); gE[9].push_back(3);
+    gE[3].push_back(6); gE[6].push_back(3);
+}
+
+void makeLcaTree() {
+    gN = MAXN;
+
+    gE[1].push_back(2); gE[2].push_back(1);
+    gE[1].push_back(3); gE[3].push_back(1);
+
+    int i, p = 2;
+    for (i = 4; i <= gN / 4; i++) {
+        gE[p].push_back(i); gE[i].push_back(p);
+        p = i;
+    }
+
+    p = 2;
+    for (; i <= gN * 2 / 4; i++) {
+        gE[p].push_back(i); gE[i].push_back(p);
+        p = i;
+    }
+
+    p = 3;
+    for (; i <= gN * 3 / 4; i++) {
+        gE[p].push_back(i); gE[i].push_back(p);
+        p = i;
+    }
+
+    p = 3;
+    for (; i <= gN; i++) {
+        gE[p].push_back(i); gE[i].push_back(p);
+        p = i;
+    }
+}
+
+void printData() {
+    cout << "level : ";
+    for (int i = 1; i <= gN; i++)
+        cout << gLevel[i] << ", ";
+    cout << endl;
+
+    cout << "parent : ";
+    for (int i = 1; i <= gN; i++)
+        cout << gP[i][0] << ", ";
+    cout << endl;
+}
+
+void testTreeBasic() {
+    cout << "-- dfs() vs dfsIter() ----------------------------------" << endl;
+    clear();
+    makeTree(); // make a test tree
+    dfs(1, 0);
+    printData();
+
+    makeTree();
+    dfsIter(1);
+    printData();
+
+    /*
+    cout << "-- dfs() vs dfsIter() - performance test ---------------" << endl;
+    clear();
+    makeTree(); // make a test tree
+    clock_t start = clock();
+    for (int i = 0; i < 1000000; i++) {
+        gCurrTime = 0;
+        dfs(1, 0);
+    }
+    cout << "elapsed time : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
+
+    clear();
+    makeTree(); // make a test tree
+    start = clock();
+    for (int i = 0; i < 1000000; i++) {
+        gCurrTime = 0;
+        dfsIter(1);
+    }
+    cout << "elapsed time : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
+    */
+
+    cout << "-- LCA test --------------------------------------------" << endl;
+    clear();        // step1: clear all variables
+    makeLcaTree();  // ... make a test tree
+
+    //dfs(1, 0);
+    dfsIter(1);     // step2: make depth and parent table
+    makeLcaTable(); // step3: make LCA table
+
+    int errCnt = 0;
+    for (int i = 0; i < 100000; i++) {
+        int u = rand() % gN + 1;
+        int v = rand() % gN + 1;
+        int lca = findLCA(u, v);
+        int lcaAns;
+        if (u == 1 || v == 1) {
+            lcaAns = 1;
+        } else if ((u != 3 && u <= gN / 2) != (v != 3 && v <= gN / 2)) {
+            lcaAns = 1;
+        } else if (u != 3 && u <= gN / 2) {
+            if ((u > gN / 4) != (v > gN / 4))
+                lcaAns = 2;
+            else
+                lcaAns = min(u, v);
+        } else {
+            if ((u > gN * 3 / 4) != (v > gN * 3 / 4))
+                lcaAns = 3;
+            else
+                lcaAns = min(u, v);
+        }
+        if (lca != lcaAns) {
+            cout << "mismatch : LCA(" << u << ", " << v << ") = " << lca << " (!= " << lcaAns << ")" << endl;
+            errCnt++;
+        }
+    }
+    if (!errCnt)
+        cout << "OK!" << endl;
+
+}
