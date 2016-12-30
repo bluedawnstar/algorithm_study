@@ -55,7 +55,7 @@
  `template <typename T> vector<T> getFactors(T x)`
   - x의 모든 약수를 구한다. O(sqrt(x))
 
- 'vector<int> getFactors(const vector<pair<int, int>>& primeFactors)'
+ `vector<int> getFactors(const vector<pair<int, int>>& primeFactors)`
   - getPrimeFactors2()나 getPrimeFactors()로 구한 prime factor 정보를 이용해서 모든 약수를 생성한다.
 
 2. 약수의 개수 구하기

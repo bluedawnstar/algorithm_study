@@ -32,7 +32,7 @@ Tree 관련 기본적인 함수들과 틀을 구현한 파일이다.
 자체로 동작하는 코드는 아니고, tree를 구성하고 MO's algorithm을 실행하기 위한 코드 템플릿이다.
 이 코드들을 사용하기 위해서는 복사한 후 "TODO" 부분을 수정해야 한다.
 
-'void initTreeMO(vector<pair<int, int>>& Q, vector<int>& lca, vector<pair<pair<int, int>, int>>& MO)'
+`void initTreeMO(vector<pair<int, int>>& Q, vector<int>& lca, vector<pair<pair<int, int>, int>>& MO)`
  - MO 알고리즘을 구동하기 위해서 Q로부터 lca와 MO 리스트를 초기화 하는 함수다.
  - 이 함수를 호출하기 전에 Q에 (L, R) 쌍이 채워져있어야 하고, `L's visit time <= R's visit time` 이어야 한다.
 
