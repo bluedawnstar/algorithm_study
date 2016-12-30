@@ -52,7 +52,7 @@ pair<int, int> checkRepeatedString(string s) {
 }
 
 
-// find maximum repeated prefix string (ex: "abababY" => (1, 2, 3))
+// find maximum repeated prefix string (ex: "abababY" => (2, 3))
 // (pattern length, pattern count)
 pair<int, int> getMaxRepeatedPrefixString(const vector<int>& prefix) {
     if (!prefix.empty()) {
@@ -107,6 +107,27 @@ vector<int> kmp(string s, string p) {
             if (j == m - 1) {
                 res.push_back(i - m + 1);
                 j = pref[j];
+            } else {
+                j++;
+            }
+        }
+    }
+
+    return res;
+}
+
+vector<int> kmp(string s, string p, const vector<int>& prefix) {
+    vector<int> res;
+
+    int n = (int)s.size(), m = (int)p.size(), j = 0;
+    for (int i = 0; i < n; i++) {
+        while (j > 0 && s[i] != p[j])
+            j = prefix[j - 1];
+
+        if (s[i] == p[j]) {
+            if (j == m - 1) {
+                res.push_back(i - m + 1);
+                j = prefix[j];
             } else {
                 j++;
             }
