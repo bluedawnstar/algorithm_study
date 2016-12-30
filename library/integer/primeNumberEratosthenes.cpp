@@ -27,6 +27,7 @@ vector<bool> eratosthenes(int n) {
     return res;
 }
 
+//--------- Min Prime Factors -------------------------------------------------
 
 vector<int> getMinFactors(int n) {
     vector<int> res(n + 1);
@@ -54,11 +55,11 @@ vector<int> getMinFactors(int n) {
     return res;
 }
 
-bool isPrimeNumber(vector<int>& minFactors, int x) {
+bool isPrimeNumber(const vector<int>& minFactors, int x) {
     return minFactors[x] == x;
 }
 
-vector<int> getPrimeFactors(vector<int>& minFactors, int x) {
+vector<int> getPrimeFactors(const vector<int>& minFactors, int x) {
     vector<int> res;
     while (x > 1) {
         res.push_back(minFactors[x]);
@@ -68,7 +69,7 @@ vector<int> getPrimeFactors(vector<int>& minFactors, int x) {
     return res;
 }
 
-vector<pair<int, int>> getPrimeFactors2(vector<int>& minFactors, int x) {
+vector<pair<int, int>> getPrimeFactors2(const vector<int>& minFactors, int x) {
     vector<pair<int, int>> res;
 
     while (x > 1) {

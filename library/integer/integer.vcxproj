@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="factor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />

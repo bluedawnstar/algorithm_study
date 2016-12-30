@@ -45,3 +45,39 @@
 
  `vector<pair<int, int>> getPrimeFactors2(vector<int>& minFactors, int x)`
   - 소인수와 소인수의 멱승을 구한다. (예: 12 = ((2,2), (3, 1)))
+
+### 약수 관련 함수들 (factor.cpp)
+약수와 관련된 함수들을 정의한다.
+아래 일부 기능은 너무 간단해서 함수로 제공하지 않는 것들도 있다.
+
+1. 약수 구하기
+ `template <typename T> vector<T> getFactors(T x)`
+  - x의 모든 약수를 구한다. O(sqrt(x))
+
+ 'vector<int> getFactors(const vector<pair<int, int>>& primeFactors)'
+  - getPrimeFactors2()나 getPrimeFactors()로 구한 prime factor 정보를 이용해서 모든 약수를 생성한다.
+
+2. 약수의 개수 구하기
+ 'int getFactorCount(const vector<pair<int, int>>& primeFactors)'
+  - getPrimeFactors2()나 getPrimeFactors()로 구한 prime factor 정보를 이용해서 약수의 수를 계산한다.
+
+ 'vector<int> getAllFactorCount(const vector<int>& minFactors)'
+  - getPrimeFactors()로 n 까지의 모든 정수에 대해 구한 prime factor를 이용해 n까지의 모든 약수의 개수를 구한다.
+  - time complexity는 O(N) 정도 시간이 소요되나, 실제 실행해보면 아래 getAllFactorCountSimple()이 더 빠르다.
+
+ 'vector<int> getAllFactorCountSimple(int n)'
+  - n까지의 모든 정수에 대해서 약수의 개수를 구한다.
+  - 시간 복잡도는 O(N logN) 정도이나, 구현 내용이 매우 간단해서 실행은 getAllFactorCount()보다도 더 빠르다.
+
+3. 약수 합 구하기
+ - 약수의 합은 소인수 분해 결과를 이용하면 매우 빠르게 계산할 수 있다.
+ - `A = a^α * b^β * c^γ` 일때, 약수의 전체 합은 아래와 같다.
+   - `<=> (1 + a^1 + ... + a^α) * (1 + b^1 + ... + b^β) * (1 + c^1 + ... + c^γ)`
+   - `<=> (a^(α+1) - 1) / (a - 1) * (b^(β+1) - 1) / (b - 1) * (c^(γ+1) - 1) / (c - 1)`
+
+4. 약수의 곱
+ - 마찬가지로 소인수 분해 결과를 이용하면 매우 빠르게 계산할 수 있다.
+ - `A = a^α * b^β * c^γ` 일때, 약수의 전체 곱은 아래와 같다.
+   - `<=> A^((α + 1) * (β + 1) * (γ + 1) / 2)`
+ - 즉, pow(A, 약수개수의_반절) 이 된다.
+

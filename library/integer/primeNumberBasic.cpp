@@ -5,58 +5,58 @@
 
 using namespace std;
 
-// check if n is a prime number
-bool isPrimeNumber(int n) {
-    if (n < 2)
+// check if x is a prime number
+bool isPrimeNumber(int x) {
+    if (x < 2)
         return false;
-    else if (n == 2)
+    else if (x == 2)
         return true;
-    else if ((n & 1) == 0)
+    else if ((x & 1) == 0)
         return false;
 
-    int root = int(sqrt(n));
+    int root = int(sqrt(x));
     for (int i = 3; i <= root; i += 2) {
-        if (n % i == 0)
+        if (x % i == 0)
             return false;
     }
 
     return true;
 }
 
-// return prime factors of n
-vector<int> getPrimeFactors(int n) {
+// return prime factors of x
+vector<int> getPrimeFactors(int x) {
     vector<int> res;
 
-    int root = int(sqrt(n));
+    int root = int(sqrt(x));
     if (root >= 2) {
-        while (n % 2 == 0) {
-            n /= 2;
+        while (x % 2 == 0) {
+            x /= 2;
             res.push_back(2);
         }
     }
 
     for (int i = 3; i <= root; i += 2) {
-        while (n % i == 0) {
-            n /= i;
+        while (x % i == 0) {
+            x /= i;
             res.push_back(i);
         }
     }
 
-    if (n > 1)
-        res.push_back(n);
+    if (x > 1)
+        res.push_back(x);
 
     return res;
 }
 
-// return prime factor and power of n
-vector<pair<int, int>> getPrimeFactors2(int n) {
+// return prime factor and power of x
+vector<pair<int, int>> getPrimeFactors2(int x) {
     vector<pair<int, int>> res;
 
-    int root = int(sqrt(n));
+    int root = int(sqrt(x));
     if (root >= 2) {
         int cnt = 0;
-        while (n % 2 == 0) {
-            n /= 2;
+        while (x % 2 == 0) {
+            x /= 2;
             cnt++;
         }
         if (cnt > 0)
@@ -65,16 +65,16 @@ vector<pair<int, int>> getPrimeFactors2(int n) {
 
     for (int i = 3; i <= root; i += 2) {
         int cnt = 0;
-        while (n % i == 0) {
-            n /= i;
+        while (x % i == 0) {
+            x /= i;
             cnt++;
         }
         if (cnt > 0)
             res.push_back(make_pair(i, cnt));
     }
 
-    if (n > 1)
-        res.push_back(make_pair(n, 1));
+    if (x > 1)
+        res.push_back(make_pair(x, 1));
 
     return res;
 }

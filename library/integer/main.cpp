@@ -8,4 +8,5 @@ using namespace std;
 int main(void) {
     TEST(PrimeNumberBasic);
     TEST(PrimeNumberEratosthenes);
+    TEST(Factor);
 }
