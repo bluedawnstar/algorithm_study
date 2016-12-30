@@ -60,21 +60,21 @@
 
 2. 약수의 개수 구하기
 
- 'int getFactorCount(const vector<pair<int, int>>& primeFactors)'
+ `int getFactorCount(const vector<pair<int, int>>& primeFactors)`
   - getPrimeFactors2()나 getPrimeFactors()로 구한 prime factor 정보를 이용해서 약수의 수를 계산한다.
 
- 'vector<int> getAllFactorCount(const vector<int>& minFactors)'
+ `vector<int> getAllFactorCount(const vector<int>& minFactors)`
   - getPrimeFactors()로 n 까지의 모든 정수에 대해 구한 prime factor를 이용해 n까지의 모든 약수의 개수를 구한다.
   - time complexity는 O(N) 정도 시간이 소요되나, 실제 실행해보면 아래 getAllFactorCountSimple()이 더 빠르다.
 
- 'vector<int> getAllFactorCountSimple(int n)'
+ `vector<int> getAllFactorCountSimple(int n)`
   - n까지의 모든 정수에 대해서 약수의 개수를 구한다.
   - 시간 복잡도는 O(N logN) 정도이나, 구현 내용이 매우 간단해서 실행은 getAllFactorCount()보다도 더 빠르다.
 
 3. 약수 합 구하기
  - 약수의 합은 소인수 분해 결과를 이용하면 매우 빠르게 계산할 수 있다.
  - `A = a^α * b^β * c^γ` 일때, 약수의 전체 합은 아래와 같다.
-   - `<=> (1 + a^1 + ... + a^α) * (1 + b^1 + ... + b^β) * (1 + c^1 + ... + c^γ)`
+   - `<=> (1 + a^1 + ... + a^α) * (1 + b^1 + ... + b^β) * (1 + c^1 + ... + c^γ)` 
    - `<=> (a^(α+1) - 1) / (a - 1) * (b^(β+1) - 1) / (b - 1) * (c^(γ+1) - 1) / (c - 1)`
 
 4. 약수의 곱
