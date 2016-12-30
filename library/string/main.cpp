@@ -7,5 +7,6 @@ using namespace std;
 
 int main(void) {
     TEST(PrefixFunction);
+    TEST(SuffixArray);
     TEST(Split);
 }

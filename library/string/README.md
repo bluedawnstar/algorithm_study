@@ -47,6 +47,33 @@
  - KMP 알고리즘을 통해서 문자열 s에서 패턴 p의 모든 위치를 찾는다.
 
 
+### Suffix Array (suffixArray.cpp)
+
+`template <typename T> vector<int> makeSuffixArray(T s, int n)`
+ - 길이가 n인 문자열 s에서 suffix array를 생성한다.
+ - 이 함수의 시간복잡도는 O(N (logN)^2) 이다.
+
+`template <typename T> vector<int> makeSuffixArrayFast(T s, int n)`
+ - 길이가 n인 문자열 s에서 suffix array를 생성한다.
+ - 이 함수의 시간복잡도는 O(N logN)으로, 굉장히 빠른 속도를 동작한다.
+   suffixArray_notUsed.cpp에 O(N) 알고리즘이 구현되어있지만, 실험결과 이 함수와 별반 성능 차이가 나지 않는다.
+   
+`template <typename T> int commonPrefix(T s, int n, int i, int j)`
+ - 문자열 s에서 i번째 suffix와 j번째 suffix 사이의 LCP를 구한다.
+
+`template <typename T> vector<int> getAllCommonPrefix(const vector<int>& suffixArray, T s, int n)`
+ - 모든 suffix array 내용에 대한 LCP를 한꺼번에 구한다. (Kasai algorithm)
+ - 시간 복잡도는 O(N)으로, 굉장히 빠르게 LCP를 구한다.
+
+`long long countSubstrings(const vector<int>& suffixArray, T s, int n)`
+ - Suffix array로부터 모든 substring의 개수를 구한다.
+ - 시간 복잡도는 O(N^2)로, 별반 좋은 성능이 아니다.
+
+`template <typename T> long long countSubstringsFast(const vector<int>& suffixArray, T s, int n)`
+ - Suffix array로부터 모든 substring의 개수를 구한다.
+ - 내부적으로 getAllCommonPrefix() 함수를 사용하며 전체 수행 시간이 O(N)이다.
+
+
 ### 문자열 자리기 (split.cpp)
 
 `vector<string> split(string s, char c)`
