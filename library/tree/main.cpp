@@ -1,16 +1,13 @@
-// uncomment one of below macros
+#include <iostream>
 
-//#define TEST_TREE_BASIC
-#define TEST_TREE_MO
+using namespace std;
 
-#if defined(TEST_TREE_BASIC)
-#include "treeBasic.cpp"
+#define TEST(ModuleName)    extern void test##ModuleName(void); \
+                            test##ModuleName()
+
 int main(void) {
-    testTreeBasic();
+    TEST(TreeBasic);
+    TEST(FenwickTree);
+    TEST(FenwickTree2D);
+    TEST(TreeMO);
 }
-#elif defined(TEST_TREE_MO)
-#include "treeMO.cpp"
-int main(void) {
-    testTreeMO();
-}
-#endif

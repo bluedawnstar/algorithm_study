@@ -193,7 +193,7 @@ long long countSubstringsFast(const vector<int>& suffixArray, T s, int n) {
 #include "../common/iostreamhelper.h"
 
 void testSuffixArray() {
-    //return; //TODO: if you want to test string functions, make this line to a comment.
+    return; //TODO: if you want to test string functions, make this line to a comment.
 
     cout << "-- makeSuffixArray() -------------" << endl;
 

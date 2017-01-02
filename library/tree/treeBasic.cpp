@@ -6,22 +6,25 @@
 
 using namespace std;
 
+namespace TreeBasic {
+
 //--------- Common ------------------------------------------------------------
 
-#define MAXN    10000
-#define LOGN    15              // log2(MAXN)
+#define MAXN    10000           // TODO: modify the maximum number of nodes
+#define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
 
 // <Node ID>
 // 0 : null node
 // 1 : root node
 // 2 ~ N : internal or leaf nodes
 
-int gN;
+int gN;                         // TODO: set a value
 
-vector<int> gE[MAXN + 1];
+vector<int> gE[MAXN + 1];       // TODO: make a tree
+int gP[LOGN][MAXN + 1];         // TODO: set all gP[0][n] to their parent
+                                // parent & acestors
+
 int gLevel[MAXN + 1];           // depth (root is 0)
-
-int gP[LOGN][MAXN + 1];         // parent & acestors
 
 void clear() {
     if (gN <= 0)
@@ -78,15 +81,20 @@ void dfsIter(int root) {
 //-----------------------------------------------------------------------------
 
 void bfs(int root) {
+    vector<bool> visited(gN + 1);
+
     queue<int> Q;
     Q.push(root);
+    visited[root] = true;
     while (!Q.empty()) {
         int u = Q.front();
         Q.pop();
 
         for (int v : gE[u]) {
-            if (v == u)
+            if (visited[v])
                 continue;
+
+            visited[v] = true;
 
             gP[0][v] = u;
             gLevel[v] = gLevel[u] + 1;
@@ -141,6 +149,7 @@ int findLCA(int A, int B) {
     return gP[0][A];
 }
 
+}
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -150,7 +159,9 @@ int findLCA(int A, int B) {
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
-void makeTree() {
+using namespace TreeBasic;
+
+static void makeTree() {
     gN = 10;
     
     gE[1].push_back(2); gE[2].push_back(1);
@@ -164,7 +175,7 @@ void makeTree() {
     gE[3].push_back(6); gE[6].push_back(3);
 }
 
-void makeLcaTree() {
+static void makeLcaTree() {
     gN = MAXN;
 
     gE[1].push_back(2); gE[2].push_back(1);
@@ -195,7 +206,7 @@ void makeLcaTree() {
     }
 }
 
-void printData() {
+static void printData() {
     cout << "level : ";
     for (int i = 1; i <= gN; i++)
         cout << gLevel[i] << ", ";
@@ -208,6 +219,11 @@ void printData() {
 }
 
 void testTreeBasic() {
+    return; //TODO: if you want to test a split function, make this line to a comment.
+
+    //Usage:
+    //    step1 : make a tree (gE, gP[0][x])
+
     cout << "-- dfs() vs dfsIter() ----------------------------------" << endl;
     clear();
     makeTree(); // make a test tree

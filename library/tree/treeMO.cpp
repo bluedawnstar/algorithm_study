@@ -6,23 +6,26 @@
 
 using namespace std;
 
+namespace TreeMO {
+
 //--------- Common ------------------------------------------------------------
 
 #define MAXN    10000           // TODO: modify the maximum number of nodes
 #define MAXQ    10000           // TODO: modify the maximum number of questions
-#define LOGN    15              // TODO: modify LCA table size
+#define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
 
 // <Node ID>
 // 0 : null node
 // 1 : root node
 // 2 ~ N : internal or leaf nodes
 
-int gN;
-vector<int> gE[MAXN + 1];
+int gN;                         // TODO: set a value
+
+vector<int> gE[MAXN + 1];       // TODO: make a tree
+int gP[LOGN][MAXN + 1];         // TODO: set all gP[0][n] to their parent
+                                // parent & acestors
 
 int gLevel[MAXN + 1];           // depth (root is 0)
-
-int gP[LOGN][MAXN + 1];         // parent & acestors
 
                                 // to flatten the tree (DFS only)
 int gVisTime[MAXN + 1][2];      // visit & exit time
@@ -201,8 +204,14 @@ void removeMO(int t) {
     }
 }
 
+}
+
+using namespace TreeMO;
+
 // template codes for MO's algorithm on a tree
 void testTreeMO() {
+    return; //TODO: if you want to test a split function, make this line to a comment.
+
     // TODO: step1 - make a tree
 
     dfsIter(1); // dfs(1, 0);
