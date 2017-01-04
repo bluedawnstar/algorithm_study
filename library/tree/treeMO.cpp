@@ -14,29 +14,24 @@ namespace TreeMO {
 #define MAXQ    10000           // TODO: modify the maximum number of questions
 #define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
 
-// <Node ID>
-// 0 : null node
-// 1 : root node
-// 2 ~ N : internal or leaf nodes
-
 int gN;                         // TODO: set a value
 
-vector<int> gE[MAXN + 1];       // TODO: make a tree
-int gP[LOGN][MAXN + 1];         // TODO: set all gP[0][n] to their parent
+vector<int> gE[MAXN];           // TODO: make a tree
+int gP[LOGN][MAXN];             // TODO: set all gP[0][n] to their parent
                                 // parent & acestors
 
-int gLevel[MAXN + 1];           // depth (root is 0)
+int gLevel[MAXN];               // depth (root is 0)
 
                                 // to flatten the tree (DFS only)
-int gVisTime[MAXN + 1][2];      // visit & exit time
-int gTime2Node[MAXN * 2 + 1];   // visit & exit time to node ID (0 <= index < 2 * N)
+int gVisTime[MAXN][2];          // visit & exit time
+int gTime2Node[MAXN * 2];       // visit & exit time to node ID (0 <= index < 2 * N)
 int gCurrTime;                  //
 
 void clear() {
     if (gN <= 0)
         return;
 
-    for (int i = 1; i <= gN; i++)
+    for (int i = 0; i < gN; i++)
         gE[i].clear();
     memset(gLevel, 0, sizeof(gLevel));
     memset(gP, 0, sizeof(gP));
@@ -72,9 +67,9 @@ void dfsIter(int root) {
         int vi;         // child index
     };
     vector<Item> st;
-    st.reserve(gN + 1);
+    st.reserve(gN);
 
-    st.push_back(Item{ root, 0, -1 });
+    st.push_back(Item{ root, -1, -1 });
     while (!st.empty()) {
         Item& it = st.back();
         if (++it.vi == 0) {
@@ -101,7 +96,7 @@ void dfsIter(int root) {
 
 void makeLcaTable() {
     for (int i = 1; i < LOGN; i++) {
-        for (int j = 1; j <= gN; j++) {
+        for (int j = 0; j < gN; j++) {
             gP[i][j] = gP[i - 1][gP[i - 1][j]];
         }
     }
@@ -145,7 +140,7 @@ int findLCA(int A, int B) {
 
 //--------- MO's algorithm ----------------------------------------------------
 
-bool gActiveMO[MAXN + 1];
+bool gActiveMO[MAXN];
 int  gCurAnsMO;
 
 // lca : lca[index of Q]
@@ -163,7 +158,7 @@ void initTreeMO(vector<pair<int, int>>& Q, vector<int>& lca, vector<pair<pair<in
         int L = Q[i].first, R = Q[i].second;
 
         int lc = findLCA(L, R);
-        lca.push_back(lc == L ? 0 : lc);
+        lca.push_back(lc == L ? -1 : lc);
         if (lc == L)
             MO.push_back(make_pair(make_pair(gVisTime[L][0], gVisTime[R][0]), i));
         else
@@ -214,7 +209,7 @@ void testTreeMO() {
 
     // TODO: step1 - make a tree
 
-    dfsIter(1); // dfs(1, 0);
+    dfsIter(0); // dfs(0, -1);
     makeLcaTable();
 
     vector<pair<int, int>> Q; // (L, R)
@@ -224,6 +219,8 @@ void testTreeMO() {
     for (int i = 0; i < T; i++) {
         int L, R;
         scanf("%d %d", &L, &R);
+        L--;
+        R--;
 
         if (gVisTime[L][0] > gVisTime[R][0])
             swap(L, R);
@@ -257,7 +254,7 @@ void testTreeMO() {
             removeMO(currR--);
 
         int addLca = 0;
-        if (lca[qi] > 0) {
+        if (lca[qi] >= 0) {
             int u = lca[qi];
 
             //TODO: implement adding function about LCA(L, R)

@@ -13,24 +13,19 @@ namespace TreeHeavyLightDecomposition {
 #define MAXN    50000
 #define LOGN    17              // log2(MAXN)
 
-// <Node ID>
-// 0 : null node
-// 1 : root node
-// 2 ~ N : internal or leaf nodes
-
 int gN;
 
-vector<int> gE[MAXN + 1];
-int gLevel[MAXN + 1];           // depth (root is 0)
-int gP[LOGN][MAXN + 1];         // parent & acestors
+vector<int> gE[MAXN];
+int gLevel[MAXN];               // depth (root is 0)
+int gP[LOGN][MAXN];             // parent & acestors
 
-int gSubTreeN[MAXN + 1];        // subtree size
+int gSubTreeN[MAXN];            // subtree size
 
 void clear() {
     if (gN <= 0)
         return;
 
-    for (int i = 0; i <= gN; i++)
+    for (int i = 0; i < gN; i++)
         gE[i].clear();
     memset(gLevel, 0, sizeof(gLevel));
     memset(gP, 0, sizeof(gP));
@@ -61,9 +56,9 @@ void dfsIter(int root) {
         int vi;         // child index
     };
     vector<Item> st;
-    st.reserve(gN + 1);
+    st.reserve(gN);
 
-    st.push_back(Item{ root, 0, -1 });
+    st.push_back(Item{ root, -1, -1 });
     while (!st.empty()) {
         Item& it = st.back();
         if (++it.vi == 0) {
@@ -91,7 +86,7 @@ void dfsIter(int root) {
 
 void makeLcaTable() {
     for (int i = 1; i < LOGN; i++) {
-        for (int j = 1; j <= gN; j++) {
+        for (int j = 0; j < gN; j++) {
             gP[i][j] = gP[i - 1][gP[i - 1][j]];
         }
     }
@@ -259,9 +254,9 @@ struct HeavyLightDecomposition {
 
     void doHLD(int root) {
         mHeavyPaths.clear();
-        mHeavyPathIndex.resize(gN + 1, -1);
+        mHeavyPathIndex.resize(gN, -1);
 
-        vector<bool> visited(gN + 1);
+        vector<bool> visited(gN);
 
         queue<int> Q;
         Q.push(root);
@@ -381,22 +376,22 @@ void testHeavyLightDecomposition() {
         clear();
 
         scanf("%d", &gN);
-        for (int v = 1; v <= gN; v++) {
+        for (int v = 0; v < gN; v++) {
             int u;
             scanf("%d", &u);
-            u++;
-            if (u == 0)
+            if (u < 0)
                 continue;
+
             gE[u].push_back(v);         // CHECK: make a tree
             gE[v].push_back(u);         // CHECK: make a tree
         }
 
-        dfs(1, 0);                      // CHECK: make tree information
+        dfs(0, -1);                     // CHECK: make tree information
         makeLcaTable();                 // CHECK: make a LCA table
 
         HeavyLightDecomposition<int, MaxOp<int>> hld;
 
-        hld.doHLD(1);
+        hld.doHLD(0);
         hld.initSegTree(1);
 
         int ans = 0;
@@ -410,11 +405,9 @@ void testHeavyLightDecomposition() {
             scanf("%s", type);
             if (!strcmp(type, "update")) {
                 scanf("%d %d %d", &u, &v, &cost);
-                u++; v++;
                 hld.update(u, v, cost);
             } else {
                 scanf("%d %d", &u, &v);
-                u++; v++;
                 ans ^= hld.query(u, v);
             }
         }

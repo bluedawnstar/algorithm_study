@@ -42,10 +42,11 @@ struct FenwickTree {
         return res;
     }
 
-    T rangeSum(int from, int to) {
-        T res = sum(to);
-        if (from > 0)
-            res -= sum(from - 1);
+    // inclusive
+    T rangeSum(int left, int right) {
+        T res = sum(right);
+        if (left > 0)
+            res -= sum(left - 1);
         return res;
     }
 
@@ -56,6 +57,13 @@ struct FenwickTree {
             mTree[pos] += val;
             pos += pos & -pos;      // add lowest bit
         }
+    }
+
+    // inclusive
+    void addRange(int left, int right, T val) {
+        add(left, val);
+        if (right + 1 < (int)mTree.size() - 1)
+            add(right + 1, -val);
     }
 };
 
