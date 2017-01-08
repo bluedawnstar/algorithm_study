@@ -142,12 +142,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="treeFenwickTree.cpp" />
     <ClCompile Include="treeFenwickTree2D.cpp" />
+    <ClCompile Include="treeFenwickTreeMultAdd.cpp" />
     <ClCompile Include="treeHeavyLightDecomposition.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="treeBasic.cpp" />
     <ClCompile Include="treeMO.cpp" />
+    <ClCompile Include="treeSegmentTree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sparseTable.h" />
+    <ClInclude Include="treeFenwickTree.h" />
+    <ClInclude Include="treeSegmentTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

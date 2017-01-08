@@ -2,9 +2,12 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <functional>
 #include <algorithm>
 
 using namespace std;
+
+#include "treeSegmentTree.h"
 
 namespace TreeHeavyLightDecomposition {
 
@@ -130,127 +133,20 @@ int findLCA(int A, int B) {
 
 //-----------------------------------------------------------------------------
 
-// The first 'node' number is 1, not 0
-// Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') is started from 0
-template <typename T, typename BinOp>
-struct SegmentTree {
-    int       n;            // the size of array
-    vector<T> rangeValue;   // 
-    T         defaultValue;
-    BinOp     merge;
-
-    SegmentTree(const T arr[], int size, T dflt = T())
-        : merge(BinOp()), defaultValue(dflt) {
-
-        n = size;
-        rangeValue.resize(n * 4);
-        init(arr, 0, n - 1, 1);
-    }
-
-    SegmentTree(int size, T dflt = T())
-        : merge(BinOp()), defaultValue(dflt) {
-
-        n = size;
-        rangeValue.resize(n * 4);
-        init<T*>(nullptr, 0, n - 1, 1);
-    }
-
-    SegmentTree(int size, BinOp op, T dflt = T())
-        : merge(op), defaultValue(dflt) {
-
-        n = size;
-        rangeValue.resize(n * 4);
-        init<T*>(nullptr, 0, n - 1, 1);
-    }
-
-    SegmentTree(const vector<T>& arr, T dflt = T())
-        : merge(BinOp()), defaultValue(dflt) {
-
-        n = (int)arr.size();
-        rangeValue.resize(n * 4);
-        init(arr, 0, n - 1, 1);
-    }
-
-    SegmentTree(const vector<T>& arr, BinOp op, T dflt = T())
-        : merge(op), defaultValue(dflt) {
-
-        n = (int)arr.size();
-        rangeValue.resize(n * 4);
-        init(arr, 0, n - 1, 1);
-    }
-
-    SegmentTree(SegmentTree&& rhs)
-        : n(rhs.n), rangeValue(std::move(rhs.rangeValue)),
-        defaultValue(rhs.defaultValue), merge(std::move(rhs.merge)) {
-    }
-
-    template <typename U>
-    T init(const U& arr, int left, int right, int node) {
-        if (left > right)
-            return defaultValue;
-
-        if (left == right)
-            return rangeValue[node] = (arr == nullptr) ? defaultValue : arr[left];
-
-        int mid = left + (right - left) / 2;
-        int leftSum = init<U>(arr, left, mid, node * 2);
-        int rightSum = init<U>(arr, mid + 1, right, node * 2 + 1);
-
-        return rangeValue[node] = merge(leftSum, rightSum);
-    }
-
-    T querySub(int left, int right, int node, int nodeLeft, int nodeRight) {
-        if (right < nodeLeft || nodeRight < left)
-            return defaultValue;
-
-        if (left <= nodeLeft && nodeRight <= right)
-            return rangeValue[node];
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        return merge(querySub(left, right, node * 2, nodeLeft, mid),
-            querySub(left, right, node * 2 + 1, mid + 1, nodeRight));
-    }
-    T query(int left, int right) {
-        return querySub(left, right, 1, 0, n - 1);
-    }
-
-    T updateSub(int index, T newValue, int node, int nodeLeft, int nodeRight) {
-        if (index < nodeLeft || nodeRight < index)
-            return rangeValue[node];
-
-        if (nodeLeft == nodeRight)
-            return rangeValue[node] = newValue;
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        return rangeValue[node] =
-            merge(updateSub(index, newValue, node * 2, nodeLeft, mid),
-                updateSub(index, newValue, node * 2 + 1, mid + 1, nodeRight));
-    }
-    T update(int index, T newValue) {
-        return updateSub(index, newValue, 1, 0, n - 1);
-    }
-};
-
-
-template <typename T>
-struct MaxOp {
-    T operator()(T a, T b) const {
-        return max(a, b);           // TODO: check binary operation for Segment Tree
-    }
-};
-template <typename T>
-struct MinOp {
-    T operator()(T a, T b) const {
-        return min(a, b);           // TODO: check binary operation for Segment Tree
-    }
-};
-
-template <typename T, typename BinOp>
+template <typename T, typename BinOp = function<T(T, T)>>
 struct HeavyLightDecomposition {
     BinOp               mBinOp;
 
     vector<vector<int>> mHeavyPaths;        // heavy paths
-    vector<int>         mHeavyPathIndex;    // convert node number(1 ~ gN) to index of heavy paths (gHeavyPaths)
+    vector<int>         mHeavyPathIndex;    // convert node number(0 ~ gN - 1) to index of heavy paths (gHeavyPaths)
+
+    HeavyLightDecomposition() : mBinOp() {
+        // no action
+    }
+
+    HeavyLightDecomposition(BinOp op) : mBinOp(op) {
+        // no action
+    }
 
     void doHLD(int root) {
         mHeavyPaths.clear();
@@ -389,7 +285,8 @@ void testHeavyLightDecomposition() {
         dfs(0, -1);                     // CHECK: make tree information
         makeLcaTable();                 // CHECK: make a LCA table
 
-        HeavyLightDecomposition<int, MaxOp<int>> hld;
+        //HeavyLightDecomposition<int, MaxOp<int>> hld;
+        HeavyLightDecomposition<int> hld([](int a, int b) { return max(a, b); });
 
         hld.doHLD(0);
         hld.initSegTree(1);

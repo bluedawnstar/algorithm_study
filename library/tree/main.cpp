@@ -9,5 +9,9 @@ int main(void) {
     TEST(TreeBasic);
     TEST(FenwickTree);
     TEST(FenwickTree2D);
+    TEST(FenwickTreeMultAdd);
+    TEST(SegmentTree);
+    TEST(SparseTable);
+    TEST(HeavyLightDecomposition);
     TEST(TreeMO);
 }
