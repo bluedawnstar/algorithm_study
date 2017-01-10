@@ -153,18 +153,18 @@ struct FenwickTreeMultAdd {
         addT.add(x, d * (1 - x));
     }
 
-    // (inclusive, exclusive)
+    // (inclusive, inclusive)
     void addRange(int left, int right, T d) {
         add(left, d);
-        add(right, -d);
+        add(right + 1, -d);
     }
 
     T sum(int x) {
         return addT.sum(x) + mulT.sum(x) * x;
     }
 
-    // (inclusive, exclusive)
+    // (inclusive, inclusive)
     T sumRange(int left, int right) {
-        return sum(right - 1) - sum(left - 1);
+        return sum(right) - sum(left - 1);
     }
 };

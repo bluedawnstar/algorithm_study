@@ -120,9 +120,8 @@ struct SparseTableMin {
 
     int query(int left, int right) {
         right++;
-        if (right <= left) {
+        if (right <= left)
             return INT_MAX;
-        }
 
         int k = H[right - left];
         vector<int>& mink = value[k];
