@@ -142,12 +142,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="distinctSubstringCounter.cpp" />
+    <ClCompile Include="lcpArraySparseTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="prefixFunction.cpp" />
     <ClCompile Include="split.cpp" />
     <ClCompile Include="suffixArray.cpp" />
+    <ClCompile Include="suffixArraySparseTable.cpp" />
     <ClCompile Include="suffixArray_notUsed.cpp" />
     <ClCompile Include="suffixTree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="distinctSubstringCounter.h" />
+    <ClInclude Include="lcpArraySparseTable.h" />
+    <ClInclude Include="suffixArraySparseTable.h" />
+    <ClInclude Include="suffixTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

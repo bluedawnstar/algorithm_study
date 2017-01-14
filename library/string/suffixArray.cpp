@@ -141,7 +141,7 @@ int commonPrefix(T s, int n, int i, int j) {
 
 // Kasai algorithm - O(N)
 template <typename T>
-vector<int> getAllCommonPrefix(const vector<int>& suffixArray, T s, int n) {
+vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n) {
     vector<int> rank(n), height(n);
     for (int i = 0; i < n; i++)
         rank[suffixArray[i]] = i;
@@ -178,7 +178,7 @@ template <typename T>
 long long countSubstringsFast(const vector<int>& suffixArray, T s, int n) {
     long long ans = 0;
 
-    vector<int> lcp = getAllCommonPrefix(suffixArray, s, n);
+    vector<int> lcp = makeLcpArray(suffixArray, s, n);
     for (int i = 0; i < (int)lcp.size(); i++) {
         ans += n - suffixArray[i] - lcp[i];
     }
