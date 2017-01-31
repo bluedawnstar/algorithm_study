@@ -1,7 +1,8 @@
 #pragma once
 
 // Making directly from string
-// This class is not appropriate for LCP calculating. If LCP is calculated, then use LcpArraySparseTable.
+// This class is not appropriate for LCP calculating.
+// Use LcpArraySparseTable to calculate LCP.
 // This class is intended for general suffix operation in O(1) or O(logN)
 struct SuffixArraySparseTable {
     struct Entry {
@@ -11,8 +12,9 @@ struct SuffixArraySparseTable {
     int N;
     int logN;
 
+    // P[k][i] : the group of 2^k-th character of i-th suffix
     vector<vector<int>> P;          // sparse table
-    int top;                        // P's last row
+    int H;                          // P's height
 
     int ch2i(char ch) {
         return ch - 'a';
@@ -48,7 +50,7 @@ struct SuffixArraySparseTable {
                     P[stp][L[i].p] = i;
             }
         }
-        top = stp - 1;
+        H = stp;
     }
 
     // (suffix position, suffix position)
@@ -59,7 +61,7 @@ struct SuffixArraySparseTable {
         if (x == y)
             return N - x;
 
-        for (int k = top; k >= 0 && x < N && y < N; k--) {
+        for (int k = H - 1; k >= 0 && x < N && y < N; k--) {
             if (P[k][x] == P[k][y]) {
                 x += 1 << k;
                 y += 1 << k;

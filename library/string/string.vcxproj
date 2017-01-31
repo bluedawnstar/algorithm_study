@@ -145,6 +145,7 @@
     <ClCompile Include="distinctSubstringCounter.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="palindromicString.cpp" />
     <ClCompile Include="prefixFunction.cpp" />
     <ClCompile Include="split.cpp" />
     <ClCompile Include="suffixArray.cpp" />

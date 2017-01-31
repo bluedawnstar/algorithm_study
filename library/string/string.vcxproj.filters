@@ -42,6 +42,9 @@
     <ClCompile Include="suffixArraySparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="palindromicString.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="suffixTree.h">

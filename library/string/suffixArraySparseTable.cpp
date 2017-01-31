@@ -22,12 +22,13 @@ template <typename T>
 vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n);
 
 void testSuffixArraySparseTable() {
-    //return; //TODO: if you want to test string functions, make this line to a comment.
+    return; //TODO: if you want to test string functions, make this line to a comment.
 
     cout << "-- LcpArray class -------------" << endl;
 
     string S("abdaaaaaaaaaaaaaaacccccccccccccccccccccaaaddddddddddddddddaaaaaaadddddddaaafaeef");
 
+    vector<int> a = makeSuffixArrayFast(S, (int)S.length());
     SuffixArraySparseTable suffixArrayST(S, (int)S.length());
 
     for (int i = 0; i < 100; i++) {

@@ -1,4 +1,5 @@
-static ostream& operator <<(ostream& os, const pair<int, int>& rhs) {
+template <typename T, typename U>
+static ostream& operator <<(ostream& os, const pair<T, U>& rhs) {
     cout << "(" << rhs.first << ", " << rhs.second << ")";
     return os;
 }

@@ -12,5 +12,6 @@ int main(void) {
     TEST(LcpArraySparseTable);
     TEST(SuffixArraySparseTable);
     TEST(DistinctSubstringCounter);
+    TEST(PalindromicString);
     TEST(Split);
 }
