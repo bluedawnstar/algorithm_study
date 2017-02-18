@@ -42,6 +42,12 @@
     <ClCompile Include="sparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeLinkCutTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="trie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="treeFenwickTree.h">
@@ -51,6 +57,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sparseTable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="trie.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="allocator.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

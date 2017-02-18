@@ -14,4 +14,5 @@ int main(void) {
     TEST(SparseTable);
     TEST(HeavyLightDecomposition);
     TEST(TreeMO);
+    TEST(Trie);
 }

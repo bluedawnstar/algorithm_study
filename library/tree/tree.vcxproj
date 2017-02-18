@@ -149,13 +149,17 @@
     <ClCompile Include="treeHeavyLightDecomposition.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="treeBasic.cpp" />
+    <ClCompile Include="treeLinkCutTree.cpp" />
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="treeSegmentTree.cpp" />
+    <ClCompile Include="trie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="allocator.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="treeFenwickTree.h" />
     <ClInclude Include="treeSegmentTree.h" />
+    <ClInclude Include="trie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -51,6 +51,16 @@ void testSegmentTree() {
     ansRMQ = rmq.query(1, 3);
     assert(ans == ansRMQ);
 
+    segTree.updateRange(0, 2, 3);
+    ans = segTree.query(1, 3);
+    cout << ans << endl;
+    assert(ans == 9);
+
+    segTree2.updateRange(0, 2, 2);
+    ans = segTree2.query(1, 3);
+    cout << ans << endl;
+    assert(ans == 2);
+
     cout << "-- Segment Tree Performance Test -----------------------" << endl;
 
     {

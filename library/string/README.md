@@ -1,6 +1,6 @@
 ## functions and classes for string manipulation
 
-### 소수관련 기본 함수 (prefixFunction.cpp)
+### Prefix function (prefixFunction.cpp)
 
 `vector<int> prefixFunction(string s)`
  - KMP 알고리즘에서 사용하는 pattern의 partial matching 정보를 구한다.
@@ -74,11 +74,11 @@
  - 내부적으로 getAllCommonPrefix() 함수를 사용하며 전체 수행 시간이 O(N)이다.
 
 
-### 문자열 자리기 (split.cpp)
+### 문자열 자르기 (split.cpp)
 
 `vector<string> split(string s, char c)`
  - Java나 다른 언어에는 문자열을 특정 delimitor로 구분해주는 기능들이 제공되는데, C++에는 없어서 유용하게 사용할 수 있다.
  - 기능은 매우 간단해서 문자열 s를 문자 c를 구분기호로 사용해서 잘라준다.
 
 `vector<pair<int,int>> split2(string s, char c)`
- - split() 함수와 동일하나, 문자열 자체를 저장하는 것이 아니라 각 substring에 대해 s에서의 (위치, 길이)를 저정한다..
+ - split() 함수와 동일하나, 문자열 자체를 저장하는 것이 아니라 각 substring에 대해 s에서의 (위치, 길이)를 저정한다.

@@ -16,7 +16,7 @@ struct SuffixArraySparseTable {
     vector<vector<int>> P;          // sparse table
     int H;                          // P's height
 
-    int ch2i(char ch) {
+    static int ch2i(char ch) {
         return ch - 'a';
     }
 

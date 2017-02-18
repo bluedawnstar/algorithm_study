@@ -35,7 +35,7 @@ struct SuffixTree {
     //TODO: check character count
     static const size_t MaxCharN = 26;
     //TODO: check conversion from character to value
-    int ch2val(char ch) {
+    static int ch2i(char ch) {
         return ch - 'a';
     }
 
@@ -151,9 +151,9 @@ struct SuffixTree {
 
                                   // There is no outgoing edge starting with
                                   // activeEdge from activeNode
-            if (activeNode->children[ch2val(text[activeEdge])] == nullptr) {
+            if (activeNode->children[ch2i(text[activeEdge])] == nullptr) {
                 //Extension Rule 2 (A new leaf edge gets created)
-                activeNode->children[ch2val(text[activeEdge])] = newNode(pos, &leafEnd);
+                activeNode->children[ch2i(text[activeEdge])] = newNode(pos, &leafEnd);
 
                 /*A new leaf edge is created in above line starting
                 from  an existng node (the current activeNode), and
@@ -171,7 +171,7 @@ struct SuffixTree {
             else {
                 // Get the next node at the end of edge starting
                 // with activeEdge
-                Node* next = activeNode->children[ch2val(text[activeEdge])];
+                Node* next = activeNode->children[ch2i(text[activeEdge])];
                 if (walkDown(next)) { //Do walkdown
                                       //Start from next node (the new activeNode)
                     continue;
@@ -208,12 +208,12 @@ struct SuffixTree {
 
                 //New internal node
                 Node* split = newNode(next->start, splitEnd);
-                activeNode->children[ch2val(text[activeEdge])] = split;
+                activeNode->children[ch2i(text[activeEdge])] = split;
 
                 //New leaf coming out of new internal node
-                split->children[ch2val(text[pos])] = newNode(pos, &leafEnd);
+                split->children[ch2i(text[pos])] = newNode(pos, &leafEnd);
                 next->start += activeLength;
-                split->children[ch2val(text[next->start])] = next;
+                split->children[ch2i(text[next->start])] = next;
 
                 /*We got a new internal node here. If there is any
                 internal node created in last extensions of same

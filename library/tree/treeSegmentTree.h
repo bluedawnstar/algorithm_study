@@ -43,7 +43,7 @@ struct LcmOp {
 //--------- General Segment Tree ----------------------------------------------
 
 // The first 'node' number is 1, not 0
-// Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') is started from 0
+// Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') are started from 0
 template <typename T, typename BinOp = function<T(T,T)>>
 struct SegmentTree {
     int       n;            // the size of array
@@ -165,6 +165,22 @@ struct SegmentTree {
     T update(int index, T newValue) {
         return _updateSub(index, newValue, 1, 0, n - 1);
     }
+
+    T _updateRangeSub(int left, int right, T newValue, int node, int nodeLeft, int nodeRight) {
+        if (right < nodeLeft || nodeRight < left)
+            return rangeValue[node];
+
+        if (nodeLeft == nodeRight)
+            return rangeValue[node] = newValue;
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        return rangeValue[node] = mergeOp(_updateRangeSub(left, right, newValue, node * 2, nodeLeft, mid),
+                                          _updateRangeSub(left, right, newValue, node * 2 + 1, mid + 1, nodeRight));
+    }
+    // inclusive
+    T updateRange(int left, int right, T newValue) {
+        return _updateRangeSub(left, right, newValue, 1, 0, n - 1);
+    }
 };
 
 template <typename T, typename BinOp>
@@ -195,7 +211,7 @@ SegmentTree<T, BinOp> makeSegmentTree(const T arr[], int size, BinOp op, T dfltV
 
 // RMQ (Range Minimum Query)
 struct RMQ {
-    int       n;
+    int       N;
     vector<int> value;
     vector<int> valueId;
 
@@ -218,21 +234,21 @@ struct RMQ {
     }
 
     void _init(int size) {
-        n = 1;
-        while (n <= size)
-            n <<= 1;
+        N = 1;
+        while (N <= size)
+            N <<= 1;
 
-        value.resize(n * 2);
-        valueId.resize(n * 2);
-        for (int i = 0; i < n; i++)
-            valueId[n + i] = i;
+        value.resize(N * 2);
+        valueId.resize(N * 2);
+        for (int i = 0; i < N; i++)
+            valueId[N + i] = i;
 
         for (int i = 0; i < size; i++)
             update(i, INT_MAX);
     }
 
     void update(int x, int val) {
-        x += n;
+        x += N;
         value[x] = val;
 
         while (x > 1) {
@@ -251,8 +267,8 @@ struct RMQ {
 
     // inclusive
     int query(int left, int right) {
-        left += n;
-        right += n;
+        left += N;
+        right += N;
         int ret = INT_MAX;
         while (left <= right) {
             if ((left & 1) == 1) {
