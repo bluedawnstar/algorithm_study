@@ -9,4 +9,5 @@ int main(void) {
     TEST(PrimeNumberBasic);
     TEST(PrimeNumberEratosthenes);
     TEST(Factor);
+    TEST(Fraction);
 }
