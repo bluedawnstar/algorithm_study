@@ -28,7 +28,7 @@ void dump(CompressedTrie::Node* p, int level) {
         return;
 
     for (int i = 0; i < level; i++)
-        cout << "++";
+        cout << "+-";
     cout << "text=";
     for (int i = 0; i < p->textLen; i++)
         cout << p->text[i];
@@ -41,7 +41,7 @@ void dump(CompressedTrie::Node* p, int level) {
 
 
 void testTrie() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "-- Trie ------------------------------------------------" << endl;
 
@@ -49,128 +49,130 @@ void testTrie() {
 
     const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
     for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
-        trie.insertKey(keys[i], strlen(keys[i]));
+        trie.insertWord(keys[i], strlen(keys[i]));
 
-    assert(trie.searchKey("the", strlen("the"))->leafCount == 1);
-    assert(trie.searchKey("these", strlen("these")) == nullptr);
-    assert(trie.searchKey("their", strlen("their"))->leafCount == 1);
-    assert(trie.searchKey("thaw", strlen("thaw")) == nullptr);
+    assert(trie.findWord("the", strlen("the"))->leafCount == 1);
+    assert(trie.findWord("these", strlen("these")) == nullptr);
+    assert(trie.findWord("their", strlen("their"))->leafCount == 1);
+    assert(trie.findWord("thaw", strlen("thaw")) == nullptr);
 
-    trie.insertKey("the", strlen("the"));
-    trie.insertKey("these", strlen("these"));
-    trie.insertKey("their", strlen("their"));
-    trie.insertKey("thaw", strlen("thaw"));
+    trie.insertWord("the", strlen("the"));
+    trie.insertWord("these", strlen("these"));
+    trie.insertWord("their", strlen("their"));
+    trie.insertWord("thaw", strlen("thaw"));
 
-    assert(trie.searchKey("the", strlen("the"))->leafCount == 2);
-    assert(trie.searchKey("these", strlen("these"))->leafCount == 1);
-    assert(trie.searchKey("their", strlen("their"))->leafCount == 2);
-    assert(trie.searchKey("thaw", strlen("thaw"))->leafCount == 1);
+    assert(trie.findWord("the", strlen("the"))->leafCount == 2);
+    assert(trie.findWord("these", strlen("these"))->leafCount == 1);
+    assert(trie.findWord("their", strlen("their"))->leafCount == 2);
+    assert(trie.findWord("thaw", strlen("thaw"))->leafCount == 1);
 
-    trie.removeKey("the", strlen("the"));
-    trie.removeKey("these", strlen("these"));
-    trie.removeKey("their", strlen("their"));
-    trie.removeKey("thaw", strlen("thaw"));
+    trie.removeWord("the", strlen("the"));
+    trie.removeWord("these", strlen("these"));
+    trie.removeWord("their", strlen("their"));
+    trie.removeWord("thaw", strlen("thaw"));
 
-    assert(trie.searchKey("the", strlen("the"))->leafCount == 1);
-    assert(trie.searchKey("these", strlen("these")) == nullptr);
-    assert(trie.searchKey("their", strlen("their"))->leafCount == 1);
-    assert(trie.searchKey("thaw", strlen("thaw")) == nullptr);
+    assert(trie.findWord("the", strlen("the"))->leafCount == 1);
+    assert(trie.findWord("these", strlen("these")) == nullptr);
+    assert(trie.findWord("their", strlen("their"))->leafCount == 1);
+    assert(trie.findWord("thaw", strlen("thaw")) == nullptr);
 
-    trie.insertKey("the", strlen("the"));
-    trie.insertKey("these", strlen("these"));
-    trie.insertKey("their", strlen("their"));
-    trie.insertKey("thaw", strlen("thaw"));
+    trie.insertWord("the", strlen("the"));
+    trie.insertWord("these", strlen("these"));
+    trie.insertWord("their", strlen("their"));
+    trie.insertWord("thaw", strlen("thaw"));
 
-    assert(trie.searchKey("the", strlen("the"))->leafCount == 2);
-    assert(trie.searchKey("these", strlen("these"))->leafCount == 1);
-    assert(trie.searchKey("their", strlen("their"))->leafCount == 2);
-    assert(trie.searchKey("thaw", strlen("thaw"))->leafCount == 1);
+    assert(trie.findWord("the", strlen("the"))->leafCount == 2);
+    assert(trie.findWord("these", strlen("these"))->leafCount == 1);
+    assert(trie.findWord("their", strlen("their"))->leafCount == 2);
+    assert(trie.findWord("thaw", strlen("thaw"))->leafCount == 1);
 
-    trie.deleteKey("the", strlen("the"));
-    trie.deleteKey("these", strlen("these"));
-    trie.deleteKey("their", strlen("their"));
-    trie.deleteKey("thaw", strlen("thaw"));
+    trie.deleteWord("the", strlen("the"));
+    trie.deleteWord("these", strlen("these"));
+    trie.deleteWord("their", strlen("their"));
+    trie.deleteWord("thaw", strlen("thaw"));
 
-    assert(trie.searchKey("the", strlen("the"))->leafCount == 1);
-    assert(trie.searchKey("these", strlen("these")) == nullptr);
-    assert(trie.searchKey("their", strlen("their"))->leafCount == 1);
-    assert(trie.searchKey("thaw", strlen("thaw")) == nullptr);
+    assert(trie.findWord("the", strlen("the"))->leafCount == 1);
+    assert(trie.findWord("these", strlen("these")) == nullptr);
+    assert(trie.findWord("their", strlen("their"))->leafCount == 1);
+    assert(trie.findWord("thaw", strlen("thaw")) == nullptr);
 
-    assert(trie.prefixKey("t", strlen("t")) == make_pair(1, false));
-    assert(trie.prefixKey("th", strlen("th")) == make_pair(2, false));
-    assert(trie.prefixKey("the", strlen("the")) == make_pair(3, true));
-    assert(trie.prefixKey("thei", strlen("thei")) == make_pair(4, false));
-    assert(trie.prefixKey("their", strlen("their")) == make_pair(5, true));
+    assert(trie.searchWord("t", strlen("t")) == make_pair(1, false));
+    assert(trie.searchWord("th", strlen("th")) == make_pair(2, false));
+    assert(trie.searchWord("the", strlen("the")) == make_pair(3, true));
+    assert(trie.searchWord("thei", strlen("thei")) == make_pair(4, false));
+    assert(trie.searchWord("their", strlen("their")) == make_pair(5, true));
 
     cout << "-- Compressed Trie -------------------------------------" << endl;
 
     CompressedTrie compTrie;
 
     for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
-        compTrie.insertKey(keys[i], strlen(keys[i]));
+        compTrie.insertWord(keys[i], strlen(keys[i]));
 
-    assert(compTrie.searchKey("the", strlen("the"))->leafCount == 1);
-    assert(compTrie.searchKey("these", strlen("these")) == nullptr);
-    assert(compTrie.searchKey("their", strlen("their"))->leafCount == 1);
-    assert(compTrie.searchKey("thaw", strlen("thaw")) == nullptr);
+    assert(compTrie.findWord("the", strlen("the"))->leafCount == 1);
+    assert(compTrie.findWord("these", strlen("these")) == nullptr);
+    assert(compTrie.findWord("their", strlen("their"))->leafCount == 1);
+    assert(compTrie.findWord("thaw", strlen("thaw")) == nullptr);
 
-    compTrie.insertKey("the", strlen("the"));
-    compTrie.insertKey("these", strlen("these"));
-    compTrie.insertKey("their", strlen("their"));
-    compTrie.insertKey("thaw", strlen("thaw"));
+    compTrie.insertWord("the", strlen("the"));
+    compTrie.insertWord("these", strlen("these"));
+    compTrie.insertWord("their", strlen("their"));
+    compTrie.insertWord("thaw", strlen("thaw"));
 
-    assert(compTrie.searchKey("th", strlen("th")) == nullptr);
-    assert(compTrie.searchKey("the", strlen("the"))->leafCount == 2);
-    assert(compTrie.searchKey("these", strlen("these"))->leafCount == 1);
-    assert(compTrie.searchKey("their", strlen("their"))->leafCount == 2);
-    assert(compTrie.searchKey("thaw", strlen("thaw"))->leafCount == 1);
+    assert(compTrie.findWord("th", strlen("th")) == nullptr);
+    assert(compTrie.findWord("the", strlen("the"))->leafCount == 2);
+    assert(compTrie.findWord("these", strlen("these"))->leafCount == 1);
+    assert(compTrie.findWord("their", strlen("their"))->leafCount == 2);
+    assert(compTrie.findWord("thaw", strlen("thaw"))->leafCount == 1);
 
     cout << "*** after insertion ***" << endl;
     dump(&compTrie.mRoot, 0);
 
-    compTrie.removeKey("the", strlen("the"));
-    compTrie.removeKey("these", strlen("these"));
-    compTrie.removeKey("their", strlen("their"));
-    compTrie.removeKey("thaw", strlen("thaw"));
+    compTrie.removeWord("the", strlen("the"));
+    compTrie.removeWord("these", strlen("these"));
+    compTrie.removeWord("their", strlen("their"));
+    compTrie.removeWord("thaw", strlen("thaw"));
 
-    assert(compTrie.searchKey("the", strlen("the"))->leafCount == 1);
-    assert(compTrie.searchKey("these", strlen("these")) == nullptr);
-    assert(compTrie.searchKey("their", strlen("their"))->leafCount == 1);
-    assert(compTrie.searchKey("thaw", strlen("thaw")) == nullptr);
+    assert(compTrie.findWord("the", strlen("the"))->leafCount == 1);
+    assert(compTrie.findWord("these", strlen("these")) == nullptr);
+    assert(compTrie.findWord("their", strlen("their"))->leafCount == 1);
+    assert(compTrie.findWord("thaw", strlen("thaw")) == nullptr);
 
     cout << "*** after removal ***" << endl;
     dump(&compTrie.mRoot, 0);
 
-    compTrie.insertKey("the", strlen("the"));
-    compTrie.insertKey("these", strlen("these"));
-    compTrie.insertKey("their", strlen("their"));
-    compTrie.insertKey("thaw", strlen("thaw"));
+    compTrie.insertWord("the", strlen("the"));
+    compTrie.insertWord("these", strlen("these"));
+    compTrie.insertWord("their", strlen("their"));
+    compTrie.insertWord("thaw", strlen("thaw"));
 
-    assert(compTrie.searchKey("the", strlen("the"))->leafCount == 2);
-    assert(compTrie.searchKey("these", strlen("these"))->leafCount == 1);
-    assert(compTrie.searchKey("their", strlen("their"))->leafCount == 2);
-    assert(compTrie.searchKey("thaw", strlen("thaw"))->leafCount == 1);
+    assert(compTrie.findWord("the", strlen("the"))->leafCount == 2);
+    assert(compTrie.findWord("these", strlen("these"))->leafCount == 1);
+    assert(compTrie.findWord("their", strlen("their"))->leafCount == 2);
+    assert(compTrie.findWord("thaw", strlen("thaw"))->leafCount == 1);
 
     cout << "*** after insertion ***" << endl;
     dump(&compTrie.mRoot, 0);
 
-    compTrie.deleteKey("the", strlen("the"));
-    compTrie.deleteKey("these", strlen("these"));
-    compTrie.deleteKey("their", strlen("their"));
-    compTrie.deleteKey("thaw", strlen("thaw"));
-    compTrie.deleteKey("any", strlen("any"), false);
+    compTrie.deleteWord("the", strlen("the"));
+    compTrie.deleteWord("these", strlen("these"));
+    compTrie.deleteWord("their", strlen("their"));
+    compTrie.deleteWord("thaw", strlen("thaw"));
 
-    assert(compTrie.searchKey("the", strlen("the"))->leafCount == 1);
-    assert(compTrie.searchKey("these", strlen("these")) == nullptr);
-    assert(compTrie.searchKey("their", strlen("their"))->leafCount == 1);
-    assert(compTrie.searchKey("thaw", strlen("thaw")) == nullptr);
-    assert(compTrie.searchKey("any", strlen("any")) == nullptr);
+    //compTrie.insertWord("an", strlen("an"));
+    compTrie.deleteWord("any", strlen("any"));
 
-    assert(compTrie.prefixKey("t", strlen("t")) == make_pair(1, false));
-    assert(compTrie.prefixKey("th", strlen("th")) == make_pair(2, false));
-    assert(compTrie.prefixKey("the", strlen("the")) == make_pair(3, true));
-    assert(compTrie.prefixKey("thei", strlen("thei")) == make_pair(4, false));
-    assert(compTrie.prefixKey("their", strlen("their")) == make_pair(5, true));
+    assert(compTrie.findWord("the", strlen("the"))->leafCount == 1);
+    assert(compTrie.findWord("these", strlen("these")) == nullptr);
+    assert(compTrie.findWord("their", strlen("their"))->leafCount == 1);
+    assert(compTrie.findWord("thaw", strlen("thaw")) == nullptr);
+    assert(compTrie.findWord("any", strlen("any")) == nullptr);
+
+    assert(compTrie.searchWord("t", strlen("t")) == make_pair(1, false));
+    assert(compTrie.searchWord("th", strlen("th")) == make_pair(2, false));
+    assert(compTrie.searchWord("the", strlen("the")) == make_pair(3, true));
+    assert(compTrie.searchWord("thei", strlen("thei")) == make_pair(4, false));
+    assert(compTrie.searchWord("their", strlen("their")) == make_pair(5, true));
 
     cout << "*** after deletion ***" << endl;
     dump(&compTrie.mRoot, 0);

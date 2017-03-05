@@ -77,9 +77,19 @@ struct Trie {
         mFreeNode = nullptr;
     }
 
+    void clear() {
+        for (int i = 0; i < MaxCharN; i++) {
+            if (mRoot.children[i]) {
+                deleteNode(mRoot.children[i]);
+                mRoot.children[i] = nullptr;
+            }
+        }
+    }
+
+
     // return if it's a new string.
     template <typename T>
-    bool insertKey(T s, int len) {
+    bool insertWord(T s, int len) {
         if (len <= 0)
             return false;
 
@@ -94,7 +104,7 @@ struct Trie {
     }
 
     template <typename T>
-    Node* searchKey(T s, int len) {
+    Node* findWord(T s, int len) {
         if (len <= 0)
             return nullptr;
 
@@ -106,9 +116,25 @@ struct Trie {
         return (p && p->leafCount > 0) ? p : nullptr;
     }
 
+    // return (prefix_matching_length, word_matched?)
     template <typename T>
-    bool removeKey(T s, int len) {
-        Node* p = searchKey(s, len);
+    pair<int, bool> searchWord(T s, int len) {
+        if (len <= 0)
+            return make_pair(0, false);
+
+        Node* p = &mRoot;
+        for (int i = 0; i < len; i++) {
+            int idx = ch2i(s[i]);
+            p = p->children[idx];
+            if (!p)
+                return make_pair(i, false);
+        }
+        return make_pair(len, p->isLeaf());
+    }
+
+    template <typename T>
+    bool removeWord(T s, int len) {
+        Node* p = findWord(s, len);
         if (!p)
             return false;
 
@@ -118,11 +144,11 @@ struct Trie {
     }
 
     template <typename T>
-    bool deleteKey(T s, int len, bool all = false) {
+    bool deleteWord(T s, int len, bool all = false) {
         if (len <= 0)
             return false;
 
-        Node* p = searchKey(s, len);
+        Node* p = findWord(s, len);
         if (!p)
             return false;
 
@@ -139,32 +165,6 @@ struct Trie {
         }
 
         return true;
-    }
-
-    // return (prefix_matching_length, word_matched?)
-    template <typename T>
-    pair<int,bool> prefixKey(T s, int len) {
-        if (len <= 0)
-            return make_pair(0, false);
-
-        Node* p = &mRoot;
-        for (int i = 0; i < len; i++) {
-            int idx = ch2i(s[i]);
-            p = p->children[idx];
-            if (!p)
-                return make_pair(i, false);
-        }
-        return make_pair(len, p->isLeaf());
-    }
-
-
-    void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
-            }
-        }
     }
 
 private:
@@ -248,8 +248,18 @@ struct CompressedTrie {
         mFreeNode = nullptr;
     }
 
+    void clear() {
+        for (int i = 0; i < MaxCharN; i++) {
+            if (mRoot.children[i]) {
+                deleteNode(mRoot.children[i]);
+                mRoot.children[i] = nullptr;
+            }
+        }
+    }
+
+
     // return if it's a new string.
-    bool insertKey(const char* s, int len) {
+    bool insertWord(const char* s, int len) {
         if (len <= 0)
             return false;
 
@@ -291,29 +301,50 @@ struct CompressedTrie {
     }
 
     template <typename T>
-    Node* searchKey(T s, int len) {
+    Node* findWord(T s, int len) {
         if (len <= 0)
             return nullptr;
 
         Node* p = mRoot.children[ch2i(s[0])];
-        for (int i = 0; i < len && p; ) {
+        for (int i = 0; p; ) {
             for (int j = 0; j < p->textLen; i++, j++) {
                 if (i >= len || s[i] != p->text[j])
                     return nullptr;
             }
-            if (i >= len && p->leafCount > 0)
-                return p;
+            if (i >= len)
+                break;
 
-            int idx = ch2i(s[i]);
-            p = p->children[idx];
+            p = p->children[ch2i(s[i])];
         }
 
-        return nullptr;
+        return (p && p->leafCount > 0) ? p : nullptr;
+    }
+
+    // return (prefix_matching_length, word_matched?)
+    template <typename T>
+    pair<int, bool> searchWord(T s, int len) {
+        if (len <= 0)
+            return make_pair(0, false);
+
+        Node* p = mRoot.children[ch2i(s[0])];
+        int i = 0;
+        while (p) {
+            for (int j = 0; j < p->textLen; i++, j++) {
+                if (i >= len || s[i] != p->text[j])
+                    return make_pair(i, false);
+            }
+            if (i >= len)
+                break;
+
+            p = p->children[ch2i(s[i])];
+        }
+
+        return make_pair(i, p && p->leafCount > 0);
     }
 
     template <typename T>
-    bool removeKey(T s, int len) {
-        Node* p = searchKey(s, len);
+    bool removeWord(T s, int len) {
+        Node* p = findWord(s, len);
         if (!p)
             return false;
 
@@ -323,11 +354,11 @@ struct CompressedTrie {
     }
 
     template <typename T>
-    bool deleteKey(T s, int len, bool all = false, bool merge = true) {
+    bool deleteWord(T s, int len, bool all = false, bool merge = true) {
         if (len <= 0)
             return false;
 
-        Node* p = searchKey(s, len);
+        Node* p = findWord(s, len);
         if (!p)
             return false;
 
@@ -342,7 +373,7 @@ struct CompressedTrie {
             p->children[ch2i(del->text[0])] = nullptr;
             freeNode(del);
 
-            if (merge && p != &mRoot) {
+            if (merge && !p->isLeaf() && p != &mRoot) {
                 // If there is only one child of parent, the parent is merged to the child.
                 int idx = -1, cnt = 0;
                 for (int i = 0; i < MaxCharN; i++) {
@@ -368,38 +399,6 @@ struct CompressedTrie {
         }
 
         return true;
-    }
-
-    // return (prefix_matching_length, word_matched?)
-    template <typename T>
-    pair<int, bool> prefixKey(T s, int len) {
-        if (len <= 0)
-            return make_pair(0, false);
-
-        Node* p = mRoot.children[ch2i(s[0])];
-        int i;
-        for (i = 0; i < len && p; ) {
-            for (int j = 0; j < p->textLen; i++, j++) {
-                if (i >= len || s[i] != p->text[j])
-                    return make_pair(i, false);
-            }
-            if (i >= len && p->leafCount > 0)
-                return make_pair(i, true);
-
-            int idx = ch2i(s[i]);
-            p = p->children[idx];
-        }
-
-        return make_pair(i, false);
-    }
-
-    void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
-            }
-        }
     }
 
 private:
