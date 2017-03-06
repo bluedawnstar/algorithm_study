@@ -83,24 +83,24 @@ vector<pair<R, R>> continuedFraction(const vector<T>& a) {
 template <typename T, typename RealT>
 struct FractionFinder {
     struct Fract {
-        T       num;
-        T       denom;
+        T num;
+        T denom;
     };
     struct FractRange {
-        RealT   err;
-        Fract   lo;
-        Fract   hi;
+        RealT err;
+        Fract lo;
+        Fract hi;
 
         bool operator <(const FractRange& rhs) const {
             return err < rhs.err;
         }
     };
 
-    Fract   mAns;
-    RealT   mDiff;
+    Fract mAns;
+    RealT mDiff;
 
-    T       mDenomRangeMin;
-    T       mDenomRangeMax;
+    T mDenomRangeMin;
+    T mDenomRangeMax;
 
     FractionFinder() {
         setDenomRange(1, numeric_limits<T>::max());
@@ -205,27 +205,29 @@ private:
 
 //--------- Stern-Brocot Tree -------------------------------------------------
 
+// inclusive range
 template <typename T, typename U = T>
-pair<T,T> findKthSternBrocot(T rangeMin, T rangeMax, pair<T,T> left, pair<T,T> right, T rateL, T rateR, U cnt) {
+pair<T,T> findKthSternBrocot(T denomRangeMin, T denomRangeMax, pair<T,T> left, pair<T,T> right, T rateL, T rateR, U cnt) {
     pair<T,T> mid = { rateL * left.first + rateR * right.first, rateL * left.second + rateR * right.second };
-    U count = sumFloorRange<T,T,U>(rangeMin, rangeMax, mid.first, mid.second);
-    T cntEq = rangeMax / mid.second - (rangeMin - 1) / mid.second;
+    U count = sumFloorRange<T,T,U>(denomRangeMin, denomRangeMax, mid.first, mid.second);
+    T cntEq = denomRangeMax / mid.second - (denomRangeMin - 1) / mid.second;
 
     if (count - cntEq < cnt && cnt <= count)
         return mid;
 
     if (count >= cnt) {
-        return (rateR == 1) ? findKthSternBrocot(rangeMin, rangeMax, left, mid, 2 * rateL, T(1), cnt)
-                            : findKthSternBrocot(rangeMin, rangeMax, left, right, T(1), rateR / 2, cnt);
+        return (rateR == 1) ? findKthSternBrocot(denomRangeMin, denomRangeMax, left, mid, 2 * rateL, T(1), cnt)
+                            : findKthSternBrocot(denomRangeMin, denomRangeMax, left, right, T(1), rateR / 2, cnt);
     } else {
-        return (rateL == 1) ? findKthSternBrocot(rangeMin, rangeMax, mid, right, T(1), 2 * rateR, cnt)
-                            : findKthSternBrocot(rangeMin, rangeMax, left, right, rateL / 2, T(1), cnt);
+        return (rateL == 1) ? findKthSternBrocot(denomRangeMin, denomRangeMax, mid, right, T(1), 2 * rateR, cnt)
+                            : findKthSternBrocot(denomRangeMin, denomRangeMax, left, right, rateL / 2, T(1), cnt);
     }
 }
 
+// inclusive range
 template <typename T, typename U = T>
-pair<T, T> findKthSternBrocot(T rangeMin, T rangeMax, U cnt) {
-    return findKthSternBrocot(rangeMin, rangeMax, make_pair<T,T>(0, 1), make_pair<T,T>(1, 0), T(1), T(1), cnt);
+pair<T, T> findKthSternBrocot(T denomRangeMin, T denomRangeMax, U cnt) {
+    return findKthSternBrocot(denomRangeMin, denomRangeMax, make_pair<T,T>(0, 1), make_pair<T,T>(1, 0), T(1), T(1), cnt);
 }
 
 /////////// For Testing ///////////////////////////////////////////////////////
