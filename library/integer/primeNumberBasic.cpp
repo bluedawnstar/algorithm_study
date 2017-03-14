@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#include "primeNumber.h"
+
 // check if x is a prime number
 bool isPrimeNumber(int x) {
     if (x < 2)
@@ -22,6 +24,32 @@ bool isPrimeNumber(int x) {
 
     return true;
 }
+
+// return all prime numbers from 1 to n
+vector<int> findPrimeNumbers(int n) {
+    vector<int> res;
+    if (n < 2)
+        return res;
+
+    if (n >= 2)
+        res.push_back(2);
+
+    for (int i = 3; i <= n; i += 2) {
+        bool isPrime = true;
+        int root = int(sqrt(i));
+        for (int j = 0; res[j] <= root; j++) {
+            if (i % res[j] == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime)
+            res.push_back(i);
+    }
+
+    return res;
+}
+
 
 // return prime factors of x
 vector<int> getPrimeFactors(int x) {
@@ -75,31 +103,6 @@ vector<pair<int, int>> getPrimeFactors2(int x) {
 
     if (x > 1)
         res.push_back(make_pair(x, 1));
-
-    return res;
-}
-
-// return all prime numbers from 1 to n
-vector<int> findPrimeNumbers(int n) {
-    vector<int> res;
-    if (n < 2)
-        return res;
-
-    if (n >= 2)
-        res.push_back(2);
-
-    for (int i = 3; i <= n; i += 2) {
-        bool isPrime = true;
-        int root = int(sqrt(i));
-        for (int j = 0; res[j] <= root; j++) {
-            if (i % res[j] == 0) {
-                isPrime = false;
-                break;
-            }
-        }
-        if (isPrime)
-            res.push_back(i);
-    }
 
     return res;
 }

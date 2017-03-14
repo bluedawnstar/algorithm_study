@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#include "primeNumber.h"
+
 // get all prime numbers
 vector<bool> eratosthenes(int n) {
     vector<bool> res(n + 1, true);
