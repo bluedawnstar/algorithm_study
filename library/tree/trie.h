@@ -44,7 +44,7 @@ struct Trie {
 
     struct Node {
         int     leafCount;
-        Node*   parent;                 // for delete
+        Node*   parent;
         Node*   children[MaxCharN];
 
         void init(Node* parent = nullptr) {
@@ -69,8 +69,6 @@ struct Trie {
     };
 
     Node mRoot;
-    Allocator<Node, AllocBlockSize> mAlloc;
-    Node* mFreeNode;
 
     Trie() {
         mRoot.init();
@@ -87,7 +85,7 @@ struct Trie {
     }
 
 
-    // return if it's a new string.
+    // return true if it's a new string.
     template <typename T>
     bool insertWord(T s, int len) {
         if (len <= 0)
@@ -103,6 +101,7 @@ struct Trie {
         return ++p->leafCount == 1;
     }
 
+    // return exactly matched word
     template <typename T>
     Node* findWord(T s, int len) {
         if (len <= 0)
@@ -116,6 +115,7 @@ struct Trie {
         return (p && p->leafCount > 0) ? p : nullptr;
     }
 
+    // prefix matching
     // return (prefix_matching_length, word_matched?)
     template <typename T>
     pair<int, bool> searchWord(T s, int len) {
@@ -132,6 +132,7 @@ struct Trie {
         return make_pair(len, p->isLeaf());
     }
 
+    // remove a exactly matched word, but the real node is not deleted
     template <typename T>
     bool removeWord(T s, int len) {
         Node* p = findWord(s, len);
@@ -143,6 +144,7 @@ struct Trie {
         return true;
     }
 
+    // delete a exactly matched word
     template <typename T>
     bool deleteWord(T s, int len, bool all = false) {
         if (len <= 0)
@@ -168,6 +170,9 @@ struct Trie {
     }
 
 private:
+    Allocator<Node, AllocBlockSize> mAlloc;
+    Node* mFreeNode;
+
     Node* allocNode(Node* parent = nullptr) {
         Node* p = nullptr;
         if (mFreeNode) {
@@ -213,7 +218,7 @@ struct CompressedTrie {
         const char* text;
         int     textLen;
         int     leafCount;
-        Node*   parent;                 // for delete
+        Node*   parent;
         Node*   children[MaxCharN];
 
         void init(Node* parent = nullptr) {
@@ -240,8 +245,6 @@ struct CompressedTrie {
     };
 
     Node mRoot;
-    Allocator<Node, AllocBlockSize> mAlloc;
-    Node* mFreeNode;
 
     CompressedTrie() {
         mRoot.init();
@@ -258,7 +261,7 @@ struct CompressedTrie {
     }
 
 
-    // return if it's a new string.
+    // return true if it's a new string.
     bool insertWord(const char* s, int len) {
         if (len <= 0)
             return false;
@@ -300,6 +303,7 @@ struct CompressedTrie {
         return ++p->leafCount == 1;
     }
 
+    // return exactly matched word
     template <typename T>
     Node* findWord(T s, int len) {
         if (len <= 0)
@@ -320,6 +324,7 @@ struct CompressedTrie {
         return (p && p->leafCount > 0) ? p : nullptr;
     }
 
+    // prefix matching
     // return (prefix_matching_length, word_matched?)
     template <typename T>
     pair<int, bool> searchWord(T s, int len) {
@@ -342,6 +347,7 @@ struct CompressedTrie {
         return make_pair(i, p && p->leafCount > 0);
     }
 
+    // remove a exactly matched word, but the real node is not deleted
     template <typename T>
     bool removeWord(T s, int len) {
         Node* p = findWord(s, len);
@@ -353,6 +359,7 @@ struct CompressedTrie {
         return true;
     }
 
+    // delete a exactly matched word
     template <typename T>
     bool deleteWord(T s, int len, bool all = false, bool merge = true) {
         if (len <= 0)
@@ -402,6 +409,9 @@ struct CompressedTrie {
     }
 
 private:
+    Allocator<Node, AllocBlockSize> mAlloc;
+    Node* mFreeNode;
+
     Node* allocNode(Node* parent = nullptr) {
         Node* p = nullptr;
         if (mFreeNode) {
