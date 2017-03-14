@@ -48,6 +48,12 @@
     <ClCompile Include="trie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="suffixTrie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="treeFenwickTree.h">
@@ -63,6 +69,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="allocator.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixTrie.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

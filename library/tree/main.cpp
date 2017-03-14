@@ -15,4 +15,6 @@ int main(void) {
     TEST(HeavyLightDecomposition);
     TEST(TreeMO);
     TEST(Trie);
+    TEST(SuffixTrie);
+    TEST(SuffixTree);
 }

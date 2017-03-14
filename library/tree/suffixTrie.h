@@ -41,7 +41,7 @@ struct SuffixTrie {
     }
 
     struct Node {
-        Node*   parent;                 // for delete
+        Node*   parent;
         Node*   suffixLink;
 
         int     suffixIndex;
@@ -66,8 +66,6 @@ struct SuffixTrie {
     };
 
     Node mRoot;
-    Allocator<Node, AllocBlockSize> mAlloc;
-    Node* mFreeNode;
 
     string mText;
     Node* mSuffixLink[MaxCharN];
@@ -91,6 +89,7 @@ struct SuffixTrie {
     }
 
 
+    // build a suffix trie from string 's'
     int build(const char* s, int len, bool finalize = true) {
         if (len <= 0)
             return 0;
@@ -103,12 +102,14 @@ struct SuffixTrie {
             added += extendSuffix(s[i]);
 
         if (finalize)
-            updateSuffixIndex();
+            setSuffixIndex();
 
         return added;
     }
 
-    void updateSuffixIndex() {
+    // update suffix indexes.
+    // It means there is no update(adding / deleting), because a node with suffix index is a leaf node.
+    void setSuffixIndex() {
         if (mText.empty())
             return;
 
@@ -119,6 +120,7 @@ struct SuffixTrie {
         }
     }
 
+    // reset suffix indexes of current leaf nodes
     void resetSuffixIndex() {
         if (mText.empty())
             return;
@@ -131,6 +133,7 @@ struct SuffixTrie {
     }
 
 
+    // add a character into the last of a suffix
     int extendSuffix(char ch) {
         if (mText.empty()) {
             Node* p = allocNode(&mRoot);
@@ -167,6 +170,7 @@ struct SuffixTrie {
         return cnt;
     }
 
+    // delete a last character
     int shrinkSuffix() {
         if (mText.empty())
             return 0;
@@ -193,6 +197,7 @@ struct SuffixTrie {
     }
 
 
+    // prefix matching
     // return (prefix_matching_length, suffix_index)
     template <typename T>
     pair<int, int> search(T s, int len) {
@@ -210,6 +215,9 @@ struct SuffixTrie {
     }
 
 private:
+    Allocator<Node, AllocBlockSize> mAlloc;
+    Node* mFreeNode;
+
     Node* allocNode(Node* parent = nullptr) {
         Node* p = nullptr;
         if (mFreeNode) {
