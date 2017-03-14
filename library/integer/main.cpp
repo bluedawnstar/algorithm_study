@@ -8,6 +8,7 @@ using namespace std;
 int main(void) {
     TEST(PrimeNumberBasic);
     TEST(PrimeNumberEratosthenes);
+    TEST(Gcd);
     TEST(Factor);
     TEST(Fraction);
 }
