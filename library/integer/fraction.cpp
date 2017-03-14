@@ -242,7 +242,7 @@ pair<T, T> findKthSternBrocot(T denomRangeMin, T denomRangeMax, U cnt) {
 #endif
 
 void testFraction() {
-    //return; //TODO: if you want to test functions of this file, make this line to a comment.
+    return; //TODO: if you want to test functions of this file, make this line to a comment.
 
     cout << "--------- testFraction() -----------------" << endl;
 
