@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#include "suffixTree.h"
+#include "suffixTree_notUsed.h"
 
 long long countSubstrings(SuffixTree::Node* node) {
     if (!node)

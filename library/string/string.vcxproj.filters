@@ -30,9 +30,6 @@
     <ClCompile Include="suffixArray_notUsed.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="suffixTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="distinctSubstringCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -45,11 +42,11 @@
     <ClCompile Include="palindromicString.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixTree_notUsed.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="suffixTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="distinctSubstringCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -57,6 +54,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lcpArraySparseTable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixTree_notUsed.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

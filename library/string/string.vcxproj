@@ -151,13 +151,13 @@
     <ClCompile Include="suffixArray.cpp" />
     <ClCompile Include="suffixArraySparseTable.cpp" />
     <ClCompile Include="suffixArray_notUsed.cpp" />
-    <ClCompile Include="suffixTree.cpp" />
+    <ClCompile Include="suffixTree_notUsed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
-    <ClInclude Include="suffixTree.h" />
+    <ClInclude Include="suffixTree_notUsed.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
