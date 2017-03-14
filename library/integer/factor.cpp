@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#include "factor.h"
+
 // return factors of a number x
 template <typename T>
 vector<T> getFactors(T x) {
@@ -132,8 +134,7 @@ vector<int> getAllFactorCountSimple(int n) {
 
 #define NN  100
 
-vector<pair<int, int>> getPrimeFactors2(int x);
-vector<int> getMinFactors(int n);
+#include "primeNumber.h"
 
 void testFactor() {
     return; //TODO: if you want to test functions of this file, make this line to a comment.
