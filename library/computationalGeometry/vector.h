@@ -146,3 +146,13 @@ template <typename T>
 inline T cross(Vec2D<T> base, Vec2D<T> a, Vec2D<T> b) {
     return (a.x - base.x) * (b.y - base.y) - (a.y - base.y) * (b.x - base.x);
 }
+
+template <typename T>
+inline bool ccw(Vec2D<T> base, Vec2D<T> a, Vec2D<T> b) {
+    return cross(base, a, b) > 0;
+}
+
+template <typename T>
+inline bool cw(Vec2D<T> base, Vec2D<T> a, Vec2D<T> b) {
+    return cross(base, a, b) < 0;
+}
