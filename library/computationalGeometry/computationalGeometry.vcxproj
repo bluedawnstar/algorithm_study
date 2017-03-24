@@ -146,9 +146,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\integer\main.cpp" />
     <ClCompile Include="convexHull.cpp" />
     <ClCompile Include="line.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="vector.cpp" />
   </ItemGroup>
