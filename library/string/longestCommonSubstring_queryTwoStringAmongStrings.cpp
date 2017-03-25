@@ -12,7 +12,7 @@ using namespace std;
 // https://www.hackerrank.com/contests/w30/challenges/substring-queries
 // 
 
-struct LongestCommonStringLength {
+struct LongestCommonStringLengthWithSuffixArray {
     int mN;                                             // the number of strings
     int mQ;                                             // the number of queries
     vector<pair<int, int>> mS;
@@ -206,6 +206,98 @@ private:
         } while (m < n);
 
         return SA;
+    }
+};
+
+#include "../tree/suffixAutomation.h"
+
+struct LongestCommonStringLengthWithSuffixAutomation {
+    int mN;                                             // the number of strings
+    int mQ;                                             // the number of queries
+
+    vector<int> mAns;
+    vector<pair<int, int>> mQIn;
+    unordered_map<int, unordered_map<int, int>> mQIndex;// (L, R) -> Q index
+    vector<unordered_map<int, int>> mQuery;             // R --> (L, Q index)
+
+                                                        // 
+                                                        // 1) how to reduce redundant questions
+                                                        //      mQuery[R][L] = the index of answer to (L, R) or (R, L)
+                                                        // 2) how to reduce the number of comparing between two suffixes 
+                                                        //      update forward and backward instead of making all pairs
+                                                        // 3) how to use suffix array, LCP array, sparse table, etc
+                                                        //      
+
+    vector<SuffixAutomation> mSA;
+
+    vector<int> solve(const vector<string>& strs, const vector<pair<int, int>>& query) {
+        mN = (int)strs.size();
+        mQ = (int)query.size();
+
+        for (int i = 0; i < mN; i++) {
+            SuffixAutomation t(strs[i].length());
+            t.extend(strs[i], (int)strs[i].length());
+            mSA.emplace_back(std::move(t));
+        }
+
+        mAns.resize(mQ);
+        mQIn.resize(mQ);
+        mQuery.resize(mN);   // R --> (L, Q index)
+
+                             // grouping queries for speed up
+        for (int i = 0; i < mQ; i++) {
+            int L = query[i].first;
+            int R = query[i].second;
+
+            if (L > R)
+                swap(L, R);
+
+            mQIn[i] = make_pair(L, R);
+            if (mQIndex[L].find(R) == mQIndex[L].end())
+                mQIndex[L][R] = i;
+
+            if (L == R)
+                mAns[mQIndex[L][R]] = (int)strs[L].length();
+            else
+                mQuery[R][L] = mQIndex[L][R];
+        }
+
+        for (int i = mN - 1; i > 0; i--) {
+            if (mQuery[i].empty())
+                continue;
+
+            for (auto it : mQuery[i]) {
+                if (strs[i].length() > strs[it.first].length())
+                    mAns[it.second] = lcs(mSA[i], strs[it.first]);
+                else
+                    mAns[it.second] = lcs(mSA[it.first], strs[i]);
+            }
+        }
+
+        // making answer
+        vector<int> res(mQ);
+        for (int i = 0; i < mQ; i++)
+            res[i] = mAns[mQIndex[mQIn[i].first][mQIn[i].second]];
+
+        return res;
+    }
+
+private:
+    int lcs(SuffixAutomation& sa, const string& t) {
+        int v = 0, l = 0, best = 0, bestpos = 0;
+        for (int i = 0; i < (int)t.length(); ++i) {
+            while (v && !sa.state[v].edges[t[i] - 'a']) {
+                v = sa.state[v].suffixLink;
+                l = sa.state[v].len;
+            }
+            if (sa.state[v].edges[t[i] - 'a']) {
+                v = sa.state[v].edges[t[i] - 'a'];
+                ++l;
+            }
+            if (l > best)
+                best = l, bestpos = i;
+        }
+        return best;
     }
 };
 
@@ -529,8 +621,11 @@ void testLongestCommonSubstring_queryTwoStringAmongStrings() {
         { 0 },
     };
 
-    LongestCommonStringLength lcs;
-    assert(lcs.solve(s1, q1) == ans1);
+    LongestCommonStringLengthWithSuffixArray lcsSuffixArray;
+    assert(lcsSuffixArray.solve(s1, q1) == ans1);
+
+    LongestCommonStringLengthWithSuffixAutomation lcsSuffixAutomation;
+    assert(lcsSuffixAutomation.solve(s1, q1) == ans1);
 
     cout << "OK!" << endl;
 }
