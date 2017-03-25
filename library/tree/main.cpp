@@ -17,4 +17,5 @@ int main(void) {
     TEST(Trie);
     TEST(SuffixTrie);
     TEST(SuffixTree);
+    TEST(SuffixAutomation);
 }
