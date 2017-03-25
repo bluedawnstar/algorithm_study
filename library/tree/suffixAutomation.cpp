@@ -61,6 +61,23 @@ int lcs(SuffixAutomation& sa, string& t) {
     return best;
 }
 
+string lcsStr(SuffixAutomation& sa, string& t) {
+    int v = 0, l = 0, best = 0, bestpos = 0;
+    for (int i = 0; i < (int)t.length(); ++i) {
+        while (v && !sa.state[v].edges[t[i] - 'a']) {
+            v = sa.state[v].suffixLink;
+            l = sa.state[v].len;
+        }
+        if (sa.state[v].edges[t[i] - 'a']) {
+            v = sa.state[v].edges[t[i] - 'a'];
+            ++l;
+        }
+        if (l > best)
+            best = l, bestpos = i;
+    }
+    return t.substr(bestpos - best + 1, best);
+}
+
 //8. Longest common substring of multiple substring.
 //9. Search for shortest substring that is not included in this string.
 //
