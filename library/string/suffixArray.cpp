@@ -4,6 +4,8 @@
 
 using namespace std;
 
+#include "suffixArray.h"
+
 //--------- Building Suffix Array ---------------------------------------------
 
 //--- O(N (logN)^2) method ---
