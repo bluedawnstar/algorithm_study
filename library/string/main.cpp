@@ -13,4 +13,5 @@ int main(void) {
     TEST(DistinctSubstringCounter);
     TEST(PalindromicString);
     TEST(Split);
+    TEST(LongestCommonSubstring_queryTwoStringAmongStrings);
 }
