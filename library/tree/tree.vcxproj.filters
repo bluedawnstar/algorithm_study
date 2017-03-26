@@ -83,5 +83,11 @@
     <ClInclude Include="suffixAutomation.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="treeBasic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeHeavyLightDecomposition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

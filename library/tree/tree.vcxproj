@@ -162,7 +162,9 @@
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="suffixAutomation.h" />
     <ClInclude Include="suffixTree.h" />
+    <ClInclude Include="treeBasic.h" />
     <ClInclude Include="treeFenwickTree.h" />
+    <ClInclude Include="treeHeavyLightDecomposition.h" />
     <ClInclude Include="treeSegmentTree.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="suffixTrie.h" />
