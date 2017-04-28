@@ -95,7 +95,7 @@ vector<pair<int, int>> getPrimeFactors2(const vector<int>& minFactors, int x) {
 #define NN  1000000
 
 void testPrimeNumberEratosthenes() {
-    return; //TODO: if you want to test functions of this file, make this line to a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     clock_t start;
 

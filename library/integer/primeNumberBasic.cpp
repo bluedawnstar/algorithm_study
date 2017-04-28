@@ -152,7 +152,7 @@ void getPrimeFactors(int n, vector<int>& primes,
 #define NN  1000000
 
 void testPrimeNumberBasic() {
-    return; //TODO: if you want to test functions of this file, make this line to a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     clock_t start;
 

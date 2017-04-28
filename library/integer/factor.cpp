@@ -137,7 +137,7 @@ vector<int> getAllFactorCountSimple(int n) {
 #include "primeNumber.h"
 
 void testFactor() {
-    return; //TODO: if you want to test functions of this file, make this line to a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- getFactors(int x) -------------------------" << endl;
     for (int i = 0; i <= 100; i++) {

@@ -34,7 +34,7 @@ void sortSqrt(vector<pair<pair<T, T>, U>>& vec, int blockSize) {
 #include "../common/iostreamhelper.h"
 
 void testSortSqrt() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- sort SQRT (Query Square Root Decomposition) ---------" << endl;
     vector<pair<int, int>> v;

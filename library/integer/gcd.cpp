@@ -61,7 +61,7 @@ T extGcd(T a, T b, T& x, T& y) {
 #include "../common/iostreamhelper.h"
 
 void testGcd() {
-    //return; //TODO: if you want to test functions of this file, make this line to a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- gcd() / lcm() / extGcd() -------------------------" << endl;
 

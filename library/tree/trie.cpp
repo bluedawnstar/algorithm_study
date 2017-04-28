@@ -41,7 +41,7 @@ void dump(CompressedTrie::Node* p, int level) {
 
 
 void testTrie() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Trie ------------------------------------------------" << endl;
 

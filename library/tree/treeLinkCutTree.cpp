@@ -295,7 +295,7 @@ static void printData() {
 }
 
 void testLinkCutTree() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
             //Usage:
             //    step1 : make a tree (gE, gP[0][x])

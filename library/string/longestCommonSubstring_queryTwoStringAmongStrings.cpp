@@ -310,7 +310,7 @@ private:
 
 
 void testLongestCommonSubstring_queryTwoStringAmongStrings() {
-    //return; //TODO: if you want to test string functions, make this line to a comment.
+    //return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Testing for Longest Common Substring Length Queries -------------" << endl;
 

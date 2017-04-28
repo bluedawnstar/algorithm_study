@@ -24,7 +24,7 @@ using namespace std;
 
 // https://algospot.com/judge/problem/read/NAVI
 void testHeavyLightDecomposition_org() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     //TreeHLD<MAXN, LOGN, int, MaxOp<int>> tree;
     TreeHLD<MAXN, LOGN, int> tree([](int a, int b) { return max(a, b); });

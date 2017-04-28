@@ -16,7 +16,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testSegmentTree() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Segment Tree ----------------------------------------" << endl;
 

@@ -113,7 +113,7 @@ void dump(SuffixTree& tree, SuffixTree::Node* p, int idx, int level, bool showSu
 */
 
 void testSuffixAutomation() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Suffix Automation -----------------------------------" << endl;
 

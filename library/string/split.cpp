@@ -39,7 +39,7 @@ vector<pair<int,int>> split2(string s, char c) {
 #include "../common/iostreamhelper.h"
 
 void testSplit() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- split() ---------" << endl;
     cout << split("a.b.c..", '.') << endl;

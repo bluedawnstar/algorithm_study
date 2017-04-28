@@ -77,7 +77,7 @@ static void printTree(Tree<MAXN, LOGN>& tree) {
 }
 
 void testTreeBasic() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     Tree<MAXN, LOGN> tree;
 

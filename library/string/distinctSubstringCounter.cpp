@@ -19,7 +19,7 @@ template <typename T>
 vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n);
 
 void testDistinctSubstringCounter() {
-    return; //TODO: if you want to test string functions, make this line to a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- DistinctSubstringCounter class -------------" << endl;
 
