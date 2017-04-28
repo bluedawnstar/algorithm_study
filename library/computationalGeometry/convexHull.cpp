@@ -70,9 +70,35 @@ bool testConvexHull(vector<Vec2D<int>>& in) {
 }
 
 void testConvexHull() {
-    //return; //TODO: if you want to test functions of this file, make this line to a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Convex Hull ------------------------" << endl;
+
+    {
+        vector<Vec2D<int>> P(16);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                P[i * 4 + j].y = i;
+                P[i * 4 + j].x = j;
+            }
+        }
+        vector<Vec2D<int>> out1 = doGrahamScanNoRemove(vector<Vec2D<int>>(P), true);
+        dump(out1);
+        vector<Vec2D<int>> out2 = doGrahamScanNoRemove(vector<Vec2D<int>>(P), false);
+        dump(out2);
+
+        vector<Vec2D<int>> P2 = vector<Vec2D<int>>{
+                                    { 0,  2 },
+                        { -1,  1 }, { 0,  1 }, { 1,  1 },
+             { -2, 0 }, { -1,  0 }, { 0,  0 }, { 1,  0 }, { 2, 0 },
+                        { -1, -1 }, { 0, -1 }, { 1, -1 },
+                                    { 0, -2 },
+        };
+        vector<Vec2D<int>> out3 = doGrahamScanNoRemove(vector<Vec2D<int>>(P2), true);
+        dump(out3);
+        vector<Vec2D<int>> out4 = doGrahamScanNoRemove(vector<Vec2D<int>>(P2), false);
+        dump(out4);
+    }
 
     assert(testConvexHull(vector<Vec2D<int>>{ { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },
                                               { 0, 1 }, { 1, 1 }, { 2, 1 },

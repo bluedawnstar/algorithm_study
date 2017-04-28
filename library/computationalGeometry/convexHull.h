@@ -23,8 +23,7 @@ vector<Vec2D<T>> doJarvis(vector<Vec2D<T>>& Q) {
         q = (p + 1) % N;
         for (int i = 0; i < N; i++) {
             T cr = cross(Q[p], Q[i], Q[q]);
-            //if (cr > 0)  //- include points of same angle
-            if ((isZero(cr) && Q[i].norm2(Q[p]) > Q[q].norm2(Q[p])) || cr > 0)  //+ exclude points of same angle
+            if ((isZero(cr) && Q[i].norm2(Q[p]) > Q[q].norm2(Q[p])) || cr > 0)
                 q = i;
         }
 
@@ -88,7 +87,7 @@ vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
 
 // O(NlogN)
 template <typename T>
-vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q) {
+vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryPoints = true) {
     vector<Vec2D<T>> S;
 
     int N = (int)Q.size();
@@ -117,10 +116,23 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q) {
 
     S.push_back(Q[0]);
     S.push_back(Q[1]);
-    for (int i = 2; i < (int)Q.size(); i++) {
-        while (S.size() >= 2 && cross(S[S.size() - 2], S.back(), Q[i]) <= 0)
-            S.pop_back();
-        S.push_back(Q[i]);
+    if (excludeBoundaryPoints) {
+        for (int i = 2; i < (int)Q.size(); i++) {
+            while (S.size() >= 2 && cross(S[S.size() - 2], S.back(), Q[i]) <= 0)
+                S.pop_back();
+            S.push_back(Q[i]);
+        }
+    } else {
+        for (int i = 2; i < (int)Q.size(); i++) {
+            while (S.size() >= 2 && cross(S[S.size() - 2], S.back(), Q[i]) < 0)
+                S.pop_back();
+            S.push_back(Q[i]);
+        }
+        for (int i = (int)Q.size() - 2; i >= 2; i--) {
+            if (cross(S.back(), S[0], Q[i]) != 0)
+                break;
+            S.push_back(Q[i]);
+        }
     }
 
     return S;
