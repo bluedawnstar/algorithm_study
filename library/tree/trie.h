@@ -271,6 +271,7 @@ struct CompressedTrie {
         int idx = ch2i(s[0]);
         if (!p->children[idx]) {
             p = p->children[idx] = allocNode(p);
+            p->leafCount++;
             p->text = s;
             p->textLen = len;
         } else {
@@ -288,9 +289,14 @@ struct CompressedTrie {
 
                 if (i < len) {
                     idx = ch2i(s[i]);
-                    if (!p->children[idx]) {
+                    if (p->leafCount == 0) {
+                        p->text = s + i - p->textLen;
+                        p->textLen += len - i;
+                        break;
+                    } else if (!p->children[idx]) {
                         // add new node
                         p = p->children[idx] = allocNode(p);
+                        p->leafCount++;
                         p->text = s + i;
                         p->textLen = len - i;
                         break;
@@ -301,6 +307,52 @@ struct CompressedTrie {
             }
         }
         return ++p->leafCount == 1;
+    }
+
+    int insertWord2(const char* s, int len) {
+        if (len <= 0)
+            return 0;
+
+        Node* p = &mRoot;
+
+        int idx = ch2i(s[0]);
+        if (!p->children[idx]) {
+            p = p->children[idx] = allocNode(p);
+            p->text = s;
+            p->textLen = len;
+            return 0;
+        } else {
+            p = p->children[idx];
+            for (int i = 0; i < len; ) {
+                int j;
+                for (j = 0; j < p->textLen && i < len; i++, j++) {
+                    if (s[i] != p->text[j])
+                        break;
+                }
+                //assert(j > 0);
+
+                if (j < p->textLen)
+                    p = split(p, j);
+
+                if (i < len) {
+                    idx = ch2i(s[i]);
+                    if (p->leafCount == 0) {
+                        p->text = s + i - p->textLen;
+                        p->textLen += len - i;
+                        return i;
+                    } else if (!p->children[idx]) {
+                        // add new node
+                        p = p->children[idx] = allocNode(p);
+                        p->text = s + i;
+                        p->textLen = len - i;
+                        return i;
+                    } else {
+                        p = p->children[idx];
+                    }
+                }
+            }
+            return len;
+        }
     }
 
     // return exactly matched word
@@ -447,7 +499,10 @@ private:
         Node* newNode = allocNode(node->parent);
         newNode->text = node->text;
         newNode->textLen = offset;
+        newNode->leafCount++;
         newNode->children[ch2i(node->text[offset])] = node;
+        if (newNode->parent->children[ch2i(newNode->text[0])])
+            newNode->parent->leafCount++;
         newNode->parent->children[ch2i(newNode->text[0])] = newNode;
         //assert(newNode->textLen > 0);
 
