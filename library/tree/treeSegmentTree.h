@@ -113,8 +113,8 @@ struct SegmentTree {
             return rangeValue[node] = defaultValue;
 
         int mid = left + (right - left) / 2;
-        int leftSum = _init(left, mid, node * 2);
-        int rightSum = _init(mid + 1, right, node * 2 + 1);
+        T leftSum = _init(left, mid, node * 2);
+        T rightSum = _init(mid + 1, right, node * 2 + 1);
 
         return rangeValue[node] = mergeOp(leftSum, rightSum);
     }
@@ -129,8 +129,8 @@ struct SegmentTree {
             return rangeValue[node] = arr[left];
 
         int mid = left + (right - left) / 2;
-        int leftSum = _init<U>(arr, left, mid, node * 2);
-        int rightSum = _init<U>(arr, mid + 1, right, node * 2 + 1);
+        T leftSum = _init<U>(arr, left, mid, node * 2);
+        T rightSum = _init<U>(arr, mid + 1, right, node * 2 + 1);
 
         return rangeValue[node] = mergeOp(leftSum, rightSum);
     }
