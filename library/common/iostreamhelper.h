@@ -1,49 +1,49 @@
 template <typename T, typename U>
 static ostream& operator <<(ostream& os, const pair<T, U>& rhs) {
-    cout << "(" << rhs.first << ", " << rhs.second << ")";
+    os << "(" << rhs.first << ", " << rhs.second << ")";
     return os;
 }
 
 static ostream& operator <<(ostream& os, const pair<int, pair<int, int>>& rhs) {
-    cout << "(" << rhs.first << ", " << rhs.second.first << ", " << rhs.second.second << ")";
+    os << "(" << rhs.first << ", " << rhs.second.first << ", " << rhs.second.second << ")";
     return os;
 }
 
 static ostream& operator <<(ostream& os, vector<int>& rhs) {
-    cout << "(";
+    os << "(";
     if (!rhs.empty())
-        cout << rhs[0];
+        os << rhs[0];
     for (int i = 1; i < (int)rhs.size(); i++)
-        cout << ", " << rhs[i];
-    cout << ")";
+        os << ", " << rhs[i];
+    os << ")";
 
     return os;
 }
 
 static ostream& operator <<(ostream& os, vector<pair<int, int>>& rhs) {
-    cout << "(";
+    os << "(";
     if (!rhs.empty())
-        cout << rhs[0];
+        os << rhs[0];
     for (int i = 1; i < (int)rhs.size(); i++)
-        cout << ", " << rhs[i];
-    cout << ")";
+        os << ", " << rhs[i];
+    os << ")";
 
     return os;
 }
 
 static ostream& operator <<(ostream& os, vector<vector<pair<int, int>>>& rhs) {
     for (int i = 0; i < (int)rhs.size(); i++)
-        cout << i << ": " << rhs[i] << endl;
+        os << i << ": " << rhs[i] << endl;
     return os;
 }
 
 static ostream& operator <<(ostream& os, vector<string>& rhs) {
-    cout << "(";
+    os << "(";
     if (!rhs.empty())
-        cout << "\"" << rhs[0] << "\"";
+        os << "\"" << rhs[0] << "\"";
     for (int i = 1; i < (int)rhs.size(); i++)
-        cout << ", " << "\"" << rhs[i] << "\"";
-    cout << ")";
+        os << ", " << "\"" << rhs[i] << "\"";
+    os << ")";
 
     return os;
 }
