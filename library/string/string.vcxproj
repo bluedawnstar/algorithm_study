@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="decimal.cpp" />
     <ClCompile Include="distinctSubstringCounter.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
     <ClCompile Include="longestCommonSubstring_queryTwoStringAmongStrings.cpp" />
