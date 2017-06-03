@@ -39,7 +39,6 @@ void testSparseTable() {
     assert(ans == ansRMQ);
 
     cout << "-- Segment Tree & Sparse Table Performance Test --------" << endl;
-
     {
         int N = 1000000;
         int TN = 10;

@@ -118,6 +118,7 @@ struct SparseTableMin {
         }
     }
 
+    // inclusive
     int query(int left, int right) {
         right++;
         if (right <= left)
