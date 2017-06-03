@@ -32,20 +32,23 @@ typedef long long           ll;
 typedef unsigned long long  ull;
 
 #define MAXN    100000
+#define MAXV    (1 << 26)
 
 int gN;
 vector<int> gA;
 
-bitset<(1 << 27)> gUsed;
+unsigned int gDP[MAXV + 10];
+int gB[1 << 16];
 
-clock_t gStartTime;
+void setB(int x, bool val) {
+    if (val)
+        gDP[x / 32] |= 1u << (x & 31);
+    else
+        gDP[x / 32] &= ~(1u << (x & 31));
+}
 
-bool checkTime() {
-#ifdef _DEBUG
-    return false;
-#else
-    return ll(clock() - gStartTime) * 1000 / CLOCKS_PER_SEC >= 990;
-#endif
+int testB(int x) {
+    return gDP[x / 32] & (1u << (x & 31));
 }
 
 bool check(vector<int>& A, int mask) {
@@ -57,19 +60,15 @@ bool check(vector<int>& A, int mask) {
 }
 
 int bitCnt(int x) {
-    int res = 0;
-    while (x) {
-        x &= x - 1;
-        res++;
-    }
-    return res;
+    return gB[x >> 16] + gB[x & ((1 << 16) - 1)];
+}
+
+void makeBitCountTable() {
+    for (int i = 1; i < (1 << 16); i++)
+        gB[i] = gB[i & (i - 1)] + 1;
 }
 
 int main(void) {
-    gStartTime = clock();
-
-    PROFILE_START(0);
-
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
@@ -90,48 +89,37 @@ int main(void) {
         return 0;
     }
 
+    makeBitCountTable();
+
     int mask = 1;
     while (mask <= allBit)
         mask <<= 1;
     mask--;
 
-    PROFILE_STOP(0);
-    PROFILE_START(1);
-
-    vector<vector<int>> P(2);
-
     for (int i = 0; i < gN; i++) {
-        int v = ~gA[i] & mask; // allBit;
-        if (v == 0 || gUsed.test(v))
-            continue;
-        P[0].push_back(v);
-        gUsed[v] = true;
+        int v = ~gA[i] & mask;
+        setB(v, true);
     }
 
-    int from = 0;
-    int to = 1;
-    while (!P[from].empty()) {
-        P[to].clear();
-
-        for (auto u : P[from]) {
-            for (int t = u; t; t &= t - 1) {
-                int v = u & ~(t & -t);
-                if (v == 0 || gUsed.test(v))
-                    continue;
-                P[to].push_back(v);
-                gUsed[v] = true;
+    for (int i = mask >> 5; i >= 0; i--) {
+        for (int j = 31; j > 0; j--) {
+            if (gDP[i] & (1u << j)) {
+                for (int t = j; t; t &= t - 1) {
+                    int v = j & ~(t & -t);
+                    gDP[i] |= 1u << v;
+                }
             }
         }
-        swap(from, to);
+        for (int t = i; t; t &= t - 1) {
+            int v = i & ~(t & -t);
+            gDP[v] |= gDP[i];
+        }
     }
 
-    PROFILE_STOP(1);
-
-    PROFILE_START(2);
     int ans = allBit;
     int bitN = bitCnt(ans);
     for (int subset = allBit; subset; subset = (subset - 1) & allBit) {
-        if (!gUsed.test(subset)) {
+        if (!testB(subset)) {
             int bn = bitCnt(subset);
             if (bn < bitN || bn == bitN && subset < ans) {
                 ans = subset;
@@ -139,7 +127,6 @@ int main(void) {
             }
         }
     }
-    PROFILE_STOP(2);
 
     cout << ans << endl;
 
