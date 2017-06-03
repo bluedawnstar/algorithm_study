@@ -174,18 +174,21 @@ int main(void) {
 
     SparseTableMin rmqP(gP, gN);
 
+    // accumulated gasoline
     vector<ll> sumG(gN);
     for (int i = 1; i < gN; i++)
         sumG[i] = sumG[i - 1] + gG[i - 1] - gW[i - 1];
 
     SparseTableLCA nextG(gN + 1);
-    vector<ll> needG(gN + 1);
+    vector<ll> needG(gN + 1);   // amount of gasoline to be bought
     {
         stack<int> stk;
         nextG.mP[0][gN] = gN;
         for (int i = gN - 1; i >= 0; i--) {
+            // find the first position where buying gasoline is required from i
             while (!stk.empty() && sumG[stk.top()] >= sumG[i])
                 stk.pop();
+
             if (stk.empty()) {
                 nextG.mP[0][i] = gN;
                 needG[i] = 0;
@@ -193,15 +196,19 @@ int main(void) {
                 nextG.mP[0][i] = stk.top();
                 needG[i] = needG[stk.top()] + sumG[i] - sumG[stk.top()];
             }
+
             stk.push(i);
         }
     }
+    // build a sparse table from next positions
     nextG.build();
 
-    vector<ll> needC(gN + 1);
+    vector<ll> needC(gN + 1);   // amount of money to be needed
     for (int i = gN - 1; i >= 0; i--) {
         ll minP = rmqP.query(i, nextG.mP[0][i] - 1);
-        int minX = i;   // minP가 유지되는 구간의 끝
+
+        // find the last position where minP is used
+        int minX = i;
         for (int j = nextG.mLogN - 1; j >= 0; j--) {
             if (rmqP.query(i, nextG.mP[j][minX] - 1) >= minP)
                 minX = nextG.mP[j][minX];
@@ -240,6 +247,8 @@ int main(void) {
         int L = qryIdx[i];
         for (int j = 0; j < (int)qry[L].size(); j++) {
             int R = qry[L][j].first;
+
+            // find the last ancestor of L in range (L, R)
             int fixedR = L;
             for (int k = nextG.mLogN - 1; k >= 0; k--) {
                 if (nextG.mP[k][fixedR] <= R)
@@ -252,6 +261,8 @@ int main(void) {
             }
 
             ll minP = rmqP.query(L, fixedR - 1);
+
+            // find the last position where minP is not used
             int minX = L;
             for (int k = nextG.mLogN - 1; k >= 0; k--) {
                 if (rmqP.query(L, nextG.mP[k][minX] - 1) >= minP)
