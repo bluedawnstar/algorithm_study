@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sparseTable.cpp" />
+    <ClCompile Include="sparseTableLCA.cpp" />
     <ClCompile Include="suffixAutomation.cpp" />
     <ClCompile Include="suffixTrie.cpp" />
     <ClCompile Include="treeFenwickTree.cpp" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="sparseTable.h" />
+    <ClInclude Include="sparseTableLCA.h" />
     <ClInclude Include="suffixAutomation.h" />
     <ClInclude Include="suffixTree.h" />
     <ClInclude Include="treeBasic.h" />

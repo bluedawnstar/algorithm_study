@@ -57,6 +57,9 @@
     <ClCompile Include="suffixAutomation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sparseTableLCA.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="treeFenwickTree.h">
@@ -87,6 +90,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeHeavyLightDecomposition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableLCA.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
