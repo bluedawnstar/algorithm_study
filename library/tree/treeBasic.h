@@ -159,7 +159,7 @@ struct Tree {
             bitCnt++;
 
         for (int i = bitCnt - 1; i >= 0; i--) {
-            if (mP[i][A] > 0 && mP[i][A] != mP[i][B]) {
+            if (mP[i][A] >= 0 && mP[i][A] != mP[i][B]) {
                 A = mP[i][A];
                 B = mP[i][B];
             }
