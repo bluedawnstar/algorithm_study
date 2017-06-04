@@ -10,6 +10,56 @@ using namespace std;
 #include "polygon.h"
 #include "convexHull.h"
 
+#if 0
+    //### find farest points from a line of convex hull's boundary
+    // input : gP -> points, (u, v) -> two points of a line
+
+    vector<Vec2D<int>> newP(gP);
+
+    vector<int> boundary = doGrahamScan(newP);
+    map<int, int> revI;
+    for (int i = 0; i < (int)boundary.size(); i++) {
+        revI[boundary[i]] = i;
+    }
+
+    int boundaryN = (int)boundary.size();
+
+    // ... (u, v) ...
+
+    int uI = revI[u];
+    int vI = revI[v];
+    if ((uI + 1) % boundaryN != vI)
+        swap(uI, vI);
+
+    Vec2D<int>& p0 = gP[boundary[uI]];
+    Vec2D<int>& p1 = gP[boundary[vI]];
+
+    ll cr = 0;
+    int lo = vI, hi = uI - 1, mid;
+
+    if (lo > hi)
+        hi += boundaryN;
+
+    while (lo <= hi) {
+        mid = lo + (hi - lo) / 2;
+
+        cr = cross(p0, p1, gP[boundary[mid % boundaryN]], gP[boundary[(mid + 1) % boundaryN]]);
+        if (cr == 0) {
+            lo = mid;
+            break;
+        } else if (cr < 0)
+            hi = mid - 1;
+        else
+            lo = mid + 1;
+    }
+
+    if (cr == 0) {
+        // P0 -> gP[boundary[lo % boundaryN]];
+        // P1 -> gP[boundary[(lo + 1) % boundaryN]];
+    } else {
+        // P0 -> gP[boundary[lo % boundaryN]];
+    }
+#endif
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
