@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="basicDigraph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minCostMaxFlow.cpp" />
     <ClCompile Include="shortestPath.cpp" />
