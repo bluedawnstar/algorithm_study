@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blackMagic", "blackMagic\bl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "graph", "graph\graph.vcxproj", "{1D2CD661-8434-4A38-B6C7-EB5CDE462941}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "polynomial", "polynomial\polynomial.vcxproj", "{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,6 +93,14 @@ Global
 		{1D2CD661-8434-4A38-B6C7-EB5CDE462941}.Release|x64.Build.0 = Release|x64
 		{1D2CD661-8434-4A38-B6C7-EB5CDE462941}.Release|x86.ActiveCfg = Release|Win32
 		{1D2CD661-8434-4A38-B6C7-EB5CDE462941}.Release|x86.Build.0 = Release|Win32
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Debug|x64.ActiveCfg = Debug|x64
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Debug|x64.Build.0 = Debug|x64
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Debug|x86.ActiveCfg = Debug|Win32
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Debug|x86.Build.0 = Debug|Win32
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Release|x64.ActiveCfg = Release|x64
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Release|x64.Build.0 = Release|x64
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Release|x86.ActiveCfg = Release|Win32
+		{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
