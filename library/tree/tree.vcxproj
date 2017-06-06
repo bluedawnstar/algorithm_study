@@ -168,6 +168,7 @@
     <ClInclude Include="treeFenwickTree.h" />
     <ClInclude Include="treeHeavyLightDecomposition.h" />
     <ClInclude Include="treeSegmentTree.h" />
+    <ClInclude Include="treeSegmentTreeLazy.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="suffixTrie.h" />
   </ItemGroup>
