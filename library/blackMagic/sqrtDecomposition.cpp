@@ -204,6 +204,7 @@ private:
 
 #include <algorithm>
 #include "../tree/treeSegmentTree.h"
+#include "../tree/treeSegmentTreeLazy.h"
 
 void testSqrtDecomposition() {
     //return; //TODO: if you want to test functions of this file, make this line a comment.
@@ -213,6 +214,7 @@ void testSqrtDecomposition() {
         vector<int> in{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
+        auto segTreeLazy = makeSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
         SqrtDecompositionLazy<int> sqrtDecom(in);
 
         for (int i = 0; i < 10000; i++) {
@@ -221,6 +223,7 @@ void testSqrtDecomposition() {
                 int R = rand() % (int)in.size();
                 if (L > R)
                     swap(L, R);
+                assert(segTree.query(L, R) == segTreeLazy.query(L, R));
                 assert(segTree.query(L, R) == sqrtDecom.query(L, R));
             } else {
                 int L = rand() % (int)in.size();
@@ -229,8 +232,10 @@ void testSqrtDecomposition() {
                 if (L > R)
                     swap(L, R);
 
-                segTree.updateRange(L, R, x);
+                int a = segTree.updateRange(L, R, x);
+                int b = segTreeLazy.updateRange(L, R, x);
                 sqrtDecom.update(L, R, x);
+                assert(a == b);
             }
         }
     }
@@ -243,6 +248,7 @@ void testSqrtDecomposition() {
         vector<int> in(N);
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
+        auto segTreeLazy = makeSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
         SqrtDecompositionLazy<int> sqrtDecom(in);
 
         vector<tuple<int, int, int, int>> Q;
@@ -267,13 +273,20 @@ void testSqrtDecomposition() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree.query(L, R) != sqrtDecom.query(L, R))
+
+                int a = segTree.query(L, R);
+                int b = segTreeLazy.query(L, R);
+                int c = sqrtDecom.query(L, R);
+                if (a != b)
+                    cout << "It'll Never be shown!" << endl;
+                if (a != c)
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
                 segTree.updateRange(L, R, x);
+                segTreeLazy.updateRange(L, R, x);
                 sqrtDecom.update(L, R, x);
             }
         }
@@ -300,6 +313,22 @@ void testSqrtDecomposition() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
+                if (segTreeLazy.query(L, R) == INT_MAX)
+                    cout << "It'll Never be shown!" << endl;
+            } else {
+                int L = get<1>(q);
+                int R = get<2>(q);
+                int x = get<3>(q);
+                segTreeLazy.updateRange(L, R, x);
+            }
+        }
+        PROFILE_STOP(1);
+
+        PROFILE_START(2);
+        for (auto& q : Q) {
+            if (get<0>(q)) {
+                int L = get<1>(q);
+                int R = get<2>(q);
                 if (sqrtDecom.query(L, R) == INT_MAX)
                     cout << "It'll Never be shown!" << endl;
             } else {
@@ -309,6 +338,6 @@ void testSqrtDecomposition() {
                 sqrtDecom.update(L, R, x);
             }
         }
-        PROFILE_STOP(1);
+        PROFILE_STOP(2);
     }
 }
