@@ -31,6 +31,7 @@ vector<T> convolution(const vector<T>& x, const vector<T>& h, bool reverseH = tr
     return y;
 }
 
+// It's better performance than multPoly() when N >= 128
 template <typename T = int>
 vector<T> convolutionFFT(const vector<T>& x, const vector<T>& h, bool reverseH = true) {
     int sizeL = (int)x.size();
@@ -102,6 +103,7 @@ vector<int> convolutionMod(const vector<int>& x, const vector<int>& h, int MOD, 
     return y;
 }
 
+// It's better performance than multPoly() when N >= 64
 vector<int> convolutionFFTMod(const vector<int>& x, const vector<int>& h, int MOD, bool reverseH = true) {
     int sizeL = (int)x.size();
     int sizeR = (int)h.size();
@@ -215,6 +217,53 @@ void testConvolution() {
     cout << x << " * " << h << " : ";
     cout << v2 << endl;
     assert(v == v2);
+
+    cout << "*** Speed test ***" << endl;
+    for (int n = 32; n <= 2048; n <<= 1) {
+        vector<int> in1(n);
+        vector<int> in2(n);
+        vector<int> out;
+        for (int i = 0; i < n; i++) {
+            in1[i] = rand() % 1024;
+            in2[i] = rand() % 1024;
+        }
+
+        cout << "N = " << n << endl;
+        cout << "  convolution() : ";
+        PROFILE_START(0);
+        for (int i = 0; i < 1000; i++) {
+            out = convolution(in1, in2);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(0);
+        cout << "  convolutionFFT() : ";
+        PROFILE_START(1);
+        for (int i = 0; i < 1000; i++) {
+            out = convolutionFFT(in1, in2);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(1);
+
+        cout << "  convolutionMod() : ";
+        PROFILE_START(2);
+        for (int i = 0; i < 1000; i++) {
+            out = convolutionMod(in1, in2, MOD);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(2);
+
+        cout << "  convolutionFFTMod() : ";
+        PROFILE_START(3);
+        for (int i = 0; i < 1000; i++) {
+            out = convolutionFFTMod(in1, in2, MOD);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(3);
+    }
 
     cout << "OK!" << endl;
 }

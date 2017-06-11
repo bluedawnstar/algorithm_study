@@ -16,6 +16,7 @@ vector<int> multPolyMod(const vector<int>& left, const vector<int>& right, int M
     return res;
 }
 
+// It's better performance than multPoly() when N >= 128
 vector<int> multPolyFFTMod(const vector<int>& left, const vector<int>& right, int MOD) {
     int sizeL = (int)left.size();
     int sizeR = (int)right.size();
@@ -69,7 +70,7 @@ vector<int> multPolyFFTMod(const vector<int>& left, const vector<int>& right, in
 // left = a, right = k
 vector<int> multPolyPolyMod(int left, int right, int MOD) {
     int n = right - left + 1;
-    if (n < 1024) {
+    if (n < 128) {
         vector<int> res = vector<int>{ 1, left };
         for (int i = left + 1; i <= right; i++)
             res = multPolyMod(res, vector<int>{ 1, i }, MOD);
@@ -138,6 +139,36 @@ void testMultPolyMod() {
         vector<int> out1 = multPolyMod(A, B, MOD);
         vector<int> out2 = multPolyFFTMod(A, B, MOD);
         assert(out1 == out2);
+    }
+
+    cout << "*** Speed test ***" << endl;
+    for (int n = 32; n <= 2048; n <<= 1) {
+        vector<int> in1(n);
+        vector<int> in2(n);
+        vector<int> out;
+        for (int i = 0; i < n; i++) {
+            in1[i] = rand() % 1024;
+            in2[i] = rand() % 1024;
+        }
+
+        cout << "N = " << n << endl;
+        cout << "  multPolyMod() : ";
+        PROFILE_START(0);
+        for (int i = 0; i < 1000; i++) {
+            out = multPolyMod(in1, in2, MOD);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(0);
+
+        cout << "  multPolyFFTMod() : ";
+        PROFILE_START(1);
+        for (int i = 0; i < 1000; i++) {
+            out = multPolyFFTMod(in1, in2, MOD);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(1);
     }
 
     cout << "OK!" << endl;

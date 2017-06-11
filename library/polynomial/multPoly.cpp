@@ -15,6 +15,7 @@ vector<T> multPoly(const vector<T>& left, const vector<T>& right) {
     return res;
 }
 
+// It's better performance than multPoly() when N >= 256
 template <typename T = int>
 vector<T> multPolyFFT(const vector<T>& left, const vector<T>& right) {
     int sizeL = (int)left.size();
@@ -66,6 +67,36 @@ void testMultPoly() {
     vector<int> outMult1 = multPoly(vector<int>{1, 2, 1}, vector<int>{1, 2, 1});
     vector<int> outMult2 = multPolyFFT(vector<int>{1, 2, 1}, vector<int>{1, 2, 1});
     assert(outMult1 == outMult2);
+
+    cout << "*** Speed test ***" << endl;
+    for (int n = 32; n <= 2048; n <<= 1) {
+        vector<int> in1(n);
+        vector<int> in2(n);
+        vector<int> out;
+        for (int i = 0; i < n; i++) {
+            in1[i] = rand() % 1024;
+            in2[i] = rand() % 1024;
+        }
+
+        cout << "N = " << n << endl;
+        cout << "  multPoly() : ";
+        PROFILE_START(0);
+        for (int i = 0; i < 1000; i++) {
+            out = multPoly(in1, in2);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(0);
+
+        cout << "  multPolyFFT() : ";
+        PROFILE_START(1);
+        for (int i = 0; i < 1000; i++) {
+            out = multPolyFFT(in1, in2);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(1);
+    }
 
     cout << "OK!" << endl;
 }
