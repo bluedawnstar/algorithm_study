@@ -9,5 +9,5 @@ int main(void) {
     TEST(FFT);
     TEST(MultPoly);
     TEST(MultPolyMod);
-    //TEST(Convolution);
+    TEST(Convolution);
 }
