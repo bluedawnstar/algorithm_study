@@ -167,4 +167,44 @@ struct Tree {
 
         return mP[0][A];
     }
+
+    //--- Centroid ------------------------------------------------------------
+
+    vector<int> mTreeSize;
+
+    void dfsSize(int u, int parent) {
+        mTreeSize[u] = 1;
+        for (int v : gE[u]) {
+            if (v != parent) {
+                dfsSize(v, u);
+                mTreeSize[u] += mTreeSize[v];
+            }
+        }
+    }
+
+    int findCentroid(int u, int parent, int N) {
+        bool isMajor = true;
+        for (int v : gE[u]) {
+            if (v == parent)
+                continue;
+
+            int res = findCentroid(v, u, N);
+            if (res != -1)
+                return res;
+
+            if (mTreeSize[v] + mTreeSize[v] > N)
+                isMajor = false;
+        }
+
+        if (isMajor && 2 * (N - mTreeSize[u]) <= N)
+            return u;
+
+        return -1;
+    }
+
+    int findCentroid(int start) {
+        mTreeSize = vector<int>(mN);
+        dfsSize(start, -1);
+        return findCentroid(start, -1, mTreeSize[start]);
+    }
 };
