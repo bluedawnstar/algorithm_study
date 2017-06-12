@@ -8,6 +8,124 @@ using namespace std;
 
 #include "treeBasic.h"
 
+/* // TODO: adding this functions to find centers of a tree
+void dfsDist(int v, int p, int d) {
+    dist[v] = d;
+    for (int to : g[v]) {
+        if (to != p) {
+            dfsDist(to, v, d + 1);
+        }
+    }
+}
+
+int findMax(int[] a) {
+    int index = -1;
+    for (int i = 0; i < a.length; i++) {
+        if (a[i] != 1000 && (index == -1 || a[index] < a[i])) {
+            index = i;
+        }
+    }
+    return index;
+}
+
+boolean dfsPath(int v, int to, int p) {
+    if (v == to) {
+        path.add(to);
+        return true;
+    }
+    path.add(v);
+    for (int u : g[v]) {
+        if (p != u && dfsPath(u, to, v)) {
+            return true;
+        }
+    }
+    path.remove(path.size() - 1);
+    return false;
+}
+
+int[] findCenters(int v) {
+    Arrays.fill(dist, 1000);
+    dfsDist(v, -1, 0);
+    v = findMax(dist);
+    dfsDist(v, -1, 0);
+    int to = findMax(dist);
+    path.clear();
+    dfsPath(v, to, -1);
+    if (path.size() % 2 == 0) {
+        return new int[] {path.get(path.size() / 2 - 1), path.get(path.size() / 2)};
+    } else {
+        return new int[] {path.get(path.size() / 2)};
+    }
+}
+*/
+
+/* //TODO: add this functions for hashing of a tree
+private static final int B1 = 31;
+private static final int M1 = 1000000007;
+private static final int Z1 = 16983;
+private static final int B2 = 37;
+private static final int M2 = 1000000009;
+private static final int Z2 = 18657;
+
+public static long unrootedHash(int[][] g) {
+    int[] cs = center(g);
+    long[] lhs = new long[cs.length];
+    int p = 0;
+    for (int c : cs) {
+        lhs[p++] = rootedHash(c, -1, g);
+    }
+    Arrays.sort(lhs);
+    long hl = Z1, hr = Z2;
+    for (long lh : lhs) {
+        long lhl = lh >> >32, lhr = (int)lh;
+        hl = (hl * B1 + lhl*lhl) % M1;
+        hr = (hr * B2 + lhr*lhr) % M2;
+    }
+    return hl << 32 | hr;
+}
+
+public static long rootedHash(int cur, int pre, int[][] g) {
+    long[] hs = new long[g[cur].length];
+    int p = 0;
+    for (int e : g[cur]) {
+        if (e != pre) {
+            hs[p++] = rootedHash(e, cur, g);
+        }
+    }
+    Arrays.sort(hs, 0, p);
+    long hl = Z1, hr = Z2;
+    for (int i = 0; i < p; i++) {
+        hl = (hl * B1 + hs[i] * hs[i]) % M1;
+        hr = (hr * B2 + hs[i] * hs[i]) % M2;
+    }
+    return hl << 32 | hr;
+}
+
+//--- OR ---
+
+long dfsHash(int v, int p) {
+    int count = 0;
+    for (int to : g[v]) {
+        if (p != to) {
+            count++;
+        }
+    }
+    long[] result = new long[count];
+    int len = 0;
+    for (int to : g[v]) {
+        if (p != to) {
+            result[len++] = dfsHash(to, v);
+        }
+    }
+    Arrays.sort(result);
+    long ans = 4242424242424243L;
+    for (int i = 0; i < len; i++) {
+        ans ^= rnd[i] * result[i];
+    }
+    return ans;
+}
+*/
+
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
