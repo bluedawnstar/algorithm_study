@@ -19,4 +19,6 @@ int main(void) {
     TEST(SuffixTree);
     TEST(SuffixAutomation);
     TEST(SparseTableLCA);
+    TEST(BST);
+    TEST(Splay);
 }

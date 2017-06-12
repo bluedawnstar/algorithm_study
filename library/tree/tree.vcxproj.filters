@@ -60,6 +60,12 @@
     <ClCompile Include="sparseTableLCA.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeBST.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeSplay.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="treeFenwickTree.h">
@@ -96,6 +102,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeSegmentTreeLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBST.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeSplay.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

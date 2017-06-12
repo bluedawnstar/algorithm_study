@@ -146,6 +146,7 @@
     <ClCompile Include="sparseTableLCA.cpp" />
     <ClCompile Include="suffixAutomation.cpp" />
     <ClCompile Include="suffixTrie.cpp" />
+    <ClCompile Include="treeBST.cpp" />
     <ClCompile Include="treeFenwickTree.cpp" />
     <ClCompile Include="treeFenwickTree2D.cpp" />
     <ClCompile Include="treeFenwickTreeMultAdd.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="treeSegmentTree.cpp" />
     <ClCompile Include="suffixTree.cpp" />
+    <ClCompile Include="treeSplay.cpp" />
     <ClCompile Include="trie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,10 +167,12 @@
     <ClInclude Include="suffixAutomation.h" />
     <ClInclude Include="suffixTree.h" />
     <ClInclude Include="treeBasic.h" />
+    <ClInclude Include="treeBST.h" />
     <ClInclude Include="treeFenwickTree.h" />
     <ClInclude Include="treeHeavyLightDecomposition.h" />
     <ClInclude Include="treeSegmentTree.h" />
     <ClInclude Include="treeSegmentTreeLazy.h" />
+    <ClInclude Include="treeSplay.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="suffixTrie.h" />
   </ItemGroup>
