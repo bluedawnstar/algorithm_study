@@ -11,25 +11,27 @@
 template <typename T>
 struct BST {
     struct Node {
-        Node() {
-            mParent = this;
-            mLeft = this;
-            mRight = this;
-            mCnt = 0;
+        Node*   parent;
+        Node*   left;
+        Node*   right;
+
+        int     cnt;
+        T       value;
+
+        void init() {
+            parent = this;
+            left = this;
+            right = this;
+            cnt = 0;
         }
 
-        Node(const T& item, Node* sentinel) : mData(item) {
-            mParent = sentinel;
-            mLeft = sentinel;
-            mRight = sentinel;
-            mCnt = 1;
+        void init(const T& item, Node* sentinel) {
+            parent = sentinel;
+            left = sentinel;
+            right = sentinel;
+            cnt = 1;
+            value = item;
         }
-
-        Node*   mLeft;
-        Node*   mRight;
-        Node*   mParent;
-        int     mCnt;
-        T       mData;
     };
 
     Node*       mRoot;     // root node
@@ -42,6 +44,7 @@ struct BST {
 
     BST() {
         mSentinel = new Node();
+        mSentinel->init();
 
         mRoot = mSentinel;
         mDuplicate = false;
@@ -50,6 +53,7 @@ struct BST {
 
     BST(const BST<T>& tree) {
         mSentinel = new Node();
+        mSentinel->init();
 
         mRoot = mSentinel;
         mDuplicate = false;
@@ -59,6 +63,7 @@ struct BST {
 
     virtual ~BST() {
         deleteRecursive(mRoot);
+        delete mSentinel;
     }
 
     BST<T>& operator =(const BST<T>& tree) {
@@ -104,26 +109,26 @@ struct BST {
         while (x != mSentinel) {
             parent = x;
 
-            if (item == x->mData && !mDuplicate) {
+            if (item == x->value && !mDuplicate) {
                 return make_pair(x, false);
             } else {
-                if (item < x->mData)
-                    x = x->mLeft;
+                if (item < x->value)
+                    x = x->left;
                 else
-                    x = x->mRight;
+                    x = x->right;
             }
         }
 
         Node* newNode = createNode(item);
-        newNode->mParent = parent;
+        newNode->parent = parent;
 
         if (parent == mSentinel)
             mRoot = newNode;
         else {
-            if (newNode->mData < parent->mData)
-                parent->mLeft = newNode;
+            if (newNode->value < parent->value)
+                parent->left = newNode;
             else
-                parent->mRight = newNode;
+                parent->right = newNode;
             updateNodeToRoot(parent);
         }
 
@@ -140,37 +145,37 @@ struct BST {
         Node *y, *x;
 
         // find node to splice out
-        if ((z->mLeft == mSentinel) || (z->mRight == mSentinel))
+        if ((z->left == mSentinel) || (z->right == mSentinel))
             y = z;
         else
             y = next(z);
 
         // find child with which to replace y
-        if (y->mLeft != mSentinel)
-            x = y->mLeft;
+        if (y->left != mSentinel)
+            x = y->left;
         else
-            x = y->mRight;
+            x = y->right;
 
         // if child node of y exist, then splice child onto parent
         if (x != mSentinel)
-            x->mParent = y->mParent;
+            x->parent = y->parent;
 
-        if (y->mParent == mSentinel)
+        if (y->parent == mSentinel)
             // if deleting node is root, then replace root with x
             mRoot = x;
         else {
             // splice in child node
-            if (y == y->mParent->mLeft)
-                y->mParent->mLeft = x;
+            if (y == y->parent->left)
+                y->parent->left = x;
             else
-                y->mParent->mRight = x;
+                y->parent->right = x;
         }
 
         // if needed, save y data
         if (y != z)
-            swap(z->mData, y->mData);
+            swap(z->value, y->value);
 
-        updateNodeToRoot(y->mParent);
+        updateNodeToRoot(y->parent);
 
         // free memory
         destroyNode(y);
@@ -189,7 +194,7 @@ struct BST {
 
 
     Node* operator [](int index) const {
-        assert((mRoot != mSentinel ? mRoot->mCnt : 0) == mCount);
+        assert((mRoot != mSentinel ? mRoot->cnt : 0) == mCount);
 
         if (index < 0 || index >= mCount)
             return mSentinel;
@@ -197,33 +202,33 @@ struct BST {
         int n = index;
         Node* p = mRoot;
         while (p != mSentinel) {
-            while (p->mLeft != mSentinel && p->mLeft->mCnt > n)
-                p = p->mLeft;
-            if (p->mLeft != mSentinel)
-                n -= p->mLeft->mCnt;
+            while (p->left != mSentinel && p->left->cnt > n)
+                p = p->left;
+            if (p->left != mSentinel)
+                n -= p->left->cnt;
             if (!n--)
                 break;
-            p = p->mRight;
+            p = p->right;
         }
 
         return p;
     }
 
     int indexOf(Node* p) const {
-        assert((mRoot != mSentinel ? mRoot->mCnt : 0) == mCount);
+        assert((mRoot != mSentinel ? mRoot->cnt : 0) == mCount);
 
         if (p == mSentinel)
             return -1;
 
-        int res = (p->mLeft != mSentinel) ? p->mLeft->mCnt : 0;
-        while (p->mParent != mSentinel) {
-            while (p->mParent != mSentinel && p->mParent->mLeft == p)
-                p = p->mParent;
-            if (p->mParent != mSentinel) {
-                p = p->mParent;
+        int res = (p->left != mSentinel) ? p->left->cnt : 0;
+        while (p->parent != mSentinel) {
+            while (p->parent != mSentinel && p->parent->left == p)
+                p = p->parent;
+            if (p->parent != mSentinel) {
+                p = p->parent;
                 res++;
-                if (p->mLeft != mSentinel)
-                    res += p->mLeft->mCnt;
+                if (p->left != mSentinel)
+                    res += p->left->cnt;
             }
         }
 
@@ -234,11 +239,11 @@ struct BST {
     Node* find(const T& key) const {
         Node *p = mRoot;
 
-        while (p != mSentinel && !(p->mData == key)) {
-            if (key < p->mData)
-                p = p->mLeft;
+        while (p != mSentinel && !(p->value == key)) {
+            if (key < p->value)
+                p = p->left;
             else
-                p = p->mRight;
+                p = p->right;
         }
 
         return p;
@@ -251,11 +256,11 @@ struct BST {
         Node* y = mSentinel;
         Node* x = mRoot;
         while (x != mSentinel) {
-            if (!(x->mData < key)) {
+            if (!(x->value < key)) {
                 y = x;
-                x = x->mLeft;
+                x = x->left;
             } else
-                x = x->mRight;
+                x = x->right;
         }
         return y;
     }
@@ -267,11 +272,11 @@ struct BST {
         Node* y = mSentinel;
         Node* x = mRoot;
         while (x != mSentinel) {
-            if (key < x->mData) {
+            if (key < x->value) {
                 y = x;
-                x = x->mLeft;
+                x = x->left;
             } else
-                x = x->mRight;
+                x = x->right;
         }
         return y;
     }
@@ -288,45 +293,45 @@ struct BST {
 
     Node* minimum(const Node* node) const {
         Node* p = const_cast<Node*>(node);
-        while (p->mLeft != mSentinel)
-            p = p->mLeft;
+        while (p->left != mSentinel)
+            p = p->left;
         return p;
     }
 
     Node* maximum(const Node* node) const {
         Node* p = const_cast<Node*>(node);
-        while (p->mRight != mSentinel)
-            p = p->mRight;
+        while (p->right != mSentinel)
+            p = p->right;
         return p;
     }
 
     Node* next(const Node* node) const {
-        if (node->mRight != mSentinel)
-            return minimum(node->mRight);
+        if (node->right != mSentinel)
+            return minimum(node->right);
         else {
             Node *cur, *parent;
 
             cur = const_cast<Node*>(node);
-            parent = node->mParent;
-            while ((parent != mSentinel) && (cur == parent->mRight)) {
+            parent = node->parent;
+            while ((parent != mSentinel) && (cur == parent->right)) {
                 cur = parent;
-                parent = parent->mParent;
+                parent = parent->parent;
             }
             return parent;
         }
     }
 
     Node* prev(const Node* node) const {
-        if (node->mLeft != mSentinel)
-            return maximum(node->mLeft);
+        if (node->left != mSentinel)
+            return maximum(node->left);
         else {
             Node *cur, *parent;
 
             cur = const_cast<Node*>(node);
-            parent = node->mParent;
-            while ((parent != mSentinel) && (cur == parent->mLeft)) {
+            parent = node->parent;
+            while ((parent != mSentinel) && (cur == parent->left)) {
                 cur = parent;
-                parent = parent->mParent;
+                parent = parent->parent;
             }
             return parent;
         }
@@ -343,7 +348,8 @@ struct BST {
 
 protected:
     Node* createNode(const T& item) {
-        Node* p = new Node(item, mSentinel);
+        Node* p = new Node();
+        p->init(item, mSentinel);
         mCount++;
         return p;
     }
@@ -356,45 +362,45 @@ protected:
 
     void copyRecursive(const Node* node) {
         if (node != mSentinel) {
-            insert(node->mData);
-            copyRecursive(node->mLeft);
-            copyRecursive(node->mRight);
+            insert(node->value);
+            copyRecursive(node->left);
+            copyRecursive(node->right);
         }
     }
 
     void deleteRecursive(Node* node) {
         if (node != mSentinel) {
-            deleteRecursive(node->mLeft);
-            deleteRecursive(node->mRight);
+            deleteRecursive(node->left);
+            deleteRecursive(node->right);
             destroyNode(node);
         }
     }
 
     void recurseWalk(const Node* node, const function<void(const T&)>& func) const {
         if (node != mSentinel) {
-            recurseWalk(node->mLeft, func);
-            func(node->mData);
-            recurseWalk(node->mRight, func);
+            recurseWalk(node->left, func);
+            func(node->value);
+            recurseWalk(node->right, func);
         }
     }
 
     void morrisInorderWalk(const Node* node, const function<void(const T&)>& func) const {
         Node *p = mRoot, *tmp;
         while (p != mSentinel) {
-            if (p->mLeft == mSentinel) {
-                func(p->mData);
-                p = p->mRight;
+            if (p->left == mSentinel) {
+                func(p->value);
+                p = p->right;
             } else {
-                tmp = p->mLeft;
-                while (tmp->mRight != mSentinel && tmp->mRight != p)
-                    tmp = tmp->mRight;
-                if (tmp->mRight == mSentinel) {
-                    tmp->mRight = p;
-                    p = p->mLeft;
+                tmp = p->left;
+                while (tmp->right != mSentinel && tmp->right != p)
+                    tmp = tmp->right;
+                if (tmp->right == mSentinel) {
+                    tmp->right = p;
+                    p = p->left;
                 } else {
-                    func(p->mData);
-                    tmp->mRight = mSentinel;
-                    p = p->mRight;
+                    func(p->value);
+                    tmp->right = mSentinel;
+                    p = p->right;
                 }
             }
         }
@@ -407,13 +413,19 @@ protected:
         // update count
         while (node != mSentinel) {
             updateNode(node);
-            node = node->mParent;
+            node = node->parent;
         }
     }
 
-    void updateNode(Node* node) {
+    void updateNodeCnt(Node* node) {
         if (node != mSentinel)
-            node->mCnt = (node->mLeft ? node->mLeft->mCnt : 0) + (node->mRight ? node->mRight->mCnt : 0) + 1;
+            node->cnt = (node->left ? node->left->cnt : 0) + (node->right ? node->right->cnt : 0) + 1;
+    }
+
+    void updateNode(Node* node) {
+        updateNodeCnt(node);
+
+        //TODO: add custom actions
     }
 };
 
@@ -428,24 +440,24 @@ enum RBColor {
 template <typename T>
 struct RBData {
     RBData() {
-        mColor = rbcBlack;
+        color = rbcBlack;
     }
 
     RBData(const T& data) {
-        mColor = rbcBlack;
-        mData = data;
+        color = rbcBlack;
+        value = data;
     }
 
     bool operator ==(const RBData<T>& rhs) const {
-        return mData == rhs.mData;
+        return value == rhs.value;
     }
 
     bool operator <(const RBData<T>& rhs) const {
-        return mData < rhs.mData;
+        return value < rhs.value;
     }
 
-    RBColor mColor;
-    T       mData;
+    RBColor color;
+    T       value;
 };
 
 template <typename T>
@@ -470,47 +482,47 @@ struct RBTree : public BST<RBData<T>> {
         Node* x = ins.first;
         Node* y;
 
-        x->mData.mColor = rbcRed;
-        while ((x != mRoot) && (x->mParent->mData.mColor == rbcRed)) {
-            if (x->mParent == x->mParent->mParent->mLeft) {
-                y = x->mParent->mParent->mRight;
+        x->value.color = rbcRed;
+        while ((x != mRoot) && (x->parent->value.color == rbcRed)) {
+            if (x->parent == x->parent->parent->left) {
+                y = x->parent->parent->right;
 
-                if (y->mData.mColor == rbcRed) {
-                    x->mParent->mData.mColor = rbcBlack;
-                    y->mData.mColor = rbcBlack;
-                    x->mParent->mParent->mData.mColor = rbcRed;
-                    x = x->mParent->mParent;
+                if (y->value.color == rbcRed) {
+                    x->parent->value.color = rbcBlack;
+                    y->value.color = rbcBlack;
+                    x->parent->parent->value.color = rbcRed;
+                    x = x->parent->parent;
                 } else {
-                    if (x == x->mParent->mRight) {
-                        x = x->mParent;
+                    if (x == x->parent->right) {
+                        x = x->parent;
                         rotateLeft(x);
                     }
 
-                    x->mParent->mData.mColor = rbcBlack;
-                    x->mParent->mParent->mData.mColor = rbcRed;
-                    rotateRight(x->mParent->mParent);
+                    x->parent->value.color = rbcBlack;
+                    x->parent->parent->value.color = rbcRed;
+                    rotateRight(x->parent->parent);
                 }
             } else {
-                y = x->mParent->mParent->mLeft;
+                y = x->parent->parent->left;
 
-                if (y->mData.mColor == rbcRed) {
-                    x->mParent->mData.mColor = rbcBlack;
-                    y->mData.mColor = rbcBlack;
-                    x->mParent->mParent->mData.mColor = rbcRed;
-                    x = x->mParent->mParent;
+                if (y->value.color == rbcRed) {
+                    x->parent->value.color = rbcBlack;
+                    y->value.color = rbcBlack;
+                    x->parent->parent->value.color = rbcRed;
+                    x = x->parent->parent;
                 } else {
-                    if (x == x->mParent->mLeft) {
-                        x = x->mParent;
+                    if (x == x->parent->left) {
+                        x = x->parent;
                         rotateRight(x);
                     }
 
-                    x->mParent->mData.mColor = rbcBlack;
-                    x->mParent->mParent->mData.mColor = rbcRed;
-                    rotateLeft(x->mParent->mParent);
+                    x->parent->value.color = rbcBlack;
+                    x->parent->parent->value.color = rbcRed;
+                    rotateLeft(x->parent->parent);
                 }
             }
         }
-        mRoot->mData.mColor = rbcBlack;
+        mRoot->value.color = rbcBlack;
 
         return ins;
     }
@@ -524,40 +536,40 @@ struct RBTree : public BST<RBData<T>> {
 
         Node *y, *x;
 
-        if ((z->mLeft == mSentinel) || (z->mRight == mSentinel))
+        if ((z->left == mSentinel) || (z->right == mSentinel))
             y = z;
         else
             y = next(z);
 
         // find child with which to replace y
-        if (y->mLeft != mSentinel)
-            x = y->mLeft;
+        if (y->left != mSentinel)
+            x = y->left;
         else
-            x = y->mRight;
+            x = y->right;
 
-        // splice child onto mParent
+        // splice child onto parent
         if (x != mSentinel)
-            x->mParent = y->mParent;
+            x->parent = y->parent;
 
-        if (y->mParent == mSentinel)
+        if (y->parent == mSentinel)
             // if deleting node is root, then replace root with x
             mRoot = x;
         else {
             // splice in child node
-            if (y == y->mParent->mLeft)
-                y->mParent->mLeft = x;
+            if (y == y->parent->left)
+                y->parent->left = x;
             else
-                y->mParent->mRight = x;
+                y->parent->right = x;
         }
 
         // if needed, save y data
         if (y != z)
-            swap(z->mData, y->mData);
+            swap(z->value, y->value);
 
-        updateNodeToRoot(y->mParent);
+        updateNodeToRoot(y->parent);
 
         // adjust tree under red-black rules
-        if (y != mSentinel && y->mData.mColor == rbcBlack)
+        if (y != mSentinel && y->value.color == rbcBlack)
             deleteFixup(x);
 
         destroyNode(y);
@@ -571,129 +583,128 @@ struct RBTree : public BST<RBData<T>> {
 
 protected:
     void rotateLeft(Node* node) {
-        if (node == mSentinel || node->mRight == mSentinel)
+        if (node == mSentinel || node->right == mSentinel)
             return;
 
-        Node* y = node->mRight;
+        Node* y = node->right;
 
         // turn y's left subtree into node's right subtree
-        node->mRight = y->mLeft;
-        if (y->mLeft != mSentinel)
-            y->mLeft->mParent = node;
+        node->right = y->left;
+        if (y->left != mSentinel)
+            y->left->parent = node;
 
-        // link node's mParent to y
-        y->mParent = node->mParent;
-        if (node->mParent == mSentinel)
+        // link node's parent to y
+        y->parent = node->parent;
+        if (node->parent == mSentinel)
             mRoot = y;
         else {
-            if (node == node->mParent->mLeft)
-                node->mParent->mLeft = y;
+            if (node == node->parent->left)
+                node->parent->left = y;
             else
-                node->mParent->mRight = y;
+                node->parent->right = y;
         }
 
         // put node on y's left
-        y->mLeft = node;
-        node->mParent = y;
+        y->left = node;
+        node->parent = y;
 
         updateNode(node);
         updateNode(y);
     }
 
     void rotateRight(Node* node) {
-        if (node == mSentinel || node->mLeft == mSentinel)
+        if (node == mSentinel || node->left == mSentinel)
             return;
 
-        Node* y = node->mLeft;
+        Node* y = node->left;
 
         // turn y's right subtree into node's left subtree
-        node->mLeft = y->mRight;
-        if (y->mRight != mSentinel)
-            y->mRight->mParent = node;
+        node->left = y->right;
+        if (y->right != mSentinel)
+            y->right->parent = node;
 
-        // link node's mParent to y
-        y->mParent = node->mParent;
-        if (node->mParent == mSentinel)
+        // link node's parent to y
+        y->parent = node->parent;
+        if (node->parent == mSentinel)
             mRoot = y;
         else {
-            if (node == node->mParent->mRight)
-                node->mParent->mRight = y;
+            if (node == node->parent->right)
+                node->parent->right = y;
             else
-                node->mParent->mLeft = y;
+                node->parent->left = y;
         }
 
         // put node on y's right
-        y->mRight = node;
-        node->mParent = y;
+        y->right = node;
+        node->parent = y;
 
         updateNode(node);
         updateNode(y);
     }
 
     void deleteFixup(Node* node) {
-        //assert(node != mSentinel);
         if (node == mSentinel)
             return;
 
         Node *w, *x = node;
-        while ((x != mRoot) && (x->mData.mColor == rbcBlack)) {
-            if (x == x->mParent->mLeft) {
-                w = x->mParent->mRight;
+        while ((x != mRoot) && (x->value.color == rbcBlack)) {
+            if (x == x->parent->left) {
+                w = x->parent->right;
 
-                if (w->mData.mColor == rbcRed) {
-                    w->mData.mColor = rbcBlack;
-                    x->mParent->mData.mColor = rbcRed;
-                    rotateLeft(x->mParent);
-                    w = x->mParent->mRight;
+                if (w->value.color == rbcRed) {
+                    w->value.color = rbcBlack;
+                    x->parent->value.color = rbcRed;
+                    rotateLeft(x->parent);
+                    w = x->parent->right;
                 }
 
-                if ((w->mLeft->mData.mColor == rbcBlack) && (w->mRight->mData.mColor == rbcBlack)) {
-                    w->mData.mColor = rbcRed;
-                    x = x->mParent;
+                if ((w->left->value.color == rbcBlack) && (w->right->value.color == rbcBlack)) {
+                    w->value.color = rbcRed;
+                    x = x->parent;
                 } else {
-                    if (w->mRight->mData.mColor == rbcBlack) {
-                        w->mLeft->mData.mColor = rbcBlack;
-                        w->mData.mColor = rbcRed;
+                    if (w->right->value.color == rbcBlack) {
+                        w->left->value.color = rbcBlack;
+                        w->value.color = rbcRed;
                         rotateRight(w);
-                        w = x->mParent->mRight;
+                        w = x->parent->right;
                     }
 
-                    w->mData.mColor = x->mParent->mData.mColor;
-                    x->mParent->mData.mColor = rbcBlack;
-                    w->mRight->mData.mColor = rbcBlack;
-                    rotateLeft(x->mParent);
+                    w->value.color = x->parent->value.color;
+                    x->parent->value.color = rbcBlack;
+                    w->right->value.color = rbcBlack;
+                    rotateLeft(x->parent);
                     x = mRoot;
                 }
             } else {
-                w = x->mParent->mLeft;
+                w = x->parent->left;
 
-                if (w->mData.mColor == rbcRed) {
-                    w->mData.mColor = rbcBlack;
-                    x->mParent->mData.mColor = rbcRed;
-                    rotateRight(x->mParent);
-                    w = x->mParent->mLeft;
+                if (w->value.color == rbcRed) {
+                    w->value.color = rbcBlack;
+                    x->parent->value.color = rbcRed;
+                    rotateRight(x->parent);
+                    w = x->parent->left;
                 }
 
-                if ((w->mRight->mData.mColor == rbcBlack) && (w->mLeft->mData.mColor == rbcBlack)) {
-                    w->mData.mColor = rbcRed;
-                    x = x->mParent;
+                if ((w->right->value.color == rbcBlack) && (w->left->value.color == rbcBlack)) {
+                    w->value.color = rbcRed;
+                    x = x->parent;
                 } else {
-                    if (w->mLeft->mData.mColor == rbcBlack) {
-                        w->mRight->mData.mColor = rbcBlack;
-                        w->mData.mColor = rbcRed;
+                    if (w->left->value.color == rbcBlack) {
+                        w->right->value.color = rbcBlack;
+                        w->value.color = rbcRed;
                         rotateLeft(w);
-                        w = x->mParent->mLeft;
+                        w = x->parent->left;
                     }
 
-                    w->mData.mColor = x->mParent->mData.mColor;
-                    x->mParent->mData.mColor = rbcBlack;
-                    w->mLeft->mData.mColor = rbcBlack;
-                    rotateRight(x->mParent);
+                    w->value.color = x->parent->value.color;
+                    x->parent->value.color = rbcBlack;
+                    w->left->value.color = rbcBlack;
+                    rotateRight(x->parent);
                     x = mRoot;
                 }
             }
         }
 
-        x->mData.mColor = rbcBlack;
+        x->value.color = rbcBlack;
     }
 };
