@@ -103,6 +103,7 @@ struct Tree {
 
         queue<int> Q;
         Q.push(root);
+        mP[0][root] = -1;
         visited[root] = true;
         while (!Q.empty()) {
             int u = Q.front();
