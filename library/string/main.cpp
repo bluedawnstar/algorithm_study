@@ -11,6 +11,7 @@ int main(void) {
     TEST(LcpArraySparseTable);
     TEST(SuffixArraySparseTable);
     TEST(DistinctSubstringCounter);
+    TEST(PalindromicSubsequence);
     TEST(PalindromicString);
     TEST(Split);
     TEST(LongestCommonSubstring_queryTwoStringAmongStrings);

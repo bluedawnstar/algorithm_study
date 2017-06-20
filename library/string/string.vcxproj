@@ -148,6 +148,7 @@
     <ClCompile Include="longestCommonSubstring_queryTwoStringAmongStrings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="palindromicString.cpp" />
+    <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="prefixFunction.cpp" />
     <ClCompile Include="split.cpp" />
     <ClCompile Include="suffixArray.cpp" />
