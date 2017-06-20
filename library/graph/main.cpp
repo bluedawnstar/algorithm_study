@@ -8,4 +8,6 @@ using namespace std;
 int main(void) {
     TEST(ShortestPath);
     TEST(MinCostMaxFlow);
+    TEST(BasicDigraph);
+    TEST(BCC);
 }

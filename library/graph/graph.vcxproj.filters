@@ -27,5 +27,16 @@
     <ClCompile Include="basicDigraph.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bcc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bcc.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="cycleDigraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

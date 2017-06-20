@@ -147,9 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basicDigraph.cpp" />
+    <ClCompile Include="bcc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minCostMaxFlow.cpp" />
     <ClCompile Include="shortestPath.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bcc.h" />
+    <ClInclude Include="cycleDigraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
