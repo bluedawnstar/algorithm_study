@@ -94,6 +94,32 @@ pair<int, pair<int, int>> getMaxRepeatedSubstring(string s) {
 }
 
 
+// return matched lengths at each position
+vector<int> kmpL(string s, string p) {
+    vector<int> res;
+    vector<int> pref = prefixFunction(p);
+
+    int n = (int)s.size(), m = (int)p.size(), j = 0;
+    for (int i = 0; i < n; i++) {
+        while (j > 0 && s[i] != p[j])
+            j = pref[j - 1];
+
+        if (s[i] == p[j]) {
+            res.push_back(j + 1);
+            if (j == m - 1) {
+                //P is found at i - m + 1
+                j = pref[j];
+            } else {
+                j++;
+            }
+        } else {
+            res.push_back(j);
+        }
+    }
+
+    return res;
+}
+
 vector<int> kmp(string s, string p) {
     vector<int> res;
     vector<int> pref = prefixFunction(p);
@@ -144,7 +170,7 @@ vector<int> kmp(string s, string p, const vector<int>& prefix) {
 #include "../common/iostreamhelper.h"
 
 void testPrefixFunction() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    //return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- checkRepeatedString() ---------" << endl;            
     cout << checkRepeatedString("abcdefg") << endl;                 // (-1, -1)
