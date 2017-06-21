@@ -6,7 +6,7 @@ struct SuffixAutomation {
 
     struct StateT {
         int len;                    // the length of the longest string in a class
-        int suffixLink;             // 
+        int suffixLink;             //  
         int edges[MaxCharN];        // labeled edges
     };
     int N;

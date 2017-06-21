@@ -9,7 +9,7 @@
 
 using namespace std;
 
-// https://saisumit.wordpress.com/2016/01/26/suffix-automaton/
+// https://saisumit.wordpress.com/2016/01/26/suffix-automaton/ 
 
 namespace SuffixAutomationNS {
 #include "suffixAutomation.h"

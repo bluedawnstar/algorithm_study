@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../tree/sparseTable.h"
-#include "../tree/treeSegmentTree.h"
-#include "../tree/treeFenwickTree.h"
+#include "../tree/segmentTree.h"
+#include "../tree/fenwickTree.h"
 
 // 'T' is a type of result
 template <typename T>

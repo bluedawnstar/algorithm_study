@@ -54,6 +54,9 @@
     <ClCompile Include="palindromicSubsequence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixAutomation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -69,6 +72,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixArray.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixAutomation.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

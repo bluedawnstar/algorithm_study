@@ -10,6 +10,7 @@ int main(void) {
     TEST(SuffixArray);
     TEST(LcpArraySparseTable);
     TEST(SuffixArraySparseTable);
+    TEST(SuffixAutomation);
     TEST(DistinctSubstringCounter);
     TEST(PalindromicSubsequence);
     TEST(PalindromicString);
