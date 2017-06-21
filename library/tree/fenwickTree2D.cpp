@@ -1,6 +1,6 @@
 using namespace std;
 
-#include "treeFenwickTree.h"
+#include "fenwickTree.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

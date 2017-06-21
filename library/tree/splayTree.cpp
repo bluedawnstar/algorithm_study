@@ -2,7 +2,7 @@ using namespace std;
 
 // http://cubelover.tistory.com/10
 
-#include "treeSplay.h"
+#include "splayTree.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -16,7 +16,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-#include "treeBST.h"
+#include "redBlackTree.h"
 
 void checkSearch(RBTree<int>& rbt, vector<int>& in);
 void checkIndex(RBTree<int>& rbt, vector<int>& in);
@@ -38,7 +38,7 @@ void checkIndex(SplayTree<int>& spt, vector<int>& in) {
 }
 
 void testSplay() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Splay Tree ----------------------------------" << endl;
 
@@ -150,19 +150,19 @@ void testSplay() {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
 
-            PROFILE_START(1);
+            PROFILE_START(0);
             for (int i = 0; i < (int)t.size(); i++) {
                 if (!rbt.erase(t[i]))
                     cerr << "It'll never be shown!" << endl;
             }
-            PROFILE_STOP(1);
+            PROFILE_STOP(0);
 
-            PROFILE_START(0);
+            PROFILE_START(1);
             for (int i = 0; i < (int)t.size(); i++) {
                 if (!spt.erase(t[i]))
                     cerr << "It'll never be shown!" << endl;
             }
-            PROFILE_STOP(0);
+            PROFILE_STOP(1);
         }
     }
     cout << "OK!" << endl;

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "treeSegmentTree.h"
+#include "segmentTree.h"
 #include "sparseTable.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////

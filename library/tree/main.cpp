@@ -17,9 +17,9 @@ int main(void) {
     TEST(Trie);
     TEST(SuffixTrie);
     TEST(SuffixTree);
-    TEST(SuffixAutomation);
     TEST(SparseTableLCA);
     TEST(BST);
     TEST(Splay);
+    TEST(Treap);
     TEST(LinkCut);
 }

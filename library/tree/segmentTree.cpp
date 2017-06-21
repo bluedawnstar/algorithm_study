@@ -5,8 +5,8 @@
 
 using namespace std;
 
-#include "treeSegmentTree.h"
-#include "treeSegmentTreeLazy.h"
+#include "segmentTree.h"
+#include "segmentTreeLazy.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

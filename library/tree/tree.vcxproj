@@ -144,37 +144,37 @@
   <ItemGroup>
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
-    <ClCompile Include="suffixAutomation.cpp" />
     <ClCompile Include="suffixTrie.cpp" />
-    <ClCompile Include="treeBST.cpp" />
-    <ClCompile Include="treeFenwickTree.cpp" />
-    <ClCompile Include="treeFenwickTree2D.cpp" />
-    <ClCompile Include="treeFenwickTreeMultAdd.cpp" />
+    <ClCompile Include="redBlackTree.cpp" />
+    <ClCompile Include="fenwickTree.cpp" />
+    <ClCompile Include="fenwickTree2D.cpp" />
+    <ClCompile Include="fenwickTreeMultAdd.cpp" />
+    <ClCompile Include="treap.cpp" />
     <ClCompile Include="treeHeavyLightDecomposition.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="treeBasic.cpp" />
     <ClCompile Include="treeLinkCut.cpp" />
     <ClCompile Include="treeLinkCutTree.cpp" />
     <ClCompile Include="treeMO.cpp" />
-    <ClCompile Include="treeSegmentTree.cpp" />
+    <ClCompile Include="segmentTree.cpp" />
     <ClCompile Include="suffixTree.cpp" />
-    <ClCompile Include="treeSplay.cpp" />
+    <ClCompile Include="splayTree.cpp" />
     <ClCompile Include="trie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTableLCA.h" />
-    <ClInclude Include="suffixAutomation.h" />
     <ClInclude Include="suffixTree.h" />
+    <ClInclude Include="treap.h" />
     <ClInclude Include="treeBasic.h" />
-    <ClInclude Include="treeBST.h" />
-    <ClInclude Include="treeFenwickTree.h" />
+    <ClInclude Include="redBlackTree.h" />
+    <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="treeHeavyLightDecomposition.h" />
     <ClInclude Include="treeLinkCut.h" />
-    <ClInclude Include="treeSegmentTree.h" />
-    <ClInclude Include="treeSegmentTreeLazy.h" />
-    <ClInclude Include="treeSplay.h" />
+    <ClInclude Include="segmentTree.h" />
+    <ClInclude Include="segmentTreeLazy.h" />
+    <ClInclude Include="splayTree.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="suffixTrie.h" />
   </ItemGroup>

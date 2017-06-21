@@ -8,7 +8,7 @@
 using namespace std;
 
 #include "treeBasic.h"
-#include "treeSegmentTree.h"
+#include "segmentTree.h"
 #include "treeHeavyLightDecomposition.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
