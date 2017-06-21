@@ -348,7 +348,7 @@ struct BitSet {
 };
 
 
-// BitSet class with mBitCnt member variable
+// BitSet class without mBitCnt member variable
 struct BitSetSimple {
     static const int BIT_SIZE = sizeof(unsigned) * 8;
     static const unsigned BIT_ALL = (unsigned)-1;
