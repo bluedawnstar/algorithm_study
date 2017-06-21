@@ -203,8 +203,8 @@ private:
 #include "../common/profile.h"
 
 #include <algorithm>
-#include "../tree/treeSegmentTree.h"
-#include "../tree/treeSegmentTreeLazy.h"
+#include "../tree/segmentTree.h"
+#include "../tree/segmentTreeLazy.h"
 
 void testSqrtDecomposition() {
     //return; //TODO: if you want to test functions of this file, make this line a comment.
