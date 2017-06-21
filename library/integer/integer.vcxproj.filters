@@ -33,6 +33,9 @@
     <ClCompile Include="gcd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bit.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -45,6 +48,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="IntMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bit.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
