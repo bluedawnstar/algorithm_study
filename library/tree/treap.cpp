@@ -1,3 +1,5 @@
+#include <cassert>
+
 using namespace std;
 
 #include "treap.h"
@@ -28,7 +30,7 @@ void checkSearch(Treap<int>& tr, vector<int>& in) {
 }
 
 void checkIndex(Treap<int>& tr, vector<int>& in) {
-    assert((tr.mRoot != nullptr ? tr.mRoot->cnt : 0) == spt.size());
+    assert((tr.mRoot != nullptr ? tr.mRoot->cnt : 0) == tr.size());
     assert(tr.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {
         assert(tr[i]->value == in[i]);
@@ -37,7 +39,7 @@ void checkIndex(Treap<int>& tr, vector<int>& in) {
 }
 
 void testTreap() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Treap ----------------------------------" << endl;
 

@@ -53,10 +53,10 @@ struct Treap {
     Node* operator [](int nth) {
         assert((mRoot ? mRoot->cnt : 0) == mCount);
 
-        if (index < 0 || index >= mCount)
+        if (nth < 0 || nth >= mCount)
             return nullptr;
 
-        int n = index;
+        int n = nth;
         Node* p = mRoot;
         while (p) {
             while (p->left && p->left->cnt > n)
@@ -95,11 +95,14 @@ struct Treap {
     Node* insert(const T& value) {
         Node* p = createNode(value);
         mRoot = insert(mRoot, p);
+        mRoot->parent = nullptr;
         return p;
     }
 
     bool erase(const T& key) {
         mRoot = erase(mRoot, key);
+        if (mRoot)
+            mRoot->parent = nullptr;
         return true;
     }
 
@@ -142,6 +145,7 @@ protected:
             root->left = ls.second;
             if (ls.second)
                 ls.second->parent = root;
+            update(root);
             return make_pair(ls.first, root);
         }
     }
@@ -160,18 +164,18 @@ protected:
                 splitted.second->parent = node;
             update(node);
             return node;
-        } else if (node->value < root->value) {
+        }
+
+        if (node->value < root->value) {
             root->left = insert(root->left, node);
             if (root->left)
                 root->left->parent = root;
-            update(root);
         } else {
             root->right = insert(root->right, node);
             if (root->right)
                 root->right->parent = root;
-            update(root);
         }
-
+        update(root);
         return root;
     }
 
@@ -181,6 +185,7 @@ protected:
             return b;
         if (!b)
             return a;
+
         if (a->priority < b->priority) {
             b->left = merge(a, b->left);
             if (b->left)
@@ -199,11 +204,13 @@ protected:
     Node* erase(Node* root, const T& key) {
         if (!root)
             return root;
+        
         if (root->value == key) {
             Node* res = merge(root->left, root->right);
             destroyNode(root);
             return res;
         }
+
         if (key < root->value) {
             root->left = erase(root->left, key);
             if (root->left)
