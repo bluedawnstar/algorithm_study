@@ -21,5 +21,5 @@ int main(void) {
     TEST(BST);
     TEST(Splay);
     TEST(Treap);
-    TEST(LinkCut);
+    TEST(LinkCutTree);
 }

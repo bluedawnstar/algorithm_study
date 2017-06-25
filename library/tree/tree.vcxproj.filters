@@ -30,9 +30,6 @@
     <ClCompile Include="sparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="treeLinkCutTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="trie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -43,9 +40,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="sparseTableLCA.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="treeLinkCut.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="splayTree.cpp">
@@ -67,6 +61,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="treap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="linkCutTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,9 +92,6 @@
     <ClInclude Include="sparseTableLCA.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="treeLinkCut.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="treap.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -114,6 +108,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="redBlackTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="linkCutTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

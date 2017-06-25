@@ -153,8 +153,7 @@
     <ClCompile Include="treeHeavyLightDecomposition.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="treeBasic.cpp" />
-    <ClCompile Include="treeLinkCut.cpp" />
-    <ClCompile Include="treeLinkCutTree.cpp" />
+    <ClCompile Include="linkCutTree.cpp" />
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="segmentTree.cpp" />
     <ClCompile Include="suffixTree.cpp" />
@@ -171,7 +170,7 @@
     <ClInclude Include="redBlackTree.h" />
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="treeHeavyLightDecomposition.h" />
-    <ClInclude Include="treeLinkCut.h" />
+    <ClInclude Include="linkCutTree.h" />
     <ClInclude Include="segmentTree.h" />
     <ClInclude Include="segmentTreeLazy.h" />
     <ClInclude Include="splayTree.h" />

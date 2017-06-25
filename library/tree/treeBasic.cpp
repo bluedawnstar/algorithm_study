@@ -133,6 +133,7 @@ long dfsHash(int v, int p) {
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/profile.h"
 
 #define MAXN    10000           // TODO: modify the maximum number of nodes
 #define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
@@ -195,7 +196,9 @@ static void printTree(Tree<MAXN, LOGN>& tree) {
 }
 
 void testTreeBasic() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
+
+    cout << "--- Tree Basic ----------------------------------" << endl;
 
     Tree<MAXN, LOGN> tree;
 
@@ -236,6 +239,7 @@ void testTreeBasic() {
     tree.dfsIter(0);    // step2: make depth and parent table
     tree.makeLcaTable();// step3: make LCA table
 
+    PROFILE_START(0);
     int errCnt = 0;
     for (int i = 0; i < 100000; i++) {
         int u = rand() % tree.mN;
@@ -262,6 +266,7 @@ void testTreeBasic() {
             errCnt++;
         }
     }
+    PROFILE_STOP(0);
     if (!errCnt)
         cout << "OK!" << endl;
 }
