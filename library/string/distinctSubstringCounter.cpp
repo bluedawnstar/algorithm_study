@@ -11,6 +11,7 @@ using namespace std;
 #include <cassert>
 #include <iostream>
 #include <map>
+#include "suffixAutomation.h"
 #include "../common/iostreamhelper.h"
 
 template <typename T>
@@ -20,7 +21,7 @@ template <typename T>
 vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n);
 
 void testDistinctSubstringCounter() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    //return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- DistinctSubstringCounter class -------------" << endl;
 
@@ -50,9 +51,11 @@ void testDistinctSubstringCounter() {
     cout << "*** test with Suffix Automation" << endl;
     {
         SuffixAutomationWithBIT<long long> sa((int)S.length());
+
         sa.init();
         for (int i = 0; i < (int)S.length(); i++) {
             sa.extend(S[i]);
+
             for (int j = 0; j <= i; j++) {
                 long long result = sa.query(j);
                 //cout << "substring count (" << j << ", " << i << ") = " << result << endl;
