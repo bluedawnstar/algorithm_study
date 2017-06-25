@@ -209,7 +209,7 @@ private:
     }
 };
 
-#include "../tree/suffixAutomation.h"
+#include "suffixAutomation.h"
 
 struct LongestCommonStringLengthWithSuffixAutomation {
     int mN;                                             // the number of strings
@@ -220,14 +220,6 @@ struct LongestCommonStringLengthWithSuffixAutomation {
     unordered_map<int, unordered_map<int, int>> mQIndex;// (L, R) -> Q index
     vector<unordered_map<int, int>> mQuery;             // R --> (L, Q index)
 
-                                                        // 
-                                                        // 1) how to reduce redundant questions
-                                                        //      mQuery[R][L] = the index of answer to (L, R) or (R, L)
-                                                        // 2) how to reduce the number of comparing between two suffixes 
-                                                        //      update forward and backward instead of making all pairs
-                                                        // 3) how to use suffix array, LCP array, sparse table, etc
-                                                        //      
-
     vector<SuffixAutomation> mSA;
 
     vector<int> solve(const vector<string>& strs, const vector<pair<int, int>>& query) {
@@ -236,7 +228,7 @@ struct LongestCommonStringLengthWithSuffixAutomation {
 
         for (int i = 0; i < mN; i++) {
             SuffixAutomation t(strs[i].length());
-            t.extend(strs[i], (int)strs[i].length());
+            t.extend(strs[i]);
             mSA.emplace_back(std::move(t));
         }
 
@@ -244,7 +236,7 @@ struct LongestCommonStringLengthWithSuffixAutomation {
         mQIn.resize(mQ);
         mQuery.resize(mN);   // R --> (L, Q index)
 
-                             // grouping queries for speed up
+        // grouping queries for speed up
         for (int i = 0; i < mQ; i++) {
             int L = query[i].first;
             int R = query[i].second;
@@ -286,12 +278,13 @@ private:
     int lcs(SuffixAutomation& sa, const string& t) {
         int v = 0, l = 0, best = 0, bestpos = 0;
         for (int i = 0; i < (int)t.length(); ++i) {
-            while (v && !sa.state[v].edges[t[i] - 'a']) {
+            int ch = SuffixAutomation::ch2i(t[i]);
+            while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
                 l = sa.state[v].len;
             }
-            if (sa.state[v].edges[t[i] - 'a']) {
-                v = sa.state[v].edges[t[i] - 'a'];
+            if (sa.state[v].next[ch]) {
+                v = sa.state[v].next[ch];
                 ++l;
             }
             if (l > best)
@@ -310,7 +303,7 @@ private:
 
 
 void testLongestCommonSubstring_queryTwoStringAmongStrings() {
-    //return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Testing for Longest Common Substring Length Queries -------------" << endl;
 

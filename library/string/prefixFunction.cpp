@@ -170,7 +170,7 @@ vector<int> kmp(string s, string p, const vector<int>& prefix) {
 #include "../common/iostreamhelper.h"
 
 void testPrefixFunction() {
-    //return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- checkRepeatedString() ---------" << endl;            
     cout << checkRepeatedString("abcdefg") << endl;                 // (-1, -1)

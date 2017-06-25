@@ -105,7 +105,7 @@ string longestPalindromicSubsequence(T s, int N) {
 #include "../common/iostreamhelper.h"
 
 void testPalindromicSubsequence() {
-    //return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- The number of palindromic subsequences ---" << endl;
     cout << countPalindromicSubsequence("a", 1) << endl;
