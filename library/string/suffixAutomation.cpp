@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <set>
 #include <algorithm>
 #include <iostream>
 
@@ -18,69 +19,279 @@ using namespace SuffixAutomationNS;
 
 #define MAXN    100000
 
-//1. Number of different substrings of a given string .
-static vector<long long> gD(MAXN + 10, 0);
-long long countSubstrings(SuffixAutomation& sa, int u) {
+// 1. Number of different substrings of a given string .
+static vector<long long> gD(MAXN * 2, 0);
+static long long countSubstrings(SuffixAutomation& sa, int u) {
     if (gD[u])
         return gD[u];
 
     long long res = 1;
 
     for (int i = 0; i < SuffixAutomation::MaxCharN; i++) {
-        if (sa.state[u].edges[i])
-            res += countSubstrings(sa, sa.state[u].edges[i]);
+        if (sa.state[u].next[i])
+            res += countSubstrings(sa, sa.state[u].next[i]);
     }
 
     return gD[u] = res;
 }
 
-//
-//2. Total length of various substrings.
-//3. Lexographically kth substring.
-//4. smallest Cyclic shift.
-//5. No.of occurrences of a pattern in the given Text.
-//6. Position of all Occurrences.
+long long countSubstrings(SuffixAutomation& sa) {
+    fill(gD.begin(), gD.end(), 0);
+    return countSubstrings(sa, 0) - 1;
+}
 
-//7. Longest common substring.
-// 
+
+// 2. Total length of all distinct substrings.
+static vector<long long> gTotLen(MAXN * 2, 0);
+static long long totalLengthOfAllDistinctSubstrings(SuffixAutomation& sa, int u) {
+    long long res = 0;
+
+    if (gTotLen[u])
+        return gTotLen[u];
+
+    for (int i = 0; i < SuffixAutomation::MaxCharN; i++)
+        if (sa.state[u].next[i])
+            //res += totalLengthOfAllDistinctSubstrings(sa, sa.state[u].next[i]) + gD[sa.state[u].next[i]];
+            res += totalLengthOfAllDistinctSubstrings(sa, sa.state[u].next[i]) + countSubstrings(sa, sa.state[u].next[i]);
+
+    return gTotLen[u] = res;
+}
+
+long long totalLengthOfAllDistinctSubstrings(SuffixAutomation& sa) {
+    fill(gD.begin(), gD.end(), 0);
+    countSubstrings(sa);
+
+    fill(gTotLen.begin(), gTotLen.end(), 0);
+    return totalLengthOfAllDistinctSubstrings(sa, 0);
+}
+
+
+// 3. Lexographically kth substring.
+// kth >= 1
+static bool kthSubstring(SuffixAutomation& sa, string& res, int kth, int u, int& path) {
+    for (int i = 0; i < SuffixAutomation::MaxCharN; i++) {
+        if (sa.state[u].next[i]) {
+            if (++path == kth || kthSubstring(sa, res, kth, sa.state[u].next[i], path)) {
+                res.push_back('a' + i);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// kth >= 0
+string kthSubstring(SuffixAutomation& sa, int kth) {
+    string res;
+    int path = 0;
+
+    kthSubstring(sa, res, kth + 1, 0, path);
+
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+
+// 4. Smallest Cyclic Shift to obtain lexicographical smallest of All possible  
+int minShift(const string& s) {
+    string ss = s + s;
+    SuffixAutomation sa((int)ss.length());
+    sa.init();
+    sa.extend(ss);
+
+    int res = -1;
+    int len = 0, cur = 0;
+
+    do {
+        for (int j = 0; j < SuffixAutomation::MaxCharN; j++) {
+            if (sa.state[cur].next[j]) {
+                if (++len == (int)s.length())
+                    res = sa.state[cur].rightEnd - (int)s.length() + 2;
+                else
+                    cur = sa.state[cur].next[j];
+                break;
+            }
+        }
+    } while (res < 0);
+
+    return min(res, (int)s.length() - res);
+}
+
+
+// 5. position of first occurrence
+int findFirst(SuffixAutomation& sa, const string& pattern) {
+    int u = 0;
+    for (int i = 0; i < (int)pattern.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(pattern[i])];
+        if (u <= 0)
+            return -1;
+    }
+    return sa.state[u].rightEnd - (int)pattern.length() + 1;
+}
+
+
+// 6. Position of all occurrences.
+static void dfsFind(SuffixAutomation& sa, vector<vector<int>>& children, int len, vector<int>& res, int u) {
+    if (u <= 0)
+        return;
+
+    res.push_back(sa.state[u].rightEnd - len + 1);
+    for (int v : children[u])
+        dfsFind(sa, children, len, res, v);
+}
+
+vector<int> findAll(SuffixAutomation& sa, const string& pattern) {
+    vector<vector<int>> children(sa.N);
+    for (int u = 1; u < sa.N; u++) {
+        children[sa.state[u].suffixLink].push_back(u);
+    }
+
+    int u = 0;
+    for (int i = 0; i < (int)pattern.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(pattern[i])];
+        if (u <= 0)
+            break;
+    }
+
+    vector<int> res;
+    if (u > 0)
+        dfsFind(sa, children, (int)pattern.length(), res, u);
+    return move(res);
+}
+
+
+vector<vector<int>> makeLinkTree(SuffixAutomation& sa) {
+    vector<vector<int>> children(sa.N);
+    for (int u = 1; u < sa.N; u++) {
+        children[sa.state[u].suffixLink].push_back(u);
+    }
+    return move(children);
+}
+
+vector<int> findAll(SuffixAutomation& sa, vector<vector<int>>& children, const string& pattern) {
+    int u = 0;
+    for (int i = 0; i < (int)pattern.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(pattern[i])];
+        if (u <= 0)
+            break;
+    }
+
+    vector<int> res;
+    if (u > 0)
+        dfsFind(sa, children, (int)pattern.length(), res, u);
+    return move(res);
+}
+
+
+// 7. count number of occurrences
+vector<int> makeCountTable(SuffixAutomation& sa) {
+    vector<pair<int, int>> base;
+    vector<int> cnt(sa.N);
+
+    for (int i = 1; i < sa.N; i++) {
+        cnt[i] = !sa.state[i].cloned;
+        base.emplace_back(sa.state[i].len, i);
+    }
+    sort(base.begin(), base.end());
+
+    for (int i = (int)base.size() - 1; i >= 0; i--)
+        cnt[sa.state[base[i].second].suffixLink] += cnt[base[i].second];
+
+    return move(cnt);
+}
+
+int countPattern(SuffixAutomation& sa, const vector<int>& countTable, const string& pattern) {
+    int u = 0;
+    for (int i = 0; i < (int)pattern.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(pattern[i])];
+        if (u <= 0)
+            return 0;
+    }
+    return countTable[u];
+}
+
+
+// 8. Longest common substring.
+
 // It's better that t's length is shorter than SuffixAutomation's length
-int lcs(SuffixAutomation& sa, string& t) {
-    int v = 0, l = 0, best = 0, bestpos = 0;
+int lengthOfLcs(SuffixAutomation& sa, string& t) {
+    int v = 0, len = 0, bestPos = 0, bestLen = 0;
     for (int i = 0; i < (int)t.length(); ++i) {
-        while (v && !sa.state[v].edges[t[i] - 'a']) {
+        int ch = SuffixAutomation::ch2i(t[i]);
+        while (v && !sa.state[v].next[ch]) {
             v = sa.state[v].suffixLink;
-            l = sa.state[v].len;
+            len = sa.state[v].len;
         }
-        if (sa.state[v].edges[t[i] - 'a']) {
-            v = sa.state[v].edges[t[i] - 'a'];
-            ++l;
+        if (sa.state[v].next[ch]) {
+            v = sa.state[v].next[ch];
+            ++len;
         }
-        if (l > best)
-            best = l, bestpos = i;
+        if (len > bestLen) {
+            bestLen = len;
+            bestPos = i;
+        }
     }
-    return best;
+    return bestLen;
 }
 
-string lcsStr(SuffixAutomation& sa, string& t) {
-    int v = 0, l = 0, best = 0, bestpos = 0;
+string lcs(SuffixAutomation& sa, string& t) {
+    int v = 0, len = 0, bestPos = 0, bestLen = 0;
     for (int i = 0; i < (int)t.length(); ++i) {
-        while (v && !sa.state[v].edges[t[i] - 'a']) {
+        int ch = SuffixAutomation::ch2i(t[i]);
+        while (v && !sa.state[v].next[ch]) {
             v = sa.state[v].suffixLink;
-            l = sa.state[v].len;
+            len = sa.state[v].len;
         }
-        if (sa.state[v].edges[t[i] - 'a']) {
-            v = sa.state[v].edges[t[i] - 'a'];
-            ++l;
+        if (sa.state[v].next[ch]) {
+            v = sa.state[v].next[ch];
+            ++len;
         }
-        if (l > best)
-            best = l, bestpos = i;
+        if (len > bestLen) {
+            bestLen = len;
+            bestPos = i;
+        }
     }
-    return t.substr(bestpos - best + 1, best);
+    return t.substr(bestPos - bestLen + 1, bestLen);
 }
 
-//8. Longest common substring of multiple substring.
-//9. Search for shortest substring that is not included in this string.
-//
+// 9. Longest common substring of multiple substring.
+// step1) make SuffixAutomation instances of all strings
+// step2) call lengthOfLcs(sa[L], str[R]) - length(str[R]) <= length(str[L])
+//        if length(str[L]) < length(str[R]) then swap(L, R)
+
+// 10. Find whether a given string s is a suffix of sa.
+bool isSuffix(SuffixAutomation& sa, const string& s) {
+    vector<int> term = sa.getTerminals();
+
+    int u = 0;
+    for (int i = 0; i < (int)s.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(s[i])];
+        if (u <= 0)
+            return false;
+    }
+    return find(term.begin(), term.end(), u) != term.end();
+}
+
+bool isSuffix(SuffixAutomation& sa, vector<int>& term, const string& s) {
+    int u = 0;
+    for (int i = 0; i < (int)s.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(s[i])];
+        if (u <= 0)
+            return false;
+    }
+    return find(term.begin(), term.end(), u) != term.end();
+}
+
+bool isSuffixWithSortedTerm(SuffixAutomation& sa, vector<int>& term, const string& s) {
+    int u = 0;
+    for (int i = 0; i < (int)s.length(); i++) {
+        u = sa.state[u].next[SuffixAutomation::ch2i(s[i])];
+        if (u <= 0)
+            return false;
+    }
+    return binary_search(term.begin(), term.end(), u);
+}
+
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -90,99 +301,125 @@ string lcsStr(SuffixAutomation& sa, string& t) {
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-/*
-void dump(SuffixTree& tree, SuffixTree::Node* p, int idx, int level, bool showSuffixIndex = false) {
-    if (!p)
-        return;
-
-    for (int i = 0; i < level; i++)
-        cout << "+-";
-    if (idx >= 0) {
-        cout << " ";
-        for (int i = 0; i < p->getLength(); i++)
-            cout << tree.mText[p->begin + i];
-        if (showSuffixIndex)
-            cout << " (" << p->suffixIndex << ")";
-        cout << endl;
-    }
-    for (int i = 0; i < SuffixTree::MaxCharN; i++) {
-        if (p->children[i])
-            dump(tree, p->children[i], i, level + 1, showSuffixIndex);
-    }
-}
-*/
-
 void testSuffixAutomation() {
     //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Suffix Automation -----------------------------------" << endl;
 
-    cout << "Test cases are not ready." << endl;
-    
-    /*
-    {
-        SuffixAutomation sa(100);
-        const char* s;
+    string s("aabaa");
+    SuffixAutomation sa(10);
 
-        const char* treeS = "abdadafaaabdfaeef";
-        tree.build(treeS, strlen(treeS));
+    sa.extend(s);
 
-        cout << "*** after build ***" << endl;
-        dump(tree, &tree.mRoot, -1, 0, true);
+    //--- countSubstrings() ---
+    cout << "countSubstrings(" << s << ") : " << countSubstrings(sa) << endl;
+    assert(countSubstrings(sa) == 11);
 
-        s = "afaabda"; assert(tree.search(s, strlen(s)) == make_pair(4, -1));
-        s = "abdadafaaabdfaeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), 0));
-        s = "aeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), (int)strlen(treeS) - (int)strlen(s)));
-        s = "abdfaeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), (int)strlen(treeS) - (int)strlen(s)));
+    //--- totalLengthOfAllDistinctSubstrings() ---
+    cout << "totalLengthOfAllDistinctSubstrings(" << s << ") : " << totalLengthOfAllDistinctSubstrings(sa) << endl;
+    assert(totalLengthOfAllDistinctSubstrings(sa) == 30);
 
-        // test extendSuffix()
+    //--- kthSubstring() ---
+    int cnt = (int)countSubstrings(sa);
+    for (int i = 0; i < cnt; i++)
+        cout << "kthSubstring(" << s << ", " << i << ") : " << kthSubstring(sa, i) << endl;
 
-        tree.clear();
-
-        cout << "*** after clear ***" << endl;
-        dump(tree, &tree.mRoot, -1, 0);
-        s = "a"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "ab"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "b"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-
-        tree.extendSuffix('a');
-        cout << "*** after extend 'a'" << endl;
-        dump(tree, &tree.mRoot, -1, 0);
-        s = "a"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "ab"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "b"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-
-        tree.extendSuffix('b');
-        cout << "*** after extend 'b'" << endl;
-        dump(tree, &tree.mRoot, -1, 0);
-        s = "a"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "ab"; assert(tree.search(s, strlen(s)) == make_pair(2, -1));
-        s = "b"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-
-        cout << "OK!" << endl;
+    //--- minShift() ---
+    pair<string, int> minShiftTest[] = {
+        { "aab", 0 },
+        { "aba", 1 },
+        { "baa", 1 },
+        { "bab", 1 },
+        { "abaa", 2 }
+    };
+    for (int i = 0; i < sizeof(minShiftTest) / sizeof(minShiftTest[0]); i++) {
+        cout << "minShift(" << minShiftTest[i].first << ") : " << minShift(minShiftTest[i].first) << endl;
+        assert(minShift(minShiftTest[i].first) == minShiftTest[i].second);
     }
 
-    cout << "*** suffix tree of \"xabxac\" ***" << endl;
-    {
-        SuffixTree tree;
-
-        const char* treeS = "xabxac";
-        {
-            tree.clear();
-
-            for (int i = 0; treeS[i]; i++) {
-                tree.extendSuffix(treeS[i]);
-                cout << "*** character '" << treeS[i] << "' added " << endl;
-                dump(tree, &tree.mRoot, -1, 0);
-            }
-
-            tree.setSuffixIndex();
-            cout << "*** with suffix index *** " << endl;
-            dump(tree, &tree.mRoot, -1, 0, true);
-        }
+    //--- findFirst() ---
+    pair<string, int> findFirstTest[] = {
+        { "a", 0 },
+        { "ab", 1 },
+        { "ba", 2 },
+        { "baa", 2 },
+        { "aba", 1 },
+        { "aaa", -1 },
+        { "bab", -1 },
+    };
+    for (int i = 0; i < sizeof(findFirstTest) / sizeof(findFirstTest[0]); i++) {
+        cout << "findFirst(" << findFirstTest[i].first << ") : " << findFirst(sa, findFirstTest[i].first) << endl;
+        assert(findFirst(sa, findFirstTest[i].first) == findFirstTest[i].second);
     }
-    */
+
+    //--- findAll() ---
+    cout << "findAll(" << "a" << ") : " << findAll(sa, "a") << endl;
+    cout << "findAll(" << "aa" << ") : " << findAll(sa, "aa") << endl;
+    cout << "findAll(" << "b" << ") : " << findAll(sa, "b") << endl;
+    cout << "findAll(" << "aba" << ") : " << findAll(sa, "aba") << endl;
+
+    vector<vector<int>> linkTree = makeLinkTree(sa);
+    cout << "findAll(" << "a" << ") : " << findAll(sa, linkTree, "a") << endl;
+    cout << "findAll(" << "aa" << ") : " << findAll(sa, linkTree, "aa") << endl;
+    cout << "findAll(" << "b" << ") : " << findAll(sa, linkTree, "b") << endl;
+    cout << "findAll(" << "aba" << ") : " << findAll(sa, linkTree, "aba") << endl;
+
+    //--- countPattern() ---
+    pair<string, int> countPatternTest[] = {
+        { "a", 4 },
+        { "ab", 1 },
+        { "ba", 1 },
+        { "baa", 1 },
+        { "aba", 1 },
+        { "aa", 2 },
+        { "bab", 0 },
+    };
+    vector<int> countTable = makeCountTable(sa);
+    for (int i = 0; i < sizeof(countPatternTest) / sizeof(countPatternTest[0]); i++) {
+        cout << "countPattern(" << countPatternTest[i].first << ") : " << countPattern(sa, countTable, countPatternTest[i].first) << endl;
+        assert(countPattern(sa, countTable, countPatternTest[i].first) == countPatternTest[i].second);
+    }
+
+    //--- lcs() ---
+    pair<string, string> lcsTest[] = {
+        { "a", "a" },
+        { "ab", "ab" },
+        { "bbabab", "aba" },
+        { "bbaabb", "baa" },
+        { "babaab", "abaa" },
+        { "ccccc", "" },
+        { "ccccbccacc", "b" },
+    };
+    for (int i = 0; i < sizeof(lcsTest) / sizeof(lcsTest[0]); i++) {
+        cout << "lcs(" << lcsTest[i].first << ") : " << lcs(sa, lcsTest[i].first) << endl;
+        assert(lcs(sa, lcsTest[i].first) == lcsTest[i].second);
+    }
+
+    //--- isSuffix() ---
+    pair<string, bool> suffixTest[] = {
+        { "a", true },
+        { "aa", true },
+        { "baa", true },
+        { "abaa", true },
+        { "aabaa", true },
+        { "ab", false },
+        { "b", false },
+        { "ba", false },
+        { "aba", false },
+        { "ccc", false },
+    };
+    for (int i = 0; i < sizeof(suffixTest) / sizeof(suffixTest[0]); i++) {
+        cout << "isSuffix(" << suffixTest[i].first << ") : " << isSuffix(sa, suffixTest[i].first) << endl;
+        assert(isSuffix(sa, suffixTest[i].first) == suffixTest[i].second);
+    }
+
+    //--- isSuffixWithSortedTerm() ---
+    vector<int> term = sa.getTerminals();
+    sort(term.begin(), term.end());
+    for (int i = 0; i < sizeof(suffixTest) / sizeof(suffixTest[0]); i++) {
+        cout << "isSuffixWithSortedTerm(" << suffixTest[i].first << ") : " << isSuffixWithSortedTerm(sa, term, suffixTest[i].first) << endl;
+        assert(isSuffixWithSortedTerm(sa, term, suffixTest[i].first) == suffixTest[i].second);
+    }
+
+    cout << "OK!" << endl;
 }
