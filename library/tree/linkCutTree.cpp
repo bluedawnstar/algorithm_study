@@ -1,10 +1,9 @@
-#include <memory.h>
+#include <cassert>
 #include <vector>
-#include <queue>
-#include <stack>
-#include <algorithm>
 
 using namespace std;
+
+#include "linkCutTree.h"
 
 #if 0
 namespace lct {
@@ -234,147 +233,112 @@ namespace LinkCutTreeSpace {
 #include <cassert>
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <numeric>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-#if 0
-using namespace LinkCutTreeSpace;
+#include "redBlackTree.h"
+#include "treap.h"
+#include "splayTree.h"
 
-static void makeTree() {
-    gN = 10;
+void checkSearch(RBTree<int>& rbt, vector<int>& in);
+void checkIndex(RBTree<int>& rbt, vector<int>& in);
 
-    gE[0].push_back(1); gE[1].push_back(0);
-    gE[0].push_back(3); gE[3].push_back(0);
-    gE[1].push_back(4); gE[4].push_back(1);
-    gE[1].push_back(2); gE[2].push_back(1);
-    gE[3].push_back(6); gE[6].push_back(3);
-    gE[3].push_back(7); gE[7].push_back(3);
-    gE[4].push_back(9); gE[9].push_back(4);
-    gE[2].push_back(8); gE[8].push_back(2);
-    gE[2].push_back(5); gE[5].push_back(2);
+void checkIndex(LinkCutTreeArray<int>& in) {
+    for (int i = 0; i < (int)in.nodes.size(); i++) {
+        assert(in.indexOf(i) == i);
+    }
 }
 
-static void makeLcaTree() {
-    gN = MAXN;
+#define MAXN    10000
+static LinkCutTreeArray<int> makeLcaTree() {
+    LinkCutTreeArray<int> lct(MAXN);
 
-    gE[0].push_back(1); gE[1].push_back(0);
-    gE[0].push_back(2); gE[2].push_back(0);
+    lct.link(1, 0);
+    lct.link(2, 0);
 
     int i, p = 1;
-    for (i = 3; i < gN / 4; i++) {
-        gE[p].push_back(i); gE[i].push_back(p);
+    for (i = 3; i < (int)lct.nodes.size() / 4; i++) {
+        lct.link(i, p);
         p = i;
     }
 
     p = 1;
-    for (; i < gN * 2 / 4; i++) {
-        gE[p].push_back(i); gE[i].push_back(p);
+    for (; i < (int)lct.nodes.size() * 2 / 4; i++) {
+        lct.link(i, p);
         p = i;
     }
 
     p = 2;
-    for (; i < gN * 3 / 4; i++) {
-        gE[p].push_back(i); gE[i].push_back(p);
+    for (; i < (int)lct.nodes.size() * 3 / 4; i++) {
+        lct.link(i, p);
         p = i;
     }
 
     p = 2;
-    for (; i < gN; i++) {
-        gE[p].push_back(i); gE[i].push_back(p);
+    for (; i < (int)lct.nodes.size(); i++) {
+        lct.link(i, p);
         p = i;
     }
+
+    return lct;
 }
 
-static void printData() {
-    cout << "level : ";
-    for (int i = 0; i < gN; i++)
-        cout << gLevel[i] << ", ";
-    cout << endl;
-
-    cout << "parent : ";
-    for (int i = 0; i < gN; i++)
-        cout << gP[i][0] << ", ";
-    cout << endl;
-}
 
 void testLinkCutTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
-            //Usage:
-            //    step1 : make a tree (gE, gP[0][x])
+    cout << "--- Link-Cut Tree ----------------------------------" << endl;
+    // LCA test 
+    {
+        LinkCutTreeArray<int> lct = makeLcaTree();
 
-    cout << "-- dfs() vs dfsIter() ----------------------------------" << endl;
-    clear();
-    makeTree(); // make a test tree
-    dfs(0, -1);
-    printData();
+        int N = (int)lct.nodes.size();
 
-    makeTree();
-    dfsIter(0);
-    printData();
-
-    /*
-    cout << "-- dfs() vs dfsIter() - performance test ---------------" << endl;
-    clear();
-    makeTree(); // make a test tree
-    clock_t start = clock();
-    for (int i = 0; i < 1000000; i++) {
-    gCurrTime = 0;
-    dfs(1, 0);
-    }
-    cout << "elapsed time : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
-
-    clear();
-    makeTree(); // make a test tree
-    start = clock();
-    for (int i = 0; i < 1000000; i++) {
-    gCurrTime = 0;
-    dfsIter(1);
-    }
-    cout << "elapsed time : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
-    */
-
-    cout << "-- LCA test --------------------------------------------" << endl;
-    clear();        // step1: clear all variables
-    makeLcaTree();  // ... make a test tree
-
-                    //dfs(0, -1);
-    dfsIter(0);     // step2: make depth and parent table
-    makeLcaTable(); // step3: make LCA table
-
-    int errCnt = 0;
-    for (int i = 0; i < 100000; i++) {
-        int u = rand() % gN;
-        int v = rand() % gN;
-        int lca = findLCA(u, v);
-        int lcaAns;
-        if (u == 0 || v == 0) {
-            lcaAns = 0;
-        } else if ((u != 2 && u < gN / 2) != (v != 2 && v < gN / 2)) {
-            lcaAns = 0;
-        } else if (u != 2 && u < gN / 2) {
-            if ((u >= gN / 4) != (v >= gN / 4))
-                lcaAns = 1;
-            else
-                lcaAns = min(u, v);
-        } else {
-            if ((u >= gN * 3 / 4) != (v >= gN * 3 / 4))
-                lcaAns = 2;
-            else
-                lcaAns = min(u, v);
+        PROFILE_START(0);
+        int errCnt = 0;
+        for (int i = 0; i < 100000; i++) {
+            int u = rand() % N;
+            int v = rand() % N;
+            int lca = lct.lca(u, v);
+            int lcaAns;
+            if (u == 0 || v == 0) {
+                lcaAns = 0;
+            } else if ((u != 2 && u < N / 2) != (v != 2 && v < N / 2)) {
+                lcaAns = 0;
+            } else if (u != 2 && u < N / 2) {
+                if ((u >= N / 4) != (v >= N / 4))
+                    lcaAns = 1;
+                else
+                    lcaAns = min(u, v);
+            } else {
+                if ((u >= N * 3 / 4) != (v >= N * 3 / 4))
+                    lcaAns = 2;
+                else
+                    lcaAns = min(u, v);
+            }
+            if (lca != lcaAns) {
+                cout << "mismatch : LCA(" << u << ", " << v << ") = " << lca << " (!= " << lcaAns << ")" << endl;
+                errCnt++;
+            }
         }
-        if (lca != lcaAns) {
-            cout << "mismatch : LCA(" << u << ", " << v << ") = " << lca << " (!= " << lcaAns << ")" << endl;
-            errCnt++;
-        }
+        PROFILE_STOP(0);
+        if (!errCnt)
+            cout << "OK!" << endl;
     }
-    if (!errCnt)
+    {
+        vector<int> in(1000);
+        iota(in.begin(), in.end(), 0);
+
+        LinkCutTreeArray<int> lct(1000);
+        lct.setValue(0, 0);
+        for (int i = 1; i < 1000; i++) {
+            lct.setValue(i, i);
+            lct.link(i, i - 1);
+        }
+        checkIndex(lct);
+
         cout << "OK!" << endl;
-
-}
-
-#endif
-
-void testLinkCut() {
-
+    }
 }

@@ -1,8 +1,6 @@
 #pragma once
 
-typedef int T;
-
-// ---
+template <typename T>
 struct LinkCutTree {
     struct Node {
         Node*   pathParent;
@@ -10,8 +8,16 @@ struct LinkCutTree {
         Node*   left;
         Node*   right;
 
-        int     cnt;    // sub-tree's size in a sub-tree
+        int     cnt;    // tree's size in a sub-tree
         T       value;
+
+        Node() {
+            init();
+        }
+
+        Node(const T& val) : value(val) {
+            init();
+        }
 
         void init() {
             pathParent = nullptr;
@@ -20,7 +26,7 @@ struct LinkCutTree {
         }
     };
 
-    Node* root(Node* x) {
+    static Node* root(Node* x) {
         access(x);
         while (x->left)
             x = x->left;
@@ -28,19 +34,20 @@ struct LinkCutTree {
         return x;
     }
 
-    int depth(Node *x) {
+    static Node* lca(Node* x, Node* y) {
+        access(x);
+        return access(y);
+    }
+
+    // global depth of x
+    static int indexOf(Node *x) {
         access(x);
         return x->cnt - 1;
     }
 
 
-    Node* lca(Node* x, Node* y) {
-        access(x);
-        return access(y);
-    }
-
     // link x to y
-    void link(Node *x, Node *y) {
+    static void link(Node *x, Node *y) {
         assert(x->left == nullptr); // x is a root of a represented tree
         access(x);
         access(y);
@@ -51,7 +58,7 @@ struct LinkCutTree {
 
     // a represented tree to two represented trees
     //   which are a x's left sub-tree and x's right sub-tree including x
-    void cut(Node *x) {
+    static void cut(Node *x) {
         access(x);
         x->left->parent = nullptr;
         x->left = nullptr;
@@ -59,7 +66,8 @@ struct LinkCutTree {
     }
 
 
-    Node* access(Node* x) {
+    // make x as the global root
+    static Node* access(Node* x) {
         splay(x);
         if (x->right) {
             x->right->pathParent = x;
@@ -88,7 +96,7 @@ struct LinkCutTree {
     }
 
 protected:
-    void splay(Node* x) {
+    static void splay(Node* x) {
         Node *y, *z;
 
         while (x->parent) {
@@ -116,7 +124,7 @@ protected:
         update(x);
     }
 
-    void rotateRight(Node *x) {
+    static void rotateRight(Node *x) {
         Node* y = x->parent;
         Node* z = y->parent;
         y->left = x->right;
@@ -136,7 +144,7 @@ protected:
         update(y);
     }
 
-    void rotateLeft(Node *x) {
+    static void rotateLeft(Node *x) {
         Node* y = x->parent;
         Node* z = y->parent;
         y->right = x->left;
@@ -156,7 +164,7 @@ protected:
         update(y);
     }
 
-    void updateCnt(Node *x) {
+    static void updateCnt(Node *x) {
         x->cnt = 1;
         if (x->left)
             x->cnt += x->left->cnt;
@@ -164,48 +172,52 @@ protected:
             x->cnt += x->right->cnt;
     }
 
-    void update(Node* x) {
+    static void update(Node* x) {
         updateCnt(x);
 
         //TODO: customizing point
     }
 };
 
-/*
-class LinkCut {
-    Node *x;
+template <typename T>
+struct LinkCutTreeArray {
+    vector<typename LinkCutTree<T>::Node> nodes;
 
-public:
-    LinkCut(int n) {
-        x = new Node[n];
-        for (int i = 0; i < n; i++) {
-            x[i].label = i;
-            update(&x[i]);
-        }
+    LinkCutTreeArray(int N) : nodes(N) {
+        // no action
     }
 
-    virtual ~LinkCut() {
-        delete[] x;
+    void setValue(int u, const T& value) {
+        nodes[u].value = value;
     }
 
-    void link(int u, int v) {
-        ::link(&x[u], &x[v]);
-    }
-
-    void cut(int u) {
-        ::cut(&x[u]);
+    const T& getValue(int u) const {
+        return nodes[u].value;
     }
 
     int root(int u) {
-        return ::root(&x[u])->label;
-    }
-
-    int depth(int u) {
-        return ::depth(&x[u]);
+        return LinkCutTree<T>::root(&nodes[u]) - &nodes[0];
     }
 
     int lca(int u, int v) {
-        return ::lca(&x[u], &x[v])->label;
+        return LinkCutTree<T>::lca(&nodes[u], &nodes[v]) - &nodes[0];
+    }
+
+    int indexOf(int u) {
+        return LinkCutTree<T>::indexOf(&nodes[u]);
+    }
+
+
+    // link x to y
+    void link(int x, int y) {
+        LinkCutTree<T>::link(&nodes[x], &nodes[y]);
+    }
+
+    void cut(int x) {
+        LinkCutTree<T>::cut(&nodes[x]);
+    }
+
+    int access(int x) {
+        return LinkCutTree<T>::access(&nodes[x]);
     }
 };
-*/
