@@ -29,7 +29,7 @@ void checkSearch(SplayTree<int>& spt, vector<int>& in) {
 }
 
 void checkIndex(SplayTree<int>& spt, vector<int>& in) {
-    assert((spt.mTree != nullptr ? spt.mTree->cnt : 0) == spt.size());
+    assert((spt.tree != nullptr ? spt.tree->cnt : 0) == spt.size());
     assert(spt.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {
         assert(spt[i]->value == in[i]);
