@@ -20,6 +20,7 @@ int main(void) {
     TEST(SparseTableLCA);
     TEST(BST);
     TEST(Splay);
+    TEST(SplayRangeQuery);
     TEST(Treap);
     TEST(LinkCutTree);
 }

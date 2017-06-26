@@ -93,7 +93,7 @@ struct FenwickTree2D {
     }
 
     // to initialize from (N - 1, M - 1)
-    void initRev(int row, int col, T val) {
+    void initReverse(int row, int col, T val) {
         add(row, col, val);
     }
 
