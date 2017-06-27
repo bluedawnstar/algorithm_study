@@ -30,7 +30,7 @@ void checkSearch(Treap<int>& tr, vector<int>& in) {
 }
 
 void checkIndex(Treap<int>& tr, vector<int>& in) {
-    assert((tr.tree != nullptr ? tr.tree->cnt : 0) == tr.size());
+    assert((tr.mRoot != nullptr ? tr.mRoot->cnt : 0) == tr.size());
     assert(tr.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {
         assert(tr[i]->value == in[i]);

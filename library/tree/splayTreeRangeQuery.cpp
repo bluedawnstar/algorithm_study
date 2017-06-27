@@ -41,7 +41,7 @@ void checkIndex(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) 
 }
 
 void testSplayRangeQuery() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Splay Tree with Range Query ----------------------------------" << endl;
 
