@@ -22,5 +22,6 @@ int main(void) {
     TEST(Splay);
     TEST(SplayRangeQuery);
     TEST(Treap);
+    TEST(TreapRangeQuery);
     TEST(LinkCutTree);
 }
