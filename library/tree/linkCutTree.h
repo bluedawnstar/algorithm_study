@@ -40,29 +40,45 @@ struct LinkCutTree {
     }
 
     // global depth of x
-    static int indexOf(Node *x) {
+    static int depth(Node* x) {
         access(x);
         return x->cnt - 1;
     }
 
-
-    // link x to y
-    static void link(Node *x, Node *y) {
-        assert(x->left == nullptr); // x is a root of a represented tree
+    static bool isConnected(Node* x, Node* y) {
+        if (x == y)
+            return true;
         access(x);
         access(y);
+        return x->parent != nullptr || x->pathParent != nullptr;
+    }
+
+
+    // link x to y
+    static bool link(Node* x, Node* y) {
+        if (x == y)
+            return false;   // connected
+        access(x);
+        access(y);
+        if (x->parent != nullptr || x->pathParent != nullptr)
+            return false;   // connected
+
         x->left = y;
         y->parent = x;
         update(x);
+
+        return true;
     }
 
     // a represented tree to two represented trees
     //   which are a x's left sub-tree and x's right sub-tree including x
-    static void cut(Node *x) {
+    static void cut(Node* x) {
         access(x);
-        x->left->parent = nullptr;
-        x->left = nullptr;
-        update(x);
+        if (x->left) {
+            x->left->parent = nullptr;
+            x->left = nullptr;
+            update(x);
+        }
     }
 
 
@@ -124,7 +140,7 @@ protected:
         update(x);
     }
 
-    static void rotateRight(Node *x) {
+    static void rotateRight(Node* x) {
         Node* y = x->parent;
         Node* z = y->parent;
         y->left = x->right;
@@ -144,7 +160,7 @@ protected:
         update(y);
     }
 
-    static void rotateLeft(Node *x) {
+    static void rotateLeft(Node* x) {
         Node* y = x->parent;
         Node* z = y->parent;
         y->right = x->left;
@@ -164,7 +180,8 @@ protected:
         update(y);
     }
 
-    static void updateCnt(Node *x) {
+    // in a aux tree
+    static void updateCnt(Node* x) {
         x->cnt = 1;
         if (x->left)
             x->cnt += x->left->cnt;
@@ -203,14 +220,18 @@ struct LinkCutTreeArray {
         return LinkCutTree<T>::lca(&nodes[u], &nodes[v]) - &nodes[0];
     }
 
-    int indexOf(int u) {
-        return LinkCutTree<T>::indexOf(&nodes[u]);
+    int depth(int u) {
+        return LinkCutTree<T>::depth(&nodes[u]);
+    }
+
+    bool isConnected(int u, int v) {
+        return LinkCutTree<T>::isConnected(&nodes[u], &nodes[v]);
     }
 
 
     // link x to y
-    void link(int x, int y) {
-        LinkCutTree<T>::link(&nodes[x], &nodes[y]);
+    bool link(int x, int y) {
+        return LinkCutTree<T>::link(&nodes[x], &nodes[y]);
     }
 
     void cut(int x) {

@@ -25,7 +25,7 @@ void checkIndex(RBTree<int>& rbt, vector<int>& in);
 
 void checkIndex(LinkCutTreeArray<int>& in) {
     for (int i = 0; i < (int)in.nodes.size(); i++) {
-        assert(in.indexOf(i) == i);
+        assert(in.depth(i) == i);
     }
 }
 
