@@ -76,6 +76,7 @@ private:
             lazyExist[node] = false;
             pushDown(treeLazy[node], node * 2, nodeLeft, mid);
             pushDown(treeLazy[node], node * 2 + 1, mid + 1, nodeRight);
+            //treeLazy[node] = defaultValue;
         }
         return mergeOp(querySub(left, right, node * 2, nodeLeft, mid),
                        querySub(left, right, node * 2 + 1, mid + 1, nodeRight));
@@ -93,6 +94,7 @@ private:
             lazyExist[node] = false;
             pushDown(treeLazy[node], node * 2, nodeLeft, mid);
             pushDown(treeLazy[node], node * 2 + 1, mid + 1, nodeRight);
+            //treeLazy[node] = defaultValue;
         }
         return tree[node] = mergeOp(updateSub(index, newValue, node * 2, nodeLeft, mid),
                                     updateSub(index, newValue, node * 2 + 1, mid + 1, nodeRight));
@@ -110,6 +112,7 @@ private:
             lazyExist[node] = false;
             pushDown(treeLazy[node], node * 2, nodeLeft, mid);
             pushDown(treeLazy[node], node * 2 + 1, mid + 1, nodeRight);
+            //treeLazy[node] = defaultValue;
         }
 
         if (left <= nodeLeft && nodeRight <= right) {

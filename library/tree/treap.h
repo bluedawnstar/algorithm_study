@@ -526,6 +526,7 @@ protected:
             x->right->value = x->right->lazy = x->lazy;
             x->right->rangeValue = blockOp(x->lazy, x->right->cnt);
         }
+        x->lazy = defaultValue;
         x->lazyExist = false;
     }
 };
