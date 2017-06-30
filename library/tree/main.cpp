@@ -24,4 +24,5 @@ int main(void) {
     TEST(Treap);
     TEST(TreapRangeQuery);
     TEST(LinkCutTree);
+    TEST(LinkCutTreePathQuery);
 }
