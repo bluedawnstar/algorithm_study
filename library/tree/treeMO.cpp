@@ -8,20 +8,14 @@ using namespace std;
 
 #include "treeBasic.h"
 
-template <int MaxN, int LogN>
-struct TreeMO : public Tree<MaxN,LogN> {
-    using Tree<MaxN, LogN>::mN;
-    using Tree<MaxN, LogN>::mE;
-    using Tree<MaxN, LogN>::mP;
-    using Tree<MaxN, LogN>::mLevel;
-
+struct TreeMO : public Tree {
     // to flatten the tree (DFS only)
     vector<pair<int, int>>  mVisTime;   // visit & exit time
     vector<int>             mTime2Node; // visit & exit time to node ID (0 <= index < 2 * N)
     int                     mCurrTime;  //
 
-    TreeMO() : Tree(), mVisTime(MaxN), mTime2Node(MaxN * 2) {
-        // no action
+    TreeMO(int N, int logN) : Tree(N, logN), mVisTime(N), mTime2Node(N * 2) {
+        mCurrTime = 0;
     }
 
     void clear() {
@@ -29,13 +23,13 @@ struct TreeMO : public Tree<MaxN,LogN> {
 
         fill(mVisTime.begin(), mVisTime.end(), pair<int, int>());    // is it necessary?
         fill(mTime2Node.begin(), mTime2Node.begin(), 0);            // is it necessary?
-        gCurrTime = 0;
+        mCurrTime = 0;
     }
 
     //--------- DFS -----------------------------------------------------------
 
     void dfs(int u, int parent) {
-        mVisTime[u][0] = mCurrTime;
+        mVisTime[u].first = mCurrTime;
         mTime2Node[mCurrTime++] = u;
 
         mP[0][u] = parent;
@@ -47,7 +41,7 @@ struct TreeMO : public Tree<MaxN,LogN> {
             dfs(v, u);
         }
 
-        mVisTime[u][1] = mCurrTime;
+        mVisTime[u].second = mCurrTime;
         mTime2Node[mCurrTime++] = u;
     }
 
@@ -93,7 +87,7 @@ struct TreeMO : public Tree<MaxN,LogN> {
     void initTreeMO(vector<pair<int, int>>& Q, vector<int>& lca, vector<pair<pair<int, int>, int>>& MO) {
         int blockN = (int)sqrt(2 * mN);
 
-        mActiveMO = vector<bool>(MaxN);
+        mActiveMO = vector<bool>(mN);
 
         lca.clear();
         MO.clear();
@@ -158,7 +152,7 @@ void testTreeMO() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
     // TODO: step1 - make a tree
-    TreeMO<MAXN, LOGN> tree;
+    TreeMO tree(MAXN, LOGN);
     tree.setVertexCount(MAXN);      // TODO: set the number of vertex
     tree.dfsIter(0);                // dfs(0, -1);
     tree.makeLcaTable();
