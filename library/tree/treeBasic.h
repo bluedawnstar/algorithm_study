@@ -10,22 +10,24 @@
     5) call query functions
 */
 
-// MAXN : modify the maximum number of nodes
-// LOGN : modify LCA table size (log2(MAXN))
-template <int MaxN, int LogN>
+// N : the maximum number of nodes
+// logN : modify LCA table size (log2(MAXN))
 struct Tree {
     int                 mN;         // the number of vertex
+    int                 mLogN;      // ceil(log2(mN))
 
     vector<vector<int>> mE;         // edges (vertex number)
     vector<vector<int>> mP;         // mP[0][n] points to the parent
                                     // parent & acestors
 
     vector<int>         mLevel;     // depth (root is 0)
+    vector<int>         mTreeSize;  // call dfsSize() to calculate tree size
 
     //--- tree construction ---------------------------------------------------
     
-    Tree() : mE(MaxN), mP(LogN, vector<int>(MaxN)), mLevel(MaxN) {
+    Tree(int N, int logN) : mE(N), mP(logN, vector<int>(N)), mLevel(N), mTreeSize(N) {
         mN = 0;
+        mLogN = logN;
     }
 
     void clear() {
@@ -35,9 +37,10 @@ struct Tree {
         for (int i = 0; i < mN; i++)
             mE[i].clear();
 
-        for (int i = 0; i < LogN; i++)
+        for (int i = 0; i < mLogN; i++)
             fill(mP[i].begin(), mP[i].end(), 0);
         fill(mLevel.begin(), mLevel.end(), 0);
+        fill(mTreeSize.begin(), mTreeSize.end(), 0);
     }
 
 
@@ -57,6 +60,7 @@ struct Tree {
     //--- DFS -----------------------------------------------------------------
 
     void dfs(int u, int parent) {
+        mTreeSize[u] = 1;
         mP[0][u] = parent;
 
         for (int v : mE[u]) {
@@ -65,6 +69,8 @@ struct Tree {
 
             mLevel[v] = mLevel[u] + 1;
             dfs(v, u);
+
+            mTreeSize[u] += mTreeSize[v];
         }
     }
 
@@ -82,8 +88,13 @@ struct Tree {
             Item& it = st.back();
             if (++it.vi == 0) {
                 // enter ...
+                mTreeSize[it.u] = 1;
                 mP[0][it.u] = it.parent;
             }
+
+            if (it.vi > 0)
+                mTreeSize[it.u] += mTreeSize[mE[it.u][it.vi - 1]];
+
             if (it.vi >= (int)mE[it.u].size()) {
                 // leave ...
                 st.pop_back();
@@ -97,6 +108,16 @@ struct Tree {
     }
 
     //--- BFS -----------------------------------------------------------------
+
+    void dfsSize(int u, int parent) {
+        mTreeSize[u] = 1;
+        for (int v : mE[u]) {
+            if (v != parent) {
+                dfsSize(v, u);
+                mTreeSize[u] += mTreeSize[v];
+            }
+        }
+    }
 
     void bfs(int root) {
         vector<bool> visited(mN);
@@ -125,7 +146,7 @@ struct Tree {
     //--- LCA -----------------------------------------------------------------
 
     void makeLcaTable() {
-        for (int i = 1; i < LogN; i++) {
+        for (int i = 1; i < mLogN; i++) {
             for (int j = 0; j < mN; j++) {
                 int pp = mP[i - 1][j];
                 mP[i][j] = pp < 0 ? pp : mP[i - 1][pp];
@@ -171,21 +192,9 @@ struct Tree {
 
     //--- Centroid ------------------------------------------------------------
 
-    vector<int> mTreeSize;
-
-    void dfsSize(int u, int parent) {
-        mTreeSize[u] = 1;
-        for (int v : gE[u]) {
-            if (v != parent) {
-                dfsSize(v, u);
-                mTreeSize[u] += mTreeSize[v];
-            }
-        }
-    }
-
     int findCentroid(int u, int parent, int N) {
         bool isMajor = true;
-        for (int v : gE[u]) {
+        for (int v : mE[u]) {
             if (v == parent)
                 continue;
 

@@ -138,9 +138,9 @@ long dfsHash(int v, int p) {
 #define MAXN    10000           // TODO: modify the maximum number of nodes
 #define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
 
-static void makeTree(Tree<MAXN, LOGN>& tree) {
+static void makeTree(Tree& tree) {
     tree.setVertexCount(10);
-    
+
     tree.addEdge(0, 1);
     tree.addEdge(0, 3);
     tree.addEdge(1, 4);
@@ -152,7 +152,7 @@ static void makeTree(Tree<MAXN, LOGN>& tree) {
     tree.addEdge(2, 5);
 }
 
-static void makeLcaTree(Tree<MAXN, LOGN>& tree) {
+static void makeLcaTree(Tree& tree) {
     tree.setVertexCount(MAXN);
 
     tree.addEdge(0, 1);
@@ -183,7 +183,7 @@ static void makeLcaTree(Tree<MAXN, LOGN>& tree) {
     }
 }
 
-static void printTree(Tree<MAXN, LOGN>& tree) {
+static void printTree(Tree& tree) {
     cout << "level : ";
     for (int i = 0; i < tree.mN; i++)
         cout << tree.mLevel[i] << ", ";
@@ -200,7 +200,7 @@ void testTreeBasic() {
 
     cout << "--- Tree Basic ----------------------------------" << endl;
 
-    Tree<MAXN, LOGN> tree;
+    Tree tree(MAXN, LOGN);
 
     cout << "-- dfs() vs dfsIter() ----------------------------------" << endl;
     tree.clear();
