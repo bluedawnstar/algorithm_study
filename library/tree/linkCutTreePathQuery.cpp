@@ -1,4 +1,5 @@
 #include <cassert>
+#include <queue>
 #include <vector>
 
 using namespace std;
@@ -24,7 +25,7 @@ using namespace std;
 vector<int> gTrV;
 
 template <typename Op>
-void buildTree(Tree<MAXN, LOGN>& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
+void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
     gTrV.clear();
     gTrV.resize(MAXN);
 
@@ -42,7 +43,7 @@ void buildTree(Tree<MAXN, LOGN>& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
     tr.makeLcaTable();
 }
 
-void update(Tree<MAXN, LOGN>& tr, int u, int v, int value) {
+void update(Tree& tr, int u, int v, int value) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         gTrV[u] = value;
@@ -55,7 +56,7 @@ void update(Tree<MAXN, LOGN>& tr, int u, int v, int value) {
     gTrV[lca] = value;
 }
 
-void add(Tree<MAXN, LOGN>& tr, int u, int v, int value) {
+void add(Tree& tr, int u, int v, int value) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         gTrV[u] += value;
@@ -68,7 +69,7 @@ void add(Tree<MAXN, LOGN>& tr, int u, int v, int value) {
     gTrV[lca] += value;
 }
 
-int query(Tree<MAXN, LOGN>& tr, int u, int v) {
+int query(Tree& tr, int u, int v) {
     int res = 0;
 
     int lca = tr.findLCA(u, v);
@@ -86,12 +87,12 @@ int query(Tree<MAXN, LOGN>& tr, int u, int v) {
 }
 
 void testLinkCutTreePathQuery() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Link-Cut Tree with Path Query ----------------------------------" << endl;
 
     for (int i = 0; i < 10; i++) {
-        Tree<MAXN, LOGN> tr;
+        Tree tr(MAXN, LOGN);
         LinkCutTreeArrayPathQuery<int, PathQuerySetAndSumOpT<int>> lct(MAXN);
         buildTree(tr, lct);
 
@@ -115,7 +116,7 @@ void testLinkCutTreePathQuery() {
     cout << "OK!" << endl;
 
     for (int i = 0; i < 10; i++) {
-        Tree<MAXN, LOGN> tr;
+        Tree tr(MAXN, LOGN);
         LinkCutTreeArrayPathQuery<int, PathQueryAddAndSumOpT<int>> lct(MAXN);
         buildTree(tr, lct);
 
@@ -142,7 +143,7 @@ void testLinkCutTreePathQuery() {
     {
         PROFILE_START(0);
 
-        Tree<MAXN, LOGN> tr;
+        Tree tr(MAXN, LOGN);
         LinkCutTreeArrayPathQuery<int, PathQueryAddAndSumOpT<int>> lct(MAXN);
         buildTree(tr, lct);
 

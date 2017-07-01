@@ -1,4 +1,5 @@
 #include <cassert>
+#include <queue>
 #include <vector>
 
 using namespace std;
