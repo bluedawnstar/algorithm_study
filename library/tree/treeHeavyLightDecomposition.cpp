@@ -1,4 +1,5 @@
 #include <memory.h>
+#include <cassert>
 #include <vector>
 #include <queue>
 #include <stack>
@@ -9,6 +10,8 @@ using namespace std;
 
 #include "treeBasic.h"
 #include "segmentTree.h"
+#include "segmentTreeLazy.h"
+#include "fenwickTree.h"
 #include "treeHeavyLightDecomposition.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -26,19 +29,20 @@ using namespace std;
 void testHeavyLightDecomposition_org() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
-    //TreeHLD<MAXN, LOGN, int, MaxOp<int>> tree;
-    TreeHLD<MAXN, LOGN, int> tree([](int a, int b) { return max(a, b); });
+    Tree tree(MAXN, LOGN);
+    HeavyLightDecomposition hld(tree);
+    auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
 
     int T ;
-    scanf("%d", &T);
+    cin >> T;
 
     while (T-- > 0) {
         tree.clear();
 
-        scanf("%d", &tree.mN);
+        cin >> tree.mN;
         for (int v = 0; v < tree.mN; v++) {
             int u;
-            scanf("%d", &u);
+            cin >> u;
             if (u < 0)
                 continue;
 
@@ -48,32 +52,34 @@ void testHeavyLightDecomposition_org() {
         tree.dfs(0, -1);
         tree.makeLcaTable();
 
-        tree.doHLD(0);
-        tree.initSegTree(1);
+        hld.doHLD(0);
+        pathQuery.build(1);
 
         int ans = 0;
 
         int Q;
-        scanf("%d", &Q);
+        cin >> Q;
         while (Q-- > 0) {
             char type[10];
             int u, v, cost;
 
-            scanf("%s", type);
+            cin >> type;
             if (!strcmp(type, "update")) {
-                scanf("%d %d %d", &u, &v, &cost);
-                tree.update(u, v, cost);
+                cin >> u >> v >> cost;
+                pathQuery.update(u, v, cost);
             } else {
-                scanf("%d %d", &u, &v);
-                ans ^= tree.query(u, v);
+                cin >> u >> v;
+                ans ^= pathQuery.query(u, v);
             }
         }
-        printf("%d\n", ans);
+        cout << ans << endl;
     }
 }
 
 void testHeavyLightDecomposition() {
     return; //TODO: if you want to test a split function, make this line to a comment.
+
+    cout << "--- Heavy-Light Decomposition -----------------------" << endl;
 
     int T = 2;
 
@@ -98,13 +104,14 @@ void testHeavyLightDecomposition() {
           { "query", 0, 11 } }
     };
 
-    TreeHLD<MAXN, LOGN, int> tree([](int a, int b) { return max(a, b); });
+    Tree tree(MAXN, LOGN);
+    HeavyLightDecomposition hld(tree);
+    auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
 
     vector<int> rightAns{ 15, 7 };
     for (int i = 0; i < T; i++) {
         tree.clear();
 
-        //scanf("%d", &gN);
         tree.setVertexCount((int)TR[i].size());
         for (int v = 0; v < tree.mN; v++) {
             int u = TR[i][v];
@@ -117,34 +124,32 @@ void testHeavyLightDecomposition() {
         tree.dfs(0, -1);
         tree.makeLcaTable();
 
-        tree.doHLD(0);
-        tree.initSegTree(1);
+        hld.doHLD(0);
+        pathQuery.build(1);
 
         int ans = 0;
 
         int Q;
-        //scanf("%d", &Q);
+
         Q = (int)QV[i].size();
         for (int j = 0; j < Q; j++) {
             string type;
             int u, v, cost;
 
-            //scanf("%s", type);
             type = QV[i][j].cmd;
             if (type == "update") {
-                //scanf("%d %d %d", &u, &v, &cost);
                 u = QV[i][j].a;
                 v = QV[i][j].b;
                 cost = QV[i][j].cost;
-                tree.update(u, v, cost);
+                pathQuery.update(u, v, cost);
             } else {
-                //scanf("%d %d", &u, &v);
                 u = QV[i][j].a;
                 v = QV[i][j].b;
-                ans ^= tree.query(u, v);
+                ans ^= pathQuery.query(u, v);
             }
         }
-        printf("%d\n", ans);
+        cout << ans << endl;
         assert(rightAns[i] == ans);
     }
+    cout << "OK!" << endl;
 }
