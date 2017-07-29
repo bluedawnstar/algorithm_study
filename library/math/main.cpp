@@ -6,5 +6,6 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
+    TEST(Matrix);
     TEST(Fibonacci);
 }
