@@ -9,52 +9,53 @@ using namespace std;
 #include "treeBasic.h"
 
 /* // TODO: adding this functions to find centers of a tree
+vector<int> gDist;
 void dfsDist(int v, int p, int d) {
-    dist[v] = d;
-    for (int to : g[v]) {
+    gDist[v] = d;
+    for (int to : gE[v]) {
         if (to != p) {
             dfsDist(to, v, d + 1);
         }
     }
 }
 
-int findMax(int[] a) {
+int findMax() {
     int index = -1;
-    for (int i = 0; i < a.length; i++) {
-        if (a[i] != 1000 && (index == -1 || a[index] < a[i])) {
+    for (int i = 0; i < gN; i++) {
+        if (gDist[i] != gN && (index == -1 || gDist[index] < gDist[i]))
             index = i;
-        }
     }
     return index;
 }
 
-boolean dfsPath(int v, int to, int p) {
+vector<int> gPath;
+bool dfsPath(int v, int to, int p) {
     if (v == to) {
-        path.add(to);
+        gPath.push_back(to);
         return true;
     }
-    path.add(v);
-    for (int u : g[v]) {
+    gPath.push_back(v);
+    for (int u : gE[v]) {
         if (p != u && dfsPath(u, to, v)) {
             return true;
         }
     }
-    path.remove(path.size() - 1);
+    gPath.pop_back();
     return false;
 }
 
-int[] findCenters(int v) {
-    Arrays.fill(dist, 1000);
+vector<int> findCenters(int v) {
+    gDist = vector<int>(gN + 10, gN);
     dfsDist(v, -1, 0);
-    v = findMax(dist);
+    v = findMax();
     dfsDist(v, -1, 0);
-    int to = findMax(dist);
-    path.clear();
+    int to = findMax();
+    gPath.clear();
     dfsPath(v, to, -1);
-    if (path.size() % 2 == 0) {
-        return new int[] {path.get(path.size() / 2 - 1), path.get(path.size() / 2)};
+    if (gPath.size() % 2 == 0) {
+        return vector<int>{ gPath[(int)gPath.size() / 2 - 1], gPath[(int)gPath.size() / 2] };
     } else {
-        return new int[] {path.get(path.size() / 2)};
+        return vector<int>{ gPath[(int)gPath.size() / 2] };
     }
 }
 */
