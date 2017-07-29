@@ -20,9 +20,10 @@
 
 #include <vector>
 #include <algorithm>
-#include "matrix.h"
 
 using namespace std;
+
+#include "matrix.h"
 
 // fibonacci(n) = | F(n + 1)   F(n)   |
 //                |   F(n)   F(n - 1) |
@@ -83,14 +84,19 @@ void testFibonacci() {
     }
 
     PROFILE_START(0);
-    for (int i = 0; i <= 10000; i++) {
+    for (int i = 0; i <= 100000; i++) {
         auto t = fibonacci<long long>(i);
+        if (t.a11 == LLONG_MAX)
+            cerr << "?" << endl;
     }
     PROFILE_STOP(0);
 
     PROFILE_START(1);
-    for (int i = 0; i <= 10000; i++)
+    for (int i = 0; i <= 100000; i++) {
         auto t = fibonacciSlow(i);
+        if (t == LLONG_MAX)
+            cerr << "?" << endl;
+    }
     PROFILE_STOP(1);
 
     cout << "OK!" << endl;
