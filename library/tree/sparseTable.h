@@ -55,7 +55,7 @@ struct SparseTable {
         }
     }
 
-    // inclusive
+    // O(1), inclusive
     T query(int left, int right) {
         right++;
         if (right <= left)
@@ -64,6 +64,25 @@ struct SparseTable {
         int k = H[right - left];
         vector<int>& mink = value[k];
         return mergeOp(mink[left], mink[right - (1 << k)]);
+    }
+
+    // O(log(right - left + 1)), inclusive
+    T queryNoOverlap(int left, int right) {
+        right++;
+        if (right <= left)
+            return defaultValue;
+
+        T res = defaultValue;
+
+        int length = right - left;
+        for (int i = 0; length; length >>= 1, i++) {
+            if (length & 1) {
+                right -= (1 << i);
+                res = mergeOp(res, value[i][right]);
+            }
+        }
+
+        return res;
     }
 };
 
@@ -80,10 +99,23 @@ SparseTable<T, BinOp> makeSparseTable(const T arr[], int size, BinOp op, T dfltV
 /* example
     1) Min Sparse Table (RMQ)
         auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return min(a, b); }, INT_MAX);
+        ...
+        sparseTable.query(left, right);
+
     2) Max Sparse Table
         auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return max(a, b); });
+        ...
+        sparseTable.query(left, right);
+
     3) GCD Sparse Table
         auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return gcd(a, b); });
+        ...
+        sparseTable.query(left, right);
+
+    4) Sum Sparse Table
+        auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return a + b; });
+        ...
+        sparseTable.queryNoOverlap(left, right);
 */
 
 //--------- RMQ (Range Minimum Query) - Min Sparse Table ----------------------

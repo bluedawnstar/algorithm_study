@@ -17,26 +17,59 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testSparseTable() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Sparse Table ----------------------------------------" << endl;
 
-    auto sparseTable = makeSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, 6, [](int a, int b) { return min(a, b); }, INT_MAX);
-    RMQ rmq(vector<int>{6, 1, 4, 3, 7, 1});
+    cout << "*** RMQ ***" << endl;
+    {
+        auto sparseTable = makeSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, 6, [](int a, int b) { return min(a, b); }, INT_MAX);
+        RMQ rmq(vector<int>{6, 1, 4, 3, 7, 1});
 
-    int ans, ansRMQ;
+        int ans, ansRMQ;
 
-    ans = sparseTable.query(2, 5);
-    cout << ans << endl;
+        ans = sparseTable.query(2, 5);
+        cout << ans << endl;
 
-    ansRMQ = rmq.query(2, 5);
-    assert(ans == ansRMQ);
+        ansRMQ = rmq.query(2, 5);
+        assert(ans == ansRMQ);
 
-    ans = sparseTable.query(0, 3);
-    cout << ans << endl;
+        ans = sparseTable.query(0, 3);
+        cout << ans << endl;
 
-    ansRMQ = rmq.query(0, 3);
-    assert(ans == ansRMQ);
+        ansRMQ = rmq.query(0, 3);
+        assert(ans == ansRMQ);
+
+        cout << "OK!" << endl;
+    }
+
+    cout << "*** SUM ***" << endl;
+    {
+        int N = 10000;
+        vector<int> inSum(N);
+        for (int i = 0; i < N; i++)
+            inSum[i] = rand();
+
+        vector<int> prefixSum(N + 1);
+        prefixSum[0] = 0;
+        for (int i = 1; i <= N; i++) {
+            prefixSum[i] = prefixSum[i - 1] + inSum[i - 1];
+        }
+
+        auto sparseTable2 = makeSparseTable<int>(inSum, (int)inSum.size(), [](int a, int b) { return a + b; }, 0);
+
+        for (int i = 0; i < 10000; i++) {
+            int left = rand() % N;
+            int right = rand() % N;
+            if (left > right)
+                swap(left, right);
+
+            int ans1 = prefixSum[right + 1] - prefixSum[left];
+            int ans2 = sparseTable2.queryNoOverlap(left, right);
+            assert(ans1 == ans2);
+        }
+        cout << "OK!" << endl;
+    }
 
     cout << "-- Segment Tree & Sparse Table Performance Test --------" << endl;
     {
