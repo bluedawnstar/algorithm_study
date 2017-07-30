@@ -25,4 +25,5 @@ int main(void) {
     TEST(TreapRangeQuery);
     TEST(LinkCutTree);
     TEST(LinkCutTreePathQuery);
+    TEST(CentroidDecomposition);
 }

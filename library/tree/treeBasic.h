@@ -206,7 +206,7 @@ struct Tree {
                 isMajor = false;
         }
 
-        if (isMajor && 2 * (N - mTreeSize[u]) <= N)
+        if (isMajor && (N - mTreeSize[u]) * 2 <= N)
             return u;
 
         return -1;
