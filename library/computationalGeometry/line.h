@@ -37,13 +37,13 @@ static bool parallelSegments(Vec2D<T> a, Vec2D<T> b, Vec2D<T> c, Vec2D<T> d, Vec
 }
 
 template <typename T>
-static bool isBoundingRectangle(Vec2D<T> p, Vec2D<T> a, Vec2D<T> b) {
+static bool inBoundingRectangle(Vec2D<T> p, Vec2D<T> a, Vec2D<T> b) {
     if (b < a)
         swap(a, b);
     return (p == a) || (p == b) || (a < p && p < b);
 }
 
-// ab 선분과 cd 선분이 만나는지 여부를 확인하고, 만단다면 그 교점을 구한다.
+// ab 선분과 cd 선분이 만나는지 여부를 확인하고, 만난다면 그 교점을 구한다.
 template <typename T>
 bool segmentIntersection(Vec2D<T> a, Vec2D<T> b, Vec2D<T> c, Vec2D<T> d, Vec2D<double>& out) {
     if (!lineIntersection(a, b, c, d, out))
