@@ -209,7 +209,7 @@ private:
     }
 };
 
-#include "suffixAutomation.h"
+#include "suffixAutomaton.h"
 
 struct LongestCommonStringLengthWithSuffixAutomation {
     int mN;                                             // the number of strings
@@ -220,14 +220,14 @@ struct LongestCommonStringLengthWithSuffixAutomation {
     unordered_map<int, unordered_map<int, int>> mQIndex;// (L, R) -> Q index
     vector<unordered_map<int, int>> mQuery;             // R --> (L, Q index)
 
-    vector<SuffixAutomation> mSA;
+    vector<SuffixAutomaton> mSA;
 
     vector<int> solve(const vector<string>& strs, const vector<pair<int, int>>& query) {
         mN = (int)strs.size();
         mQ = (int)query.size();
 
         for (int i = 0; i < mN; i++) {
-            SuffixAutomation t(strs[i].length());
+            SuffixAutomaton t(strs[i].length());
             t.extend(strs[i]);
             mSA.emplace_back(std::move(t));
         }
@@ -275,10 +275,10 @@ struct LongestCommonStringLengthWithSuffixAutomation {
     }
 
 private:
-    int lcs(SuffixAutomation& sa, const string& t) {
+    int lcs(SuffixAutomaton& sa, const string& t) {
         int v = 0, l = 0, best = 0, bestpos = 0;
         for (int i = 0; i < (int)t.length(); ++i) {
-            int ch = SuffixAutomation::ch2i(t[i]);
+            int ch = SuffixAutomaton::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
                 l = sa.state[v].len;

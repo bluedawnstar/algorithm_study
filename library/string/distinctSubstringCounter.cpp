@@ -11,7 +11,7 @@ using namespace std;
 #include <cassert>
 #include <iostream>
 #include <map>
-#include "suffixAutomation.h"
+#include "suffixAutomaton.h"
 #include "../common/iostreamhelper.h"
 
 template <typename T>

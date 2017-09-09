@@ -1,6 +1,6 @@
 #pragma once
 
-struct SuffixAutomation {
+struct SuffixAutomaton {
     static const size_t MaxCharN = 26;
     static int ch2i(int c) { return c - 'a'; }
 
@@ -16,7 +16,7 @@ struct SuffixAutomation {
     vector<StateT> state;           // t0 is zeroth state, other states get numbers 1,2,3,...
     int last;
 
-    SuffixAutomation(int maxN) : state(maxN * 2, StateT{ 0, 0, { 0, } }) {
+    SuffixAutomaton(int maxN) : state(maxN * 2, StateT{ 0, 0, { 0, } }) {
         init();
     }
 

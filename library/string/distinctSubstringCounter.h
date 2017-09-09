@@ -73,15 +73,15 @@ struct DistinctSubstringCounterWithSuffixArray {
 };
 
 template <typename T>
-struct SuffixAutomationWithBIT : public SuffixAutomation {
+struct SuffixAutomationWithBIT : public SuffixAutomaton {
     FenwickTreeMultAdd<T> bit;
 
-    SuffixAutomationWithBIT(int maxN) : SuffixAutomation(maxN), bit(maxN) {
+    SuffixAutomationWithBIT(int maxN) : SuffixAutomaton(maxN), bit(maxN) {
         // no action
     }
 
     void extend(char c) {
-        SuffixAutomation::extend(c);
+        SuffixAutomaton::extend(c);
         update(last);
     }
 

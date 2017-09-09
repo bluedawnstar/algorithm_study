@@ -154,7 +154,7 @@
     <ClCompile Include="suffixArray.cpp" />
     <ClCompile Include="suffixArraySparseTable.cpp" />
     <ClCompile Include="suffixArray_notUsed.cpp" />
-    <ClCompile Include="suffixAutomation.cpp" />
+    <ClCompile Include="suffixAutomaton.cpp" />
     <ClCompile Include="suffixTree_notUsed.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,7 +162,7 @@
     <ClInclude Include="lcpArraySparseTable.h" />
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
-    <ClInclude Include="suffixAutomation.h" />
+    <ClInclude Include="suffixAutomaton.h" />
     <ClInclude Include="suffixTree_notUsed.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
