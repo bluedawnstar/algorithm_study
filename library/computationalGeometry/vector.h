@@ -47,15 +47,15 @@ struct Vec2D {
     }
 
     Vec2D<T> operator +(const Vec2D<T>& rhs) const {
-        return Vec2D(x + rhs.x, y + rhs.y);
+        return Vec2D{ x + rhs.x, y + rhs.y };
     }
 
     Vec2D<T> operator -(const Vec2D<T>& rhs) const {
-        return Vec2D(x - rhs.x, y - rhs.y);
+        return Vec2D{ x - rhs.x, y - rhs.y };
     }
 
     Vec2D<T> operator *(T v) const {
-        return Vec2D<T>(x * v, y * v);
+        return Vec2D<T>{ x * v, y * v };
     }
 
     Vec2D<T>& operator +=(const Vec2D<T>& rhs) const {
