@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bit.cpp" />
+    <ClCompile Include="digit.cpp" />
     <ClCompile Include="factor.cpp" />
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="gcd.cpp" />

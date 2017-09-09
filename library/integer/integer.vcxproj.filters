@@ -36,6 +36,9 @@
     <ClCompile Include="bit.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="digit.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">

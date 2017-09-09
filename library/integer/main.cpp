@@ -11,4 +11,5 @@ int main(void) {
     TEST(Gcd);
     TEST(Factor);
     TEST(Fraction);
+    TEST(Digit);
 }
