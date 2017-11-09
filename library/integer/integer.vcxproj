@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="bit.h" />
     <ClInclude Include="factor.h" />
+    <ClInclude Include="fraction.h" />
     <ClInclude Include="gcd.h" />
     <ClInclude Include="IntMod.h" />
     <ClInclude Include="primeNumber.h" />

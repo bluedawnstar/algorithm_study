@@ -4,6 +4,7 @@
 #include <string>
 #include <queue>
 #include <algorithm>
+#include "fraction.h"
 
 using namespace std;
 
@@ -241,10 +242,34 @@ pair<T, T> findKthSternBrocot(T denomRangeMin, T denomRangeMax, U cnt) {
 #define M_PI       3.14159265358979323846   // pi
 #endif
 
+template <typename T>
+ostream& operator <<(ostream& os, const Fraction<T>& f) {
+    os << "(" << f.num << " / " << f.denom << ")";
+    return os;
+}
+
 void testFraction() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--------- testFraction() -----------------" << endl;
+
+    Fraction<int> f1(6, 21);
+    assert(f1.copyReduce() == Fraction<int>(2, 7));
+
+    Fraction<int> f2(9, 12);
+
+    assert(f1 + f2 == Fraction<int>(87, 84));
+    assert(f1 - f2 == Fraction<int>(-39, 84));
+    assert(f1 * f2 == Fraction<int>(54, 252));
+    assert(f1 / f2 == Fraction<int>(72, 189));
+    assert(-f1 == Fraction<int>(-6, 21));
+    assert(+f1 == f1);
+
+    Fraction<int> f3(2, 7);
+    assert(f1 == f3);
+    Fraction<int> f4(3, 7);
+    assert(f1 < f4);
+    assert(f4 > f1);
 
     //--- test continued fraction ---------------------------------------------
 
