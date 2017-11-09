@@ -26,4 +26,5 @@ int main(void) {
     TEST(LinkCutTree);
     TEST(LinkCutTreePathQuery);
     TEST(CentroidDecomposition);
+    TEST(KDTree);
 }

@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="centroidDecomposition.cpp" />
+    <ClCompile Include="kdtree.cpp" />
     <ClCompile Include="linkCutTreePathQuery.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
+    <ClInclude Include="kdtree.h" />
     <ClInclude Include="linkCutTreePathQuery.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTableLCA.h" />
