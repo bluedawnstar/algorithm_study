@@ -146,7 +146,7 @@ vector<int> getShortestPath(int v) {
 
 using namespace OneSourceShortestPath;
 
-void buildGraph() {
+static void buildGraph() {
     gN = 9;
     addEdge(0, 1, 4);
     addEdge(0, 7, 8);
@@ -165,7 +165,7 @@ void buildGraph() {
 }
 
 void testShortestPath() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Shortest Path ---------" << endl;
     buildGraph();

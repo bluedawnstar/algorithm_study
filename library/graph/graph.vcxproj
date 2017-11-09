@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minCostMaxFlow.cpp" />
     <ClCompile Include="shortestPath.cpp" />
+    <ClCompile Include="topologicalSort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h" />

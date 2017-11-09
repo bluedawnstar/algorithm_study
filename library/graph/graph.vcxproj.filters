@@ -30,6 +30,9 @@
     <ClCompile Include="bcc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="topologicalSort.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">

@@ -28,7 +28,7 @@ namespace BasicDigraphTest {
 using namespace BasicDigraphTest;
 
 void testBCC() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Biconnected Components ---------" << endl;
 

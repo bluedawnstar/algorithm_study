@@ -10,4 +10,5 @@ int main(void) {
     TEST(MinCostMaxFlow);
     TEST(BasicDigraph);
     TEST(BCC);
+    TEST(TopologicalSort);
 }
