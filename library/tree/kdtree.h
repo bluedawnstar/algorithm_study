@@ -166,12 +166,9 @@ protected:
                 node->right = _deleteNode(node->left, minNode->point, depth + 1);
             } else {
                 delete node;
-                return nullptr;
+                node = nullptr;
             }
-            return node;
-        }
-
-        if (data[currD] < node->point[currD])
+        } else if (data[currD] < node->point[currD])
             node->left = _deleteNode(node->left, data, depth + 1);
         else
             node->right = _deleteNode(node->right, data, depth + 1);
