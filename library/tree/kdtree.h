@@ -78,10 +78,6 @@ struct KDTree {
         return curr;
     }
 
-    Node* findMin(Node* node, int dimen) {
-        return _findMin(node, dimen, 0);
-    }
-
     Node* findMin(int dimen) {
         return _findMin(root, dimen, 0);
     }
