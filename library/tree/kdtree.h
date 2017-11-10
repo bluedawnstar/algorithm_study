@@ -164,6 +164,7 @@ protected:
                 Node* minNode = findMin(node->left, currD);
                 copyData(node, minNode->point);
                 node->right = _deleteNode(node->left, minNode->point, depth + 1);
+                node->left = nullptr;
             } else {
                 delete node;
                 node = nullptr;
@@ -172,6 +173,7 @@ protected:
             node->left = _deleteNode(node->left, data, depth + 1);
         else
             node->right = _deleteNode(node->right, data, depth + 1);
+
         return node;
     }
 };
