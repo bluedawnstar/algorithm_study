@@ -386,7 +386,7 @@ void testKDTree() {
 
         KDTree<int, 3> tree;
 
-        int N = 10000000;
+        int N = 1000;
         vector<vector<int>> in(N, vector<int>(3));
         for (int i = 0; i < N; i++) {
             in[i][0] = rand();
