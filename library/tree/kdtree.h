@@ -28,6 +28,7 @@ struct KDTree {
     void insert(Node* newNode) {
         if (root == nullptr) {
             root = newNode;
+            count++;
             return;
         }
 
@@ -38,12 +39,14 @@ struct KDTree {
             if (newNode->point[currD] < curr->point[currD]) {
                 if (curr->left == nullptr) {
                     curr->left = newNode;
+                    count++;
                     break;
                 }
                 curr = curr->left;
             } else {
                 if (curr->right == nullptr) {
                     curr->right = newNode;
+                    count++;
                     break;
                 }
                 curr = curr->right;
@@ -116,6 +119,20 @@ struct KDTree {
             bound[i].second = maxPoint[i] + 1;
         }
         _searchRegionFast(root, 0, res, bound);
+        return res;
+    }
+
+    template <typename U>
+    vector<Node*> searchKNN(const U& point, int K) {
+        priority_queue<pair<double,Node*>> pq;
+        auto bnd = bound;
+        _searchKNN(root, point, 0, pq, K, bnd);
+
+        vector<Node*> res(pq.size());
+        for (int i = (int)pq.size() - 1; i >= 0; i--) {
+            res[i] = pq.top().second;
+            pq.pop();
+        }
         return res;
     }
 
@@ -210,6 +227,7 @@ protected:
                 node->left = nullptr;
             } else {
                 delete node;
+                count--;
                 node = nullptr;
             }
         } else if (point[currD] < node->point[currD])
@@ -368,6 +386,54 @@ protected:
             bound[currD].first = max(bound[currD].first, node->point[currD]);
             _searchRegionFast(node->right, depth + 1, res, bound);
             bound[currD].first = temp;
+        }
+    }
+
+    template <typename U>
+    void _searchKNN(Node* node, const U& point, int depth, priority_queue<pair<double, Node*>>& pq, int K, vector<pair<T, T>>& bound) {
+        if (node == nullptr)
+            return;
+
+        if ((int)pq.size() >= K) {
+            for (int i = 0; i < KD; i++) {
+                if (point[i] + pq.top().first < bound[i].first || bound[i].second <= point[i] - pq.top().first)
+                    return;
+            }
+        }
+
+        int currD = depth % KD;
+
+        auto dist = calcDistance(node, point);
+        if ((int)pq.size() < K || dist < pq.top().first) {
+            pq.emplace(dist, node);
+            if ((int)pq.size() > K)
+                pq.pop();
+        }
+
+        if (point[currD] < node->point[currD]) {
+            auto temp = bound[currD];
+
+            bound[currD].second = min(bound[currD].second, node->point[currD]);
+            _searchKNN(node->left, point, depth + 1, pq, K, bound);
+            bound[currD].second = temp.second;
+
+            if ((int)pq.size() < K || node->point[currD] <= point[currD] + pq.top().first) {
+                bound[currD].first = max(bound[currD].first, node->point[currD]);
+                _searchKNN(node->right, point, depth + 1, pq, K, bound);
+                bound[currD].first = temp.first;
+            }
+        } else {
+            auto temp = bound[currD];
+
+            bound[currD].first = max(bound[currD].first, node->point[currD]);
+            _searchKNN(node->right, point, depth + 1, pq, K, bound);
+            bound[currD].first = temp.first;
+
+            if ((int)pq.size() < K || point[currD] - pq.top().first < node->point[currD]) {
+                bound[currD].second = min(bound[currD].second, node->point[currD]);
+                _searchKNN(node->left, point, depth + 1, pq, K, bound);
+                bound[currD].second = temp.second;
+            }
         }
     }
 };

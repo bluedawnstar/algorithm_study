@@ -1,6 +1,7 @@
 #include <cassert>
-#include <vector>
 #include <limits>
+#include <vector>
+#include <queue>
 #include <algorithm>
 
 using namespace std;
@@ -59,6 +60,32 @@ static int findNearest(const vector<vector<int>>& vec3D, const vector<int>& poin
     return res;
 }
 
+static vector<int> findKNN(const vector<vector<int>>& vec3D, const vector<int>& point3D, int K) {
+    double dist = numeric_limits<double>::max();
+
+    priority_queue<pair<double, int>> pq;
+
+    for (int i = 0; i < (int)vec3D.size(); i++) {
+        double d = 0.0;
+        for (int j = 0; j < 3; j++) {
+            d += double(vec3D[i][j] - point3D[j]) * double(vec3D[i][j] - point3D[j]);
+        }
+        d = sqrt(d);
+
+        pq.emplace(d, i);
+        if ((int)pq.size() > K)
+            pq.pop();
+    }
+
+    vector<int> res(pq.size());
+    for (int i = (int)pq.size() - 1; i >= 0; i--) {
+        res[i] = pq.top().second;
+        pq.pop();
+    }
+
+    return res;
+}
+
 static vector<vector<int>> searchRegion(const vector<vector<int>>& vec3D, const vector<int>& pointMin, const vector<int>& pointMax) {
     vector<vector<int>> res;
 
@@ -78,7 +105,7 @@ static vector<vector<int>> searchRegion(const vector<vector<int>>& vec3D, const 
 }
 
 void testKDTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- KD-Tree ----------------------------------" << endl;
     cout << "*** insert" << endl;
@@ -352,6 +379,110 @@ void testKDTree() {
             }
         }
     }
+    //----------------------------------------------
+    cout << "*** search KNN" << endl;
+    {
+        //srand(time(nullptr));
+
+        KDTree<int, 3> tree;
+
+        int N = 10000000;
+        vector<vector<int>> in(N, vector<int>(3));
+        for (int i = 0; i < N; i++) {
+            in[i][0] = rand();
+            in[i][1] = rand();
+            in[i][2] = rand();
+            tree.insert(in[i]);
+        }
+
+        int QN = 1000;
+
+        vector<vector<int>> qry(QN, vector<int>(3));
+        for (int i = 0; i < QN; i++) {
+            qry[i][0] = rand();
+            qry[i][1] = rand();
+            qry[i][2] = rand();
+        }
+
+        vector<vector<KDTree<int,3>::Node*>> out1(QN);
+        vector<vector<int>> out2(QN);
+
+        const int K = 100;
+
+        PROFILE_START(0);
+        for (int i = 0; i < QN; i++) {
+            out1[i] = tree.searchKNN(qry[i], K);
+        }
+        PROFILE_STOP(0);
+
+        PROFILE_START(1);
+        for (int i = 0; i < QN; i++) {
+            out2[i] = findKNN(in, qry[i], K);
+        }
+        PROFILE_STOP(1);
+
+        vector<vector<vector<int>>> out11(QN);
+        vector<vector<vector<int>>> out22(QN);
+        for (int i = 0; i < QN; i++) {
+            out11[i].resize(out1[i].size());
+            for (int j = 0; j < (int)out1[i].size(); j++) {
+                out11[i][j].assign(out1[i][j]->point, out1[i][j]->point + 3);
+            }
+            out22[i].resize(out2[i].size());
+            for (int j = 0; j < (int)out2[i].size(); j++) {
+                out22[i][j] = in[out2[i][j]];
+            }
+            sort(out11[i].begin(), out11[i].end());
+            sort(out22[i].begin(), out22[i].end());
+        }
+        if (out11 != out22) {
+            cout << "KDTree.searchKNN() failed" << endl;
+        }
+        assert(out11 == out22);
+    }
+#if 0
+    //----------------------------------------------
+    cout << "*** speed test of nearest neighbor" << endl;
+    {
+        //srand(time(nullptr));
+
+        KDTree<int, 3> tree;
+
+        int N = 10000000;
+        vector<vector<int>> in(N, vector<int>(3));
+
+        PROFILE_START(0);
+        for (int i = 0; i < N; i++) {
+            in[i][0] = rand();
+            in[i][1] = rand();
+            in[i][2] = rand();
+            tree.insert(in[i]);
+        }
+        PROFILE_STOP(0);
+
+        int QN = 1000;
+
+        vector<vector<int>> qry(QN, vector<int>(3));
+        for (int i = 0; i < QN; i++) {
+            qry[i][0] = rand();
+            qry[i][1] = rand();
+            qry[i][2] = rand();
+        }
+
+        vector<vector<int>> out1(QN);
+        vector<vector<int>> out2(QN);
+
+        PROFILE_START(1);
+        for (int i = 0; i < QN; i++) {
+            auto* p = tree.searchNearest(qry[i])->point;
+            out1[i] = vector<int>(p, p + 3);
+        }
+        PROFILE_STOP(1);
+
+        if (out1 == out2)
+            cerr << "Dummy message to prevent optimization" << endl;
+    }
+#endif
 
     cout << "OK!" << endl;
 }
