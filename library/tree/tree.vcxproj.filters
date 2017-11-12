@@ -87,6 +87,9 @@
     <ClCompile Include="segmentTreePersistent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeCompact.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sparseTable.h">
@@ -150,6 +153,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreePersistentLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeCompact.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

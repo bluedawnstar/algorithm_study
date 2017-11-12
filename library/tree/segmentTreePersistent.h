@@ -251,12 +251,3 @@ PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const T arr[], int siz
     segTree.build(arr, 0, size - 1);
     return std::move(segTree);
 }
-
-/* example
-1) Min Segment Tree (RMQ)
-auto segTree = makePersistentSegmentTree<int>(N, [](int a, int b) { return min(a, b); }, INT_MAX);
-2) Max Segment Tree
-auto segTree = makePersistentSegmentTree<int>(N, [](int a, int b) { return max(a, b); });
-3) GCD Segment Tree
-auto segTree = makePersistentSegmentTree<int>(N, [](int a, int b) { return gcd(a, b); });
-*/

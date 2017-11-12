@@ -21,7 +21,7 @@ using namespace std;
 #include "segmentTree.h"
 
 void testSegmentTreePersistent() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Persistent Segment Tree ----------------------------------------" << endl;
 
@@ -147,7 +147,7 @@ void testSegmentTreePersistent() {
         }
         PROFILE_STOP(1);
     }
-    cout << "*** Segment tree vs segment tree with lazy propagation" << endl;
+    cout << "*** Persistent segment tree vs persistent segment tree with lazy propagation" << endl;
     {
         int T = 100000;
         int N = 1000000;
