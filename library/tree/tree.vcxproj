@@ -146,6 +146,7 @@
     <ClCompile Include="kdtree.cpp" />
     <ClCompile Include="kdtreeNoUpdate.cpp" />
     <ClCompile Include="linkCutTreePathQuery.cpp" />
+    <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
     <ClCompile Include="splayTreeRangeQuery.cpp" />
@@ -172,6 +173,8 @@
     <ClInclude Include="kdtree.h" />
     <ClInclude Include="kdtreeNoUpdate.h" />
     <ClInclude Include="linkCutTreePathQuery.h" />
+    <ClInclude Include="segmentTreePersistent.h" />
+    <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTableLCA.h" />
     <ClInclude Include="suffixTree.h" />

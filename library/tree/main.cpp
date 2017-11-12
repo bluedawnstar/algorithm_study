@@ -11,6 +11,7 @@ int main(void) {
     TEST(FenwickTree2D);
     TEST(FenwickTreeMultAdd);
     TEST(SegmentTree);
+    TEST(SegmentTreePersistent);
     TEST(SparseTable);
     TEST(HeavyLightDecomposition);
     TEST(TreeMO);

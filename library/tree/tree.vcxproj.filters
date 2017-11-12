@@ -84,6 +84,9 @@
     <ClCompile Include="kdtreeNoUpdate.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreePersistent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sparseTable.h">
@@ -141,6 +144,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="kdtreeNoUpdate.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePersistent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePersistentLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
