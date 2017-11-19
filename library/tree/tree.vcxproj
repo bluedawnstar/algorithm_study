@@ -170,6 +170,7 @@
     <ClCompile Include="suffixTree.cpp" />
     <ClCompile Include="splayTree.cpp" />
     <ClCompile Include="trie.cpp" />
+    <ClCompile Include="waveletTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="splayTree.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="suffixTrie.h" />
+    <ClInclude Include="waveletTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

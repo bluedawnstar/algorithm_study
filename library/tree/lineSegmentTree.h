@@ -19,6 +19,7 @@ struct LineSegmentTree {
         buildSub(1, 0, N - 1);
     }
 
+    // inclusive
     void add(int lineX1, int lineX2, int delta) {
         addSub(1, 0, N - 1, lineX1, lineX2, delta);
     }
@@ -58,6 +59,7 @@ private:
         }
     }
 
+    // inclusive
     void addSub(int node, int left, int right, int lineX1, int lineX2, int delta) {
         if (left == lineX1 && right == lineX2) {
             addTo(node, delta);

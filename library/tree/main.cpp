@@ -32,4 +32,5 @@ int main(void) {
     TEST(KDTreeNoUpdate);
     TEST(IntervalTree);
     TEST(LineSegmentTree);
+    TEST(WaveletTree);
 }

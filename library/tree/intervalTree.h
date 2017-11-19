@@ -4,11 +4,11 @@
 // 
 // [!!] Is it really needed? I think set, map is enough.
 // 
-template <typename T, typename DataT>
+template <typename T = int>
 struct IntervalTree {
     struct Interval {
         T       low, high;  // inclusive
-        DataT   data;
+        //DataT   data;
     };
 
     struct IntervalNode {
@@ -143,6 +143,7 @@ public:
         return newNode;
     }
 
+    // inclusive
     IntervalNode* eraseSub(IntervalNode* node, T low, T high) {
         if (!node)
             return nullptr;

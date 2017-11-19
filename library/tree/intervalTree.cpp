@@ -14,12 +14,14 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-static ostream& operator <<(ostream& os, IntervalTree<int,int>::IntervalNode* rhs) {
+typedef IntervalTree<int>::IntervalNode NodeT;
+
+static ostream& operator <<(ostream& os, NodeT* rhs) {
     os << "(" << rhs->interval.low << ", " << rhs->interval.high << ")";
     return os;
 }
 
-static ostream& operator <<(ostream& os, vector<IntervalTree<int,int>::IntervalNode*>& rhs) {
+static ostream& operator <<(ostream& os, vector<NodeT*>& rhs) {
     os << "{ ";
     if (!rhs.empty())
         os << rhs[0];
@@ -37,7 +39,7 @@ void testIntervalTree() {
 
     vector<pair<int,int>> in{ { 15, 20 }, { 10, 30 }, { 17, 19 }, { 5, 20 }, { 12, 15 }, { 30, 40 } };
 
-    IntervalTree<int, int> tree;
+    IntervalTree<int> tree;
     for (int i = 0; i < (int)in.size(); i++) {
         auto* p = tree.insert(in[i].first, in[i].second);
         assert(p->interval.low == in[i].first);

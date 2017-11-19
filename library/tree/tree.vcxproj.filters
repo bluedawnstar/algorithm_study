@@ -99,6 +99,9 @@
     <ClCompile Include="lineSegmentTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="waveletTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sparseTable.h">
@@ -174,6 +177,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lineSegmentTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="waveletTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
