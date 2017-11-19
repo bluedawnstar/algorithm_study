@@ -143,10 +143,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="centroidDecomposition.cpp" />
+    <ClCompile Include="intervalTree.cpp" />
     <ClCompile Include="kdtree.cpp" />
     <ClCompile Include="kdtreeNoUpdate.cpp" />
+    <ClCompile Include="lineSegmentTree.cpp" />
     <ClCompile Include="linkCutTreePathQuery.cpp" />
     <ClCompile Include="segmentTreeCompact.cpp" />
+    <ClCompile Include="segmentTreeCompactLazy.cpp" />
     <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
@@ -171,10 +174,13 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
+    <ClInclude Include="intervalTree.h" />
     <ClInclude Include="kdtree.h" />
     <ClInclude Include="kdtreeNoUpdate.h" />
+    <ClInclude Include="lineSegmentTree.h" />
     <ClInclude Include="linkCutTreePathQuery.h" />
     <ClInclude Include="segmentTreeCompact.h" />
+    <ClInclude Include="segmentTreeCompactLazy.h" />
     <ClInclude Include="segmentTreePersistent.h" />
     <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="sparseTable.h" />

@@ -30,4 +30,6 @@ int main(void) {
     TEST(CentroidDecomposition);
     TEST(KDTree);
     TEST(KDTreeNoUpdate);
+    TEST(IntervalTree);
+    TEST(LineSegmentTree);
 }

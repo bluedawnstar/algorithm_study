@@ -90,6 +90,15 @@
     <ClCompile Include="segmentTreeCompact.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeCompactLazy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="intervalTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lineSegmentTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sparseTable.h">
@@ -156,6 +165,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeCompact.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeCompactLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="intervalTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lineSegmentTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
