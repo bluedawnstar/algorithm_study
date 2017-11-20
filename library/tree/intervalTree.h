@@ -24,6 +24,10 @@ struct IntervalTree {
     IntervalTree() : count(0), tree(nullptr) {
     }
 
+    ~IntervalTree() {
+        destroyAll(tree);
+    }
+
     // inclusive
     IntervalNode* insert(T low, T high) {
         if (tree == nullptr)
@@ -104,6 +108,16 @@ public:
     void destroyNode(IntervalNode* node) {
         delete node;
         count--;
+    }
+
+    void destroyAll(IntervalNode* node) {
+        if (!node)
+            return;
+        if (node->left)
+            destroyAll(node->left);
+        if (node->right)
+            destroyAll(node->right);
+        destroyNode(node);
     }
 
     // inclusive

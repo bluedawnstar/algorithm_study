@@ -2,15 +2,17 @@
 
 template <typename T>
 struct WaveletTree {
-    struct WaveletNode {
+    static const T NaN = numeric_limits<T>::min();
+
+    struct Node {
         T valLow, valHigh;      // value range (not index), inclusive
         vector<int> freq;
 
-        WaveletNode* left;
-        WaveletNode* right;
+        Node* left;
+        Node* right;
 
         // [first, last), [valLo, valHi]
-        WaveletNode(T* first, T* last, T vLo, T vHi) {
+        Node(T* first, T* last, T vLo, T vHi) : left(nullptr), right(nullptr) {
             valLow = vLo, valHigh = vHi;
 
             if (first >= last)
@@ -40,33 +42,74 @@ struct WaveletTree {
 
             auto pivot = stable_partition(first, last, lessEqualMid);
 
-            left = new WaveletNode(first, pivot, valLow, mid);
-            right = new WaveletNode(pivot, last, mid + 1, valHigh);
+            left = new Node(first, pivot, valLow, mid);
+            right = new Node(pivot, last, mid + 1, valHigh);
         }
 
-
-        // the number of numbers in range [lo, hi] less than or equal to k
-        // inclusive
-        int countLessOrEqual(int lo, int hi, T k) {
-            if (lo > hi || k < valLow)
+        // the number of numbers in range [L, R] less than or equal to k
+        // inclusive (1 <= L <= R <= N, 1 <= k <= N)
+        int countLessOrEqual(int L, int R, T k) {
+            if (L > R || k < valLow)
                 return 0;
 
             if (valHigh <= k)
-                return hi - lo + 1;
+                return R - L + 1;
 
-            int ltCount = freq[lo - 1];
-            int rtCount = freq[hi];
+            int ltCount = freq[L - 1];
+            int rtCount = freq[R];
 
             return left->countLessOrEqual(ltCount + 1, rtCount, k)
-                + right->countLessOrEqual(lo - ltCount, hi - rtCount, k);
+                + right->countLessOrEqual(L - ltCount, R - rtCount, k);
+        }
+
+        // kth smallest element in [L, R]
+        // inclusive (1 <= L <= R <= N)
+        int kth(int L, int R, int k) {
+            if (L > R)
+                return 0;
+
+            if (valLow == valHigh)
+                return valLow;
+
+            int cntIn = freq[R] - freq[L - 1];
+            int ltCount = freq[L - 1];
+            int rtCount = freq[R];
+
+            if (k <= cntIn)
+                return left->kth(ltCount + 1, rtCount, k);
+            else
+                return right->kth(L - ltCount, R - rtCount, k - cntIn);
+        }
+
+        // the number of k in [L, R]
+        // inclusive (1 <= L <= R <= N)
+        int count(int L, int R, T k) {
+            if (L > R || k < valLow || k > valHigh)
+                return 0;
+
+            if (valLow == valHigh)
+                return R - L + 1;
+
+            int ltCount = freq[L - 1];
+            int rtCount = freq[R];
+
+            T mid = valLow + (valHigh - valLow) / 2;
+            if (k <= mid)
+                return left->count(ltCount + 1, rtCount, k);
+            else
+                return right->count(L - ltCount, R - rtCount, k);
         }
     };
 
     int N;
     vector<T> data;
-    WaveletNode* tree;
+    Node* tree;
 
     WaveletTree() : N(0), data(), tree(nullptr) {
+    }
+
+    ~WaveletTree() {
+        destroyAll(tree);
     }
 
     // inclusive
@@ -74,7 +117,7 @@ struct WaveletTree {
         N = size;
         data.assign(in, in + size);
 
-        tree = new WaveletNode(&data[0], &data[0] + size, valLow, valHigh);
+        tree = new Node(&data[0], &data[0] + size, valLow, valHigh);
     }
 
     // inclusive
@@ -102,14 +145,55 @@ struct WaveletTree {
     int queryCountLessOrEqual(T k) {
         if (!tree)
             return 0;
-        return tree->countLessOrEqual(0, N - 1, k);
+        return tree->countLessOrEqual(1, N, k);
     }
 
+
     // the number of values (value <= k)
-    // inclusive
-    int queryCountLessOrEqual(int lo, int hi, T k) {
+    // inclusive (0 <= left <= right < N)
+    int queryCountLessOrEqual(int left, int right, T k) {
         if (!tree)
             return 0;
-        return tree->countLessOrEqual(lo, hi, k);
+        return tree->countLessOrEqual(left + 1, right + 1, k);
+    }
+
+    // (0 <= k < N)
+    int kth(int k) {
+        if (!tree)
+            return 0;
+        return tree->kth(1, N, k + 1);
+    }
+
+    // kth smallest element in [L, R]
+    // inclusive (0 <= L <= R < N, 0 <= k < N)
+    int kth(int left, int right, int k) {
+        if (!tree)
+            return 0;
+        return tree->kth(left + 1, right + 1, k + 1);
+    }
+
+    int count(T k) {
+        if (!tree)
+            return 0;
+        return tree->count(1, N, k);
+    }
+
+    // the number of k in [L, R]
+    // inclusive (0 <= L <= R < N)
+    int count(int left, int right, T k) {
+        if (!tree)
+            return 0;
+        return tree->count(left + 1, right + 1, k);
+    }
+
+private:
+    void destroyAll(Node* node) {
+        if (!node)
+            return;
+        if (node->left)
+            destroyAll(node->left);
+        if (node->right)
+            destroyAll(node->right);
+        delete node;
     }
 };
