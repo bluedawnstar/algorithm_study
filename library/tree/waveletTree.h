@@ -149,7 +149,7 @@ struct WaveletTree {
     }
 
 
-    // the number of values (value <= k)
+    // the number of values less than or equal to k - O(log(max_value))
     // inclusive (0 <= left <= right < N)
     int queryCountLessOrEqual(int left, int right, T k) {
         if (!tree)
