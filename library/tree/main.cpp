@@ -33,4 +33,5 @@ int main(void) {
     TEST(IntervalTree);
     TEST(LineSegmentTree);
     TEST(WaveletTree);
+    TEST(WaveletTreeBitVector);
 }
