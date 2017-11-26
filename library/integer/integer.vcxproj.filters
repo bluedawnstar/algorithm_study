@@ -39,9 +39,6 @@
     <ClCompile Include="digit.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="sumOfPower.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -60,9 +57,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fraction.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="sumOfPower.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
