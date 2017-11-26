@@ -103,6 +103,22 @@ static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int 
         }
         assert(get<2>(ans) == gt);
     }
+    // count with range
+    {
+        int Klow = in[L + (R - L) / 3];
+        int Khigh = in[L + (R - L) * 2/ 3];
+
+        if (Klow > Khigh)
+            swap(Klow, Khigh);
+
+        int gt = countK(in, L, R, Klow, Khigh);
+        int ans = matrix.count(L, R, Klow, Khigh);
+
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
 }
 
 void testWaveletMatrix() {

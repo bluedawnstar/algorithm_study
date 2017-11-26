@@ -116,14 +116,21 @@ struct WaveletMatrix {
     }
 
     // inclusive (0 <= left <= right < N)
-    int count(int left, int right, T val) const {
-        return get<0>(countEx(left, right, val));
+    int countLessThanOrEqual(int left, int right, T val) const {
+        auto t = countEx(left, right, val);
+        return ::get<0>(t) + ::get<1>(t);
     }
 
     // inclusive (0 <= left <= right < N)
-    int countLessThanOrEqual(int left, int right, T val) const {
-        auto t = countEx(left, right, val);
-        return get<0>(t) + get<1>(t);
+    int count(int left, int right, T val) const {
+        return ::get<0>(countEx(left, right, val));
+    }
+
+    // inclusive (0 <= left <= right < N)
+    int count(int left, int right, T valLow, T valHigh) const {
+        auto tL = countEx(left, right, valLow);
+        auto tH = countEx(left, right, valHigh);
+        return ::get<0>(tH) + ::get<1>(tH) - ::get<1>(tL);
     }
 
     // return (the number of val, numbers less than val, numbers greater than val)
