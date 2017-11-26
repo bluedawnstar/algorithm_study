@@ -126,7 +126,6 @@ static void testSpeedAll() {
     {
         WaveletTree<int> tree;
         tree.build(in);
-        T = 0;
         for (int i = 0; i < T; i++) {
             auto& t = qryKth[i];
             int ans = tree.kth(get<0>(t), get<1>(t), get<2>(t));
