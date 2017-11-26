@@ -50,7 +50,7 @@ void testDistinctSubstringCounter() {
 
     cout << "*** test with Suffix Automation" << endl;
     {
-        SuffixAutomationWithBIT<long long> sa((int)S.length());
+        DistinctSubstringCounterWithSuffixAutomaton<long long> sa((int)S.length());
 
         sa.init();
         for (int i = 0; i < (int)S.length(); i++) {
