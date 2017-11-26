@@ -181,7 +181,7 @@ struct WaveletTree {
         build(&in[0], (int)in.size());
     }
 
-    int queryCountLessOrEqual(T k) {
+    int countLessOrEqual(T k) {
         if (!tree)
             return 0;
         return tree->countLessOrEqual(1, N, k);
@@ -190,7 +190,7 @@ struct WaveletTree {
 
     // the number of values less than or equal to k : O(log(max_value))
     // inclusive (0 <= left <= right < N)
-    int queryCountLessOrEqual(int left, int right, T k) {
+    int countLessOrEqual(int left, int right, T k) {
         if (!tree)
             return 0;
         return tree->countLessOrEqual(left + 1, right + 1, k);

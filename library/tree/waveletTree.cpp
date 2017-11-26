@@ -52,7 +52,7 @@ static void test(vector<int>& in, WaveletTree<int>& tree, int N, int L, int R, i
     // less than or equal to k
     {
         int gt = countLTE(in, 0, N - 1, K);
-        int ans = tree.queryCountLessOrEqual(K);
+        int ans = tree.countLessOrEqual(K);
         if (ans != gt) {
             cout << "GT = " << gt << ", " << "ans = " << ans << endl;
         }
@@ -60,7 +60,7 @@ static void test(vector<int>& in, WaveletTree<int>& tree, int N, int L, int R, i
     }
     {
         int gt = countLTE(in, L, R, K);
-        int ans = tree.queryCountLessOrEqual(L, R, K);
+        int ans = tree.countLessOrEqual(L, R, K);
         if (ans != gt) {
             cout << "(" << L << ", " << R << ") : GT = " << gt << ", " << "ans = " << ans << endl;
         }

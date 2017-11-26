@@ -220,7 +220,7 @@ struct WaveletTreeBitVector {
         build(&in[0], (int)in.size());
     }
 
-    int queryCountLessOrEqual(T k) {
+    int countLessOrEqual(T k) {
         if (!tree)
             return 0;
         return tree->countLessOrEqual(0, N - 1, k);
@@ -229,7 +229,7 @@ struct WaveletTreeBitVector {
 
     // the number of values less than or equal to k - O(log(max_value))
     // inclusive (0 <= left <= right < N)
-    int queryCountLessOrEqual(int left, int right, T k) {
+    int countLessOrEqual(int left, int right, T k) {
         if (!tree)
             return 0;
         return tree->countLessOrEqual(left, right, k);

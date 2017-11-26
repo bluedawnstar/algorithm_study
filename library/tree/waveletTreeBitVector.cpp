@@ -73,7 +73,7 @@ static void testSpeedTree() {
             if (L > R)
                 swap(L, R);
 
-            int ans = tree.queryCountLessOrEqual(K);
+            int ans = tree.countLessOrEqual(K);
             if (ans < 0)
                 cerr << "I'll never be shown!" << endl;
         }
@@ -92,7 +92,7 @@ static void testSpeedTree() {
             if (L > R)
                 swap(L, R);
 
-            int ans = tree.queryCountLessOrEqual(K);
+            int ans = tree.countLessOrEqual(K);
             if (ans < 0)
                 cerr << "I'll never be shown!" << endl;
         }
@@ -167,7 +167,7 @@ static void test(vector<int>& in, WaveletTreeBitVector<int>& tree, int N, int L,
     // less than or equal to k
     {
         int gt = countLTE(in, 0, N - 1, K);
-        int ans = tree.queryCountLessOrEqual(K);
+        int ans = tree.countLessOrEqual(K);
         if (ans != gt) {
             cout << "GT = " << gt << ", " << "ans = " << ans << endl;
         }
@@ -175,7 +175,7 @@ static void test(vector<int>& in, WaveletTreeBitVector<int>& tree, int N, int L,
     }
     {
         int gt = countLTE(in, L, R, K);
-        int ans = tree.queryCountLessOrEqual(L, R, K);
+        int ans = tree.countLessOrEqual(L, R, K);
         if (ans != gt) {
             cout << "(" << L << ", " << R << ") : GT = " << gt << ", " << "ans = " << ans << endl;
         }
