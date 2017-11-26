@@ -57,6 +57,9 @@
     <ClCompile Include="suffixAutomaton.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="palindromicTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -75,6 +78,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixAutomaton.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicString.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicSubsequence.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

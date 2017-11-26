@@ -149,6 +149,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="palindromicString.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
+    <ClCompile Include="palindromicTree.cpp" />
     <ClCompile Include="prefixFunction.cpp" />
     <ClCompile Include="split.cpp" />
     <ClCompile Include="suffixArray.cpp" />
@@ -160,6 +161,9 @@
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
+    <ClInclude Include="palindromicString.h" />
+    <ClInclude Include="palindromicSubsequence.h" />
+    <ClInclude Include="palindromicTree.h" />
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />
