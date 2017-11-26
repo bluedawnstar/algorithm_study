@@ -151,32 +151,6 @@ struct WaveletTreeBitVector {
                 }
             }
         }
-
-        //TODO: implement!
-        // (0 <= pos < N)
-        void update(int pos, T* first, T orgX, T newX) {
-            if (pos >= (int)rank.size() || valLow == valHigh)
-                return;
-
-            int ltCount = rank.rank1(pos - 1);
-
-            T mid = valLow + (valHigh - valLow) / 2;
-            if (orgX <= mid && newX <= mid)
-                left->update(ltCount + 1, first, orgX, newX);
-            else if (orgX > mid && newX > mid)
-                right->update(pos - ltCount, first + rank.count(), orgX, newX);
-            else {
-                *(first + pos - 1) = newX;
-                int cnt = rank.rank1(pos);
-                if (orgX < newX) {
-                    for (int i = pos; i < (int)rank.size() && rank.rank1(i) == cnt; i++)
-                        --rank.mRank[i];
-                } else {
-                    for (int i = pos; i < (int)rank.size() && rank.rank1(i) == cnt; i++)
-                        ++rank.mRank[i];
-                }
-            }
-        }
     };
 
     int N;
@@ -278,14 +252,6 @@ struct WaveletTreeBitVector {
         if (!tree || pos < 0 || pos >= N - 1 || orgX1 == orgX2)
             return;
         tree->swap(pos, &data[0], orgX1, orgX2);
-    }
-
-    //TODO: implement!
-    // (0 <= pos < N - 1)
-    void update(int pos, T orgX, T newX) {
-        if (!tree || pos < 0 || pos >= N || orgX == newX)
-            return;
-        tree->update(pos, &data[0], orgX, newX);
     }
 
 private:

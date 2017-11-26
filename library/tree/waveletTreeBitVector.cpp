@@ -257,17 +257,6 @@ void testWaveletTreeBitVector() {
             K = in[R];
         }
         test(in, tree, N, L, R, K);
-
-        continue;
-
-        //------- update ------
-        for (int j = 0; j < 10; j++) {
-            int pos = rand() % N;
-            int t = rand() % N;
-            tree.update(pos, in[pos], t);
-            in[pos] = t;
-        }
-        test(in, tree, N, L, R, K);
     }
 
     cout << "OK!" << endl;
