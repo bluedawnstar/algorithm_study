@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "positiveSum.h"
+#include "arraySum.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -33,7 +33,7 @@ void testPositiveSum() {
     for (int i = 0; i < N; i++) {
         v[i] = rand() % N;
     }
-    PositiveSum<int> S(v);
+    ArraySum<int> S(v);
 
     for (int i = 0; i < T; i++) {
         int L = rand() * rand() % N;

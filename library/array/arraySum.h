@@ -1,19 +1,17 @@
 #pragma once
 
-// for positive numbers (including 0)
-
 template <typename T>
-struct PositiveSum {
+struct ArraySum {
     vector<T> sum;
 
-    PositiveSum() {
+    ArraySum() {
     }
 
-    explicit PositiveSum(const T* in, int N) {
+    explicit ArraySum(const T* in, int N) {
         build(in, N);
     }
 
-    explicit PositiveSum(const vector<T>& in) {
+    explicit ArraySum(const vector<T>& in) {
         build(in);
     }
 

@@ -149,12 +149,12 @@
     <ClCompile Include="integralImage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="packedArray.cpp" />
-    <ClCompile Include="positiveSum.cpp" />
+    <ClCompile Include="arraySum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="integralImage.h" />
     <ClInclude Include="packedArray.h" />
-    <ClInclude Include="positiveSum.h" />
+    <ClInclude Include="arraySum.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
