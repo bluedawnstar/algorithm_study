@@ -115,8 +115,20 @@ struct WaveletMatrix {
         return val;
     }
 
-    // inclusive (0 <= left <= right < N, 0 <= k)
-    tuple<int, int, int> count(int left, int right, T val) const {
+    // inclusive (0 <= left <= right < N)
+    int count(int left, int right, T val) const {
+        return get<0>(countEx(left, right, val));
+    }
+
+    // inclusive (0 <= left <= right < N)
+    int countLessThanOrEqual(int left, int right, T val) const {
+        auto t = countEx(left, right, val);
+        return get<0>(t) + get<1>(t);
+    }
+
+    // return (the number of val, numbers less than val, numbers greater than val)
+    // inclusive (0 <= left <= right < N)
+    tuple<int, int, int> countEx(int left, int right, T val) const {
         if (val > mMaxVal) {
             return make_tuple(0, right - left + 1, 0);
         }

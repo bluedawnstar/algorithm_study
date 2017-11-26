@@ -16,10 +16,17 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-static int countLTE(vector<int>& v, int L, int R, int K) {
+static int countLess(vector<int>& v, int L, int R, int K) {
     int res = 0;
     for (int i = L; i <= R; i++)
-        res += (v[i] <= K);
+        res += (v[i] < K);
+    return res;
+}
+
+static int countGreater(vector<int>& v, int L, int R, int K) {
+    int res = 0;
+    for (int i = L; i <= R; i++)
+        res += (v[i] > K);
     return res;
 }
 
@@ -76,12 +83,25 @@ static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int 
     {
         int K = in[L + (R - L) / 2];
 
+        auto ans = matrix.countEx(L, R, K);
+
         int gt = countK(in, L, R, K);
-        int ans = get<0>(matrix.count(L, R, K));
-        if (ans != gt) {
-            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        if (get<0>(ans) != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << get<0>(ans) << endl;
         }
-        assert(ans == gt);
+        assert(get<0>(ans) == gt);
+
+        gt = countLess(in, L, R, K);
+        if (get<1>(ans) != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << get<1>(ans) << endl;
+        }
+        assert(get<1>(ans) == gt);
+
+        gt = countGreater(in, L, R, K);
+        if (get<2>(ans) != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << get<2>(ans) << endl;
+        }
+        assert(get<2>(ans) == gt);
     }
 }
 
