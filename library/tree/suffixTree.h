@@ -51,7 +51,7 @@ struct SuffixTree {
 
         int     suffixIndex;
         int     childCount;
-        Node*   children[MaxCharN];
+        Node*   children[MaxCharN];     //TODO: make more efficient
 
         void init() {
             this->begin = 0;

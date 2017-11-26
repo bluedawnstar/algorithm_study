@@ -13,7 +13,8 @@ struct WaveletTree {
 
         // [first, last), [valLo, valHi]
         Node(T* first, T* last, T vLo, T vHi) : left(nullptr), right(nullptr) {
-            valLow = vLo, valHigh = vHi;
+            valLow = vLo;
+            valHigh = vHi;
 
             if (first >= last)
                 return;
@@ -47,7 +48,7 @@ struct WaveletTree {
         }
 
         // the number of numbers in range [L, R] less than or equal to k
-        // inclusive (1 <= L <= R <= N, 1 <= k <= N)
+        // inclusive (1 <= L <= R <= N)
         int countLessOrEqual(int L, int R, T k) {
             if (L > R || k < valLow)
                 return 0;
@@ -99,6 +100,44 @@ struct WaveletTree {
             else
                 return right->count(L - ltCount, R - rtCount, k);
         }
+
+        // the number of k in [L, R]
+        // inclusive (1 <= L <= R <= N)
+        int count(int L, int R, T kLow, T kHigh) {
+            if (L > R || kHigh < valLow || kLow > valHigh)
+                return 0;
+
+            if (valLow == valHigh)
+                return R - L + 1;
+
+            int ltCount = freq[L - 1];
+            int rtCount = freq[R];
+
+            T mid = valLow + (valHigh - valLow) / 2;
+            return left->count(ltCount + 1, rtCount, kLow, kHigh)
+                 + right->count(L - ltCount, R - rtCount, kLow, kHigh);
+        }
+
+        // (1 <= pos < N)
+        void swap(int pos, T* first, T orgX1, T orgX2) {
+            if (pos + 1 >= (int)freq.size() || valLow == valHigh)
+                return;
+
+            int ltCount = freq[pos - 1];
+
+            T mid = valLow + (valHigh - valLow) / 2;
+            if (orgX1 <= mid && orgX2 <= mid)
+                left->swap(ltCount + 1, first, orgX1, orgX2);
+            else if (orgX1 > mid && orgX2 > mid)
+                right->swap(pos - ltCount, first + freq.back(), orgX1, orgX2);
+            else {
+                ::swap(*(first + pos - 1), *(first + pos));
+                if (orgX1 < orgX2)
+                    --freq[pos];
+                else
+                    ++freq[pos];
+            }
+        }
     };
 
     int N;
@@ -149,7 +188,7 @@ struct WaveletTree {
     }
 
 
-    // the number of values less than or equal to k - O(log(max_value))
+    // the number of values less than or equal to k : O(log(max_value))
     // inclusive (0 <= left <= right < N)
     int queryCountLessOrEqual(int left, int right, T k) {
         if (!tree)
@@ -160,7 +199,7 @@ struct WaveletTree {
     // (0 <= k < N)
     int kth(int k) {
         if (!tree)
-            return 0;
+            return NaN;
         return tree->kth(1, N, k + 1);
     }
 
@@ -168,7 +207,7 @@ struct WaveletTree {
     // inclusive (0 <= L <= R < N, 0 <= k < N)
     int kth(int left, int right, int k) {
         if (!tree)
-            return 0;
+            return NaN;
         return tree->kth(left + 1, right + 1, k + 1);
     }
 
@@ -184,6 +223,22 @@ struct WaveletTree {
         if (!tree)
             return 0;
         return tree->count(left + 1, right + 1, k);
+    }
+
+    // the number of k in [L, R]
+    // inclusive (0 <= L <= R < N)
+    int count(int left, int right, T kLow, T kHigh) {
+        if (!tree)
+            return 0;
+        return tree->count(left + 1, right + 1, kLow, kHigh);
+    }
+
+    // swap(A[pos], A[pos + 1])
+    // (0 <= pos < N - 1)
+    void swap(int pos, T orgX1, T orgX2) {
+        if (!tree || pos < 0 || pos >= N - 1 || orgX1 == orgX2)
+            return;
+        tree->swap(pos + 1, &data[0], orgX1, orgX2);
     }
 
 private:

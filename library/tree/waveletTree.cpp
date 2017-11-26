@@ -15,6 +15,92 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
+static int countLTE(vector<int>& v, int L, int R, int K) {
+    int res = 0;
+    for (int i = L; i <= R; i++)
+        res += (v[i] <= K);
+    return res;
+}
+
+static int kth(vector<int>& v, int L, int R, int K) {
+    vector<int> t(R - L + 1);
+    for (int i = L; i <= R; i++)
+        t[i - L] = v[i];
+    sort(t.begin(), t.end());
+    return t[K];
+}
+
+static int countK(vector<int>& v, int L, int R, int K) {
+    int res = 0;
+    for (int i = L; i <= R; i++) {
+        if (v[i] == K)
+            res++;
+    }
+    return res;
+}
+
+static int countK(vector<int>& v, int L, int R, int Klo, int Khi) {
+    int res = 0;
+    for (int i = L; i <= R; i++) {
+        if (Klo <= v[i] && v[i] <= Khi)
+            res++;
+    }
+    return res;
+}
+
+static void test(vector<int>& in, WaveletTree<int>& tree, int N, int L, int R, int K) {
+    // less than or equal to k
+    {
+        int gt = countLTE(in, 0, N - 1, K);
+        int ans = tree.queryCountLessOrEqual(K);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    {
+        int gt = countLTE(in, L, R, K);
+        int ans = tree.queryCountLessOrEqual(L, R, K);
+        if (ans != gt) {
+            cout << "(" << L << ", " << R << ") : GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    // kth number
+    {
+        int K = rand() % (R - L + 1);
+        int gt = kth(in, L, R, K);
+        int ans = tree.kth(L, R, K);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    // count
+    {
+        int K = in[L + (R - L) / 2];
+
+        int gt = countK(in, L, R, K);
+        int ans = tree.count(L, R, K);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    // count
+    {
+        int Klow = in[L + (R - L) / 3];
+        int Khigh = in[L + (R - L) * 2 / 3];
+
+        int gt = countK(in, L, R, Klow, Khigh);
+        int ans = tree.count(L, R, Klow, Khigh);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+}
+
 void testWaveletTree() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
@@ -25,7 +111,9 @@ void testWaveletTree() {
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = rand() % N;
+            in[j] = rand() * rand();
+        //for (int j = 0; j < N; j++)
+        //    in[j] = j;
 
         WaveletTree<int> tree;
         tree.build(in);
@@ -37,61 +125,21 @@ void testWaveletTree() {
         if (L > R)
             swap(L, R);
 
-        // less than or equal to k
+        test(in, tree, N, L, R, K);
+
+        //------- swap ------
         {
-            int gt = 0;
-            for (int j = 0; j < N; j++)
-                gt += (in[j] <= K);
-
-            int ans = tree.queryCountLessOrEqual(K);
-            if (ans != gt) {
-                cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+            if (R == N - 1) {
+                if (L == R)
+                    --L, --R;
+                else
+                    --R;
             }
-            assert(ans == gt);
+            tree.swap(R, in[R], in[R + 1]);
+            swap(in[R], in[R + 1]);
+            K = in[R];
         }
-        {
-            int gt = 0;
-            for (int j = L; j <= R; j++)
-                gt += (in[j] <= K);
-
-            int ans = tree.queryCountLessOrEqual(L, R, K);
-            if (ans != gt) {
-                cout << "(" << L << ", " << R << ") : GT = " << gt << ", " << "ans = " << ans << endl;
-            }
-            assert(ans == gt);
-        }
-        // kth number
-        {
-            int K = rand() % (R - L + 1);
-
-            vector<int> t(R - L + 1);
-            for (int i = L; i <= R; i++)
-                t[i - L] = in[i];
-            sort(t.begin(), t.end());
-
-            int gt = t[K];
-            int ans = tree.kth(L, R, K);
-            if (ans != gt) {
-                cout << "GT = " << gt << ", " << "ans = " << ans << endl;
-            }
-            assert(ans == gt);
-        }
-        // count
-        {
-            int K = in[L + (R - L) / 2];
-
-            int gt = 0;
-            for (int i = L; i <= R; i++) {
-                if (in[i] == K)
-                    gt++;
-            }
-
-            int ans = tree.count(L, R, K);
-            if (ans != gt) {
-                cout << "GT = " << gt << ", " << "ans = " << ans << endl;
-            }
-            assert(ans == gt);
-        }
+        test(in, tree, N, L, R, K);
     }
 
     cout << "OK!" << endl;
