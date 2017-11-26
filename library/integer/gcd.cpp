@@ -6,51 +6,7 @@
 using namespace std;
 
 #include "factor.h"
-
-// recursive
-template <typename T>
-T gcd(T p, T q) {
-    return q == 0 ? p : gcd(q, p % q);
-}
-
-// iterative
-template <typename T>
-T gcd2(T p, T q) {
-    if (p < q)
-        swap(p, q);
-
-    T t;
-    while (q != 0) {
-        t = q;
-        q = p % q;
-        p = t;
-    }
-
-    return p;
-}
-
-template <typename T>
-T lcm(T p, T q) {
-    return (p / gcd(p, q)) * q;
-}
-
-
-// a * x + b * y = gcd(a, b)
-template <typename T>
-T extGcd(T a, T b, T& x, T& y) {
-    if (b == 0) {
-        x = T(1);
-        y = T(0);
-        return a;
-    }
-
-    T x1, y1;
-    T g = extGcd(b, a % b, x1, y1);
-
-    x = y1;
-    y = x1 - (a / b) * y1;
-    return g;
-}
+#include "gcd.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////

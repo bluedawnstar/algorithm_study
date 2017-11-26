@@ -14,9 +14,6 @@ using namespace std;
 
 #include "palindromicString.h"
 
-//template <typename T>
-//vector<int> getPalindromes(T& s, int n);
-
 void testPalindromicTree() {
     //return; //TODO: if you want to test string functions, make this line a comment.
 
