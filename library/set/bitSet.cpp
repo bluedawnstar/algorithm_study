@@ -33,7 +33,7 @@ bool check(bitset<N>& bs1, BitSetSimple& bs2) {
 }
 
 void testBitSet() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Bit Set ---------------------------" << endl;
     

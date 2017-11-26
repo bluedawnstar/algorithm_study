@@ -21,7 +21,7 @@ struct BitSet {
 
         int r = N % BIT_SIZE;
         mEndMask = r ? ((BIT_ONE << r) - BIT_ONE) : BIT_ALL;
-        mV.resize((N + BIT_SIZE - 1) / BIT_SIZE);
+        mV = vector<unsigned>((N + BIT_SIZE - 1) / BIT_SIZE);
     }
 
     int size() const {
@@ -367,7 +367,7 @@ struct BitSetSimple {
 
         int r = N % BIT_SIZE;
         mEndMask = r ? ((BIT_ONE << r) - BIT_ONE) : BIT_ALL;
-        mV.resize((N + BIT_SIZE - 1) / BIT_SIZE);
+        mV = vector<unsigned>((N + BIT_SIZE - 1) / BIT_SIZE);
     }
 
     int size() const {
