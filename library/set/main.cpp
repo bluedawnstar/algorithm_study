@@ -10,4 +10,5 @@ int main(void) {
     TEST(BitSet);
     TEST(BitVectorRank);
     TEST(WaveletMatrix);
+    TEST(WaveletMatrixArray);
 }

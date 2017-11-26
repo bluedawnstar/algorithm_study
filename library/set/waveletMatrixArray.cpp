@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#include "waveletMatrixArray.h"
 #include "waveletMatrix.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -56,7 +57,56 @@ static int countK(vector<int>& v, int L, int R, int Klo, int Khi) {
     return res;
 }
 
-static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int R) {
+static void testSpeed() {
+    cout << "--- Wavelet Matrix - Speed Test ---" << endl;
+
+    int N = 100000;
+    int T = 1000000;
+
+    vector<int> in(N);
+    for (int j = 0; j < N; j++)
+        in[j] = rand() * rand();
+
+    vector<tuple<int, int, int>> qryKth(T);
+    for (int i = 0; i < T; i++) {
+        int L = rand() % N;
+        int R = rand() % N;
+
+        if (L > R)
+            swap(L, R);
+        int K = rand() % (R - L + 1);
+
+        qryKth.emplace_back(L, R, K);
+    }
+
+    PROFILE_START(0);
+    {
+        WaveletMatrix<int> matrix;
+        matrix.build(in);
+        for (int i = 0; i < T; i++) {
+            auto& t = qryKth[i];
+            int ans = matrix.kth(get<0>(t), get<1>(t), get<2>(t));
+            if (ans < 0)
+                cerr << "I'll never be shown!" << endl;
+        }
+    }
+    PROFILE_STOP(0);
+
+    PROFILE_START(1);
+    {
+        WaveletMatrixArray<int> matrix;
+        matrix.build(in);
+        for (int i = 0; i < T; i++) {
+            auto& t = qryKth[i];
+            int ans = matrix.kth(get<0>(t), get<1>(t), get<2>(t));
+            if (ans < 0)
+                cerr << "I'll never be shown!" << endl;
+        }
+    }
+    PROFILE_STOP(1);
+}
+
+static void test(vector<int>& in, WaveletMatrixArray<int>& matrix, int N, int L, int R) {
     // get number
     {
         int K = rand() % N;
@@ -106,7 +156,7 @@ static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int 
     // count with range
     {
         int Klow = in[L + (R - L) / 3];
-        int Khigh = in[L + (R - L) * 2/ 3];
+        int Khigh = in[L + (R - L) * 2 / 3];
 
         if (Klow > Khigh)
             swap(Klow, Khigh);
@@ -121,10 +171,10 @@ static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int 
     }
 }
 
-void testWaveletMatrix() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+void testWaveletMatrixArray() {
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Wavelet Matrix --------------------------------------" << endl;
+    cout << "-- Wavelet Matrix Array --------------------------------------" << endl;
 
     int N = 100;
     int T = 1000;
@@ -132,10 +182,8 @@ void testWaveletMatrix() {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
             in[j] = rand() * rand();
-        //for (int j = 0; j < N; j++)
-        //    in[j] = j;
 
-        WaveletMatrix<int> matrix;
+        WaveletMatrixArray<int> matrix;
         matrix.build(in);
 
         for (int j = 0; j < 10; j++) {
@@ -148,6 +196,8 @@ void testWaveletMatrix() {
             test(in, matrix, N, L, R);
         }
     }
+
+    testSpeed();
 
     cout << "OK!" << endl;
 }

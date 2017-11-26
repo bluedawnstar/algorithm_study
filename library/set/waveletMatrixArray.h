@@ -3,20 +3,23 @@
 
 #include "bitVectorRank.h"
 
+// <WaveletMatrix vs WaveletMatrixArray>
+// Speed:  WaveletMatrixArray is faster 4 ~ 5 times
+// Memory: WaveletMatrix is more efficient 24 ~ 30%
+
 template <typename T>
-struct WaveletMatrix {
+struct WaveletMatrixArray {
     static const T NaN = numeric_limits<T>::min();
 
     int mN;
     int mH;
     T mMaxVal;
-    vector<BitVectorRank> mV;   // MSB bit first
-    vector<int> mMids;          
+    vector<vector<int>> mV; // MSB bit first
 
-    WaveletMatrix() {
+    WaveletMatrixArray() {
     }
 
-    explicit WaveletMatrix(const vector<T>& in) {
+    explicit WaveletMatrixArray(const vector<T>& in) {
         build(in);
     }
 
@@ -40,30 +43,30 @@ struct WaveletMatrix {
         while (mMaxVal >= (T(1) << mH))
             ++mH;
 
-        mV = vector<BitVectorRank>(mH, BitVectorRank(mN));
-        mMids = vector<int>(mH);
+        mV = vector<vector<int>>(mH, vector<int>(mN + 1));
 
         vector<T> cur(first, first + N);
         vector<T> next(mN);
         for (int i = 0; i < mH; i++) {
             T mask = T(1) << (mH - i - 1);
 
-            int zeroN = 0;
-            for (int j = 0; j < mN; j++)
-                zeroN += ((cur[j] & mask) == 0);
-            mMids[i] = zeroN;
+            vector<int>& v = mV[i];
 
-            BitVectorRank &bv = mV[i];
+            int zeroN = 0;
+            for (int j = 0; j < mN; j++) {
+                v[j] = zeroN;
+                zeroN += ((cur[j] & mask) == 0);
+            }
+            v[mN] = zeroN;
+
             int zeroPos = 0, onePos = zeroN;
             for (int j = 0; j < mN; j++) {
                 if (cur[j] & mask) {
                     next[onePos++] = cur[j];
-                    bv.set(j);
                 } else {
                     next[zeroPos++] = cur[j];
                 }
             }
-            bv.buildRank();
             next.swap(cur);
         }
     }
@@ -76,14 +79,14 @@ struct WaveletMatrix {
     T get(int pos) const {
         T val = 0;
         for (int i = 0; i < mH; i++) {
-            const BitVectorRank &bv = mV[i];
+            const vector<int>& v = mV[i];
 
-            if (bv.get(pos)) {
+            if (v[pos] == v[pos + 1]) {
                 val = (val << 1) | 1;
-                pos = mMids[i] + bv.rank1(pos - 1);
+                pos = v.back() + (pos - v[pos]);
             } else {
                 val = val << 1;
-                pos = bv.rank0(pos - 1);
+                pos = v[pos];
             }
         }
         return val;
@@ -97,18 +100,18 @@ struct WaveletMatrix {
 
         T val = 0;
         for (int i = 0; i < mH; i++) {
-            const BitVectorRank &bv = mV[i];
+            const vector<int>& v = mV[i];
 
-            int count = bv.rank0(left, right);
+            int count = v[right + 1] - v[left];
             if (k >= count) {
                 val = (val << 1) | 1;
-                left = mMids[i] + bv.rank1(left - 1);
-                right = mMids[i] + bv.rank1(right) - 1;
+                left = v.back() + (left - v[left]);
+                right = v.back() + (right - v[right + 1]);
                 k -= count;
             } else {
                 val = val << 1;
-                left = bv.rank0(left - 1);
-                right = bv.rank0(right) - 1;
+                left = v[left];
+                right = v[right + 1] - 1;
             }
         }
         return val;
@@ -141,18 +144,18 @@ struct WaveletMatrix {
 
         int lt = 0, gt = 0;
         for (int i = 0; i < mH; i++) {
-            const BitVectorRank &bv = mV[i];
+            const vector<int>& v = mV[i];
 
             if ((val >> (mH - i - 1)) & 1) {
-                int leftN = bv.rank1(left - 1);
-                int rightN = bv.rank1(right);
+                int leftN = left - v[left];
+                int rightN = right + 1 - v[right + 1];
 
                 lt += (right - left + 1) - (rightN - leftN);
-                left = mMids[i] + leftN;
-                right = mMids[i] + rightN - 1;
+                left = v.back() + leftN;
+                right = v.back() + rightN - 1;
             } else {
-                int leftN = bv.rank0(left - 1);
-                int rightN = bv.rank0(right);
+                int leftN = v[left];
+                int rightN = v[right + 1];
 
                 gt += (right - left + 1) - (rightN - leftN);
                 left = leftN;
