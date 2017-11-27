@@ -149,8 +149,8 @@ struct PalindromicNumber {
 
 /////////// Palindromic Substrings ////////////////////////////////////////////
 
-// A[i] : starting position of the longest palindromic string to be ended at i
 // Manacher's algorithm - O(N)
+// return radius of longest palindromic substrings to be centered on each characters
 // https://algospot.com/wiki/read/Manacher%27s_algorithm
 template <typename T>
 vector<int> getPalindromes(T& s, int n) {
@@ -176,7 +176,7 @@ vector<int> getPalindromes(T& s, int n) {
 }
 
 // using Manacher's algorithm - O(N)
-// return the lengths of longest palindromic strings to start from each characters
+// return the lengths of longest palindromic substrings to start from each characters
 template <typename T>
 vector<int> getLongestPalindromes(T& s, int n) {
     string s2;
@@ -210,6 +210,51 @@ vector<int> getLongestPalindromes(T& s, int n) {
             R = R / 2;
 
             for (int j = curr - R; j <= curr; j++) {
+                if (res[j])
+                    break;
+                res[j] = 2 * R-- + 1;
+            }
+        }
+    }
+
+    return res;
+}
+
+// using Manacher's algorithm - O(N)
+// return the lengths of longest palindromic substrings to end at each characters
+template <typename T>
+vector<int> getLongestPalindromesByEnd(T& s, int n) {
+    string s2;
+    s2.reserve(n * 2);
+
+    s2.push_back(s[0]);
+    for (int i = 1; i < n; i++) {
+        s2.push_back('#');
+        s2.push_back(s[i]);
+    }
+
+    vector<int> A = getPalindromes(s2, (int)s2.length());
+
+    vector<int> res(n);
+
+    for (int i = 0; i < (int)A.size(); i++) {
+        int curr = i / 2;
+        int R = A[i];
+
+        if (i & 1) { // '#'
+            if (R < 1)
+                continue;
+            R = (R + 1) / 2;
+
+            for (int j = curr + R; j >= curr; j--) {
+                if (res[j])
+                    break;
+                res[j] = 2 * R--;
+            }
+        } else {
+            R = R / 2;
+
+            for (int j = curr + R; j >= curr; j--) {
                 if (res[j])
                     break;
                 res[j] = 2 * R-- + 1;

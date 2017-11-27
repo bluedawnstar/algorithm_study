@@ -39,26 +39,45 @@ void testPalindromicTree() {
         assert(ans == gt);
     }
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 100; i++) {
         string s;
         for (int j = 0; j < 100; j++)
             s += 'a' + rand() % 3;
 
-        vector<int> gt((int)s.length());
-        int prevN = 0;
-        for (int i = 0; i < (int)s.length(); i++) {
-            int currN = countPalindromicSubstring(s, i + 1);
-            gt[i] = currN - prevN;
-            prevN = currN;
-        }
+        // the number of palindromic strings
+        {
+            vector<int> gt((int)s.length());
+            int prevN = 0;
+            for (int i = 0; i < (int)s.length(); i++) {
+                int currN = countPalindromicSubstring(s, i + 1);
+                gt[i] = currN - prevN;
+                prevN = currN;
+            }
 
-        PalindromicTree tree((int)s.length());
-        vector<int> ans = tree.countAll(s);
-        if (ans != gt) {
-            cout << s << endl;
-            cout << "gt = " << gt << ", ans = " << ans << endl;
+            PalindromicTree tree((int)s.length());
+            vector<int> ans = tree.countAll(s);
+            if (ans != gt) {
+                cout << s << endl;
+                cout << "gt = " << gt << ", ans = " << ans << endl;
+            }
+            assert(ans == gt);
         }
-        assert(ans == gt);
+        // lengths of palindromic strings
+        {
+            vector<int> gt = getLongestPalindromesByEnd(s, (int)s.length());
+
+            PalindromicTree tree((int)s.length());
+            vector<int> ans;
+            for (int i = 0; i < (int)s.length(); i++) {
+                tree.extend(s[i]);
+                ans.push_back(tree.tree[tree.lastSuffix].len);
+            }
+            if (ans != gt) {
+                cout << s << endl;
+                cout << "gt = " << gt << ", ans = " << ans << endl;
+            }
+            assert(ans == gt);
+        }
     }
 
     cout << "OK!" << endl;
