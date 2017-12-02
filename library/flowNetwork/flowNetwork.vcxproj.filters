@@ -18,24 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="shortestPath.cpp">
+    <ClCompile Include="minCostMaxFlow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="basicDigraph.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="bcc.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="topologicalSort.cpp">
+    <ClCompile Include="fordFulkerson.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bcc.h">
+    <ClInclude Include="minCostMaxFlow.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="cycleDigraph.h">
+    <ClInclude Include="fordFulkerson.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

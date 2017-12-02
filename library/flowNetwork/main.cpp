@@ -6,8 +6,6 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(ShortestPath);
-    TEST(BasicDigraph);
-    TEST(BCC);
-    TEST(TopologicalSort);
+    TEST(FordFulkerson);
+    TEST(MinCostMaxFlow);
 }

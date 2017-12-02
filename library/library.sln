@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "math\math.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "array", "array\array.vcxproj", "{93442E65-E0FB-4C0F-A8C8-92915D41EBE7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flowNetwork", "flowNetwork\flowNetwork.vcxproj", "{9512AEC3-42BF-4B6B-BF37-F542FB311E50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -131,6 +133,14 @@ Global
 		{93442E65-E0FB-4C0F-A8C8-92915D41EBE7}.Release|x64.Build.0 = Release|x64
 		{93442E65-E0FB-4C0F-A8C8-92915D41EBE7}.Release|x86.ActiveCfg = Release|Win32
 		{93442E65-E0FB-4C0F-A8C8-92915D41EBE7}.Release|x86.Build.0 = Release|Win32
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Debug|x64.ActiveCfg = Debug|x64
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Debug|x64.Build.0 = Debug|x64
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Debug|x86.ActiveCfg = Debug|Win32
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Debug|x86.Build.0 = Debug|Win32
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Release|x64.ActiveCfg = Release|x64
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Release|x64.Build.0 = Release|x64
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Release|x86.ActiveCfg = Release|Win32
+		{9512AEC3-42BF-4B6B-BF37-F542FB311E50}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
