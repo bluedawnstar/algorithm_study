@@ -150,6 +150,7 @@
     <ClCompile Include="linkCutTreePathQuery.cpp" />
     <ClCompile Include="segmentTreeCompact.cpp" />
     <ClCompile Include="segmentTreeCompactLazy.cpp" />
+    <ClCompile Include="segmentTreeCompactLazyAdd.cpp" />
     <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="linkCutTreePathQuery.h" />
     <ClInclude Include="segmentTreeCompact.h" />
     <ClInclude Include="segmentTreeCompactLazy.h" />
+    <ClInclude Include="segmentTreeCompactLazyAdd.h" />
     <ClInclude Include="segmentTreePersistent.h" />
     <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="sparseTable.h" />

@@ -105,6 +105,9 @@
     <ClCompile Include="waveletTreeBitVector.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeCompactLazyAdd.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sparseTable.h">
@@ -186,6 +189,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="waveletTreeBitVector.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeCompactLazyAdd.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

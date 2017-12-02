@@ -17,11 +17,11 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-int rand16() {
+static int rand16() {
     return rand() % 32768;
 }
 
-int rand32() {
+static int rand32() {
     return rand16() * rand16();
 }
 

@@ -13,6 +13,8 @@ int main(void) {
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
     TEST(SegmentTreeCompact);
+    TEST(SegmentTreeCompactLazy);
+    TEST(SegmentTreeCompactLazyAdd);
     TEST(SparseTable);
     TEST(HeavyLightDecomposition);
     TEST(TreeMO);
