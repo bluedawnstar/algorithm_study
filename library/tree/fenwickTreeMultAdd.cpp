@@ -27,7 +27,7 @@ void testFenwickTreeMultAdd() {
     fenwick.addRange(30, 39, 2);
 
     int ans = fenwick.sum(5);
-    cout << "fenwick.sum(0) = " << ans << endl;
+    cout << "fenwick.sum(5) = " << ans << endl;
     assert(ans == 0);
 
     ans = fenwick.sumRange(3, 24);
