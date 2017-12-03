@@ -9,6 +9,7 @@ int main(void) {
     TEST(BasicDigraph);
     TEST(BasicUndirectedGraph);
     TEST(ShortestPath);
+    TEST(ShortestPathAllPairs);
     TEST(BCC);
     TEST(DAG);
     TEST(BipartiteMaching);

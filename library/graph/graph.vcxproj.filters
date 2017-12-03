@@ -45,6 +45,9 @@
     <ClCompile Include="assignmentProblem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="shortestPathAllPair.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -75,6 +78,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="assignmentProblem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="shortestPathAllPair.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -65,5 +65,4 @@ struct AssignmentProblem {
 
         return -v[0];
     }
-
 };
