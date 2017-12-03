@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "minCostMaxFlow.h"
+#include "minCostMaxFlowBellmanFord.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -21,7 +21,7 @@ using namespace std;
 #define NODE_S      200
 #define NODE_T      201
 
-static void build(MinCostMaxFlow<int>& network, const vector<int>& A, const vector<int>& C, const vector<vector<int>>& B) {
+void build(MinCostMaxFlowBellmanFord<int>& network, const vector<int>& A, const vector<int>& C, const vector<vector<int>>& B) {
     int N = (int)A.size();
     int M = (int)C.size();
 
@@ -41,13 +41,13 @@ static void build(MinCostMaxFlow<int>& network, const vector<int>& A, const vect
     }
 }
 
-void testMinCostMaxFlow() {
+void testMinCostMaxFlowBellmanFord() {
     //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Min-Cost Max-Flow ---------" << endl;
+    cout << "-- Min-Cost Max-Flow - Bellman Ford ---------" << endl;
     // https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes
 
-    MinCostMaxFlow<int> network(300);
+    MinCostMaxFlowBellmanFord<int> network(300);
 
     build(network,
         vector<int>{ 1, 4, 8 },
@@ -56,7 +56,7 @@ void testMinCostMaxFlow() {
             { 633, 587, 100, 887, 979, 892 },
             { 708, 871, 132, 28, 255, 825 },
             { 536, 139, 672, 280, 968, 417 }
-        }
+    }
     );
 
     PROFILE_START(0);

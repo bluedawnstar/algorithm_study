@@ -21,7 +21,28 @@
     <ClCompile Include="minCostMaxFlow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="fordFulkerson.cpp">
+    <ClCompile Include="minCutMaxFlow.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="maxFlowEdmondsKarp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="maxFlowDinic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="maxFlowPushRelabel.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="minCostMaxFlowBellmanFord.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="minCostMaxFlowPotential.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="minCostMaxFlowSPFA.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GomoryHuTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +50,28 @@
     <ClInclude Include="minCostMaxFlow.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="fordFulkerson.h">
+    <ClInclude Include="minCutMaxFlow.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxFlowEdmondsKarp.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxFlowDinic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxFlowPushRelabel.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minCostMaxFlowBellmanFord.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minCostMaxFlowPotential.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minCostMaxFlowSPFA.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GomoryHuTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

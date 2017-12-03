@@ -6,6 +6,13 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(FordFulkerson);
+    TEST(MaxFlowEdmondsKarp);
+    TEST(MaxFlowDinic);
+    TEST(MaxFlowPushRelabel);
+    TEST(MinCutMaxFlow);
+    TEST(GomoryHuTree);
     TEST(MinCostMaxFlow);
+    TEST(MinCostMaxFlowBellmanFord);
+    TEST(MinCostMaxFlowPotential);
+    TEST(MinCostMaxFlowSPFA);
 }
