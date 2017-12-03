@@ -23,13 +23,13 @@ struct MaxFlowDinic {
     MaxFlowDinic() : N(0) {
     }
 
-    MaxFlowDinic(int n) : N(n), edges(N + 1), levels(N + 1, -1) {
+    MaxFlowDinic(int n) : N(n), edges(N), levels(N, -1) {
     }
 
     void init(int n) {
         N = n;
-        edges = vector<vector<Edge>>(N + 1);
-        levels = vector<int>(N + 1, -1);
+        edges = vector<vector<Edge>>(N);
+        levels = vector<int>(N, -1);
     }
 
     // add edges to a directed graph
@@ -54,7 +54,7 @@ struct MaxFlowDinic {
         T res = 0;
 
         while (bfs(s, t)) {
-            vector<int> start(N + 1);
+            vector<int> start(N);
             while (true) {
                 T flow = dfs(s, t, INF, start);
                 if (flow <= 0)

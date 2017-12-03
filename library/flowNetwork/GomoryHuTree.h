@@ -58,7 +58,7 @@ struct GomoryHuTreeBuilder {
         edges = vector<vector<Edge>>(N + 1);
     }
 
-    // add edges to a directed graph
+    // add edges to a undirected graph
     void addEdge(int u, int v, T capacity) {
         int uN = (int)edges[u].size();
         int vN = (int)edges[v].size();
@@ -73,7 +73,7 @@ struct GomoryHuTreeBuilder {
         }
     }
 
-    // O(V^3 * flow), O(VE * flow)
+    // O(V^3 * flow) or O(VE * flow)
     GomoryHuTree<T> build() {
         vector<int> parent(N, 0);
         vector<T> maxFlow(N);

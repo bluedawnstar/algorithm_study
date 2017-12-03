@@ -22,14 +22,14 @@ struct MinCostMaxFlow {
     MinCostMaxFlow() : N(0) {
     }
 
-    MinCostMaxFlow(int n) : N(n), edges(N + 1), visited(N + 1), cost(N + 1) {
+    MinCostMaxFlow(int n) : N(n), edges(N), visited(N), cost(N) {
     }
 
     void init(int n) {
         N = n;
-        edges = vector<vector<Edge>>(N + 1);
-        visited = vector<bool>(N + 1);
-        cost = vector<T>(N + 1);
+        edges = vector<vector<Edge>>(N);
+        visited = vector<bool>(N);
+        cost = vector<T>(N);
     }
 
     // add edges to a directed graph

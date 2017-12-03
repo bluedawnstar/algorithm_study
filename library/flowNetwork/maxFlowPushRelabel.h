@@ -28,13 +28,13 @@ struct MaxFlowPushRelabel {
     MaxFlowPushRelabel() : N(0) {
     }
 
-    MaxFlowPushRelabel(int n) : N(n), vertices(N + 1, Vertex{ 0, 0 }), edges(N + 1) {
+    MaxFlowPushRelabel(int n) : N(n), vertices(N, Vertex{ 0, 0 }), edges(N) {
     }
 
     void init(int n) {
         N = n;
-        vertices = vector<Vertex>(N + 1, Vertex{ 0, 0 });
-        edges = vector<vector<Edge>>(N + 1);
+        vertices = vector<Vertex>(N, Vertex{ 0, 0 });
+        edges = vector<vector<Edge>>(N);
     }
 
     // add edges to a directed graph

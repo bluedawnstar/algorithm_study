@@ -20,12 +20,12 @@ struct MinCostMaxFlowBellmanFord {
     MinCostMaxFlowBellmanFord() : N(0) {
     }
 
-    MinCostMaxFlowBellmanFord(int n) : N(n), edges(N + 1) {
+    MinCostMaxFlowBellmanFord(int n) : N(n), edges(N) {
     }
 
     void init(int n) {
         N = n;
-        edges = vector<vector<Edge>>(N + 1);
+        edges = vector<vector<Edge>>(N);
     }
 
     // add edges to a directed graph
@@ -50,9 +50,9 @@ struct MinCostMaxFlowBellmanFord {
 
         pair<T, T> res;
         while (res.first < maxFlow) {
-            vector<T> dist(N + 1, INF);
-            vector<T> currFlow(N + 1);
-            vector<pair<int, int>> parent(N + 1);  // (u, edge index in u's edges)
+            vector<T> dist(N, INF);
+            vector<T> currFlow(N);
+            vector<pair<int, int>> parent(N);  // (u, edge index in u's edges)
 
             bellmanFord(s, dist, currFlow, parent);
             if (dist[t] == INF)
@@ -79,7 +79,7 @@ private:
         dist[s] = 0;
         currFlow[s] = INF;
 
-        vector<bool> inQ(N + 1);
+        vector<bool> inQ(N);
 
         queue<int> Q;
         Q.push(s);

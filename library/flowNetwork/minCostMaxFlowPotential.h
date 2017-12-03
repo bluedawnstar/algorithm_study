@@ -20,12 +20,12 @@ struct MinCostMaxFlowPotential {
     MinCostMaxFlowPotential() : N(0) {
     }
 
-    MinCostMaxFlowPotential(int n) : N(n), edges(N + 1) {
+    MinCostMaxFlowPotential(int n) : N(n), edges(N) {
     }
 
     void init(int n) {
         N = n;
-        edges = vector<vector<Edge>>(N + 1);
+        edges = vector<vector<Edge>>(N);
     }
 
     // add edges to a directed graph
@@ -49,21 +49,21 @@ struct MinCostMaxFlowPotential {
         //clearFlow();
 
         // bellmanFord can be skipped if edges' costs are non-negative
-        vector<T> potential(N + 1, INF);
+        vector<T> potential(N, INF);
         bellmanFord(s, potential);
 
-        vector<T> currFlow(N + 1);
-        vector<pair<int, int>> parent(N + 1);  // (u, edge index in u's edges)
+        vector<T> currFlow(N);
+        vector<pair<int, int>> parent(N);  // (u, edge index in u's edges)
 
         pair<T, T> res;
         while (res.first < maxFlow) {
             priority_queue<pair<T, int>> Q;
             Q.emplace(T(0), s);
 
-            vector<T> priority(N + 1, INF);
+            vector<T> priority(N, INF);
             priority[s] = 0;
 
-            vector<bool> finished(N + 1);
+            vector<bool> finished(N);
             currFlow[s] = INF;
             while (!Q.empty() && !finished[t]) {
                 auto uPriority = -Q.top().first;
@@ -119,7 +119,7 @@ private:
     void bellmanFord(int s, vector<T>& dist) {
         dist[s] = 0;
 
-        vector<bool> inQ(N + 1);
+        vector<bool> inQ(N);
 
         queue<int> Q;
         Q.push(s);

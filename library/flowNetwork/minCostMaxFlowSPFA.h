@@ -20,12 +20,12 @@ struct MinCostMaxFlowSPFA {
     MinCostMaxFlowSPFA() : N(0) {
     }
 
-    MinCostMaxFlowSPFA(int n) : N(n), edges(N + 1) {
+    MinCostMaxFlowSPFA(int n) : N(n), edges(N) {
     }
 
     void init(int n) {
         N = n;
-        edges = vector<vector<Edge>>(N + 1);
+        edges = vector<vector<Edge>>(N);
     }
 
     // add edges to a directed graph
@@ -48,13 +48,13 @@ struct MinCostMaxFlowSPFA {
     pair<T, T> calcMinCostMaxFlow(int s, int t, T maxFlow = INF) {
         //clearFlow();
 
-        vector<bool> inQ(N + 1);
+        vector<bool> inQ(N);
 
         pair<T, T> res;
         while (res.first < maxFlow) {
-            vector<pair<int, int>> parent(N + 1, make_pair(-1, -1));  // (u, edge index in u's edges)
+            vector<pair<int, int>> parent(N, make_pair(-1, -1));  // (u, edge index in u's edges)
 
-            vector<T> dist(N + 1, INF);
+            vector<T> dist(N, INF);
             dist[s] = 0;
 
             queue<int> Q;

@@ -23,13 +23,13 @@ struct MaxFlowEdmondsKarp {
     MaxFlowEdmondsKarp() : N(0) {
     }
 
-    MaxFlowEdmondsKarp(int n) : N(n), edges(N + 1), parent(N + 1, make_pair(-1, -1)) {
+    MaxFlowEdmondsKarp(int n) : N(n), edges(N), parent(N, make_pair(-1, -1)) {
     }
 
     void init(int n) {
         N = n;
-        edges = vector<vector<Edge>>(N + 1);
-        parent = vector<pair<int,int>>(N + 1, make_pair(-1, -1));
+        edges = vector<vector<Edge>>(N);
+        parent = vector<pair<int,int>>(N, make_pair(-1, -1));
     }
 
     // add edges to a directed graph
