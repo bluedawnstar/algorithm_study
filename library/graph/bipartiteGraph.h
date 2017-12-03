@@ -27,7 +27,7 @@ struct BipartiteGraphArray {
 
     // maximum number of matching from srcN to dstN
     // Kuhn's algorithm : O(V^3)
-    int bipartiteMatching() {
+    int calcMaxMatching() {
         match.assign(srcN, -1);
         matchRev.assign(dstN, -1);
 
@@ -39,7 +39,7 @@ struct BipartiteGraphArray {
         }
         return res;
     }
-    vector<int>& getLastBipartiteMatchingEdges() {
+    vector<int>& getLastMaxMatchingEdges() {
         return match;
     }
 
@@ -109,34 +109,104 @@ struct BipartiteGraph {
 
     // maximum number of matching from srcN to dstN
     // Kuhn's algorithm : O(V * E)
-    int bipartiteMatching() {
+    int calcMaxMatching() {
         match.assign(srcN, -1);
         matchRev.assign(dstN, -1);
 
         int res = 0;
         for (int u = 0; u < srcN; u++) {
             vector<bool> visited(dstN);
-            if (dfsBPM(u, visited))
+            if (dfsKuhn(u, visited))
                 res++;
         }
         return res;
     }
-    vector<int>& getLastBipartiteMatchingEdges() {
+
+    // maximum number of matching from srcN to dstN
+    // It's faster than Kuhn's algorithm about 3x
+    // Hopcroft-Karp : O(E * sqrt(V))
+    int calcMaxMatchingHopcroftKarp() {
+        match.assign(srcN, -1);
+        matchRev.assign(dstN, -1);
+
+        int res = 0;
+        while (true) {
+            bfsHopcroftKarp();
+
+            vector<bool> visited(dstN);
+
+            int cnt = 0;
+            for (int u = 0; u < srcN; u++) {
+                if (match[u] < 0 && dfsHopcroftKarp(u, visited))
+                    ++cnt;
+            }
+            if (!cnt)
+                break;
+
+            res += cnt;
+        }
+
+        return res;
+    }
+
+    vector<int>& getLastMaxMatchingEdges() {
         return match;
     }
 
 private:
     vector<int> match;
     vector<int> matchRev;
+    vector<int> dist;
 
     // return true if a matching for vertex u is possible
-    bool dfsBPM(int u, vector<bool>& visited) {
+    bool dfsKuhn(int u, vector<bool>& visited) {
         if (visited[u])
             return false;
         visited[u] = true;
 
         for (int v : edges[u]) {
-            if (matchRev[v] < 0 || dfsBPM(matchRev[v], visited)) {
+            if (matchRev[v] < 0 || dfsKuhn(matchRev[v], visited)) {
+                matchRev[v] = u;
+                match[u] = v;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //-------------------------------------------
+
+    void bfsHopcroftKarp() {
+        dist.assign(srcN, -1);
+
+        queue<int> Q;
+        for (int u = 0; u < srcN; u++) {
+            if (match[u] < 0) {
+                Q.push(u);
+                dist[u] = 0;
+            }
+        }
+
+        while (!Q.empty()) {
+            int u = Q.front();
+            Q.pop();
+
+            for (int v : edges[u]) {
+                int u2 = matchRev[v];
+                if (u2 >= 0 && dist[u2] < 0) {
+                    dist[u2] = dist[u] + 1;
+                    Q.push(u2);
+                }
+            }
+        }
+    }
+
+    bool dfsHopcroftKarp(int u, vector<bool>& visited) {
+        visited[u] = true;
+
+        for (int v : edges[u]) {
+            int u2 = matchRev[v];
+            if (u2 < 0 || !visited[u2] && dist[u2] == dist[u] + 1 && dfsHopcroftKarp(u2, visited)) {
                 matchRev[v] = u;
                 match[u] = v;
                 return true;
