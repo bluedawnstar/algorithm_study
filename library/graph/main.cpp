@@ -10,4 +10,5 @@ int main(void) {
     TEST(BasicDigraph);
     TEST(BCC);
     TEST(DAG);
+    TEST(BipartiteMaching);
 }

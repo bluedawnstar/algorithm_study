@@ -148,12 +148,14 @@
   <ItemGroup>
     <ClCompile Include="basicDigraph.cpp" />
     <ClCompile Include="bcc.cpp" />
+    <ClCompile Include="bipartitleGraph.cpp" />
     <ClCompile Include="dag.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="shortestPathOneSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h" />
+    <ClInclude Include="bipartiteGraph.h" />
     <ClInclude Include="cycleDigraph.h" />
     <ClInclude Include="dag.h" />
     <ClInclude Include="shortestPathOneSource.h" />

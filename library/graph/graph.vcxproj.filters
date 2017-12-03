@@ -30,6 +30,9 @@
     <ClCompile Include="dag.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bipartitleGraph.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -42,6 +45,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="dag.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bipartiteGraph.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

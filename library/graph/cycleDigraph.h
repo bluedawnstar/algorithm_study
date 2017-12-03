@@ -1,5 +1,6 @@
 #pragma once
 
+// digraph
 struct CycleDetector {
     vector<int> cycleParent;
 
