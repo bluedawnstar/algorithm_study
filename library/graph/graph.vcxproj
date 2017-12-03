@@ -147,17 +147,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basicDigraph.cpp" />
+    <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartitleGraph.cpp" />
     <ClCompile Include="dag.cpp" />
+    <ClCompile Include="generalMaxMatching.cpp" />
+    <ClCompile Include="assignmentProblem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="minimumSpanningTree.cpp" />
     <ClCompile Include="shortestPathOneSource.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="basicDigraph.h" />
+    <ClInclude Include="basicUndirectedGraph.h" />
     <ClInclude Include="bcc.h" />
     <ClInclude Include="bipartiteGraph.h" />
     <ClInclude Include="cycleDigraph.h" />
     <ClInclude Include="dag.h" />
+    <ClInclude Include="generalMaxMatching.h" />
+    <ClInclude Include="assignmentProblem.h" />
+    <ClInclude Include="minimumSpanningTree.h" />
     <ClInclude Include="shortestPathOneSource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

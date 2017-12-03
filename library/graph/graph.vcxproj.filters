@@ -33,6 +33,18 @@
     <ClCompile Include="bipartitleGraph.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="generalMaxMatching.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="basicUndirectedGraph.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="minimumSpanningTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="assignmentProblem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -48,6 +60,21 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bipartiteGraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatching.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="basicUndirectedGraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="basicDigraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minimumSpanningTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="assignmentProblem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -43,14 +43,14 @@ static BipartiteGraph<int> buildGraph() {
 }
 
 void testBipartiteMaching() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Bipartite Maching -------------" << endl;
     {
         auto graph = buildGraphArray();
 
         int ans = graph.calcMaxMatching();
-        cout << "bipartite matchin : " << ans << endl;
+        cout << "bipartite matching : " << ans << endl;
         assert(ans == 5);
 
         cout << graph.getLastMaxMatchingEdges() << endl;
@@ -60,13 +60,13 @@ void testBipartiteMaching() {
         auto graph = buildGraph();
 
         int ans = graph.calcMaxMatching();
-        cout << "bipartite matchin : " << ans << endl;
+        cout << "bipartite matching : " << ans << endl;
         assert(ans == 5);
 
         cout << graph.getLastMaxMatchingEdges() << endl;
 
         ans = graph.calcMaxMatchingHopcroftKarp();
-        cout << "bipartite matchin : " << ans << endl;
+        cout << "bipartite matching : " << ans << endl;
         assert(ans == 5);
 
         cout << graph.getLastMaxMatchingEdges() << endl;

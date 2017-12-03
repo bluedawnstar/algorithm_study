@@ -26,9 +26,9 @@ static DAG<int> buildGraph() {
 }
 
 void testDAG() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- TopologicalSort -------------" << endl;
+    cout << "-- Directed Acyclic Graph -------------" << endl;
     {
         auto graph = buildGraph();
         vector<int> res;

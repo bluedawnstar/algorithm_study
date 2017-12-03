@@ -6,9 +6,13 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(ShortestPath);
     TEST(BasicDigraph);
+    TEST(BasicUndirectedGraph);
+    TEST(ShortestPath);
     TEST(BCC);
     TEST(DAG);
     TEST(BipartiteMaching);
+    TEST(GeneralGraphMaxMatching);
+    TEST(MinimumSpanningTree);
+    TEST(Hungarian);
 }

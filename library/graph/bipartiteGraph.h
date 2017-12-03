@@ -20,7 +20,6 @@ struct BipartiteGraphArray {
         edges = vector<vector<bool>>(srcN, vector<bool>(dstN));
     }
 
-    // add edges to directed graph
     void addEdge(int u, int v) {
         edges[u][v] = true;
     }
@@ -102,7 +101,6 @@ struct BipartiteGraph {
         edges = vector<vector<bool>>(srcN);
     }
 
-    // add edges to directed graph
     void addEdge(int u, int v) {
         edges[u].push_back(v);
     }

@@ -2,18 +2,16 @@
 
 // digraph
 struct CycleDetector {
-    vector<int> cycleParent;
-
-    vector<bool> visited;
-    vector<bool> inStack;
-    vector<int> stack;
+    vector<int> cycleParent;    // cycle group
 
     void detect(vector<vector<int>>& edges, int N, int root) {
-        cycleParent = vector<int>(N, -1);
+        cycleParent.assign(N, -1);
 
-        visited = vector<bool>(N);
-        inStack = vector<bool>(N);
-        stack = vector<int>(N);
+        visited.assign(N, false);
+        inStack.assign(N, false);
+
+        stack.clear();
+        stack.reserve(N);
 
         dfs(edges, root);
     }
@@ -29,6 +27,10 @@ struct CycleDetector {
     }
 
 private:
+    vector<bool> visited;
+    vector<bool> inStack;
+    vector<int> stack;
+
     // find cycle groups
     void dfs(vector<vector<int>>& edges, int u) {
         visited[u] = true;
