@@ -74,7 +74,6 @@ private:
     }
 };
 
-
 // Construct block-cut tree from biconnected components
 struct BlockCutTree {
     int                 N;

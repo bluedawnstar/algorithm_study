@@ -18,16 +18,16 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="shortestPath.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="basicDigraph.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="bcc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="topologicalSort.cpp">
+    <ClCompile Include="shortestPathOneSource.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dag.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,6 +36,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="cycleDigraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="shortestPathOneSource.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dag.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

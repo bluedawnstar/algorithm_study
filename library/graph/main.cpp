@@ -9,5 +9,5 @@ int main(void) {
     TEST(ShortestPath);
     TEST(BasicDigraph);
     TEST(BCC);
-    TEST(TopologicalSort);
+    TEST(DAG);
 }
