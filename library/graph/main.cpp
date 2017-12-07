@@ -10,6 +10,7 @@ int main(void) {
     TEST(BasicUndirectedGraph);
     TEST(ShortestPath);
     TEST(ShortestPathAllPairs);
+    TEST(ReachableAllPairs);
     TEST(BCC);
     TEST(DAG);
     TEST(BipartiteMaching);

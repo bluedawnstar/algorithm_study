@@ -155,6 +155,7 @@
     <ClCompile Include="assignmentProblem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minimumSpanningTree.cpp" />
+    <ClCompile Include="reachableAllPair.cpp" />
     <ClCompile Include="shortestPathAllPair.cpp" />
     <ClCompile Include="shortestPathOneSource.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="generalMaxMatching.h" />
     <ClInclude Include="assignmentProblem.h" />
     <ClInclude Include="minimumSpanningTree.h" />
+    <ClInclude Include="reachableAllPair.h" />
     <ClInclude Include="shortestPathAllPair.h" />
     <ClInclude Include="shortestPathOneSource.h" />
   </ItemGroup>
