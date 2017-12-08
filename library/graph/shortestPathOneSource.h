@@ -1,6 +1,6 @@
 #pragma once
 
-// for undirected graph
+// for directed graph
 template <typename T>
 struct ShortestPath {
     static const T INF = T(0x3f3f3f3f);
@@ -23,8 +23,12 @@ struct ShortestPath {
         parent = vector<T>(N);
     }
 
-    // add edges to undirected graph
+    // add edges to directed graph
     void addEdge(int u, int v, int w) {
+        edges[u].emplace_back(v, w);
+    }
+
+    void addBiEdge(int u, int v, int w) {
         edges[u].emplace_back(v, w);
         edges[v].emplace_back(u, w);
     }
@@ -34,13 +38,13 @@ struct ShortestPath {
         fill(dist.begin(), dist.end(), INF);
         fill(parent.begin(), parent.end(), -1);
 
-        priority_queue<pair<int, int>> pq;   // (-weight, vertex)
+        priority_queue<pair<T, int>> pq;    // (-weight, vertex)
 
         pq.push(make_pair(0, start));
         dist[start] = 0;
         parent[start] = -1;
         while (!pq.empty()) {
-            int w = -pq.top().first;        // weight
+            T w = -pq.top().first;          // weight
             int u = pq.top().second;        // vertex u
 
             pq.pop();
@@ -49,7 +53,7 @@ struct ShortestPath {
 
             for (int i = 0; i < (int)edges[u].size(); i++) {
                 int v = edges[u][i].first;
-                int vDist = edges[u][i].second + w;
+                T vDist = w + edges[u][i].second;
                 if (dist[v] > vDist) {
                     pq.push(make_pair(-vDist, v));
                     dist[v] = vDist;
@@ -60,6 +64,7 @@ struct ShortestPath {
     }
 
     // O(VE)
+    // return false if the graph has negative cycles
     bool bellmanFord(int start) {
         fill(dist.begin(), dist.end(), INF);
         fill(parent.begin(), parent.end(), -1);
@@ -73,7 +78,7 @@ struct ShortestPath {
             for (int u = 0; u < N; u++) {
                 for (int j = 0; j < (int)edges[u].size(); j++) {
                     int v = edges[u][j].first;
-                    int w = edges[u][j].second;
+                    T w = edges[u][j].second;
                     if (dist[v] > dist[u] + w) {
                         dist[v] = dist[u] + w;
                         parent[v] = u;
@@ -89,17 +94,20 @@ struct ShortestPath {
 
     // Shortest Path Faster Algorithm
     // time complexity : normal - O(E), worst - O(VE)
-    void spfa(int start) {
+    // return false if the graph has negative cycles
+    bool spfa(int start) {
         fill(dist.begin(), dist.end(), INF);
         fill(parent.begin(), parent.end(), -1);
 
         vector<bool> inQ(N);
+        vector<int> updated(N);
 
         dist[start] = 0;
         parent[start] = -1;
 
         queue<int> Q;
         Q.push(start);
+        updated[start]++;
         inQ[start] = true;
         while (!Q.empty()) {
             int u = Q.front();
@@ -111,6 +119,8 @@ struct ShortestPath {
                     parent[v.first] = u;
                     if (!inQ[v.first]) {
                         Q.push(v.first);
+                        if (++updated[v.first] >= N)
+                            return false;
                         inQ[v.first] = true;
                     }
                 }
@@ -118,6 +128,8 @@ struct ShortestPath {
 
             inQ[u] = false;
         }
+
+        return true;
     }
 
 
