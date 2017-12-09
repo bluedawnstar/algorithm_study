@@ -60,6 +60,9 @@
     <ClCompile Include="palindromicTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="rabinKarp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -87,6 +90,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicSubsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rabinKarp.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunction.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="split.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

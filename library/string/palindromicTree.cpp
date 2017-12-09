@@ -15,7 +15,7 @@ using namespace std;
 #include "palindromicString.h"
 
 void testPalindromicTree() {
-    //return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     vector<string> in{
         "a",
