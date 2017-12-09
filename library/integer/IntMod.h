@@ -26,6 +26,11 @@ inline int modPow(int x, int n, int M) {
     return ((n & 1) == 0) ? p : int((long long)p * x % M);
 }
 
+// M is a prime number
+inline int modPowPrime(int x, long long n, int M) {
+    return modPow(x, int(n % (M - 1)), M);
+}
+
 // a and M are coprime.
 inline int modInv(int a, int M) {
     int x, y;
@@ -77,6 +82,20 @@ inline int modDivPrime(int a, int b, int M) {
 }
 
 
+//http://codeforces.com/blog/entry/13908#comment-188854
+// M is a prime number and n < M
+inline vector<int> modInvPrimeRange(int n, int M) {
+    vector<int> res(n + 1);
+    res[0] = 0;
+    res[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        res[i] = (M - (M / i) * res[M % i] % M) % M;
+    }
+
+    return move(res);
+}
+
+
 //--- long long version -------------------------
 
 inline long long modAdd(long long a, long long b, long long M) {
@@ -115,6 +134,11 @@ inline long long modPow(long long x, long long n, long long M) {
 
     return ((n & 1) == 0) ? p : modMul(p, x, M);
 #endif
+}
+
+// M is a prime number
+inline long long modPowPrime(long long x, long long n, long long M) {
+    return modPow(x, n % (M - 1), M);
 }
 
 // a and M are coprime.

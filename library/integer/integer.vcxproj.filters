@@ -74,5 +74,11 @@
     <ClInclude Include="primeFactor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="eulerTheorem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="digit.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

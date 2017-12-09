@@ -155,6 +155,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bit.h" />
+    <ClInclude Include="digit.h" />
+    <ClInclude Include="eulerTheorem.h" />
     <ClInclude Include="factor.h" />
     <ClInclude Include="fraction.h" />
     <ClInclude Include="fractionAlgo.h" />

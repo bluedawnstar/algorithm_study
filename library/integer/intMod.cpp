@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "intMod.h"
+#include "eulerTheorem.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -21,6 +22,20 @@ void testIntMod() {
 
     assert(modAdd(3, 7, 5) == 0);
     assert(modMul(3, 7, 5) == 1);
+
+    vector<int> modR = modInvPrimeRange(96, 97);
+    for (int i = 1; i <= 1000; i++) {
+        assert(modInv(i, 97) == modInvPrime(i, 97));
+    }
+
+    for (int i = 1; i < 97; i++) {
+        assert(modInv(i, 97) == modR[i]);
+    }
+
+    cout << "phi() ========" << endl;
+    for (int i = 1; i <= 100; i++) {
+        cout << i << " : " << phi(i) << endl;
+    }
 
     cout << "OK!" << endl;
 }

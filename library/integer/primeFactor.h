@@ -217,4 +217,14 @@ struct PrimeFactors {
             res *= it.second + 1;
         return res;
     }
+
+    //see the eulerTheorem.h
+    int phi(int n) {
+        int res = n;
+
+        for (auto& p : primeFactors)
+            res -= res / p.first;
+
+        return res;
+    }
 };
