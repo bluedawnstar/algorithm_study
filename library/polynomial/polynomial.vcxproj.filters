@@ -35,5 +35,11 @@
     <ClInclude Include="fft.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="multPoly.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="multPolyMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
