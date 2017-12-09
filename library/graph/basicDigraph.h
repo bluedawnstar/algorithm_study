@@ -19,9 +19,8 @@ struct BasicDigraph {
         edges[u].push_back(v);
     }
 
-    //--- shortest path without weight ---
-
-    vector<int> searchShortestPathBFS(int start) {
+    //--- Shortest path without weight ---
+    vector<int> searchShortestPathBFS(int start) const {
         vector<int> dist(N, -1);
         vector<int> parent(N, -1);
 
@@ -45,7 +44,7 @@ struct BasicDigraph {
         return move(parent);
     }
 
-    vector<int> getShortestPath(int u, int v) {
+    vector<int> getShortestPath(int u, int v) const {
         vector<int> parent = searchShortestPathBFS(u);
 
         vector<int> res;
@@ -58,9 +57,8 @@ struct BasicDigraph {
         return res;
     }
 
-    //--- cycle detection with DFS ---
-
-    bool isCyclicGraphDFS(vector<bool>& visited, int u, vector<bool>& visStack) {
+    //--- Cycle detection with DFS ---
+    bool isCyclicGraphDFS(vector<bool>& visited, int u, vector<bool>& visStack) const {
         visited[u] = true;
         visStack[u] = true;
 
@@ -76,7 +74,7 @@ struct BasicDigraph {
         return false;
     }
 
-    bool isCyclicGraphDFS() {
+    bool isCyclicGraphDFS() const {
         vector<bool> visited(N);
         vector<bool> visStack(N);
 
@@ -88,7 +86,7 @@ struct BasicDigraph {
         return false;
     }
 
-    //--- strongly connected components (Tarjan's algorithm) ---
+    //--- Strongly connected components (Tarjan's algorithm) ---
     struct SCCContext {
         vector<vector<int>> scc;
 
@@ -105,7 +103,7 @@ struct BasicDigraph {
             : scc(), visited(n), discoverCount(0), discover(n), low(n), stacked(n) {
         }
     };
-    void findSCC(SCCContext& ctx, int u) {
+    void findSCC(SCCContext& ctx, int u) const {
         ctx.visited[u] = true;
         ctx.discover[u] = ctx.low[u] = ctx.discoverCount++;
 
@@ -136,7 +134,7 @@ struct BasicDigraph {
         }
     }
 
-    vector<vector<int>> findSCC() {
+    vector<vector<int>> findSCC() const {
         SCCContext ctx(N);
 
         for (int u = 0; u < N; u++) {
@@ -147,7 +145,7 @@ struct BasicDigraph {
         return move(ctx.scc);
     }
 
-    //--- strongly connected graph test (Kosaraju's algorithm) ---
+    //--- Strongly connected graph test (Kosaraju's algorithm) ---
     static void dfsSCGraph(const vector<vector<int>>& edges, vector<bool>& visited, int u) {
         visited[u] = true;
         for (int v : edges[u]) {
@@ -156,7 +154,7 @@ struct BasicDigraph {
         }
     }
 
-    bool isSCGraph() {
+    bool isSCGraph() const {
         vector<bool> visited(N);
 
         // step 1 : check connectivity of the current graph
@@ -185,26 +183,188 @@ struct BasicDigraph {
         return true;
     }
 
+    // modified Kosaraju's algorithm for eulerian path or circuit
+    bool isSC(const vector<int>& indeg, int start, int finish) {
+        // step 1 : check connectivity of the current graph
+        vector<bool> visited(N);
+
+        dfsSCGraph(edges, visited, start);
+        for (int i = 0; i < N; i++) {
+            if (!visited[i] && (!edges[i].empty() || indeg[i] > 0))
+                return false;
+        }
+
+        // step 2 : make a reversed graph
+        vector<vector<int>> revEdge(N);
+        for (int u = 0; u < N; u++) {
+            for (int v : edges[u])
+                revEdge[v].push_back(u);
+        }
+
+        // step 3 : check connectivity of the reversed graph
+        fill(visited.begin(), visited.end(), false);
+
+        dfsSCGraph(revEdge, visited, finish);
+        for (int i = 0; i < N; i++) {
+            if (!visited[i] && (!edges[i].empty() || indeg[i] > 0))
+                return false;
+        }
+
+        return true;
+    }
+
+
+    //--- Eulerian path & circuit
+    // return (indegree, edge count)
+    pair<vector<int>, int> calcInDegree() const {
+        pair<vector<int>, int> res;
+        res.second = 0;;
+        res.first.assign(N, 0);
+
+        for (int i = 0; i < N; i++) {
+            res.second += (int)edges[i].size();
+            for (int v : edges[i])
+                res.first[v]++;
+        }
+
+        return move(res);
+    }
+
+    // precondition: all vertices are connected
+    bool existEulerPathNaive() const {
+        auto indeg = calcInDegree();
+
+        int in = 0;
+        int out = 0;
+        for (int i = 0; i < N; i++) {
+            int deg = (int)edges[i].size() - indeg.first[i];    // out_deg - in_deg
+            if (deg == 1)
+                out++;
+            else if (deg == -1)
+                in++;
+            else if (deg != 0)
+                return false;
+        }
+        return in == out && (in <= 1);  // (in == 0 && out == 0) || (in == 1 && out == 1)
+    }
+
+    // precondition: all vertices are connected
+    bool existEulerCircuitNaive() {
+        auto indeg = calcInDegree();
+
+        for (int i = 0; i < N; i++) {
+            if ((int)edges[i].size() != indeg.first[i])
+                return false;
+        }
+        return true;
+    }
+
+    bool existEulerPath() {
+        auto indeg = calcInDegree();
+
+        int in = 0, out = 0;
+        int start = 0, finish = 0;
+        for (int i = 0; i < N; i++) {
+            int deg = (int)edges[i].size() - indeg.first[i];
+            if (deg == 1) {
+                out++;
+                start = i;
+            } else if (deg == -1) {
+                in++;
+                finish = i;
+            } else if (deg != 0)
+                return false;
+        }
+        if (in != out || (in > 1))
+            return false;
+
+        return isSC(indeg.first, start, finish);
+    }
+
+    bool existEulerCircuit() {
+        auto indeg = calcInDegree();
+
+        for (int i = 0; i < N; i++) {
+            if (edges[i].size() != indeg.first[i])
+                return false;
+        }
+        return isSC(indeg.first, 0, 0);
+    }
+
+    int findEulerPathStart(const vector<int>& indeg) const {
+        int in = 0;
+        int out = 0;
+        int start = 0;
+        for (int i = 0; i < N; i++) {
+            int deg = (int)edges[i].size() - indeg[i];
+            if (deg == 1) {
+                out++;
+                start = i;
+            } else if (deg == -1)
+                in++;
+            else if (deg != 0)
+                return -1;
+        }
+        if (in != out || (in > 1))
+            return -1;
+
+        return start;
+    }
+
+    vector<int> getEulerPath() {
+        vector<int> path;
+        auto indeg = calcInDegree();
+
+        int u = findEulerPathStart(indeg.first);
+        if (u < 0)
+            return path;
+
+        path.reserve(indeg.second + 1);
+
+        vector<vector<int>> residualEdges(edges);
+        {
+            stack<int> st;
+            st.push(u);
+            while (!st.empty()) {
+                int v = st.top();
+                if (!residualEdges[v].empty()) {
+                    u = residualEdges[v][0];
+                    st.push(u);
+                    residualEdges[v].erase(residualEdges[v].begin());
+                } else {
+                    path.push_back(v);
+                    st.pop();
+                }
+            }
+        }
+        if (path.size() != indeg.second + 1)
+            return vector<int>{};
+
+        reverse(path.begin(), path.end());
+
+        return path;
+    }
+
 protected:
-    void dfs(int u, vector<bool>& visited) {
+    void dfs(vector<bool>& visited, int u) const {
         //cout << "dfs(" << u << ")" << endl;
 
         visited[u] = true;
         for (int v : edges[u]) {
             if (!visited[v])
-                dfs(v, visited);
+                dfs(visited, v);
         }
     }
 
-    void dfsAll() {
+    void dfsAll() const {
         vector<bool> visited(N);
         for (int u = 0; u < N; u++) {
             if (!visited[u])
-                dfs(u, visited);
+                dfs(visited, u);
         }
     }
 
-    void bfs(int start, vector<bool>& visited) {
+    void bfs(int start, vector<bool>& visited) const {
         queue<int> Q;
         Q.push(start);
         visited[start] = true;
@@ -223,7 +383,7 @@ protected:
         }
     }
 
-    void bfsAll() {
+    void bfsAll() const {
         vector<bool> visited(N);
         for (int u = 0; u < N; u++) {
             if (!visited[u])

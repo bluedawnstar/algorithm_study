@@ -1,8 +1,9 @@
 #include <climits>
 #include <numeric>
-#include <queue>
-#include <algorithm>
 #include <vector>
+#include <queue>
+#include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -82,6 +83,17 @@ static BasicDigraph buildSCGraph2() {
     return graph;
 }
 
+static BasicDigraph buildEulerian() {
+    BasicDigraph graph(5);
+    graph.addEdge(1, 0);
+    graph.addEdge(0, 2);
+    graph.addEdge(2, 1);
+    graph.addEdge(0, 3);
+    graph.addEdge(3, 4);
+    graph.addEdge(4, 0);
+    return graph;
+}
+
 static bool check(vector<vector<int>>& L, vector<vector<int>>& R) {
     for (auto& v : L)
         sort(v.begin(), v.end());
@@ -139,6 +151,20 @@ void testBasicDigraph() {
 
         auto graph2 = buildSCGraph2();
         assert(graph2.isSCGraph() == false);
+    }
+    cout << "* Eularian path & circuit (existence)" << endl;
+    {
+        auto graph1 = buildEulerian();
+        assert(graph1.existEulerPathNaive() == true);
+        assert(graph1.existEulerCircuitNaive() == true);
+        assert(graph1.existEulerPath() == true);
+        assert(graph1.existEulerCircuit() == true);
+    }
+    cout << "* Eularian path" << endl;
+    {
+        auto graph1 = buildEulerian();
+        auto path = graph1.getEulerPath();
+        assert(path.size() == 7 && path.front() == path.back() && count(path.begin(), path.end(), 0) == 3);
     }
     cout << "OK" << endl;
 }

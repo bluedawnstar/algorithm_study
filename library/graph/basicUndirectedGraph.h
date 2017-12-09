@@ -22,9 +22,26 @@ struct BasicUndirectedGraph {
         edges[v].push_back(u);
     }
 
-    //--- shortest path without weight ---
+    bool isConnectedGraph() const {
+        vector<bool> visited(N);
 
-    vector<int> searchShortestPathBFS(int start) {
+        for (int u = 0; u < N; u++) {
+            if (!edges[u].empty()) {
+                dfs(visited, u);
+                break;
+            }
+        }
+
+        for (int u = 0; u < N; u++) {
+            if (!visited[u] && !edges[u].empty())
+                return false;
+        }
+
+        return true;
+    }
+
+    //--- Shortest path without weight ---
+    vector<int> searchShortestPathBFS(int start) const {
         vector<int> dist(N, -1);
         vector<int> parent(N, -1);
 
@@ -48,7 +65,7 @@ struct BasicUndirectedGraph {
         return move(parent);
     }
 
-    vector<int> getShortestPath(int u, int v) {
+    vector<int> getShortestPath(int u, int v) const {
         vector<int> parent = searchShortestPathBFS(u);
 
         vector<int> res;
@@ -61,9 +78,8 @@ struct BasicUndirectedGraph {
         return res;
     }
 
-    //--- cycle detection with DFS ---
-
-    bool isCyclicGraphDFS(vector<bool>& visited, int u, int parent) {
+    //--- Cycle detection with DFS ---
+    bool isCyclicGraphDFS(vector<bool>& visited, int u, int parent) const {
         visited[u] = true;
         for (int v : edges[u]) {
             if (!visited[v]) {
@@ -76,7 +92,7 @@ struct BasicUndirectedGraph {
         return false;
     }
 
-    bool isCyclicGraphDFS() {
+    bool isCyclicGraphDFS() const {
         vector<bool> visited(N);
         for (int u = 0; u < N; u++) {
             if (!visited[u] && isCyclicGraphDFS(visited, u, -1))
@@ -86,9 +102,8 @@ struct BasicUndirectedGraph {
         return false;
     }
 
-    //--- cycle detection with Union Find ---
-
-    bool isCyclicGraphWithUnionFind() {
+    //--- Cycle detection with Union Find ---
+    bool isCyclicGraphWithUnionFind() const {
         UnionFind uf(N);
 
         for (int u = 0; u < N; u++) {
@@ -106,7 +121,7 @@ struct BasicUndirectedGraph {
         return false;
     }
 
-    //--- articulation point (cut vertex) ---
+    //--- Articulation point (cut vertex) ---
     struct CutVertexContext {
         vector<bool> cutVertex;
 
@@ -122,7 +137,7 @@ struct BasicUndirectedGraph {
               discoverCount(0), discover(n), low(n) {
         }
     };
-    void findCutVertex(CutVertexContext& ctx, int u) {
+    void findCutVertex(CutVertexContext& ctx, int u) const {
         ctx.visited[u] = true;
         ctx.discover[u] = ctx.low[u] = ctx.discoverCount++;
 
@@ -142,7 +157,7 @@ struct BasicUndirectedGraph {
             ctx.cutVertex[u] = (childCount > 1);
     }
 
-    vector<bool> findCutVertex() {
+    vector<bool> findCutVertex() const {
         CutVertexContext ctx(N);
         for (int u = 0; u < N; u++) {
             if (!ctx.visited[u])
@@ -151,7 +166,7 @@ struct BasicUndirectedGraph {
         return move(ctx.cutVertex);
     }
 
-    //--- bridge ---
+    //--- Bridge ---
     struct BridgeContext {
         vector<pair<int,int>> bridge;
 
@@ -166,7 +181,7 @@ struct BasicUndirectedGraph {
             : visited(n), parent(n, -1), discoverCount(0), discover(n), low(n) {
         }
     };
-    void findBridge(BridgeContext& ctx, int u) {
+    void findBridge(BridgeContext& ctx, int u) const {
         ctx.visited[u] = true;
         ctx.discover[u] = ctx.low[u] = ctx.discoverCount++;
 
@@ -182,7 +197,7 @@ struct BasicUndirectedGraph {
         }
     }
 
-    vector<pair<int,int>> findBridge() {
+    vector<pair<int,int>> findBridge() const {
         BridgeContext ctx(N);
         for (int u = 0; u < N; u++) {
             if (!ctx.visited[u])
@@ -191,26 +206,81 @@ struct BasicUndirectedGraph {
         return move(ctx.bridge);
     }
 
-protected:
-    void dfs(int u, vector<bool>& visited) {
-        //cout << "dfs(" << u << ")" << endl;
+    //--- Eulerian path & circuit
+    int getOddDegreeCount() const {
+        int odd = 0;
+        for (int i = 0; i < N; i++)
+            if (edges[i].size() & 1)
+                odd++;
+        return odd;
+    }
 
+    bool existEulerPath() const {
+        if (!isConnectedGraph())
+            return false;
+        return (getOddDegreeCount() & ~2) == 0; // 0 or 2
+    }
+
+    bool existEulerCircuit() const {
+        if (!isConnectedGraph())
+            return false;
+        return getOddDegreeCount() == 0;    // 0
+    }
+
+    vector<int> getEulerPath() const {
+        vector<int> path;
+        vector<vector<int>> residualEdges(edges);
+
+        int u = 0;
+        int odd = 0;
+        for (int i = 0; i < N; i++) {
+            if (residualEdges[i].size() & 1) {
+                if (odd++ == 0)
+                    u = i;
+            }
+        }
+        if (odd != 0 && odd != 2)
+            return path;
+
+        stack<int> st;
+        st.push(u);
+        while (!st.empty()) {
+            int v = st.top();
+            if (!residualEdges[v].empty()) {
+                u = residualEdges[v][0];
+                st.push(u);
+                //TODO: find() can be removed if each edge has opposite edge's index
+                residualEdges[u].erase(find(residualEdges[u].begin(), residualEdges[u].end(), v));
+                residualEdges[v].erase(residualEdges[v].begin());
+            } else {
+                path.push_back(v);
+                st.pop();
+            }
+        }
+        reverse(path.begin(), path.end());
+
+        return move(path);
+    }
+
+protected:
+    void dfs(vector<bool>& visited, int u) const {
+        //cout << "dfs(" << u << ")" << endl;
         visited[u] = true;
         for (int v : edges[u]) {
             if (!visited[v])
-                dfs(v, visited);
+                dfs(visited, v);
         }
     }
 
-    void dfsAll() {
+    void dfsAll() const {
         vector<bool> visited(N);
         for (int u = 0; u < N; u++) {
             if (!visited[u])
-                dfs(u, visited);
+                dfs(visited, u);
         }
     }
 
-    void bfs(int start, vector<bool>& visited) {
+    void bfs(int start, vector<bool>& visited) const {
         queue<int> Q;
         Q.push(start);
         visited[start] = true;
@@ -229,7 +299,7 @@ protected:
         }
     }
 
-    void bfsAll() {
+    void bfsAll() const {
         vector<bool> visited(N);
         for (int u = 0; u < N; u++) {
             if (!visited[u])
