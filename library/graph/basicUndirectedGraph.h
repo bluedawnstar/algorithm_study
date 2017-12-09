@@ -106,6 +106,91 @@ struct BasicUndirectedGraph {
         return false;
     }
 
+    //--- articulation point (cut vertex) ---
+    struct CutVertexContext {
+        vector<bool> cutVertex;
+
+        vector<bool> visited;
+        vector<int> parent;
+
+        int discoverCount;
+        vector<int> discover;
+        vector<int> low;
+
+        CutVertexContext(int n)
+            : cutVertex(n), visited(n), parent(n, -1),
+              discoverCount(0), discover(n), low(n) {
+        }
+    };
+    void findCutVertex(CutVertexContext& ctx, int u) {
+        ctx.visited[u] = true;
+        ctx.discover[u] = ctx.low[u] = ctx.discoverCount++;
+
+        int childCount = 0;
+        for (int v : edges[u]) {
+            if (!ctx.visited[v]) {
+                ctx.parent[v] = u;
+                findCutVertex(ctx, v);
+                childCount++;
+                if (ctx.low[v] >= ctx.discover[u])
+                    ctx.cutVertex[u] = true;
+                ctx.low[u] = min(ctx.low[u], ctx.low[v]);
+            } else if (v != ctx.parent[u])
+                ctx.low[u] = min(ctx.low[u], ctx.discover[v]);
+        }
+        if (ctx.parent[u] < 0)
+            ctx.cutVertex[u] = (childCount > 1);
+    }
+
+    vector<bool> findCutVertex() {
+        CutVertexContext ctx(N);
+        for (int u = 0; u < N; u++) {
+            if (!ctx.visited[u])
+                findCutVertex(ctx, u);
+        }
+        return move(ctx.cutVertex);
+    }
+
+    //--- bridge ---
+    struct BridgeContext {
+        vector<pair<int,int>> bridge;
+
+        vector<bool> visited;
+        vector<int> parent;
+
+        int discoverCount;
+        vector<int> discover;
+        vector<int> low;
+
+        BridgeContext(int n)
+            : visited(n), parent(n, -1), discoverCount(0), discover(n), low(n) {
+        }
+    };
+    void findBridge(BridgeContext& ctx, int u) {
+        ctx.visited[u] = true;
+        ctx.discover[u] = ctx.low[u] = ctx.discoverCount++;
+
+        for (int v : edges[u]) {
+            if (!ctx.visited[v]) {
+                ctx.parent[v] = u;
+                findBridge(ctx, v);
+                if (ctx.low[v] > ctx.discover[u])
+                    ctx.bridge.push_back(pair<int, int>(u, v));
+                ctx.low[u] = min(ctx.low[u], ctx.low[v]);
+            } else if (v != ctx.parent[u])
+                ctx.low[u] = min(ctx.low[u], ctx.discover[v]);
+        }
+    }
+
+    vector<pair<int,int>> findBridge() {
+        BridgeContext ctx(N);
+        for (int u = 0; u < N; u++) {
+            if (!ctx.visited[u])
+                findBridge(ctx, u);
+        }
+        return move(ctx.bridge);
+    }
+
 protected:
     void dfs(int u, vector<bool>& visited) {
         //cout << "dfs(" << u << ")" << endl;

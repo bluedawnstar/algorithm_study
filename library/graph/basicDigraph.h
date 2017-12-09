@@ -88,6 +88,103 @@ struct BasicDigraph {
         return false;
     }
 
+    //--- strongly connected components (Tarjan's algorithm) ---
+    struct SCCContext {
+        vector<vector<int>> scc;
+
+        vector<bool> visited;
+
+        int discoverCount;
+        vector<int> discover;
+        vector<int> low;
+
+        vector<bool> stacked;
+        vector<int> stack;
+
+        SCCContext(int n)
+            : scc(), visited(n), discoverCount(0), discover(n), low(n), stacked(n) {
+        }
+    };
+    void findSCC(SCCContext& ctx, int u) {
+        ctx.visited[u] = true;
+        ctx.discover[u] = ctx.low[u] = ctx.discoverCount++;
+
+        ctx.stack.push_back(u);
+        ctx.stacked[u] = true;
+        for (int v : edges[u]) {
+            if (!ctx.visited[v]) {
+                findSCC(ctx, v);
+                ctx.low[u] = min(ctx.low[u], ctx.low[v]);
+            } else if (ctx.stacked[v]) // back edge
+                ctx.low[u] = min(ctx.low[u], ctx.discover[v]);
+        }
+
+        // u is a root of an SCC
+        if (ctx.low[u] == ctx.discover[u]) {
+            vector<int> scc;
+            while (!ctx.stack.empty() && ctx.stack.back() != u) {
+                int w = ctx.stack.back();
+                scc.push_back(w);
+                ctx.stack.pop_back();
+                ctx.stacked[w] = false;
+            }
+            scc.push_back(u);
+            ctx.stack.pop_back();
+            ctx.stacked[u] = false;
+
+            ctx.scc.push_back(scc);
+        }
+    }
+
+    vector<vector<int>> findSCC() {
+        SCCContext ctx(N);
+
+        for (int u = 0; u < N; u++) {
+            if (!ctx.visited[u])
+                findSCC(ctx, u);
+        }
+
+        return move(ctx.scc);
+    }
+
+    //--- strongly connected graph test (Kosaraju's algorithm) ---
+    static void dfsSCGraph(const vector<vector<int>>& edges, vector<bool>& visited, int u) {
+        visited[u] = true;
+        for (int v : edges[u]) {
+            if (!visited[v])
+                dfsSCGraph(edges, visited, v);
+        }
+    }
+
+    bool isSCGraph() {
+        vector<bool> visited(N);
+
+        // step 1 : check connectivity of the current graph
+        dfsSCGraph(edges, visited, 0);
+        for (int u = 0; u < N; u++) {
+            if (!visited[u])
+                return false;
+        }
+
+        // step 2 : make a reversed graph
+        vector<vector<int>> revEdge(N);
+        for (int u = 0; u < N; u++) {
+            for (int v : edges[u]) {
+                revEdge[v].push_back(u);
+            }
+        }
+
+        // step 3 : check connectivity of the reversed graph
+        visited.assign(N, false);
+        dfsSCGraph(revEdge, visited, 0);
+        for (int i = 0; i < N; i++) {
+            if (!visited[i])
+                return false;
+        }
+
+        return true;
+    }
+
 protected:
     void dfs(int u, vector<bool>& visited) {
         //cout << "dfs(" << u << ")" << endl;
