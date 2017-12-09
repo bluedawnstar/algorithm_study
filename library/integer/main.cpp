@@ -9,6 +9,7 @@ int main(void) {
     TEST(PrimeNumberBasic);
     TEST(PrimeNumberEratosthenes);
     TEST(Gcd);
+    TEST(IntMod);
     TEST(Factor);
     TEST(Fraction);
     TEST(Digit);

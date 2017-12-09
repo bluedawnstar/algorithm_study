@@ -8,7 +8,6 @@ using namespace std;
 #include "factor.h"
 #include "gcd.h"
 
-
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>

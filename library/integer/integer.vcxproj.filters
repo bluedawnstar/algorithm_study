@@ -39,24 +39,33 @@
     <ClCompile Include="digit.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="intMod.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="primeNumber.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="gcd.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="IntMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bit.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fraction.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fractionAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeNumberBasic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeNumberEratosthenes.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="intMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
