@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "intMod.h"
+#include "intModExt.h"
 #include "eulerTheorem.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -16,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testIntMod() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Modular Operations -------------------------" << endl;
 
@@ -36,6 +37,13 @@ void testIntMod() {
 
     for (int i = 1; i < 97; i++) {
         assert(modInv(i, 97) == modR[i]);
+    }
+
+    {
+        auto ans1 = factorialModNaive(25, 29);
+        auto ans2 = factorialModWilson(25, 29);
+        assert(ans1 == ans2);
+        assert(ans1 == 5);
     }
 
     cout << "phi() ========" << endl;

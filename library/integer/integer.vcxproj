@@ -166,6 +166,7 @@
     <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gcd.h" />
     <ClInclude Include="intMod.h" />
+    <ClInclude Include="intModExt.h" />
     <ClInclude Include="primeFactor.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
