@@ -41,5 +41,8 @@
     <ClInclude Include="multPolyMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="convolution.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

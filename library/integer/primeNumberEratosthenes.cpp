@@ -16,7 +16,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-#define NN  10000
+#define NN  10000000
 
 static bool check(const vector<bool>& L, int offsetL, vector<bool>& R, int offsetR, int N) {
     for (int i = 0; i < N; i++)
@@ -51,10 +51,11 @@ void testPrimeNumberEratosthenes() {
     cout << "OK!" << endl;
 
     cout << "--- performance test about eratosthenes ---" << endl;
-
-    PROFILE_START(0);
-    vector<bool> p = eratosthenes(NN);
-    if (p.empty())
-        cerr << "error!" << endl;
-    PROFILE_STOP(0);
+    {
+        PROFILE_START(0);
+        vector<bool> p = eratosthenes(NN);
+        if (p.empty())
+            cerr << "error!" << endl;
+        PROFILE_STOP(0);
+    }
 }

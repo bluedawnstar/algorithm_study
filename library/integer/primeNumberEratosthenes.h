@@ -1,6 +1,6 @@
 #pragma once
 
-// get all prime numbers
+// get all prime numbers in [0, n], inclusive
 // O(N loglogN)
 inline vector<bool> eratosthenes(int n) {
     vector<bool> res(n + 1, true);

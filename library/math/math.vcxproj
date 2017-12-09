@@ -152,6 +152,7 @@
     <ClCompile Include="sumOfPower.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fibonacci.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="sumOfPower.h" />
   </ItemGroup>
