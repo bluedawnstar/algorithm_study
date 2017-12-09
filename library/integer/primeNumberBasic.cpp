@@ -11,22 +11,46 @@ using namespace std;
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
+#include <cassert>
+#include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/profile.h"
 
 #define NN  1000000
 
 void testPrimeNumberBasic() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     clock_t start;
 
     cout << "--- test isPrimeNumber() from 0 to 100 ---" << endl;
-    for (int i = 0; i <= 100; i++) {
-        if (isPrimeNumber(i))
-            cout << i << ", ";
+    {
+        for (int i = 0; i <= 100; i++) {
+            auto b = isPrimeNumber(i);
+            if (b)
+                cout << i << ", ";
+        }
+        cout << endl;
+
+        PROFILE_START(0);
+        int n = 0;
+        for (int i = 0; i <= 1000000; i++) {
+            n += isPrimeNumber(i);
+        }
+        PROFILE_STOP(0);
+        if (n <= 0)
+            cerr << "What?" << endl;
+
+        PROFILE_START(1);
+        n = 0;
+        for (int i = 0; i <= 1000000; i++) {
+            n += isPrimeNumberWithMiller(i, 5);
+        }
+        PROFILE_STOP(1);
+        if (n <= 0)
+            cerr << "What?" << endl;
     }
-    cout << endl;
 
     cout << "--- test getPrimeFactors() from 0 to 100 ---" << endl;
     for (int i = 0; i <= 100; i++)
@@ -74,4 +98,6 @@ void testPrimeNumberBasic() {
         PrimeFactors::buildAll(NN, primes, primeFactors);
     }
     cout << "getPrimeFactors(n,primes,factors)'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
+
+    cout << "OK!" << endl;
 }
