@@ -16,12 +16,18 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testIntMod() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Modular Operations -------------------------" << endl;
 
     assert(modAdd(3, 7, 5) == 0);
     assert(modMul(3, 7, 5) == 1);
+
+    {
+        int MOD = 1000000007;
+        long long a = 124124124214123412ll, b = 39039834038204432ll;
+        assert(modMul(a, b, (long long)MOD) == modMul(int(a % MOD), int(b % MOD), MOD));
+    }
 
     vector<int> modR = modInvPrimeRange(96, 97);
     for (int i = 1; i <= 1000; i++) {

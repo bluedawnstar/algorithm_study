@@ -35,6 +35,8 @@ inline int modPowPrime(int x, long long n, int M) {
 inline int modInv(int a, int M) {
     int x, y;
     extGcd(a, M, x, y);
+    //if (extGcd(a, M, x, y) > 1)
+    //    return -1;
     return (x % M + M) % M;
 }
 
@@ -111,8 +113,21 @@ inline long long modMul(long long a, long long b, long long M) {
 #ifdef __GNUC__
     return long long((__int128_t)(a % M) * (b % M) % M);
 #else
-    assert(false);  // not implemented!
-    return (a % M * b % M) % M;
+        int base = (int)1e9;
+        long long aLow = a % base, aHigh = a / base;
+        long long bLow = b % base, bHigh = b / base;
+
+        long long result = (aHigh * bHigh) % M;
+        for (int i = 0; i < 9; i++)
+            result = (result * 10) % M;
+
+        result = (result + aLow * bHigh % M + bLow * aHigh % M) % M;
+        for (int i = 0; i < 9; i++)
+            result = (result * 10) % M;
+
+        result = (result + aLow * bLow % M) % M;
+
+        return result;
 #endif
 }
 
@@ -145,6 +160,8 @@ inline long long modPowPrime(long long x, long long n, long long M) {
 inline long long modInv(long long a, long long M) {
     long long x, y;
     extGcd(a, M, x, y);
+    //if (extGcd(a, M, x, y) > 1)
+    //    return -1;
     return (x % M + M) % M;
 }
 

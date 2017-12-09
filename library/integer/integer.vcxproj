@@ -143,7 +143,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bit.cpp" />
+    <ClCompile Include="chineseRemainderTheorem.cpp" />
     <ClCompile Include="digit.cpp" />
+    <ClCompile Include="equations.cpp" />
     <ClCompile Include="factor.cpp" />
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="gcd.cpp" />
@@ -155,7 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bit.h" />
+    <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="digit.h" />
+    <ClInclude Include="equations.h" />
     <ClInclude Include="eulerTheorem.h" />
     <ClInclude Include="factor.h" />
     <ClInclude Include="fraction.h" />

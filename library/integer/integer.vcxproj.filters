@@ -45,6 +45,12 @@
     <ClCompile Include="primeFactor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="chineseRemainderTheorem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="equations.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -78,6 +84,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="digit.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="chineseRemainderTheorem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="equations.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
