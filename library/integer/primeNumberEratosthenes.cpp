@@ -10,17 +10,25 @@ using namespace std;
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
+#include <cassert>
+#include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/profile.h"
 
-#define NN  1000000
+#define NN  10000
+
+static bool check(const vector<bool>& L, int offsetL, vector<bool>& R, int offsetR, int N) {
+    for (int i = 0; i < N; i++)
+        if (L[offsetL++] != R[offsetR++])
+            return false;
+    return true;
+}
 
 void testPrimeNumberEratosthenes() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
-    clock_t start;
-
-    cout << "--- test eratosthenes() from 0 to 100 ---" << endl;
+    cout << "--- test eratosthenes() ---" << endl;
     {
         auto v = eratosthenes(100);
         cout << "(";
@@ -28,41 +36,25 @@ void testPrimeNumberEratosthenes() {
             if (v[i])
                 cout << i << ", ";
         }
-        cout << ")";
+        cout << ")" << endl;
+
+        v = eratosthenes(NN);
+
+        int L = (int)sqrt(NN) + 10, R = NN;
+        auto v2 = eratosthenes(L, R);
+        assert(check(v, L, v2, 0, R - L + 1));
+
+        L = (int)sqrt(NN) - 10, R = NN;
+        v2 = eratosthenes(L, R);
+        assert(check(v, L, v2, 0, R - L + 1));
     }
+    cout << "OK!" << endl;
 
-    vector<int> minFactors = getMinFactors(100);
+    cout << "--- performance test about eratosthenes ---" << endl;
 
-    cout << "--- test isPrimeNumber() from 0 to 100 ---" << endl;
-    for (int i = 0; i <= 100; i++) {
-        if (isPrimeNumber(minFactors, i))
-            cout << i << ", ";
-    }
-    cout << endl;
-
-    cout << "--- test getPrimeFactors() from 0 to 100 ---" << endl;
-    for (int i = 0; i <= 100; i++)
-        cout << i << ": " << getPrimeFactors(minFactors, i) << endl;
-
-    cout << "--- test getPrimeFactors2() from 0 to 100 ---" << endl;
-    for (int i = 0; i <= 100; i++)
-        cout << i << ": " << getPrimeFactors2(minFactors, i) << endl;
-
-    cout << "--- performance test about prime number functions ---" << endl;
-
-    start = clock();
-    eratosthenes(NN);
-    cout << "eratosthenes()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
-
-    minFactors = getMinFactors(NN);
-
-    start = clock();
-    for (int i = 0; i <= NN; i++)
-        getPrimeFactors(minFactors, i);
-    cout << "getPrimeFactors()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
-
-    start = clock();
-    for (int i = 0; i <= NN; i++)
-        getPrimeFactors2(minFactors, i);
-    cout << "getPrimeFactors2()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
+    PROFILE_START(0);
+    vector<bool> p = eratosthenes(NN);
+    if (p.empty())
+        cerr << "error!" << endl;
+    PROFILE_STOP(0);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 // get all prime numbers
+// O(N loglogN)
 inline vector<bool> eratosthenes(int n) {
     vector<bool> res(n + 1, true);
     res[0] = false;
@@ -22,57 +23,36 @@ inline vector<bool> eratosthenes(int n) {
     return res;
 }
 
-//--------- Min Prime Factors -------------------------------------------------
+// get all prime numbers
+// inclusive, O(N loglogN)
+inline vector<bool> eratosthenes(int left, int right) {
+    int n = right - left + 1;
+    vector<bool> res(n, true);
 
-inline vector<int> getMinFactors(int n) {
-    vector<int> res(n + 1);
-    res[0] = -1;
-    res[1] = -1;
-
-    for (int i = 2; i <= n; i++)
-        res[i] = i;
+    if (left <= 0 && 0 <= right)
+        res[0] = false;
+    if (left <= 1 && 1 <= right)
+        res[1 - left] = false;
 
     if (n >= 4) {
-        for (int j = 2 * 2; j <= n; j += 2)
-            res[j] = 2;
+        for (int j = left + (left & 1); j <= right; j += 2)
+            res[j - left] = false;
     }
 
-    int root = (int)sqrt(n);
+    int root = (int)sqrt(right);
+    vector<bool> p(root + 1, true);
+
+    if (root >= 4) {
+        for (int j = 4; j <= root; j += 2)
+            p[j] = false;
+    }
     for (int i = 3; i <= root; i += 2) {
-        if (res[i] == i) {
-            for (int j = i * i; j >= 0 && j <= n; j += i) {
-                if (res[j] == j)
-                    res[j] = i;
-            }
+        if (p[i]) {
+            for (int j = i * i; j >= 0 && j <= root; j += i)
+                p[j] = false;
+            for (int j = max(i * i, ((left + i - 1) / i) * i); j >= 0 && j <= right; j += i)
+                res[j - left] = false;
         }
-    }
-
-    return res;
-}
-
-inline bool isPrimeNumber(const vector<int>& minFactors, int x) {
-    return minFactors[x] == x;
-}
-
-inline vector<int> getPrimeFactors(const vector<int>& minFactors, int x) {
-    vector<int> res;
-    while (x > 1) {
-        res.push_back(minFactors[x]);
-        x /= minFactors[x];
-    }
-
-    return res;
-}
-
-inline vector<pair<int, int>> getPrimeFactors2(const vector<int>& minFactors, int x) {
-    vector<pair<int, int>> res;
-
-    while (x > 1) {
-        if (!res.empty() && res.back().first == minFactors[x])
-            res.back().second++;
-        else
-            res.push_back(make_pair(minFactors[x], 1));
-        x /= minFactors[x];
     }
 
     return res;

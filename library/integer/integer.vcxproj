@@ -149,6 +149,7 @@
     <ClCompile Include="gcd.cpp" />
     <ClCompile Include="intMod.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="primeFactor.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gcd.h" />
     <ClInclude Include="intMod.h" />
+    <ClInclude Include="primeFactor.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
   </ItemGroup>

@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "factor.h"
+#include "primeFactor.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -30,8 +31,8 @@ void testFactor() {
 
     cout << "--- getFactors(vector<pair<int,int>>&) -------------------------" << endl;
     for (int i = 1; i <= 100; i++) {
-        vector<pair<int, int>> primeFactors = getPrimeFactors2(i);
-        vector<int> factors = getFactors(primeFactors);
+        PrimeFactors pf(i);
+        vector<int> factors = pf.getFactors();
         {
             vector<int> v = getFactors(i);
             assert(factors == v);
@@ -40,8 +41,8 @@ void testFactor() {
     }
 
     cout << "--- getAllFactorCount() -------------------------" << endl;
-    vector<int> minFactors = getMinFactors(NN);
-    vector<int> factorCount = getAllFactorCount(minFactors);
+    MinFactors minFactors(NN);
+    vector<int> factorCount = minFactors.getAllFactorCount();
     for (int i = 0; i <= NN; i++) {
         cout << "(" << i << ": " << factorCount[i] << "), ";
     }
@@ -58,11 +59,11 @@ void testFactor() {
 
     cout << "--- performance test of getAllFactorCountXXX() --" << endl;
     {
-        vector<int> minFactors = getMinFactors(NN);
+        MinFactors minFactors(NN);
 
         clock_t start = clock();
         for (int i = 0; i < 100000; i++)
-            getAllFactorCount(minFactors);
+            minFactors.getAllFactorCount();
         cout << "elapsed time of getAllFactorCount() : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
 
         start = clock();

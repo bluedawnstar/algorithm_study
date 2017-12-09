@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "primeNumberBasic.h"
+#include "primeFactor.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -32,8 +33,10 @@ void testPrimeNumberBasic() {
         cout << i << ": " << getPrimeFactors(i) << endl;
 
     cout << "--- test getPrimeFactors2() from 0 to 100 ---" << endl;
-    for (int i = 0; i <= 100; i++)
-        cout << i << ": " << getPrimeFactors2(i) << endl;
+    for (int i = 0; i <= 100; i++) {
+        PrimeFactors pf(i);
+        cout << i << ": " << pf.primeFactors << endl;
+    }
 
     cout << "--- test findPrimeNumbers() from 0 to 100 ---" << endl;
     cout << findPrimeNumbers(100) << endl;;
@@ -41,9 +44,10 @@ void testPrimeNumberBasic() {
     cout << "--- test getPrimeFactors(n,primes,factors) from 0 to 100 ---" << endl;
     {
         vector<int> primes;
-        vector<vector<pair<int, int>>> primeFactors;
-        getPrimeFactors(100, primes, primeFactors);
-        cout << primeFactors << endl;
+        vector<PrimeFactors> primeFactors;
+        PrimeFactors::buildAll(100, primes, primeFactors);
+        for (int i = 0; i < 100; i++)
+            cout << primeFactors[i].primeFactors << endl;
     }
 
     cout << "--- performance test about prime factorization functions ---" << endl;
@@ -54,8 +58,9 @@ void testPrimeNumberBasic() {
     cout << "getPrimeFactor()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 
     start = clock();
-    for (int i = 0; i <= NN; i++)
-        getPrimeFactors2(i);
+    for (int i = 0; i <= NN; i++) {
+        PrimeFactors pf(i);;
+    }
     cout << "getPrimeFactor2()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 
     start = clock();
@@ -65,8 +70,8 @@ void testPrimeNumberBasic() {
     start = clock();
     {
         vector<int> primes;
-        vector<vector<pair<int, int>>> primeFactors;
-        getPrimeFactors(NN, primes, primeFactors);
+        vector<PrimeFactors> primeFactors;
+        PrimeFactors::buildAll(NN, primes, primeFactors);
     }
     cout << "getPrimeFactors(n,primes,factors)'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 }

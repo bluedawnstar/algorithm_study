@@ -42,6 +42,9 @@
     <ClCompile Include="intMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="primeFactor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -66,6 +69,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="intMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeFactor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
