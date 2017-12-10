@@ -29,9 +29,6 @@ void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
     gTrV.clear();
     gTrV.resize(MAXN);
 
-    tr.clear();
-    tr.setVertexCount(MAXN);
-
     for (int u = 1; u < MAXN; u++) {
         int v = rand() % u;
         tr.addEdge(u, v);
@@ -91,7 +88,7 @@ void testLinkCutTreePathQuery() {
 
     cout << "--- Link-Cut Tree with Path Query ----------------------------------" << endl;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1; i++) {
         Tree tr(MAXN, LOGN);
         LinkCutTreeArrayPathQuery<int, PathQuerySetAndSumOpT<int>> lct(MAXN);
         buildTree(tr, lct);
@@ -115,7 +112,7 @@ void testLinkCutTreePathQuery() {
     }
     cout << "OK!" << endl;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1; i++) {
         Tree tr(MAXN, LOGN);
         LinkCutTreeArrayPathQuery<int, PathQueryAddAndSumOpT<int>> lct(MAXN);
         buildTree(tr, lct);

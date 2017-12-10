@@ -108,6 +108,9 @@
     <ClCompile Include="segmentTreeCompactLazyAdd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeEulerTour.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sparseTable.h">
@@ -192,6 +195,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeCompactLazyAdd.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeEulerTour.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeMO.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

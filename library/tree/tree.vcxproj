@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="centroidDecomposition.cpp" />
+    <ClCompile Include="treeEulerTour.cpp" />
     <ClCompile Include="intervalTree.cpp" />
     <ClCompile Include="kdtree.cpp" />
     <ClCompile Include="kdtreeNoUpdate.cpp" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
+    <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />
     <ClInclude Include="kdtree.h" />
     <ClInclude Include="kdtreeNoUpdate.h" />
@@ -199,6 +201,7 @@
     <ClInclude Include="segmentTree.h" />
     <ClInclude Include="segmentTreeLazy.h" />
     <ClInclude Include="splayTree.h" />
+    <ClInclude Include="treeMO.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="suffixTrie.h" />
     <ClInclude Include="waveletTree.h" />

@@ -8,125 +8,6 @@ using namespace std;
 
 #include "treeBasic.h"
 
-/* // TODO: adding this functions to find centers of a tree
-vector<int> gDist;
-void dfsDist(int v, int p, int d) {
-    gDist[v] = d;
-    for (int to : gE[v]) {
-        if (to != p) {
-            dfsDist(to, v, d + 1);
-        }
-    }
-}
-
-int findMax() {
-    int index = -1;
-    for (int i = 0; i < gN; i++) {
-        if (gDist[i] != gN && (index == -1 || gDist[index] < gDist[i]))
-            index = i;
-    }
-    return index;
-}
-
-vector<int> gPath;
-bool dfsPath(int v, int to, int p) {
-    if (v == to) {
-        gPath.push_back(to);
-        return true;
-    }
-    gPath.push_back(v);
-    for (int u : gE[v]) {
-        if (p != u && dfsPath(u, to, v)) {
-            return true;
-        }
-    }
-    gPath.pop_back();
-    return false;
-}
-
-vector<int> findCenters(int v) {
-    gDist = vector<int>(gN + 10, gN);
-    dfsDist(v, -1, 0);
-    v = findMax();
-    dfsDist(v, -1, 0);
-    int to = findMax();
-    gPath.clear();
-    dfsPath(v, to, -1);
-    if (gPath.size() % 2 == 0) {
-        return vector<int>{ gPath[(int)gPath.size() / 2 - 1], gPath[(int)gPath.size() / 2] };
-    } else {
-        return vector<int>{ gPath[(int)gPath.size() / 2] };
-    }
-}
-*/
-
-/* //TODO: add this functions for hashing of a tree
-private static final int B1 = 31;
-private static final int M1 = 1000000007;
-private static final int Z1 = 16983;
-private static final int B2 = 37;
-private static final int M2 = 1000000009;
-private static final int Z2 = 18657;
-
-public static long unrootedHash(int[][] g) {
-    int[] cs = center(g);
-    long[] lhs = new long[cs.length];
-    int p = 0;
-    for (int c : cs) {
-        lhs[p++] = rootedHash(c, -1, g);
-    }
-    Arrays.sort(lhs);
-    long hl = Z1, hr = Z2;
-    for (long lh : lhs) {
-        long lhl = lh >> >32, lhr = (int)lh;
-        hl = (hl * B1 + lhl*lhl) % M1;
-        hr = (hr * B2 + lhr*lhr) % M2;
-    }
-    return hl << 32 | hr;
-}
-
-public static long rootedHash(int cur, int pre, int[][] g) {
-    long[] hs = new long[g[cur].length];
-    int p = 0;
-    for (int e : g[cur]) {
-        if (e != pre) {
-            hs[p++] = rootedHash(e, cur, g);
-        }
-    }
-    Arrays.sort(hs, 0, p);
-    long hl = Z1, hr = Z2;
-    for (int i = 0; i < p; i++) {
-        hl = (hl * B1 + hs[i] * hs[i]) % M1;
-        hr = (hr * B2 + hs[i] * hs[i]) % M2;
-    }
-    return hl << 32 | hr;
-}
-
-//--- OR ---
-
-long dfsHash(int v, int p) {
-    int count = 0;
-    for (int to : g[v]) {
-        if (p != to) {
-            count++;
-        }
-    }
-    long[] result = new long[count];
-    int len = 0;
-    for (int to : g[v]) {
-        if (p != to) {
-            result[len++] = dfsHash(to, v);
-        }
-    }
-    Arrays.sort(result);
-    long ans = 4242424242424243L;
-    for (int i = 0; i < len; i++) {
-        ans ^= rnd[i] * result[i];
-    }
-    return ans;
-}
-*/
-
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
@@ -139,8 +20,8 @@ long dfsHash(int v, int p) {
 #define MAXN    10000           // TODO: modify the maximum number of nodes
 #define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
 
-static void makeTree(Tree& tree) {
-    tree.setVertexCount(10);
+static Tree makeTree() {
+    Tree tree(10, 4);
 
     tree.addEdge(0, 1);
     tree.addEdge(0, 3);
@@ -151,10 +32,12 @@ static void makeTree(Tree& tree) {
     tree.addEdge(4, 9);
     tree.addEdge(2, 8);
     tree.addEdge(2, 5);
+
+    return move(tree);
 }
 
-static void makeLcaTree(Tree& tree) {
-    tree.setVertexCount(MAXN);
+static Tree makeLcaTree() {
+    Tree tree(MAXN, LOGN);
 
     tree.addEdge(0, 1);
     tree.addEdge(0, 2);
@@ -182,6 +65,18 @@ static void makeLcaTree(Tree& tree) {
         tree.addEdge(p, i);
         p = i;
     }
+
+    return move(tree);
+}
+
+static Tree makeTreeForCenter() {
+    Tree tree(4, 4);
+
+    tree.addEdge(0, 3);
+    tree.addEdge(3, 1);
+    tree.addEdge(2, 3);
+
+    return move(tree);
 }
 
 static void printTree(Tree& tree) {
@@ -192,82 +87,76 @@ static void printTree(Tree& tree) {
 
     cout << "parent : ";
     for (int i = 0; i < tree.mN; i++)
-        cout << tree.mP[i][0] << ", ";
+        cout << tree.mP[0][i] << ", ";
     cout << endl;
 }
 
 void testTreeBasic() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Tree Basic ----------------------------------" << endl;
 
-    Tree tree(MAXN, LOGN);
-
-    cout << "-- dfs() vs dfsIter() ----------------------------------" << endl;
-    tree.clear();
-    makeTree(tree); // make a test tree
-    tree.dfs(0, -1);
-    printTree(tree);
-
-    makeTree(tree);
-    tree.dfsIter(0);
-    printTree(tree);
-
-    /*
-    cout << "-- dfs() vs dfsIter() - performance test ---------------" << endl;
-    tree.clear();
-    makeTree(tree); // make a test tree
-    clock_t start = clock();
-    for (int i = 0; i < 1000000; i++) {
-        tree.dfs(1, 0);
+    cout << "* dfs() vs dfsIter()" << endl;
+    {
+        auto tree = makeTree(); // make a test tree
+        tree.dfs(0, -1);
+        printTree(tree);
     }
-    cout << "elapsed time : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
-
-    tree.clear();
-    makeTree(tree); // make a test tree
-    start = clock();
-    for (int i = 0; i < 1000000; i++) {
-        tree.dfsIter(1);
+    {
+        auto tree = makeTree();
+        tree.dfsIter(0);
+        printTree(tree);
     }
-    cout << "elapsed time : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
-    */
+    cout << "* centroid, center, diameter" << endl;
+    {
+        auto tree = makeTreeForCenter();
+        tree.build(0);
+        
+        assert(tree.findCentroid(0) == 3);
 
-    cout << "-- LCA test --------------------------------------------" << endl;
-    tree.clear();       // step1: clear all variables
-    makeLcaTree(tree);  // ... make a test tree
+        auto center = tree.findCenters(0);
+        assert(center.size() == 1 && center[0] == 3);
 
-    //tree.dfs(0, -1);
-    tree.dfsIter(0);    // step2: make depth and parent table
-    tree.makeLcaTable();// step3: make LCA table
+        auto centerEx = tree.findCentersEx();
+        assert(centerEx.size() == 1 && centerEx[0] == 3);
 
-    PROFILE_START(0);
-    int errCnt = 0;
-    for (int i = 0; i < 100000; i++) {
-        int u = rand() % tree.mN;
-        int v = rand() % tree.mN;
-        int lca = tree.findLCA(u, v);
-        int lcaAns;
-        if (u == 0 || v == 0) {
-            lcaAns = 0;
-        } else if ((u != 2 && u < tree.mN / 2) != (v != 2 && v < tree.mN / 2)) {
-            lcaAns = 0;
-        } else if (u != 2 && u < tree.mN / 2) {
-            if ((u >= tree.mN / 4) != (v >= tree.mN / 4))
-                lcaAns = 1;
-            else
-                lcaAns = min(u, v);
-        } else {
-            if ((u >= tree.mN * 3 / 4) != (v >= tree.mN * 3 / 4))
-                lcaAns = 2;
-            else
-                lcaAns = min(u, v);
+        auto diam = tree.getDiameter();
+        assert(diam == 2);
+    }
+    cout << "* LCA test" << endl;
+    {
+        auto tree = makeLcaTree();  // make a test tree
+        tree.build(0);
+
+        PROFILE_START(0);
+        int errCnt = 0;
+        for (int i = 0; i < 100000; i++) {
+            int u = rand() % tree.mN;
+            int v = rand() % tree.mN;
+            int lca = tree.findLCA(u, v);
+            int lcaAns;
+            if (u == 0 || v == 0) {
+                lcaAns = 0;
+            } else if ((u != 2 && u < tree.mN / 2) != (v != 2 && v < tree.mN / 2)) {
+                lcaAns = 0;
+            } else if (u != 2 && u < tree.mN / 2) {
+                if ((u >= tree.mN / 4) != (v >= tree.mN / 4))
+                    lcaAns = 1;
+                else
+                    lcaAns = min(u, v);
+            } else {
+                if ((u >= tree.mN * 3 / 4) != (v >= tree.mN * 3 / 4))
+                    lcaAns = 2;
+                else
+                    lcaAns = min(u, v);
+            }
+            if (lca != lcaAns) {
+                cout << "mismatch : LCA(" << u << ", " << v << ") = " << lca << " (!= " << lcaAns << ")" << endl;
+                errCnt++;
+            }
+            assert(lca == lcaAns);
         }
-        if (lca != lcaAns) {
-            cout << "mismatch : LCA(" << u << ", " << v << ") = " << lca << " (!= " << lcaAns << ")" << endl;
-            errCnt++;
-        }
+        PROFILE_STOP(0);
     }
-    PROFILE_STOP(0);
-    if (!errCnt)
-        cout << "OK!" << endl;
+    cout << "OK!" << endl;
 }

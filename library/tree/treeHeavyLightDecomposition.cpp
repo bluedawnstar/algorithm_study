@@ -29,15 +29,13 @@ using namespace std;
 void testHeavyLightDecomposition_org() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
-    Tree tree(MAXN, LOGN);
-    HeavyLightDecomposition hld(tree);
-    auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
-
     int T ;
     cin >> T;
 
     while (T-- > 0) {
-        tree.clear();
+        Tree tree(MAXN, LOGN);
+        HeavyLightDecomposition hld(tree);
+        auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
 
         cin >> tree.mN;
         for (int v = 0; v < tree.mN; v++) {
@@ -104,15 +102,12 @@ void testHeavyLightDecomposition() {
           { "query", 0, 11 } }
     };
 
-    Tree tree(MAXN, LOGN);
-    HeavyLightDecomposition hld(tree);
-    auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
-
     vector<int> rightAns{ 15, 7 };
     for (int i = 0; i < T; i++) {
-        tree.clear();
+        Tree tree((int)TR[i].size(), LOGN);
+        HeavyLightDecomposition hld(tree);
+        auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
 
-        tree.setVertexCount((int)TR[i].size());
         for (int v = 0; v < tree.mN; v++) {
             int u = TR[i][v];
             if (u < 0)

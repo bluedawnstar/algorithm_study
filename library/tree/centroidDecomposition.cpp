@@ -16,9 +16,8 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-static void makeTree(Tree& tree) {
-    tree.setVertexCount(16);
-
+static Tree makeTree() {
+    Tree tree(16, 4);
     tree.addEdge(0, 3);
     tree.addEdge(1, 3);
     tree.addEdge(2, 3);
@@ -34,11 +33,11 @@ static void makeTree(Tree& tree) {
     tree.addEdge(10, 12);
     tree.addEdge(12, 14);
     tree.addEdge(12, 15);
+    return move(tree);
 }
 
-static void makeTree2(Tree& tree) {
-    tree.setVertexCount(15);
-
+static Tree makeTree2() {
+    Tree tree(15, 4);
     tree.addEdge(0, 1);
     tree.addEdge(2, 1);
     tree.addEdge(3, 1);
@@ -53,6 +52,7 @@ static void makeTree2(Tree& tree) {
     tree.addEdge(8, 12);
     tree.addEdge(12, 13);
     tree.addEdge(12, 14);
+    return tree;
 }
 
 static void dumpTree(vector<vector<int>>& tree, int N) {
@@ -75,9 +75,7 @@ void testCentroidDecomposition() {
     cout << "--- Centroid Decomposition ---------------------------" << endl;
     cout << "*** Tree #1 ***" << endl;
     {
-        Tree tree(MAXN, LOGN);
-
-        makeTree(tree); // make a test tree
+        auto tree = makeTree(); // make a test tree
         dumpTree(tree.mE, 16);
 
         CentroidDecomposition cd;
@@ -89,9 +87,7 @@ void testCentroidDecomposition() {
 
     cout << "*** Tree #2 ***" << endl;
     {
-        Tree tree(MAXN, LOGN);
-
-        makeTree2(tree); // make a test tree
+        auto tree = makeTree2(); // make a test tree
         dumpTree(tree.mE, 15);
 
         CentroidDecomposition cd;

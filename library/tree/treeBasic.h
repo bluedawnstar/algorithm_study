@@ -2,15 +2,14 @@
 
 /*
 <How to use>
-    1) call setCount() to set the number of vertexes
-    2) call add() to construct tree
-    3) call dfs() / dfsIter() or bfs() to set level and parent table
-    4) call makeLcaTable() to create LCA table
-
-    5) call query functions
+    1) call add() to construct tree
+    2) call build() to fill mP, mLevel, and mTreeSize
+       - It will call dfs() / dfsIter() or bfs() to set level and parent table
+       - It will also call makeLcaTable() to create LCA table
+    3) call query functions
 */
 
-// N : the maximum number of nodes
+// N : the number of nodes
 // logN : modify LCA table size (log2(MAXN))
 struct Tree {
     int                 mN;         // the number of vertex
@@ -24,28 +23,25 @@ struct Tree {
     vector<int>         mTreeSize;  // call dfsSize() to calculate tree size
 
     //--- tree construction ---------------------------------------------------
-    
-    Tree(int N, int logN) : mE(N), mP(logN, vector<int>(N)), mLevel(N), mTreeSize(N) {
+
+    Tree() {
         mN = 0;
+        mLogN = 0;
+    }
+
+    Tree(int N, int logN) : mE(N), mP(logN, vector<int>(N)), mLevel(N), mTreeSize(N) {
+        mN = N;
         mLogN = logN;
     }
 
-    void clear() {
-        if (mN <= 0)
-            return;
+    void init(int N, int logN) {
+        mN = N;
+        mLogN = logN;
 
-        for (int i = 0; i < mN; i++)
-            mE[i].clear();
-
-        for (int i = 0; i < mLogN; i++)
-            fill(mP[i].begin(), mP[i].end(), 0);
-        fill(mLevel.begin(), mLevel.end(), 0);
-        fill(mTreeSize.begin(), mTreeSize.end(), 0);
-    }
-
-
-    void setVertexCount(int n) {
-        mN = n;
+        mE = vector<vector<int>>(N);
+        mP = vector<vector<int>>(logN, vector<int>(N));
+        mLevel.assign(N, 0);
+        mTreeSize.assign(N, 0);
     }
 
     void addEdge(int u, int v) {
@@ -55,6 +51,13 @@ struct Tree {
 
     void addEdgeDirected(int u, int v) {
         mE[u].push_back(v);
+    }
+
+    void build(int root) {
+        dfs(root, -1);
+        //dfsIter(root, -1);
+        //bfs(root);
+        makeLcaTable();
     }
 
     //--- DFS -----------------------------------------------------------------
@@ -216,5 +219,162 @@ struct Tree {
         mTreeSize = vector<int>(mN);
         dfsSize(start, -1);
         return findCentroid(start, -1, mTreeSize[start]);
+    }
+
+    //--- Center --------------------------------------------------------------
+
+    void dfsDist(vector<int>& dist, int u, int parent, int d) {
+        dist[u] = d;
+        for (int v : mE[u]) {
+            if (v != parent)
+                dfsDist(dist, v, u, d + 1);
+        }
+    }
+
+    int findFarthest(const vector<int>& dist) {
+        int index = -1;
+        for (int i = 0; i < mN; i++) {
+            if (dist[i] != mN && (index == -1 || dist[index] < dist[i]))
+                index = i;
+        }
+        return index;
+    }
+
+    bool dfsPath(vector<int>& path, int u, int parent, int target) {
+        if (u == target) {
+            path.push_back(target);
+            return true;
+        }
+        path.push_back(u);
+        for (int v : mE[u]) {
+            if (v != parent && dfsPath(path, v, u, target))
+                return true;
+        }
+        path.pop_back();
+        return false;
+    }
+
+    vector<int> findCenters(int start) {
+        vector<int> dist(mN, mN);
+
+        dfsDist(dist, start, -1, 0);
+        start = findFarthest(dist);
+
+        dfsDist(dist, start, -1, 0);
+        int farthest = findFarthest(dist);
+
+        vector<int> path;
+        dfsPath(path, start, -1, farthest);
+        if (path.size() % 2 == 0)
+            return vector<int>{ path[(int)path.size() / 2 - 1], path[(int)path.size() / 2] };
+        else
+            return vector<int>{ path[(int)path.size() / 2] };
+    }
+
+    vector<int> findCentersEx() {
+        vector<int> leaves;
+        leaves.reserve(mN);
+
+        vector<int> deg(mN);
+        for (int u = 0; u < mN; u++) {
+            deg[u] = (int)mE[u].size();
+            if (deg[u] <= 1)
+                leaves.push_back(u);
+        }
+
+        int removedLeaves = (int)leaves.size();
+        while (removedLeaves < mN) {
+            vector<int> newLeaves;
+            newLeaves.reserve(mN);
+            for (int u : leaves) {
+                for (int v : mE[u]) {
+                    if (--deg[v] == 1)
+                        newLeaves.push_back(v);
+                }
+            }
+            swap(leaves, newLeaves);
+            removedLeaves += (int)leaves.size();
+        }
+        return move(leaves);
+    }
+
+    //--- Diameter ------------------------------------------------------------
+
+    int getDiameter() {
+        vector<int> dist(mN, mN);
+
+        dfsDist(dist, 0, -1, 0);
+        int farthest = findFarthest(dist);
+
+        dfsDist(dist, farthest, -1, 0);
+        int target = findFarthest(dist);
+
+        return dist[target];
+    }
+
+    //--- Hashing of tree shape (Tree isomorphism) ----------------------------
+
+    static const unsigned long long M1 = 1000000007;
+    static const unsigned long long B1 = 31;
+    static const unsigned long long Z1 = 16983;
+
+    static const unsigned long long M2 = 1000000009;
+    static const unsigned long long B2 = 37;
+    static const unsigned long long Z2 = 18657;
+
+    unsigned long long unrootedHash() {
+        vector<int> centers = findCenters(0);
+        vector<unsigned long long> lhs;
+        lhs.reserve(centers.size());
+
+        for (int c : centers)
+            lhs.push_back(rootedHash(c, -1));
+        sort(lhs.begin(), lhs.end());
+
+        unsigned long long hl = Z1, hr = Z2;
+        for (unsigned long long lh : lhs) {
+            auto lhl = (unsigned long long)(unsigned int)(lh >> 32);
+            auto lhr = (unsigned long long)(unsigned int)lh;
+            hl = (hl * B1 + lhl * lhl) % M1;
+            hr = (hr * B2 + lhr * lhr) % M2;
+        }
+        return (hl << 32) | hr;
+    }
+
+    unsigned long long rootedHash(int u, int parent) {
+        vector<unsigned long long> hs;
+        hs.reserve(mE[u].size());
+
+        for (int v : mE[u]) {
+            if (v != parent)
+                hs.push_back(rootedHash(v, u));
+        }
+        sort(hs.begin(), hs.end());
+
+        unsigned long long hl = Z1, hr = Z2;
+        for (unsigned long long h : hs) {
+            hl = (hl * B1 + h * h) % M1;
+            hr = (hr * B2 + h * h) % M2;
+        }
+        return (hl << 32) | hr;
+    }
+
+    unsigned long long rootedHash2(int u, int parent) {
+        vector<unsigned long long> res;
+        res.reserve(mE[u].size());
+
+        for (int v : mE[u]) {
+            if (parent != v)
+                res.push_back(rootedHash(v, u));
+        }
+        sort(res.begin(), res.end());
+
+        unsigned long long ans = 4242424242424243ull;
+        unsigned long long h = Z1;
+        for (unsigned long long x : res) {
+            h = (h * B1) % M1;
+            ans ^= h * x;
+        }
+        return ans;
     }
 };
