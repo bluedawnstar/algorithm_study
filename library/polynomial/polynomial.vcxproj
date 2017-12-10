@@ -151,12 +151,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="multPoly.cpp" />
     <ClCompile Include="multPolyMod.cpp" />
+    <ClCompile Include="ntt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="multPoly.h" />
     <ClInclude Include="multPolyMod.h" />
+    <ClInclude Include="ntt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

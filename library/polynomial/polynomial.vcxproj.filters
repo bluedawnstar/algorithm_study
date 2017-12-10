@@ -30,6 +30,9 @@
     <ClCompile Include="convolution.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ntt.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fft.h">
@@ -42,6 +45,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="convolution.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ntt.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

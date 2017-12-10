@@ -10,4 +10,5 @@ int main(void) {
     TEST(MultPoly);
     TEST(MultPolyMod);
     TEST(Convolution);
+    TEST(NTT);
 }
