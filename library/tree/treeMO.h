@@ -58,9 +58,9 @@ struct TreeMO {
             int lc = tree.findLCA(L, R);
             lca.push_back(lc == L ? -1 : lc);
             if (lc == L)
-                MO.push_back(make_tuple(tree.mVisTime[L].first, tree.mVisTime[R].first, i));
+                MO.emplace_back(tree.mVisTime[L].first, tree.mVisTime[R].first, i);
             else
-                MO.push_back(make_tuple(tree.mVisTime[L].second, tree.mVisTime[R].first, i));
+                MO.emplace_back(tree.mVisTime[L].second, tree.mVisTime[R].first, i);
         }
 
         int blockN = (int)sqrt(2 * tree.mN);
