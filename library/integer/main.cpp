@@ -16,4 +16,5 @@ int main(void) {
     TEST(Digit);
     TEST(ChineseRemainderTheorem);
     TEST(Equations);
+    TEST(PrimitiveRoot);
 }

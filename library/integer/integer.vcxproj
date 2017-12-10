@@ -154,6 +154,7 @@
     <ClCompile Include="primeFactor.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />
+    <ClCompile Include="primitiveRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bit.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="primeFactor.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
+    <ClInclude Include="primitiveRoot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
