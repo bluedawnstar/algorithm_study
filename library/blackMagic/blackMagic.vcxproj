@@ -147,7 +147,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MOAlgorithm.cpp" />
     <ClCompile Include="sqrtDecomposition.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MOAlgorithm.h" />
+    <ClInclude Include="sqrtDecomposition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
