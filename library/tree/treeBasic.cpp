@@ -92,7 +92,7 @@ static void printTree(Tree& tree) {
 }
 
 void testTreeBasic() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Tree Basic ----------------------------------" << endl;
 
