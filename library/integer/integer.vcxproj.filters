@@ -54,6 +54,9 @@
     <ClCompile Include="primitiveRoot.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bigint.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -99,6 +102,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="primitiveRoot.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bigint.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

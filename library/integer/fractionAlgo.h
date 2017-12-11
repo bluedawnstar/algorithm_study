@@ -3,7 +3,7 @@
 
 //--------- General Functions -------------------------------------------------
 
-//TODO: fix return type 'R' to right type according to required precision of a/b (ex: __int128)
+//TODO: fix return type 'R' to right type according to required precision of a/b (ex: __int128_t)
 
 // sum(floor(a/b * i)), i=0..n
 template <typename T, typename U = T, typename R = T>

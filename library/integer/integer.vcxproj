@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bigint.cpp" />
     <ClCompile Include="bit.cpp" />
     <ClCompile Include="chineseRemainderTheorem.cpp" />
     <ClCompile Include="digit.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="primitiveRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bigint.h" />
     <ClInclude Include="bit.h" />
     <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="digit.h" />
