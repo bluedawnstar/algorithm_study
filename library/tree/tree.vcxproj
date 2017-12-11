@@ -156,7 +156,6 @@
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
     <ClCompile Include="splayTreeRangeQuery.cpp" />
-    <ClCompile Include="suffixTrie.cpp" />
     <ClCompile Include="redBlackTree.cpp" />
     <ClCompile Include="fenwickTree.cpp" />
     <ClCompile Include="fenwickTree2D.cpp" />
@@ -169,11 +168,7 @@
     <ClCompile Include="linkCutTree.cpp" />
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="segmentTree.cpp" />
-    <ClCompile Include="suffixTree.cpp" />
     <ClCompile Include="splayTree.cpp" />
-    <ClCompile Include="trie.cpp" />
-    <ClCompile Include="waveletTree.cpp" />
-    <ClCompile Include="waveletTreeBitVector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
@@ -191,7 +186,6 @@
     <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTableLCA.h" />
-    <ClInclude Include="suffixTree.h" />
     <ClInclude Include="treap.h" />
     <ClInclude Include="treeBasic.h" />
     <ClInclude Include="redBlackTree.h" />
@@ -202,10 +196,6 @@
     <ClInclude Include="segmentTreeLazy.h" />
     <ClInclude Include="splayTree.h" />
     <ClInclude Include="treeMO.h" />
-    <ClInclude Include="trie.h" />
-    <ClInclude Include="suffixTrie.h" />
-    <ClInclude Include="waveletTree.h" />
-    <ClInclude Include="waveletTreeBitVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

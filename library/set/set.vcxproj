@@ -150,15 +150,11 @@
     <ClCompile Include="bitVectorRank.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="unionFind.cpp" />
-    <ClCompile Include="waveletMatrix.cpp" />
-    <ClCompile Include="waveletMatrixArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitSet.h" />
     <ClInclude Include="bitVectorRank.h" />
     <ClInclude Include="unionFind.h" />
-    <ClInclude Include="waveletMatrix.h" />
-    <ClInclude Include="waveletMatrixArray.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,12 +27,6 @@
     <ClCompile Include="bitVectorRank.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="waveletMatrix.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="waveletMatrixArray.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -42,12 +36,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitVectorRank.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="waveletMatrix.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="waveletMatrixArray.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,9 +19,6 @@ int main(void) {
     TEST(HeavyLightDecomposition);
     TEST(EulerTour);
     TEST(TreeMO);
-    TEST(Trie);
-    TEST(SuffixTrie);
-    TEST(SuffixTree);
     TEST(SparseTableLCA);
     TEST(BST);
     TEST(Splay);
@@ -35,6 +32,4 @@ int main(void) {
     TEST(KDTreeNoUpdate);
     TEST(IntervalTree);
     TEST(LineSegmentTree);
-    TEST(WaveletTree);
-    TEST(WaveletTreeBitVector);
 }

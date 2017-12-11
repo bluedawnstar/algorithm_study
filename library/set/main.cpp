@@ -9,6 +9,4 @@ int main(void) {
     TEST(UnionFind);
     TEST(BitSet);
     TEST(BitVectorRank);
-    TEST(WaveletMatrix);
-    TEST(WaveletMatrixArray);
 }

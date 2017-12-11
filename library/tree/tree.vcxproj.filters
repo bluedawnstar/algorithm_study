@@ -30,15 +30,6 @@
     <ClCompile Include="sparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="trie.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="suffixTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="suffixTrie.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="sparseTableLCA.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -99,12 +90,6 @@
     <ClCompile Include="lineSegmentTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="waveletTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="waveletTreeBitVector.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="segmentTreeCompactLazyAdd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -116,16 +101,7 @@
     <ClInclude Include="sparseTable.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="trie.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="allocator.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="suffixTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="suffixTrie.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeBasic.h">
@@ -186,12 +162,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lineSegmentTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="waveletTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="waveletTreeBitVector.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeCompactLazyAdd.h">
