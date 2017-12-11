@@ -9,10 +9,7 @@
 
 using namespace std;
 
-namespace TrieSuffix {
 #include "suffixTrie.h"
-}
-
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -21,8 +18,6 @@ namespace TrieSuffix {
 #include <iostream>
 #include <vector>
 #include "../common/iostreamhelper.h"
-
-using namespace TrieSuffix;
 
 void dump(SuffixTrie::Node* p, int idx, int level) {
     if (!p)

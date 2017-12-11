@@ -9,9 +9,7 @@
 
 using namespace std;
 
-namespace TreeTrie {
 #include "trie.h"
-}
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -20,8 +18,6 @@ namespace TreeTrie {
 #include <iostream>
 #include <vector>
 #include "../common/iostreamhelper.h"
-
-using namespace TreeTrie;
 
 void dump(CompressedTrie::Node* p, int level) {
     if (!p)

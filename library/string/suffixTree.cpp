@@ -1,18 +1,11 @@
-#include <memory.h>
-#include <cassert>
-#include <cstring>
 #include <string>
-#include <stack>
-#include <memory>
+#include <vector>
 #include <algorithm>
 #include <iostream>
 
 using namespace std;
 
-namespace TreeSuffix {
 #include "suffixTree.h"
-}
-using namespace TreeSuffix;
 
 int countSubstrings(SuffixTree& tree, SuffixTree::Node* p) {
     if (!p)
@@ -31,6 +24,10 @@ int countSubstrings(SuffixTree& tree, SuffixTree::Node* p) {
 long long countSubstrings(SuffixTree& tree) {
     return countSubstrings(tree, &tree.mRoot);
 }
+
+//TODO: implement applicable functions to use Suffix Tree
+//TODO: implement tree features on Suffix Tree
+//      (ex: LCA & LCP, suffix id to node index & pointer, ...)
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -56,19 +53,19 @@ void dump(SuffixTree& tree, SuffixTree::Node* p, int idx, int level, bool showSu
         cout << endl;
     }
     for (int i = 0; i < SuffixTree::MaxCharN; i++) {
-        if (p->children[i])
-            dump(tree, p->children[i], i, level + 1, showSuffixIndex);
+        if (p->hasChild(i))
+            dump(tree, p->getChild(i), i, level + 1, showSuffixIndex);
     }
 }
 
 
 void testSuffixTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Suffix Tree -----------------------------------------" << endl;
 
     {
-        SuffixTree tree;
+        SuffixTree tree(100);
         const char* s;
 
         const char* treeS = "abdadafaaabdfaeef";
@@ -114,7 +111,7 @@ void testSuffixTree() {
 
     cout << "*** suffix tree of \"xabxac\" ***" << endl;
     {
-        SuffixTree tree;
+        SuffixTree tree(100);
 
         const char* treeS = "xabxac";
         {

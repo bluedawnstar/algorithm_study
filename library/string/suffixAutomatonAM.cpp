@@ -12,63 +12,63 @@ using namespace std;
 
 // https://saisumit.wordpress.com/2016/01/26/suffix-automaton/ 
 
-#include "suffixAutomaton.h"
+#include "suffixAutomatonAM.h"
 
 #define MAXN    100000
 
 // 1. Number of different substrings of a given string .
-static vector<long long> gD(MAXN * 2, 0);
-static long long countSubstrings(SuffixAutomaton& sa, int u) {
-    if (gD[u])
-        return gD[u];
+static vector<long long> gDAM(MAXN * 2, 0);
+static long long countSubstrings(SuffixAutomatonAM& sa, int u) {
+    if (gDAM[u])
+        return gDAM[u];
 
     long long res = 1;
 
-    for (int i = 0; i < SuffixAutomaton::MaxCharN; i++) {
-        if (sa.state[u].next[i])
-            res += countSubstrings(sa, sa.state[u].next[i]);
+    for (int i = 0; i < SuffixAutomatonAM::MaxCharN; i++) {
+        if (sa.state[u].hasNext(i))
+            res += countSubstrings(sa, sa.state[u].getNext(i));
     }
 
-    return gD[u] = res;
+    return gDAM[u] = res;
 }
 
-long long countSubstrings(SuffixAutomaton& sa) {
-    fill(gD.begin(), gD.end(), 0);
+long long countSubstrings(SuffixAutomatonAM& sa) {
+    fill(gDAM.begin(), gDAM.end(), 0);
     return countSubstrings(sa, 0) - 1;
 }
 
 
 // 2. Total length of all distinct substrings.
-static vector<long long> gTotLen(MAXN * 2, 0);
-static long long totalLengthOfAllDistinctSubstrings(SuffixAutomaton& sa, int u) {
+static vector<long long> gTotLenAM(MAXN * 2, 0);
+static long long totalLengthOfAllDistinctSubstrings(SuffixAutomatonAM& sa, int u) {
     long long res = 0;
 
-    if (gTotLen[u])
-        return gTotLen[u];
+    if (gTotLenAM[u])
+        return gTotLenAM[u];
 
-    for (int i = 0; i < SuffixAutomaton::MaxCharN; i++)
-        if (sa.state[u].next[i])
-            //res += totalLengthOfAllDistinctSubstrings(sa, sa.state[u].next[i]) + gD[sa.state[u].next[i]];
-            res += totalLengthOfAllDistinctSubstrings(sa, sa.state[u].next[i]) + countSubstrings(sa, sa.state[u].next[i]);
+    for (int i = 0; i < SuffixAutomatonAM::MaxCharN; i++)
+        if (sa.state[u].hasNext(i))
+            //res += totalLengthOfAllDistinctSubstrings(sa, sa.state[u].getNext(i)) + gD[sa.state[u].getNext(i)];
+            res += totalLengthOfAllDistinctSubstrings(sa, sa.state[u].getNext(i)) + countSubstrings(sa, sa.state[u].getNext(i));
 
-    return gTotLen[u] = res;
+    return gTotLenAM[u] = res;
 }
 
-long long totalLengthOfAllDistinctSubstrings(SuffixAutomaton& sa) {
-    fill(gD.begin(), gD.end(), 0);
+long long totalLengthOfAllDistinctSubstrings(SuffixAutomatonAM& sa) {
+    fill(gDAM.begin(), gDAM.end(), 0);
     countSubstrings(sa);
 
-    fill(gTotLen.begin(), gTotLen.end(), 0);
+    fill(gTotLenAM.begin(), gTotLenAM.end(), 0);
     return totalLengthOfAllDistinctSubstrings(sa, 0);
 }
 
 
 // 3. Lexographically kth substring.
 // kth >= 1
-static bool kthSubstring(SuffixAutomaton& sa, string& res, int kth, int u, int& path) {
-    for (int i = 0; i < SuffixAutomaton::MaxCharN; i++) {
-        if (sa.state[u].next[i]) {
-            if (++path == kth || kthSubstring(sa, res, kth, sa.state[u].next[i], path)) {
+static bool kthSubstring(SuffixAutomatonAM& sa, string& res, int kth, int u, int& path) {
+    for (int i = 0; i < SuffixAutomatonAM::MaxCharN; i++) {
+        if (sa.state[u].hasNext(i)) {
+            if (++path == kth || kthSubstring(sa, res, kth, sa.state[u].getNext(i), path)) {
                 res.push_back('a' + i);
                 return true;
             }
@@ -78,7 +78,7 @@ static bool kthSubstring(SuffixAutomaton& sa, string& res, int kth, int u, int& 
 }
 
 // kth >= 0
-string kthSubstring(SuffixAutomaton& sa, int kth) {
+string kthSubstring(SuffixAutomatonAM& sa, int kth) {
     string res;
     int path = 0;
 
@@ -90,9 +90,9 @@ string kthSubstring(SuffixAutomaton& sa, int kth) {
 
 
 // 4. Smallest Cyclic Shift to obtain lexicographical smallest of All possible  
-int minShift(const string& s) {
+int minShiftAM(const string& s) {
     string ss = s + s;
-    SuffixAutomaton sa((int)ss.length());
+    SuffixAutomatonAM sa((int)ss.length());
     sa.init();
     sa.extend(ss);
 
@@ -100,12 +100,12 @@ int minShift(const string& s) {
     int len = 0, cur = 0;
 
     do {
-        for (int j = 0; j < SuffixAutomaton::MaxCharN; j++) {
-            if (sa.state[cur].next[j]) {
+        for (int j = 0; j < SuffixAutomatonAM::MaxCharN; j++) {
+            if (sa.state[cur].hasNext(j)) {
                 if (++len == (int)s.length())
                     res = sa.state[cur].rightEnd - (int)s.length() + 2;
                 else
-                    cur = sa.state[cur].next[j];
+                    cur = sa.state[cur].getNext(j);
                 break;
             }
         }
@@ -116,10 +116,10 @@ int minShift(const string& s) {
 
 
 // 5. position of first occurrence
-int findFirst(SuffixAutomaton& sa, const string& pattern) {
+int findFirst(SuffixAutomatonAM& sa, const string& pattern) {
     int u = 0;
     for (int i = 0; i < (int)pattern.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
         if (u <= 0)
             return -1;
     }
@@ -128,7 +128,7 @@ int findFirst(SuffixAutomaton& sa, const string& pattern) {
 
 
 // 6. Position of all occurrences.
-static void dfsFind(SuffixAutomaton& sa, vector<vector<int>>& children, int len, vector<int>& res, int u) {
+static void dfsFind(SuffixAutomatonAM& sa, vector<vector<int>>& children, int len, vector<int>& res, int u) {
     if (u <= 0)
         return;
 
@@ -137,7 +137,7 @@ static void dfsFind(SuffixAutomaton& sa, vector<vector<int>>& children, int len,
         dfsFind(sa, children, len, res, v);
 }
 
-vector<int> findAll(SuffixAutomaton& sa, const string& pattern) {
+vector<int> findAll(SuffixAutomatonAM& sa, const string& pattern) {
     vector<vector<int>> children(sa.N);
     for (int u = 1; u < sa.N; u++) {
         children[sa.state[u].suffixLink].push_back(u);
@@ -145,9 +145,9 @@ vector<int> findAll(SuffixAutomaton& sa, const string& pattern) {
 
     int u = 0;
     for (int i = 0; i < (int)pattern.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
         if (u <= 0)
-            return {};
+            return{};
     }
 
     vector<int> res;
@@ -158,7 +158,7 @@ vector<int> findAll(SuffixAutomaton& sa, const string& pattern) {
 }
 
 
-vector<vector<int>> makeLinkTree(SuffixAutomaton& sa) {
+vector<vector<int>> makeLinkTree(SuffixAutomatonAM& sa) {
     vector<vector<int>> children(sa.N);
     for (int u = 1; u < sa.N; u++) {
         children[sa.state[u].suffixLink].push_back(u);
@@ -166,12 +166,12 @@ vector<vector<int>> makeLinkTree(SuffixAutomaton& sa) {
     return move(children);
 }
 
-vector<int> findAll(SuffixAutomaton& sa, vector<vector<int>>& children, const string& pattern) {
+vector<int> findAll(SuffixAutomatonAM& sa, vector<vector<int>>& children, const string& pattern) {
     int u = 0;
     for (int i = 0; i < (int)pattern.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
         if (u <= 0)
-            return {};
+            return{};
     }
 
     vector<int> res;
@@ -183,7 +183,7 @@ vector<int> findAll(SuffixAutomaton& sa, vector<vector<int>>& children, const st
 
 
 // 7. count number of occurrences
-vector<int> makeCountTable(SuffixAutomaton& sa) {
+vector<int> makeCountTable(SuffixAutomatonAM& sa) {
     vector<pair<int, int>> base;
     vector<int> cnt(sa.N);
 
@@ -199,10 +199,10 @@ vector<int> makeCountTable(SuffixAutomaton& sa) {
     return move(cnt);
 }
 
-int countPattern(SuffixAutomaton& sa, const vector<int>& countTable, const string& pattern) {
+int countPattern(SuffixAutomatonAM& sa, const vector<int>& countTable, const string& pattern) {
     int u = 0;
     for (int i = 0; i < (int)pattern.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
         if (u <= 0)
             return 0;
     }
@@ -213,16 +213,16 @@ int countPattern(SuffixAutomaton& sa, const vector<int>& countTable, const strin
 // 8. Longest common substring.
 
 // It's better that t's length is shorter than SuffixAutomation's length
-int lengthOfLcs(SuffixAutomaton& sa, string& t) {
+int lengthOfLcs(SuffixAutomatonAM& sa, string& t) {
     int v = 0, len = 0, bestPos = 0, bestLen = 0;
     for (int i = 0; i < (int)t.length(); ++i) {
-        int ch = SuffixAutomaton::ch2i(t[i]);
-        while (v && !sa.state[v].next[ch]) {
+        int ch = SuffixAutomatonAM::ch2i(t[i]);
+        while (v && !sa.state[v].hasNext(ch)) {
             v = sa.state[v].suffixLink;
             len = sa.state[v].len;
         }
-        if (sa.state[v].next[ch]) {
-            v = sa.state[v].next[ch];
+        if (sa.state[v].hasNext(ch)) {
+            v = sa.state[v].getNext(ch);
             ++len;
         }
         if (len > bestLen) {
@@ -233,16 +233,16 @@ int lengthOfLcs(SuffixAutomaton& sa, string& t) {
     return bestLen;
 }
 
-string lcs(SuffixAutomaton& sa, string& t) {
+string lcs(SuffixAutomatonAM& sa, string& t) {
     int v = 0, len = 0, bestPos = 0, bestLen = 0;
     for (int i = 0; i < (int)t.length(); ++i) {
-        int ch = SuffixAutomaton::ch2i(t[i]);
-        while (v && !sa.state[v].next[ch]) {
+        int ch = SuffixAutomatonAM::ch2i(t[i]);
+        while (v && !sa.state[v].hasNext(ch)) {
             v = sa.state[v].suffixLink;
             len = sa.state[v].len;
         }
-        if (sa.state[v].next[ch]) {
-            v = sa.state[v].next[ch];
+        if (sa.state[v].hasNext(ch)) {
+            v = sa.state[v].getNext(ch);
             ++len;
         }
         if (len > bestLen) {
@@ -259,32 +259,32 @@ string lcs(SuffixAutomaton& sa, string& t) {
 //        if length(str[L]) < length(str[R]) then swap(L, R)
 
 // 10. Find whether a given string s is a suffix of sa.
-bool isSuffix(SuffixAutomaton& sa, const string& s) {
+bool isSuffix(SuffixAutomatonAM& sa, const string& s) {
     vector<int> term = sa.getTerminals();
 
     int u = 0;
     for (int i = 0; i < (int)s.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(s[i]));
         if (u <= 0)
             return false;
     }
     return find(term.begin(), term.end(), u) != term.end();
 }
 
-bool isSuffix(SuffixAutomaton& sa, vector<int>& term, const string& s) {
+bool isSuffix(SuffixAutomatonAM& sa, vector<int>& term, const string& s) {
     int u = 0;
     for (int i = 0; i < (int)s.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(s[i]));
         if (u <= 0)
             return false;
     }
     return find(term.begin(), term.end(), u) != term.end();
 }
 
-bool isSuffixWithSortedTerm(SuffixAutomaton& sa, vector<int>& term, const string& s) {
+bool isSuffixWithSortedTerm(SuffixAutomatonAM& sa, vector<int>& term, const string& s) {
     int u = 0;
     for (int i = 0; i < (int)s.length(); i++) {
-        u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
+        u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(s[i]));
         if (u <= 0)
             return false;
     }
@@ -300,16 +300,16 @@ bool isSuffixWithSortedTerm(SuffixAutomaton& sa, vector<int>& term, const string
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-void testSuffixAutomation() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+void testSuffixAutomationAM() {
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Suffix Automation -----------------------------------" << endl;
+    cout << "-- Suffix Automation - Array Mapped --------------------" << endl;
     string s("aabaa");
-    SuffixAutomaton sa(10);
+    SuffixAutomatonAM sa(10);
     sa.extend(s);
 
     string s2("abbb");
-    SuffixAutomaton sa2(10);
+    SuffixAutomatonAM sa2(10);
     sa2.extend(s2);
 
     //--- countSubstrings() ---
@@ -334,8 +334,8 @@ void testSuffixAutomation() {
         { "abaa", 2 }
     };
     for (int i = 0; i < sizeof(minShiftTest) / sizeof(minShiftTest[0]); i++) {
-        cout << "minShift(" << minShiftTest[i].first << ") : " << minShift(minShiftTest[i].first) << endl;
-        assert(minShift(minShiftTest[i].first) == minShiftTest[i].second);
+        cout << "minShift(" << minShiftTest[i].first << ") : " << minShiftAM(minShiftTest[i].first) << endl;
+        assert(minShiftAM(minShiftTest[i].first) == minShiftTest[i].second);
     }
 
     //--- findFirst() ---
@@ -422,6 +422,5 @@ void testSuffixAutomation() {
         cout << "isSuffixWithSortedTerm(" << suffixTest[i].first << ") : " << isSuffixWithSortedTerm(sa, term, suffixTest[i].first) << endl;
         assert(isSuffixWithSortedTerm(sa, term, suffixTest[i].first) == suffixTest[i].second);
     }
-
     cout << "OK!" << endl;
 }

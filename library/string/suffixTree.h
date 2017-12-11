@@ -1,47 +1,28 @@
 #pragma once
 
-//--- Block Allocator ---------------------------------------------------------
-
-template <typename T, size_t ChunkSizeN>
-struct Allocator {
-    struct ChunkT {
-        int n;
-        T values[ChunkSizeN];
-
-        ChunkT() {
-            n = 0;
-        }
-    };
-    stack<shared_ptr<ChunkT>> mChunks;
-
-    Allocator() {
-        mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-    }
-
-    ~Allocator() {
-        // no action
-    }
-
-    T* alloc() {
-        if (mChunks.top()->n >= ChunkSizeN)
-            mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-        return &mChunks.top()->values[mChunks.top()->n++];
-    }
-
-    void clear() {
-        stack<shared_ptr<ChunkT>>().swap(mChunks);
-    }
-};
-
 struct SuffixTree {
     static const size_t MaxCharN = 26;
-    static const size_t AllocBlockSize = 128;
 
     static int ch2i(char ch) {
         return ch - 'a';
     }
 
+    static int popcnt(unsigned x) {
+#ifndef __GNUC__
+        x = x - ((x >> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+        x = (x + (x >> 4)) & 0x0F0F0F0F;
+        x = x + (x >> 8);
+        x = x + (x >> 16);
+        return int(x & 0x0000003F);
+#else
+        return __builtin_popcount(x);
+#endif
+    }
+
     struct Node {
+        int     id;
+
         int     begin;
         int*    end;
         int     depth;                  // distance in characters from root
@@ -50,38 +31,58 @@ struct SuffixTree {
         Node*   suffixLink;
 
         int     suffixIndex;
-        int     childCount;
-        Node*   children[MaxCharN];     //TODO: make more efficient
 
-        void init() {
+        unsigned int childSet;
+        vector<Node*> children;
+
+        void init(int id) {
+            this->id = id;
             this->begin = 0;
             this->end = nullptr;
             this->depth = 0;
             this->parent = nullptr;
             this->suffixLink = nullptr;
             this->suffixIndex = -1;
-            this->childCount = 0;
-            memset(this->children, 0, sizeof(this->children));
+            this->childSet = 0;
+            this->children.clear();
         }
 
-        int getLength() {
+        int getLength() const {
             return *end - begin;
         }
 
         bool isLeaf() const {
-            return childCount <= 0;
+            return !childSet;
         }
 
         bool isEnd() const {
             return suffixIndex >= 0;
         }
 
-        void addChild(int index, Node* node) {
-            if (!children[index])
-                childCount++;
-            children[index] = node;
-            if (node)
-                node->parent = this;
+        int getChildCount() const {
+            return popcnt(childSet);
+        }
+
+        bool hasChild(int chIdx) const {
+            return (childSet & (1 << chIdx)) != 0;
+        }
+
+        Node* getChild(int chIdx) const {
+            if ((childSet & (1 << chIdx)) == 0)
+                return nullptr;
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            return children[idx];
+        }
+
+        void setChild(int chIdx, Node* node) {
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            if ((childSet & (1 << chIdx)) != 0) {
+                children[idx] = node;
+            } else {
+                children.insert(children.begin() + idx, node);
+                childSet |= (1 << chIdx);
+            }
+            node->parent = this;
         }
     };
 
@@ -92,30 +93,32 @@ struct SuffixTree {
     int   mActiveLen;
     int*  mLeafEnd;
 
-    SuffixTree() {
-        mFreeNode = nullptr;
+    //SuffixTree() {
+    //    init(0);
+    //}
 
-        mRoot.init();
-        mRoot.end = allocInt(0);
+    explicit SuffixTree(int maxN) {
+        init(maxN);
+    }
 
-        mActiveNode = nullptr;
-        mActiveLen = 0;
-        mLeafEnd = allocInt(0);
+    void init(int maxN) {
+        mNodes.resize(maxN * 2);
+        mInts.resize(maxN * 2);
+        clear();
     }
 
     void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
-                mRoot.childCount = 0;
-            }
-        }
+        mNodeN = 0;
+        mIntN = 0;
+
+        mRoot.init(0);
+        mRoot.end = allocInt(0);
+
         mText.clear();
 
         mActiveNode = nullptr;
         mActiveLen = 0;
-        *mLeafEnd = 0;
+        mLeafEnd = allocInt(0);
     }
 
     // build a suffix trie from string 's'
@@ -163,18 +166,18 @@ struct SuffixTree {
 
         Node* last = nullptr;
         while (mActiveLen >= 0) {
-            Node* node = mActiveNode->children[ch2i(mText[currPos - mActiveLen])];
+            Node* node = mActiveNode->getChild(ch2i(mText[currPos - mActiveLen]));
 
             // walk down
             while (node != nullptr && mActiveLen >= node->getLength()) {
                 mActiveLen -= node->getLength();
                 mActiveNode = node;
-                node = node->children[ch2i(mText[currPos - mActiveLen])];
+                node = node->getChild(ch2i(mText[currPos - mActiveLen]));
             }
 
             if (node == nullptr) {
                 Node* newNode = allocNode(currPos, -1, mActiveNode->depth + mActiveNode->getLength());
-                mActiveNode->addChild(idx, newNode);
+                mActiveNode->setChild(idx, newNode);
                 if (last != nullptr)
                     last->suffixLink = mActiveNode;
                 last = nullptr;
@@ -188,13 +191,13 @@ struct SuffixTree {
                 } else {
                     Node* splitNode = allocNode(node->begin, node->begin + mActiveLen, mActiveNode->depth + mActiveNode->getLength());
                     Node* newNode = allocNode(currPos, -1, node->depth + mActiveLen);
-                    splitNode->addChild(idx, newNode);
+                    splitNode->setChild(idx, newNode);
 
                     node->begin += mActiveLen;
                     node->depth += mActiveLen;
-                    splitNode->addChild(afterTailIdx, node);
+                    splitNode->setChild(afterTailIdx, node);
 
-                    mActiveNode->addChild(ch2i(mText[currPos - mActiveLen]), splitNode);
+                    mActiveNode->setChild(ch2i(mText[currPos - mActiveLen]), splitNode);
                     if (last != nullptr)
                         last->suffixLink = splitNode;
                     last = splitNode;
@@ -216,7 +219,7 @@ struct SuffixTree {
         if (len <= 0)
             return make_pair(0, -1);
 
-        Node* p = mRoot.children[ch2i(s[0])];
+        Node* p = mRoot.getChild(ch2i(s[0]));
         int i = 0;
         while (p) {
             for (int j = 0; j < p->getLength(); i++, j++) {
@@ -226,29 +229,22 @@ struct SuffixTree {
             if (i >= len)
                 break;
 
-            p = p->children[ch2i(s[i])];
+            p = p->getChild(ch2i(s[i]));
         }
 
         return make_pair(i, p ? p->suffixIndex : -1);
     }
 
 private:
-    Allocator<Node, AllocBlockSize> mAlloc;
-    Allocator<int, AllocBlockSize> mAllocInt;
-    Node* mFreeNode;
+    int             mNodeN;     // 
+    vector<Node>    mNodes;     // 
+    int             mIntN;      // 
+    vector<int>     mInts;      // 
 
     Node* allocNode() {
-        Node* p = nullptr;
-        if (mFreeNode) {
-            p = mFreeNode;
-            mFreeNode = mFreeNode->parent;
-            p->init();
-        } else {
-            p = mAlloc.alloc();
-            p->init();
-        }
+        Node* p = &mNodes[mNodeN++];
+        p->init(mNodeN);
         p->suffixLink = &mRoot;
-
         return p;
     }
 
@@ -260,25 +256,8 @@ private:
         return node;
     }
 
-    void freeNode(Node* node) {
-        node->parent = mFreeNode;
-        mFreeNode = node;
-    }
-
-    void deleteNode(Node* p) {
-        if (!p)
-            return;
-
-        for (int i = 0; i < MaxCharN; i++) {
-            if (p->children[i])
-                deleteNode(p->children[i]);
-        }
-
-        freeNode(p);
-    }
-
     int* allocInt(int val) {
-        int* v = mAllocInt.alloc();
+        int* v = &mInts[mIntN++];
         *v = val;
         return v;
     }
@@ -291,8 +270,8 @@ private:
             node->suffixIndex = (int)mText.length() - node->depth - node->getLength();
         else {
             for (int i = 0; i < MaxCharN; i++) {
-                if (node->children[i])
-                    setSuffixIndex(node->children[i]);
+                if (node->hasChild(i))
+                    setSuffixIndex(node->getChild(i));
             }
         }
     }
@@ -303,8 +282,8 @@ private:
 
         node->suffixIndex = -1;
         for (int i = 0; i < MaxCharN; i++) {
-            if (node->children[i])
-                resetSuffixIndex(node->children[i]);
+            if (node->hasChild(i))
+                resetSuffixIndex(node->getChild(i));
         }
     }
 };

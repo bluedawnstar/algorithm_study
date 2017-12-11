@@ -157,7 +157,10 @@
     <ClCompile Include="suffixArraySparseTable.cpp" />
     <ClCompile Include="suffixArray_notUsed.cpp" />
     <ClCompile Include="suffixAutomaton.cpp" />
-    <ClCompile Include="suffixTree_notUsed.cpp" />
+    <ClCompile Include="suffixAutomatonAM.cpp" />
+    <ClCompile Include="suffixTree.cpp" />
+    <ClCompile Include="suffixTrie.cpp" />
+    <ClCompile Include="trie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h" />
@@ -171,7 +174,10 @@
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />
-    <ClInclude Include="suffixTree_notUsed.h" />
+    <ClInclude Include="suffixAutomatonAM.h" />
+    <ClInclude Include="suffixTree.h" />
+    <ClInclude Include="suffixTrie.h" />
+    <ClInclude Include="trie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

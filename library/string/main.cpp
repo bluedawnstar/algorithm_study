@@ -11,6 +11,10 @@ int main(void) {
     TEST(LcpArraySparseTable);
     TEST(SuffixArraySparseTable);
     TEST(SuffixAutomation);
+    TEST(SuffixAutomationAM);
+    TEST(SuffixTrie);
+    TEST(SuffixTree);
+    TEST(Trie);
     TEST(DistinctSubstringCounter);
     TEST(PalindromicSubsequence);
     TEST(PalindromicString);
