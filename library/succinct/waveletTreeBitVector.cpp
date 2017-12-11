@@ -7,7 +7,7 @@ using namespace std;
 
 #include "waveletTree.h"
 #include "waveletTreeBitVector.h"
-#include "../set/waveletMatrix.h"
+#include "../succinct/waveletMatrix.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
