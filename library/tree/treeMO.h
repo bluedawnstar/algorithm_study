@@ -32,10 +32,10 @@
 struct TreeMO {
     DfsTourTree&                tree;
 
-    vector<bool>                mActive;
+    vector<bool>                active;
 
-    function<void(int, int)>    mOnAdd;
-    function<void(int, int)>    mOnRemove;
+    function<void(int, int)>    onAdd;
+    function<void(int, int)>    onRemove;
 
     vector<int>                 lca;        // lca[Q index] -> lca of (L, R)
     vector<tuple<int, int, int>> MO;        // (MO_L, MO_R, Q index)
@@ -45,9 +45,9 @@ struct TreeMO {
     }
 
     void build(vector<pair<int, int>>& Q, function<void(int, int)> onAdd, function<void(int, int)> onRemove) {
-        mActive = vector<bool>(tree.mN);
-        mOnAdd = onAdd;
-        mOnRemove = onRemove;
+        active = vector<bool>(tree.mN);
+        this->onAdd = onAdd;
+        this->onRemove = onRemove;
 
         lca.reserve(Q.size());
         MO.reserve(Q.size());
@@ -75,21 +75,21 @@ struct TreeMO {
     
     void add(int t) {
         int u = tree.mTime2Node[t];
-        if (mActive[u]) {
+        if (active[u]) {
             remove(t);
         } else {
-            mActive[u] = true;
-            mOnAdd(t, u);
+            active[u] = true;
+            onAdd(t, u);
         }
     }
 
     void remove(int t) {
         int u = tree.mTime2Node[t];
-        if (!mActive[u]) {
+        if (!active[u]) {
             add(t);
         } else {
-            mActive[u] = false;
-            mOnRemove(t, u);
+            active[u] = false;
+            onRemove(t, u);
         }
     }
 };
