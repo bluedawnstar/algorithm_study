@@ -15,6 +15,7 @@ int main(void) {
     TEST(SuffixTrie);
     TEST(SuffixTree);
     TEST(Trie);
+    TEST(CompressedTrie);
     TEST(DistinctSubstringCounter);
     TEST(PalindromicSubsequence);
     TEST(PalindromicString);

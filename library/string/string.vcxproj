@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compressedTrie.cpp" />
     <ClCompile Include="decimal.cpp" />
     <ClCompile Include="distinctSubstringCounter.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="trie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="compressedTrie.h" />
     <ClInclude Include="distinctSubstringCounter.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
     <ClInclude Include="palindromicString.h" />

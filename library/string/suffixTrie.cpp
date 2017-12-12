@@ -36,7 +36,7 @@ void dump(SuffixTrie::Node* p, int idx, int level) {
 
 
 void testSuffixTrie() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Suffix Trie -----------------------------------------" << endl;
 

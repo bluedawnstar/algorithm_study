@@ -72,6 +72,9 @@
     <ClCompile Include="suffixAutomatonAM.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="compressedTrie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -117,6 +120,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixAutomatonAM.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="compressedTrie.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
