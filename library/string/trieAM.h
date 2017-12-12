@@ -1,56 +1,41 @@
 #pragma once
 
-//--- Block Allocator ---------------------------------------------------------
+#include "trie.h"
 
-template <typename T, size_t ChunkSizeN>
-struct Allocator {
-    struct ChunkT {
-        int n;
-        T values[ChunkSizeN];
+//--- Array Mapped Trie -------------------------------------------------------
 
-        ChunkT() {
-            n = 0;
-        }
-    };
-    stack<shared_ptr<ChunkT>> mChunks;
-
-    Allocator() {
-        mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-    }
-
-    ~Allocator() {
-        // no action
-    }
-
-    T* alloc() {
-        if (mChunks.top()->n >= ChunkSizeN)
-            mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-        return &mChunks.top()->values[mChunks.top()->n++];
-    }
-
-    void clear() {
-        stack<shared_ptr<ChunkT>>().swap(mChunks);
-    }
-};
-
-//--- Trie --------------------------------------------------------------------
-
-struct Trie {
+struct TrieAM {
     static const size_t MaxCharN = 26;
     static const size_t AllocBlockSize = 128;
     static int ch2i(char ch) {
         return ch - 'a';
     }
 
+    static int popcnt(unsigned x) {
+#ifndef __GNUC__
+        x = x - ((x >> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+        x = (x + (x >> 4)) & 0x0F0F0F0F;
+        x = x + (x >> 8);
+        x = x + (x >> 16);
+        return int(x & 0x0000003F);
+#else
+        return __builtin_popcount(x);
+#endif
+    }
+
     struct Node {
-        int     leafCount;
-        Node*   parent;
-        Node*   children[MaxCharN];
+        int             leafCount;
+        Node*           parent;
+
+        unsigned        childSet;
+        vector<Node*>   children;
 
         void init(Node* parent = nullptr) {
             this->leafCount = 0;
             this->parent = parent;
-            memset(this->children, 0, sizeof(this->children));
+            this->childSet = 0;
+            this->children.clear();
         }
 
         bool isLeaf() const {
@@ -60,27 +45,41 @@ struct Trie {
         bool isEmpty() const {
             if (leafCount > 0)
                 return false;
-            for (int i = 0; i < MaxCharN; i++) {
-                if (children[i])
-                    return false;
+            return childSet == 0;
+        }
+
+        bool hasChild(int chIdx) const {
+            return (childSet & (1 << chIdx)) != 0;
+        }
+
+        Node* getChild(int chIdx) const {
+            if ((childSet & (1 << chIdx)) == 0)
+                return 0;
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            return children[idx];
+        }
+
+        void setChild(int chIdx, Node* node) {
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            if ((childSet & (1 << chIdx)) != 0) {
+                children[idx] = node;
+            } else {
+                children.insert(children.begin() + idx, node);
+                childSet |= (1 << chIdx);
             }
-            return true;
         }
     };
 
     Node mRoot;
 
-    Trie() {
+    TrieAM() {
         mRoot.init();
         mFreeNode = nullptr;
     }
 
     void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
-            }
+        for (auto* p : mRoot.children) {
+            deleteNode(p);
         }
     }
 
@@ -97,9 +96,9 @@ struct Trie {
         Node* p = &mRoot;
         for (int i = 0; i < len; i++) {
             int idx = ch2i(s[i]);
-            if (!p->children[idx])
-                p->children[idx] = allocNode(p);
-            p = p->children[idx];
+            if (!p->hasChild(idx))
+                p->setChild(idx, allocNode(p));
+            p = p->getChild(idx);
         }
         return ++p->leafCount == 1;
     }
@@ -117,7 +116,7 @@ struct Trie {
         Node* p = (Node*)&mRoot;
         for (int i = 0; i < len && p; i++) {
             int idx = ch2i(s[i]);
-            p = p->children[idx];
+            p = p->getChild(idx);
         }
         return (p && p->leafCount > 0) ? p : nullptr;
     }
@@ -137,7 +136,7 @@ struct Trie {
         Node* p = (Node*)&mRoot;
         for (int i = 0; i < len; i++) {
             int idx = ch2i(s[i]);
-            p = p->children[idx];
+            p = p->getChild(idx);
             if (!p)
                 return make_pair(i, false);
         }
@@ -162,7 +161,7 @@ struct Trie {
 
     // delete a exactly matched word
     bool erase(const string& s, bool all = false) {
-        return erase(&s[0], (int)s.length());
+        return erase(&s[0], (int)s.length(), all);
     }
 
     // delete a exactly matched word
@@ -182,7 +181,7 @@ struct Trie {
         for (int i = len - 1; i >= 0 && p != &mRoot && p->isEmpty(); i--) {
             Node* del = p;
             p = p->parent;
-            p->children[ch2i(s[i])] = nullptr;
+            p->setChild(ch2i(s[i]), nullptr);
             freeNode(del);
         }
 
@@ -216,11 +215,8 @@ private:
         if (!p)
             return;
 
-        for (int i = 0; i < MaxCharN; i++) {
-            if (p->children[i])
-                deleteNode(p->children[i]);
-        }
-
+        for (auto* t : p->children)
+            deleteNode(t);
         freeNode(p);
     }
 };

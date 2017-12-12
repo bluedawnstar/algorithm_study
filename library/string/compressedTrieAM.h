@@ -2,28 +2,44 @@
 
 #include "trie.h"
 
-//--- Compressed Trie ---------------------------------------------------------
+//--- Array Mapped Compressed Trie ---------------------------------------------------------
 
-struct CompressedTrie {
+struct CompressedTrieAM {
     static const size_t MaxCharN = 26;
     static const size_t AllocBlockSize = 128;
     static int ch2i(char ch) {
         return ch - 'a';
     }
 
+    static int popcnt(unsigned x) {
+#ifndef __GNUC__
+        x = x - ((x >> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+        x = (x + (x >> 4)) & 0x0F0F0F0F;
+        x = x + (x >> 8);
+        x = x + (x >> 16);
+        return int(x & 0x0000003F);
+#else
+        return __builtin_popcount(x);
+#endif
+    }
+
     struct Node {
-        const char* text;
-        int     textLen;
-        int     leafCount;
-        Node*   parent;
-        Node*   children[MaxCharN];
+        const char*     text;
+        int             textLen;
+        int             leafCount;
+        Node*           parent;
+
+        unsigned        childSet;
+        vector<Node*>   children;
 
         void init(Node* parent = nullptr) {
             this->text = nullptr;
             this->textLen = 0;
             this->leafCount = 0;
             this->parent = parent;
-            memset(this->children, 0, sizeof(this->children));
+            this->childSet = 0;
+            this->children.clear();
         }
 
         bool isLeaf() const {
@@ -33,27 +49,41 @@ struct CompressedTrie {
         bool isEmpty() const {
             if (leafCount > 0)
                 return false;
-            for (int i = 0; i < MaxCharN; i++) {
-                if (children[i])
-                    return false;
+            return childSet == 0;
+        }
+
+        bool hasChild(int chIdx) const {
+            return (childSet & (1 << chIdx)) != 0;
+        }
+
+        Node* getChild(int chIdx) const {
+            if ((childSet & (1 << chIdx)) == 0)
+                return 0;
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            return children[idx];
+        }
+
+        void setChild(int chIdx, Node* node) {
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            if ((childSet & (1 << chIdx)) != 0) {
+                children[idx] = node;
+            } else {
+                children.insert(children.begin() + idx, node);
+                childSet |= (1 << chIdx);
             }
-            return true;
         }
     };
 
     Node mRoot;
 
-    CompressedTrie() {
+    CompressedTrieAM() {
         mRoot.init();
         mFreeNode = nullptr;
     }
 
     void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
-            }
+        for (auto* p : mRoot.children) {
+            deleteNode(p);
         }
     }
 
@@ -70,33 +100,36 @@ struct CompressedTrie {
         Node* p = &mRoot;
 
         int idx = ch2i(s[0]);
-        if (!p->children[idx]) {
-            p = p->children[idx] = allocNode(p);
+        if (!p->hasChild(idx)) {
+            auto* t = allocNode(p);
+            p->setChild(idx, t);
+            p = t;
             p->text = s;
             p->textLen = len;
         } else {
-            p = p->children[idx];
+            p = p->getChild(idx);
             for (int i = 0; i < len; ) {
                 int j;
                 for (j = 0; j < p->textLen && i < len; i++, j++) {
                     if (s[i] != p->text[j])
                         break;
                 }
-                //assert(j > 0);
 
                 if (j < p->textLen)
                     p = split(p, j);
 
                 if (i < len) {
                     idx = ch2i(s[i]);
-                    if (!p->children[idx]) {
+                    if (!p->hasChild(idx)) {
                         // add new node
-                        p = p->children[idx] = allocNode(p);
+                        auto* t = allocNode(p);
+                        p->setChild(idx, t);
+                        p = t;
                         p->text = s + i;
                         p->textLen = len - i;
                         break;
                     } else {
-                        p = p->children[idx];
+                        p = p->getChild(idx);
                     }
                 }
             }
@@ -114,7 +147,7 @@ struct CompressedTrie {
         if (len <= 0)
             return nullptr;
 
-        Node* p = mRoot.children[ch2i(s[0])];
+        Node* p = mRoot.getChild(ch2i(s[0]));
         for (int i = 0; p; ) {
             for (int j = 0; j < p->textLen; i++, j++) {
                 if (i >= len || s[i] != p->text[j])
@@ -123,7 +156,7 @@ struct CompressedTrie {
             if (i >= len)
                 break;
 
-            p = p->children[ch2i(s[i])];
+            p = p->getChild(ch2i(s[i]));
         }
 
         return (p && p->leafCount > 0) ? p : nullptr;
@@ -141,7 +174,7 @@ struct CompressedTrie {
         if (len <= 0)
             return make_pair(0, false);
 
-        Node* p = mRoot.children[ch2i(s[0])];
+        Node* p = mRoot.getChild(ch2i(s[0]));
         int i = 0;
         while (p) {
             for (int j = 0; j < p->textLen; i++, j++) {
@@ -151,7 +184,7 @@ struct CompressedTrie {
             if (i >= len)
                 break;
 
-            p = p->children[ch2i(s[i])];
+            p = p->getChild(ch2i(s[i]));
         }
 
         return make_pair(i, p && p->leafCount > 0);
@@ -195,27 +228,27 @@ struct CompressedTrie {
         if (p->isEmpty()) {
             Node* del = p;
             p = p->parent;
-            p->children[ch2i(del->text[0])] = nullptr;
+            p->setChild(ch2i(del->text[0]), nullptr);
             freeNode(del);
 
             if (merge && !p->isLeaf() && p != &mRoot) {
                 // If there is only one child of parent, the parent is merged to the child.
                 int idx = -1, cnt = 0;
                 for (int i = 0; i < MaxCharN; i++) {
-                    if (p->children[i]) {
+                    if (p->hasChild(i)) {
                         idx = i;
                         cnt++;
                     }
                 }
                 if (cnt == 1) {
                     Node* parent = p->parent;
-                    Node* child = p->children[idx];
+                    Node* child = p->getChild(idx);
 
                     child->text -= p->textLen;
                     child->textLen += p->textLen;
 
                     idx = ch2i(p->text[0]);
-                    parent->children[idx] = child;
+                    parent->setChild(idx, child);
                     child->parent = parent;
 
                     freeNode(p);
@@ -253,11 +286,8 @@ private:
         if (!p)
             return;
 
-        for (int i = 0; i < MaxCharN; i++) {
-            if (p->children[i])
-                deleteNode(p->children[i]);
-        }
-
+        for (auto* t : p->children)
+            deleteNode(t);
         freeNode(p);
     }
 
@@ -265,14 +295,12 @@ private:
         Node* newNode = allocNode(node->parent);
         newNode->text = node->text;
         newNode->textLen = offset;
-        newNode->children[ch2i(node->text[offset])] = node;
-        newNode->parent->children[ch2i(newNode->text[0])] = newNode;
-        //assert(newNode->textLen > 0);
+        newNode->setChild(ch2i(node->text[offset]), node);
+        newNode->parent->setChild(ch2i(newNode->text[0]), newNode);
 
         node->text += offset;
         node->textLen -= offset;
         node->parent = newNode;
-        //assert(node->textLen > 0);
 
         return newNode;
     }

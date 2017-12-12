@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="compressedTrie.cpp" />
+    <ClCompile Include="compressedTrieAM.cpp" />
     <ClCompile Include="decimal.cpp" />
     <ClCompile Include="distinctSubstringCounter.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
@@ -162,9 +163,11 @@
     <ClCompile Include="suffixTree.cpp" />
     <ClCompile Include="suffixTrie.cpp" />
     <ClCompile Include="trie.cpp" />
+    <ClCompile Include="trieAM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="compressedTrie.h" />
+    <ClInclude Include="compressedTrieAM.h" />
     <ClInclude Include="distinctSubstringCounter.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
     <ClInclude Include="palindromicString.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="suffixTree.h" />
     <ClInclude Include="suffixTrie.h" />
     <ClInclude Include="trie.h" />
+    <ClInclude Include="trieAM.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

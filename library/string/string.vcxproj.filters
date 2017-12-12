@@ -75,6 +75,12 @@
     <ClCompile Include="compressedTrie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="compressedTrieAM.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="trieAM.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -123,6 +129,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="compressedTrie.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="compressedTrieAM.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="trieAM.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
