@@ -22,25 +22,8 @@ void testEulerTour() {
 
     cout << "--- Euler Tour Tree -----------------------------" << endl;
     {
-        int N = 4, LOGN = 4;
-        EulerTourTree tree(N, LOGN);
-
-        tree.addEdge(0, 1);
-        tree.addEdge(0, 2);
-        tree.addEdge(2, 3);
-
-        tree.build(0);
-
-        // time: 0 1 2 3 4 5 6 7
-        // node: 0 1 1 2 3 3 2 0
-        vector<pair<int, int>> gtVT = vector<pair<int, int>>{ { 0, 7 }, { 1, 2 }, { 3, 6 }, { 4, 5 } };
-        vector<int> gtT2N = { 0, 1, 1, 2, 3, 3, 2, 0 };
-        assert(tree.mVisTime == gtVT);
-        assert(tree.mTime2Node == gtT2N);
-    }
-    {
         int N = 8, LOGN = 4;
-        ExactEulerTourTree tree(N, LOGN);
+        EulerTourTree tree(N, LOGN);
         tree.addEdge(0, 1);
         tree.addEdge(0, 2);
         tree.addEdge(1, 3);
@@ -55,7 +38,7 @@ void testEulerTour() {
     }
     {
         int N = 1000, LOGN = 14;
-        ExactEulerTourTree tree(N, LOGN);
+        EulerTourTree tree(N, LOGN);
 
         for (int v = 1; v < N; v++) {
             int u = rand() % v;
@@ -83,7 +66,7 @@ void testEulerTour() {
         //int TESTN = 10000000;
         int TESTN = 10000;
         int N = 75000, LOGN = int(log2(N) + 1);
-        ExactEulerTourTree tree(N, LOGN);
+        EulerTourTree tree(N, LOGN);
 
         for (int v = 1; v < N; v++) {
             int u = rand() % v;

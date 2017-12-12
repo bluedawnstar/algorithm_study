@@ -1,6 +1,6 @@
 #pragma once
 
-#include "treeEulerTour.h"
+#include "treeDfsTour.h"
 
 /* MO's algorithm
 
@@ -30,7 +30,7 @@
     }
 */
 struct TreeMO {
-    EulerTourTree&              tree;
+    DfsTourTree&                tree;
 
     vector<bool>                mActive;
 
@@ -41,7 +41,7 @@ struct TreeMO {
     vector<tuple<int, int, int>> MO;        // (MO_L, MO_R, Q index)
 
     // Q[i] = (left, right), inclusive
-    TreeMO(EulerTourTree& _tree) : tree(_tree) {
+    TreeMO(DfsTourTree& _tree) : tree(_tree) {
     }
 
     void build(vector<pair<int, int>>& Q, function<void(int, int)> onAdd, function<void(int, int)> onRemove) {

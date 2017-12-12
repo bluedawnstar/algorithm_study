@@ -17,6 +17,7 @@ int main(void) {
     TEST(SegmentTreeCompactLazyAdd);
     TEST(SparseTable);
     TEST(HeavyLightDecomposition);
+    TEST(DfsTour);
     TEST(EulerTour);
     TEST(TreeMO);
     TEST(SparseTableLCA);

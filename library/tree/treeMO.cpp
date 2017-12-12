@@ -21,7 +21,7 @@ void testTreeMO() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
     //TODO: step1 - make a tree
-    EulerTourTree tree(N, LOGN);
+    DfsTourTree tree(N, LOGN);
     //TODO: add edges to tree
     tree.build(0);
 
