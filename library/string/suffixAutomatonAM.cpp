@@ -301,7 +301,7 @@ bool isSuffixWithSortedTerm(SuffixAutomatonAM& sa, vector<int>& term, const stri
 #include "../common/iostreamhelper.h"
 
 void testSuffixAutomationAM() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Suffix Automation - Array Mapped --------------------" << endl;
     string s("aabaa");

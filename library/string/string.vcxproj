@@ -162,6 +162,7 @@
     <ClCompile Include="suffixAutomatonAM.cpp" />
     <ClCompile Include="suffixTree.cpp" />
     <ClCompile Include="suffixTrie.cpp" />
+    <ClCompile Include="suffixTrieAM.cpp" />
     <ClCompile Include="trie.cpp" />
     <ClCompile Include="trieAM.cpp" />
   </ItemGroup>
@@ -182,6 +183,7 @@
     <ClInclude Include="suffixAutomatonAM.h" />
     <ClInclude Include="suffixTree.h" />
     <ClInclude Include="suffixTrie.h" />
+    <ClInclude Include="suffixTrieAM.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="trieAM.h" />
   </ItemGroup>

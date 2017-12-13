@@ -7,6 +7,8 @@ using namespace std;
 
 #include "segmentTree.h"
 #include "sparseTable.h"
+#include "sparseTableMin.h"
+#include "sparseTableMinIndex.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

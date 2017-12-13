@@ -1,15 +1,16 @@
 #include <memory.h>
 #include <cassert>
 #include <cstring>
+#include <memory>
 #include <string>
 #include <stack>
-#include <memory>
+#include <vector>
 #include <algorithm>
 #include <iostream>
 
 using namespace std;
 
-#include "suffixTrie.h"
+#include "suffixTrieAM.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -19,7 +20,7 @@ using namespace std;
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-void dump(SuffixTrie::Node* p, int idx, int level) {
+void dump(SuffixTrieAM::Node* p, int idx, int level) {
     if (!p)
         return;
 
@@ -28,20 +29,20 @@ void dump(SuffixTrie::Node* p, int idx, int level) {
     if (idx >= 0)
         cout << " " << char('a' + idx) << endl;
 
-    for (int i = 0; i < SuffixTrie::MaxCharN; i++) {
-        if (p->children[i])
-            dump(p->children[i], i, level + 1);
+    for (int i = 0; i < SuffixTrieAM::MaxCharN; i++) {
+        if (p->hasChild(i))
+            dump(p->getChild(i), i, level + 1);
     }
 }
 
 
-void testSuffixTrie() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+void testSuffixTrieAM() {
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Suffix Trie -----------------------------------------" << endl;
+    cout << "-- Array Mapped Suffix Trie -----------------------------------------" << endl;
 
     const char* s;
-    SuffixTrie trie;
+    SuffixTrieAM trie;
 
     // test buildSuffix()
 

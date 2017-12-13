@@ -24,18 +24,12 @@
     <ClCompile Include="bitSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="bitVectorRank.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitSet.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="bitVectorRank.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -174,6 +174,8 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
+    <ClInclude Include="sparseTableMin.h" />
+    <ClInclude Include="sparseTableMinIndex.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />

@@ -1,67 +1,83 @@
 #pragma once
 
-//--- Block Allocator ---------------------------------------------------------
+#include "suffixTrie.h"
 
-template <typename T, size_t ChunkSizeN>
-struct Allocator {
-    struct ChunkT {
-        int n;
-        T values[ChunkSizeN];
-
-        ChunkT() {
-            n = 0;
-        }
-    };
-    stack<shared_ptr<ChunkT>> mChunks;
-
-    Allocator() {
-        mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-    }
-
-    ~Allocator() {
-        // no action
-    }
-
-    T* alloc() {
-        if (mChunks.top()->n >= ChunkSizeN)
-            mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-        return &mChunks.top()->values[mChunks.top()->n++];
-    }
-
-    void clear() {
-        stack<shared_ptr<ChunkT>>().swap(mChunks);
-    }
-};
-
-struct SuffixTrie {
+// Array Mapped Suffix Trie
+struct SuffixTrieAM {
     static const size_t MaxCharN = 26;
     static const size_t AllocBlockSize = 128;
     static int ch2i(char ch) {
         return ch - 'a';
     }
 
-    struct Node {
-        Node*   parent;
-        Node*   suffixLink;
+    static int popcnt(unsigned x) {
+#ifndef __GNUC__
+        return _mm_popcnt_u32(x);
+        /*
+        x = x - ((x >> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+        x = (x + (x >> 4)) & 0x0F0F0F0F;
+        x = x + (x >> 8);
+        x = x + (x >> 16);
+        return int(x & 0x0000003F);
+        */
+#else
+        return __builtin_popcount(x);
+#endif
+    }
 
-        int     suffixIndex;
-        int     childCount;
-        Node*   children[MaxCharN];
+    struct Node {
+        Node*           parent;
+        Node*           suffixLink;
+        int             suffixIndex;
+
+        unsigned        childSet;
+        vector<Node*>   children;
 
         void init(Node* parent = nullptr) {
             this->parent = parent;
             this->suffixLink = nullptr;
             this->suffixIndex = -1;
-            this->childCount = 0;
-            memset(this->children, 0, sizeof(this->children));
+            this->childSet = 0;
+            this->children.clear();
         }
 
         bool isLeaf() const {
-            return childCount <= 0;
+            return childSet == 0;
         }
 
         bool isEnd() const {
             return suffixIndex >= 0;
+        }
+
+
+        bool hasChild(int chIdx) const {
+            return (childSet & (1 << chIdx)) != 0;
+        }
+
+        Node* getChild(int chIdx) const {
+            if ((childSet & (1 << chIdx)) == 0)
+                return 0;
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            return children[idx];
+        }
+
+        void setChild(int chIdx, Node* node) {
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            if ((childSet & (1 << chIdx)) != 0) {
+                children[idx] = node;
+            } else {
+                children.insert(children.begin() + idx, node);
+                childSet |= (1 << chIdx);
+            }
+        }
+
+        void eraseChild(int chIdx) {
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            if ((childSet & (1 << chIdx)) != 0) {
+                children[idx] = nullptr;
+                childSet &= ~(1 << chIdx);
+            }
         }
     };
 
@@ -70,20 +86,19 @@ struct SuffixTrie {
     string mText;
     Node* mSuffixLink[MaxCharN];
 
-    SuffixTrie() {
+    SuffixTrieAM() {
         mRoot.init();
         mFreeNode = nullptr;
         memset(mSuffixLink, 0, sizeof(mSuffixLink));
     }
 
     void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
-                mRoot.childCount = 0;
-            }
+        for (auto* p : mRoot.children) {
+            deleteNode(p);
         }
+        mRoot.childSet = 0;
+        mRoot.children.clear();
+
         mText.clear();
         memset(mSuffixLink, 0, sizeof(mSuffixLink));
     }
@@ -137,8 +152,7 @@ struct SuffixTrie {
     int extendSuffix(char ch) {
         if (mText.empty()) {
             Node* p = allocNode(&mRoot);
-            mRoot.children[ch2i(ch)] = p;
-            mRoot.childCount++;
+            mRoot.setChild(ch2i(ch), p);
             mSuffixLink[ch2i(ch)] = p;
 
             mText += ch;
@@ -150,19 +164,17 @@ struct SuffixTrie {
 
         Node* p = allocNode(slink);
         mSuffixLink[idx] = p;
-        slink->children[idx] = p;
-        slink->childCount++;
+        slink->setChild(idx, p);
 
         int cnt = 1;
         for (slink = slink->suffixLink; slink; slink = slink->suffixLink) {
-            if (slink->children[idx]) {
-                p->suffixLink = slink->children[idx];
+            if (slink->hasChild(idx)) {
+                p->suffixLink = slink->getChild(idx);
                 break;
             }
 
             p = p->suffixLink = allocNode(slink);
-            slink->children[idx] = p;
-            slink->childCount++;
+            slink->setChild(idx, p);
             cnt++;
         }
         mText += ch;
@@ -179,10 +191,9 @@ struct SuffixTrie {
 
         int idx = ch2i(mText.back());
         Node* p = mSuffixLink[idx];
-        while (p && p != &mRoot && p->childCount <= 0) {
+        while (p && p != &mRoot && p->childSet == 0) {
             Node* del = p;
-            p->parent->children[idx] = nullptr;
-            p->parent->childCount--;
+            p->parent->eraseChild(idx);
             p = p->suffixLink;
 
             freeNode(del);
@@ -212,9 +223,9 @@ struct SuffixTrie {
         Node* p = (Node*)&mRoot;
         for (int i = 0; i < len; i++) {
             int idx = ch2i(s[i]);
-            if (!p->children[idx])
+            if (!p->hasChild(idx))
                 return make_pair(i, -1);
-            p = p->children[idx];
+            p = p->getChild(idx);
         }
         return make_pair(len, p->suffixIndex);
     }
@@ -247,9 +258,8 @@ private:
         if (!p)
             return;
 
-        for (int i = 0; i < MaxCharN; i++) {
-            if (p->children[i])
-                deleteNode(p->children[i]);
+        for (auto* t : p->children) {
+            deleteNode(t);
         }
 
         freeNode(p);

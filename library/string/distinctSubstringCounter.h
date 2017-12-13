@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../tree/sparseTable.h"
+#include "../tree/sparseTableMin.h"
 #include "../tree/segmentTree.h"
 #include "../tree/fenwickTree.h"
 

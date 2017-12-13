@@ -60,7 +60,7 @@ void dump(SuffixTree& tree, SuffixTree::Node* p, int idx, int level, bool showSu
 
 
 void testSuffixTree() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Suffix Tree -----------------------------------------" << endl;
 

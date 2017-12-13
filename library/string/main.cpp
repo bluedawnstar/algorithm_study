@@ -13,6 +13,7 @@ int main(void) {
     TEST(SuffixAutomation);
     TEST(SuffixAutomationAM);
     TEST(SuffixTrie);
+    TEST(SuffixTrieAM);
     TEST(SuffixTree);
     TEST(Trie);
     TEST(TrieAM);

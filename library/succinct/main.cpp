@@ -6,6 +6,7 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
+    TEST(BitVectorRank);
     TEST(WaveletTree);
     TEST(WaveletTreeBitVector);
     TEST(WaveletMatrix);

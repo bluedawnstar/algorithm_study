@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bitVectorRank.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="waveletMatrix.cpp" />
     <ClCompile Include="waveletMatrixArray.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="waveletTreeBitVector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitVectorRank.h" />
     <ClInclude Include="waveletMatrix.h" />
     <ClInclude Include="waveletMatrixArray.h" />
     <ClInclude Include="waveletTree.h" />

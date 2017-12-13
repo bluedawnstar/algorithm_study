@@ -13,12 +13,15 @@ struct TrieAM {
 
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
+        return _mm_popcnt_u32(x);
+        /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
         x = (x + (x >> 4)) & 0x0F0F0F0F;
         x = x + (x >> 8);
         x = x + (x >> 16);
         return int(x & 0x0000003F);
+        */
 #else
         return __builtin_popcount(x);
 #endif
@@ -66,6 +69,14 @@ struct TrieAM {
             } else {
                 children.insert(children.begin() + idx, node);
                 childSet |= (1 << chIdx);
+            }
+        }
+
+        void eraseChild(int chIdx) {
+            int idx = popcnt(childSet & ((1 << chIdx) - 1));
+            if ((childSet & (1 << chIdx)) != 0) {
+                children[idx] = nullptr;
+                childSet &= ~(1 << chIdx);
             }
         }
     };
@@ -181,7 +192,7 @@ struct TrieAM {
         for (int i = len - 1; i >= 0 && p != &mRoot && p->isEmpty(); i--) {
             Node* del = p;
             p = p->parent;
-            p->setChild(ch2i(s[i]), nullptr);
+            p->eraseChild(ch2i(s[i]));
             freeNode(del);
         }
 

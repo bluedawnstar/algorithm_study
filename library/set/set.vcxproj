@@ -147,13 +147,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bitSet.cpp" />
-    <ClCompile Include="bitVectorRank.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="unionFind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitSet.h" />
-    <ClInclude Include="bitVectorRank.h" />
     <ClInclude Include="unionFind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

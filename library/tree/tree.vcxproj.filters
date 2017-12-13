@@ -179,5 +179,11 @@
     <ClInclude Include="treeDfsTour.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="sparseTableMin.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableMinIndex.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

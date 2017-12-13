@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 
-#include "../set/bitVectorRank.h"
+#include "bitVectorRank.h"
 
 // <WaveletMatrix vs WaveletMatrixArray>
 // Speed:  WaveletMatrixArray is faster 4 ~ 5 times

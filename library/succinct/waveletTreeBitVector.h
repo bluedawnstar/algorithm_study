@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../set/bitVectorRank.h"
+#include "bitVectorRank.h"
 
 template <typename T>
 struct WaveletTreeBitVector {
