@@ -13,7 +13,7 @@ struct CompressedTrieAM {
 
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
-        return _mm_popcnt_u32(x);
+        return (int)__popcnt(x);
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);

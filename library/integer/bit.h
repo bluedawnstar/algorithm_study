@@ -18,7 +18,7 @@ inline int clz(unsigned long long x) {
 
 inline int popcount(unsigned x) {
 #ifndef __GNUC__
-    return _mm_popcnt_u32(x);
+    return (int)__popcnt(x);
     /*
     x = x - ((x >> 1) & 0x55555555);
     x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
@@ -34,7 +34,7 @@ inline int popcount(unsigned x) {
 
 inline int popcount(unsigned long long x) {
 #ifndef __GNUC__
-    return _mm_popcnt_u32(unsigned(x)) + _mm_popcnt_u32(unsigned(x >> 32));
+    return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
 #else
     return __builtin_popcountll(x);
 #endif
