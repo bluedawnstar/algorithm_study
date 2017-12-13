@@ -18,4 +18,5 @@ int main(void) {
     TEST(Equations);
     TEST(PrimitiveRoot);
     TEST(BigInt);
+    TEST(Bit);
 }
