@@ -25,4 +25,5 @@ int main(void) {
     TEST(PalindromicTree);
     TEST(Split);
     TEST(LongestCommonSubstring_queryTwoStringAmongStrings);
+    TEST(Hashing);
 }

@@ -22,4 +22,6 @@ void testSplit() {
     cout << split2("a.b.c..", '.') << endl;
     cout << split2(".b.c..", '.') << endl;
     cout << split2(".b.c..d", '.') << endl;
+
+    cout << "OK!" << endl;
 }

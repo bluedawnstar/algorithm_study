@@ -84,6 +84,9 @@
     <ClCompile Include="suffixTrieAM.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="hashing.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -141,6 +144,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixTrieAM.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="hashing.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
