@@ -8,6 +8,8 @@ using namespace std;
 
 #include "bigint.h"
 
+//https://e-maxx-eng.appspot.com/algebra/big-integer.html
+
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
