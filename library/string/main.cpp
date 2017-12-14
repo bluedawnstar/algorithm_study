@@ -26,4 +26,5 @@ int main(void) {
     TEST(Split);
     TEST(LongestCommonSubstring_queryTwoStringAmongStrings);
     TEST(Hashing);
+    TEST(ZAlgorithm);
 }

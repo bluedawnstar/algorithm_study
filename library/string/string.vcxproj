@@ -166,6 +166,7 @@
     <ClCompile Include="suffixTrieAM.cpp" />
     <ClCompile Include="trie.cpp" />
     <ClCompile Include="trieAM.cpp" />
+    <ClCompile Include="zAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="compressedTrie.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="suffixTrieAM.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="trieAM.h" />
+    <ClInclude Include="zAlgorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
