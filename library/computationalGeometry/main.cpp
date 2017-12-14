@@ -10,4 +10,5 @@ int main(void) {
     TEST(Line);
     TEST(Polygon);
     TEST(ConvexHull);
+    TEST(LineSegmentUnion);
 }
