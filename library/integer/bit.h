@@ -1,5 +1,6 @@
 #pragma once
 
+// counting leading zeros
 inline int clz(unsigned x) {
 #ifndef __GNUC__
     return (int)__lzcnt(x);
@@ -15,7 +16,7 @@ inline int clz(unsigned long long x) {
         return 32 + clz(unsigned(x));
 }
 
-
+// pop count
 inline int popcount(unsigned x) {
 #ifndef __GNUC__
     return (int)__popcnt(x);
@@ -40,7 +41,7 @@ inline int popcount(unsigned long long x) {
 #endif
 }
 
-
+// last '1' bit
 template <typename T>
 inline T getLastBit(T x) {
     return x & -x;
@@ -51,11 +52,32 @@ inline T clearLastBit(T x) {
     return x & (x - 1);
 }
 
-
+// integer log2
 inline int log2Int(unsigned x) {
     return clz(1u) - clz(x);
 }
 
 inline int log2Int(unsigned long long x) {
     return clz(1ull) - clz(x);
+}
+
+// submasks
+template <typename T>
+inline vector<T> getAllSubmasks(T mask) {
+    vector<T> res;
+    for (T s = mask; ; s = (s - T(1)) & mask) {
+        res.push_back(s);
+        if (!s)
+            break;
+    }
+    return res;
+}
+
+// O(3^n)
+inline void foreachAllSubmasksOfAllMasks(int n) {
+    for (int m = 0; m < (1 << n); m++) {
+        for (int s = m; s; s = (s - 1) & m) {
+            //... do something!...
+        }
+    }
 }
