@@ -185,5 +185,8 @@
     <ClInclude Include="sparseTableMinIndex.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="segmentTreeRMQ.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

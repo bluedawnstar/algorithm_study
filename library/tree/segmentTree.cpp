@@ -7,6 +7,7 @@ using namespace std;
 
 #include "segmentTree.h"
 #include "segmentTreeLazy.h"
+#include "segmentTreeRMQ.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

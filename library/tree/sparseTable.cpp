@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "segmentTree.h"
+#include "segmentTreeRMQ.h"
 #include "sparseTable.h"
 #include "sparseTableMin.h"
 #include "sparseTableMinIndex.h"

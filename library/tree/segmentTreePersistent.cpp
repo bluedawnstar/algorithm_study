@@ -19,6 +19,7 @@ using namespace std;
 #include "../common/profile.h"
 
 #include "segmentTree.h"
+#include "segmentTreeRMQ.h"
 
 void testSegmentTreePersistent() {
     return; //TODO: if you want to test a split function, make this line a comment.
