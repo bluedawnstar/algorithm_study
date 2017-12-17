@@ -89,12 +89,15 @@ struct SuffixTree {
         }
     };
 
-    Node mRoot;
-    string mText;
+    Node            mRoot;
+    string          mText;
 
-    Node* mActiveNode;
-    int   mActiveLen;
-    int*  mLeafEnd;
+    int             mNodeN;     // 
+    vector<Node>    mNodes;     // 
+
+    Node*           mActiveNode;
+    int             mActiveLen;
+    int*            mLeafEnd;
 
     //SuffixTree() {
     //    init(0);
@@ -125,6 +128,11 @@ struct SuffixTree {
     }
 
     // build a suffix trie from string 's'
+    void build(const string& s, bool finalize = true) {
+        build(&s[0], (int)s.length(), finalize);
+    }
+
+    // build a suffix trie from string 's'
     void build(const char* s, int len, bool finalize = true) {
         if (len <= 0)
             return;
@@ -136,28 +144,13 @@ struct SuffixTree {
         *mLeafEnd = 0;
 
         for (int i = 0; i < len; i++)
-            extendSuffix(s[i]);
+            extend(s[i]);
 
         if (finalize)
             setSuffixIndex();
     }
 
-    // update suffix indexes.
-    // It means there is no update(adding), because a node with suffix index is a leaf node.
-    void setSuffixIndex() {
-        if (mText.empty())
-            return;
-        setSuffixIndex(&mRoot);
-    }
-
-    void resetSuffixIndex() {
-        if (mText.empty())
-            return;
-        resetSuffixIndex(&mRoot);
-    }
-
-
-    void extendSuffix(char ch) {
+    void extend(char ch) {
         int currPos = (int)mText.length();
         mText += ch;
 
@@ -216,9 +209,36 @@ struct SuffixTree {
         mActiveLen++;
     }
 
+    // update suffix indexes.
+    // It means there is no update(adding), because a node with suffix index is a leaf node.
+    void setSuffixIndex() {
+        if (mText.empty())
+            return;
+        setSuffixIndex(&mRoot);
+    }
+
+    void resetIndex() {
+        if (mText.empty())
+            return;
+        resetSuffixIndex(&mRoot);
+    }
+
+
+    const Node* getNode(int id) const {
+        return (id == 0) ? &mRoot : &mNodes[id - 1];
+    }
+
+    Node* getNode(int id) {
+        return (id == 0) ? &mRoot : &mNodes[id - 1];
+    }
+
     // return (prefix_matching_length, suffix_index)
-    template <typename T>
-    pair<int, int> search(T s, int len) {
+    pair<int, int> search(const string& s) const {
+        return search(&s[0], (int)s.length());
+    }
+
+    // return (prefix_matching_length, suffix_index)
+    pair<int, int> search(const char* s, int len) const {
         if (len <= 0)
             return make_pair(0, -1);
 
@@ -238,9 +258,19 @@ struct SuffixTree {
         return make_pair(i, p ? p->suffixIndex : -1);
     }
 
+    string getString(const Node* node) const {
+        vector<const Node*> stk;
+        for (const Node* p = node; p != &mRoot; p = p->parent)
+            stk.push_back(p);
+        
+        string res;
+        for (int i = (int)stk.size() - 1; i >= 0; i--)
+            res += mText.substr(stk[i]->begin, stk[i]->getLength());
+
+        return move(res);
+    }
+
 private:
-    int             mNodeN;     // 
-    vector<Node>    mNodes;     // 
     int             mIntN;      // 
     vector<int>     mInts;      // 
 
@@ -272,6 +302,7 @@ private:
         if (node->isLeaf())
             node->suffixIndex = (int)mText.length() - node->depth - node->getLength();
         else {
+            node->suffixIndex = -1;
             for (int i = 0; i < MaxCharN; i++) {
                 if (node->hasChild(i))
                     setSuffixIndex(node->getChild(i));

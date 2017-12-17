@@ -15,6 +15,7 @@ int main(void) {
     TEST(SuffixTrie);
     TEST(SuffixTrieAM);
     TEST(SuffixTree);
+    TEST(SuffixTreeAlgo);
     TEST(Trie);
     TEST(TrieAM);
     TEST(CompressedTrie);

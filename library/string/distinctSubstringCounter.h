@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../tree/sparseTableMin.h"
-#include "../tree/segmentTreeRMQ.h"
-#include "../tree/fenwickTree.h"
+#include "../rangeQuery/sparseTableMin.h"
+#include "../rangeQuery/segmentTreeRMQ.h"
+#include "../rangeQuery/fenwickTree.h"
 
 // 'T' is a type of result
 template <typename T>

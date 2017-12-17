@@ -90,6 +90,9 @@
     <ClCompile Include="searchPrefixFunction.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixTreeAlgo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -153,6 +156,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="searchPrefixFunction.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixTreeAlgo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,29 +6,7 @@
 using namespace std;
 
 #include "suffixTree.h"
-
-int countSubstrings(SuffixTree& tree, SuffixTree::Node* p) {
-    if (!p)
-        return 0;
-
-    int res = (p != &tree.mRoot) ? p->getLength() : 0;
-
-    for (int i = 0; i < SuffixTree::MaxCharN; i++) {
-        if (p->children[i])
-            res += countSubstrings(tree, p->children[i]);
-    }
-
-    return res;
-}
-
-long long countSubstrings(SuffixTree& tree) {
-    return countSubstrings(tree, &tree.mRoot);
-}
-
-//TODO: implement applicable functions to use Suffix Tree
-//TODO: implement tree features on Suffix Tree
-//      (ex: LCA & LCP, suffix id to node index & pointer, ...)
-
+#include "suffixTreeAlgo.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -38,7 +16,7 @@ long long countSubstrings(SuffixTree& tree) {
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-void dump(SuffixTree& tree, SuffixTree::Node* p, int idx, int level, bool showSuffixIndex = false) {
+static void dump(SuffixTree& tree, SuffixTree::Node* p, int idx, int level, bool showSuffixIndex = false) {
     if (!p)
         return;
 
@@ -79,7 +57,7 @@ void testSuffixTree() {
         s = "aeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), (int)strlen(treeS) - (int)strlen(s)));
         s = "abdfaeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), (int)strlen(treeS) - (int)strlen(s)));
 
-        // test extendSuffix()
+        // test extend()
 
         tree.clear();
 
@@ -90,7 +68,7 @@ void testSuffixTree() {
         s = "b"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
         s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
 
-        tree.extendSuffix('a');
+        tree.extend('a');
         cout << "*** after extend 'a'" << endl;
         dump(tree, &tree.mRoot, -1, 0);
         s = "a"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
@@ -98,7 +76,7 @@ void testSuffixTree() {
         s = "b"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
         s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
 
-        tree.extendSuffix('b');
+        tree.extend('b');
         cout << "*** after extend 'b'" << endl;
         dump(tree, &tree.mRoot, -1, 0);
         s = "a"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
@@ -118,7 +96,7 @@ void testSuffixTree() {
             tree.clear();
 
             for (int i = 0; treeS[i]; i++) {
-                tree.extendSuffix(treeS[i]);
+                tree.extend(treeS[i]);
                 cout << "*** character '" << treeS[i] << "' added " << endl;
                 dump(tree, &tree.mRoot, -1, 0);
             }

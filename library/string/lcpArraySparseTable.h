@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../tree/sparseTableMin.h"
+#include "../rangeQuery/sparseTableMin.h"
 
 // 1. making sequence
 //    SA -> LCP array -> LcpArraySparseTable
