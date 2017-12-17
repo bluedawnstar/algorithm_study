@@ -18,7 +18,7 @@ using namespace std;
 
 #include "redBlackTree.h"
 #include "splayTree.h"
-#include "segmentTreeLazy.h"
+#include "../rangeQuery/segmentTreeLazy.h"
 
 void checkSearch(RBTree<int>& rbt, vector<int>& in);
 void checkIndex(RBTree<int>& rbt, vector<int>& in);

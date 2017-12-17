@@ -16,8 +16,8 @@ using namespace std;
 #include "../common/profile.h"
 
 #include <algorithm>
-#include "../tree/segmentTree.h"
-#include "../tree/segmentTreeLazy.h"
+#include "segmentTree.h"
+#include "segmentTreeLazy.h"
 
 void testSqrtDecomposition() {
     return; //TODO: if you want to test functions of this file, make this line a comment.

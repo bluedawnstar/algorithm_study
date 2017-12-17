@@ -1,7 +1,7 @@
 #pragma once
 
 #include "treeBasic.h"
-#include "sparseTableMinIndex.h"
+#include "../rangeQuery/sparseTableMinIndex.h"
 
 struct EulerTourTree : public Tree {
     vector<int>     mFirstVisTime;  // node index to first visit time

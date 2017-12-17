@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1CCABCA3-ACC8-4384-AC8B-C88B41D7484B}</ProjectGuid>
+    <ProjectGuid>{D6163BEF-B75E-4BA6-9E10-A9E1D0D20675}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>blackMagic</RootNamespace>
+    <RootNamespace>rangeQuery</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -146,12 +146,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="fenwickTree.cpp" />
+    <ClCompile Include="fenwickTree2D.cpp" />
+    <ClCompile Include="fenwickTreeMultAdd.cpp" />
+    <ClCompile Include="lineSegmentTree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MOAlgorithm.cpp" />
+    <ClCompile Include="segmentTree.cpp" />
+    <ClCompile Include="segmentTreeCompact.cpp" />
+    <ClCompile Include="segmentTreeCompactLazy.cpp" />
+    <ClCompile Include="segmentTreeCompactLazyAdd.cpp" />
+    <ClCompile Include="segmentTreePersistent.cpp" />
+    <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sqrtDecomposition.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fenwickTree.h" />
+    <ClInclude Include="lineSegmentTree.h" />
     <ClInclude Include="MOAlgorithm.h" />
+    <ClInclude Include="segmentTree.h" />
+    <ClInclude Include="segmentTreeCompact.h" />
+    <ClInclude Include="segmentTreeCompactLazy.h" />
+    <ClInclude Include="segmentTreeCompactLazyAdd.h" />
+    <ClInclude Include="segmentTreeLazy.h" />
+    <ClInclude Include="segmentTreePersistent.h" />
+    <ClInclude Include="segmentTreePersistentLazy.h" />
+    <ClInclude Include="segmentTreeRMQ.h" />
+    <ClInclude Include="sparseTable.h" />
+    <ClInclude Include="sparseTableMin.h" />
+    <ClInclude Include="sparseTableMinIndex.h" />
     <ClInclude Include="sqrtDecomposition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

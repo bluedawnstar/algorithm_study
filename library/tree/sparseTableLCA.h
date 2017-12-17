@@ -10,6 +10,7 @@ struct SparseTableLCA {
     int                 mLogN;      // 
     vector<vector<int>> mP;         // mP[0][n] points to the parent
                                     // parent & acestors
+    vector<int>         mLevel;     // level
 
     SparseTableLCA() {
         mN = 0;
@@ -20,12 +21,12 @@ struct SparseTableLCA {
         init(N);
     }
 
-    SparseTableLCA(const vector<int>& A) {
-        init(A);
+    SparseTableLCA(const vector<int>& parent, const vector<int>& level) {
+        init(parent, level);
     }
 
-    SparseTableLCA(const int A[], int N) {
-        init(A, N);
+    SparseTableLCA(const int parent[], const int level[], int N) {
+        init(parent, level, N);
     }
 
 
@@ -35,18 +36,20 @@ struct SparseTableLCA {
         mP.resize(mLogN);
         for (int i = 0; i < mLogN; i++)
             mP[i].resize(mN);
+        mLevel.resize(N);
     }
 
-    void init(const vector<int>& A) {
-        init((int)A.size());
-        copy(A.begin(), A.end(), mP[0].begin());
+    void init(const vector<int>& parent, const vector<int>& level) {
+        init((int)parent.size());
+        copy(parent.begin(), parent.end(), mP[0].begin());
+        copy(level.begin(), level.end(), mLevel.begin());
     }
 
-    void init(const int A[], int N) {
+    void init(const int parent[], const int level[], int N) {
         init(N);
-        copy(A, A + N, mP[0].begin());
+        copy(parent, parent + N, mP[0].begin());
+        copy(level, level + N, mLevel.begin());
     }
-
 
     void build() {
         for (int i = 1; i < mLogN; i++) {
@@ -58,7 +61,7 @@ struct SparseTableLCA {
     }
 
 
-    int climb(int x, int dist) {
+    int climb(int x, int dist) const {
         if (dist <= 0)
             return x;
 
@@ -71,13 +74,21 @@ struct SparseTableLCA {
         return x;
     }
 
-    // PRECONDITION: The depth from the root of A and B is the same.
-    int findLCA(int A, int B) {
+    int findLCA(int A, int B) const {
+        if (mLevel[A] < mLevel[B])
+            swap(A, B);
+
+        A = climb(A, mLevel[A] - mLevel[B]);
+
         if (A == B)
             return A;
 
-        for (int i = mLogN - 1; i >= 0; i--) {
-            if (mP[i][A] >= 0 && mP[i][A] != mP[i][B]) {
+        int bitCnt = 0;
+        for (int x = mLevel[A]; x; x >>= 1)
+            bitCnt++;
+
+        for (int i = bitCnt - 1; i >= 0; i--) {
+            if (mP[i][A] > 0 && mP[i][A] != mP[i][B]) {
                 A = mP[i][A];
                 B = mP[i][B];
             }

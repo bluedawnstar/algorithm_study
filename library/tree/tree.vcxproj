@@ -148,19 +148,10 @@
     <ClCompile Include="intervalTree.cpp" />
     <ClCompile Include="kdtree.cpp" />
     <ClCompile Include="kdtreeNoUpdate.cpp" />
-    <ClCompile Include="lineSegmentTree.cpp" />
     <ClCompile Include="linkCutTreePathQuery.cpp" />
-    <ClCompile Include="segmentTreeCompact.cpp" />
-    <ClCompile Include="segmentTreeCompactLazy.cpp" />
-    <ClCompile Include="segmentTreeCompactLazyAdd.cpp" />
-    <ClCompile Include="segmentTreePersistent.cpp" />
-    <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTableLCA.cpp" />
     <ClCompile Include="splayTreeRangeQuery.cpp" />
     <ClCompile Include="redBlackTree.cpp" />
-    <ClCompile Include="fenwickTree.cpp" />
-    <ClCompile Include="fenwickTree2D.cpp" />
-    <ClCompile Include="fenwickTreeMultAdd.cpp" />
     <ClCompile Include="treap.cpp" />
     <ClCompile Include="treapRangeQuery.cpp" />
     <ClCompile Include="treeHeavyLightDecomposition.cpp" />
@@ -168,37 +159,23 @@
     <ClCompile Include="treeBasic.cpp" />
     <ClCompile Include="linkCutTree.cpp" />
     <ClCompile Include="treeMO.cpp" />
-    <ClCompile Include="segmentTree.cpp" />
     <ClCompile Include="splayTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
-    <ClInclude Include="segmentTreeRMQ.h" />
-    <ClInclude Include="sparseTableMin.h" />
-    <ClInclude Include="sparseTableMinIndex.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />
     <ClInclude Include="kdtree.h" />
     <ClInclude Include="kdtreeNoUpdate.h" />
-    <ClInclude Include="lineSegmentTree.h" />
     <ClInclude Include="linkCutTreePathQuery.h" />
-    <ClInclude Include="segmentTreeCompact.h" />
-    <ClInclude Include="segmentTreeCompactLazy.h" />
-    <ClInclude Include="segmentTreeCompactLazyAdd.h" />
-    <ClInclude Include="segmentTreePersistent.h" />
-    <ClInclude Include="segmentTreePersistentLazy.h" />
-    <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTableLCA.h" />
     <ClInclude Include="treap.h" />
     <ClInclude Include="treeBasic.h" />
     <ClInclude Include="redBlackTree.h" />
-    <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="treeHeavyLightDecomposition.h" />
     <ClInclude Include="linkCutTree.h" />
-    <ClInclude Include="segmentTree.h" />
-    <ClInclude Include="segmentTreeLazy.h" />
     <ClInclude Include="splayTree.h" />
     <ClInclude Include="treeMO.h" />
   </ItemGroup>

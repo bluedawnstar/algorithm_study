@@ -7,15 +7,6 @@ using namespace std;
 
 int main(void) {
     TEST(TreeBasic);
-    TEST(FenwickTree);
-    TEST(FenwickTree2D);
-    TEST(FenwickTreeMultAdd);
-    TEST(SegmentTree);
-    TEST(SegmentTreePersistent);
-    TEST(SegmentTreeCompact);
-    TEST(SegmentTreeCompactLazy);
-    TEST(SegmentTreeCompactLazyAdd);
-    TEST(SparseTable);
     TEST(HeavyLightDecomposition);
     TEST(DfsTour);
     TEST(EulerTour);
@@ -32,5 +23,4 @@ int main(void) {
     TEST(KDTree);
     TEST(KDTreeNoUpdate);
     TEST(IntervalTree);
-    TEST(LineSegmentTree);
 }
