@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "prefixFunction.h"
+#include "searchPrefixFunction.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

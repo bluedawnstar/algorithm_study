@@ -1,6 +1,6 @@
 #pragma once
 
-inline vector<int> prefixFunction(string s) {
+inline vector<int> prefixFunction(const string& s) {
     vector<int> p(s.size());
     int j = 0;
     for (int i = 1; i < (int)s.size(); i++) {
@@ -11,10 +11,10 @@ inline vector<int> prefixFunction(string s) {
             j++;
         p[i] = j;
     }
-    return p;
+    return move(p);
 }
 
-inline vector<int> prefixFunction(string s, int start) {
+inline vector<int> prefixFunction(const string& s, int start) {
     int n = (int)s.size() - start;
 
     vector<int> p(n);
@@ -27,7 +27,7 @@ inline vector<int> prefixFunction(string s, int start) {
             j++;
         p[i] = j;
     }
-    return p;
+    return move(p);
 }
 
 
@@ -62,14 +62,14 @@ inline pair<int, int> getMaxRepeatedPrefixString(const vector<int>& prefix) {
     return make_pair(-1, -1);
 }
 
-inline pair<int, int> getMaxRepeatedPrefixString(string s, int start) {
+inline pair<int, int> getMaxRepeatedPrefixString(const string& s, int start) {
     return getMaxRepeatedPrefixString(prefixFunction(s, start));
 }
 
 
 // find maximum repeated string (ex: "XabababY" => (1, 2, 3) - "ab" x 3 at position 1)
 // (first pos, (pattern length, pattern count))
-inline pair<int, pair<int, int>> getMaxRepeatedSubstring(string s) {
+inline pair<int, pair<int, int>> getMaxRepeatedSubstring(const string& s) {
     int repLen = 0;
     pair<int, pair<int, int>> res(-1, pair<int, int>(-1, -1));
     for (int i = 0; i < (int)s.length(); i++) {
@@ -86,12 +86,12 @@ inline pair<int, pair<int, int>> getMaxRepeatedSubstring(string s) {
         }
     }
 
-    return res;
+    return move(res);
 }
 
 
 // return matched lengths at each position
-inline vector<int> kmpL(string s, string p) {
+inline vector<int> kmpL(const string& s, const string& p) {
     vector<int> res;
     vector<int> pref = prefixFunction(p);
 
@@ -113,10 +113,10 @@ inline vector<int> kmpL(string s, string p) {
         }
     }
 
-    return res;
+    return move(res);
 }
 
-inline vector<int> kmp(string s, string p) {
+inline vector<int> kmp(const string& s, const string& p) {
     vector<int> res;
     vector<int> pref = prefixFunction(p);
 
@@ -135,10 +135,10 @@ inline vector<int> kmp(string s, string p) {
         }
     }
 
-    return res;
+    return move(res);
 }
 
-inline vector<int> kmp(string s, string p, const vector<int>& prefix) {
+inline vector<int> kmp(const string& s, const string& p, const vector<int>& prefix) {
     vector<int> res;
 
     int n = (int)s.size(), m = (int)p.size(), j = 0;
@@ -156,5 +156,63 @@ inline vector<int> kmp(string s, string p, const vector<int>& prefix) {
         }
     }
 
+    return move(res);
+}
+
+//----------------------
+
+inline vector<int> getAllPartialMatch(const string& s) {
+    int N = (int)s.length();
+
+    vector<int> res(N);
+    int begin = 1, matched = 0;
+    while (begin + matched < N) {
+        if (s[begin + matched] == s[matched]) {
+            ++matched;
+            res[begin + matched - 1] = matched;
+        } else {
+            if (matched == 0)
+                ++begin;
+            else {
+                begin += matched - res[matched - 1];
+                matched = res[matched - 1];
+            }
+        }
+    }
+
+    return move(res);
+}
+
+vector<int> getPrefixSuffix(const string& s) {
+    vector<int> res, pi = getAllPartialMatch(s);
+
+    int n = (int)s.length();
+    while (n > 0) {
+        res.push_back(n);
+        n = pi[n - 1];
+    }
     return res;
+}
+
+int maxOverlap(const string& a, const string& b) {
+    int n = (int)a.length(), m = (int)b.length();
+    vector<int> pi = getAllPartialMatch(b);
+
+    int begin = 0, matched = 0;
+    while (begin < n) {
+        if (matched < m && a[begin + matched] == b[matched]) {
+            ++matched;
+            if (begin + matched == n)
+                return matched;
+        } else {
+            if (matched == 0)
+                ++begin;
+            else {
+                begin += matched - pi[matched - 1];
+                matched = pi[matched - 1];
+            }
+        }
+    }
+
+    return 0;
 }

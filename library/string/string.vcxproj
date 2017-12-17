@@ -153,8 +153,8 @@
     <ClCompile Include="palindromicString.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="palindromicTree.cpp" />
-    <ClCompile Include="prefixFunction.cpp" />
-    <ClCompile Include="rabinKarp.cpp" />
+    <ClCompile Include="searchPrefixFunction.cpp" />
+    <ClCompile Include="searchRabinKarp.cpp" />
     <ClCompile Include="split.cpp" />
     <ClCompile Include="suffixArray.cpp" />
     <ClCompile Include="suffixArraySparseTable.cpp" />
@@ -166,7 +166,7 @@
     <ClCompile Include="suffixTrieAM.cpp" />
     <ClCompile Include="trie.cpp" />
     <ClCompile Include="trieAM.cpp" />
-    <ClCompile Include="zAlgorithm.cpp" />
+    <ClCompile Include="searchZAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="compressedTrie.h" />
@@ -177,8 +177,8 @@
     <ClInclude Include="palindromicString.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicTree.h" />
-    <ClInclude Include="prefixFunction.h" />
-    <ClInclude Include="rabinKarp.h" />
+    <ClInclude Include="searchPrefixFunction.h" />
+    <ClInclude Include="searchRabinKarp.h" />
     <ClInclude Include="split.h" />
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
@@ -189,7 +189,7 @@
     <ClInclude Include="suffixTrieAM.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="trieAM.h" />
-    <ClInclude Include="zAlgorithm.h" />
+    <ClInclude Include="searchZAlgorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

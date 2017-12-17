@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "zAlgorithm.h"
+#include "searchZAlgorithm.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

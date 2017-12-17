@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../tree/sparseTableMin.h"
-#include "../tree/segmentTree.h"
+#include "../tree/segmentTreeRMQ.h"
 #include "../tree/fenwickTree.h"
 
 // 'T' is a type of result

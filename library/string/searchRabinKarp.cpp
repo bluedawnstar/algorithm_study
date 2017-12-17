@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "rabinKarp.h"
+#include "searchRabinKarp.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
