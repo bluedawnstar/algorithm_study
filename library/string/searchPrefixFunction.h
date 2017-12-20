@@ -11,7 +11,7 @@ inline vector<int> prefixFunction(const string& s) {
             j++;
         p[i] = j;
     }
-    return move(p);
+    return p;
 }
 
 inline vector<int> prefixFunction(const string& s, int start) {
@@ -27,7 +27,7 @@ inline vector<int> prefixFunction(const string& s, int start) {
             j++;
         p[i] = j;
     }
-    return move(p);
+    return p;
 }
 
 
@@ -86,7 +86,7 @@ inline pair<int, pair<int, int>> getMaxRepeatedSubstring(const string& s) {
         }
     }
 
-    return move(res);
+    return res;
 }
 
 
@@ -113,7 +113,7 @@ inline vector<int> kmpL(const string& s, const string& p) {
         }
     }
 
-    return move(res);
+    return res;
 }
 
 inline vector<int> kmp(const string& s, const string& p) {
@@ -135,7 +135,7 @@ inline vector<int> kmp(const string& s, const string& p) {
         }
     }
 
-    return move(res);
+    return res;
 }
 
 inline vector<int> kmp(const string& s, const string& p, const vector<int>& prefix) {
@@ -156,7 +156,7 @@ inline vector<int> kmp(const string& s, const string& p, const vector<int>& pref
         }
     }
 
-    return move(res);
+    return res;
 }
 
 //----------------------
@@ -180,7 +180,7 @@ inline vector<int> getAllPartialMatch(const string& s) {
         }
     }
 
-    return move(res);
+    return res;
 }
 
 vector<int> getPrefixSuffix(const string& s) {

@@ -122,19 +122,19 @@ private:
 
 template <typename T, typename BinOp>
 CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(int size, BinOp op, T dfltValue = T()) {
-    return std::move(CompactSegmentTreeLazyAdd<T, BinOp>(size, op, dfltValue));
+    return CompactSegmentTreeLazyAdd<T, BinOp>(size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const vector<T>& v, BinOp op, T dfltValue = T()) {
     auto segTree = CompactSegmentTreeLazyAdd<T, BinOp>((int)v.size(), op, dfltValue);
     segTree.build(v);
-    return std::move(segTree);
+    return segTree;
 }
 
 template <typename T, typename BinOp>
 CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const T arr[], int size, BinOp op, T dfltValue = T()) {
     auto segTree = CompactSegmentTreeLazyAdd<T, BinOp>(size, op, dfltValue);
     segTree.build(arr, size);
-    return std::move(segTree);
+    return segTree;
 }

@@ -109,7 +109,7 @@ struct bigint {
             }
             return res;
         }
-        return move(*this - (-v));
+        return *this - (-v);
     }
 
     bigint& operator +=(const bigint& v) {
@@ -132,7 +132,7 @@ struct bigint {
             }
             return -(v - *this);
         }
-        return move(*this + (-v));
+        return *this + (-v);
     }
 
     bigint& operator -=(const bigint& v) {
@@ -146,7 +146,7 @@ struct bigint {
         res.a = multiplyFFT(convertBase(a, baseDigitN, 3), convertBase(v.a, baseDigitN, 3));
         res.a = convertBase(res.a, 3, baseDigitN);
         res.trim();
-        return move(res);
+        return res;
     }
 
     bigint& operator *=(const bigint& v) {
@@ -177,7 +177,7 @@ struct bigint {
     bigint operator *(int v) const {
         bigint res = *this;
         res *= v;
-        return move(res);
+        return res;
     }
 
     bigint& operator *=(int v) {
@@ -197,7 +197,7 @@ struct bigint {
     bigint operator /(int v) const {
         bigint res = *this;
         res /= v;
-        return move(res);
+        return res;
     }
 
     bigint& operator /=(int v) {
@@ -326,7 +326,7 @@ struct bigint {
         }
         res.a = convertBase(res.a, 6, baseDigitN);
         res.trim();
-        return move(res);
+        return res;
     }
 
 
@@ -347,7 +347,7 @@ struct bigint {
             carry /= 1000;
         }
 
-        return move(res);
+        return res;
     }
 
     static vector<long long> multiplyKaratsuba(const vector<long long>& a, const vector<long long>& b) {

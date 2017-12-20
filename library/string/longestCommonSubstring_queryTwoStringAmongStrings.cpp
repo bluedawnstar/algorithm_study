@@ -229,7 +229,7 @@ struct LongestCommonStringLengthWithSuffixAutomation {
         for (int i = 0; i < mN; i++) {
             SuffixAutomaton t(strs[i].length());
             t.extend(strs[i]);
-            mSA.emplace_back(std::move(t));
+            mSA.emplace_back(move(t));
         }
 
         mAns.resize(mQ);

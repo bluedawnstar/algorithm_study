@@ -180,7 +180,7 @@ protected:
 
 template <typename T, typename BinOp>
 HLDPathQuery<T, BinOp> makeHLDPathQuery(HeavyLightDecomposition& hld, BinOp op, T dfltValue = T()) {
-    return std::move(HLDPathQuery<T, BinOp>(hld, op, dfltValue));
+    return HLDPathQuery<T, BinOp>(hld, op, dfltValue);
 }
 
 
@@ -338,7 +338,7 @@ protected:
 
 template <typename T, typename MergeOp, typename BlockOp>
 HLDPathQueryLazy<T, MergeOp, BlockOp> makeHLDPathQueryLazy(HeavyLightDecomposition& hld, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return std::move(HLDPathQueryLazy<T, MergeOp, BlockOp>(hld, mop, bop, dfltValue));
+    return HLDPathQueryLazy<T, MergeOp, BlockOp>(hld, mop, bop, dfltValue);
 }
 
 

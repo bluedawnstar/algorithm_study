@@ -88,12 +88,12 @@ struct SparseTable {
 
 template <typename T, typename BinOp>
 SparseTable<T, BinOp> makeSparseTable(const vector<T>& arr, int size, BinOp op, T dfltValue = T()) {
-    return std::move(SparseTable<T, BinOp>(arr, size, op, dfltValue));
+    return SparseTable<T, BinOp>(arr, size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 SparseTable<T, BinOp> makeSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return std::move(SparseTable<T, BinOp>(arr, size, op, dfltValue));
+    return SparseTable<T, BinOp>(arr, size, op, dfltValue);
 }
 
 /* example

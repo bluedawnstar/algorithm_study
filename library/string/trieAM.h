@@ -135,7 +135,7 @@ struct TrieAM {
     // prefix matching
     // return (prefix_matching_length, word_matched?)
     pair<int, bool> search(const string& s) const {
-        return move(search(&s[0], (int)s.length()));
+        return search(&s[0], (int)s.length());
     }
 
     // prefix matching

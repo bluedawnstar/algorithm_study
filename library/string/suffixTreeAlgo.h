@@ -67,13 +67,13 @@ struct SuffixTreeAlgo {
     }
 
     pair<Node*, int> search(const string& s) const {
-        return move(search(&s[0], (int)s.length()));
+        return search(&s[0], (int)s.length());
     }
 
     pair<Node*, int> search(const char* s, int N) const {
         pair<Node*, int> res(nullptr, 0);
         dfsSearch(res, &tree.mRoot, s, N, 0);
-        return move(res);
+        return res;
     }
 
     //--- Repeated Substring -------------------------------------
@@ -95,7 +95,7 @@ struct SuffixTreeAlgo {
         vector<int> res;
         res.reserve(tree.mText.length());
         dfsBuildSuffixArray(&tree.mRoot, res);
-        return move(res);
+        return res;
     }
 
 private:
@@ -136,7 +136,7 @@ private:
             }
         }
 
-        return move(res);
+        return res;
     }
 
     //--- Check Substring ----------------------------------------

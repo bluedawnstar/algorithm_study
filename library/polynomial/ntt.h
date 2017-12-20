@@ -71,11 +71,11 @@ struct NTT {
         
         C.resize(n);
 
-        return move(C);
+        return C;
     }
 
     vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
-        return move(multiply(x, h, reverseH));
+        return multiply(x, h, reverseH);
     }
 
 private:

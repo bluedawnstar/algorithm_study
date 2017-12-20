@@ -154,7 +154,7 @@ vector<int> findAll(SuffixAutomatonAM& sa, const string& pattern) {
     dfsFind(sa, children, (int)pattern.length(), res, u);
     res.erase(unique(res.begin(), res.end()), res.end());
 
-    return move(res);
+    return res;
 }
 
 
@@ -163,7 +163,7 @@ vector<vector<int>> makeLinkTree(SuffixAutomatonAM& sa) {
     for (int u = 1; u < sa.N; u++) {
         children[sa.state[u].suffixLink].push_back(u);
     }
-    return move(children);
+    return children;
 }
 
 vector<int> findAll(SuffixAutomatonAM& sa, vector<vector<int>>& children, const string& pattern) {
@@ -178,7 +178,7 @@ vector<int> findAll(SuffixAutomatonAM& sa, vector<vector<int>>& children, const 
     dfsFind(sa, children, (int)pattern.length(), res, u);
     res.erase(unique(res.begin(), res.end()), res.end());
 
-    return move(res);
+    return res;
 }
 
 
@@ -196,7 +196,7 @@ vector<int> makeCountTable(SuffixAutomatonAM& sa) {
     for (int i = (int)base.size() - 1; i >= 0; i--)
         cnt[sa.state[base[i].second].suffixLink] += cnt[base[i].second];
 
-    return move(cnt);
+    return cnt;
 }
 
 int countPattern(SuffixAutomatonAM& sa, const vector<int>& countTable, const string& pattern) {

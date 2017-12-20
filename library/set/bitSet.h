@@ -187,7 +187,7 @@ struct BitSet {
         if (mEndMask + 1 != 0)
             bs.mV[n] = (mV[n] | rhs.mV[n]);
         bs.recalcCount();
-        return move(bs);
+        return bs;
     }
 
     BitSet operator &(const BitSet& rhs) {
@@ -200,7 +200,7 @@ struct BitSet {
         if (mEndMask + 1 != 0)
             bs.mV[n] = mV[n] & rhs.mV[n];
         bs.recalcCount();
-        return move(bs);
+        return bs;
     }
 
     BitSet operator ^(const BitSet& rhs) {
@@ -213,7 +213,7 @@ struct BitSet {
         if (mEndMask + 1 != 0)
             bs.mV[n] = mV[n] ^ rhs.mV[n];
         bs.recalcCount();
-        return move(bs);
+        return bs;
     }
 
     BitSet operator ~() const {
@@ -227,7 +227,7 @@ struct BitSet {
             bs.mV[n] = ~mV[n] & mEndMask;
 
         bs.mBitCnt = mN - mBitCnt;
-        return move(bs);
+        return bs;
     }
 
     BitSet& operator <<=(int n) {
@@ -518,7 +518,7 @@ struct BitSetSimple {
         if (mEndMask + 1 != 0)
             bs.mV[n] = (mV[n] | rhs.mV[n]);
 
-        return move(bs);
+        return bs;
     }
 
     BitSetSimple operator &(const BitSetSimple& rhs) {
@@ -531,7 +531,7 @@ struct BitSetSimple {
         if (mEndMask + 1 != 0)
             bs.mV[n] = mV[n] & rhs.mV[n];
 
-        return move(bs);
+        return bs;
     }
 
     BitSetSimple operator ^(const BitSetSimple& rhs) {
@@ -544,7 +544,7 @@ struct BitSetSimple {
         if (mEndMask + 1 != 0)
             bs.mV[n] = mV[n] ^ rhs.mV[n];
 
-        return move(bs);
+        return bs;
     }
 
     BitSetSimple operator ~() const {
@@ -557,7 +557,7 @@ struct BitSetSimple {
         if (mEndMask + 1 != 0)
             bs.mV[n] = ~mV[n] & mEndMask;
 
-        return move(bs);
+        return bs;
     }
 
     BitSetSimple& operator <<=(int n) {

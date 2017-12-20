@@ -108,19 +108,19 @@ struct CompactSegmentTree {
 
 template <typename T, typename BinOp>
 CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltValue = T()) {
-    return std::move(CompactSegmentTree<T, BinOp>(size, op, dfltValue));
+    return CompactSegmentTree<T, BinOp>(size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
     auto segTree = CompactSegmentTree<T, BinOp>((int)v.size(), op, dfltValue);
     segTree.build(v);
-    return std::move(segTree);
+    return segTree;
 }
 
 template <typename T, typename BinOp>
 CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
     auto segTree = CompactSegmentTree<T, BinOp>(size, op, dfltValue);
     segTree.build(arr, size);
-    return std::move(segTree);
+    return segTree;
 }

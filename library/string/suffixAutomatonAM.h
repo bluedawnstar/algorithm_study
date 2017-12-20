@@ -124,6 +124,6 @@ struct SuffixAutomatonAM {
         vector<int> res;
         for (int u = last; u > 0; u = state[u].suffixLink)
             res.push_back(u);
-        return move(res);
+        return res;
     }
 };

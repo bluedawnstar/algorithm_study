@@ -29,11 +29,11 @@ inline vector<int> makeZArray(const char* s, int len) {
         }
     }
 
-    return move(Z);
+    return Z;
 }
 
 inline vector<int> makeZArray(const string& s) {
-    return move(makeZArray(&s[0], (int)s.length()));
+    return makeZArray(&s[0], (int)s.length());
 }
 
 inline vector<int> searchZ(const string& text, const string& pattern) {
@@ -48,5 +48,5 @@ inline vector<int> searchZ(const string& text, const string& pattern) {
             res.push_back(i - (int)pattern.length() - 1);
     }
 
-    return move(res);
+    return res;
 }

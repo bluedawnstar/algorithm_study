@@ -641,5 +641,5 @@ protected:
 
 template <typename T, typename MergeOp, typename BlockOp>
 inline SplayTreeRangeQuery<T, MergeOp, BlockOp> makeSplayTreeRangeQuery(MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return std::move(SplayTreeRangeQuery<T, MergeOp, BlockOp>(mop, bop, dfltValue));
+    return SplayTreeRangeQuery<T, MergeOp, BlockOp>(mop, bop, dfltValue);
 }

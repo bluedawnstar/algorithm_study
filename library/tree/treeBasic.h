@@ -295,7 +295,7 @@ struct Tree {
             swap(leaves, newLeaves);
             removedLeaves += (int)leaves.size();
         }
-        return move(leaves);
+        return leaves;
     }
 
     //--- Diameter ------------------------------------------------------------

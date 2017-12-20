@@ -48,6 +48,6 @@ struct MOAlgorithm {
             ans[get<2>(q)] = curAns;
         }
 
-        return move(ans);
+        return ans;
     }
 };

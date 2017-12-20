@@ -41,7 +41,7 @@ struct BasicDigraph {
             }
         }
 
-        return move(parent);
+        return parent;
     }
 
     vector<int> getShortestPath(int u, int v) const {
@@ -142,7 +142,7 @@ struct BasicDigraph {
                 findSCC(ctx, u);
         }
 
-        return move(ctx.scc);
+        return ctx.scc;
     }
 
     //--- Strongly connected graph test (Kosaraju's algorithm) ---
@@ -227,7 +227,7 @@ struct BasicDigraph {
                 res.first[v]++;
         }
 
-        return move(res);
+        return res;
     }
 
     // precondition: all vertices are connected

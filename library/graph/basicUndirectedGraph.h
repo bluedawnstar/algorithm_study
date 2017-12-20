@@ -62,7 +62,7 @@ struct BasicUndirectedGraph {
             }
         }
 
-        return move(parent);
+        return parent;
     }
 
     vector<int> getShortestPath(int u, int v) const {
@@ -163,7 +163,7 @@ struct BasicUndirectedGraph {
             if (!ctx.visited[u])
                 findCutVertex(ctx, u);
         }
-        return move(ctx.cutVertex);
+        return ctx.cutVertex;
     }
 
     //--- Bridge ---
@@ -203,7 +203,7 @@ struct BasicUndirectedGraph {
             if (!ctx.visited[u])
                 findBridge(ctx, u);
         }
-        return move(ctx.bridge);
+        return ctx.bridge;
     }
 
     //--- Eulerian path & circuit
@@ -259,7 +259,7 @@ struct BasicUndirectedGraph {
         }
         reverse(path.begin(), path.end());
 
-        return move(path);
+        return path;
     }
 
 protected:

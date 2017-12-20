@@ -140,21 +140,21 @@ private:
 
 template <typename T, typename BinOp>
 SegmentTree<T, BinOp> makeSegmentTree(int size, BinOp op, T dfltValue = T()) {
-    return std::move(SegmentTree<T, BinOp>(size, op, dfltValue));
+    return SegmentTree<T, BinOp>(size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 SegmentTree<T, BinOp> makeSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
     auto segTree = SegmentTree<T, BinOp>((int)v.size(), op, dfltValue);
     segTree.build(v, 0, (int)v.size() - 1);
-    return std::move(segTree);
+    return segTree;
 }
 
 template <typename T, typename BinOp>
 SegmentTree<T, BinOp> makeSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
     auto segTree = SegmentTree<T, BinOp>(size, op, dfltValue);
     segTree.build(arr, 0, size - 1);
-    return std::move(segTree);
+    return segTree;
 }
 
 /* example

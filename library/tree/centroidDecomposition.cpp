@@ -33,7 +33,7 @@ static Tree makeTree() {
     tree.addEdge(10, 12);
     tree.addEdge(12, 14);
     tree.addEdge(12, 15);
-    return move(tree);
+    return tree;
 }
 
 static Tree makeTree2() {

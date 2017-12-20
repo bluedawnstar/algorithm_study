@@ -267,7 +267,7 @@ struct SuffixTree {
         for (int i = (int)stk.size() - 1; i >= 0; i--)
             res += mText.substr(stk[i]->begin, stk[i]->getLength());
 
-        return move(res);
+        return res;
     }
 
 private:

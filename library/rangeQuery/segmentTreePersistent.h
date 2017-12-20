@@ -228,26 +228,26 @@ private:
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(BinOp op, T dfltValue = T()) {
-    return std::move(PersistentSegmentTree<T, BinOp>(op, dfltValue));
+    return PersistentSegmentTree<T, BinOp>(op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(int size, BinOp op, T dfltValue = T()) {
     auto segTree = PersistentSegmentTree<T, BinOp>(op, dfltValue);
     segTree.init(dfltValue, 0, size - 1);
-    return std::move(segTree);
+    return segTree;
 }
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
     auto segTree = PersistentSegmentTree<T, BinOp>(op, dfltValue);
     segTree.build(v, 0, (int)v.size() - 1);
-    return std::move(segTree);
+    return segTree;
 }
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
     auto segTree = PersistentSegmentTree<T, BinOp>(op, dfltValue);
     segTree.build(arr, 0, size - 1);
-    return std::move(segTree);
+    return segTree;
 }

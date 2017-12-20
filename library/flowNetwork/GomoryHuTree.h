@@ -142,6 +142,6 @@ struct GomoryHuTreeBuilder {
             }
         }
 
-        return move(res);
+        return res;
     }
 };

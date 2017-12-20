@@ -66,7 +66,7 @@ static Tree makeLcaTree() {
         p = i;
     }
 
-    return move(tree);
+    return tree;
 }
 
 static Tree makeTreeForCenter() {
@@ -76,7 +76,7 @@ static Tree makeTreeForCenter() {
     tree.addEdge(3, 1);
     tree.addEdge(2, 3);
 
-    return move(tree);
+    return tree;
 }
 
 static void printTree(Tree& tree) {

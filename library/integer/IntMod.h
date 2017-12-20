@@ -94,7 +94,7 @@ inline vector<int> modInvPrimeRange(int n, int M) {
         res[i] = (M - (M / i) * res[M % i] % M) % M;
     }
 
-    return move(res);
+    return res;
 }
 
 
