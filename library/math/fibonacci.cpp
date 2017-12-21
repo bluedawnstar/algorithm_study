@@ -41,12 +41,12 @@ void testFibonacci() {
 
     cout << "--- Fibonacci ------------------------------" << endl;
 
-    for (int i = 0; i <= 10000; i++) {
+    for (int i = 0; i <= 1000; i++) {
         assert(fibonacci<long long>(i).a01 == fibonacciSlow(i));
     }
 
     PROFILE_START(0);
-    for (int i = 0; i <= 100000; i++) {
+    for (int i = 0; i <= 1000; i++) {
         auto t = fibonacci<long long>(i);
         if (t.a11 == LLONG_MAX)
             cerr << "?" << endl;
@@ -54,7 +54,7 @@ void testFibonacci() {
     PROFILE_STOP(0);
 
     PROFILE_START(1);
-    for (int i = 0; i <= 100000; i++) {
+    for (int i = 0; i <= 1000; i++) {
         auto t = fibonacciSlow(i);
         if (t == LLONG_MAX)
             cerr << "?" << endl;

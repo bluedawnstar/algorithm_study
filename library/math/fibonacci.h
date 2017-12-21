@@ -1,6 +1,6 @@
 #pragma once
 
-#include "matrix.h"
+#include "matrix2x2.h"
 
 /*
 <Important properties>
