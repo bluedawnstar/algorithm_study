@@ -22,13 +22,13 @@ struct FenwickTree {
             add(i, arr[i]);
     }
 
-    void init(vector<T>& v, int n) {
-        for (int i = 0; i < n; i++)
+    void init(vector<T>& v) {
+        for (int i = 0; i < (int)v.size(); i++)
             add(i, v[i]);
     }
 
     // sum from 0 to pos
-    T sum(int pos) {
+    T sum(int pos) const {
         pos++;
 
         T res = 0;
@@ -41,7 +41,7 @@ struct FenwickTree {
     }
 
     // inclusive
-    T sumRange(int left, int right) {
+    T sumRange(int left, int right) const {
         T res = sum(right);
         if (left > 0)
             res -= sum(left - 1);
@@ -63,75 +63,43 @@ struct FenwickTree {
         if (right + 1 < (int)tree.size() - 1)
             add(right + 1, -val);
     }
-};
-
-//--------- Fenwick Tree 2D ---------------------------------------------------
-
-template <typename T>
-struct FenwickTree2D {
-    vector<vector<T>> tree;
-
-    FenwickTree2D(int rowN, int colN) : tree(rowN + 1, vector<T>(colN + 1)) {
-        // no action
-    }
-
-    void clear() {
-        for (int i = 0; i < (int)tree.size(); i++)
-            fill(tree[i].begin(), tree[i].end(), 0);
-    }
-
-    // to initialize from (0, 0)
-    void init(int row, int col, T val) {
-        T v = sum(row, col);
-        if (row > 0)
-            v -= sum(row - 1, col);
-        if (col > 0)
-            v -= sum(row, col - 1);
-        if (row > 0 && col > 0)
-            v += sum(row - 1, col - 1);
-        add(row, col, val - v);
-    }
-
-    // to initialize from (N - 1, M - 1)
-    void initReverse(int row, int col, T val) {
-        add(row, col, val);
-    }
 
 
-    T sum(int row, int col) {
-        row++;
-        col++;
-
-        T res = 0;
-        for (int r = row; r > 0; r &= r - 1) {
-            for (int c = col; c > 0; c &= c - 1) {
-                res += tree[r][c];
-            }
+    T get(int pos) const {
+        T res = tree[pos + 1];
+        if (pos > 0) {
+            int lca = pos & (pos + 1);
+            for (pos; pos != lca; pos &= pos - 1)
+                res -= tree[pos];
         }
 
         return res;
     }
 
-    T sumRange(int row1, int col1, int row2, int col2) {
-        T res = sum(row2, col2);
-        if (row1 > 0)
-            res -= sum(row1 - 1, col2);
-        if (col1 > 0)
-            res -= sum(row2, col1 - 1);
-        if (row1 > 0 && col1 > 0)
-            res += sum(row1 - 1, col1 - 1);
-        return res;
+    void set(int pos, T val) {
+        add(pos, val - get(pos));
     }
 
-    void add(int row, int col, T val) {
-        row++;
-        col++;
+    // returns min(i | sum[0,i] >= sum)
+    int lowerBound(T sum) const {
+        --sum;
 
-        for (int r = row; r < (int)tree.size(); r += r & -r) {
-            for (int c = col; c < (int)tree[row].size(); c += c & -c) {
-                tree[r][c] += val;
+        int N = (int)tree.size() - 1;
+        int pos = 0;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        for (; blockSize > 0; blockSize >>= 1) {
+            int nextPos = pos + blockSize;
+            if (nextPos < N && sum >= tree[nextPos]) {
+                sum -= tree[nextPos];
+                pos = nextPos;
             }
         }
+
+        return pos;
     }
 };
 
@@ -159,12 +127,12 @@ struct FenwickTreeMultAdd {
         add(right + 1, -d);
     }
 
-    T sum(int x) {
+    T sum(int x) const {
         return addT.sum(x) + mulT.sum(x) * x;
     }
 
     // (inclusive, inclusive)
-    T sumRange(int left, int right) {
+    T sumRange(int left, int right) const {
         return sum(right) - sum(left - 1);
     }
 };

@@ -26,7 +26,7 @@ static int rand32() {
 }
 
 void testSegmentTreeCompactLazyAdd() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Compact Segment Tree - Lazy Add ----------------------------------------" << endl;
 
@@ -93,7 +93,7 @@ void testSegmentTreeCompactLazyAdd() {
             int res = 0;
             FenwickTree<int> ft(N);
 
-            ft.init(T, N);
+            ft.init(T);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += ft.sumRange(it.first, it.second);

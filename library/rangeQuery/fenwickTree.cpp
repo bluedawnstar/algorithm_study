@@ -14,32 +14,117 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
+static int sumSlow(vector<int>& v, int L, int R) {
+    int res = 0;
+    while (L <= R)
+        res += v[L++];
+    return res;
+}
+
+static int lowerBoundSlow(vector<int>& v, int k) {
+    int res = 0;
+    for (int i = 0; i < (int)v.size(); i++) {
+        res += v[i];
+        if (res >= k)
+            return i;
+    }
+    return (int)v.size();
+}
+
 void testFenwickTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- FenwickTree -----------------------------------------" << endl;
+    {
+        vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int N = (int)in.size();
 
-    int freq[] = { 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
-    int n = sizeof(freq) / sizeof(freq[0]);
+        FenwickTree<int> fenwick(N);
+        fenwick.init(in);
 
-    FenwickTree<int> fenwick(n);
+        int ans = fenwick.sum(5);
+        cout << "fenwick.sum(5) = " << ans << endl;
+        assert(ans == 12);
 
-    fenwick.init(freq, n);
+        fenwick.add(3, 6);
+        cout << "after fenwick.add(3, 6)" << endl;
 
-    int ans = fenwick.sum(5);
-    cout << "fenwick.sum(5) = " << ans << endl;
-    assert(ans == 12);
+        ans = fenwick.sum(5);
+        cout << "fenwick.sum(5) = " << ans << endl;
+        assert(ans == 18);
 
-    fenwick.add(3, 6);
-    cout << "after fenwick.add(3, 6)" << endl;
+        ans = fenwick.sumRange(1, 5);
+        cout << "fenwick.rangeSum(1, 5) = " << ans << endl;
+        assert(ans == 16);
+    }
+    {
+        vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int N = (int)in.size();
 
-    ans = fenwick.sum(5);
-    cout << "fenwick.sum(5) = " << ans << endl;
-    assert(ans == 18);
+        FenwickTree<int> fenwick(N);
+        fenwick.init(in);
 
-    ans = fenwick.sumRange(1, 5);
-    cout << "fenwick.rangeSum(1, 5) = " << ans << endl;
-    assert(ans == 16);
+        for (int i = 0; i < N; i++) {
+            int ans = fenwick.get(i);
+            int gt = sumSlow(in, i, i);
+            if (ans != gt) {
+                ans = fenwick.get(i);
+                cerr << "[" << i << "] ans = " << ans << ", gt = " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+
+        for (int i = 0; i < 10000; i++) {
+            if (i % 1) {
+                int idx = rand() % N;
+                int val = rand() % 100;
+                in[idx] = val;
+                fenwick.set(idx, val);
+
+                int R = idx;
+                int ans = fenwick.get(R);
+                int gt = sumSlow(in, R, R);
+                if (ans != gt) {
+                    ans = fenwick.get(R);
+                    cerr << "[" << R << "] ans = " << ans << ", gt = " << gt << endl;
+                }
+                assert(ans == gt);
+            } else {
+                int R = rand() % N;
+                int ans = fenwick.get(R);
+                int gt = sumSlow(in, R, R);
+                if (ans != gt) {
+                    ans = fenwick.get(R);
+                    cerr << "[" << R << "] ans = " << ans << ", gt = " << gt << endl;
+                }
+                assert(ans == gt);
+            }
+        }
+    }
+    cout << "*** lower bound test" << endl;
+    {
+        int N = 1000;
+        vector<int> in(N);
+
+        for (int i = 0; i < N; i++)
+            in[i] = rand() % 1000;
+
+        FenwickTree<int> fenwick(N);
+        fenwick.init(in);
+
+        for (int i = 0; i < N; i++) {
+            int R = rand() % N;
+            int sum = sumSlow(in, 0, R);
+
+            int ans = fenwick.lowerBound(sum);
+            int gt = lowerBoundSlow(in, sum);
+            if (ans != gt) {
+                cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                ans = fenwick.lowerBound(sum);
+            }
+            assert(ans == gt);
+        }
+    }
 
     cout << "OK!" << endl;
 }
