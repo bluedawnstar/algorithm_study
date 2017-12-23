@@ -153,6 +153,7 @@
     <ClCompile Include="dag.cpp" />
     <ClCompile Include="generalMaxMatching.cpp" />
     <ClCompile Include="assignmentProblem.cpp" />
+    <ClCompile Include="graphColoringGreedy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minimumSpanningTree.cpp" />
     <ClCompile Include="reachableAllPair.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="dag.h" />
     <ClInclude Include="generalMaxMatching.h" />
     <ClInclude Include="assignmentProblem.h" />
+    <ClInclude Include="graphColoringGreedy.h" />
     <ClInclude Include="minimumSpanningTree.h" />
     <ClInclude Include="reachableAllPair.h" />
     <ClInclude Include="shortestPathAllPair.h" />

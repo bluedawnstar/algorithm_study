@@ -6,7 +6,7 @@ struct DAG {
     static const T INF = T(0x3f3f3f3f);
 
     int N;
-    vector<vector<int>> edges;
+    vector<vector<pair<int,T>>> edges;
 
     DAG() : N(0) {
     }
@@ -20,14 +20,14 @@ struct DAG {
     }
 
     // add edges to undirected graph
-    void addEdge(int u, int v) {
-        edges[u].push_back(v);
+    void addEdge(int u, int v, T w) {
+        edges[u].emplace_back(v, w);
     }
 
     //--- topological sort with DFS
 
     // return if cycle detected
-    bool topologicalSortDFS(int u, vector<int>& res) {
+    bool topologicalSortDFS(int u, vector<int>& res) const {
         res.clear();
         res.reserve(N);
 
@@ -40,7 +40,7 @@ struct DAG {
     }
 
     // return if cycle detected
-    bool topologicalSortDFS(vector<int>& res) {
+    bool topologicalSortDFS(vector<int>& res) const {
         res.clear();
         res.reserve(N);
 
@@ -61,14 +61,14 @@ struct DAG {
     //--- topological sort with BFS (Kahn's algorithm)
 
     // return if cycle detected
-    bool topologicalSortBFS(vector<int>& res) {
+    bool topologicalSortBFS(vector<int>& res) const {
         res.clear();
         res.reserve(N);
 
         vector<int> inDegree(N, 0);
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < (int)edges[i].size(); j++)
-                inDegree[edges[i][j]]++;
+        for (int u = 0; u < N; u++) {
+            for (auto& e : edges[u])
+                inDegree[e.first]++;
         }
 
         queue<int> Q;
@@ -81,28 +81,66 @@ struct DAG {
             Q.pop();
 
             res.push_back(u);
-            for (int i = 0; i < (int)edges[u].size(); i++) {
-                int v = edges[u][i];
-                if (--inDegree[v] == 0)
-                    Q.push(v);
+            for (auto& e : edges[u]) {
+                if (--inDegree[e.first] == 0)
+                    Q.push(e.first);
             }
         }
 
         return res.size() != N;
     }
 
+    //--- shortest path - one source
+
+    // O(V + E)
+    // return (distances, parents)
+    pair<vector<int>, vector<int>> findShortestPath(int start) const {
+        vector<int> order;
+        topologicalSortDFS(order);
+
+        vector<T> dist(N, INF);
+        vector<int> parent(N, -1);
+
+        dist[start] = 0;
+        for (int u : order) {
+            if (dist[u] == INF)
+                continue;
+
+            for (auto& e : edges[u]) {
+                int v = e.first;
+                if (dist[v] > dist[u] + e.second) {
+                    dist[v] = dist[u] + e.second;
+                    parent[v] = u;
+                }
+            }
+        }
+
+        return make_pair(move(dist), move(parent));
+    }
+
+    vector<int> getShortestPath(const vector<int>& parents, int v) const {
+        vector<int> res;
+        do {
+            res.push_back(v);
+            v = parents[v];
+        } while (v >= 0);
+
+        reverse(res.begin(), res.end());
+
+        return res;
+    }
+
 private:
     // return if cycle detected
-    bool topologicalSortDFS(int u, vector<bool>& visited, vector<int>& res) {
+    bool topologicalSortDFS(int u, vector<bool>& visited, vector<int>& res) const {
         visited[u] = true;
-        for (int i = 0; i < (int)edges[u].size(); i++) {
-            int v = edges[u][i];
-            if (!visited[v]) {
-                if (topologicalSortDFS(v, visited, res))
+        for (auto& e : edges[u]) {
+            if (!visited[e.first]) {
+                if (topologicalSortDFS(e.first, visited, res))
                     return true;
             }
             //TODO: uncomment if cycle detection is necessary
-            //else if (find(res.begin(), res.end(), v) == res.end())
+            //else if (find(res.begin(), res.end(), e.first) == res.end())
             //    return true;
         }
         res.push_back(u);

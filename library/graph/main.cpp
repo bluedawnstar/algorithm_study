@@ -17,4 +17,5 @@ int main(void) {
     TEST(GeneralGraphMaxMatching);
     TEST(MinimumSpanningTree);
     TEST(Hungarian);
+    TEST(GraphColoringGreedy);
 }

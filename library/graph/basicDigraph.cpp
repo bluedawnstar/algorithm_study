@@ -105,7 +105,7 @@ static bool check(vector<vector<int>>& L, vector<vector<int>>& R) {
 }
 
 void testBasicDigraph() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Basic Digraph ---------" << endl;
     cout << "* Shortest path" << endl;
