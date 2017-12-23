@@ -1,14 +1,14 @@
 #pragma once
 
 #include "suffixTree.h"
-#include "../tree/sparseTableLCA.h"
+#include "../tree/lcaSparseTable.h"
 
 struct SuffixTreeAlgo {
     typedef SuffixTree::Node Node;
 
     SuffixTree&     tree;
     vector<int>     levels;     // of all nodes
-    SparseTableLCA  sptLCA;     // of all nodes
+    LcaSparseTable  sptLCA;     // of all nodes
 
     vector<Node*>   suffixes;   // of leaf nodes
 
@@ -20,7 +20,7 @@ struct SuffixTreeAlgo {
     //--- LCA ----------------------------------------------------
 
     Node* findLCA(const Node* left, const Node* right) const {
-        int id = sptLCA.findLCA(left->id, right->id);
+        int id = sptLCA.lca(left->id, right->id);
         return tree.getNode(id);
     }
 
@@ -29,7 +29,7 @@ struct SuffixTreeAlgo {
     }
 
     Node* findLCAWithNodeID(int leftNodeId, int rightNodeId) const {
-        int id = sptLCA.findLCA(leftNodeId, rightNodeId);
+        int id = sptLCA.lca(leftNodeId, rightNodeId);
         return tree.getNode(id);
     }
 

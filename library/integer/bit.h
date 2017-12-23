@@ -63,7 +63,7 @@ inline int log2Int(unsigned long long x) {
 
 // submasks
 template <typename T>
-inline vector<T> getAllSubmasks(T mask) {
+inline vector<T> getAllBackwardSubmasks(T mask) {
     vector<T> res;
     for (T s = mask; ; s = (s - T(1)) & mask) {
         res.push_back(s);
@@ -73,11 +73,36 @@ inline vector<T> getAllSubmasks(T mask) {
     return res;
 }
 
+// submasks
+template <typename T>
+inline vector<T> getAllForwardSubmasks(T mask) {
+    vector<T> res;
+    for (T s = mask; ; s = (s - T(1)) & mask) {
+        res.push_back(s ^ mask);
+        if (!s)
+            break;
+    }
+    return res;
+}
+
 // O(3^n)
-inline void foreachAllSubmasksOfAllMasks(int n) {
+inline void foreachAllBackwardSubmasksOfAllMasks(int n) {
     for (int m = 0; m < (1 << n); m++) {
         for (int s = m; s; s = (s - 1) & m) {
             //... do something!...
         }
+        //... do something!...
+    }
+}
+
+// O(3^n)
+inline void foreachAllForwardSubmasksOfAllMasks(int n) {
+    for (int m = 0; m < (1 << n); m++) {
+        for (int s = m; s; s = (s - 1) & m) {
+            int submask = s ^ m;
+            //... do something!...
+        }
+        int submask = m;
+        //... do something!...
     }
 }
