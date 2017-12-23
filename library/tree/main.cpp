@@ -11,7 +11,8 @@ int main(void) {
     TEST(DfsTour);
     TEST(EulerTour);
     TEST(TreeMO);
-    TEST(SparseTableLCA);
+    TEST(LcaSparseTable);
+    TEST(LcaShieberVishkin);
     TEST(BST);
     TEST(Splay);
     TEST(SplayRangeQuery);

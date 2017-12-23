@@ -27,9 +27,6 @@
     <ClCompile Include="treeHeavyLightDecomposition.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="sparseTableLCA.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="splayTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -69,6 +66,12 @@
     <ClCompile Include="treeDfsTour.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lcaSparseTable.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lcaSchieberVishkin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -78,9 +81,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeHeavyLightDecomposition.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="sparseTableLCA.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treap.h">
@@ -117,6 +117,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeDfsTour.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lcaSparseTable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lcaSchieberVishkin.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

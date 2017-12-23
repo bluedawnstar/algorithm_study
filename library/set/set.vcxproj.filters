@@ -32,5 +32,11 @@
     <ClInclude Include="bitSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="bitSetSimple.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitSetVariable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

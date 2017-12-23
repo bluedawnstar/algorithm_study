@@ -1,7 +1,7 @@
 #pragma once
 
-// BitSet class with mBitCnt member variable
-struct BitSet {
+// BitSet class without mBitCnt member variable
+struct BitSetSimple {
     static const int BIT_SIZE = sizeof(unsigned) * 8;
     static const unsigned BIT_ALL = (unsigned)-1;
     static const unsigned BIT_ONE = 1u;
@@ -10,14 +10,12 @@ struct BitSet {
     static const int INDEX_SHIFT = 5;
 
     int mN;
-    int mBitCnt;
 
     unsigned mEndMask;
     vector<unsigned> mV;
 
     void init(int N) {
         mN = N;
-        mBitCnt = 0;
 
         int r = N % BIT_SIZE;
         mEndMask = r ? ((BIT_ONE << r) - BIT_ONE) : BIT_ALL;
@@ -29,105 +27,86 @@ struct BitSet {
     }
 
     int count() const {
-        return mBitCnt;
+        int res = 0;
+        for (int i = 0; i < (int)mV.size(); i++)
+            res += popCount(mV[i]);
+        return res;
     }
 
     bool all() const {
-        return mBitCnt >= mN;
+        return count() >= mN;
     }
 
     bool any() const {
-        return mBitCnt > 0;
+        return count() > 0;
     }
 
     bool none() const {
-        return mBitCnt <= 0;
+        return count() <= 0;
     }
 
     bool test(int pos) const {
         return (mV[pos >> INDEX_SHIFT] & (BIT_ONE << (pos & INDEX_MASK))) != 0;
     }
 
-    BitSet& set() {
-        if (mBitCnt < mN) {
-            int n = mN >> INDEX_SHIFT;
-            for (int i = 0; i < n; i++)
-                mV[i] = BIT_ALL;
-            if (mEndMask + 1 != 0)
-                mV[n] = mEndMask;
-
-            mBitCnt = mN;
-        }
+    BitSetSimple& set() {
+        int n = mN >> INDEX_SHIFT;
+        for (int i = 0; i < n; i++)
+            mV[i] = BIT_ALL;
+        if (mEndMask + 1 != 0)
+            mV[n] = mEndMask;
         return *this;
     }
 
-    BitSet& set(int pos, bool value = true) {
+    BitSetSimple& set(int pos, bool value = true) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
         if (value) {
-            if ((mV[idx] & (BIT_ONE << off)) == 0) {
+            if ((mV[idx] & (BIT_ONE << off)) == 0)
                 mV[idx] |= BIT_ONE << off;
-                mBitCnt++;
-            }
         } else {
-            if (mV[idx] & (BIT_ONE << off)) {
+            if (mV[idx] & (BIT_ONE << off))
                 mV[idx] &= ~(BIT_ONE << off);
-                mBitCnt--;
-            }
         }
         return *this;
     }
 
-    BitSet& reset() {
-        if (mBitCnt > 0) {
-            int n = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
-            for (int i = 0; i < n; i++)
-                mV[i] = 0;
-            mBitCnt = 0;
-        }
+    BitSetSimple& reset() {
+        int n = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
+        for (int i = 0; i < n; i++)
+            mV[i] = 0;
         return *this;
     }
 
-    BitSet& reset(int pos) {
+    BitSetSimple& reset(int pos) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
-        if (mV[idx] & (BIT_ONE << off)) {
+        if (mV[idx] & (BIT_ONE << off))
             mV[idx] &= ~(BIT_ONE << off);
-            mBitCnt--;
-        }
 
         return *this;
     }
 
-    BitSet& flip() {
+    BitSetSimple& flip() {
         int n = mN >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
             mV[i] ^= BIT_ALL;
         if (mEndMask + 1 != 0)
             mV[n] ^= mEndMask;
-
-        mBitCnt = mN - mBitCnt;
-
         return *this;
     }
 
-    BitSet& flip(int pos) {
+    BitSetSimple& flip(int pos) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
-        if ((mV[idx] & (BIT_ONE << off)) == 0) {
+        if ((mV[idx] & (BIT_ONE << off)) == 0)
             mV[idx] |= BIT_ONE << off;
-            mBitCnt++;
-        } else {
+        else
             mV[idx] &= ~(BIT_ONE << off);
-            mBitCnt--;
-        }
         return *this;
     }
 
-    bool operator ==(const BitSet& rhs) const {
-        if (mBitCnt != rhs.mBitCnt)
-            return false;
-
+    bool operator ==(const BitSetSimple& rhs) const {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         if (n1 != n2)
@@ -140,45 +119,45 @@ struct BitSet {
         return true;
     }
 
-    bool operator !=(const BitSet& rhs) const {
+    bool operator !=(const BitSetSimple& rhs) const {
         return !operator ==(rhs);
     }
 
-    BitSet& operator |=(const BitSet& rhs) {
+    BitSetSimple& operator |=(const BitSetSimple& rhs) {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
 
         int n = min(n1, n2);
         for (int i = 0; i < n; i++)
             mV[i] |= rhs.mV[i];
-        recalcCount();
+
         return *this;
     }
 
-    BitSet& operator &=(const BitSet& rhs) {
+    BitSetSimple& operator &=(const BitSetSimple& rhs) {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
 
         int n = min(n1, n2);
         for (int i = 0; i < n; i++)
             mV[i] &= rhs.mV[i];
-        recalcCount();
+
         return *this;
     }
 
-    BitSet& operator ^=(const BitSet& rhs) {
+    BitSetSimple& operator ^=(const BitSetSimple& rhs) {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
 
         int n = min(n1, n2);
         for (int i = 0; i < n; i++)
             mV[i] ^= rhs.mV[i];
-        recalcCount();
+
         return *this;
     }
 
-    BitSet operator |(const BitSet& rhs) {
-        BitSet bs = *this;
+    BitSetSimple operator |(const BitSetSimple& rhs) {
+        BitSetSimple bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -186,12 +165,12 @@ struct BitSet {
             bs.mV[i] = mV[i] | rhs.mV[i];
         if (mEndMask + 1 != 0)
             bs.mV[n] = (mV[n] | rhs.mV[n]);
-        bs.recalcCount();
+
         return bs;
     }
 
-    BitSet operator &(const BitSet& rhs) {
-        BitSet bs = *this;
+    BitSetSimple operator &(const BitSetSimple& rhs) {
+        BitSetSimple bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -199,12 +178,12 @@ struct BitSet {
             bs.mV[i] = mV[i] & rhs.mV[i];
         if (mEndMask + 1 != 0)
             bs.mV[n] = mV[n] & rhs.mV[n];
-        bs.recalcCount();
+
         return bs;
     }
 
-    BitSet operator ^(const BitSet& rhs) {
-        BitSet bs = *this;
+    BitSetSimple operator ^(const BitSetSimple& rhs) {
+        BitSetSimple bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -212,12 +191,12 @@ struct BitSet {
             bs.mV[i] = mV[i] ^ rhs.mV[i];
         if (mEndMask + 1 != 0)
             bs.mV[n] = mV[n] ^ rhs.mV[n];
-        bs.recalcCount();
+
         return bs;
     }
 
-    BitSet operator ~() const {
-        BitSet bs = *this;
+    BitSetSimple operator ~() const {
+        BitSetSimple bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -226,17 +205,15 @@ struct BitSet {
         if (mEndMask + 1 != 0)
             bs.mV[n] = ~mV[n] & mEndMask;
 
-        bs.mBitCnt = mN - mBitCnt;
         return bs;
     }
 
-    BitSet& operator <<=(int n) {
+    BitSetSimple& operator <<=(int n) {
         if (n <= 0)
             return *this;
 
         if (n >= mN) {
             fill(mV.begin(), mV.end(), 0);
-            mBitCnt = 0;
             return *this;
         }
 
@@ -266,17 +243,15 @@ struct BitSet {
         if (mEndMask + 1 != 0)
             mV[mN >> INDEX_SHIFT] &= mEndMask;
 
-        recalcCount();
         return *this;
     }
 
-    BitSet& operator >>=(int n) {
+    BitSetSimple& operator >>=(int n) {
         if (n <= 0)
             return *this;
 
         if (n >= mN) {
             fill(mV.begin(), mV.end(), 0);
-            mBitCnt = 0;
             return *this;
         }
 
@@ -308,16 +283,12 @@ struct BitSet {
         if (mEndMask + 1 != 0)
             mV[mN >> INDEX_SHIFT] &= mEndMask;
 
-        recalcCount();
         return *this;
     }
 
     //-----------------------------------------------------
 
     int first() const {
-        if (mBitCnt <= 0)
-            return -1;
-
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i]) {
                 int j = 0;
@@ -330,21 +301,17 @@ struct BitSet {
         return -1;
     }
 
-    int recalcCount() {
-        mBitCnt = 0;
-        for (int i = 0; i < (int)mV.size(); i++)
-            mBitCnt += popCount(mV[i]);
-        return mBitCnt;
-    }
-
     static int popCount(unsigned x) {
 #ifndef __GNUC__
+        return (int)__popcnt(x);
+        /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
         x = (x + (x >> 4)) & 0x0F0F0F0F;
         x = x + (x >> 8);
         x = x + (x >> 16);
         return x & 0x0000003F;
+        */
 #else
         return __builtin_popcount(x);
 #endif

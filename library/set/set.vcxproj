@@ -152,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitSet.h" />
+    <ClInclude Include="bitSetSimple.h" />
+    <ClInclude Include="bitSetVariable.h" />
     <ClInclude Include="unionFind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

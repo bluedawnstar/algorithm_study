@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "sparseTableLCA.h"
+#include "lcaSparseTable.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -15,10 +15,10 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
-void testSparseTableLCA() {
+void testLcaSparseTable() {
     //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Sparse Table LCA ----------------------------------------" << endl;
+    cout << "-- LCA with Sparse Table -----------------------------------" << endl;
     
     vector<int> parent(100), level(100);
     iota(parent.begin(), parent.end(), 1);
@@ -26,7 +26,7 @@ void testSparseTableLCA() {
     for (int i = 0; i < (int)level.size(); i++)
         level[i] = (int)level.size() - i - 1;
 
-    SparseTableLCA spLCA(parent, level);
+    LcaSparseTable spLCA(parent, level);
     spLCA.build();
 
     assert(spLCA.climb(0, 100) == -1);

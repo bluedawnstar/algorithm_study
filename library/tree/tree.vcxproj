@@ -143,13 +143,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="centroidDecomposition.cpp" />
+    <ClCompile Include="lcaSchieberVishkin.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
     <ClCompile Include="treeEulerTour.cpp" />
     <ClCompile Include="intervalTree.cpp" />
     <ClCompile Include="kdtree.cpp" />
     <ClCompile Include="kdtreeNoUpdate.cpp" />
     <ClCompile Include="linkCutTreePathQuery.cpp" />
-    <ClCompile Include="sparseTableLCA.cpp" />
+    <ClCompile Include="lcaSparseTable.cpp" />
     <ClCompile Include="splayTreeRangeQuery.cpp" />
     <ClCompile Include="redBlackTree.cpp" />
     <ClCompile Include="treap.cpp" />
@@ -164,13 +165,14 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
+    <ClInclude Include="lcaSchieberVishkin.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />
     <ClInclude Include="kdtree.h" />
     <ClInclude Include="kdtreeNoUpdate.h" />
     <ClInclude Include="linkCutTreePathQuery.h" />
-    <ClInclude Include="sparseTableLCA.h" />
+    <ClInclude Include="lcaSparseTable.h" />
     <ClInclude Include="treap.h" />
     <ClInclude Include="treeBasic.h" />
     <ClInclude Include="redBlackTree.h" />

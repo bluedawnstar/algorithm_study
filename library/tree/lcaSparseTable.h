@@ -5,27 +5,27 @@
     init() -> build() -> climb() / findLCA()
 */
 
-struct SparseTableLCA {
+struct LcaSparseTable {
     int                 mN;         // the number of vertex
     int                 mLogN;      // 
     vector<vector<int>> mP;         // mP[0][n] points to the parent
                                     // parent & acestors
     vector<int>         mLevel;     // level
 
-    SparseTableLCA() {
+    LcaSparseTable() {
         mN = 0;
         mLogN = 0;
     }
 
-    SparseTableLCA(int N) {
+    LcaSparseTable(int N) {
         init(N);
     }
 
-    SparseTableLCA(const vector<int>& parent, const vector<int>& level) {
+    LcaSparseTable(const vector<int>& parent, const vector<int>& level) {
         init(parent, level);
     }
 
-    SparseTableLCA(const int parent[], const int level[], int N) {
+    LcaSparseTable(const int parent[], const int level[], int N) {
         init(parent, level, N);
     }
 
@@ -51,6 +51,7 @@ struct SparseTableLCA {
         copy(level, level + N, mLevel.begin());
     }
 
+    // O(NlogN)
     void build() {
         for (int i = 1; i < mLogN; i++) {
             for (int j = 0; j < mN; j++) {
@@ -60,7 +61,7 @@ struct SparseTableLCA {
         }
     }
 
-
+    // O(logD)
     int climb(int x, int dist) const {
         if (dist <= 0)
             return x;
@@ -74,7 +75,8 @@ struct SparseTableLCA {
         return x;
     }
 
-    int findLCA(int A, int B) const {
+    // O(logN)
+    int lca(int A, int B) const {
         if (mLevel[A] < mLevel[B])
             swap(A, B);
 
