@@ -314,22 +314,6 @@ struct BitSet {
 
     //-----------------------------------------------------
 
-    int first() const {
-        if (mBitCnt <= 0)
-            return -1;
-
-        for (int i = 0; i < (int)mV.size(); i++) {
-            if (mV[i]) {
-                int j = 0;
-                for (unsigned x = mV[i]; !(x & 1); x >>= 1, j++)
-                    ;
-                return i * BIT_SIZE + j;
-            }
-        }
-
-        return -1;
-    }
-
     int recalcCount() {
         mBitCnt = 0;
         for (int i = 0; i < (int)mV.size(); i++)
@@ -337,14 +321,53 @@ struct BitSet {
         return mBitCnt;
     }
 
+    int firstClearBit() const {
+        for (int i = 0; i < (int)mV.size(); i++) {
+            if (mV[i] != BIT_ALL) {
+                int m = (int)~mV[i];
+                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+            }
+        }
+        return size();
+    }
+
+    int first() const {
+        for (int i = 0; i < (int)mV.size(); i++) {
+            if (mV[i]) {
+                int m = (int)mV[i];
+                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+            }
+        }
+        return -1;
+    }
+
+    int last() const {
+        for (int i = (int)mV.size() - 1; i >= 0; i--) {
+            if (mV[i])
+                return i * BIT_SIZE + BIT_SIZE - clz(mV[i]) - 1;
+        }
+        return -1;
+    }
+
+    static int clz(unsigned x) {
+#ifndef __GNUC__
+        return (int)__lzcnt(x);
+#else
+        return __builtin_clz(x);
+#endif
+    }
+
     static int popCount(unsigned x) {
 #ifndef __GNUC__
+        return (int)__popcnt(x);
+        /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
         x = (x + (x >> 4)) & 0x0F0F0F0F;
         x = x + (x >> 8);
         x = x + (x >> 16);
         return x & 0x0000003F;
+        */
 #else
         return __builtin_popcount(x);
 #endif

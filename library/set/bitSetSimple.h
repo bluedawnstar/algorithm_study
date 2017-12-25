@@ -288,17 +288,40 @@ struct BitSetSimple {
 
     //-----------------------------------------------------
 
+    int firstClearBit() const {
+        for (int i = 0; i < (int)mV.size(); i++) {
+            if (mV[i] != BIT_ALL) {
+                int m = (int)~mV[i];
+                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+            }
+        }
+        return size();
+    }
+
     int first() const {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i]) {
-                int j = 0;
-                for (unsigned x = mV[i]; !(x & 1); x >>= 1, j++)
-                    ;
-                return i * BIT_SIZE + j;
+                int m = (int)mV[i];
+                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
-
         return -1;
+    }
+
+    int last() const {
+        for (int i = (int)mV.size() - 1; i >= 0; i--) {
+            if (mV[i])
+                return i * BIT_SIZE + BIT_SIZE - clz(mV[i]) - 1;
+        }
+        return -1;
+    }
+
+    static int clz(unsigned x) {
+#ifndef __GNUC__
+        return (int)__lzcnt(x);
+#else
+        return __builtin_clz(x);
+#endif
     }
 
     static int popCount(unsigned x) {

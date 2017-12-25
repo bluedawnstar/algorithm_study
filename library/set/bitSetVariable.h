@@ -71,13 +71,17 @@ struct BitSetVariable {
     }
 
     bool operator ==(const BitSetVariable& rhs) const {
-        if (mV.size() != rhs.mV.size())
-            return false;
-
-        for (int i = 0; i < (int)mV.size(); i++) {
+        int n = (int)min(mV.size(), rhs.mV.size());
+        for (int i = 0; i < n; i++) {
             if (mV[i] != rhs.mV[i])
                 return false;
         }
+
+        const vector<unsigned int>& maxV = (mV.size() >= rhs.mV.size()) ? mV : rhs.mV;
+        for (int i = n; i < (int)maxV.size(); i++)
+            if (!maxV[i])
+                return false;
+
         return true;
     }
 
@@ -250,7 +254,7 @@ struct BitSetVariable {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i] != BIT_ALL) {
                 int m = (int)~mV[i];
-                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                return i * BIT_SIZE + (BIT_SIZE - 1) - clz(unsigned(m & -m));
             }
         }
         return size();
@@ -260,7 +264,7 @@ struct BitSetVariable {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i]) {
                 int m = (int)mV[i];
-                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                return i * BIT_SIZE + (BIT_SIZE - 1) - clz(unsigned(m & -m));
             }
         }
         return -1;
@@ -269,7 +273,7 @@ struct BitSetVariable {
     int last() const {
         for (int i = (int)mV.size() - 1; i >= 0; i--) {
             if (mV[i])
-                return i * BIT_SIZE + BIT_SIZE - clz(mV[i]) - 1;
+                return i * BIT_SIZE + (BIT_SIZE - 1) - clz(mV[i]);
         }
         return -1;
     }

@@ -7,7 +7,7 @@ struct DfsTourTree : public Tree {
     vector<int>             mTime2Node; // time to node index (0 <= time < 2 * N)
     int                     mCurrTime;  //
 
-                                        //--- tree construction ---------------------------------------------------
+    //--- tree construction ---------------------------------------------------
 
     DfsTourTree() {
         mN = 0;
@@ -32,8 +32,13 @@ struct DfsTourTree : public Tree {
         makeLcaTable();
     }
 
-    //--------- DFS -----------------------------------------------------------
+    // return true if u is an ancestor of v
+    bool isAncestor(int u, int v) const {
+        return mVisTime[u].first <= mVisTime[v].first && mVisTime[v].second <= mVisTime[u].second;
+    }
 
+private:
+    //--------- DFS -----------------------------------------------------------
     void dfs(int u, int parent) {
         mVisTime[u].first = mCurrTime;
         mTime2Node[mCurrTime++] = u;
