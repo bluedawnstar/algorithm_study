@@ -28,7 +28,7 @@ struct AhoCorasickAM {
 
     struct Node {
         int             terminal;       // number of string to be ended at this node
-        Node*           fail;
+        Node*           suffixLink;
 
         vector<int>     output;
 
@@ -37,7 +37,7 @@ struct AhoCorasickAM {
 
         void init() {
             this->terminal = -1;
-            this->fail = nullptr;
+            this->suffixLink = nullptr;
             this->childSet = 0;
             this->children.clear();
         }
@@ -163,7 +163,7 @@ struct AhoCorasickAM {
     void build() {
         queue<Node*> Q;
 
-        mRoot.fail = &mRoot;
+        mRoot.suffixLink = &mRoot;
         Q.push(&mRoot);
 
         while (!Q.empty()) {
@@ -177,17 +177,17 @@ struct AhoCorasickAM {
                 Node* child = here->getChild(c);
 
                 if (here == &mRoot)
-                    child->fail = &mRoot;
+                    child->suffixLink = &mRoot;
                 else {
-                    Node* t = here->fail;
+                    Node* t = here->suffixLink;
                     while (t != &mRoot && !t->hasChild(c))
-                        t = t->fail;
+                        t = t->suffixLink;
                     if (t->hasChild(c))
                         t = t->getChild(c);
-                    child->fail = t;
+                    child->suffixLink = t;
                 }
 
-                child->output = child->fail->output;
+                child->output = child->suffixLink->output;
                 if (child->terminal != -1)
                     child->output.push_back(child->terminal);
                 Q.push(child);
@@ -209,7 +209,7 @@ struct AhoCorasickAM {
         for (int i = 0; i < len; i++) {
             int chIdx = ch2i(s[i]);
             while (state != &mRoot && !state->hasChild(chIdx))
-                state = state->fail;
+                state = state->suffixLink;
             if (state->hasChild(chIdx))
                 state = state->getChild(chIdx);
 
