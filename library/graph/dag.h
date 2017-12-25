@@ -130,6 +130,64 @@ struct DAG {
         return res;
     }
 
+    //--- Transitive Closure
+
+    vector<BitSetSimple> getTransitiveClosure(const vector<int>& sorted) const {
+        vector<BitSetSimple> res;
+        for (int i = (int)sorted.size() - 1; i >= 0; i--) {
+            int u = sorted[i];
+
+            res[u].init(N);
+            res[u].set(u);
+            for (int v : edges[u])
+                res[u] |= res[v];
+        }
+
+        return res;
+    }
+
+    vector<BitSetSimple> getTransitiveClosure() const {
+        vector<int> sorted;
+        topologicalSortDFS(sorted);
+
+        return getTransitiveClosure(sorted);
+    }
+
+
+    //--- LCA
+
+    vector<BitSetSimple> makeAncestorTable(const vector<int>& sorted) const {
+        vector<BitSetSimple> res;
+
+        for (int u = 0; u < N; u++)
+            res[u].init(N);
+
+        for (int u : sorted) {
+            res[u].set(u);
+            for (int v : edges[u])
+                res[v] |= res[u];
+        }
+
+        return res;
+    }
+
+    vector<BitSetSimple> makeAncestorTable() const {
+        vector<int> sorted;
+        topologicalSortDFS(sorted);
+
+        return makeAncestorTable(sorted);
+    }
+
+    int findLCA(const vector<BitSet>& ancestorTable, int u, int v) const {
+        for (int idx = (N - 1) >> BitSetSimple::INDEX_SHIFT; idx >= 0; idx--) {
+            auto t = (ancestorTable[u].mV[idx] & ancestorTable[v].mV[idx]);
+            if (t) {
+                return idx * BitSetSimple::BIT_SIZE + (BIT_SIZE - 1) - clz(t);
+            }
+        }
+        return -1;
+    }
+
 private:
     // return if cycle detected
     bool topologicalSortDFS(int u, vector<bool>& visited, vector<int>& res) const {
@@ -145,5 +203,13 @@ private:
         }
         res.push_back(u);
         return false;
+    }
+
+    static int clz(unsigned x) {
+#ifndef __GNUC__
+        return (int)__lzcnt(x);
+#else
+        return __builtin_clz(x);
+#endif
     }
 };
