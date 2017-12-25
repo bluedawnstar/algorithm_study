@@ -18,6 +18,7 @@ int main(void) {
     TEST(SuffixTreeAlgo);
     TEST(Trie);
     TEST(TrieAM);
+    TEST(AhoCorasickAM);
     TEST(CompressedTrie);
     TEST(CompressedTrieAM);
     TEST(DistinctSubstringCounter);

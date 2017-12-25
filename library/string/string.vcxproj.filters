@@ -93,6 +93,9 @@
     <ClCompile Include="suffixTreeAlgo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ahoCorasickAM.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -165,6 +168,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixAutomatonAMAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ahoCorasickAM.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
