@@ -24,4 +24,7 @@ int main(void) {
     TEST(KDTree);
     TEST(KDTreeNoUpdate);
     TEST(IntervalTree);
+    TEST(RTree);
+    TEST(QuadTree);
+    TEST(MetricTree);
 }

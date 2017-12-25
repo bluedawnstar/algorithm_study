@@ -144,10 +144,13 @@
   <ItemGroup>
     <ClCompile Include="centroidDecomposition.cpp" />
     <ClCompile Include="lcaSchieberVishkin.cpp" />
+    <ClCompile Include="metricTree.cpp" />
+    <ClCompile Include="quadTree.cpp" />
+    <ClCompile Include="rTree.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
     <ClCompile Include="treeEulerTour.cpp" />
     <ClCompile Include="intervalTree.cpp" />
-    <ClCompile Include="kdtree.cpp" />
+    <ClCompile Include="kdTree.cpp" />
     <ClCompile Include="kdtreeNoUpdate.cpp" />
     <ClCompile Include="linkCutTreePathQuery.cpp" />
     <ClCompile Include="lcaSparseTable.cpp" />
@@ -166,10 +169,13 @@
     <ClInclude Include="allocator.h" />
     <ClInclude Include="centroidDecomposition.h" />
     <ClInclude Include="lcaSchieberVishkin.h" />
+    <ClInclude Include="metricTree.h" />
+    <ClInclude Include="quadTree.h" />
+    <ClInclude Include="rTree.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />
-    <ClInclude Include="kdtree.h" />
+    <ClInclude Include="kdTree.h" />
     <ClInclude Include="kdtreeNoUpdate.h" />
     <ClInclude Include="linkCutTreePathQuery.h" />
     <ClInclude Include="lcaSparseTable.h" />

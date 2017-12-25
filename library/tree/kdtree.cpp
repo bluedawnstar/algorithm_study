@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "kdtree.h"
+#include "kdTree.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

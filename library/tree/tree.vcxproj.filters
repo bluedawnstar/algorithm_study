@@ -51,9 +51,6 @@
     <ClCompile Include="centroidDecomposition.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="kdtree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="kdtreeNoUpdate.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -70,6 +67,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="lcaSchieberVishkin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="rTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="kdTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="quadTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="metricTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,9 +110,6 @@
     <ClInclude Include="centroidDecomposition.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="kdtree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="kdtreeNoUpdate.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -123,6 +129,18 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lcaSchieberVishkin.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="kdTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="quadTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="metricTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
