@@ -184,7 +184,9 @@
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />
+    <ClInclude Include="suffixAutomatonAlgo.h" />
     <ClInclude Include="suffixAutomatonAM.h" />
+    <ClInclude Include="suffixAutomatonAMAlgo.h" />
     <ClInclude Include="suffixTree.h" />
     <ClInclude Include="suffixTreeAlgo.h" />
     <ClInclude Include="suffixTrie.h" />
