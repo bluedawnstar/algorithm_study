@@ -54,6 +54,9 @@
     <ClCompile Include="graphColoringGreedy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sat2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -93,6 +96,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="graphColoringGreedy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sat2.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

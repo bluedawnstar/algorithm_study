@@ -18,4 +18,5 @@ int main(void) {
     TEST(MinimumSpanningTree);
     TEST(Hungarian);
     TEST(GraphColoringGreedy);
+    TEST(SAT2);
 }
