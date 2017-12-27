@@ -9,7 +9,8 @@ static ostream& operator <<(ostream& os, const pair<int, pair<int, int>>& rhs) {
     return os;
 }
 
-static ostream& operator <<(ostream& os, vector<int>& rhs) {
+template <typename T>
+static ostream& operator <<(ostream& os, vector<T>& rhs) {
     os << "(";
     if (!rhs.empty())
         os << rhs[0];
