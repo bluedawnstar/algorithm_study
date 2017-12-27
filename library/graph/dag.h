@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../set/bitSetSimple.h"
+
 // Directed Acyclic Graph
 template <typename T>
 struct DAG {
@@ -178,7 +180,7 @@ struct DAG {
         return makeAncestorTable(sorted);
     }
 
-    int findLCA(const vector<BitSet>& ancestorTable, int u, int v) const {
+    int findLCA(const vector<BitSetSimple>& ancestorTable, int u, int v) const {
         for (int idx = (N - 1) >> BitSetSimple::INDEX_SHIFT; idx >= 0; idx--) {
             auto t = (ancestorTable[u].mV[idx] & ancestorTable[v].mV[idx]);
             if (t) {

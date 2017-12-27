@@ -145,7 +145,7 @@ struct BasicDigraph {
         return ctx.scc;
     }
 
-    //--- Strongly connected graph test (Kosaraju's algorithm) ---
+    //--- Strongly connected graph test (Kosaraju's algorithm), O(E + V) ---
     static void dfsSCGraph(const vector<vector<int>>& edges, vector<bool>& visited, int u) {
         visited[u] = true;
         for (int v : edges[u]) {
@@ -183,7 +183,6 @@ struct BasicDigraph {
         return true;
     }
 
-    // modified Kosaraju's algorithm for eulerian path or circuit
     bool isSC(const vector<int>& indeg, int start, int finish) {
         // step 1 : check connectivity of the current graph
         vector<bool> visited(N);

@@ -7,7 +7,7 @@ using namespace std;
 
 #include "dag.h"
 
-  /////////// For Testing ///////////////////////////////////////////////////////
+/////////// For Testing ///////////////////////////////////////////////////////
 
 #include <cassert>
 #include <string>
@@ -40,7 +40,7 @@ static DAG<int> buildGraphForShortestPath() {
 }
 
 void testDAG() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Directed Acyclic Graph -------------" << endl;
     {
