@@ -73,7 +73,7 @@ struct Vec2D {
     Vec2D<T> operator *(T v) const {
         return Vec2D<T>{ x * v, y * v };
     }
-
+    
     Vec2D<T>& operator +=(const Vec2D<T>& rhs) const {
         x += rhs.x;
         y += rhs.y;
@@ -90,6 +90,10 @@ struct Vec2D {
         x *= v;
         y *= v;
         return *this;
+    }
+
+    Vec2D<T> operator -() const {
+        return Vec2D<T>{ -x, -y };
     }
 
     double norm() const {
@@ -143,7 +147,7 @@ struct Vec2D {
 
     Vec2D<double> normalize() const {
         double dist = hypot(x, y);
-        return Vec2D<double>(x / dist, y / dist);
+        return Vec2D<double>{ x / dist, y / dist };
     }
 
     //--- Projection -----------------------------------

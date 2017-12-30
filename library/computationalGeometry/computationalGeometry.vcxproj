@@ -154,6 +154,7 @@
     <ClCompile Include="lineSegmentUnion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="polygonDiameter.cpp" />
     <ClCompile Include="vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="lineSegmentIntersection.h" />
     <ClInclude Include="lineSegmentUnion.h" />
     <ClInclude Include="polygon.h" />
+    <ClInclude Include="polygonDiameter.h" />
     <ClInclude Include="vec2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

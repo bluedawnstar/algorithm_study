@@ -54,7 +54,7 @@ private:
         return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
     }
 
-    static bool inside(vector<Vec2D<T>>& poly, Vec2D<T> p) {
+    static bool inside(vector<Vec2D<T>> poly, Vec2D<T> p) {
         Vec2D<T> mid{ 0, 0 };
 
         int N = (int)poly.size();
