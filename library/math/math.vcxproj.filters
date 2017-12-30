@@ -27,6 +27,9 @@
     <ClCompile Include="sumOfPower.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ternarySearch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -39,6 +42,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="matrix2x2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ternarySearch.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
