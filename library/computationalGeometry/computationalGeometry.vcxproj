@@ -148,17 +148,21 @@
   <ItemGroup>
     <ClCompile Include="convexHull.cpp" />
     <ClCompile Include="line.cpp" />
+    <ClCompile Include="lineSegmentAllIntersections.cpp" />
+    <ClCompile Include="lineSegmentIntersection.cpp" />
     <ClCompile Include="lineSegmentUnion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polygon.cpp" />
-    <ClCompile Include="vector.cpp" />
+    <ClCompile Include="vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHull.h" />
     <ClInclude Include="line.h" />
+    <ClInclude Include="lineSegmentAllIntersections.h" />
+    <ClInclude Include="lineSegmentIntersection.h" />
     <ClInclude Include="lineSegmentUnion.h" />
     <ClInclude Include="polygon.h" />
-    <ClInclude Include="vector.h" />
+    <ClInclude Include="vec2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

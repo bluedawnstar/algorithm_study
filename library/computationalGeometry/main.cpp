@@ -11,4 +11,6 @@ int main(void) {
     TEST(Polygon);
     TEST(ConvexHull);
     TEST(LineSegmentUnion);
+    TEST(LineSegmentIntersection);
+    TEST(LineSegmentAllIntersections);
 }

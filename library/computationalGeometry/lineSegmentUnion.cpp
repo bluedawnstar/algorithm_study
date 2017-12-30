@@ -1,7 +1,7 @@
 #include <cmath>
 #include <vector>
 #include <cmath>
-#include "vector.h"
+#include "vec2D.h"
 #include <algorithm>
 
 using namespace std;

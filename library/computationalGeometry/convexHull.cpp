@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "vector.h"
+#include "vec2D.h"
 #include "line.h"
 #include "polygon.h"
 #include "convexHull.h"
@@ -120,7 +120,7 @@ bool testConvexHull(vector<Vec2D<int>>& in) {
 }
 
 void testConvexHull() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Convex Hull ------------------------" << endl;
 

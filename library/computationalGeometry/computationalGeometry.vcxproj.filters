@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="vector.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="line.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -33,11 +30,17 @@
     <ClCompile Include="lineSegmentUnion.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="vec2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lineSegmentIntersection.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lineSegmentAllIntersections.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="line.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -48,6 +51,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lineSegmentUnion.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vec2D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lineSegmentIntersection.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lineSegmentAllIntersections.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

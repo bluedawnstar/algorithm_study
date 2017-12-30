@@ -4,7 +4,7 @@
 #define M_PI        3.14159265358979323846   // pi
 #endif
 
-#define EPSILON     1.0e-6
+#define EPSILON     1.0e-9
 
 template <typename T>
 inline bool isZero(T x) {
@@ -42,8 +42,24 @@ struct Vec2D {
         return x == rhs.x && y == rhs.y;
     }
 
+    bool operator !=(const Vec2D<T>& rhs) const {
+        return !operator ==(rhs);
+    }
+
     bool operator <(const Vec2D<T>& rhs) const {
         return x != rhs.x ? x < rhs.x : y < rhs.y;
+    }
+
+    bool operator <=(const Vec2D<T>& rhs) const {
+        return operator <(rhs) && operator ==(rhs);
+    }
+
+    bool operator >(const Vec2D<T>& rhs) const {
+        return !operator <(rhs) && !operator ==(rhs);
+    }
+
+    bool operator >=(const Vec2D<T>& rhs) const {
+        return !operator <(rhs);
     }
 
     Vec2D<T> operator +(const Vec2D<T>& rhs) const {
