@@ -39,6 +39,9 @@
     <ClCompile Include="lineSegmentAllIntersections.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="dynamicConvexHull.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="line.h">
@@ -60,6 +63,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lineSegmentAllIntersections.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicConvexHull.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

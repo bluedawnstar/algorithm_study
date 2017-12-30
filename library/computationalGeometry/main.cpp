@@ -10,6 +10,7 @@ int main(void) {
     TEST(Line);
     TEST(Polygon);
     TEST(ConvexHull);
+    TEST(DynamicConvexHull);
     TEST(LineSegmentUnion);
     TEST(LineSegmentIntersection);
     TEST(LineSegmentAllIntersections);

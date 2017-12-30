@@ -137,3 +137,27 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryP
 
     return S;
 }
+
+
+// O(NlogN)
+template <typename T>
+vector<Vec2D<T>> doGrahamAndrew(vector<Vec2D<T>>& Q) {
+    int N = (int)Q.size();
+    if (N <= 1)
+        return Q;
+
+    sort(Q.begin(), Q.end());
+
+    int k = 0;
+    vector<Vec2D<T>> res(N * 2);
+    for (int i = 0; i < N; res[k++] = Q[i++])
+        for (; k >= 2 && !cw(res[k - 2], res[k - 1], Q[i]); --k)
+            ;
+
+    for (int i = N - 2, t = k; i >= 0; res[k++] = Q[i--])
+        for (; k > t && !cw(res[k - 2], res[k - 1], Q[i]); --k)
+            ;
+
+    res.resize(k - 1 - (res[0] == res[1]));
+    return res;
+}

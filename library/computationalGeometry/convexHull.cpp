@@ -70,7 +70,11 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void makeData(vector<Vec2D<int>>& points, int size) {
+static int rand32() {
+    return (rand() & 0x3fff) * (rand() & 0xffff);
+}
+
+static void makeData(vector<Vec2D<int>>& points, int size) {
     if ((int)points.size() < size)
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
@@ -81,7 +85,18 @@ void makeData(vector<Vec2D<int>>& points, int size) {
     random_shuffle(points.begin(), points.end());
 }
 
-bool compare(vector<Vec2D<int>>& A, vector<Vec2D<int>>& B) {
+static void makeData(vector<Vec2D<int>>& points, int size, int R) {
+    if ((int)points.size() < size)
+        points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
+
+    for (int i = 0; i < size; i++) {
+        points[i].x = rand32() % (2 * R + 1) % R;
+        points[i].y = ((rand() & 1) ? 1 : -1) * int(sqrt(1.0 * R * R - 1.0 * points[i].x * points[i].x));
+    }
+    random_shuffle(points.begin(), points.end());
+}
+
+static bool compare(vector<Vec2D<int>>& A, vector<Vec2D<int>>& B) {
     if (A.size() != B.size())
         return false;
 
@@ -92,28 +107,32 @@ bool compare(vector<Vec2D<int>>& A, vector<Vec2D<int>>& B) {
     return true;
 }
 
-void dump(vector<Vec2D<int>>& in) {
+static void dump(vector<Vec2D<int>>& in) {
     for (auto it : in) {
         cout << " (" << it.x << ", " << it.y << ")";
     }
     cout << endl;
 }
 
-bool testConvexHull(vector<Vec2D<int>>& in) {
+static bool testConvexHull(vector<Vec2D<int>>& in) {
     vector<Vec2D<int>> out1 = doJarvis(vector<Vec2D<int>>(in));
     vector<Vec2D<int>> out2 = doGrahamScan(vector<Vec2D<int>>(in));
     vector<Vec2D<int>> out3 = doGrahamScanNoRemove(vector<Vec2D<int>>(in));
+    vector<Vec2D<int>> out4 = doGrahamAndrew(vector<Vec2D<int>>(in));
 
     sort(out1.begin(), out1.end());
     sort(out2.begin(), out2.end());
     sort(out3.begin(), out3.end());
-    if (out1 != out2 || out1 != out3) {
+    sort(out4.begin(), out4.end());
+    if (out1 != out2 || out1 != out3 || out1 != out4) {
         cout << "---Jarvis----------" << endl;
         dump(out1);
         cout << "---Graham Scan----------" << endl;
         dump(out2);
         cout << "---Graham Scan without Removing ----------" << endl;
         dump(out3);
+        cout << "---Graham-Andrew----------" << endl;
+        dump(out4);
         return false;
     }
     return true;
@@ -174,27 +193,43 @@ void testConvexHull() {
 
     cout << "speed test (x 1000) ..." << endl;
     {
-        int N = rand() % 1000 + 1;
+        int T = 1000;
+        int N = 10000;
         vector<Vec2D<int>> points(N);
-        makeData(points, N);
+        //makeData(points, N);
+        makeData(points, N, 10000);
 
         PROFILE_START(0);
-        for (int i = 0; i < 1000; i++) {
-            vector<Vec2D<int>> out1 = doJarvis(vector<Vec2D<int>>(points));
+        for (int i = 0; i < T; i++) {
+            vector<Vec2D<int>> out = doJarvis(vector<Vec2D<int>>(points));
+            if (out.empty())
+                cout << "To prevent optimization!" << endl;
         }
         PROFILE_STOP(0);
 
         PROFILE_START(1);
-        for (int i = 0; i < 1000; i++) {
-            vector<Vec2D<int>> out2 = doGrahamScan(vector<Vec2D<int>>(points));
+        for (int i = 0; i < T; i++) {
+            vector<Vec2D<int>> out = doGrahamScan(vector<Vec2D<int>>(points));
+            if (out.empty())
+                cout << "To prevent optimization!" << endl;
         }
         PROFILE_STOP(1);
 
         PROFILE_START(2);
-        for (int i = 0; i < 1000; i++) {
-            vector<Vec2D<int>> out3 = doGrahamScanNoRemove(vector<Vec2D<int>>(points));
+        for (int i = 0; i < T; i++) {
+            vector<Vec2D<int>> out = doGrahamScanNoRemove(vector<Vec2D<int>>(points));
+            if (out.empty())
+                cout << "To prevent optimization!" << endl;
         }
         PROFILE_STOP(2);
+
+        PROFILE_START(3);
+        for (int i = 0; i < T; i++) {
+            vector<Vec2D<int>> out = doGrahamAndrew(vector<Vec2D<int>>(points));
+            if (out.empty())
+                cout << "To prevent optimization!" << endl;
+        }
+        PROFILE_STOP(3);
     }
 
     cout << "OK!" << endl;
