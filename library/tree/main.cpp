@@ -14,6 +14,7 @@ int main(void) {
     TEST(LcaSparseTable);
     TEST(LcaShieberVishkin);
     TEST(BST);
+    TEST(RBTreeSimple);
     TEST(Splay);
     TEST(SplayRangeQuery);
     TEST(Treap);

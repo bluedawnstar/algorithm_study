@@ -81,6 +81,9 @@
     <ClCompile Include="metricTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="redBlackTreeSimple.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -141,6 +144,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="metricTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="redBlackTreeSimple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
