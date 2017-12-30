@@ -16,7 +16,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testCycleDetection() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Cycle Detection ------------------------" << endl;
     {
