@@ -42,6 +42,39 @@ struct BipartiteGraphArray {
         return match;
     }
 
+    //--- Max Independent Set -------------------------------------------------
+
+    // Must call this function after calcMaxMatching()
+    // return (chosen A, chosen B), O(V^3)
+    pair<vector<bool>, vector<bool>> maxIndependentSet() {
+        pair<vector<bool>, vector<bool>> res;
+        res.first.assign(srcN, true);
+        res.second.assign(dstN, false);
+
+        for (int v = 0; v < dstN; v++)
+            if (matchRev[v] < 0)
+                res.second[v] = true;
+
+        while (true) {
+            bool changed = false;
+            for (int u = 0; u < srcN; u++) {
+                if (!res.first[u])
+                    continue;
+                for (int v = 0; v < dstN; v++) {
+                    if (res.second[v] && edges[u][v]) {
+                        res.first[u] = false;
+                        res.second[match[u]] = true;
+                        changed = true;
+                    }
+                }
+            }
+            if (!changed)
+                break;
+        }
+
+        return res;
+    }
+
 private:
     vector<int> match;
     vector<int> matchRev;
@@ -149,6 +182,40 @@ struct BipartiteGraph {
 
     vector<int>& getLastMaxMatchingEdges() {
         return match;
+    }
+
+
+    //--- Max Independent Set -------------------------------------------------
+
+    // Must call this function after calcMaxMatchingXXX()
+    // return (chosen A, chosen B), O(V^3)
+    pair<vector<bool>, vector<bool>> maxIndependentSet() {
+        pair<vector<bool>, vector<bool>> res;
+        res.first.assign(srcN, true);
+        res.second.assign(dstN, false);
+
+        for (int v = 0; v < dstN; v++)
+            if (matchRev[v] < 0)
+                res.second[v] = true;
+
+        while (true) {
+            bool changed = false;
+            for (int u = 0; u < srcN; u++) {
+                if (!res.first[u])
+                    continue;
+                for (int v : edges[u]) {
+                    if (res.second[v]) {
+                        res.first[u] = false;
+                        res.second[match[u]] = true;
+                        changed = true;
+                    }
+                }
+            }
+            if (!changed)
+                break;
+        }
+
+        return res;
     }
 
 private:

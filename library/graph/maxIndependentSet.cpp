@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-static int maxIndependentSet(vector<unsigned long long>& g, const vector<int>& weights) {
+static int maxWeightedIndependentSet(vector<unsigned long long>& g, const vector<int>& weights) {
     int res = 0;
     int n = (int)g.size();
 
@@ -64,8 +64,8 @@ void testMaxIndependentSet() {
                     }
             }
 
-            int ans = MaxWeightedIndependentSet::solve(G, weights);
-            int gt = maxIndependentSet(G, weights);
+            int ans = MaxIndependentSet::getMaxWeightedSum(G, weights);
+            int gt = maxWeightedIndependentSet(G, weights);
             if (ans != gt) {
                 cerr << "Mismatched: gt = " << gt << ", ans = " << ans << endl;
             }
@@ -91,7 +91,7 @@ void testMaxIndependentSet() {
 
         PROFILE_START(0);
         for (int step = 0; step < 10; step++) {
-            int ans = MaxWeightedIndependentSet::solve(G, weights);
+            int ans = MaxIndependentSet::getMaxWeightedSum(G, weights);
             if (ans < 0)
                 cerr << "ERROR!" << endl;
         }

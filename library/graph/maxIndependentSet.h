@@ -3,15 +3,15 @@
 // https://en.wikipedia.org/wiki/Independent_set_(graph_theory)
 
 // Undirected graph
-struct MaxWeightedIndependentSet {
-    static int solve(vector<unsigned long long>& G, const vector<int>& weights) {
+struct MaxIndependentSet {
+    static int getMaxWeightedSum(vector<unsigned long long>& G, const vector<int>& weights) {
         for (int u = 0; u < (int)G.size(); u++)
             G[u] |= (1ull << u);
 
-        return solve(G, (1ull << (int)G.size()) - 1ull, weights);
+        return getMaxWeightedSum(G, (1ull << (int)G.size()) - 1ull, weights);
     }
 
-    static int solve(const vector<vector<int>>& edges, const vector<int>& weights) {
+    static int getMaxWeightedSum(const vector<vector<int>>& edges, const vector<int>& weights) {
         int N = (int)edges.size();
 
         vector<unsigned long long> G(N);
@@ -22,13 +22,16 @@ struct MaxWeightedIndependentSet {
                 G[v] |= (1ull << u);
             }
         }
-        return solve(G, (1ull << N) - 1ull, weights);
+        return getMaxWeightedSum(G, (1ull << N) - 1ull, weights);
     }
+
+    //--- bipartite graph -------------------------
+    // See "bipartiteGraph.h" and "bipartiteGraph.cpp"
 
 private:
     // O(3^(V/3))
     // returns maximum weighted independent set
-    static int solve(const vector<unsigned long long>& G, unsigned long long unused, const vector<int>& weights) {
+    static int getMaxWeightedSum(const vector<unsigned long long>& G, unsigned long long unused, const vector<int>& weights) {
         if (!unused)
             return 0;
 
@@ -43,7 +46,7 @@ private:
         int res = 0;
         unsigned long long nv = G[v] & unused;
         for (int y = ctz(nv); y < N; y += ctz(nv >> (y + 1)) + 1)
-            res = max(res, weights[y] + solve(G, unused & ~G[y], weights));
+            res = max(res, weights[y] + getMaxWeightedSum(G, unused & ~G[y], weights));
 
         return res;
     }

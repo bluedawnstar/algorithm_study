@@ -23,9 +23,9 @@ struct MaxClique {
 
 private:
     // O(3^(V/3))
-    // returns maximum weight sum
+    // returns maximum weighted sum among all cliques
     static int doBronKerbosch(const vector<unsigned long long>& G, unsigned long long cur,
-        unsigned long long allowed, unsigned long long forbidden, const vector<int>& weights) {
+                              unsigned long long allowed, unsigned long long forbidden, const vector<int>& weights) {
         int N = (int)G.size();
 
         if (allowed == 0 && forbidden == 0) {

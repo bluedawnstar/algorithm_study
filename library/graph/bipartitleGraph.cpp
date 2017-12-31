@@ -43,7 +43,7 @@ static BipartiteGraph<int> buildGraph() {
 }
 
 void testBipartiteMaching() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Bipartite Maching -------------" << endl;
     {
@@ -52,9 +52,15 @@ void testBipartiteMaching() {
         int ans = graph.calcMaxMatching();
         cout << "bipartite matching : " << ans << endl;
         assert(ans == 5);
-
         cout << graph.getLastMaxMatchingEdges() << endl;
 
+        auto mis = graph.maxIndependentSet();
+        cout << "max independent set : " << endl
+             << "    " << mis.first << endl
+             << "    " << mis.second << endl;
+        vector<bool> misGT1{ true, true, true, true, true, true };
+        vector<bool> misGT2{ false, false, false, false, true, false };
+        assert(mis.first == misGT1 && mis.second == misGT2);
     }
     {
         auto graph = buildGraph();
@@ -62,14 +68,20 @@ void testBipartiteMaching() {
         int ans = graph.calcMaxMatching();
         cout << "bipartite matching : " << ans << endl;
         assert(ans == 5);
-
         cout << graph.getLastMaxMatchingEdges() << endl;
 
         ans = graph.calcMaxMatchingHopcroftKarp();
         cout << "bipartite matching : " << ans << endl;
         assert(ans == 5);
-
         cout << graph.getLastMaxMatchingEdges() << endl;
+
+        auto mis = graph.maxIndependentSet();
+        cout << "max independent set : " << endl
+             << "    " << mis.first << endl
+             << "    " << mis.second << endl;
+        vector<bool> misGT1{ true, true, true, true, true, true };
+        vector<bool> misGT2{ false, false, false, false, true, false };
+        assert(mis.first == misGT1 && mis.second == misGT2);
     }
     cout << "*** Speed Test ***" << endl;
     {
