@@ -10,4 +10,6 @@ int main(void) {
     TEST(Fibonacci);
     TEST(TernarySearch);
     TEST(GaussianElimination);
+    TEST(SimpsonIntegration);
+    TEST(Shuntingyard);
 }

@@ -2,6 +2,7 @@
 
 #include "matrix.h"
 
+// O(N^3)
 vector<double> gauss(Matrix<double> a, vector<double> b) {
     int N = a.N;
     for (int row = 0; row < N; row++) {
