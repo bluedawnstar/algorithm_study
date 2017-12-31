@@ -23,7 +23,7 @@ static ostream& operator <<(ostream& os, const Vec2D<T>& v) {
     return os;
 }
 
-static void dumpTriangles(const DelaunayTriangulation<double>& dt, const vector<Triangle>& tr) {
+static void dumpTriangles(const DelaunayTriangulation<double>& dt, const vector<DelaunayTriangulation<double>::Triangle>& tr) {
     for (auto& it : tr) {
         cout << "{" << dt.points[it.p[0]] << "," << dt.points[it.p[1]] << "," << dt.points[it.p[2]] << "},";
     }
@@ -31,7 +31,7 @@ static void dumpTriangles(const DelaunayTriangulation<double>& dt, const vector<
 }
 
 void testDelaunayTriangulation() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Delaunay Triangulation ---------------------------------" << endl;
 

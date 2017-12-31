@@ -1,31 +1,32 @@
 #pragma once
 
-struct Triangle {
-    int p[3];
-
-    Triangle() {
-        memset(p, 0, sizeof(p));
-    }
-
-    Triangle(int ai, int bi, int ci) {
-        p[0] = ai;
-        p[1] = bi;
-        p[2] = ci;
-    }
-
-    Triangle(const Triangle& rhs) {
-        operator =(rhs);
-    }
-
-    Triangle& operator =(const Triangle& rhs) {
-        if (this != &rhs)
-            memcpy(p, rhs.p, sizeof(p));
-        return *this;
-    }
-};
-
 template <typename T>
 struct DelaunayTriangulation {
+    struct Triangle {
+        int p[3];                               // index
+
+        Triangle() {
+            memset(p, 0, sizeof(p));
+        }
+
+        Triangle(int ai, int bi, int ci) {
+            p[0] = ai;
+            p[1] = bi;
+            p[2] = ci;
+        }
+
+        Triangle(const Triangle& rhs) {
+            operator =(rhs);
+        }
+
+        Triangle& operator =(const Triangle& rhs) {
+            if (this != &rhs)
+                memcpy(p, rhs.p, sizeof(p));
+            return *this;
+        }
+    };
+
+
     const T INF = 0x3f3f3f3f;
 
     vector<Vec2D<T>> points;
@@ -39,6 +40,7 @@ struct DelaunayTriangulation {
         triangles.push_back(Triangle(0, 1, 2));
     }
 
+    // O(N)
     void add(T x, T y) {
         Vec2D<T> pt{ x, y };
         points.push_back(pt);

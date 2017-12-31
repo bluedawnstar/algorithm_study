@@ -16,4 +16,5 @@ int main(void) {
     TEST(LineSegmentIntersection);
     TEST(LineSegmentAllIntersections);
     TEST(DelaunayTriangulation);
+    TEST(ClosestPair);
 }

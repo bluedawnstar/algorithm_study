@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="closestPair.cpp" />
     <ClCompile Include="convexHull.cpp" />
     <ClCompile Include="delaunayTriangulation.cpp" />
     <ClCompile Include="dynamicConvexHull.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="closestPair.h" />
     <ClInclude Include="convexHull.h" />
     <ClInclude Include="delaunayTriangulation.h" />
     <ClInclude Include="dynamicConvexHull.h" />
