@@ -43,7 +43,7 @@ static int maxWeightedIndependentSet(vector<unsigned long long>& g, const vector
 }
 
 void testMaxIndependentSet() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Max Weighted Independent Set -----------------------" << endl;
     {

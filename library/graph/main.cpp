@@ -21,4 +21,5 @@ int main(void) {
     TEST(SAT2);
     TEST(MaxClique);
     TEST(MaxIndependentSet);
+    TEST(Hamiltonian);
 }

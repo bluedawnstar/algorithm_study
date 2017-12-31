@@ -63,6 +63,9 @@
     <ClCompile Include="maxIndependentSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="hamiltonian.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -111,6 +114,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="maxIndependentSet.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="hamiltonian.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
