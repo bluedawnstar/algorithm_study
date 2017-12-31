@@ -1,7 +1,11 @@
 #pragma once
 
-typedef int T;
-//template <typename T>
+// <PRECONDITION>
+//  - 'Polygon' must be a convex polygon.
+//  - 'Polygon' must be stored by counting-clockwise order
+//
+// Rotating Calipers : O(N)
+template <typename T>
 inline double calcPolygonDiameter(const vector<Vec2D<T>>& polygon) {
     int N = (int)polygon.size();
 
@@ -9,7 +13,7 @@ inline double calcPolygonDiameter(const vector<Vec2D<T>>& polygon) {
     int right = max_element(polygon.begin(), polygon.end()) - polygon.begin();
 
     Vec2D<double> calipersA{ 0, 1 };
-    double res = (polygon[right] - polygon[left]).norm();
+    double res = (polygon[right] - polygon[left]).norm();               // calculate 
 
     vector<Vec2D<double>> toNext(N);
     for (int i = 0; i < N; i++)
@@ -26,7 +30,7 @@ inline double calcPolygonDiameter(const vector<Vec2D<T>>& polygon) {
             calipersA = -toNext[b];
             b = (b + 1) % N;
         }
-        res = max(res, (polygon[a] - polygon[b]).norm());
+        res = max(res, (polygon[a] - polygon[b]).norm());               // calculate
     }
 
     return res;

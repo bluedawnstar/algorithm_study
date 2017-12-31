@@ -4,7 +4,9 @@
 #define M_PI        3.14159265358979323846   // pi
 #endif
 
+#ifndef EPSILON
 #define EPSILON     1.0e-9
+#endif
 
 template <typename T>
 inline bool isZero(T x) {
