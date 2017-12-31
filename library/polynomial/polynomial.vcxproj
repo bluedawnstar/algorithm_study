@@ -152,13 +152,16 @@
     <ClCompile Include="multPoly.cpp" />
     <ClCompile Include="multPolyMod.cpp" />
     <ClCompile Include="ntt.cpp" />
+    <ClCompile Include="rootFindingLaguerre.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="multPoly.h" />
     <ClInclude Include="multPolyMod.h" />
     <ClInclude Include="ntt.h" />
+    <ClInclude Include="rootFindingLaguerre.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
