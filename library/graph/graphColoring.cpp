@@ -18,7 +18,7 @@ using namespace std;
 void testGraphColoringGreedy() {
     //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Graph Coloring Greedy ---------" << endl;
+    cout << "-- Graph Coloring ----------------" << endl;
     {
         GraphColoring gc(5);
         gc.addEdge(0, 1);

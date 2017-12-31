@@ -57,6 +57,9 @@
     <ClCompile Include="graphColoring.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="clique.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -99,6 +102,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="graphColoring.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="clique.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,4 +19,5 @@ int main(void) {
     TEST(Hungarian);
     TEST(GraphColoringGreedy);
     TEST(SAT2);
+    TEST(MaxClique);
 }

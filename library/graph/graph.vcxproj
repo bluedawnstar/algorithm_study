@@ -150,6 +150,7 @@
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartitleGraph.cpp" />
+    <ClCompile Include="clique.cpp" />
     <ClCompile Include="dag.cpp" />
     <ClCompile Include="generalMaxMatching.cpp" />
     <ClCompile Include="assignmentProblem.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="basicUndirectedGraph.h" />
     <ClInclude Include="bcc.h" />
     <ClInclude Include="bipartiteGraph.h" />
+    <ClInclude Include="clique.h" />
     <ClInclude Include="cycleDigraph.h" />
     <ClInclude Include="dag.h" />
     <ClInclude Include="generalMaxMatching.h" />
