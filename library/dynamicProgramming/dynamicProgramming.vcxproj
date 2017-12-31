@@ -150,11 +150,13 @@
     <ClCompile Include="divideConquerOptimization.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="steinerTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHullTrick.h" />
     <ClInclude Include="divideConquerOptimization.h" />
     <ClInclude Include="knuthOptimization.h" />
+    <ClInclude Include="steinerTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
