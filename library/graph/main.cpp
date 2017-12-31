@@ -20,4 +20,5 @@ int main(void) {
     TEST(GraphColoringGreedy);
     TEST(SAT2);
     TEST(MaxClique);
+    TEST(MaxIndependentSet);
 }

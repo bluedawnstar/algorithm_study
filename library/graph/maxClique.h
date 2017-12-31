@@ -1,11 +1,31 @@
 #pragma once
 
+// https://en.wikipedia.org/wiki/Clique_(graph_theory)
+
 // Undirected graph
 struct MaxClique {
+    static int doBronKerbosch(const vector<unsigned long long>& G, const vector<int>& weights) {
+        return doBronKerbosch(G, 0ull, (1ull << (int)G.size()) - 1ull, 0ull, weights);
+    }
+
+    static int doBronKerbosch(const vector<vector<int>>& edges, const vector<int>& weights) {
+        int N = (int)edges.size();
+
+        vector<unsigned long long> G(N);
+        for (int u = 0; u < N; u++) {
+            for (int v : edges[u]) {
+                G[u] |= (1ull << v);
+                G[v] |= (1ull << u);
+            }
+        }
+        return doBronKerbosch(G, 0ull, (1ull << N) - 1ull, 0ull, weights);
+    }
+
+private:
     // O(3^(V/3))
     // returns maximum weight sum
     static int doBronKerbosch(const vector<unsigned long long>& G, unsigned long long cur,
-                              unsigned long long allowed, unsigned long long forbidden, const vector<int>& weights) {
+        unsigned long long allowed, unsigned long long forbidden, const vector<int>& weights) {
         int N = (int)G.size();
 
         if (allowed == 0 && forbidden == 0) {
@@ -29,24 +49,7 @@ struct MaxClique {
         return res;
     }
 
-    static int doBronKerbosch(const vector<unsigned long long>& G, const vector<int>& weights) {
-        return doBronKerbosch(G, 0ull, (1ull << (int)G.size()) - 1ull, 0ull, weights);
-    }
 
-    static int doBronKerbosch(const vector<vector<int>>& edges, const vector<int>& weights) {
-        int N = (int)edges.size();
-
-        vector<unsigned long long> G(N);
-        for (int u = 0; u < N; u++) {
-            for (int v : edges[u]) {
-                G[u] |= (1ull << v);
-                G[v] |= (1ull << u);
-            }
-        }
-        return doBronKerbosch(G, 0ull, (1ull << N) - 1ull, 0ull, weights);
-    }
-
-private:
     static int clz(unsigned x) {
 #ifndef __GNUC__
         return (int)__lzcnt(x);

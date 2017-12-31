@@ -57,7 +57,10 @@
     <ClCompile Include="graphColoring.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="clique.cpp">
+    <ClCompile Include="maxClique.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="maxIndependentSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,7 +107,10 @@
     <ClInclude Include="graphColoring.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="clique.h">
+    <ClInclude Include="maxClique.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxIndependentSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
