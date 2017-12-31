@@ -2,7 +2,7 @@
 
 // <PRECONDITION>
 //  - 'Polygon' must be a convex polygon.
-//  - 'Polygon' must be stored by counting-clockwise order
+//  - 'Polygon' must be stored by counter-clockwise order
 //
 // Rotating Calipers : O(N)
 template <typename T>
