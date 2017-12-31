@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="convexHull.cpp" />
+    <ClCompile Include="delaunayTriangulation.cpp" />
     <ClCompile Include="dynamicConvexHull.cpp" />
     <ClCompile Include="line.cpp" />
     <ClCompile Include="lineSegmentAllIntersections.cpp" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHull.h" />
+    <ClInclude Include="delaunayTriangulation.h" />
     <ClInclude Include="dynamicConvexHull.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="lineSegmentAllIntersections.h" />

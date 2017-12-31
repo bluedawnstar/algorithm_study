@@ -76,19 +76,19 @@ struct Vec2D {
         return Vec2D<T>{ x * v, y * v };
     }
     
-    Vec2D<T>& operator +=(const Vec2D<T>& rhs) const {
+    Vec2D<T>& operator +=(const Vec2D<T>& rhs) {
         x += rhs.x;
         y += rhs.y;
         return *this;
     }
 
-    Vec2D<T>& operator -=(const Vec2D<T>& rhs) const {
+    Vec2D<T>& operator -=(const Vec2D<T>& rhs) {
         x -= rhs.x;
         y -= rhs.y;
         return *this;
     }
 
-    Vec2D<T>& operator *=(T v) const {
+    Vec2D<T>& operator *=(T v) {
         x *= v;
         y *= v;
         return *this;

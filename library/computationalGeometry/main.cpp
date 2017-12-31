@@ -15,4 +15,5 @@ int main(void) {
     TEST(LineSegmentUnion);
     TEST(LineSegmentIntersection);
     TEST(LineSegmentAllIntersections);
+    TEST(DelaunayTriangulation);
 }
