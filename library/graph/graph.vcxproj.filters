@@ -51,10 +51,10 @@
     <ClCompile Include="reachableAllPair.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="graphColoringGreedy.cpp">
+    <ClCompile Include="sat2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="sat2.cpp">
+    <ClCompile Include="graphColoring.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,10 +95,10 @@
     <ClInclude Include="reachableAllPair.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="graphColoringGreedy.h">
+    <ClInclude Include="sat2.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="sat2.h">
+    <ClInclude Include="graphColoring.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
