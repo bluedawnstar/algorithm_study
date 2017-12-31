@@ -9,4 +9,5 @@ int main(void) {
     TEST(Matrix);
     TEST(Fibonacci);
     TEST(TernarySearch);
+    TEST(GaussianElimination);
 }

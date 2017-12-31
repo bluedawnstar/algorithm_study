@@ -10,6 +10,64 @@ struct Matrix {
     Matrix(int _N) : N(_N), val(_N, vector<T>(_N)) {
     }
 
+    Matrix(const vector<vector<T>>& rhs) : N((int)rhs.size()), val(rhs) {
+    }
+
+    Matrix(vector<vector<T>>&& rhs) : N((int)rhs.size()), val(move(rhs)) {
+    }
+
+    template <typename U>
+    Matrix(const vector<vector<U>>& rhs) : N((int)rhs.size()), val(N, vector<T>(N)) {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                val[i][j] = (T)rhs[i][j];
+    }
+
+    template <typename U>
+    Matrix(const Matrix<U>& rhs) : N(rhs.N), val(N, vector<T>(N)) {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                val[i][j] = (T)rhs.val[i][j];
+    }
+
+
+    Matrix& operator =(const vector<vector<T>>& rhs) {
+        N = (int)rhs.N;
+        val = rhs;
+        return *this;
+    }
+
+    Matrix& operator =(vector<vector<T>>&& rhs) {
+        N = (int)rhs.size();
+        val = move(rhs);
+        return *this;
+    }
+
+    template <typename U>
+    Matrix& operator =(const vector<vector<U>>& rhs) {
+        N = (int)rhs.size();
+
+        val.assign(N, vector<T>(N));
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                val[i][j] = (T)rhs[i][j];
+
+        return *this;
+    }
+
+    template <typename U>
+    Matrix& operator =(const Matrix<U>& rhs) {
+        N = (int)rhs.size();
+
+        val.assign(N, vector<T>(N));
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                val[i][j] = (T)rhs.val[i][j];
+
+        return *this;
+    }
+
+
     Matrix& init() {
         for (int i = 0; i < N; i++)
             fill(val[i].begin(), val[i].end(), 0);
@@ -61,6 +119,20 @@ struct Matrix {
         return *this;
     }
 
+    Matrix& operator +=(const Matrix& rhs) {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                val[i][j] += rhs.val[i][j];
+        return *this;
+    }
+
+    Matrix& operator -=(const Matrix& rhs) {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                val[i][j] -= rhs.val[i][j];
+        return *this;
+    }
+
     Matrix operator +(T x) const {
         Matrix res = *this;
         res += x;
@@ -91,6 +163,59 @@ struct Matrix {
         return res;
     }
 
+    Matrix operator +(const Matrix& rhs) const {
+        Matrix res(N);
+        res += rhs;
+        return res;
+    }
+
+    Matrix operator -(const Matrix& rhs) const {
+        Matrix res(N);
+        res -= rhs;
+        return res;
+    }
+
+
+    Matrix pow(int n) const {
+        return Matrix<T>::pow(*this, n);
+    }
+
+    // O(N^3)
+    double det() const {
+        const double EPS = 1e-10;
+
+        double res = 1;
+        vector<bool> used(N);
+
+        Matrix<double> a = *this;
+        for (int i = 0; i < N; i++) {
+            int p;
+            for (p = 0; p < N; p++) {
+                if (!used[p] && abs(a[p][i]) > EPS)
+                    break;
+            }
+            if (p >= N)
+                return 0;
+
+            res *= a[p][i];
+            used[p] = true;
+
+            double z = 1.0 / a[p][i];
+            for (int j = 0; j < N; j++)
+                a[p][j] *= z;
+
+            for (int j = 0; j < N; j++) {
+                if (j != p) {
+                    z = a[j][i];
+                    for (int k = 0; k < N; k++)
+                        a[j][k] -= z * a[p][k];
+                }
+            }
+        }
+        return res;
+    }
+
+
     static void multiply(Matrix& out, const Matrix& left, const Matrix& right) {
         int N = left.N;
         for (int r = 0; r < N; r++) {
@@ -104,7 +229,7 @@ struct Matrix {
     }
 
     static const Matrix& getIdentity(int N) {
-        /*static unordered_map<int, shared_ptr<Matrix<T>>> M;
+        static unordered_map<int, shared_ptr<Matrix<T>>> M;
 
         auto& it = M.find(N);
         if (it != M.end())
@@ -115,15 +240,6 @@ struct Matrix {
         M[N] = mat;
 
         return *mat;
-        */
-        static vector<shared_ptr<Matrix<T>>> M;
-
-        if (N >= (int)M.size()) {
-            M.resize(N + 1);
-            M[N] = make_shared<Matrix<T>>(N);
-            M[N]->identity();
-        }
-        return *M[N];
     }
 
     //PRECONDITION: n >= 0

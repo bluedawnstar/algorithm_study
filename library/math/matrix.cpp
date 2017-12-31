@@ -48,12 +48,19 @@ static long long fibonacciSlow(int n) {
 }
 
 void testMatrix() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Matrix ---------------------------------" << endl;
 
     for (int i = 0; i <= 1000; i++) {
         assert(fibonacci<long long>(i)[0][1] == fibonacciSlow(i));
+    }
+
+    {
+        Matrix<int> m(vector<vector<int>>{ { 2, 4, 3, 5, 4 }, { 5, 4, 0, 2, 4 }, { 0, 5, 5, 2, 3 },
+                                           { 1, 0, 4, 3, 0 }, { 0, 5, 1, 4, 4 } });
+        cout << m.det() << endl;
+        assert(fabs(m.det() - 279) < 1e-9);
     }
 
     PROFILE_START(0);
