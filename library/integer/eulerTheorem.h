@@ -43,7 +43,64 @@ T phi(T n) {
 }
 
 template <typename T>
-T phi(T n, const vector<T>& primeFactors) {
+T phiFast(T n) {
+    T res = n;
+
+    if (n < 2)
+        return res;
+
+    if (n % 2 == 0) {
+        do {
+            n /= 2;
+        } while (n % 2 == 0);
+        res -= res / 2;
+    }
+
+    for (T i = 3; i * i <= n; i += 2) {
+        if (n % i == 0) {
+            do {
+                n /= i;
+            } while (n % i == 0);
+            res -= res / i;
+        }
+    }
+
+    if (n > 1)
+        res -= res / n;
+
+    return res;
+}
+
+// 'primes' is prime numbers in [0, sqrt(n)]
+template <typename T>
+T phiFast(T n, const vector<T>& primes) {
+    T res = n;
+
+    if (n < 2)
+        return res;
+
+    int idx = 0;
+    T pf = primes[0];
+
+    while (pf * pf <= n) {
+        if (n % pf == 0) {
+            do {
+                n /= pf;
+            } while (n % pf == 0);
+            res -= res / pf;
+        }
+        pf = primes[++idx];
+    }
+
+    if (n > 1)
+        res -= res / n;
+
+    return res;
+}
+
+// 'primeFactors' is prime factors of 'n'
+template <typename T>
+T phiFastest(T n, const vector<T>& primeFactors) {
     T res = n;
 
     for (auto p : primeFactors)

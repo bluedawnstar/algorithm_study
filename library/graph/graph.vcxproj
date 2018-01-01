@@ -149,7 +149,7 @@
     <ClCompile Include="basicDigraph.cpp" />
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
-    <ClCompile Include="bipartitleGraph.cpp" />
+    <ClCompile Include="bipartiteGraph.cpp" />
     <ClCompile Include="hamiltonian.cpp" />
     <ClCompile Include="maxClique.cpp" />
     <ClCompile Include="dag.cpp" />
