@@ -151,12 +151,14 @@
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="steinerTree.cpp" />
+    <ClCompile Include="subsequence.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHullTrick.h" />
     <ClInclude Include="divideConquerOptimization.h" />
     <ClInclude Include="knuthOptimization.h" />
     <ClInclude Include="steinerTree.h" />
+    <ClInclude Include="subsequence.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

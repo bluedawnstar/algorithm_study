@@ -9,4 +9,5 @@ int main(void) {
     TEST(ConvexHullTrick);
     TEST(KnuthOptimization);
     TEST(DevideAndConquerOptimization);
+    TEST(Subsequence);
 }
