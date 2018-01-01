@@ -1,4 +1,3 @@
-// Method #1: memoization
 class Solution_Memoization {
 public:
     int dfs(vector<vector<int>>& dp, const string& s, int i, const string& p, int j) {
