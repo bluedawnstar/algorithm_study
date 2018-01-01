@@ -22,6 +22,34 @@ using namespace std;
 void testPrimeNumberBasic() {
     return; //TODO: if you want to test functions of this file, make this line a comment.
 
+    cout << "--- test getPrimeFactors() -----------" << endl;
+    {
+        auto ans0 = getPrimeFactors(10001);
+        auto ans1 = getPrimeFactorsFast(10001);
+        auto primes = findPrimeNumbers(100);
+        auto ans2 = getPrimeFactorsFast(10001, primes);
+        assert(ans0 == ans1);
+        assert(ans0 == ans2);
+    }
+    {
+        int N = 100000007;
+        auto primes = findPrimeNumbers(N);
+
+        PROFILE_START(0);
+        auto ans0 = getPrimeFactors(N);
+        PROFILE_STOP(0);
+        PROFILE_START(1);
+        auto ans1 = getPrimeFactorsFast(N);
+        PROFILE_STOP(1);
+        PROFILE_START(2);
+        auto ans2 = getPrimeFactorsFast(N, primes);
+        PROFILE_STOP(2);
+
+        if (ans0.empty() || ans1.empty() || ans2.empty())
+            cerr << "It mustn't be shown!" << endl;
+    }
+    cout << "OK!" << endl;
+
     clock_t start;
 
     cout << "--- test isPrimeNumber() from 0 to 100 ---" << endl;
@@ -42,14 +70,14 @@ void testPrimeNumberBasic() {
         if (n <= 0)
             cerr << "What?" << endl;
 
-        PROFILE_START(1);
-        n = 0;
-        for (int i = 0; i <= 1000000; i++) {
-            n += isPrimeNumberWithMiller(i, 5);
-        }
-        PROFILE_STOP(1);
-        if (n <= 0)
-            cerr << "What?" << endl;
+        //PROFILE_START(1);
+        //n = 0;
+        //for (int i = 0; i <= 1000000; i++) {
+        //    n += isPrimeNumberWithMiller(i, 5);
+        //}
+        //PROFILE_STOP(1);
+        //if (n <= 0)
+        //    cerr << "What?" << endl;
     }
 
     cout << "--- test getPrimeFactors() from 0 to 100 ---" << endl;

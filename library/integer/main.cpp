@@ -12,6 +12,7 @@ int main(void) {
     TEST(IntMod);
     TEST(Factor);
     TEST(PrimeFactor);
+    TEST(EulerTheorem);
     TEST(Fraction);
     TEST(Digit);
     TEST(ChineseRemainderTheorem);
@@ -19,4 +20,5 @@ int main(void) {
     TEST(PrimitiveRoot);
     TEST(BigInt);
     TEST(Bit);
+    TEST(PrimalityTest);
 }
