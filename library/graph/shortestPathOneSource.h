@@ -40,7 +40,7 @@ struct ShortestPath {
 
         priority_queue<pair<T, int>> pq;    // (-weight, vertex)
 
-        pq.push(make_pair(0, start));
+        pq.emplace(0, start);
         dist[start] = 0;
         parent[start] = -1;
         while (!pq.empty()) {
@@ -55,7 +55,7 @@ struct ShortestPath {
                 int v = edges[u][i].first;
                 T vDist = w + edges[u][i].second;
                 if (dist[v] > vDist) {
-                    pq.push(make_pair(-vDist, v));
+                    pq.emplace(-vDist, v);
                     dist[v] = vDist;
                     parent[v] = u;
                 }
