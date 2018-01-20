@@ -33,6 +33,12 @@
     <ClCompile Include="subsequence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="palindromicSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="palindromicSubstring.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHullTrick.h">
@@ -48,6 +54,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="subsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicSubsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicSubstring.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

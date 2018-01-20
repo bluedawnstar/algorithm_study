@@ -10,4 +10,6 @@ int main(void) {
     TEST(KnuthOptimization);
     TEST(DevideAndConquerOptimization);
     TEST(Subsequence);
+    TEST(PalindromicSubsequence);
+    TEST(PalindromicSubstring);
 }
