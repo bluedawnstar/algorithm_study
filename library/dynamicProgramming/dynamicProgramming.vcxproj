@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
+    <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="convexHullTrick.h" />
     <ClInclude Include="divideConquerOptimization.h" />
+    <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />

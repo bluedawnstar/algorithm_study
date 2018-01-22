@@ -1,6 +1,6 @@
 #pragma once
 
-int countPalindromicSubsequence(string s) {
+inline int countPalindromicSubsequence(string s) {
     int N = (int)s.length();
     vector<vector<int>> dp(N, vector<int>(N));
 
@@ -22,7 +22,7 @@ int countPalindromicSubsequence(string s) {
     return dp[0][N - 1];
 }
 
-int lengthOfLongestPalindromicSubsequence(string s) {
+inline int lengthOfLongestPalindromicSubsequence(string s) {
     int N = (int)s.length();
     vector<vector<int>> dp(N, vector<int>(N));
 
@@ -44,7 +44,7 @@ int lengthOfLongestPalindromicSubsequence(string s) {
     return dp[0][N - 1];
 }
 
-string longestPalindromicSubsequence(string s) {
+inline string longestPalindromicSubsequence(string s) {
     int N = (int)s.length();
     vector<vector<int>> dp(N, vector<int>(N));
 

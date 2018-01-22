@@ -12,4 +12,5 @@ int main(void) {
     TEST(Subsequence);
     TEST(PalindromicSubsequence);
     TEST(PalindromicSubstring);
+    TEST(Knapsack);
 }
