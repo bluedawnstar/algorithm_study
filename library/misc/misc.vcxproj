@@ -147,11 +147,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cycleDetection.cpp" />
+    <ClCompile Include="largestRectangle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mergeableHeap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h" />
+    <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

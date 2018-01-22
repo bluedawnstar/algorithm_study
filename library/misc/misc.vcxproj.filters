@@ -24,12 +24,18 @@
     <ClCompile Include="mergeableHeap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="largestRectangle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeableHeap.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="largestRectangle.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
