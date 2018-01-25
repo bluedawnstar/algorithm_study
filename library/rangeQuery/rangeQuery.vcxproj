@@ -150,6 +150,7 @@
     <ClCompile Include="fenwickTree2D.cpp" />
     <ClCompile Include="fenwickTreeMax.cpp" />
     <ClCompile Include="fenwickTreeMultAdd.cpp" />
+    <ClCompile Include="fenwickTreeXor.cpp" />
     <ClCompile Include="lineSegmentTree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MOAlgorithm.cpp" />
@@ -165,6 +166,8 @@
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
     <ClInclude Include="fenwickTreeMax.h" />
+    <ClInclude Include="fenwickTreeMultAdd.h" />
+    <ClInclude Include="fenwickTreeXor.h" />
     <ClInclude Include="lineSegmentTree.h" />
     <ClInclude Include="MOAlgorithm.h" />
     <ClInclude Include="segmentTree.h" />

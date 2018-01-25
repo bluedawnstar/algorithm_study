@@ -9,6 +9,7 @@ int main(void) {
     TEST(SqrtDecomposition);
     TEST(MOAlgorithm);
     TEST(FenwickTree);
+    TEST(FenwickTreeXor);
     TEST(FenwickTree2D);
     TEST(FenwickTreeMultAdd);
     TEST(FenwickTreeMax);
