@@ -2,7 +2,7 @@
 
 #include "../rangeQuery/sparseTableMin.h"
 #include "../rangeQuery/segmentTreeRMQ.h"
-#include "../rangeQuery/fenwickTree.h"
+#include "../rangeQuery/fenwickTreeMultAdd.h"
 
 // 'T' is a type of result
 template <typename T>
