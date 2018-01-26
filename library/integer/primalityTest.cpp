@@ -43,14 +43,13 @@ static long long rand64() {
 }
 
 void testPrimalityTest() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Primality Test -------------------" << endl;
     {
         cout << "-- GT | Rho | Fermat | Miller ---" << endl;
         long long L = 10000000000000ll;
         long long R = 10000000001000ll;
-        int k = 3;
         for (long long i = L; i <= R; i++) {
             auto gt = isPrimeNumber(i);
             auto ans = PrimalityTest<long long>::isPrimeNumber(i);
@@ -61,7 +60,6 @@ void testPrimalityTest() {
     {
         cout << "-- GT | Rho | Fermat | Miller ---" << endl;
         int T = 10000;
-        int k = 3;
         while (T-- > 0) {
             long long x = rand64();
             auto gt = isPrimeNumber(x);
