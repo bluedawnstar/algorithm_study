@@ -63,6 +63,12 @@
     <ClCompile Include="primalityTest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mobius.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="primeFactorLongLong.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -114,6 +120,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="primalityTest.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mobius.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeFactorLongLong.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

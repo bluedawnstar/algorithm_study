@@ -153,8 +153,10 @@
     <ClCompile Include="gcd.cpp" />
     <ClCompile Include="intMod.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mobius.cpp" />
     <ClCompile Include="primalityTest.cpp" />
     <ClCompile Include="primeFactor.cpp" />
+    <ClCompile Include="primeFactorLongLong.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />
     <ClCompile Include="primitiveRoot.cpp" />
@@ -172,8 +174,10 @@
     <ClInclude Include="gcd.h" />
     <ClInclude Include="intMod.h" />
     <ClInclude Include="intModExt.h" />
+    <ClInclude Include="mobius.h" />
     <ClInclude Include="primalityTest.h" />
     <ClInclude Include="primeFactor.h" />
+    <ClInclude Include="primeFactorLongLong.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
     <ClInclude Include="primitiveRoot.h" />
