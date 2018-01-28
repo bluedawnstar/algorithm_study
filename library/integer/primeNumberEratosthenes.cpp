@@ -30,6 +30,10 @@ void testPrimeNumberEratosthenes() {
 
     cout << "--- test eratosthenes() ---" << endl;
     {
+        auto p = eratosthenes(65536);
+        cout << "prime count within 65536 : " << count(p.begin(), p.end(), true) << endl;
+    }
+    {
         auto v = eratosthenes(100);
         cout << "(";
         for (int i = 0; i < (int)v.size(); i++) {

@@ -45,7 +45,7 @@ static long long rand64() {
 }
 
 void testPrimeFactorLongLong() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     srand((unsigned int)time(nullptr));
 
