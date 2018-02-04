@@ -3,12 +3,12 @@
 // 1) O(n^2) => O(n)
 //    dp[i] = min { b[j] + m[j] * x[i] }
 //            j<i
-//    => m[j] is 'slope', x[i] is 'x', b[j] is 'y-intercept' (b[j] = dp[j])
+//    => m[j] is 'slope', x[i] is 'x', b[j] is 'y-intercept' (normally b[j] = dp[j])
 //
 // 2) O(kn^2) => O(kn)
 //    dp[i][j] = min { b[i - 1][k] + m[k] * x[j] }
 //               k<j
-//    => m[k] is 'slope', x[j] is 'x', b[i - 1][k] is 'y-intercept'
+//    => m[k] is 'slope', x[j] is 'x', b[i - 1][k] is 'y-intercept' (normally b[i - 1][k] = dp[i - 1][k])
 template <typename T>
 struct DPConvexHullTrickMin {
     struct Line {
