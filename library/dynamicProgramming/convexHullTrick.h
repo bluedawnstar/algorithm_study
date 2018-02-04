@@ -1,48 +1,47 @@
 #pragma once
 
 // 1) O(n^2) => O(n)
-//    dp[i] = min { dp[j] + b[j] * a[i] }
+//    dp[i] = min { b[j] + m[j] * x[i] }
 //            j<i
-//    => b[j] is slope, dp[j] is xterm
+//    => m[j] is 'slope', x[i] is 'x', b[j] is 'y-intercept' (b[j] = dp[j])
 //
 // 2) O(kn^2) => O(kn)
-//    dp[i][j] = min { dp[i - 1][k] + b[k] * a[j] }
+//    dp[i][j] = min { b[i - 1][k] + m[k] * x[j] }
 //               k<j
-//    => b[k] is slope, dp[i - 1][k] is xterm
+//    => m[k] is 'slope', x[j] is 'x', b[i - 1][k] is 'y-intercept'
 template <typename T>
-struct DPConvexHullTrick {
+struct DPConvexHullTrickMin {
     struct Line {
-        T slope, xterm;
+        T m, b;     // f(x) = m * x + b
 
         template <typename U>
         inline T get(U x) const {
-            return slope * x + xterm;
+            return m * x + b;
         }
     };
 
     deque<Line> lines;
 
-    // a[j] <= a[j + 1], b[k] >= b[k + 1]
-    void insert(T slope, T xterm) {
-        Line l{ slope, xterm };
+    // when Xs of queries (not insert) are ascending, x[j] <= x[j + 1]
+    // PRECONDITION: m[k] >= m[k + 1]
+    void insert(T m, T b) {
+        Line l{ m, b };
 
         while (lines.size() > 1 && ccw(lines[lines.size() - 2], lines[lines.size() - 1], l))
             lines.pop_back();
 
-        if (lines.size() == 1 && lines.front().xterm > l.xterm)
-            lines.pop_back();
         lines.push_back(l);
     }
 
-    // a[j] >= a[j + 1], b[k] <= b[k + 1]
-    void insertReverse(T slope, T xterm) {
-        Line l{ slope, xterm };
+    // when Xs of queries (not insert) are descending, x[j] >= x[j + 1]
+    // PRECONDITION: m[k] <= m[k + 1]
+    void insertReverse(T m, T b) {
+        Line l{ m, b };
 
         while (lines.size() > 1 && cw(lines[lines.size() - 2], lines[lines.size() - 1], l))
             lines.pop_back();
 
-        if (lines.size() != 1 || lines.front().xterm > l.xterm)
-            lines.push_back(l);
+        lines.push_back(l);
     }
 
     template <typename U>
@@ -50,7 +49,7 @@ struct DPConvexHullTrick {
         if (lines.empty())
             return 0;
 
-        while (lines.size() > 1 && lines[0].get(x) > lines[1].get(x))
+        while (lines.size() > 1 && lines[0].get(x) >= lines[1].get(x))
             lines.pop_front();
 
         return lines[0].get(x);
@@ -58,18 +57,18 @@ struct DPConvexHullTrick {
 
 private:
     static T area(const Line& a, const Line& b, const Line& c) {
-        T ax = (b.slope - a.slope);
-        T bx = (c.xterm - a.xterm);
-        T ay = (c.slope - a.slope);
-        T by = (b.xterm - a.xterm);
+        T ax = (b.m - a.m);
+        T bx = (c.b - a.b);
+        T ay = (c.m - a.m);
+        T by = (b.b - a.b);
         return ax * bx - ay * by;
     }
 
     static bool ccw(const Line& a, const Line& b, const Line& c) {
-        return area(a, b, c) > 0;
+        return area(a, b, c) >= 0;
     }
 
     static bool cw(const Line& a, const Line& b, const Line& c) {
-        return area(a, b, c) < 0;
+        return area(a, b, c) <= 0;
     }
 };

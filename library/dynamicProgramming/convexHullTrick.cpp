@@ -39,7 +39,7 @@ ll solveWoC30(int KK, vector<pair<int,int>>& xw) {
         dp[1][n] = sumXW[n] - sumW[n] * xw[n].first;
 
     for (int k = 2; k <= KK; k++) {
-        DPConvexHullTrick<ll> cht;
+        DPConvexHullTrickMin<ll> cht;
         cht.insertReverse(sumW[k - 2], dp[k - 1][k - 2] - sumXW[k - 2]);
         for (int n = k - 1; n < NN; n++) {
             if (n < k)
