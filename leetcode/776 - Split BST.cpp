@@ -14,37 +14,15 @@ public:
         if (root == nullptr)
             return res;
 
-        TreeNode* parent = nullptr;
-        TreeNode* curr = root;
-        if (curr->val < V) {
-            // detach bigger
-            while (curr && V > curr->val) {
-                parent = curr;
-                curr = curr->right;
-            }
-            if (curr != nullptr) {
-                if (parent)
-                    parent->right = curr->left;
-                else
-                    root = curr->left;
-                curr->left = nullptr;
-            }
+        if (root->val <= V) {
+            auto r = splitBST(root->right, V);
+            root->right = r[0];
             res[0] = root;
-            res[1] = curr;
+            res[1] = r[1];
         } else {
-            // detach smaller
-            while (curr && V < curr->val) {
-                parent = curr;
-                curr = curr->left;
-            }
-            if (curr != nullptr) {
-                if (parent)
-                    parent->left = curr->right;
-                else
-                    root = curr->right;
-                curr->right = nullptr;
-            }
-            res[0] = curr;
+            auto l = splitBST(root->left, V);
+            root->left = l[1];
+            res[0] = l[0];
             res[1] = root;
         }
 
