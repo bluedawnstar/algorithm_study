@@ -48,10 +48,7 @@ struct CompactSegmentTree {
     }
 
     T query(int index) {
-        T res = defaultValue;
-        for (index += N; index > 0; index >>= 1)
-            res = mergeOp(res, tree[index]);
-        return res;
+        return tree[index + N];
     }
 
     // inclusive
