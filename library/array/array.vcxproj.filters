@@ -24,7 +24,7 @@
     <ClCompile Include="integralImage.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="arraySum.cpp">
+    <ClCompile Include="prefixSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClInclude Include="integralImage.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="arraySum.h">
+    <ClInclude Include="prefixSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

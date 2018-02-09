@@ -1,17 +1,17 @@
 #pragma once
 
 template <typename T>
-struct ArraySum {
+struct PrefixSum {
     vector<T> sum;
 
-    ArraySum() {
+    PrefixSum() {
     }
 
-    explicit ArraySum(const T* in, int N) {
+    explicit PrefixSum(const T* in, int N) {
         build(in, N);
     }
 
-    explicit ArraySum(const vector<T>& in) {
+    explicit PrefixSum(const vector<T>& in) {
         build(in);
     }
 
