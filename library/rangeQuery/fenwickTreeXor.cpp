@@ -22,7 +22,7 @@ static int xorSlow(vector<int>& v, int L, int R) {
 }
 
 void testFenwickTreeXor() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- XOR FenwickTree (Binary Indexed Tree) -------------------" << endl;
     {

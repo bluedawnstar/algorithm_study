@@ -158,6 +158,7 @@
     <ClCompile Include="segmentTreeCompact.cpp" />
     <ClCompile Include="segmentTreeCompactLazy.cpp" />
     <ClCompile Include="segmentTreeCompactLazyAdd.cpp" />
+    <ClCompile Include="segmentTreeMaxSubarray.cpp" />
     <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sqrtDecomposition.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="segmentTreeCompactLazy.h" />
     <ClInclude Include="segmentTreeCompactLazyAdd.h" />
     <ClInclude Include="segmentTreeLazy.h" />
+    <ClInclude Include="segmentTreeMaxSubarray.h" />
     <ClInclude Include="segmentTreePersistent.h" />
     <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="segmentTreeRMQ.h" />
