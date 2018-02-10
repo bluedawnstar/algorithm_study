@@ -55,7 +55,7 @@ ll solveWoC30(int KK, vector<pair<int,int>>& xw) {
 
 
 void testConvexHullTrick() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Convex Hull Trick ------------------------" << endl;
 

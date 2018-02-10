@@ -13,4 +13,5 @@ int main(void) {
     TEST(PalindromicSubsequence);
     TEST(PalindromicSubstring);
     TEST(Knapsack);
+    TEST(BitDP);
 }

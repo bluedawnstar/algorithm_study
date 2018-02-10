@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
     <ClCompile Include="knapsack.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="subsequence.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitDP.h" />
     <ClInclude Include="convexHullTrick.h" />
     <ClInclude Include="divideConquerOptimization.h" />
     <ClInclude Include="knapsack.h" />
