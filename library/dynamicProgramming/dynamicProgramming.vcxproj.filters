@@ -45,6 +45,9 @@
     <ClCompile Include="bitDP.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="maxProductSumOfSubarray.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHullTrick.h">
@@ -72,6 +75,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitDP.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxProductSumOfSubarray.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

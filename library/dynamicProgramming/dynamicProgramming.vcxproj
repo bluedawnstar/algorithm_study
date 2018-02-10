@@ -152,6 +152,7 @@
     <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maxProductSumOfSubarray.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="palindromicSubstring.cpp" />
     <ClCompile Include="steinerTree.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="divideConquerOptimization.h" />
     <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
+    <ClInclude Include="maxProductSumOfSubarray.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />
     <ClInclude Include="steinerTree.h" />
