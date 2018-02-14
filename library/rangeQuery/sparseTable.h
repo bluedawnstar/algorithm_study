@@ -9,7 +9,7 @@ template <typename T, typename BinOp = function<T(T,T)>>
 struct SparseTable {
     int                 N;
     vector<vector<T>>   value;
-    vector<T>           H;
+    vector<int>         H;
     T                   defaultValue;
     BinOp               mergeOp;
 
@@ -62,7 +62,7 @@ struct SparseTable {
             return defaultValue;
 
         int k = H[right - left];
-        vector<int>& mink = value[k];
+        vector<T>& mink = value[k];
         return mergeOp(mink[left], mink[right - (1 << k)]);
     }
 

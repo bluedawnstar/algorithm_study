@@ -1,0 +1,138 @@
+#pragma once
+
+#include <vector>
+#include <functional>
+
+//--------- General Sparse Table ----------------------------------------------
+
+template <typename T, typename BinOp = function<T(T, T)>>
+struct SparseTableIndex {
+    int                 N;
+    vector<vector<int>> value;          // index to 'in'
+    vector<int>         H;
+    T                   defaultValue;
+    BinOp               mergeOp;
+
+    vector<T>           in;
+
+    template <typename U>
+    SparseTableIndex(const U& a, int n, T dfltValue = T())
+        : mergeOp(), defaultValue(dfltValue) {
+        _init(a, n);
+    }
+
+    template <typename U>
+    SparseTableIndex(const U& a, int n, BinOp op, T dfltValue = T())
+        : mergeOp(op), defaultValue(dfltValue) {
+        _init(a, n);
+    }
+
+    SparseTableIndex(SparseTableIndex&& rhs)
+        : N(rhs.N), value(std::move(rhs.value)), H(std::move(rhs.H)),
+        mergeOp(std::move(rhs.mergeOp)), defaultValue(rhs.defaultValue), in(std::move(rhs.in)) {
+    }
+
+    template <typename U>
+    void _init(const U& a, int n) {
+        this->N = n;
+
+        in.resize(n);
+        for (int i = 0; i < n; i++)
+            in[i] = a[i];
+
+        H.resize(n + 1);
+        H[1] = 0;
+        for (int i = 2; i < (int)H.size(); i++)
+            H[i] = H[i >> 1] + 1;
+
+        value.resize(H.back() + 1, vector<T>(n));
+        for (int i = 0; i < n; i++)
+            value[0][i] = a[i];
+
+        for (int i = 1; i < (int)value.size(); i++) {
+            vector<T>& prev = value[i - 1];
+            vector<T>& curr = value[i];
+            for (int v = 0; v < n; v++) {
+                int v2 = v + (1 << (i - 1));
+                if (v2 < n) {
+                    T a = in[prev[v]];
+                    T b = in[prev[v2]];
+                    curr[v] = (mergeOp(a, b) == a) ? prev[v] : prev[v2];
+                } else {
+                    curr[v] = prev[v];
+                }
+            }
+        }
+    }
+
+    // O(1), inclusive
+    // return index
+    int query(int left, int right) {
+        right++;
+        if (right <= left)
+            return -1;
+
+        int k = H[right - left];
+        vector<int>& mink = value[k];
+
+        int a = mink[left];
+        int b = mink[right - (1 << k)];
+        return (mergeOp(in[a], in[b]) == in[a]) ? a : b;
+    }
+
+    // O(log(right - left + 1)), inclusive
+    int queryNoOverlap(int left, int right) {
+        right++;
+        if (right <= left)
+            return -1;
+
+        T val = defaultValue;
+        int res = -1;
+
+        int length = right - left;
+        for (int i = 0; length; length >>= 1, i++) {
+            if (length & 1) {
+                right -= (1 << i);
+
+                int idx = value[i][right];
+                val = mergeOp(val, in[idx]);
+                if (val == in[idx])
+                    res = idx;
+            }
+        }
+
+        return res;
+    }
+};
+
+template <typename T, typename BinOp>
+SparseTableIndex<T, BinOp> makeSparseTableIndex(const vector<T>& arr, int size, BinOp op, T dfltValue = T()) {
+    return SparseTableIndex<T, BinOp>(arr, size, op, dfltValue);
+}
+
+template <typename T, typename BinOp>
+SparseTableIndex<T, BinOp> makeSparseTableIndex(const T arr[], int size, BinOp op, T dfltValue = T()) {
+    return SparseTableIndex<T, BinOp>(arr, size, op, dfltValue);
+}
+
+/* example
+1) Min Sparse Table (RMQ)
+auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return min(a, b); }, INT_MAX);
+...
+sparseTable.query(left, right);
+
+2) Max Sparse Table
+auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return max(a, b); });
+...
+sparseTable.query(left, right);
+
+3) GCD Sparse Table
+auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return gcd(a, b); });
+...
+sparseTable.query(left, right);
+
+4) Sum Sparse Table
+auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return a + b; });
+...
+sparseTable.queryNoOverlap(left, right);
+*/

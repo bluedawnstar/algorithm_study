@@ -8,6 +8,7 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeRMQ.h"
 #include "sparseTable.h"
+#include "sparseTableIndex.h"
 #include "sparseTableMin.h"
 #include "sparseTableMinIndex.h"
 
@@ -20,7 +21,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testSparseTable() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Sparse Table ----------------------------------------" << endl;
 

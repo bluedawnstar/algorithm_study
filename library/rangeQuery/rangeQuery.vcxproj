@@ -181,6 +181,7 @@
     <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="segmentTreeRMQ.h" />
     <ClInclude Include="sparseTable.h" />
+    <ClInclude Include="sparseTableIndex.h" />
     <ClInclude Include="sparseTableMin.h" />
     <ClInclude Include="sparseTableMinIndex.h" />
     <ClInclude Include="sqrtDecomposition.h" />

@@ -39,14 +39,10 @@ struct SparseTableMinIndex {
             vector<int>& curr = value[i];
             for (int v = 0; v < n; v++) {
                 int v2 = v + (1 << (i - 1));
-                if (v2 < n) {
-                    if (in[prev[v]] < in[prev[v2]])
-                        curr[v] = prev[v];
-                    else
-                        curr[v] = prev[v2];
-                } else {
+                if (v2 < n)
+                    curr[v] = (in[prev[v]] < in[prev[v2]]) ? prev[v] : prev[v2];
+                else
                     curr[v] = prev[v];
-                }
             }
         }
     }
