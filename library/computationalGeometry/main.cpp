@@ -17,4 +17,5 @@ int main(void) {
     TEST(LineSegmentAllIntersections);
     TEST(DelaunayTriangulation);
     TEST(ClosestPair);
+    TEST(PersistentConvexHull);
 }
