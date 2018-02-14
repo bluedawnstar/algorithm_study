@@ -9,4 +9,5 @@ int main(void) {
     TEST(PackedArray);
     TEST(PositiveSum);
     TEST(IntegralImage);
+    TEST(PersistentArray);
 }

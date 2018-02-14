@@ -27,6 +27,9 @@
     <ClCompile Include="prefixSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="persistentArray.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="packedArray.h">
@@ -36,6 +39,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="prefixSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="persistentArray.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -149,11 +149,13 @@
     <ClCompile Include="integralImage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="packedArray.cpp" />
+    <ClCompile Include="persistentArray.cpp" />
     <ClCompile Include="prefixSum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="integralImage.h" />
     <ClInclude Include="packedArray.h" />
+    <ClInclude Include="persistentArray.h" />
     <ClInclude Include="prefixSum.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
