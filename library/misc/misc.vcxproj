@@ -150,11 +150,15 @@
     <ClCompile Include="largestRectangle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mergeableHeap.cpp" />
+    <ClCompile Include="persistentStack.cpp" />
+    <ClCompile Include="randomAccessSparseTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h" />
     <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />
+    <ClInclude Include="persistentStack.h" />
+    <ClInclude Include="randomAccessSparseTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

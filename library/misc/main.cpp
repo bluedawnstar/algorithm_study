@@ -9,4 +9,6 @@ int main(void) {
     TEST(CycleDetection);
     TEST(MergeableHeap);
     TEST(LargestRectangle);
+    TEST(RandomAccessSparseTable);
+    TEST(PersistentStack);
 }

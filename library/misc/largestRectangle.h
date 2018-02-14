@@ -30,7 +30,7 @@ int largestRectangle(const vector<vector<bool>>& matrix) {
 
     int res = 0;
     for (int i = 0; i < rows; i++) {
-        stack<pair<int, int>> stk;       // (height, index)
+        stack<pair<int, int>> stk;      // (height, index)
         stk.emplace(-1, -1);
 
         for (int j = 0; j <= cols; j++) {
