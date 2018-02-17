@@ -18,7 +18,8 @@ int main(void) {
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);
-    TEST(SegmentTreeLine1D);
     TEST(SegmentTreeMaxSubarray);
     TEST(SparseTable);
+    TEST(SegmentTreeLine1D);
+    TEST(SegmentTreeLine2D);
 }
