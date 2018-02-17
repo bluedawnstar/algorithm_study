@@ -1,5 +1,6 @@
 #pragma once
 
+// Fully Persistent Convex Hull
 template <typename T>
 struct PersistentLowerConvexHull {
     vector<pair<T, T>>      points; // the right most point at each index
@@ -23,25 +24,32 @@ struct PersistentLowerConvexHull {
     }
 
     //PRECONDITION: x[i] < x[i + 1]
-    // return convex ID (the index to points and next)
+    // return new convex ID (the index to points and next)
     int add(T x, T y) {
+        return add((int)points.size() - 1, x, y);
+    }
+
+    //PRECONDITION: x[i] < x[i + 1]
+    // return new convex ID (the index to points and next)
+    // -1 <= convexID (old convex ID)
+    int add(int convexID, T x, T y) {
         int idx = (int)points.size();
         points.emplace_back(x, y);
-        next.push_back(idx - 1);
+        next.push_back(convexID);
 
-        if (idx == 0) {
+        if (idx == 0 || convexID < 0) {
             length.push_back(1);
             index.add(idx, -1);
-            return 0;
+            return idx;
         }
 
         auto base = make_pair(x, y);
 
-        int lo = 0, hi = length[idx - 1] - 1;
-        int loIdx = idx - 1;
+        int lo = 0, hi = length[convexID] - 1;
+        int loIdx = convexID;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
-            int a = index.query(idx - 1, mid);
+            int a = index.query(convexID, mid);
             int b = next[a];
 
             if (ccw(base, points[a], points[b])) {
@@ -61,22 +69,30 @@ struct PersistentLowerConvexHull {
     }
 
     //PRECONDITION: x[i] < x[i + 1]
-    // return convex ID (the index to points and next)
+    // return new convex ID (the index to points and next)
     // It's faster than add()
     int addLinear(T x, T y) {
+        return addLinear((int)points.size() - 1, x, y);
+    }
+
+    //PRECONDITION: x[i] < x[i + 1]
+    // return new convex ID (the index to points and next)
+    // It's faster than add()
+    // -1 <= convexID (old convex ID)
+    int addLinear(int convexID, T x, T y) {
         int idx = (int)points.size();
         points.emplace_back(x, y);
-        next.push_back(idx - 1);
+        next.push_back(convexID);
 
-        if (idx == 0) {
+        if (idx == 0 || convexID < 0) {
             length.push_back(1);
             index.add(idx, -1);
-            return 0;
+            return idx;
         }
 
         auto base = make_pair(x, y);
 
-        int loIdx = idx - 1;
+        int loIdx = convexID;
         while (next[loIdx] >= 0 && ccw(base, points[loIdx], points[next[loIdx]]))
             loIdx = next[loIdx];
 
