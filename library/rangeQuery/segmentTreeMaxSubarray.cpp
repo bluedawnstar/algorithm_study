@@ -36,7 +36,7 @@ static int getMaxSubarray(const vector<int>& v, int L, int R) {
 }
 
 void testSegmentTreeMaxSubarray() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Segment Tree for Maximum Subarray ----------------------------------------" << endl;
     {

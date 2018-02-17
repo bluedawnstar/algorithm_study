@@ -1,7 +1,5 @@
 #pragma once
 
-//[CAUTION!] This class doesn't free created nodes
-
 // The first 'node' number is 1, not 0
 // Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') are started from 0
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
@@ -26,6 +24,17 @@ struct PersistentSegmentTreeLazy {
 
     PersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dflt = T())
         : N(0), trees(), treesLazy(), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    }
+
+    PersistentSegmentTreeLazy(PersistentSegmentTreeLazy&& rhs)
+        : N(rhs.N), trees(move(rhs.trees)), treesLazy(move(rhs.treesLazy)),
+          defaultValue(rhs.defaultValue), mergeOp(rhs.mergeOp), blockOp(rhs.blockOp),
+          nodes(move(rhs.nodes)) {
+    }
+
+    ~PersistentSegmentTreeLazy() {
+        for (auto* p : nodes)
+            delete p;
     }
 
     int getHistorySize() const {
@@ -135,11 +144,17 @@ struct PersistentSegmentTreeLazy {
     }
 
 private:
+    vector<Node*>   nodes;          // allocated nodes
+
     Node* createNode(int id, T value) {
-        return new Node{ id, value, nullptr, nullptr };
+        auto* p = new Node{ id, value, nullptr, nullptr };
+        nodes.push_back(p);
+        return p;
     }
     Node* createNode(int id, T value, Node* left, Node* right) {
-        return new Node{ id, value, left, right };
+        auto* p = new Node{ id, value, left, right };
+        nodes.push_back(p);
+        return p;
     }
 
     // inclusive

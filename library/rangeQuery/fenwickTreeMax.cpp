@@ -23,7 +23,7 @@ using namespace std;
 #include "segmentTreeCompact.h"
 
 void testFenwickTreeMax() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- FenwickTree for Max ---------------------------------" << endl;
 

@@ -5,8 +5,6 @@
 
 //--------- Persistent Segment Tree ----------------------------------------------
 
-//[CAUTION!] This class doesn't free created nodes
-
 template <typename T, typename BinOp = function<T(T, T)>>
 struct PersistentSegmentTree {
     struct Node {
@@ -25,6 +23,16 @@ struct PersistentSegmentTree {
 
     PersistentSegmentTree(BinOp op, T dflt = T())
         : N(0), trees(), mergeOp(op), defaultValue(dflt) {
+    }
+
+    PersistentSegmentTree(PersistentSegmentTree&& rhs)
+        : N(rhs.N), trees(move(rhs.trees)), mergeOp(rhs.mergeOp), defaultValue(rhs.defaultValue),
+          nodes(move(rhs.nodes)) {
+    }
+
+    ~PersistentSegmentTree() {
+        for (auto* p : nodes)
+            delete p;
     }
 
     int getHistorySize() const {
@@ -123,11 +131,17 @@ struct PersistentSegmentTree {
     }
 
 private:
+    vector<Node*>   nodes;          // allocated nodes
+
     Node* createNode(T value) {
-        return new Node{ value, nullptr, nullptr };
+        auto* p = new Node{ value, nullptr, nullptr };
+        nodes.push_back(p);
+        return p;
     }
     Node* createNode(T value, Node* left, Node* right) {
-        return new Node{ value, left, right };
+        auto* p = new Node{ value, left, right };
+        nodes.push_back(p);
+        return p;
     }
 
     // inclusive
