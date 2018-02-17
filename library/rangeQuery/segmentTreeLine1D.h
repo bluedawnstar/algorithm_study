@@ -1,12 +1,12 @@
 #pragma once
 
-struct LineSegmentTree {
+struct SegmentTreeLine1D {
     int N;
     // (the number of lines occupying min covered subsegments, total length of min covered subsegments)
     vector<pair<int, int>> tree;
     vector<int> lazy;               // delta to add
 
-    LineSegmentTree(int maxN) : N(maxN), tree(maxN * 4), lazy(maxN * 4) {
+    SegmentTreeLine1D(int maxN) : N(maxN), tree(maxN * 4), lazy(maxN * 4) {
 
     }
 
@@ -20,6 +20,7 @@ struct LineSegmentTree {
     }
 
     // inclusive
+    // delta is normally -1 or 1
     void add(int lineX1, int lineX2, int delta) {
         addSub(1, 0, N - 1, lineX1, lineX2, delta);
     }

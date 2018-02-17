@@ -24,9 +24,6 @@
     <ClCompile Include="fenwickTreeMultAdd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="lineSegmentTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -63,12 +60,12 @@
     <ClCompile Include="segmentTreeMaxSubarray.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeLine1D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="lineSegmentTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="MOAlgorithm.h">
@@ -126,6 +123,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sparseTableIndex.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeLine1D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

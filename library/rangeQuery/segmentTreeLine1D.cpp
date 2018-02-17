@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "lineSegmentTree.h"
+#include "segmentTreeLine1D.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -14,16 +14,16 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void testLineSegmentTree() {
+void testSegmentTreeLine1D() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- LineSegmentTree --------------------------------------" << endl;
+    cout << "-- Segment Tree for 1D Line -----------------------------" << endl;
 
     int N = 10000;
     int D = 100;
     int X = N - D * 2;
     int T = 1000;
-    LineSegmentTree tree(N);
+    SegmentTreeLine1D tree(N);
 
     tree.build(N);
 
