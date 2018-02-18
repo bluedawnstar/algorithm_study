@@ -3,6 +3,7 @@
 using namespace std;
 
 #include "treap.h"
+#include "treapRangeQuery.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -18,6 +19,7 @@ using namespace std;
 
 #include "redBlackTree.h"
 #include "splayTree.h"
+#include "splayTreeRangeQuery.h"
 #include "../rangeQuery/segmentTreeLazy.h"
 
 void checkSearch(RBTree<int>& rbt, vector<int>& in);

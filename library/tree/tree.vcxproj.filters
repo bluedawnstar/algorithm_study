@@ -155,5 +155,20 @@
     <ClInclude Include="maxIndependentSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="treapRangeQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeHeavyLightDecompositionPathQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeHeavyLightDecompositionPathQueryLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeHeavyLightDecompositionPathQueryBIT.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="splayTreeRangeQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

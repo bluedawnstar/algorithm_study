@@ -176,6 +176,8 @@
     <ClInclude Include="quadTree.h" />
     <ClInclude Include="redBlackTreeSimple.h" />
     <ClInclude Include="rTree.h" />
+    <ClInclude Include="splayTreeRangeQuery.h" />
+    <ClInclude Include="treapRangeQuery.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />
@@ -189,6 +191,9 @@
     <ClInclude Include="treeHeavyLightDecomposition.h" />
     <ClInclude Include="linkCutTree.h" />
     <ClInclude Include="splayTree.h" />
+    <ClInclude Include="treeHeavyLightDecompositionPathQuery.h" />
+    <ClInclude Include="treeHeavyLightDecompositionPathQueryBIT.h" />
+    <ClInclude Include="treeHeavyLightDecompositionPathQueryLazy.h" />
     <ClInclude Include="treeMO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

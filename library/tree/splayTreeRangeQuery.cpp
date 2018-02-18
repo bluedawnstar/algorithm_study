@@ -1,6 +1,7 @@
 using namespace std;
 
 #include "splayTree.h"
+#include "splayTreeRangeQuery.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

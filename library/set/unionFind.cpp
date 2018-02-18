@@ -4,6 +4,7 @@
 using namespace std;
 
 #include "unionFind.h"
+#include "unionFindMap.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////

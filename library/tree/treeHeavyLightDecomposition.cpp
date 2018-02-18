@@ -13,6 +13,9 @@ using namespace std;
 #include "../rangeQuery/segmentTreeLazy.h"
 #include "../rangeQuery/fenwickTreeMultAdd.h"
 #include "treeHeavyLightDecomposition.h"
+#include "treeHeavyLightDecompositionPathQuery.h"
+#include "treeHeavyLightDecompositionPathQueryLazy.h"
+#include "treeHeavyLightDecompositionPathQueryBIT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
