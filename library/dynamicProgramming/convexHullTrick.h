@@ -15,8 +15,8 @@ struct DPConvexHullTrickMin {
         T m, b;     // f(x) = m * x + b
 
         template <typename U>
-        inline T get(U x) const {
-            return m * x + b;
+        inline long long get(U x) const {
+            return 1ll * m * x + b;
         }
     };
 
@@ -45,7 +45,7 @@ struct DPConvexHullTrickMin {
     }
 
     template <typename U>
-    T query(U x) {
+    long long query(U x) {
         if (lines.empty())
             return 0;
 
@@ -61,7 +61,7 @@ private:
         T bx = (c.b - a.b);
         T ay = (c.m - a.m);
         T by = (b.b - a.b);
-        return ax * bx - ay * by;
+        return 1ll * ax * bx - 1ll * ay * by;
     }
 
     static bool ccw(const Line& a, const Line& b, const Line& c) {

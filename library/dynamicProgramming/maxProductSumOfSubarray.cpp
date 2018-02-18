@@ -20,16 +20,16 @@ using namespace std;
 #include "../common/profile.h"
 
 void testProductSumOfSubarray() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Max Product-Sum of All Pairs of Subarray -----------------------------------" << endl;
     {
         int N = 10;
-        vector<long long> A(1 << N);
+        vector<int> A(1 << N);
         for (int i = 0; i < (1 << N); i++)
             A[i] = rand();
 
-        AllPairMaxProductSumOfSubarray<long long> solver;
+        AllPairMaxProductSumOfSubarray solver;
         solver.build(A);
 
         cout << solver.solve() << endl;

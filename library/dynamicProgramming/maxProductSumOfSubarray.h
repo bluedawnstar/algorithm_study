@@ -3,14 +3,13 @@
 // https://www.hackerrank.com/contests/hourrank-26/challenges/pair-sums/problem
 
 // max{ product-sum of all pairs in S }, S = any of noneempty subarray
-template <typename T>
 struct AllPairMaxProductSumOfSubarray {
     int N;
-    vector<T> A;
-    vector<T> prefixSum;
-    vector<T> prefixSquareSum;
+    vector<int> A;
+    vector<long long> prefixSum;
+    vector<long long> prefixSquareSum;
 
-    void build(const vector<T>& A) {
+    void build(const vector<int>& A) {
         N = (int)A.size();
         this->A = A;
 
@@ -18,20 +17,20 @@ struct AllPairMaxProductSumOfSubarray {
         prefixSquareSum.resize(N + 1);
         for (int i = 0; i < N; i++) {
             prefixSum[i + 1] = prefixSum[i] + A[i];
-            prefixSquareSum[i + 1] = prefixSquareSum[i] + A[i] * A[i];
+            prefixSquareSum[i + 1] = prefixSquareSum[i] + 1ll * A[i] * A[i];
         }
     }
 
-    T solve() {
+    long long solve() {
         return dfs(0, N - 1) / 2;
     }
 
 private:
-    T dfs(int L, int R) {
+    long long dfs(int L, int R) {
         if (L >= R)
-            return numeric_limits<T>::min();
+            return numeric_limits<long long>::min();
         else if (L + 1 == R)
-            return T(2) * T(A[L]) * A[R];
+            return 2ll * A[L] * A[R];
 
         int mid = L + (R - L) / 2;
 
@@ -49,11 +48,11 @@ private:
             return prefixSum[l] < prefixSum[r];
         });
 
-        DPConvexHullTrickMin<T> cht;
+        DPConvexHullTrickMin<long long> cht;
         for (int i : idxL)
             cht.insert(2ll * prefixSum[i], -(prefixSum[i] * prefixSum[i] + prefixSquareSum[i]));
 
-        T ans = 0;
+        long long ans = 0;
         for (int i : idxR) {
             ans = max(ans, (prefixSum[i] * prefixSum[i] - prefixSquareSum[i]) - cht.query(prefixSum[i]));
         }
