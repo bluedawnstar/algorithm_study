@@ -6,7 +6,6 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(PrefixFunction);
     TEST(SuffixArray);
     TEST(LcpArraySparseTable);
     TEST(SuffixArraySparseTable);
@@ -28,5 +27,8 @@ int main(void) {
     TEST(Split);
     TEST(LongestCommonSubstring_queryTwoStringAmongStrings);
     TEST(Hashing);
-    TEST(ZAlgorithm);
+    TEST(SearchPrefixFunction);
+    TEST(SearchRabinKarp);
+    TEST(SearchZAlgorithm);
+    TEST(PrefixFunction);
 }

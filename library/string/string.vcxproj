@@ -154,6 +154,7 @@
     <ClCompile Include="palindromicString.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="palindromicTree.cpp" />
+    <ClCompile Include="prefixFunction.cpp" />
     <ClCompile Include="searchPrefixFunction.cpp" />
     <ClCompile Include="searchRabinKarp.cpp" />
     <ClCompile Include="split.cpp" />
@@ -180,6 +181,10 @@
     <ClInclude Include="palindromicString.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicTree.h" />
+    <ClInclude Include="prefixFunction.h" />
+    <ClInclude Include="prefixFunctionAlgo.h" />
+    <ClInclude Include="prefixFunctionKMP.h" />
+    <ClInclude Include="prefixFunctionSparseTable.h" />
     <ClInclude Include="searchPrefixFunction.h" />
     <ClInclude Include="searchRabinKarp.h" />
     <ClInclude Include="split.h" />

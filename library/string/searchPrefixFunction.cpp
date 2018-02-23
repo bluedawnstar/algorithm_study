@@ -11,7 +11,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
-void testPrefixFunction() {
+void testSearchPrefixFunction() {
     return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- checkRepeatedString() ---------" << endl;            

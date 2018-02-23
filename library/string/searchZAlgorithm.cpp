@@ -34,7 +34,7 @@ static vector<int> searchNaive(const string& text, const string& pattern) {
     return res;
 }
 
-void testZAlgorithm() {
+void testSearchZAlgorithm() {
     return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Z Algorithm ---------" << endl;

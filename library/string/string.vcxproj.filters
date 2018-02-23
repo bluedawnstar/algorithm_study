@@ -96,6 +96,9 @@
     <ClCompile Include="ahoCorasickAM.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="prefixFunction.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -171,6 +174,18 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="ahoCorasickAM.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunction.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunctionKMP.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunctionAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunctionSparseTable.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
