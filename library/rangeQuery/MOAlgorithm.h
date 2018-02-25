@@ -35,14 +35,17 @@ struct MOAlgorithm {
 
         int curAns = 0;
         for (auto& q : qry) {
-            while (L < get<0>(q))
+            int left = get<0>(q);
+            int right = get<1>(q);
+
+            while (L < left)
                 curAns += remove(in[L++]);
-            while (L > get<0>(q))
+            while (L > left)
                 curAns += add(in[--L]);
 
-            while (R < get<1>(q))
+            while (R < right)
                 curAns += add(in[++R]);
-            while (R > get<1>(q))
+            while (R > right)
                 curAns += remove(in[R--]);
 
             ans[get<2>(q)] = curAns;
