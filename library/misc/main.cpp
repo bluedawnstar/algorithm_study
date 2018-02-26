@@ -11,4 +11,5 @@ int main(void) {
     TEST(LargestRectangle);
     TEST(RandomAccessSparseTable);
     TEST(PersistentStack);
+    TEST(CountUniqueNumbers);
 }

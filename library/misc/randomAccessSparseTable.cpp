@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testRandomAccessSparseTable() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Random Access Sparse Table -------------" << endl;
     int N = 100;

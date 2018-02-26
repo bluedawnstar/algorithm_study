@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testLargestRectangle() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Largest Rectangle ------------------------" << endl;
 
