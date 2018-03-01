@@ -2,13 +2,15 @@
 
 // Li Chao Segment Tree
 // https://e-maxx-eng.appspot.com/geometry/convex_hull_trick.html
+template <typename T>
 struct SegmentTreeLine2DMin {
     static const int INF = 0x3f3f3f3f;
+    static const long long LLINF = 0x3f3f3f3f3f3f3f3fll;
 
     struct Line {
-        int m, b;       // f(x) = m * x + b
+        T m, b;       // f(x) = m * x + b
 
-        long long get(int x) const {
+        long long get(T x) const {
             return 1ll * m * x + b;
         }
     };
@@ -19,7 +21,7 @@ struct SegmentTreeLine2DMin {
         Node* right;
     };
 
-    int minX, maxX;
+    T minX, maxX;
     Node* root;
 
     vector<Node*> nodes;
@@ -28,7 +30,7 @@ struct SegmentTreeLine2DMin {
     }
 
     // inclusive
-    SegmentTreeLine2DMin(int _minX, int _maxX) : minX(_minX), maxX(_maxX), root(nullptr) {
+    SegmentTreeLine2DMin(T _minX, T _maxX) : minX(_minX), maxX(_maxX), root(nullptr) {
     }
 
     ~SegmentTreeLine2DMin() {
@@ -36,18 +38,18 @@ struct SegmentTreeLine2DMin {
             delete p;
     }
 
-    void init(int _minX, int _maxX) {
+    void init(T _minX, T _maxX) {
         minX = _minX;
         maxX = _maxX;
         root = nullptr;
     }
 
-    void add(int m, int b) {
+    void add(T m, T b) {
         Line l{ m, b };
         insert(l, minX, maxX, root);
     }
 
-    long long query(int x) const {
+    long long query(T x) const {
         return query(x, minX, maxX, root);
     }
 
@@ -58,7 +60,7 @@ private:
         return p;
     }
 
-    void insert(Line& l, int left, int right, Node*& node) {
+    void insert(Line& l, T left, T right, Node*& node) {
         if (!node) {
             node = createNode(l);
             return;
@@ -77,7 +79,7 @@ private:
             return;
         }
 
-        int mid = left + (right - left) / 2;
+        T mid = left + (right - left) / 2;
         if (trl > vl)
             swap(node->line, l);
 
@@ -89,14 +91,14 @@ private:
         }
     }
 
-    long long query(int x, int left, int right, const Node* node) const {
+    long long query(T x, T left, T right, const Node* node) const {
         if (!node)
-            return INF;
+            return LLINF;
 
         if (left == right)
             return node->line.get(x);
 
-        int mid = left + (right - left) / 2;
+        T mid = left + (right - left) / 2;
         if (x <= mid)
             return min(node->line.get(x), query(x, left, mid, node->left));
         else
