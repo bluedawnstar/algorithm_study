@@ -159,6 +159,9 @@
     <ClCompile Include="segmentTreeCompactLazy.cpp" />
     <ClCompile Include="segmentTreeCompactLazyAdd.cpp" />
     <ClCompile Include="segmentTreeLine2D.cpp" />
+    <ClCompile Include="segmentTreeLine2DArray.cpp" />
+    <ClCompile Include="segmentTreeLineSegment2D.cpp" />
+    <ClCompile Include="segmentTreeLineSegment2DSum.cpp" />
     <ClCompile Include="segmentTreeMaxSubarray.cpp" />
     <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
@@ -177,8 +180,14 @@
     <ClInclude Include="segmentTreeCompactLazy.h" />
     <ClInclude Include="segmentTreeCompactLazyAdd.h" />
     <ClInclude Include="segmentTreeLazy.h" />
+    <ClInclude Include="segmentTreeLine2DArrayMax.h" />
+    <ClInclude Include="segmentTreeLine2DArrayMin.h" />
     <ClInclude Include="segmentTreeLine2DMax.h" />
     <ClInclude Include="segmentTreeLine2DMin.h" />
+    <ClInclude Include="segmentTreeLineSegment2DMax.h" />
+    <ClInclude Include="segmentTreeLineSegment2DMaxSum.h" />
+    <ClInclude Include="segmentTreeLineSegment2DMin.h" />
+    <ClInclude Include="segmentTreeLineSegment2DMinSum.h" />
     <ClInclude Include="segmentTreeMaxSubarray.h" />
     <ClInclude Include="segmentTreePersistent.h" />
     <ClInclude Include="segmentTreePersistentLazy.h" />

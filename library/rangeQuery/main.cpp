@@ -22,4 +22,7 @@ int main(void) {
     TEST(SparseTable);
     TEST(SegmentTreeLine1D);
     TEST(SegmentTreeLine2D);
+    TEST(SegmentTreeLine2DArray);
+    TEST(SegmentTreeLineSegment2D);
+    TEST(SegmentTreeLineSegment2DSum);
 }
