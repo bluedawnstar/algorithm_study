@@ -1,6 +1,6 @@
 #pragma once
 
-// Fully Persistent Convex Hull
+// Fully Persistent Convex Hull - upper envelope
 template <typename T>
 struct PersistentLowerConvexHull {
     vector<pair<T, T>>      points; // the right most point at each index

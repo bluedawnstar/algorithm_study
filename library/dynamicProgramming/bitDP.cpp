@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testBitDP() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Bit DP -----------------------------------" << endl;
 

@@ -18,7 +18,7 @@ using namespace std;
 
 
 void testKnuthOptimization() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Knuth Optimization ------------------------" << endl;
 

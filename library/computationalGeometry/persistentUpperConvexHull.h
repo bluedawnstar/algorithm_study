@@ -2,7 +2,7 @@
 
 #include "../misc/randomAccessSparseTable.h"
 
-// Fully Persistent Convex Hull
+// Fully Persistent Convex Hull - lower envelope
 template <typename T>
 struct PersistentUpperConvexHull {
     vector<pair<T, T>>      points; // the right most point at each index
