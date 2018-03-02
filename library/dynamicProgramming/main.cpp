@@ -14,5 +14,7 @@ int main(void) {
     TEST(PalindromicSubstring);
     TEST(Knapsack);
     TEST(BitDP);
+    TEST(DigitDP);
     TEST(ProductSumOfSubarray);
+    TEST(PersistentConvexHull);
 }

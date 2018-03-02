@@ -48,6 +48,12 @@
     <ClCompile Include="maxProductSumOfSubarray.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="digitDP.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\computationalGeometry\persistentConvexHull.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convexHullTrick.h">
@@ -78,6 +84,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="maxProductSumOfSubarray.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="digitDP.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\computationalGeometry\persistentLowerConvexHull.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\computationalGeometry\persistentUpperConvexHull.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

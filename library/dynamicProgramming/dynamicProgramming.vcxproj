@@ -146,8 +146,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\computationalGeometry\persistentConvexHull.cpp" />
     <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
+    <ClCompile Include="digitDP.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
     <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
@@ -159,8 +161,11 @@
     <ClCompile Include="subsequence.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\computationalGeometry\persistentLowerConvexHull.h" />
+    <ClInclude Include="..\computationalGeometry\persistentUpperConvexHull.h" />
     <ClInclude Include="bitDP.h" />
     <ClInclude Include="convexHullTrick.h" />
+    <ClInclude Include="digitDP.h" />
     <ClInclude Include="divideConquerOptimization.h" />
     <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
