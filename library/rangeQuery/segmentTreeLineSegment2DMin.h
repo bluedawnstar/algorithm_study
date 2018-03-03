@@ -82,6 +82,7 @@ private:
                     lazyExist[node] = true;
                     pushDown(node, nodeLeft, nodeRight);
                 }
+                // this line segment is fully exposed
                 return;
             }
         }

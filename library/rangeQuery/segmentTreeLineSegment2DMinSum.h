@@ -37,9 +37,15 @@ struct SegmentTreeLineSegment2DMinSum {
     vector<Line> treeLazy;
     vector<bool> lazyExist;
 
-    // sum
-    vector<long long> sum;      // SUM{ min{ b[k] + m[k] * x }     }, i <= k <= j, i <= x <= j
-    vector<long long> sumX;     // SUM{ min{ b[k] + m[k] * x } * x }, i <= k <= j, i <= x <= j
+    // for (i = left; i <= right; i++)
+    //    for (j = i; j <= right; j++)
+    //       sum += min[k=i..j]{ Fk(i) }, Fk(x) = b[k] + m[k] * x
+    vector<long long> sum;
+
+    // for (i = left; i <= right; i++)
+    //    for (j = i; j <= right; j++)
+    //       sumX += min[k=i..j]{ Fk(i) * i },  Fk(x) = b[k] + m[k] * x
+    vector<long long> sumX;
 
     vector<long long> sumXTbl;  // SUM[0<=x<=n]{ x }
     vector<long long> sumXXTbl; // SUM[0<=x<=n]{ x * x }
@@ -68,8 +74,14 @@ struct SegmentTreeLineSegment2DMinSum {
     }
 
     // query sum in [left, right]
-    //   - first : SUM{ min{ b[k] + m[k] * x }     }, i <= k <= j, i <= x <= j
-    //   - second: SUM{ min{ b[k] + m[k] * x } * x }, i <= k <= j, i <= x <= j
+    //   - first :
+    //      for (i = left; i <= right; i++)
+    //         for (j = i; j <= right; j++)
+    //           sum += min[k=i..j]{ Fk(i) },       Fk(x) = b[k] + m[k] * x
+    //   - second:
+    //      for (i = left; i <= right; i++) {
+    //         for (j = i; j <= right; j++)
+    //           sumX += min[k=i..j]{ Fk(i) * i },  Fk(x) = b[k] + m[k] * x
     // inclusive, O(NlogN)
     pair<long long, long long> querySum(int left, int right) {
         return querySumSub(left, right, 1, 0, N - 1);
@@ -106,6 +118,7 @@ private:
                     lazyExist[node] = true;
                     pushDown(node, nodeLeft, nodeRight);
                 }
+                // this line segment is fully exposed
                 return;
             }
         }

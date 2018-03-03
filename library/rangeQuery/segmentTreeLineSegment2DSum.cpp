@@ -35,35 +35,35 @@ void testSegmentTreeLineSegment2DSum() {
         SegmentTreeLineSegment2DMaxSum tree(MAXX);
 
         // method #1 : O(N^2)
-        long long gt = 0ll;
+        vector<long long> gt1(R + 1);
         for (int i = 0; i <= R; i++) {
             long long maxV = -tree.INF;
             for (int j = i; j <= R; j++) {
                 maxV = max(maxV, lines[j].get(i));
-                gt += maxV;
+                gt1[j] += maxV;
             }
         }
 
         // method #2 : O(N^2)
-        long long gt2 = 0ll;
+        vector<long long> gt2(R + 1);
         {
             vector<long long> maxV(R + 1, -tree.INF);
             for (int j = 0; j <= R; j++) {
                 for (int i = 0; i <= j; i++) {
                     maxV[i] = max(maxV[i], lines[j].get(i));
-                    gt2 += maxV[i];
+                    gt2[j] += maxV[i];
                 }
             }
         }
 
         // method #3 (from method #2) : O(NlogN)
-        long long ans = 0ll;
+        vector<long long> ans(R + 1);
         for (int j = 0; j <= R; j++) {
             tree.add(0, j, lines[j].m, lines[j].b);
-            ans += tree.querySum(0, j).first;
+            ans[j] = tree.querySum(0, j).first;
         }
 
-        assert(gt == ans);
+        assert(gt1 == ans);
         assert(gt2 == ans);
     }
     {
@@ -80,35 +80,35 @@ void testSegmentTreeLineSegment2DSum() {
         SegmentTreeLineSegment2DMinSum tree(MAXX);
 
         // method #1 : O(N^2)
-        long long gt = 0ll;
+        vector<long long> gt1(R + 1);
         for (int i = 0; i <= R; i++) {
             long long minV = tree.INF;
             for (int j = i; j <= R; j++) {
                 minV = min(minV, lines[j].get(i));
-                gt += minV;
+                gt1[j] += minV;
             }
         }
 
         // method #2 : O(N^2)
-        long long gt2 = 0ll;
+        vector<long long> gt2(R + 1);
         {
             vector<long long> minV(R + 1, tree.INF);
             for (int j = 0; j <= R; j++) {
                 for (int i = 0; i <= j; i++) {
                     minV[i] = min(minV[i], lines[j].get(i));
-                    gt2 += minV[i];
+                    gt2[j] += minV[i];
                 }
             }
         }
 
         // method #3 (from method #2) : O(NlogN)
-        long long ans = 0ll;
+        vector<long long> ans(R + 1);
         for (int j = 0; j <= R; j++) {
             tree.add(0, j, lines[j].m, lines[j].b);
-            ans += tree.querySum(0, j).first;
+            ans[j] = tree.querySum(0, j).first;
         }
 
-        assert(gt == ans);
+        assert(gt1 == ans);
         assert(gt2 == ans);
     }
 
