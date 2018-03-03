@@ -51,14 +51,20 @@
     <ClCompile Include="digitDP.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\computationalGeometry\persistentConvexHull.cpp">
+    <ClCompile Include="dynamicUpperEnvelope.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dynamicLowerEnvelope.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dynamicConvexHull.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="persistentConvexHull.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="convexHullTrick.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="divideConquerOptimization.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -89,10 +95,28 @@
     <ClInclude Include="digitDP.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\computationalGeometry\persistentLowerConvexHull.h">
+    <ClInclude Include="dynamicUpperEnvelope.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\computationalGeometry\persistentUpperConvexHull.h">
+    <ClInclude Include="dynamicLowerEnvelope.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicConvexHullLower.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicConvexHullUpper.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="persistentLowerConvexHull.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="persistentUpperConvexHull.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="convexHullTrickMax.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="convexHullTrickMin.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

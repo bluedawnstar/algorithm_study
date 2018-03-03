@@ -17,4 +17,7 @@ int main(void) {
     TEST(DigitDP);
     TEST(ProductSumOfSubarray);
     TEST(PersistentConvexHull);
+    TEST(DynamicUpperEnvelope);
+    TEST(DynamicLowerEnvelope);
+    TEST(DynamicConvexHull);
 }

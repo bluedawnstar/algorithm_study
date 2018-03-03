@@ -146,32 +146,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\computationalGeometry\persistentConvexHull.cpp" />
     <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="digitDP.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
+    <ClCompile Include="dynamicConvexHull.cpp" />
+    <ClCompile Include="dynamicLowerEnvelope.cpp" />
+    <ClCompile Include="dynamicUpperEnvelope.cpp" />
     <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxProductSumOfSubarray.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="palindromicSubstring.cpp" />
+    <ClCompile Include="persistentConvexHull.cpp" />
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\computationalGeometry\persistentLowerConvexHull.h" />
-    <ClInclude Include="..\computationalGeometry\persistentUpperConvexHull.h" />
     <ClInclude Include="bitDP.h" />
-    <ClInclude Include="convexHullTrick.h" />
+    <ClInclude Include="convexHullTrickMin.h" />
+    <ClInclude Include="convexHullTrickMax.h" />
     <ClInclude Include="digitDP.h" />
     <ClInclude Include="divideConquerOptimization.h" />
+    <ClInclude Include="dynamicConvexHullLower.h" />
+    <ClInclude Include="dynamicLowerEnvelope.h" />
+    <ClInclude Include="dynamicConvexHullUpper.h" />
+    <ClInclude Include="dynamicUpperEnvelope.h" />
     <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
     <ClInclude Include="maxProductSumOfSubarray.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />
+    <ClInclude Include="persistentLowerConvexHull.h" />
+    <ClInclude Include="persistentUpperConvexHull.h" />
     <ClInclude Include="steinerTree.h" />
     <ClInclude Include="subsequence.h" />
   </ItemGroup>
