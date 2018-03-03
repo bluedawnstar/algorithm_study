@@ -169,7 +169,6 @@
     <ClInclude Include="basicUndirectedGraph.h" />
     <ClInclude Include="bcc.h" />
     <ClInclude Include="bipartiteGraph.h" />
-    <ClInclude Include="bipartiteGraphArray.h" />
     <ClInclude Include="hamiltonian.h" />
     <ClInclude Include="maxClique.h" />
     <ClInclude Include="cycleDigraph.h" />
