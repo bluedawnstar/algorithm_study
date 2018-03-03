@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "bipartiteGraph.h"
+#include "bipartiteGraphArray.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -43,7 +44,7 @@ static BipartiteGraph<int> buildGraph() {
 }
 
 void testBipartiteMaching() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Bipartite Maching -------------" << endl;
     {
@@ -75,7 +76,16 @@ void testBipartiteMaching() {
         assert(ans == 5);
         cout << graph.getLastMaxMatchingEdges() << endl;
 
+        auto mvc = graph.minVertexCover();
         auto mis = graph.maxIndependentSet();
+
+        assert(mvc.first.size() == mis.first.size());
+        assert(mvc.second.size() == mis.second.size());
+        for (int i = 0; i < (int)mvc.first.size(); i++)
+            assert(mvc.first[i] != mis.first[i]);
+        for (int i = 0; i < (int)mvc.second.size(); i++)
+            assert(mvc.second[i] != mis.second[i]);
+
         cout << "max independent set : " << endl
              << "    " << mis.first << endl
              << "    " << mis.second << endl;

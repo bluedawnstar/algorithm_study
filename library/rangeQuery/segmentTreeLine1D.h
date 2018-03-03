@@ -36,6 +36,10 @@ struct SegmentTreeLine1D {
         return querySub(1, 0, N - 1, left, right, count);
     }
 
+    void forEachCovered(int left, int right, const function<void(int)>& f) {
+        forEachCoveredSub(1, 0, N - 1, left, right, f);
+    }
+
 private:
     // inclusive
     void buildSub(int node, int left, int right) {
@@ -111,6 +115,34 @@ private:
             else
                 return querySub(2 * node, left, mid, lineX1, mid, count)
                      + querySub(2 * node + 1, mid + 1, right, mid + 1, lineX2, count);
+        }
+    }
+
+    void forEachCoveredSub(int node, int left, int right, int lineX1, int lineX2, const function<void(int)>& f) {
+        if (left > right || lineX1 > right || lineX2 < left)
+            return;
+
+        if (left == lineX1 && right == lineX2) {
+            if (tree[node].first > 0) {
+                for (int i = left; i <= right; i++)
+                    f(i);
+                return;
+            } else if (tree[node].first == 0 && tree[node].second == (right - left + 1))
+                return;
+        }
+
+        if (left < right) {
+            push(node);
+
+            int mid = left + (right - left) / 2;
+            if (lineX2 <= mid)
+                forEachCoveredSub(2 * node, left, mid, lineX1, lineX2, f);
+            else if (lineX1 > mid)
+                forEachCoveredSub(2 * node + 1, mid + 1, right, lineX1, lineX2, f);
+            else {
+                forEachCoveredSub(2 * node, left, mid, lineX1, mid, f);
+                forEachCoveredSub(2 * node + 1, mid + 1, right, mid + 1, lineX2, f);
+            }
         }
     }
 };
