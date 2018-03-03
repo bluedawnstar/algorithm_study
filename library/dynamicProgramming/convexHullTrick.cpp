@@ -5,7 +5,8 @@
 
 using namespace std;
 
-#include "convexHullTrick.h"
+#include "convexHullTrickMin.h"
+#include "convexHullTrickMax.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -20,7 +21,7 @@ using namespace std;
 typedef long long ll;
 
 // https://www.hackerrank.com/contests/w30/challenges/poles
-ll solveWoC30(int KK, vector<pair<int,int>>& xw) {
+ll solveWoC30_WithMin(int KK, vector<pair<int,int>>& xw) {
     int NN = (int)xw.size();
     vector<ll> sumW(NN);
     vector<ll> sumXW(NN);
@@ -53,13 +54,46 @@ ll solveWoC30(int KK, vector<pair<int,int>>& xw) {
     return dp[KK][NN - 1];
 }
 
+ll solveWoC30_WithMax(int KK, vector<pair<int, int>>& xw) {
+    int NN = (int)xw.size();
+    vector<ll> sumW(NN);
+    vector<ll> sumXW(NN);
+    vector<vector<ll>> dp(KK + 1, vector<ll>(NN));
+
+    reverse(xw.begin(), xw.end());
+
+    sumW[0] = xw[0].second;
+    sumXW[0] = ll(xw[0].second) * xw[0].first;
+    for (int i = 1; i < NN; i++) {
+        sumW[i] = sumW[i - 1] + xw[i].second;
+        sumXW[i] = sumXW[i - 1] + ll(xw[i].second) * xw[i].first;
+    }
+
+    for (int n = 1; n < NN; n++)
+        dp[1][n] = sumXW[n] - sumW[n] * xw[n].first;
+
+    for (int k = 2; k <= KK; k++) {
+        DPConvexHullTrickMax<long long> cht;
+        cht.insertReverse(-sumW[k - 2], -dp[k - 1][k - 2] + sumXW[k - 2]);
+        for (int n = k - 1; n < NN; n++) {
+            if (n < k)
+                dp[k][n] = 0;
+            else
+                dp[k][n] = sumXW[n] - xw[n].first * sumW[n] - cht.query(xw[n].first);
+            cht.insertReverse(-sumW[n], -dp[k - 1][n] + sumXW[n]);
+        }
+    }
+
+    return dp[KK][NN - 1];
+}
+
 
 void testConvexHullTrick() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Convex Hull Trick ------------------------" << endl;
 
-    assert(solveWoC30(12, vector<pair<int, int>>{
+    vector<pair<int, int>> testIn1{
         { 4, 994 },
         { 27, 980 },
         { 88, 974 },
@@ -93,9 +127,8 @@ void testConvexHullTrick() {
         { 893, 108 },
         { 937, 41 },
         { 979, 30 },
-    }) == 224606ll);
-
-    assert(solveWoC30(5, vector<pair<int, int>>{
+    };
+    vector<pair<int, int>> testIn2{
         { 28, 445 },
         { 34, 468 },
         { 56, 304 },
@@ -104,7 +137,10 @@ void testConvexHullTrick() {
         { 72, 38 },
         { 78, 697 },
         { 97, 872 },
-    }) == 6606ll);
+    };
+
+    assert(solveWoC30_WithMin(12, testIn1) == 224606ll);
+    assert(solveWoC30_WithMin(5, testIn2) == 6606ll);
 
     cout << "OK!" << endl;
 }
