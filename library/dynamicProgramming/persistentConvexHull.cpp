@@ -8,7 +8,6 @@ using namespace std;
 // https://www.hackerrank.com/contests/w36/challenges/expert-computation
 // https://www.hackerrank.com/external_redirect?to=http://codeforces.com/blog/entry/51684
 
-#include "vec2D.h"
 #include "persistentUpperConvexHull.h"
 #include "persistentLowerConvexHull.h"
 
