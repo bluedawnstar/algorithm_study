@@ -31,4 +31,6 @@ int main(void) {
     TEST(SearchRabinKarp);
     TEST(SearchZAlgorithm);
     TEST(PrefixFunction);
+    TEST(Subsequence);
+    TEST(SubsequenceLCS);
 }

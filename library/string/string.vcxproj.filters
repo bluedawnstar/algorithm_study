@@ -99,6 +99,12 @@
     <ClCompile Include="prefixFunction.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="subsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="subsequenceLCS.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -186,6 +192,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="prefixFunctionSparseTable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="subsequenceLCS.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="subsequenceCheck.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="subsequenceCount.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
