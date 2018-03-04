@@ -12,4 +12,5 @@ int main(void) {
     TEST(GaussianElimination);
     TEST(SimpsonIntegration);
     TEST(Shuntingyard);
+    TEST(FactorialZeroes);
 }

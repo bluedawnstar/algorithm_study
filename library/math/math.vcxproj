@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="expressionParser.cpp" />
+    <ClCompile Include="factorialZeroes.cpp" />
     <ClCompile Include="fibonacci.cpp" />
     <ClCompile Include="gaussianElimination.cpp" />
     <ClCompile Include="main.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="expressionParser.h" />
+    <ClInclude Include="factorialZeroes.h" />
     <ClInclude Include="fibonacci.h" />
     <ClInclude Include="gaussianElimination.h" />
     <ClInclude Include="matrix.h" />
