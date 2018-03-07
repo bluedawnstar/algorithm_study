@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="disjointSparseTable.cpp" />
     <ClCompile Include="fenwickTree.cpp" />
     <ClCompile Include="fenwickTree2D.cpp" />
     <ClCompile Include="fenwickTreeMax.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="sqrtDecomposition.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="disjointSparseTable.h" />
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
     <ClInclude Include="fenwickTreeMax.h" />
