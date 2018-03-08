@@ -2,34 +2,68 @@
 
 // O(kn^2) => O(knlogn)
 // 
-// dp[i][j] = min { dp[i - 1][k] + C[k][j] }
+// dp[i][j] = min { dp[i - 1][k] + C[k + 1][j] }
 //            k<j
 // 
 // <precondition> A[i][j] is the smallest k that gives optimal answer in dp[i][j]
 //     A[i][j] <= A[i][j + 1]
 //   or
 //     C[a][c] + C[b][d] <= C[a][d] + C[b][c], a <= b <= c <= d (quadrangle inequality)
-template <typename T, T INF = 2e9>
-void divideAndConquerDP(vector<vector<T>>& dp, vector<vector<T>>& C, int i, int jlo, int jhi, int klo, int khi) {
-    // calculate dp[i][jlo], D[i][jlo+1], ..., D[i][jhi]
+// 
+// https://www.hackerrank.com/contests/ioi-2014-practice-contest-2/challenges/guardians-lunatics-ioi14
+// https://www.hackerrank.com/contests/101hack53/challenges/optimal-bus-stops/problem
+// 
+//
+/*
+    InT : input type
+    OutT : output type
+    CostF : cost function
+        OutT CostF(int left, int right); 1 <= left <= right <= N
+*/
+template <typename T = double, typename CostF = function<T(int, int)>>
+struct DivideAndConquerOptimizer {
+    const T INF;
 
-    if (jlo > jhi)
-        return;
+    int N;
+    vector<vector<T>> dp;
+    CostF costF;
 
-    int jmid = jlo + (jhi - jlo) / 2;
-
-    dp[i][jmid] = INF;
-    int minK = -1;
-    for (int k = klo; k <= khi && k < jmid; k++) {
-        T v = dp[i - 1][k] + C[k][jmid];
-        if (dp[i][jmid] > v) {
-            dp[i][jmid] = v;
-            minK = k;
-        }
+    // PRECONDITION: A must be sorted by ascending order
+    DivideAndConquerOptimizer(int _N, T _INF, CostF _costF)
+        : N(_N), INF(_INF), costF(_costF) {
     }
 
-    divideAndConquerDP<T, INF>(dp, C, i, jlo, jmid - 1, klo, minK);
-    divideAndConquerDP<T, INF>(dp, C, i, jmid + 1, jhi, minK, khi);
-}
+    T solve(int K) {
+        dp = vector<vector<T>>(K + 1, vector<T>(N + 1, INF));
+        dp[0][0] = T(0);
+        for (int i = 1; i <= K; i++)
+            divideAndConquerDP(i, 1, N, 0, N);
+        return dp[K][N];
+    }
 
-// https://www.hackerrank.com/contests/ioi-2014-practice-contest-2/challenges/guardians-lunatics-ioi14
+private:
+    void divideAndConquerDP(int i, int jlo, int jhi, int klo, int khi) {
+        if (jlo > jhi)
+            return;
+
+        int jmid = jlo + (jhi - jlo) / 2;
+        int minK = klo;
+
+        dp[i][jmid] = INF;
+        for (int k = klo; k <= khi && k < jmid; k++) {
+            T cur = dp[i - 1][k] + costF(k + 1, jmid);
+            if (cur < dp[i][jmid]) {
+                dp[i][jmid] = cur;
+                minK = k;
+            }
+        }
+
+        divideAndConquerDP(i, jlo, jmid - 1, klo, minK);
+        divideAndConquerDP(i, jmid + 1, jhi, minK, khi);
+    }
+};
+
+template <typename T, typename CostF>
+DivideAndConquerOptimizer<T, CostF> makeDivideAndConquerOptimizer(int N, T INF, CostF costFunc) {
+    return DivideAndConquerOptimizer<T, CostF>(N, INF, costFunc);
+}

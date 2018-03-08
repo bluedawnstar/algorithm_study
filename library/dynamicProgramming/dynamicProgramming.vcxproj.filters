@@ -63,6 +63,9 @@
     <ClCompile Include="persistentConvexHull.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="divideConquerOptimization_OptimalSquareDistance1D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -117,6 +120,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="convexHullTrickMin.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="divideConquerOptimization_OptimalSquareDistance1D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

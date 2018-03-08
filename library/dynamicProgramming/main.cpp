@@ -8,7 +8,6 @@ using namespace std;
 int main(void) {
     TEST(ConvexHullTrick);
     TEST(KnuthOptimization);
-    TEST(DevideAndConquerOptimization);
     TEST(Subsequence);
     TEST(PalindromicSubsequence);
     TEST(PalindromicSubstring);
@@ -20,4 +19,6 @@ int main(void) {
     TEST(DynamicUpperEnvelope);
     TEST(DynamicLowerEnvelope);
     TEST(DynamicConvexHull);
+    TEST(DivideAndConquerOptimization);
+    TEST(OptimalSquareDistance1D);
 }

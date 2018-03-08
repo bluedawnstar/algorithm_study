@@ -150,6 +150,7 @@
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="digitDP.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
+    <ClCompile Include="divideConquerOptimization_OptimalSquareDistance1D.cpp" />
     <ClCompile Include="dynamicConvexHull.cpp" />
     <ClCompile Include="dynamicLowerEnvelope.cpp" />
     <ClCompile Include="dynamicUpperEnvelope.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="convexHullTrickMax.h" />
     <ClInclude Include="digitDP.h" />
     <ClInclude Include="divideConquerOptimization.h" />
+    <ClInclude Include="divideConquerOptimization_OptimalSquareDistance1D.h" />
     <ClInclude Include="dynamicConvexHullLower.h" />
     <ClInclude Include="dynamicLowerEnvelope.h" />
     <ClInclude Include="dynamicConvexHullUpper.h" />
