@@ -54,7 +54,7 @@ struct DisjointSparseTable {
             N <<= 1;
 
         H.resize(N);
-        H[1] = 1;
+        H[1] = 0;
         for (int i = 2; i < N; i++)
             H[i] = H[i >> 1] + 1;
 
@@ -62,15 +62,15 @@ struct DisjointSparseTable {
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 
-        vector<T>& A = value[0];
-        for (int h = 1, range = 2; range <= N; h++, range <<= 1) {
+        vector<T>& A = value[0];    // range is 2
+        for (int h = 1, range = 4; range <= N; h++, range <<= 1) {
             int half = range >> 1;
 
             vector<T>& curr = value[h];
             for (int i = half; i < N; i += range) {
                 curr[i - 1] = A[i - 1];
                 for (int j = i - 2; j >= i - half; j--)
-                    curr[j] = mergeOp(curr[j + 1], A[j]);
+                    curr[j] = mergeOp(A[j], curr[j + 1]);
 
                 curr[i] = A[i];
                 for (int j = i + 1; j < i + half; j++)
