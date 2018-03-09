@@ -6,8 +6,6 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(ConvexHullTrick);
-    TEST(KnuthOptimization);
     TEST(Subsequence);
     TEST(PalindromicSubsequence);
     TEST(PalindromicSubstring);
@@ -19,6 +17,8 @@ int main(void) {
     TEST(DynamicUpperEnvelope);
     TEST(DynamicLowerEnvelope);
     TEST(DynamicConvexHull);
+    TEST(ConvexHullTrick);
     TEST(DivideAndConquerOptimization);
     TEST(OptimalSquareDistance1D);
+    TEST(KnuthOptimization);
 }
