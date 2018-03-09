@@ -1,5 +1,7 @@
 #pragma once
 
+// http://codeforces.com/blog/entry/8219
+// 
 // O(kn^2) => O(knlogn)
 // 
 // dp[i][j] = min { dp[i - 1][k] + C[k + 1][j] }
@@ -15,12 +17,11 @@
 // 
 //
 /*
-    InT : input type
-    OutT : output type
-    CostF : cost function
-        OutT CostF(int left, int right); 1 <= left <= right <= N
+    - T     : cost type
+    - CostF : cost function
+        => T CostF(int i, int left, int right); 1 <= i <= K, 1 <= left <= right <= N, inclusive
 */
-template <typename T = double, typename CostF = function<T(int, int)>>
+template <typename T = double, typename CostF = function<T(int, int, int)>>
 struct DivideAndConquerOptimizer {
     const T INF;
 
@@ -51,9 +52,9 @@ private:
 
         dp[i][jmid] = INF;
         for (int k = klo; k <= khi && k < jmid; k++) {
-            T cur = dp[i - 1][k] + costF(k + 1, jmid);
-            if (cur < dp[i][jmid]) {
-                dp[i][jmid] = cur;
+            T val = dp[i - 1][k] + costF(i, k + 1, jmid);
+            if (val < dp[i][jmid]) {
+                dp[i][jmid] = val;
                 minK = k;
             }
         }

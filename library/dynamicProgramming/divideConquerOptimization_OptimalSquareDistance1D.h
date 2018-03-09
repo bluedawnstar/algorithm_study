@@ -22,6 +22,7 @@ https://www.hackerrank.com/contests/101hack53/challenges/optimal-bus-stops/probl
 2. Optimization
     DP(C, i) <= DP(C, i + 1)
 */
+// O(K*N*logN)
 struct OptimalSquareDistance1D {
     const double INF = 1e15;
 
@@ -45,8 +46,8 @@ struct OptimalSquareDistance1D {
         return dp[K][N];
     }
 
-    // 1 <= left <= right <= N
-    double cost(int left, int right) const {
+    // 1 <= i <= K, 1 <= left <= right <= N
+    double cost(int i, int left, int right) const {
         return SS[right] - SS[left - 1] - double(S[right] - S[left - 1]) * (S[right] - S[left - 1]) / (right - left + 1);
     }
 
@@ -60,9 +61,9 @@ private:
 
         dp[i][jmid] = INF;
         for (int k = klo; k <= khi && k < jmid; k++) {
-            double cur = dp[i - 1][k] + cost(k + 1, jmid);
-            if (cur < dp[i][jmid]) {
-                dp[i][jmid] = cur;
+            double val = dp[i - 1][k] + cost(i, k + 1, jmid);
+            if (val < dp[i][jmid]) {
+                dp[i][jmid] = val;
                 minK = k;
             }
         }

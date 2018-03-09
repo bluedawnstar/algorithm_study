@@ -33,7 +33,7 @@ void testDivideAndConquerOptimization() {
             SS[i] = SS[i - 1] + 1ll * A[i - 1] * A[i - 1];
         }
 
-        auto optimizer = makeDivideAndConquerOptimizer(N, 1.0e15, [&S, &SS](int L, int R) {
+        auto optimizer = makeDivideAndConquerOptimizer(N, 1.0e15, [&S, &SS](int i, int L, int R) {
             return SS[R] - SS[L - 1] - double(S[R] - S[L - 1]) * (S[R] - S[L - 1]) / (R - L + 1);
         });
 
