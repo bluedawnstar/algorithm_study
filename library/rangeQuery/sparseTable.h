@@ -13,16 +13,32 @@ struct SparseTable {
     T                   defaultValue;
     BinOp               mergeOp;
 
-    template <typename U>
-    SparseTable(const U& a, int n, T dfltValue = T())
+    SparseTable(T dfltValue = T())
         : mergeOp(), defaultValue(dfltValue) {
-        _init(a, n);
     }
 
-    template <typename U>
-    SparseTable(const U& a, int n, BinOp op, T dfltValue = T())
+    SparseTable(BinOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
-        _init(a, n);
+    }
+
+    SparseTable(const T a[], int n, T dfltValue = T())
+        : mergeOp(), defaultValue(dfltValue) {
+        build(a, n);
+    }
+
+    SparseTable(const vector<T>& a, T dfltValue = T())
+        : mergeOp(), defaultValue(dfltValue) {
+        build(a);
+    }
+
+    SparseTable(const T a[], int n, BinOp op, T dfltValue = T())
+        : mergeOp(op), defaultValue(dfltValue) {
+        build(a, n);
+    }
+
+    SparseTable(const vector<T>& a, BinOp op, T dfltValue = T())
+        : mergeOp(op), defaultValue(dfltValue) {
+        build(a);
     }
 
     SparseTable(SparseTable&& rhs)
@@ -30,8 +46,7 @@ struct SparseTable {
           mergeOp(std::move(rhs.mergeOp)), defaultValue(rhs.defaultValue) {
     }
 
-    template <typename U>
-    void _init(const U& a, int n) {
+    void build(const T a[], int n) {
         this->N = n;
 
         H.resize(n + 1);
@@ -53,6 +68,10 @@ struct SparseTable {
                     curr[v] = prev[v];
             }
         }
+    }
+
+    void build(const vector<T>& a) {
+        build(&a[0], (int)a.size());
     }
 
     // O(1), inclusive
@@ -87,8 +106,8 @@ struct SparseTable {
 };
 
 template <typename T, typename BinOp>
-SparseTable<T, BinOp> makeSparseTable(const vector<T>& arr, int size, BinOp op, T dfltValue = T()) {
-    return SparseTable<T, BinOp>(arr, size, op, dfltValue);
+SparseTable<T, BinOp> makeSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
+    return SparseTable<T, BinOp>(arr, op, dfltValue);
 }
 
 template <typename T, typename BinOp>

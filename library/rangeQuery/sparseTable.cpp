@@ -27,7 +27,7 @@ void testSparseTable() {
 
     cout << "*** RMQ ***" << endl;
     {
-        auto sparseTable = makeSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, 6, [](int a, int b) { return min(a, b); }, INT_MAX);
+        auto sparseTable = makeSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
         RMQ rmq(vector<int>{6, 1, 4, 3, 7, 1});
 
         int ans, ansRMQ;
@@ -60,7 +60,7 @@ void testSparseTable() {
             prefixSum[i] = prefixSum[i - 1] + inSum[i - 1];
         }
 
-        auto sparseTable2 = makeSparseTable<int>(inSum, (int)inSum.size(), [](int a, int b) { return a + b; }, 0);
+        auto sparseTable2 = makeSparseTable<int>(inSum, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < 10000; i++) {
             int left = rand() % N;
@@ -117,7 +117,7 @@ void testSparseTable() {
         cout << "*** Sparse Table ***" << endl;
         res = 0;
         start = clock();
-        SparseTableMin st(T, N);
+        SparseTableMin st(T);
         for (int i = 0; i < TN; i++) {
             for (auto& it : Q) {
                 res += st.query(it.first, it.second);

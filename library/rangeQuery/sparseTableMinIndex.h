@@ -12,13 +12,15 @@ struct SparseTableMinIndex {
     SparseTableMinIndex() {
     }
 
-    template <typename U>
-    SparseTableMinIndex(const U& a, int n) {
+    SparseTableMinIndex(const int a[], int n) {
         build(a, n);
     }
 
-    template <typename U>
-    void build(const U& a, int n) {
+    SparseTableMinIndex(const vector<int>& a) {
+        build(a);
+    }
+
+    void build(const int a[], int n) {
         this->N = n;
 
         in.resize(n);
@@ -45,6 +47,10 @@ struct SparseTableMinIndex {
                     curr[v] = prev[v];
             }
         }
+    }
+
+    void build(const vector<int>& a) {
+        build(&a[0], (int)a.size());
     }
 
     // inclusive

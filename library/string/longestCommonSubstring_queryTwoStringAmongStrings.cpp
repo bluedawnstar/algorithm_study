@@ -84,7 +84,7 @@ struct LongestCommonStringLengthWithSuffixArray {
         // making suffix array, LCP array, sparse table for LCP array
         mSA = makeSuffixArrayFast(mSS);
         mLCP = makeLcpArray(mSA, mSS, (int)mSS.length());
-        LcpArraySparseTable sparseTable(mLCP, (int)mLCP.size());
+        LcpArraySparseTable sparseTable(mLCP);
 
         // check forward
         vector<int> lastSAIndex(mN, -1);

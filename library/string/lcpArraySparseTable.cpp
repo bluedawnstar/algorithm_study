@@ -30,7 +30,7 @@ void testLcpArraySparseTable() {
 
     vector<int> a = makeSuffixArrayFast(S, (int)S.length());
     vector<int> lcpArray = makeLcpArray(a, S, (int)S.length());
-    LcpArraySparseTable lcpArrayST(lcpArray, (int)lcpArray.size());
+    LcpArraySparseTable lcpArrayST(lcpArray);
 
     for (int i = 0; i < 100; i++) {
         int left = rand() % S.length(), right = rand() % S.length();

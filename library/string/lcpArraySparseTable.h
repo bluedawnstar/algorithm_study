@@ -10,9 +10,13 @@ struct LcpArraySparseTable {
     SparseTableMin lcpTable;
     
     // PRECONDITION: lcpArray[i] = LCP(SA[i], SA[i - 1])
-    template <typename T>
-    LcpArraySparseTable(const T& lcpArray, int n)
+    LcpArraySparseTable(const int lcpArray[], int n)
         : lcpTable(lcpArray, n) {
+        // no action
+    }
+
+    LcpArraySparseTable(const vector<int>& lcpArray)
+        : lcpTable(lcpArray) {
         // no action
     }
 

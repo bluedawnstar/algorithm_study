@@ -30,7 +30,7 @@ struct EulerTourTree : public Tree {
         vector<int> level(mEuler.size());
         for (int i = 0; i < (int)mEuler.size(); i++)
             level[i] = mLevel[mEuler[i]];
-        mRMQ.build(level, (int)mEuler.size());
+        mRMQ.build(level);
     }
 
     //--------- DFS -----------------------------------------------------------

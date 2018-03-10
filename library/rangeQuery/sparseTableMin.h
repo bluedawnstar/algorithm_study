@@ -7,8 +7,18 @@ struct SparseTableMin {
     vector<vector<int>> value;
     vector<int> H;
 
-    template <typename U>
-    SparseTableMin(const U& a, int n) {
+    SparseTableMin() {
+    }
+
+    SparseTableMin(const vector<int>& a) {
+        build(a);
+    }
+
+    SparseTableMin(const int a[], int n) {
+        build(a, n);
+    }
+
+    void build(const int a[], int n) {
         this->N = n;
 
         H.resize(n + 1);
@@ -30,6 +40,10 @@ struct SparseTableMin {
                     curr[v] = prev[v];
             }
         }
+    }
+
+    void build(const vector<int>& a) {
+        build(&a[0], (int)a.size());
     }
 
     // inclusive

@@ -17,7 +17,7 @@ struct DistinctSubstringCounterWithSuffixArray {
     FenwickTreeMultAdd<T>   fsum;
 
     DistinctSubstringCounterWithSuffixArray(const vector<int>& SA, const vector<int>& lcpArray, int n)
-        : lcpTable(lcpArray, n), addedSuffix(n), fsum(n), revSA(n) {
+        : lcpTable(lcpArray), addedSuffix(n), fsum(n), revSA(n) {
         N = n;
         currSuffixPos = N - 1;
 
