@@ -23,6 +23,22 @@ inline vector<bool> eratosthenes(int n) {
     return res;
 }
 
+// get all prime numbers in [0, n], inclusive
+// O(N loglogN)
+inline vector<int> eratosthenes2(int n) {
+    vector<bool> p = eratosthenes(n);
+
+    vector<int> res;
+    if (n >= 2)
+        res.push_back(2);
+    for (int i = 3; i <= n; i += 2)
+        if (p[i])
+            res.push_back(i);
+
+    return res;
+}
+
+
 // get all prime numbers
 // inclusive, O(N loglogN)
 inline vector<bool> eratosthenes(int left, int right) {
@@ -34,17 +50,14 @@ inline vector<bool> eratosthenes(int left, int right) {
     if (left <= 1 && 1 <= right)
         res[1 - left] = false;
 
-    if (n >= 4) {
-        for (int j = left + (left & 1); j <= right; j += 2)
-            res[j - left] = false;
-    }
-
     int root = (int)sqrt(right);
     vector<bool> p(root + 1, true);
 
     if (root >= 4) {
         for (int j = 4; j <= root; j += 2)
             p[j] = false;
+        for (int j = max(4, left + (left & 1)); j <= right; j += 2)
+            res[j - left] = false;
     }
     for (int i = 3; i <= root; i += 2) {
         if (p[i]) {
@@ -54,6 +67,19 @@ inline vector<bool> eratosthenes(int left, int right) {
                 res[j - left] = false;
         }
     }
+
+    return res;
+}
+
+// get all prime numbers
+// inclusive, O(N loglogN)
+inline vector<int> eratosthenes2(int left, int right) {
+    vector<bool> p = eratosthenes(left, right);
+
+    vector<int> res;
+    for (int i = left; i <= right; i++)
+        if (p[i])
+            res.push_back(i + left);
 
     return res;
 }

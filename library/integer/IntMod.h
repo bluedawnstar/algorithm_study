@@ -111,7 +111,7 @@ inline long long modSub(long long a, long long b, long long M) {
 
 inline long long modMul(long long a, long long b, long long M) {
 #ifdef __GNUC__
-    return long long((__int128_t)(a % M) * (b % M) % M);
+    return (long long)((__int128_t)(a % M) * (b % M) % M);
 #else
         int base = (int)1e9;
         long long aLow = a % base, aHigh = a / base;
@@ -137,9 +137,9 @@ inline long long modPow(long long x, long long n, long long M) {
         return 1;
 
     long long p = modPow(x, n / 2, M) % M;
-    p = long long((__int128_t)p * p % M);
+    p = (long long)((__int128_t)p * p % M);
 
-    return ((n & 1) == 0) ? p : long long((__int128_t)p * x % M);
+    return ((n & 1) == 0) ? p : (long long)((__int128_t)p * x % M);
 #else
     if (n == 0)
         return 1;
@@ -196,7 +196,7 @@ inline long long modInvPrime(long long a, long long M) {
 // a and M are coprime
 inline long long modDiv(long long a, long long b, long long M) {
 #ifdef __GNUC__
-    return long long((__int128_t)(a % M) * modInv(b, M) % M);
+    return (long long)((__int128_t)(a % M) * modInv(b, M) % M);
 #else
     return modMul(a % M, modInv(b, M), M);
 #endif
@@ -205,7 +205,7 @@ inline long long modDiv(long long a, long long b, long long M) {
 // a and M are coprime
 inline long long modDivIter(long long a, long long b, long long M) {
 #ifdef __GNUC__
-    return long long((__int128_t)(a % M) * modInvIter(b, M) % M);
+    return (long long)((__int128_t)(a % M) * modInvIter(b, M) % M);
 #else
     return modMul(a % M, modInvIter(b, M), M);
 #endif
@@ -214,7 +214,7 @@ inline long long modDivIter(long long a, long long b, long long M) {
 // M is a prime number.
 inline long long modDivPrime(long long a, long long b, long long M) {
 #ifdef __GNUC__
-    return long long((__int128_t)(a % M) * modInvPrime(b, M) % M);
+    return (long long)((__int128_t)(a % M) * modInvPrime(b, M) % M);
 #else
     return modMul(a % M, modInvPrime(b, M), M);
 #endif
