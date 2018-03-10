@@ -176,6 +176,30 @@ void testBitSet() {
             assert(check(bs1, bs2));
         }
     }
+    {
+        vector<int> index;
+
+        for (int i = 0; i < N / 10; i++)
+            index.push_back(rand() % N);
+        sort(index.begin(), index.end());
+        index.erase(unique(index.begin(), index.end()), index.end());
+
+        BitSetSimple bs;
+        bs.init(N);
+
+        for (int i : index)
+            bs.set(i);
+
+        for (int i = 0, j = -1; i < (int)index.size(); i++) {
+            j = bs.next(j);
+            assert(j == index[i]);
+        }
+
+        for (int i = (int)index.size() - 1, j = N; i >= 0; i--) {
+            j = bs.prev(j);
+            assert(j == index[i]);
+        }
+    }
 
     cout << "OK!" << endl;
 }

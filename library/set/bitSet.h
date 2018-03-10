@@ -325,7 +325,7 @@ struct BitSet {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i] != BIT_ALL) {
                 int m = (int)~mV[i];
-                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
         return size();
@@ -335,7 +335,7 @@ struct BitSet {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i]) {
                 int m = (int)mV[i];
-                return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
         return -1;
@@ -344,8 +344,47 @@ struct BitSet {
     int last() const {
         for (int i = (int)mV.size() - 1; i >= 0; i--) {
             if (mV[i])
-                return i * BIT_SIZE + BIT_SIZE - clz(mV[i]) - 1;
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
         }
+        return -1;
+    }
+    int next(int pos) const {
+        if (++pos >= mN)
+            return -1;
+
+        int index = pos >> INDEX_SHIFT;
+        int offset = pos & INDEX_MASK;
+
+        int m = (int)mV[index] & (BIT_ALL << offset);
+        if (m)
+            return (index << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+
+        for (int i = index + 1; i < (int)mV.size(); i++) {
+            if (mV[i]) {
+                m = (int)mV[i];
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+            }
+        }
+
+        return -1;
+    }
+
+    int prev(int pos) const {
+        if (--pos < 0)
+            return -1;
+
+        int index = pos >> INDEX_SHIFT;
+        int offset = pos & INDEX_MASK;
+
+        int m = (int)mV[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
+        if (m)
+            return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
+
+        for (int i = index - 1; i < (int)mV.size(); i--) {
+            if (mV[i])
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
+        }
+
         return -1;
     }
 

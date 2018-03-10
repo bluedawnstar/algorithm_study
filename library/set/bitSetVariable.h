@@ -278,6 +278,46 @@ struct BitSetVariable {
         return -1;
     }
 
+    int next(int pos) const {
+        if (++pos >= (int)mV.size() * BIT_SIZE)
+            return -1;
+
+        int index = pos >> INDEX_SHIFT;
+        int offset = pos & INDEX_MASK;
+
+        int m = (int)mV[index] & (BIT_ALL << offset);
+        if (m)
+            return (index << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+
+        for (int i = index + 1; i < (int)mV.size(); i++) {
+            if (mV[i]) {
+                m = (int)mV[i];
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+            }
+        }
+
+        return -1;
+    }
+
+    int prev(int pos) const {
+        if (--pos < 0)
+            return -1;
+
+        int index = pos >> INDEX_SHIFT;
+        int offset = pos & INDEX_MASK;
+
+        int m = (int)mV[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
+        if (m)
+            return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
+
+        for (int i = index - 1; i < (int)mV.size(); i--) {
+            if (mV[i])
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
+        }
+
+        return -1;
+    }
+
     static int clz(unsigned x) {
 #ifndef __GNUC__
         return (int)__lzcnt(x);
