@@ -21,7 +21,7 @@ using namespace std;
 #define NN  1000000
 
 void testMobius() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Mobius Function -----------------------" << endl;
     {

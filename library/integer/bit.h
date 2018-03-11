@@ -3,17 +3,45 @@
 // counting leading zeros
 inline int clz(unsigned x) {
 #ifndef __GNUC__
-    return (int)__lzcnt(x);
+    return (int)_lzcnt_u32(x);
 #else
     return __builtin_clz(x);
 #endif
 }
 
 inline int clz(unsigned long long x) {
+#if defined(_M_X64)
+    return (int)_lzcnt_u64(x);
+#elif defined(__GNUC__)
+    return __builtin_clzll(x);
+#else
     if ((x >> 32) != 0)
-        return clz(unsigned(x >> 32));
+        return (int)_lzcnt_u32(unsigned(x >> 32));
     else
-        return 32 + clz(unsigned(x));
+        return 32 + (int)_lzcnt_u32(unsigned(x));
+#endif
+}
+
+// counting trailing zeros
+inline int ctz(unsigned x) {
+#ifndef __GNUC__
+    return (int)_tzcnt_u32(x);
+#else
+    return __builtin_ctz(x);
+#endif
+}
+
+inline int ctz(unsigned long long x) {
+#if defined(_M_X64)
+    return (int)_tzcnt_u64(x);
+#elif defined(__GNUC__)
+    return __builtin_ctzll(x);
+#else
+    if ((x >> 32) != 0)
+        return (int)_tzcnt_u32(unsigned(x >> 32));
+    else
+        return 32 + (int)_tzcnt_u32(unsigned(x));
+#endif
 }
 
 // pop count
@@ -34,10 +62,12 @@ inline int popcount(unsigned x) {
 }
 
 inline int popcount(unsigned long long x) {
-#ifndef __GNUC__
-    return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
-#else
+#if defined(_M_X64)
+    return (int)__popcnt64(x);
+#elif defined(__GNUC__)
     return __builtin_popcountll(x);
+#else
+    return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
 #endif
 }
 
