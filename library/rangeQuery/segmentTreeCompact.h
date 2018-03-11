@@ -9,6 +9,7 @@
 // It's faster than SegmentTree 140x
 template <typename T, typename BinOp = function<T(T, T)>>
 struct CompactSegmentTree {
+    int       RealN;
     int       N;            // the size of array
     vector<T> tree;         //
     
@@ -16,14 +17,16 @@ struct CompactSegmentTree {
     BinOp     mergeOp;
     
     CompactSegmentTree(int size, T dflt = T())
-        : N(size + (size & 1)), tree((size + (size & 1)) * 2, dflt), mergeOp(), defaultValue(dflt) {
+        : RealN(size), N(size + (size & 1)), tree((size + (size & 1)) * 2, dflt), mergeOp(), defaultValue(dflt) {
     }
     
     CompactSegmentTree(int size, BinOp op, T dflt = T())
-        : N(size + (size & 1)), tree((size + (size & 1)) * 2, dflt), mergeOp(op), defaultValue(dflt) {
+        : RealN(size), N(size + (size & 1)), tree((size + (size & 1)) * 2, dflt), mergeOp(op), defaultValue(dflt) {
     }
     
     void init(T value, int size) {
+        RealN = size;
+
         for (int i = 0; i < size; i++)
             tree[N + i] = value;
         
@@ -32,6 +35,8 @@ struct CompactSegmentTree {
     }
     
     void build(const vector<T>& v) {
+        RealN = (int)v.size();
+
         for (int i = 0; i < (int)v.size(); i++)
             tree[N + i] = v[i];
         
@@ -40,12 +45,16 @@ struct CompactSegmentTree {
     }
     
     void build(const T arr[], int size) {
+        RealN = size;
+
         for (int i = 0; i < size; i++)
             tree[N + i] = arr[i];
         
         for (int i = N - 1; i > 0; i--)
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
+
+    //--- query
 
     T query(int index) {
         return tree[index + N];
@@ -66,6 +75,8 @@ struct CompactSegmentTree {
         return mergeOp(resL, resR);
     }
     
+    //--- update
+
     void update(int index, T newValue) {
         tree[index + N] = newValue;
         
@@ -84,6 +95,8 @@ struct CompactSegmentTree {
         }
     }
 
+    //--- add
+
     void add(int index, T value) {
         tree[index + N] += value;
         
@@ -100,6 +113,75 @@ struct CompactSegmentTree {
             for (int i = L; i <= R; i++)
                 tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
         }
+    }
+
+    //--- find
+
+    // find next position where f(x) is true in [start, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    int findNext(int start, const function<bool(int)>& f) {
+        int shiftN = 0;
+        int cur = start + N, R = RealN - 1 + N;
+
+        while (true) {
+            if (f(tree[cur])) {
+                if (cur < N) {
+                    cur <<= 1;
+                    shiftN--;
+                } else {
+                    return cur - N;
+                }
+            } else {
+                if (++cur >(R >> shiftN))
+                    break;
+
+                int n = ctz(cur);
+                cur >>= n;
+                shiftN += n;
+            }
+        }
+
+        return -1;
+    }
+
+    // find previous position where f(x) is true in [0, start]
+    //   f(x): OOOOOOOOxxxxxxxxxxx
+    //                ^          S
+    int findPrev(int start, const function<bool(int)>& f) {
+        int shiftN = 0;
+        int cur = start + N, L = N;
+
+        while (true) {
+            if (f(tree[cur])) {
+                if (cur < N) {
+                    cur = (cur << 1) | 1;
+                    shiftN--;
+                } else {
+                    return cur - N;
+                }
+            } else {
+                if (cur <= (L >> shiftN))
+                    break;
+
+                int n = ctz(cur);
+                cur >>= n;
+                shiftN += n;
+
+                cur--;
+            }
+        }
+
+        return -1;
+    }
+
+private:
+    int ctz(unsigned x) const {
+#ifndef __GNUC__
+        return (int)_tzcnt_u32(x);
+#else
+        return __builtin_ctz(x);
+#endif
     }
 };
 

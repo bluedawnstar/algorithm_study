@@ -10,6 +10,7 @@
 // (a.k.a. Starry Sky Tree)
 template <typename T, typename BinOp = function<T(T, T)>>
 struct CompactSegmentTreeLazyAdd {
+    int       RealN;
     int       N;            // the size of array
     int       H;            // the height of the tree
     vector<T> tree;         //
@@ -19,20 +20,22 @@ struct CompactSegmentTreeLazyAdd {
     BinOp     mergeOp;
 
     CompactSegmentTreeLazyAdd(int size, T dflt = T())
-        : N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), mergeOp(), defaultValue(dflt) {
+        : RealN(size), N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), mergeOp(), defaultValue(dflt) {
         H = 0;
         for (int i = N; i; i >>= 1)
             H++;
     }
 
     CompactSegmentTreeLazyAdd(int size, BinOp op, T dflt = T())
-        : N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), mergeOp(op), defaultValue(dflt) {
+        : RealN(size), N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), mergeOp(op), defaultValue(dflt) {
         H = 0;
         for (int i = N; i; i >>= 1)
             H++;
     }
 
     void init(T value, int size) {
+        RealN = size;
+
         for (int i = 0; i < size; i++)
             tree[N + i] = value;
 
@@ -41,6 +44,8 @@ struct CompactSegmentTreeLazyAdd {
     }
 
     void build(const vector<T>& v) {
+        RealN = (int)v.size();
+
         for (int i = 0; i < (int)v.size(); i++)
             tree[N + i] = v[i];
 
@@ -49,12 +54,16 @@ struct CompactSegmentTreeLazyAdd {
     }
 
     void build(const T arr[], int size) {
-.        for (int i = 0; i < size; i++)
+        RealN = size;
+
+        for (int i = 0; i < size; i++)
             tree[N + i] = arr[i];
 
         for (int i = N - 1; i > 0; i--)
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
+
+    //--- query
 
     T query(int index) {
         return query(index, index);
@@ -78,6 +87,8 @@ struct CompactSegmentTreeLazyAdd {
         return mergeOp(resL, resR);
     }
 
+    //--- update
+
     void add(int index, T value) {
         addRange(index, index, value);
     }
@@ -93,6 +104,72 @@ struct CompactSegmentTreeLazyAdd {
         pushUp(left + N);
         if (left != right)
             pushUp(right + N);
+    }
+
+    //--- find
+
+    // find next position where f(x) is true in [start, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    int findNext(int start, const function<bool(int)>& f) {
+        pushDown(start + N);
+
+        int shiftN = 0;
+        int cur = start + N, R = RealN - 1 + N;
+
+        while (true) {
+            pushDownOne(cur);
+            if (f(tree[cur])) {
+                if (cur < N) {
+                    cur <<= 1;
+                    shiftN--;
+                } else {
+                    return cur - N;
+                }
+            } else {
+                if (++cur > (R >> shiftN))
+                    break;
+
+                int n = ctz(cur);
+                cur >>= n;
+                shiftN += n;
+            }
+        }
+
+        return -1;
+    }
+
+    // find previous position where f(x) is true in [0, start]
+    //   f(x): OOOOOOOOxxxxxxxxxxx
+    //                ^          S
+    int findPrev(int start, const function<bool(int)>& f) {
+        pushDown(start + N);
+
+        int shiftN = 0;
+        int cur = start + N, L = N;
+
+        while (true) {
+            pushDownOne(cur);
+            if (f(tree[cur])) {
+                if (cur < N) {
+                    cur = (cur << 1) | 1;
+                    shiftN--;
+                } else {
+                    return cur - N;
+                }
+            } else {
+                if (cur <= (L >> shiftN))
+                    break;
+
+                int n = ctz(cur);
+                cur >>= n;
+                shiftN += n;
+
+                cur--;
+            }
+        }
+
+        return -1;
     }
 
 private:
@@ -118,6 +195,22 @@ private:
                 treeLazy[i] = 0;
             }
         }
+    }
+
+    void pushDownOne(int index) {
+        if (index < N && treeLazy[index]) {
+            apply((index << 1), treeLazy[index]);
+            apply((index << 1) | 1, treeLazy[index]);
+            treeLazy[index] = 0;
+        }
+    }
+
+    int ctz(unsigned x) const {
+#ifndef __GNUC__
+        return (int)_tzcnt_u32(x);
+#else
+        return __builtin_ctz(x);
+#endif
     }
 };
 

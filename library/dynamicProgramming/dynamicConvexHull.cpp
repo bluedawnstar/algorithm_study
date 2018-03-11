@@ -1,6 +1,6 @@
 #include <cmath>
+#include <functional>
 #include <vector>
-#include <cmath>
 #include <algorithm>
 
 using namespace std;

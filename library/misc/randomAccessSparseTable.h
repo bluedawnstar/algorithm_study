@@ -66,31 +66,7 @@ struct RandomAccessSparseTable {
         return x;
     }
 
-    // get last value from start in range [start, rightLimit]
-    int findLast(int start, int rightLimit) const {
-        int res = start;
-        for (int i = mLogN - 1; i >= 0; i--) {
-            int next = mP[i][res];
-            if (0 <= next && next <= rightLimit)
-                res = next;
-        }
-
-        return res;
-    }
-
-    // find last position where f(x) is true
-    //   f(x): OOOOOOOOOOOxxxxxxxx
-    //         S         ^
-    int findLast(int start, const function<bool(int)>& f) const {
-        int res = start;
-        for (int i = mLogN - 1; i >= 0; i--) {
-            int next = mP[i][res];
-            if (0 <= next && f(next))
-                res = next;
-        }
-
-        return res;
-    }
+    //--- find
 
     // get last value from start in range [leftLimit, N)
     int findFirst(int start, int leftLimit) const {
@@ -120,5 +96,31 @@ struct RandomAccessSparseTable {
                 res = next;
         }
         return f(mP[0][res]) ? mP[0][res] : res;
+    }
+
+    // get last value from start in range [start, rightLimit]
+    int findLast(int start, int rightLimit) const {
+        int res = start;
+        for (int i = mLogN - 1; i >= 0; i--) {
+            int next = mP[i][res];
+            if (0 <= next && next <= rightLimit)
+                res = next;
+        }
+
+        return res;
+    }
+
+    // find last position where f(x) is true [start, N)
+    //   f(x): OOOOOOOOOOOxxxxxxxx
+    //         S         ^
+    int findLast(int start, const function<bool(int)>& f) const {
+        int res = start;
+        for (int i = mLogN - 1; i >= 0; i--) {
+            int next = mP[i][res];
+            if (0 <= next && f(next))
+                res = next;
+        }
+
+        return res;
     }
 };

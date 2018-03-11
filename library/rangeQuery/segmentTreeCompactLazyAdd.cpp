@@ -25,47 +25,119 @@ static int rand32() {
     return rand16() * rand16();
 }
 
+static int findNext(const vector<int>& A, int start, int x) {
+    while (start < (int)A.size()) {
+        if (A[start] <= x)
+            return start;
+        start++;
+    }
+    return -1;
+}
+
+static int findPrev(const vector<int>& A, int start, int x) {
+    while (start >= 0) {
+        if (A[start] <= x)
+            return start;
+        start--;
+    }
+    return -1;
+}
+
 void testSegmentTreeCompactLazyAdd() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Compact Segment Tree - Lazy Add ----------------------------------------" << endl;
+    {
+        int freq[] = { 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int N = sizeof(freq) / sizeof(freq[0]);
 
-    int freq[] = { 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
-    int N = sizeof(freq) / sizeof(freq[0]);
+        FenwickTree<int> fenwick(N);
+        auto segTree = makeCompactSegmentTreeLazyAdd(freq, N, [](int a, int b) { return a + b; });
 
-    FenwickTree<int> fenwick(N);
-    auto segTree = makeCompactSegmentTreeLazyAdd(freq, N, [](int a, int b) { return a + b; });
+        fenwick.init(freq, N);
 
-    fenwick.init(freq, N);
+        int ans = fenwick.sum(5);
+        assert(ans == 12);
 
-    int ans = fenwick.sum(5);
-    cout << "fenwick.sum(5) = " << ans << endl;
-    assert(ans == 12);
+        ans = segTree.query(0, 5);
+        assert(ans == 12);
 
-    ans = segTree.query(0, 5);
-    cout << "segTree.query(0, 5) = " << ans << endl;
-    assert(ans == 12);
+        fenwick.add(3, 6);
+        segTree.add(3, 6);
 
-    fenwick.add(3, 6);
-    segTree.add(3, 6);
-    cout << "after add(3, 6)" << endl;
+        ans = fenwick.sum(5);
+        assert(ans == 18);
 
-    ans = fenwick.sum(5);
-    cout << "fenwick.sum(5) = " << ans << endl;
-    assert(ans == 18);
+        ans = segTree.query(0, 5);
+        assert(ans == 18);
 
-    ans = segTree.query(0, 5);
-    cout << "segTree.query(0, 5) = " << ans << endl;
-    assert(ans == 18);
+        ans = fenwick.sumRange(1, 5);
+        assert(ans == 16);
 
-    ans = fenwick.sumRange(1, 5);
-    cout << "fenwick.rangeSum(1, 5) = " << ans << endl;
-    assert(ans == 16);
+        ans = segTree.query(1, 5);
+        assert(ans == 16);
+    }
+    cout << "*** findNext() & findPrev()" << endl;
+    {
+        static const int T = 1000;
+        int N = 100000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = rand() % (T * 10);
 
-    ans = segTree.query(1, 5);
-    cout << "segTree.query(1, 5) = " << ans << endl;
-    assert(ans == 16);
+        auto seg = makeCompactSegmentTreeLazyAdd(in, [](int a, int b) { return min(a, b); });
+        for (int i = N - 1; i >= 0; i--) {
+            int idx = rand() % N;
+            int t = rand() % (T * 10);
 
+            seg.add(idx, t - in[idx]);
+            in[idx] = t;
+
+            int ans1 = seg.findNext(i, [](int x) {
+                return x <= T;
+            });
+            int gt1 = findNext(in, i, T);
+            assert(gt1 == ans1);
+
+            int ans2 = seg.findPrev(i, [](int x) {
+                return x <= T;
+            });
+            int gt2 = findPrev(in, i, T);
+            assert(gt2 == ans2);
+        }
+    }
+    {
+        static const int T = 1000;
+        int N = 1000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = rand() % (T * 10);
+
+        auto seg = makeCompactSegmentTreeLazyAdd(in, [](int a, int b) { return min(a, b); });
+        for (int i = N - 1; i >= 0; i--) {
+            int L = rand() % N;
+            int R = rand() % N;
+            int t = rand() % 10;
+            if (L > R)
+                swap(L, R);
+
+            seg.addRange(L, R, t);
+            for (int j = L; j <= R; j++)
+                in[j] += t;
+
+            int ans1 = seg.findNext(i, [](int x) {
+                return x <= T;
+            });
+            int gt1 = findNext(in, i, T);
+            assert(gt1 == ans1);
+
+            int ans2 = seg.findPrev(i, [](int x) {
+                return x <= T;
+            });
+            int gt2 = findPrev(in, i, T);
+            assert(gt2 == ans2);
+        }
+    }
     cout << "OK!" << endl;
 
     cout << "-- Compact Segment Tree Performance Test -----------------------" << endl;

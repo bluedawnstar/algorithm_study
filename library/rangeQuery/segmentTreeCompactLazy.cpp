@@ -27,44 +27,117 @@ static int rand32() {
     return rand16() * rand16();
 }
 
+static int findNext(const vector<int>& A, int start, int x) {
+    while (start < (int)A.size()) {
+        if (A[start] <= x)
+            return start;
+        start++;
+    }
+    return -1;
+}
+
+static int findPrev(const vector<int>& A, int start, int x) {
+    while (start >= 0) {
+        if (A[start] <= x)
+            return start;
+        start--;
+    }
+    return -1;
+}
+
 void testSegmentTreeCompactLazy() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Compact Segment Tree Lazy ----------------------------------------" << endl;
+    {
+        auto segTree = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; }, [](int a, int k) { return a * k; });
+        auto segTree2 = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, INT_MAX);
 
-    auto segTree = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; }, [](int a, int k) { return a * k; });
-    auto segTree2 = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, INT_MAX);
+        int ans;
 
-    int ans;
+        ans = segTree.query(1, 3);
+        assert(ans == 12);
 
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 12);
+        segTree.update(2, 10);
+        ans = segTree.query(1, 3);
+        assert(ans == 18);
 
-    segTree.update(2, 10);
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 18);
+        ans = segTree2.query(1, 3);
+        assert(ans == 3);
 
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 3);
+        segTree2.update(2, -10);
+        ans = segTree2.query(1, 3);
+        assert(ans == -10);
 
-    segTree2.update(2, -10);
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == -10);
+        segTree.updateRange(0, 2, 3);
+        ans = segTree.query(1, 3);
+        assert(ans == 9);
 
-    segTree.updateRange(0, 2, 3);
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 9);
+        segTree2.updateRange(0, 2, 2);
+        ans = segTree2.query(1, 3);
+        assert(ans == 2);
+    }
+    cout << "*** findNext() & findPrev()" << endl;
+    {
+        static const int T = 1000;
+        int N = 10000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = rand() % (T * 10);
 
-    segTree2.updateRange(0, 2, 2);
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 2);
+        auto seg = makeCompactSegmentTreeLazyUpdate(in, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; });
+        for (int i = N - 1; i >= 0; i--) {
+            int index = rand() % N;
+            int t = rand() % (T * 10);
 
+            seg.update(index, t);
+            in[index] = t;
+
+            int ans1 = seg.findNext(i, [](int x) {
+                return x <= T;
+            });
+            int gt1 = findNext(in, i, T);
+            assert(gt1 == ans1);
+
+            int ans2 = seg.findPrev(i, [](int x) {
+                return x <= T;
+            });
+            int gt2 = findPrev(in, i, T);
+            assert(gt2 == ans2);
+        }
+    }
+    {
+        static const int T = 1000;
+        int N = 10000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = rand() % (T * 10);
+
+        auto seg = makeCompactSegmentTreeLazyUpdate(in, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; });
+        for (int i = N - 1; i >= 0; i--) {
+            int L = rand() % N;
+            int R = rand() % N;
+            int t = rand() % (T * 10);
+            if (L > R)
+                swap(L, R);
+
+            seg.updateRange(L, R, t);
+            for (int j = L; j <= R; j++)
+                in[j] = t;
+
+            int ans1 = seg.findNext(i, [](int x) {
+                return x <= T;
+            });
+            int gt1 = findNext(in, i, T);
+            assert(gt1 == ans1);
+
+            int ans2 = seg.findPrev(i, [](int x) {
+                return x <= T;
+            });
+            int gt2 = findPrev(in, i, T);
+            assert(gt2 == ans2);
+        }
+    }
     cout << "-- Compact Segment Tree Performance Test -----------------------" << endl;
     cout << "*** Segment tree vs compact segment tree" << endl;
     {
@@ -126,8 +199,15 @@ void testSegmentTreeCompactLazy() {
     }
     cout << "*** Segment tree vs compact segment tree with range update & query" << endl;
     {
+
         int T = 100000;
         int N = 100000;
+
+#if _DEBUG
+        T = 1000;
+        N = 1000;
+#endif
+
         vector<int> in(N);
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
