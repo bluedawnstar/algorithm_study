@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "lcaSparseTable.h"
+#include "lcaSparseTableSimple.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

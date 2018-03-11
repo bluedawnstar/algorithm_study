@@ -170,5 +170,8 @@
     <ClInclude Include="splayTreeRangeQuery.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="lcaSparseTableSimple.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
