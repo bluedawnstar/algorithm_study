@@ -316,6 +316,7 @@ struct BitSetSimple {
         return -1;
     }
 
+    // pos < next(pos) < N (or -1)
     int next(int pos) const {
         if (++pos >= mN)
             return -1;
@@ -337,6 +338,7 @@ struct BitSetSimple {
         return -1;
     }
 
+    // -1 <= prev(pos) < pos
     int prev(int pos) const {
         if (--pos < 0)
             return -1;

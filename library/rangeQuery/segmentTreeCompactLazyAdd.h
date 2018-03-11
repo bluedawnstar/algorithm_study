@@ -6,7 +6,8 @@
 //--------- Compact Segment Tree - Lazy Add -----------------------------------
 // http://codeforces.com/blog/entry/18051
 
-// It's slower than FenwickTree 10x
+// It's slower than FenwickTree 10x for just summation
+// (a.k.a. Starry Sky Tree)
 template <typename T, typename BinOp = function<T(T, T)>>
 struct CompactSegmentTreeLazyAdd {
     int       N;            // the size of array
@@ -48,7 +49,7 @@ struct CompactSegmentTreeLazyAdd {
     }
 
     void build(const T arr[], int size) {
-        for (int i = 0; i < size; i++)
+.        for (int i = 0; i < size; i++)
             tree[N + i] = arr[i];
 
         for (int i = N - 1; i > 0; i--)
