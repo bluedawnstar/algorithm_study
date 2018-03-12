@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../misc/randomAccessSparseTable.h"
+#include "../misc/jumpPointerSparseTable.h"
 
 // Fully Persistent Convex Hull - lower envelope
 template <typename T>
@@ -9,7 +9,7 @@ struct PersistentUpperConvexHull {
     vector<int>             length; // the number of convex hull points at each index
     vector<int>             next;   // index of next point in a upper or lower convex hull at each index
 
-    RandomAccessSparseTable index;
+    JumpPointerSparseTable  index;
 
     PersistentUpperConvexHull(int N) : index(N) {
         reserve(N);

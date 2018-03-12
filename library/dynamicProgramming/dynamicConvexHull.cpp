@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-#include "../misc/randomAccessSparseTable.h"
+#include "../misc/jumpPointerSparseTable.h"
 #include "persistentLowerConvexHull.h"
 #include "persistentUpperConvexHull.h"
 

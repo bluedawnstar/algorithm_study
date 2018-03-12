@@ -7,7 +7,7 @@ struct PersistentLowerConvexHull {
     vector<int>             length; // the number of convex hull points at each index
     vector<int>             next;   // index of next point in a upper or lower convex hull at each index
 
-    RandomAccessSparseTable index;
+    JumpPointerSparseTable  index;
 
     PersistentLowerConvexHull(int N) : index(N) {
         reserve(N);

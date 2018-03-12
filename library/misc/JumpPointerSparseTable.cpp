@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "randomAccessSparseTable.h"
+#include "jumpPointerSparseTable.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ static int findLast(const vector<int>& A, int start, int R) {
     return start;
 }
 
-void testRandomAccessSparseTable() {
+void testJumpPointerSparseTable() {
     //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Random Access Sparse Table -------------" << endl;
@@ -40,7 +40,7 @@ void testRandomAccessSparseTable() {
             in[i] = i;
         random_shuffle(in.begin(), in.end());
 
-        RandomAccessSparseTable rast(N);
+        JumpPointerSparseTable rast(N);
         rast.add(in[0], -1);
         for (int i = 1; i < N; i++)
             rast.add(in[i], in[i - 1]);
@@ -65,7 +65,7 @@ void testRandomAccessSparseTable() {
         for (int i = 1; i < N; i++)
             in[i] = rand() % i;
 
-        RandomAccessSparseTable rast(N);
+        JumpPointerSparseTable rast(N);
         rast.build(in);
 
         for (int i = N - 1; i >= 0; i--) {

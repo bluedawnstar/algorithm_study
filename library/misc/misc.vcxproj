@@ -152,7 +152,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mergeableHeap.cpp" />
     <ClCompile Include="persistentStack.cpp" />
-    <ClCompile Include="randomAccessSparseTable.cpp" />
+    <ClCompile Include="JumpPointerSparseTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="countUniqueNumbers.h" />
@@ -160,7 +160,7 @@
     <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />
     <ClInclude Include="persistentStack.h" />
-    <ClInclude Include="randomAccessSparseTable.h" />
+    <ClInclude Include="JumpPointerSparseTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

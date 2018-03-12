@@ -27,13 +27,13 @@
     <ClCompile Include="largestRectangle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="randomAccessSparseTable.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="persistentStack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="countUniqueNumbers.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpPointerSparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,13 +47,13 @@
     <ClInclude Include="largestRectangle.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="randomAccessSparseTable.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="persistentStack.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="countUniqueNumbers.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpPointerSparseTable.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

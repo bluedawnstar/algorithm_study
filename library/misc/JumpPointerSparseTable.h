@@ -1,13 +1,13 @@
 #pragma once
 
 // Sparse table for random access in a linked list
-struct RandomAccessSparseTable {
+struct JumpPointerSparseTable {
     int                 mN;         // the number of vertex
     int                 mLogN;      // 
     vector<vector<int>> mP;         // mP[0][n] points to the parent
                                     // parent & acestors
 
-    RandomAccessSparseTable(int N) {
+    JumpPointerSparseTable(int N) {
         init(N);
     }
 
