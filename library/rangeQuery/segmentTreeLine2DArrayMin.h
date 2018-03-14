@@ -16,9 +16,21 @@ struct SegmentTreeLine2DArrayMin {
     int N;
     vector<Line> tree;
 
-    // inclusive
-    SegmentTreeLine2DArrayMin(int size) : N(size), tree(size * 4) {
+
+    SegmentTreeLine2DArrayMin() : N(0) {
     }
+
+    // inclusive
+    explicit SegmentTreeLine2DArrayMin(int size) {
+        init(size);
+    }
+
+
+    void init(int size) {
+        N = size;
+        tree = vector<Line>(size * 4);
+    }
+
 
     void add(long long m, long long b) {
         Line l{ m, b };

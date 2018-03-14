@@ -13,24 +13,44 @@ struct SegmentTreeLazy {
     MergeOp   mergeOp;
     BlockOp   blockOp;
 
-    SegmentTreeLazy(int size, T dflt = T())
-        : N(size), tree(size * 4, dflt), treeLazy(size * 4, dflt), lazyExist(size * 4),
-          defaultValue(dflt), mergeOp(), blockOp() {
+    SegmentTreeLazy(MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
     }
 
     SegmentTreeLazy(int size, MergeOp mop, BlockOp bop, T dflt = T())
-        : N(size), tree(size * 4, dflt), treeLazy(size * 4, dflt), lazyExist(size * 4),
-          defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        init(size);
+    }
+
+    SegmentTreeLazy(const T arr[], int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(arr, n);
+    }
+
+    SegmentTreeLazy(const vector<T> &v, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(v);
+    }
+
+
+    void init(int size) {
+        N = size;
+        tree.assign(size * 4, defaultValue);
+        treeLazy.assign(size * 4, defaultValue);
+        lazyExist.assign(size * 4, false);
     }
 
     // inclusive
-    T build(const vector<T>& v, int left, int right) {
-        return buildSub(v, left, right, 1);
+    T build(const T arr[], int n) {
+        init(n);
+        return buildSub(arr, 0, n - 1, 1);
     }
+
     // inclusive
-    T build(const T arr[], int left, int right) {
-        return buildSub(arr, left, right, 1);
+    T build(const vector<T>& v) {
+        return build(&v[0], (int)v.size());
     }
+
 
     // inclusive
     T query(int left, int right) {
@@ -49,8 +69,7 @@ struct SegmentTreeLazy {
 
 private:
     // inclusive
-    template <typename U>
-    T buildSub(const U& arr, int left, int right, int node) {
+    T buildSub(const T arr[], int left, int right, int node) {
         if (left > right)
             return defaultValue;
 
@@ -58,8 +77,8 @@ private:
             return tree[node] = arr[left];
 
         int mid = left + (right - left) / 2;
-        T leftSum = buildSub<U>(arr, left, mid, node * 2);
-        T rightSum = buildSub<U>(arr, mid + 1, right, node * 2 + 1);
+        T leftSum = buildSub(arr, left, mid, node * 2);
+        T rightSum = buildSub(arr, mid + 1, right, node * 2 + 1);
 
         return tree[node] = mergeOp(leftSum, rightSum);
     }
@@ -142,14 +161,12 @@ SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(int size, MergeOp mop, 
 
 template <typename T, typename MergeOp, typename BlockOp>
 SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    auto segTree = SegmentTreeLazy<T, MergeOp, BlockOp>((int)v.size(), mop, bop, dfltValue);
-    segTree.build(v, 0, (int)v.size() - 1);
+    auto segTree = SegmentTreeLazy<T, MergeOp, BlockOp>(v, mop, bop, dfltValue);
     return segTree;
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
 SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    auto segTree = SegmentTreeLazy<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
-    segTree.build(arr, 0, size - 1);
+    auto segTree = SegmentTreeLazy<T, MergeOp, BlockOp>(arr, size, mop, bop, dfltValue);
     return segTree;
 }

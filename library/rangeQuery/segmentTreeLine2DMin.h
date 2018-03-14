@@ -24,6 +24,9 @@ struct SegmentTreeLine2DMin {
 
     vector<Node*> nodes;
 
+    SegmentTreeLine2DMin() : minX(-0x3f3f3f3f), maxX(0x3f3f3f3f), root(nullptr) {
+    }
+
     // inclusive
     SegmentTreeLine2DMin(int _minX, int _maxX) : minX(_minX), maxX(_maxX), root(nullptr) {
     }
@@ -32,6 +35,13 @@ struct SegmentTreeLine2DMin {
         for (auto* p : nodes)
             delete p;
     }
+
+
+    void init(int _minX, int _maxX) {
+        minX = _minX;
+        maxX = _maxX;
+    }
+
 
     void add(long long m, long long b) {
         Line l{ m, b };

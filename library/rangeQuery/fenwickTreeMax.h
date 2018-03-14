@@ -5,25 +5,48 @@
 // for sum from 0 to pos
 template <typename T>
 struct FenwickTreeMax {
-    vector<T> tree;
+    vector<T>   tree;
+    T           defaultValue;
 
-    FenwickTreeMax(int n, T initValue = T()) : tree(n + 1, initValue) {
-        // no action
+    explicit FenwickTreeMax(T dflt) {
     }
 
-    void clear(T initValue = T()) {
-        fill(tree.begin(), tree.end(), initValue);
+    FenwickTreeMax(int n, T dflt) : tree(n + 1, dflt) {
     }
 
-    void init(T arr[], int n) {
+    FenwickTreeMax(T value, int n, T dflt) : defaultValue(dflt) {
+        build(value, n);
+    }
+
+    FenwickTreeMax(const T arr[], int n, T dflt) : defaultValue(dflt) {
+        build(arr, n);
+    }
+
+    explicit FenwickTreeMax(const vector<T>& v, T dflt) : defaultValue(dflt) {
+        build(v);
+    }
+
+
+    void init(int n) {
+        tree.assign(n + 1, defaultValue);
+    }
+
+    void build(T value, int n) {
+        tree.assign(n + 1, defaultValue);
+        for (int i = 0; i < n; i++)
+            set(i, value);
+    }
+
+    void build(const T arr[], int n) {
+        tree.assign(n + 1, defaultValue);
         for (int i = 0; i < n; i++)
             set(i, arr[i]);
     }
 
-    void init(vector<T>& v) {
-        for (int i = 0; i < (int)v.size(); i++)
-            set(i, v[i]);
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
     }
+
 
     // max[0..pos]
     T get(int pos) const {

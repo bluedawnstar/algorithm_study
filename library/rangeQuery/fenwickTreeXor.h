@@ -9,23 +9,43 @@ template <typename T>
 struct FenwickTreeXor {
     vector<T> tree;
 
-    FenwickTreeXor(int n) : tree(n + 1) {
-        // no action
+    FenwickTreeXor() {
     }
 
-    void clear() {
-        fill(tree.begin(), tree.end(), 0);
+    explicit FenwickTreeXor(int n) : tree(n + 1) {
     }
 
-    void init(T arr[], int n) {
+    FenwickTreeXor(T value, int n) {
+        build(value, n);
+    }
+
+    FenwickTreeXor(const T arr[], int n) {
+        build(arr, n);
+    }
+
+    FenwickTreeXor(const vector<T>& v) {
+        build(v);
+    }
+
+
+    void init(int n) {
+        tree = vector<int>(n + 1);
+    }
+
+    void build(T value, int n) {
+        for (int i = 0; i < n; i++)
+            add(i, value);
+    }
+
+    void build(const T arr[], int n) {
         for (int i = 0; i < n; i++)
             add(i, arr[i]);
     }
 
-    void init(vector<T>& v) {
-        for (int i = 0; i < (int)v.size(); i++)
-            add(i, v[i]);
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
     }
+
 
     void add(int pos, T val) {
         pos++;

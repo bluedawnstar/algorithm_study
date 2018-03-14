@@ -52,22 +52,42 @@ struct SegmentTree {
     T         defaultValue;
     BinOp     mergeOp;
 
-    SegmentTree(int size, T dflt = T())
-        : N(size), tree(size * 4, dflt), mergeOp(), defaultValue(dflt) {
+    explicit SegmentTree(BinOp op, T dflt = T())
+        : N(0), tree(), mergeOp(op), defaultValue(dflt) {
     }
 
     SegmentTree(int size, BinOp op, T dflt = T())
         : N(size), tree(size * 4, dflt), mergeOp(op), defaultValue(dflt) {
     }
 
-    // inclusive
-    T build(const vector<T>& v, int left, int right) {
-        return buildSub(v, left, right, 1);
+    SegmentTree(const T arr[], int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(arr, n);
     }
-    // inclusive
-    T build(const T arr[], int left, int right) {
-        return buildSub(arr, left, right, 1);
+
+    SegmentTree(const vector<T>& v, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(v);
     }
+
+
+    void init(int size) {
+        N = size;
+        tree.assign(size * 4, defaultValue);
+    }
+
+    // inclusive
+    T build(const T arr[], int n) {
+        init(n);
+        return buildSub(arr, 0, n - 1, 1);
+    }
+
+    // inclusive
+    T build(const vector<T>& v) {
+        init((int)v.size());
+        return build(&v[0], (int)v.size());
+    }
+
 
     // inclusive
     T query(int left, int right) {
@@ -86,8 +106,7 @@ struct SegmentTree {
 
 private:
     // inclusive
-    template <typename U>
-    T buildSub(const U& arr, int left, int right, int node) {
+    T buildSub(const T arr[], int left, int right, int node) {
         if (left > right)
             return defaultValue;
 
@@ -95,8 +114,8 @@ private:
             return tree[node] = arr[left];
 
         int mid = left + (right - left) / 2;
-        T leftSum = buildSub<U>(arr, left, mid, node * 2);
-        T rightSum = buildSub<U>(arr, mid + 1, right, node * 2 + 1);
+        T leftSum = buildSub(arr, left, mid, node * 2);
+        T rightSum = buildSub(arr, mid + 1, right, node * 2 + 1);
 
         return tree[node] = mergeOp(leftSum, rightSum);
     }
@@ -144,16 +163,14 @@ SegmentTree<T, BinOp> makeSegmentTree(int size, BinOp op, T dfltValue = T()) {
 }
 
 template <typename T, typename BinOp>
-SegmentTree<T, BinOp> makeSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    auto segTree = SegmentTree<T, BinOp>((int)v.size(), op, dfltValue);
-    segTree.build(v, 0, (int)v.size() - 1);
+SegmentTree<T, BinOp> makeSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
+    auto segTree = SegmentTree<T, BinOp>(arr, size, op, dfltValue);
     return segTree;
 }
 
 template <typename T, typename BinOp>
-SegmentTree<T, BinOp> makeSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    auto segTree = SegmentTree<T, BinOp>(size, op, dfltValue);
-    segTree.build(arr, 0, size - 1);
+SegmentTree<T, BinOp> makeSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
+    auto segTree = SegmentTree<T, BinOp>(v, op, dfltValue);
     return segTree;
 }
 

@@ -12,9 +12,18 @@ struct FenwickTreeMultAdd {
     FenwickTree<T> mulT;
     FenwickTree<T> addT;
 
-    FenwickTreeMultAdd(int n)
-        : mulT(n), addT(n) {
+    FenwickTreeMultAdd() {
     }
+
+    FenwickTreeMultAdd(int n) : mulT(n), addT(n) {
+    }
+
+
+    void init(int n) {
+        mulT.build(n);
+        addT.build(n);
+    }
+
 
     void add(int x, T d) {
         mulT.add(x, d);

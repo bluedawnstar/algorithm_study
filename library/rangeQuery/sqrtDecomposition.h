@@ -29,17 +29,18 @@ struct SqrtDecompositionLazy {
         blockCount = 0;
     }
 
-    SqrtDecompositionLazy(int n) {
+    explicit SqrtDecompositionLazy(int n) {
         init(n);
     }
 
-    SqrtDecompositionLazy(const vector<T>& v) {
-        init(v);
+    SqrtDecompositionLazy(const T v[], int n) {
+        build(v, n);
     }
 
-    SqrtDecompositionLazy(const T v[], int n) {
-        init(v, n);
+    explicit SqrtDecompositionLazy(const vector<T>& v) {
+        build(v);
     }
+
 
     void init(int n) {
         N = n;
@@ -52,23 +53,17 @@ struct SqrtDecompositionLazy {
         blockLazyExist.resize(blockCount);
     }
 
-    void init(const vector<T>& v) {
-        init((int)v.size());
-        copy(v.begin(), v.end(), values.begin());
-        build();
-    }
-
-    void init(const T v[], int n) {
+    void build(const T v[], int n) {
         init(n);
         copy(v, v + n, values.begin());
-        build();
-    }
-
-
-    void build() {
         for (int i = 0; i < blockCount; i++)
             updateBlockValue(i);
     }
+
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
+    }
+
 
     void update(int l, int r, T x) {
         int blockL = l / blockSize;

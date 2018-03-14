@@ -57,20 +57,25 @@ struct SegmentTreeMaxSubarray {
     int          N;         // the size of array
     vector<Node> tree;      //
 
-    SegmentTreeMaxSubarray(int size) : N(size + (size & 1)), tree((size + (size & 1)) * 2) {
+    SegmentTreeMaxSubarray() : N(0) {
     }
 
-    void init(T value, int size) {
+    explicit SegmentTreeMaxSubarray(int size) {
+        init(size);
+    }
+
+
+    void init(int size) {
+        N = size + (size & 1);
+        tree = vector<Node>(N * 2);
+    }
+
+
+    void build(T value, int size) {
+        init(size);
+
         for (int i = 0; i < size; i++)
             tree[N + i].init(value);
-
-        for (int i = N - 1; i > 0; i--)
-            mergeOp(tree[i], tree[i << 1], tree[(i << 1) | 1]);
-    }
-
-    void build(const vector<T>& v) {
-        for (int i = 0; i < (int)v.size(); i++)
-            tree[N + i].init(v[i]);
 
         for (int i = N - 1; i > 0; i--)
             mergeOp(tree[i], tree[i << 1], tree[(i << 1) | 1]);
@@ -83,6 +88,11 @@ struct SegmentTreeMaxSubarray {
         for (int i = N - 1; i > 0; i--)
             mergeOp(tree[i], tree[i << 1], tree[(i << 1) | 1]);
     }
+
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
+    }
+
 
     T query(int index) {
         return tree[index + N].bestSum;

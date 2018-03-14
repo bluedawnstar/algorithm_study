@@ -14,22 +14,8 @@ struct DisjointSparseTable {
     T                   defaultValue;
     BinOp               mergeOp;
 
-    DisjointSparseTable(T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-    }
-
-    DisjointSparseTable(BinOp op, T dfltValue = T())
+    explicit DisjointSparseTable(BinOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
-    }
-
-    DisjointSparseTable(const T a[], int n, T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-        build(a, n);
-    }
-
-    DisjointSparseTable(const vector<T>& a, T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-        build(a);
     }
 
     DisjointSparseTable(const T a[], int n, BinOp op, T dfltValue = T())
@@ -46,6 +32,7 @@ struct DisjointSparseTable {
         : ReadN(rhs.RealN), N(rhs.N), value(std::move(rhs.value)), H(std::move(rhs.H)),
         mergeOp(std::move(rhs.mergeOp)), defaultValue(rhs.defaultValue) {
     }
+
 
     void build(const T a[], int n) {
         RealN = n;
@@ -82,6 +69,7 @@ struct DisjointSparseTable {
     void build(const vector<T>& a) {
         build(&a[0], (int)a.size());
     }
+
 
     // O(1), inclusive
     T query(int left, int right) {

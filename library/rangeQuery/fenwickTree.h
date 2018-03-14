@@ -9,23 +9,41 @@ template <typename T>
 struct FenwickTree {
     vector<T> tree;
 
+    FenwickTree() {
+    }
+
     FenwickTree(int n) : tree(n + 1) {
-        // no action
     }
 
-    void clear() {
-        fill(tree.begin(), tree.end(), 0);
+    FenwickTree(const T arr[], int n) {
+        build(arr, n);
     }
 
-    void init(T arr[], int n) {
+    FenwickTree(const vector<T>& v) {
+        build(v);
+    }
+
+
+    void init(int n) {
+        tree = vector<int>(n + 1);
+    }
+
+    void build(T value, int n) {
+        tree = vector<int>(n + 1);
+        for (int i = 0; i < n; i++)
+            add(i, value);
+    }
+
+    void build(const T arr[], int n) {
+        tree = vector<int>(n + 1);
         for (int i = 0; i < n; i++)
             add(i, arr[i]);
     }
 
-    void init(vector<T>& v) {
-        for (int i = 0; i < (int)v.size(); i++)
-            add(i, v[i]);
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
     }
+
 
     // sum from 0 to pos
     T sum(int pos) const {

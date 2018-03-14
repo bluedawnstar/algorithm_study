@@ -19,22 +19,39 @@ struct CompactSegmentTreeLazyAdd {
     T         defaultValue;
     BinOp     mergeOp;
 
-    CompactSegmentTreeLazyAdd(int size, T dflt = T())
-        : RealN(size), N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), mergeOp(), defaultValue(dflt) {
-        H = 0;
-        for (int i = N; i; i >>= 1)
-            H++;
+    explicit CompactSegmentTreeLazyAdd(BinOp op, T dflt = T())
+        : mergeOp(), defaultValue(dflt) {
     }
 
     CompactSegmentTreeLazyAdd(int size, BinOp op, T dflt = T())
-        : RealN(size), N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), mergeOp(op), defaultValue(dflt) {
+        : mergeOp(op), defaultValue(dflt) {
+        init(size);
+    }
+
+    CompactSegmentTreeLazyAdd(const T arr[], int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(arr, n);
+    }
+
+    CompactSegmentTreeLazyAdd(const vector<T>& v, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(v);
+    }
+
+
+    void init(int size) {
+        RealN = size;
+        N = size + (size & 1);
+        tree.assign(N * 2, defaultValue);
+        treeLazy.assign(N, defaultValue);
+
         H = 0;
         for (int i = N; i; i >>= 1)
             H++;
     }
 
-    void init(T value, int size) {
-        RealN = size;
+    void build(T value, int size) {
+        init(size);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = value;
@@ -43,21 +60,21 @@ struct CompactSegmentTreeLazyAdd {
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const vector<T>& v) {
-        RealN = (int)v.size();
+    void build(const T arr[], int size) {
+        init(size);
 
-        for (int i = 0; i < (int)v.size(); i++)
-            tree[N + i] = v[i];
+        for (int i = 0; i < size; i++)
+            tree[N + i] = arr[i];
 
         for (int i = N - 1; i > 0; i--)
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const T arr[], int size) {
-        RealN = size;
+    void build(const vector<T>& v) {
+        init((int)v.size());
 
-        for (int i = 0; i < size; i++)
-            tree[N + i] = arr[i];
+        for (int i = 0; i < (int)v.size(); i++)
+            tree[N + i] = v[i];
 
         for (int i = N - 1; i > 0; i--)
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);

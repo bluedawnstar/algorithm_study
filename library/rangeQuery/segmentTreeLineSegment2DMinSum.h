@@ -50,15 +50,28 @@ struct SegmentTreeLineSegment2DMinSum {
     vector<long long> sumXTbl;  // SUM[0<=x<=n]{ x }
     vector<long long> sumXXTbl; // SUM[0<=x<=n]{ x * x }
 
-    SegmentTreeLineSegment2DMinSum(int size)
-        : N(size), treeL(size * 4), treeR(size * 4), treeLazy(size * 4), lazyExist(size * 4) {
+    SegmentTreeLineSegment2DMinSum() : N(0) {
+    }
 
-        sum.resize(N * 4);
-        sumX.resize(N * 4);
-        sumXTbl.resize(N + 1);
-        sumXXTbl.resize(N + 1);
+    explicit SegmentTreeLineSegment2DMinSum(int size) {
+        init(size);
+    }
+
+
+    void init(int size) {
+        N = size;
+        treeL = vector<Line>(size * 4);
+        treeR = vector<Line>(size * 4);
+        treeLazy = vector<Line>(size * 4);
+        lazyExist.assign(size * 4, false);
+
+        sum.assign(N * 4, 0);
+        sumX.assign(N * 4, 0);
+        sumXTbl.assign(N + 1, 0);
+        sumXXTbl.assign(N + 1, 0);
         onInit();
     }
+
 
     // add a line segment
     // inclusive, O(NlogN)

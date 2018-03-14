@@ -9,13 +9,9 @@ struct FenwickTree2D {
     vector<vector<T>> tree;
 
     FenwickTree2D(int rowN, int colN) : tree(rowN + 1, vector<T>(colN + 1)) {
-        // no action
     }
 
-    void clear() {
-        for (int i = 0; i < (int)tree.size(); i++)
-            fill(tree[i].begin(), tree[i].end(), 0);
-    }
+    //--- for initialization
 
     // to initialize from (0, 0)
     void init(int row, int col, T val) {
@@ -34,6 +30,7 @@ struct FenwickTree2D {
         add(row, col, val);
     }
 
+    //---
 
     T sum(int row, int col) const {
         row++;

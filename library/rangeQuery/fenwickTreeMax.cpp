@@ -34,8 +34,7 @@ void testFenwickTreeMax() {
     for (int i = 0; i < N; i++)
         in[i] = rand();
 
-    FenwickTreeMax<int> ft(N);
-    ft.init(in);
+    FenwickTreeMax<int> ft(in, 0);
 
     auto segTree = makeCompactSegmentTree(in, [](int a, int b) { return max(a, b); }, 0);
     for (int i = 0; i < 1000; i++) {

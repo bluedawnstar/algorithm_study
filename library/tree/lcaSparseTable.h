@@ -61,6 +61,7 @@ struct LcaSparseTable {
         }
     }
 
+    // Level ancestor
     // O(logD)
     int climb(int x, int dist) const {
         if (dist <= 0)

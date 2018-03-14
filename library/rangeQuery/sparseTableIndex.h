@@ -15,16 +15,18 @@ struct SparseTableIndex {
 
     vector<T>           in;
 
-    template <typename U>
-    SparseTableIndex(const U& a, int n, T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-        _init(a, n);
+    explicit SparseTableIndex(BinOp op, T dfltValue = T())
+        : mergeOp(op), defaultValue(dfltValue) {
     }
 
-    template <typename U>
-    SparseTableIndex(const U& a, int n, BinOp op, T dfltValue = T())
+    SparseTableIndex(const T a[], int n, BinOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
-        _init(a, n);
+        build(a, n);
+    }
+
+    SparseTableIndex(const vector<T>& a, BinOp op, T dfltValue = T())
+        : mergeOp(op), defaultValue(dfltValue) {
+        build(a);
     }
 
     SparseTableIndex(SparseTableIndex&& rhs)
@@ -32,9 +34,9 @@ struct SparseTableIndex {
         mergeOp(std::move(rhs.mergeOp)), defaultValue(rhs.defaultValue), in(std::move(rhs.in)) {
     }
 
-    template <typename U>
-    void _init(const U& a, int n) {
-        this->N = n;
+
+    void build(const T a[], int n) {
+        N = n;
 
         in.resize(n);
         for (int i = 0; i < n; i++)
@@ -64,6 +66,11 @@ struct SparseTableIndex {
             }
         }
     }
+
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
+    }
+
 
     // O(1), inclusive
     // return index

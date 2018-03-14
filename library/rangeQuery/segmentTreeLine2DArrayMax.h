@@ -16,9 +16,20 @@ struct SegmentTreeLine2DArrayMax {
     int N;
     vector<Line> tree;
 
-    // inclusive
-    SegmentTreeLine2DArrayMax(int size) : N(size), tree(size * 4) {
+
+    SegmentTreeLine2DArrayMax() : N(0) {
     }
+
+    // inclusive
+    explicit SegmentTreeLine2DArrayMax(int size) : N(size), tree(size * 4) {
+    }
+
+
+    void init(int size) {
+        N = size;
+        tree = vector<Line>(size * 4);
+    }
+
 
     void add(long long m, long long b) {
         Line l{ m, b };

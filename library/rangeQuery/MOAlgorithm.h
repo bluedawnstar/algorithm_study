@@ -4,14 +4,6 @@
 struct MOAlgorithm {
     vector<int> cnt;    // value to count
 
-    int add(int x) {
-        return (++cnt[x] == 1) ? 1 : 0;
-    }
-
-    int remove(int x) {
-        return (--cnt[x] == 0) ? -1 : 0;
-    }
-
     vector<int> query(int maxValue, const vector<int>& in, const vector<pair<int, int>>& Q) {
         vector<int> ans(Q.size());
 
@@ -52,5 +44,14 @@ struct MOAlgorithm {
         }
 
         return ans;
+    }
+
+private:
+    int add(int x) {
+        return (++cnt[x] == 1) ? 1 : 0;
+    }
+
+    int remove(int x) {
+        return (--cnt[x] == 0) ? -1 : 0;
     }
 };

@@ -39,8 +39,7 @@ void testFenwickTree() {
         vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
         int N = (int)in.size();
 
-        FenwickTree<int> fenwick(N);
-        fenwick.init(in);
+        FenwickTree<int> fenwick(in);
 
         int ans = fenwick.sum(5);
         cout << "fenwick.sum(5) = " << ans << endl;
@@ -61,8 +60,7 @@ void testFenwickTree() {
         vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
         int N = (int)in.size();
 
-        FenwickTree<int> fenwick(N);
-        fenwick.init(in);
+        FenwickTree<int> fenwick(in);
 
         for (int i = 0; i < N; i++) {
             int ans = fenwick.get(i);
@@ -109,8 +107,7 @@ void testFenwickTree() {
         for (int i = 0; i < N; i++)
             in[i] = rand() % 1000;
 
-        FenwickTree<int> fenwick(N);
-        fenwick.init(in);
+        FenwickTree<int> fenwick(in);
 
         for (int i = 0; i < N; i++) {
             int R = rand() % N;

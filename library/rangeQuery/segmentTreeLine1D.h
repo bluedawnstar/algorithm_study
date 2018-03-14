@@ -6,18 +6,26 @@ struct SegmentTreeLine1D {
     vector<pair<int, int>> tree;
     vector<int> lazy;               // delta to add
 
-    SegmentTreeLine1D(int maxN) : N(maxN), tree(maxN * 4), lazy(maxN * 4) {
 
+    SegmentTreeLine1D() : N(0) {
     }
 
-    void build() {
-        buildSub(1, 0, N - 1);
+    explicit SegmentTreeLine1D(int n) {
+        build(n);
     }
 
-    void build(int N) {
-        this->N = N;
-        buildSub(1, 0, N - 1);
+
+    void init(int n) {
+        N = n;
+        tree = vector<pair<int,int>>(n * 4);
+        lazy = vector<int>(n * 4);
     }
+
+    void build(int n) {
+        init(n);
+        buildSub(1, 0, n - 1);
+    }
+
 
     // inclusive
     // delta is normally -1 or 1

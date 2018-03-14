@@ -16,9 +16,10 @@ struct SparseTableMinIndex {
         build(a, n);
     }
 
-    SparseTableMinIndex(const vector<int>& a) {
+    explicit SparseTableMinIndex(const vector<int>& a) {
         build(a);
     }
+
 
     void build(const int a[], int n) {
         this->N = n;
@@ -52,6 +53,7 @@ struct SparseTableMinIndex {
     void build(const vector<int>& a) {
         build(&a[0], (int)a.size());
     }
+
 
     // inclusive
     int query(int left, int right) {

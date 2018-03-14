@@ -19,22 +19,40 @@ struct CompactSegmentTreeLazyUpdate {
     BinOp       mergeOp;
     BlockOp     blockOp;
 
-    CompactSegmentTreeLazyUpdate(int size, T dflt = T())
-        : RealN(size), N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), lazyExist(N), mergeOp(), blockOp(), defaultValue(dflt) {
-        H = 0;
-        for (int i = N; i; i >>= 1)
-            H++;
+    CompactSegmentTreeLazyUpdate(BinOp op, BlockOp bop, T dflt = T())
+        : mergeOp(op), blockOp(bop), defaultValue(dflt) {
     }
 
     CompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dflt = T())
-        : RealN(size), N(size + (size & 1)), tree(N * 2, dflt), treeLazy(N, dflt), lazyExist(N), mergeOp(op), blockOp(bop), defaultValue(dflt) {
+        : mergeOp(op), blockOp(bop), defaultValue(dflt) {
+        init(size);
+    }
+
+    CompactSegmentTreeLazyUpdate(const T arr[], int n, BinOp op, BlockOp bop, T dflt = T())
+        : mergeOp(op), blockOp(bop), defaultValue(dflt) {
+        build(arr, n);
+    }
+
+    CompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dflt = T())
+        : mergeOp(op), blockOp(bop), defaultValue(dflt) {
+        build(v);
+    }
+
+
+    void init(int size) {
+        RealN = size;
+        N = size + (size & 1);
+        tree.assign(N * 2, defaultValue);
+        treeLazy.assign(N, defaultValue);
+        lazyExist.assign(N, false);
+
         H = 0;
         for (int i = N; i; i >>= 1)
             H++;
     }
 
-    void init(T value, int size) {
-        RealN = size;
+    void build(T value, int size) {
+        init(size);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = value;
@@ -43,24 +61,18 @@ struct CompactSegmentTreeLazyUpdate {
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const vector<T>& v) {
-        RealN = (int)v.size();
-
-        for (int i = 0; i < (int)v.size(); i++)
-            tree[N + i] = v[i];
-
-        for (int i = N - 1; i > 0; i--)
-            tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
-    }
-
     void build(const T arr[], int size) {
-        RealN = size;
+        init(size);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = arr[i];
 
         for (int i = N - 1; i > 0; i--)
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
+    }
+
+    void build(const vector<T>& v) {
+        build(&v[0], (int)v.size());
     }
 
     //--- query

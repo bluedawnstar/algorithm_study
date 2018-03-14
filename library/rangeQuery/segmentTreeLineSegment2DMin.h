@@ -36,9 +36,22 @@ struct SegmentTreeLineSegment2DMin {
     vector<Line> treeLazy;
     vector<bool> lazyExist;
 
-    SegmentTreeLineSegment2DMin(int size)
-        : N(size), treeL(size * 4), treeR(size * 4), treeLazy(size * 4), lazyExist(size * 4) {
+    SegmentTreeLineSegment2DMin() : N(0) {
     }
+
+    explicit SegmentTreeLineSegment2DMin(int size) {
+        init(size);
+    }
+
+
+    void init(int size) {
+        N = size;
+        treeL = vector<Line>(size * 4);
+        treeR = vector<Line>(size * 4);
+        treeLazy = vector<Line>(size * 4);
+        lazyExist.assign(size * 4, false);
+    }
+
 
     // add a line segment
     // inclusive, O(NlogN)

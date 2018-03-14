@@ -108,6 +108,9 @@ void testSegmentTreeLineSegment2DSum() {
             ans[j] = tree.querySum(0, j).first;
         }
 
+        cout << gt1 << endl;
+        cout << gt2 << endl;
+        cout << ans << endl;
         assert(gt1 == ans);
         assert(gt2 == ans);
     }

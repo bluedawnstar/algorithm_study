@@ -18,12 +18,18 @@ struct PersistentSegmentTreeLazy {
     MergeOp         mergeOp;
     BlockOp         blockOp;
 
-    PersistentSegmentTreeLazy(T dflt = T())
-        : N(0), trees(), treesLazy(), defaultValue(dflt), mergeOp(), blockOp() {
-    }
-
     PersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dflt = T())
         : N(0), trees(), treesLazy(), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    }
+
+    PersistentSegmentTreeLazy(const T arr[], int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(arr, n);
+    }
+
+    PersistentSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(v);
     }
 
     PersistentSegmentTreeLazy(PersistentSegmentTreeLazy&& rhs)
@@ -37,47 +43,46 @@ struct PersistentSegmentTreeLazy {
             delete p;
     }
 
+
     int getHistorySize() const {
         return (int)trees.size();
     }
 
+
     // inclusive
-    T init(T value, int N) {
-        this->N = N;
+    void init(int n) {
+        N = n;
         trees.clear();
         treesLazy.clear();
+    }
+
+    // inclusive
+    T build(T value, int n) {
+        init(n);
 
         treesLazy.resize(1);
-        auto t = initSub(value, 0, N - 1, 1);
+        auto t = initSub(value, 0, n - 1, 1);
         trees.push_back(t.second);
 
         return t.first;
     }
 
     // inclusive
-    T build(const vector<T>& v, int left, int right) {
-        N = right - left + 1;
-        trees.clear();
-        treesLazy.clear();
+    T build(const T arr[], int n) {
+        init(n);
 
         treesLazy.resize(1);
-        auto t = buildSub(v, 0, N - 1, 1);
+        auto t = buildSub(arr, 0, n - 1, 1);
         trees.push_back(t.second);
 
         return t.first;
     }
+
     // inclusive
-    T build(const T arr[], int left, int right) {
-        N = right - left + 1;
-        trees.clear();
-        treesLazy.clear();
-
-        treesLazy.resize(1);
-        auto t = buildSub(arr, 0, N - 1, 1);
-        trees.push_back(t.second);
-
-        return t.first;
+    T build(const vector<T>& v) {
+        return build(&v[0], (int)v.size());
     }
+
 
     // inclusive
     T query(int left, int right) {
@@ -174,8 +179,7 @@ private:
     }
 
     // inclusive
-    template <typename U>
-    pair<T,Node*> buildSub(const U& arr, int left, int right, int node) {
+    pair<T,Node*> buildSub(const T arr[], int left, int right, int node) {
         if (left > right)
             return make_pair(defaultValue, nullptr);
 
@@ -183,8 +187,8 @@ private:
             return make_pair(arr[left], createNode(node, arr[left]));
 
         int mid = left + (right - left) / 2;
-        auto L = buildSub<U>(arr, left, mid, node * 2);
-        auto R = buildSub<U>(arr, mid + 1, right, node * 2 + 1);
+        auto L = buildSub(arr, left, mid, node * 2);
+        auto R = buildSub(arr, mid + 1, right, node * 2 + 1);
         auto value = mergeOp(L.first, R.first);
         return make_pair(value, createNode(node, value, L.second, R.second));
     }
@@ -328,22 +332,13 @@ PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(Mer
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
-    segTree.init(dfltValue, 0, size - 1);
-    return segTree;
-}
-
-template <typename T, typename MergeOp, typename BlockOp>
 PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
-    segTree.build(v, 0, (int)v.size() - 1);
+    auto segTree = PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(v, mop, bop, dfltValue);
     return segTree;
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
 PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
-    segTree.build(arr, 0, size - 1);
+    auto segTree = PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(arr, size, mop, bop, dfltValue);
     return segTree;
 }

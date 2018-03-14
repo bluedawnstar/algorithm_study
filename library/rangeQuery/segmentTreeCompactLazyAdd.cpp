@@ -48,13 +48,13 @@ void testSegmentTreeCompactLazyAdd() {
 
     cout << "-- Compact Segment Tree - Lazy Add ----------------------------------------" << endl;
     {
-        int freq[] = { 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
-        int N = sizeof(freq) / sizeof(freq[0]);
+        vector<int> freq{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int N = (int)freq.size();
 
-        FenwickTree<int> fenwick(N);
-        auto segTree = makeCompactSegmentTreeLazyAdd(freq, N, [](int a, int b) { return a + b; });
+        FenwickTree<int> fenwick;
+        auto segTree = makeCompactSegmentTreeLazyAdd(freq, [](int a, int b) { return a + b; });
 
-        fenwick.init(freq, N);
+        fenwick.build(freq);
 
         int ans = fenwick.sum(5);
         assert(ans == 12);
@@ -163,9 +163,7 @@ void testSegmentTreeCompactLazyAdd() {
         PROFILE_START(0);
         {
             int res = 0;
-            FenwickTree<int> ft(N);
-
-            ft.init(T);
+            FenwickTree<int> ft(T);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += ft.sumRange(it.first, it.second);

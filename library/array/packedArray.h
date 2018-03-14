@@ -1,30 +1,10 @@
 #pragma once
 
-template <typename T>
-struct PackedArrayTrait {
-};
-
-template <>
-struct PackedArrayTrait<unsigned int> {
-    typedef unsigned int T;
-    static const int BIT_SIZE = sizeof(T) * 8;
-    static const int INDEX_MASK = 0x1F;
-    static const int INDEX_SHIFT = 5;
-};
-
-template <>
-struct PackedArrayTrait<unsigned long long> {
-    typedef unsigned long long T;
-    static const int BIT_SIZE = sizeof(T) * 8;
-    static const int INDEX_MASK = 0x3F;
-    static const int INDEX_SHIFT = 6;
-};
-
-template <typename T>
+template <typename T = unsigned int>
 struct PackedArray {
-    static const int BIT_SIZE = PackedArrayTrait<T>::BIT_SIZE;
-    static const int INDEX_MASK = PackedArrayTrait<T>::INDEX_MASK;
-    static const int INDEX_SHIFT = PackedArrayTrait<T>::INDEX_SHIFT;
+    static const int BIT_SIZE = sizeof(T) * 8;
+    static const int INDEX_MASK = (sizeof(T) == 4) ? 0x1F : 0x3F;
+    static const int INDEX_SHIFT = (sizeof(T) == 4) ? 5 : 6;
 
     vector<T> data;
 

@@ -17,12 +17,18 @@ struct PersistentSegmentTree {
     T               defaultValue;
     BinOp           mergeOp;
 
-    PersistentSegmentTree(T dflt = T())
-        : N(0), trees(), mergeOp(), defaultValue(dflt) {
+    explicit PersistentSegmentTree(BinOp op, T dflt = T())
+        : N(0), trees(), mergeOp(op), defaultValue(dflt) {
     }
 
-    PersistentSegmentTree(BinOp op, T dflt = T())
-        : N(0), trees(), mergeOp(op), defaultValue(dflt) {
+    PersistentSegmentTree(const T arr[], int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(arr, n);
+    }
+
+    PersistentSegmentTree(const vector<T>& v, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(v);
     }
 
     PersistentSegmentTree(PersistentSegmentTree&& rhs)
@@ -35,40 +41,42 @@ struct PersistentSegmentTree {
             delete p;
     }
 
+
     int getHistorySize() const {
         return (int)trees.size();
     }
 
-    // inclusive
-    T init(T value, int N) {
-        this->N = N;
-        trees.clear();
 
-        auto t = initSub(value, 0, N - 1);
+    // inclusive
+    void init(int n) {
+        N = n;
+        trees.clear();
+    }
+
+    // inclusive
+    T build(T value, int n) {
+        init(n);
+
+        auto t = buildSub(value, 0, N - 1);
         trees.push_back(t.second);
 
         return t.first;
     }
 
     // inclusive
-    T build(const vector<T>& v, int left, int right) {
-        N = right - left + 1;
-        trees.clear();
+    T build(const T arr[], int n) {
+        init(n);
 
-        auto t = buildSub(v, left, right);
+        auto t = buildSub(arr, 0, n -1);
         trees.push_back(t.second);
-
         return t.first;
     }
+
     // inclusive
-    T build(const T arr[], int left, int right) {
-        N = right - left + 1;
-        trees.clear();
-
-        auto t = buildSub(arr, left, right);
-        trees.push_back(t.second);
-        return t.first;
+    T build(const vector<T>& v) {
+        return build(&v[0], (int)v.size());
     }
+
 
     // inclusive
     T query(int left, int right) {
@@ -145,7 +153,7 @@ private:
     }
 
     // inclusive
-    pair<T, Node*> initSub(T initValue, int left, int right) {
+    pair<T, Node*> buildSub(T initValue, int left, int right) {
         if (left > right)
             return make_pair(defaultValue, nullptr);
 
@@ -153,15 +161,14 @@ private:
             return make_pair(initValue, createNode(initValue));
 
         int mid = left + (right - left) / 2;
-        auto L = initSub(initValue, left, mid);
-        auto R = initSub(initValue, mid + 1, right);
+        auto L = buildSub(initValue, left, mid);
+        auto R = buildSub(initValue, mid + 1, right);
         auto value = mergeOp(L.first, R.first);
         return make_pair(value, createNode(value, L.second, R.second));
     }
 
     // inclusive
-    template <typename U>
-    pair<T,Node*> buildSub(const U& arr, int left, int right) {
+    pair<T,Node*> buildSub(const T arr[], int left, int right) {
         if (left > right)
             return make_pair(defaultValue, nullptr);
 
@@ -169,8 +176,8 @@ private:
             return make_pair(arr[left], createNode(arr[left]));
 
         int mid = left + (right - left) / 2;
-        auto L = buildSub<U>(arr, left, mid);
-        auto R = buildSub<U>(arr, mid + 1, right);
+        auto L = buildSub(arr, left, mid);
+        auto R = buildSub(arr, mid + 1, right);
         auto value = mergeOp(L.first, R.first);
         return make_pair(value, createNode(value, L.second, R.second));
     }
@@ -246,22 +253,13 @@ PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(BinOp op, T dfltValue 
 }
 
 template <typename T, typename BinOp>
-PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(int size, BinOp op, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTree<T, BinOp>(op, dfltValue);
-    segTree.init(dfltValue, 0, size - 1);
-    return segTree;
-}
-
-template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTree<T, BinOp>(op, dfltValue);
-    segTree.build(v, 0, (int)v.size() - 1);
+    auto segTree = PersistentSegmentTree<T, BinOp>(v, op, dfltValue);
     return segTree;
 }
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTree<T, BinOp>(op, dfltValue);
-    segTree.build(arr, 0, size - 1);
+    auto segTree = PersistentSegmentTree<T, BinOp>(arr, size, op, dfltValue);
     return segTree;
 }

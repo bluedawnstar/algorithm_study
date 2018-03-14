@@ -10,13 +10,14 @@ struct SparseTableMin {
     SparseTableMin() {
     }
 
-    SparseTableMin(const vector<int>& a) {
-        build(a);
-    }
-
     SparseTableMin(const int a[], int n) {
         build(a, n);
     }
+
+    explicit SparseTableMin(const vector<int>& a) {
+        build(a);
+    }
+
 
     void build(const int a[], int n) {
         this->N = n;
@@ -45,6 +46,7 @@ struct SparseTableMin {
     void build(const vector<int>& a) {
         build(&a[0], (int)a.size());
     }
+
 
     // inclusive
     int query(int left, int right) {

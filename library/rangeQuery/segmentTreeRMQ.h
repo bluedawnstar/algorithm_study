@@ -10,23 +10,47 @@ struct RMQ {
     vector<int> value;
     vector<int> valueId;
 
-    RMQ(int size) {
+    RMQ() {
+    }
+
+    explicit RMQ(int size) {
         init(size);
     }
 
     RMQ(int v[], int size) {
+        build(v, size);
+    }
+
+    RMQ(const vector<int>& v) {
+        build(v);
+    }
+
+
+    void init(int size) {
+        N = 1;
+        while (N <= size)
+            N <<= 1;
+
+        value.resize(N * 2);
+        valueId.resize(N * 2);
+        for (int i = 0; i < N; i++)
+            valueId[N + i] = i;
+
+        for (int i = 0; i < size; i++)
+            update(i, INT_MAX);
+    }
+
+    void build(const int v[], int size) {
         init(size);
 
         for (int i = 0; i < size; i++)
             update(i, v[i]);
     }
 
-    RMQ(const vector<int>& v) {
-        init((int)v.size());
-
-        for (int i = 0; i < (int)v.size(); i++)
-            update(i, v[i]);
+    void build(const vector<int>& v) {
+        build(&v[0], (int)v.size());
     }
+
 
     void update(int x, int val) {
         x += N;
@@ -64,20 +88,5 @@ struct RMQ {
             right >>= 1;
         }
         return ret;
-    }
-
-private:
-    void init(int size) {
-        N = 1;
-        while (N <= size)
-            N <<= 1;
-
-        value.resize(N * 2);
-        valueId.resize(N * 2);
-        for (int i = 0; i < N; i++)
-            valueId[N + i] = i;
-
-        for (int i = 0; i < size; i++)
-            update(i, INT_MAX);
     }
 };

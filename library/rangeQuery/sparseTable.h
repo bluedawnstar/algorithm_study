@@ -13,22 +13,8 @@ struct SparseTable {
     T                   defaultValue;
     BinOp               mergeOp;
 
-    SparseTable(T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-    }
-
-    SparseTable(BinOp op, T dfltValue = T())
+    explicit SparseTable(BinOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
-    }
-
-    SparseTable(const T a[], int n, T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-        build(a, n);
-    }
-
-    SparseTable(const vector<T>& a, T dfltValue = T())
-        : mergeOp(), defaultValue(dfltValue) {
-        build(a);
     }
 
     SparseTable(const T a[], int n, BinOp op, T dfltValue = T())
@@ -45,6 +31,7 @@ struct SparseTable {
         : N(rhs.N), value(std::move(rhs.value)), H(std::move(rhs.H)),
           mergeOp(std::move(rhs.mergeOp)), defaultValue(rhs.defaultValue) {
     }
+
 
     void build(const T a[], int n) {
         this->N = n;
@@ -73,6 +60,7 @@ struct SparseTable {
     void build(const vector<T>& a) {
         build(&a[0], (int)a.size());
     }
+
 
     // O(1), inclusive
     T query(int left, int right) {
