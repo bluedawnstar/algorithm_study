@@ -28,6 +28,11 @@ struct CompactSegmentTreeLazyUpdate {
         init(size);
     }
 
+    CompactSegmentTreeLazyUpdate(T value, int n, BinOp op, BlockOp bop, T dflt = T())
+        : mergeOp(op), blockOp(bop), defaultValue(dflt) {
+        build(value, n);
+    }
+
     CompactSegmentTreeLazyUpdate(const T arr[], int n, BinOp op, BlockOp bop, T dflt = T())
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
         build(arr, n);

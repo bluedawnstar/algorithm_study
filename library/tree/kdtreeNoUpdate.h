@@ -44,6 +44,7 @@ struct KDTreeNoUpdate {
         _build(0, (int)tree.size(), 0);
     }
 
+
     // O(logN)
     template <typename U>
     int searchNearest(const U& qry) {

@@ -28,6 +28,11 @@ struct CompactSegmentTreeLazyAdd {
         init(size);
     }
 
+    CompactSegmentTreeLazyAdd(T value, int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(value, n);
+    }
+
     CompactSegmentTreeLazyAdd(const T arr[], int n, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
@@ -71,13 +76,7 @@ struct CompactSegmentTreeLazyAdd {
     }
 
     void build(const vector<T>& v) {
-        init((int)v.size());
-
-        for (int i = 0; i < (int)v.size(); i++)
-            tree[N + i] = v[i];
-
-        for (int i = N - 1; i > 0; i--)
-            tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
+        build(&v[0], (int)v.size());
     }
 
     //--- query

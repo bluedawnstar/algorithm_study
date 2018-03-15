@@ -64,12 +64,23 @@ struct SegmentTreeMaxSubarray {
         init(size);
     }
 
+    SegmentTreeMaxSubarray(T value, int size) {
+        build(value, size);
+    }
+
+    SegmentTreeMaxSubarray(const T arr[], int size) {
+        build(arr, size);
+    }
+
+    SegmentTreeMaxSubarray(const vector<T>& v) {
+        build(v);
+    }
+
 
     void init(int size) {
         N = size + (size & 1);
         tree = vector<Node>(N * 2);
     }
-
 
     void build(T value, int size) {
         init(size);
@@ -82,6 +93,8 @@ struct SegmentTreeMaxSubarray {
     }
 
     void build(const T arr[], int size) {
+        init(size);
+
         for (int i = 0; i < size; i++)
             tree[N + i].init(arr[i]);
 

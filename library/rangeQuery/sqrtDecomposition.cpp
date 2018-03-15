@@ -28,7 +28,7 @@ void testSqrtDecomposition() {
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
         auto segTreeLazy = makeSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
-        SqrtDecompositionLazy<int> sqrtDecom(in);
+        SqrtDecompositionLazy<int> sqrtDecom(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
 
         for (int i = 0; i < 10000; i++) {
             if (rand() % 2) {
@@ -62,7 +62,7 @@ void testSqrtDecomposition() {
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
         auto segTreeLazy = makeSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
-        SqrtDecompositionLazy<int> sqrtDecom(in);
+        SqrtDecompositionLazy<int> sqrtDecom(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
 
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {

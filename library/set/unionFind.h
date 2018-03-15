@@ -2,18 +2,21 @@
 
 class UnionFind {
 public:
+    UnionFind() {
+    }
+
     UnionFind(int N) : mParent(N, 0), mRank(N, 0) {
         for (int i = 0; i < N; i++)
             mParent[i] = i;
     }
 
-    void init() {
-        int N = mParent.size();
-        for (int i = 0; i < N; i++) {
+    void init(int N) {
+        mParent.resize(N);
+        mRank.assign(N, 0);
+        for (int i = 0; i < N; i++)
             mParent[i] = i;
-            mRank[i] = 0;
-        }
     }
+
 
     int findSet(int x) {
         if (mParent[x] == x)

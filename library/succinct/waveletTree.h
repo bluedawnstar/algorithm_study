@@ -181,6 +181,7 @@ struct WaveletTree {
         build(&in[0], (int)in.size());
     }
 
+
     int countLessOrEqual(T k) {
         if (!tree)
             return 0;

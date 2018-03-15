@@ -21,6 +21,16 @@ struct PersistentSegmentTree {
         : N(0), trees(), mergeOp(op), defaultValue(dflt) {
     }
 
+    PersistentSegmentTree(int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        init(n);
+    }
+
+    PersistentSegmentTree(T value, int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(value, n);
+    }
+
     PersistentSegmentTree(const T arr[], int n, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
@@ -47,13 +57,11 @@ struct PersistentSegmentTree {
     }
 
 
-    // inclusive
     void init(int n) {
         N = n;
         trees.clear();
     }
 
-    // inclusive
     T build(T value, int n) {
         init(n);
 
@@ -63,7 +71,6 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
-    // inclusive
     T build(const T arr[], int n) {
         init(n);
 
@@ -72,7 +79,6 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
-    // inclusive
     T build(const vector<T>& v) {
         return build(&v[0], (int)v.size());
     }
@@ -168,7 +174,7 @@ private:
     }
 
     // inclusive
-    pair<T,Node*> buildSub(const T arr[], int left, int right) {
+    pair<T, Node*> buildSub(const T arr[], int left, int right) {
         if (left > right)
             return make_pair(defaultValue, nullptr);
 

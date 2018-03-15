@@ -120,8 +120,7 @@ private:
         levels.resize(tree.mNodeN + 1);
         dfsGetLevels(levels, &tree.mRoot, 0);
 
-        sptLCA.init(parent, levels);
-        sptLCA.build();
+        sptLCA.build(parent, levels);
     }
 
     // 0: longest suffix, ..., n - 1: shortest suffix, n: '$'

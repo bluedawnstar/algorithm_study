@@ -32,13 +32,13 @@ struct FenwickTreeMax {
     }
 
     void build(T value, int n) {
-        tree.assign(n + 1, defaultValue);
+        init(n);
         for (int i = 0; i < n; i++)
             set(i, value);
     }
 
     void build(const T arr[], int n) {
-        tree.assign(n + 1, defaultValue);
+        init(n);
         for (int i = 0; i < n; i++)
             set(i, arr[i]);
     }

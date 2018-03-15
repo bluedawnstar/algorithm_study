@@ -22,11 +22,11 @@ struct LcaSparseTable {
     }
 
     LcaSparseTable(const vector<int>& parent, const vector<int>& level) {
-        init(parent, level);
+        build(parent, level);
     }
 
     LcaSparseTable(const int parent[], const int level[], int N) {
-        init(parent, level, N);
+        build(parent, level, N);
     }
 
 
@@ -39,16 +39,20 @@ struct LcaSparseTable {
         mLevel.resize(N);
     }
 
-    void init(const vector<int>& parent, const vector<int>& level) {
+    // O(NlogN)
+    void build(const vector<int>& parent, const vector<int>& level) {
         init((int)parent.size());
         copy(parent.begin(), parent.end(), mP[0].begin());
         copy(level.begin(), level.end(), mLevel.begin());
+        build();
     }
 
-    void init(const int parent[], const int level[], int N) {
+    // O(NlogN)
+    void build(const int parent[], const int level[], int N) {
         init(N);
         copy(parent, parent + N, mP[0].begin());
         copy(level, level + N, mLevel.begin());
+        build();
     }
 
     // O(NlogN)
@@ -60,6 +64,7 @@ struct LcaSparseTable {
             }
         }
     }
+
 
     // Level ancestor
     // O(logD)

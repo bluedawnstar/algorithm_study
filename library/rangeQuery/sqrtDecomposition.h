@@ -1,19 +1,7 @@
 #pragma once
 
-template <typename T>
+template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct SqrtDecompositionLazy {
-    static const T INIT_VALUE = 0;          //TODO: modify
-
-    static T mergeOp(T a, T b) {
-        return a + b;                       //TODO: modify
-    }
-
-    static T mergeBlockOp(T x, int n) {     //TODO: modify
-        return x * n;
-    }
-
-    //------------------------------------------------
-
     int N;
     int blockSize;
     int blockCount;
@@ -23,21 +11,34 @@ struct SqrtDecompositionLazy {
     vector<T> blockLazy;
     vector<bool> blockLazyExist;
 
-    SqrtDecompositionLazy() {
+    T         defaultValue;
+    MergeOp   mergeOp;
+    BlockOp   blockOp;
+
+    SqrtDecompositionLazy(MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         N = 0;
         blockSize = 0;
         blockCount = 0;
     }
 
-    explicit SqrtDecompositionLazy(int n) {
+    explicit SqrtDecompositionLazy(int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         init(n);
     }
 
-    SqrtDecompositionLazy(const T v[], int n) {
+    SqrtDecompositionLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(value, n);
+    }
+
+    SqrtDecompositionLazy(const T v[], int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(v, n);
     }
 
-    explicit SqrtDecompositionLazy(const vector<T>& v) {
+    explicit SqrtDecompositionLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(v);
     }
 
@@ -51,6 +52,13 @@ struct SqrtDecompositionLazy {
         blockValues.resize(blockCount);
         blockLazy.resize(blockCount);
         blockLazyExist.resize(blockCount);
+    }
+
+    void build(T value, int n) {
+        init(n);
+        fill(values.begin(), values.begin() + n, value);
+        for (int i = 0; i < blockCount; i++)
+            updateBlockValue(i);
     }
 
     void build(const T v[], int n) {
@@ -73,7 +81,7 @@ struct SqrtDecompositionLazy {
 
         if (blockL == blockR) {
             if (getBlockSize(blockL) == (r - l + 1)) {
-                blockValues[blockL] = mergeBlockOp(x, r - l + 1);
+                blockValues[blockL] = blockOp(x, r - l + 1);
 
                 blockLazy[blockL] = x;
                 blockLazyExist[blockL] = true;
@@ -96,7 +104,7 @@ struct SqrtDecompositionLazy {
                 updateBlockValue(blockL);
             }
 
-            T blockX = mergeBlockOp(x, blockSize);
+            T blockX = blockOp(x, blockSize);
 
             while (blockCL < blockCU) {
                 blockValues[blockCL] = blockX;
@@ -118,7 +126,7 @@ struct SqrtDecompositionLazy {
     }
 
     T query(int l, int r) {
-        T res = INIT_VALUE;
+        T res = defaultValue;
 
         int blockL = l / blockSize;
         int blockR = r / blockSize;
@@ -127,13 +135,13 @@ struct SqrtDecompositionLazy {
 
         if (blockL == blockR) {
             if (blockLazyExist[blockL])
-                res = mergeBlockOp(blockLazy[blockL], r - l + 1);
+                res = blockOp(blockLazy[blockL], r - l + 1);
             else
                 res = mergeValue(l, r + 1);
         } else {
             if (blockL != blockCL) {
                 if (blockLazyExist[blockL])
-                    res = mergeBlockOp(blockLazy[blockL], blockCL * blockSize - l);
+                    res = blockOp(blockLazy[blockL], blockCL * blockSize - l);
                 else
                     res = mergeValue(l, blockCL * blockSize);
             }
@@ -145,7 +153,7 @@ struct SqrtDecompositionLazy {
 
             if (blockCU == blockR) {
                 if (blockLazyExist[blockR])
-                    res = mergeOp(res, mergeBlockOp(blockLazy[blockR], r % blockSize + 1));
+                    res = mergeOp(res, blockOp(blockLazy[blockR], r % blockSize + 1));
                 else
                     res = mergeOp(res, mergeValue(blockR * blockSize, r + 1));
             }
@@ -156,7 +164,7 @@ struct SqrtDecompositionLazy {
 
 private:
     void updateBlockValue(int block) {
-        blockValues[block] = INIT_VALUE;
+        blockValues[block] = defaultValue;
 
         int l = block * blockSize;
         int r = min(N, l + blockSize);
@@ -165,7 +173,7 @@ private:
     }
 
     T mergeValue(int l, int r) {
-        T res = INIT_VALUE;
+        T res = defaultValue;
 
         while (l < r)
             res = mergeOp(res, values[l++]);

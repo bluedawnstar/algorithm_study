@@ -46,10 +46,6 @@ struct SplayTreeRangeQuery {
         deleteRecursive(tree);
     }
 
-    int size() const {
-        return count;
-    }
-
     void build(int n) {
         Node *x;
 
@@ -65,6 +61,10 @@ struct SplayTreeRangeQuery {
             x->cnt = n - i;
             x->rangeValue = x->value = x->lazy = defaultValue;
         }
+    }
+
+    int size() const {
+        return count;
     }
 
     void update(int index, int value) {

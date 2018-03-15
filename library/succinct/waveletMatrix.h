@@ -68,6 +68,7 @@ struct WaveletMatrix {
         }
     }
 
+
     int size() const {
         return mN;
     }

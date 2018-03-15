@@ -16,11 +16,11 @@ struct LcaSparseTableSimple {
     }
 
     LcaSparseTableSimple(const vector<int>& A) {
-        init(A);
+        build(A);
     }
 
     LcaSparseTableSimple(const int A[], int N) {
-        init(A, N);
+        build(A, N);
     }
 
 
@@ -32,14 +32,18 @@ struct LcaSparseTableSimple {
             mP[i].resize(mN);
     }
 
-    void init(const vector<int>& A) {
+    // O(NlogN)
+    void build(const vector<int>& A) {
         init((int)A.size());
         copy(A.begin(), A.end(), mP[0].begin());
+        build();
     }
 
-    void init(const int A[], int N) {
+    // O(NlogN)
+    void build(const int A[], int N) {
         init(N);
         copy(A, A + N, mP[0].begin());
+        build();
     }
 
     // O(NlogN)
@@ -51,6 +55,7 @@ struct LcaSparseTableSimple {
             }
         }
     }
+
 
     // O(logD)
     int climb(int x, int dist) {

@@ -25,6 +25,7 @@ struct MetricTree {
         build(0, N);
     }
 
+
     // nearest neighbor
     // returns (point index, distance)
     pair<int, D> searchNearest(T x, T y) const {

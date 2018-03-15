@@ -22,6 +22,11 @@ struct SegmentTreeLazy {
         init(size);
     }
 
+    SegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(value, n);
+    }
+
     SegmentTreeLazy(const T arr[], int n, MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(arr, n);
@@ -40,13 +45,16 @@ struct SegmentTreeLazy {
         lazyExist.assign(size * 4, false);
     }
 
-    // inclusive
+    T build(T value, int n) {
+        init(n);
+        return buildSub(value, 0, n - 1, 1);
+    }
+
     T build(const T arr[], int n) {
         init(n);
         return buildSub(arr, 0, n - 1, 1);
     }
 
-    // inclusive
     T build(const vector<T>& v) {
         return build(&v[0], (int)v.size());
     }
@@ -79,6 +87,21 @@ private:
         int mid = left + (right - left) / 2;
         T leftSum = buildSub(arr, left, mid, node * 2);
         T rightSum = buildSub(arr, mid + 1, right, node * 2 + 1);
+
+        return tree[node] = mergeOp(leftSum, rightSum);
+    }
+
+    // inclusive
+    T buildSub(T value, int left, int right, int node) {
+        if (left > right)
+            return defaultValue;
+
+        if (left == right)
+            return tree[node] = value;
+
+        int mid = left + (right - left) / 2;
+        T leftSum = buildSub(value, left, mid, node * 2);
+        T rightSum = buildSub(value, mid + 1, right, node * 2 + 1);
 
         return tree[node] = mergeOp(leftSum, rightSum);
     }

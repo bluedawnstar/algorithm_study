@@ -24,7 +24,12 @@ struct CompactSegmentTree {
         : mergeOp(op), defaultValue(dflt) {
         init(size);
     }
-    
+
+    CompactSegmentTree(T value, int n, BinOp op, T dflt = T())
+        : mergeOp(op), defaultValue(dflt) {
+        build(value, n);
+    }
+
     CompactSegmentTree(const T arr[], int n, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
@@ -40,6 +45,16 @@ struct CompactSegmentTree {
         RealN = size;
         N = size + (size & 1);
         tree.assign(N * 2, defaultValue);
+    }
+
+    void build(T value, int size) {
+        init(size);
+
+        for (int i = 0; i < size; i++)
+            tree[N + i] = value;
+
+        for (int i = N - 1; i > 0; i--)
+            tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
     void build(const T arr[], int size) {

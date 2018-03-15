@@ -7,7 +7,7 @@ struct PrefixSum {
     PrefixSum() {
     }
 
-    explicit PrefixSum(const T* in, int N) {
+    PrefixSum(const T* in, int N) {
         build(in, N);
     }
 
@@ -15,9 +15,6 @@ struct PrefixSum {
         build(in);
     }
 
-    void build(const vector<T>& in) {
-        build(&in[0], (int)in.size());
-    }
 
     void build(const T* in, int N) {
         sum.resize(N + 1);
@@ -26,6 +23,11 @@ struct PrefixSum {
             sum[i] = sum[i - 1] + *in++;
         }
     }
+
+    void build(const vector<T>& in) {
+        build(&in[0], (int)in.size());
+    }
+
 
     // inclusive (0 <= left <= right < N)
     T query(int left, int right) {

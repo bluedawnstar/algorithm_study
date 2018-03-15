@@ -36,6 +36,7 @@ struct NextPositionTable {
         }
     }
 
+
     // Is 't' subsequence of 's'
     // O(|t|), inclusive
     bool isSubsequence(const string& t, char first = 'a', char last = 'z') const {

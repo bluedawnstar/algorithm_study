@@ -23,6 +23,7 @@ struct WaveletMatrixArray {
         build(in);
     }
 
+
     void build(const vector<T>& in) {
         build(&in[0], (int)in.size(), (in.empty()) ? 0 : *max_element(in.begin(), in.end()));
     }
@@ -70,6 +71,7 @@ struct WaveletMatrixArray {
             next.swap(cur);
         }
     }
+
 
     int size() const {
         return mN;

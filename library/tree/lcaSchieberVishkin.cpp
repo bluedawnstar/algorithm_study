@@ -96,8 +96,7 @@ void testLcaShieberVishkin() {
     {
         auto tree = makeLcaTree();  // make a test tree
 
-        LcaSchieberVishkin svLCA(tree.mN);
-        svLCA.build(tree.mE, 0);
+        LcaSchieberVishkin svLCA(tree.mE, 0);
 
         PROFILE_START(1);
         int errCnt = 0;

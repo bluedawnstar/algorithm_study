@@ -27,6 +27,7 @@ struct BitVectorRank {
         mRank = vector<int>(mV.size() + 1);
     }
 
+
     int size() const {
         return mN;
     }

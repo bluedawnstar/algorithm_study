@@ -12,7 +12,11 @@ struct FenwickTree {
     FenwickTree() {
     }
 
-    FenwickTree(int n) : tree(n + 1) {
+    explicit FenwickTree(int n) : tree(n + 1) {
+    }
+
+    FenwickTree(const T value, int n) {
+        build(value, n);
     }
 
     FenwickTree(const T arr[], int n) {
@@ -29,13 +33,13 @@ struct FenwickTree {
     }
 
     void build(T value, int n) {
-        tree = vector<int>(n + 1);
+        init(n);
         for (int i = 0; i < n; i++)
             add(i, value);
     }
 
     void build(const T arr[], int n) {
-        tree = vector<int>(n + 1);
+        init(n);
         for (int i = 0; i < n; i++)
             add(i, arr[i]);
     }

@@ -18,26 +18,19 @@ struct LcaSchieberVishkin {
         time = 0;
     }
 
-    LcaSchieberVishkin(int N) {
-        init(N);
-    }
-
-    void init(int N) {
-        this->N = N;
-        parent.resize(N);
-        preorder.resize(N);
-        I.resize(N);
-        head.resize(N);
-        A.resize(N);
-        time = 0;
+    LcaSchieberVishkin(vector<vector<int>>& edges, int root) {
+        build(edges, root);
     }
 
     // O(N)
     void build(vector<vector<int>>& edges, int root) {
+        init((int)edges.size());
+
         time = 0;
         dfs1(edges, root, -1);
         dfs2(edges, root, -1, 0);
     }
+
 
     // O(1)
     int lca(int x, int y) const {
@@ -49,6 +42,16 @@ struct LcaSchieberVishkin {
     }
 
 private:
+    void init(int N) {
+        this->N = N;
+        parent.resize(N);
+        preorder.resize(N);
+        I.resize(N);
+        head.resize(N);
+        A.resize(N);
+        time = 0;
+    }
+
     // p: parent node of u
     void dfs1(vector<vector<int>>& edges, int u, int p) {
         parent[u] = p;

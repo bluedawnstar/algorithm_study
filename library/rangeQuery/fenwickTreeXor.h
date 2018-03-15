@@ -33,11 +33,13 @@ struct FenwickTreeXor {
     }
 
     void build(T value, int n) {
+        init(n);
         for (int i = 0; i < n; i++)
             add(i, value);
     }
 
     void build(const T arr[], int n) {
+        init(n);
         for (int i = 0; i < n; i++)
             add(i, arr[i]);
     }

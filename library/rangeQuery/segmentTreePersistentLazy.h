@@ -22,6 +22,16 @@ struct PersistentSegmentTreeLazy {
         : N(0), trees(), treesLazy(), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
     }
 
+    PersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        init(n);
+    }
+
+    PersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(value, n);
+    }
+
     PersistentSegmentTreeLazy(const T arr[], int n, MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(arr, n);
@@ -49,14 +59,12 @@ struct PersistentSegmentTreeLazy {
     }
 
 
-    // inclusive
     void init(int n) {
         N = n;
         trees.clear();
         treesLazy.clear();
     }
 
-    // inclusive
     T build(T value, int n) {
         init(n);
 
@@ -67,7 +75,6 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // inclusive
     T build(const T arr[], int n) {
         init(n);
 
@@ -78,7 +85,6 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // inclusive
     T build(const vector<T>& v) {
         return build(&v[0], (int)v.size());
     }
@@ -163,7 +169,6 @@ private:
     }
 
     // inclusive
-    template <typename U>
     pair<T, Node*> initSub(T initValue, int left, int right, int node) {
         if (left > right)
             return make_pair(defaultValue, nullptr);
@@ -179,7 +184,7 @@ private:
     }
 
     // inclusive
-    pair<T,Node*> buildSub(const T arr[], int left, int right, int node) {
+    pair<T, Node*> buildSub(const T arr[], int left, int right, int node) {
         if (left > right)
             return make_pair(defaultValue, nullptr);
 

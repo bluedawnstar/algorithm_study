@@ -15,14 +15,11 @@ struct SegmentTreeLine1D {
     }
 
 
-    void init(int n) {
-        N = n;
-        tree = vector<pair<int,int>>(n * 4);
-        lazy = vector<int>(n * 4);
-    }
-
     void build(int n) {
-        init(n);
+        N = n;
+        tree = vector<pair<int, int>>(n * 4);
+        lazy = vector<int>(n * 4);
+
         buildSub(1, 0, n - 1);
     }
 

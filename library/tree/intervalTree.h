@@ -28,6 +28,7 @@ struct IntervalTree {
         destroyAll(tree);
     }
 
+
     // inclusive
     IntervalNode* insert(T low, T high) {
         if (tree == nullptr)

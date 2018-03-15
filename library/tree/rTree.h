@@ -27,6 +27,7 @@ struct RTree {
         build(0, N, true, this->rects);
     }
 
+
     // nearest neighbor
     // returns (rectangle index, distance)
     pair<int, double> searchNearest(T x, T y) const {

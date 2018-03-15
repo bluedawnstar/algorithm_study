@@ -4,17 +4,46 @@ struct PrefixFunction {
     vector<int> pi;
     string p;
 
+    PrefixFunction() {
+    }
+
+    PrefixFunction(const char* s, int n) {
+        build(s, n);
+    }
+
     PrefixFunction(const string& s) {
-        build(&s[0], (int)s.length());
+        build(s);
     }
 
     PrefixFunction(const string& s, int start) {
         build(&s[start], (int)s.length() - start);
     }
 
-    PrefixFunction(const char* s, int n) {
-        build(s, n);
+
+    void build(const char* s, int n) {
+        pi.resize(n);
+        p.assign(s, n);
+
+        int j = 0;
+        for (int i = 1; i < n; i++) {
+            while (j > 0 && s[j] != s[i])
+                j = pi[j - 1];
+
+            if (s[j] == s[i])
+                j++;
+            pi[i] = j;
+        }
     }
+
+    void build(const string& s) {
+        build(&s[0], (int)s.length());
+    }
+
+    void build(const string& s, int start) {
+        build(&s[start], (int)s.length() - start);
+    }
+
+    //---
 
     // (pattern length, pattern count)
     pair<int, int> checkRepeatedString() const {
@@ -87,21 +116,5 @@ struct PrefixFunction {
             n = pi[n - 1];
         }
         return res;
-    }
-
-private:
-    void build(const char* s, int n) {
-        pi.resize(n);
-        p.assign(s, n);
-
-        int j = 0;
-        for (int i = 1; i < n; i++) {
-            while (j > 0 && s[j] != s[i])
-                j = pi[j - 1];
-
-            if (s[j] == s[i])
-                j++;
-            pi[i] = j;
-        }
     }
 };

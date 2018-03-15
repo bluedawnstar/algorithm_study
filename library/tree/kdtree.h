@@ -25,6 +25,7 @@ struct KDTree {
         root = nullptr;
     }
 
+
     void insert(Node* newNode) {
         if (root == nullptr) {
             root = newNode;
