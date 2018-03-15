@@ -35,16 +35,19 @@ static vector<int> searchNaive(const string& text, const string& pattern) {
 }
 
 void testSearchRabinKarp() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    //return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Rabin Karp ---------" << endl;
     
-    string S = "AABAACAADAABAABA", key = "AABA";
+    string S = "aabaacaadaabaaba", key = "aaba";
 
     auto gt = searchNaive(S, key);
     auto ans = searchRabinKarp(S, key);
-    if (gt != ans) {
+    auto ans2 = searchRabinKarpLowercaseAlphabet(S, key);
+    if (gt != ans || gt != ans2) {
         cerr << "Error: " << gt << " <-> " << ans << endl;
     }
-    assert(gt == ans);
+    assert(gt == ans && gt == ans2);
+
+    cout << "OK!" << endl;
 }
