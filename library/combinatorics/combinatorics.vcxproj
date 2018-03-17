@@ -147,11 +147,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="comb.cpp" />
+    <ClCompile Include="combModExt.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h" />
+    <ClInclude Include="combDP.h" />
     <ClInclude Include="combMod.h" />
+    <ClInclude Include="combModExt.h" />
+    <ClInclude Include="combModDP.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

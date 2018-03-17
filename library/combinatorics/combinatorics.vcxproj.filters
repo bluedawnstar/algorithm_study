@@ -21,12 +21,24 @@
     <ClCompile Include="comb.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="combModExt.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="combMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="combModDP.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="combDP.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="combModExt.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

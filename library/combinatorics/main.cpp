@@ -7,4 +7,5 @@ using namespace std;
 
 int main(void) {
     TEST(Comb);
+    TEST(CombModExt);
 }
