@@ -29,4 +29,5 @@ int main(void) {
     TEST(SegmentTreeLineSegment2DSum);
     TEST(SqrtTree);
     TEST(MergeSortTree);
+    TEST(MergeSortTreeIndex);
 }

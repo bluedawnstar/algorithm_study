@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "mergeSortTree.h"
+#include "mergeSortTreeIndex.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -50,7 +50,7 @@ static int countK(vector<int>& v, int L, int R, int Klo, int Khi) {
     return res;
 }
 
-static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R, int K) {
+static void test(vector<int>& in, MergeSortTreeIndex<int>& tree, int N, int L, int R, int K) {
     // less than or equal to k
     {
         int gt = countLTE(in, 0, N - 1, K);
@@ -72,7 +72,18 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
     {
         int K = RandInt32::get() % (R - L + 1);
         int gt = kth(in, L, R, K);
-        int ans = tree.kth(L, R, K, 0, numeric_limits<int>::max());
+        int ans = tree.kth(L, R, K);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    // count
+    {
+        int K = in[L + (R - L) / 2];
+
+        int gt = countK(in, 0, N - 1, K);
+        int ans = tree.count(K);
         if (ans != gt) {
             cout << "GT = " << gt << ", " << "ans = " << ans << endl;
         }
@@ -106,10 +117,10 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
     }
 }
 
-void testMergeSortTree() {
+void testMergeSortTreeIndex() {
     return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- Merge Sort Tree ----------------------------------------------" << endl;
+    cout << "-- Merge Sort Tree with Index -----------------------------------" << endl;
 
     int N = 100;
     int T = 100;
@@ -120,7 +131,7 @@ void testMergeSortTree() {
         //for (int j = 0; j < N; j++)
         //    in[j] = j;
 
-        MergeSortTree<int> tree(in);
+        MergeSortTreeIndex<int> tree(in);
 
         int K = RandInt32::get() % N;
         int L = RandInt32::get() % N;

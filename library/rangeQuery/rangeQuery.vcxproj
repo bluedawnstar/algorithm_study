@@ -154,6 +154,7 @@
     <ClCompile Include="fenwickTreePersistent.cpp" />
     <ClCompile Include="fenwickTreeXor.cpp" />
     <ClCompile Include="mergeSortTree.cpp" />
+    <ClCompile Include="mergeSortTreeIndex.cpp" />
     <ClCompile Include="segmentTreeLine1D.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MOAlgorithm.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="fenwickTreePersistent.h" />
     <ClInclude Include="fenwickTreeXor.h" />
     <ClInclude Include="mergeSortTree.h" />
+    <ClInclude Include="mergeSortTreeIndex.h" />
     <ClInclude Include="segmentTreeLine1D.h" />
     <ClInclude Include="MOAlgorithm.h" />
     <ClInclude Include="segmentTree.h" />

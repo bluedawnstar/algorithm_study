@@ -7,6 +7,9 @@ struct MergeSortTree {
     int               N;        // the size of array
     vector<vector<T>> tree;     // 
 
+    MergeSortTree() : N(0) {
+    }
+
     MergeSortTree(const T arr[], int n) {
         build(arr, n);
     }
@@ -14,6 +17,7 @@ struct MergeSortTree {
     explicit MergeSortTree(const vector<T>& v) {
         build(v);
     }
+
 
     // O(NlogN)
     void build(const T arr[], int n) {
@@ -65,7 +69,7 @@ struct MergeSortTree {
             else
                 lo = mid + 1;
         }
-        return lo;
+        return lo; // lower bound
     }
 
     // O(logN * logN * logA), inclusive (0 <= k < N)
