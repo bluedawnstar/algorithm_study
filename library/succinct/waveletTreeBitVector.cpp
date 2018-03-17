@@ -207,6 +207,9 @@ static void test(vector<int>& in, WaveletTreeBitVector<int>& tree, int N, int L,
         int Klow = in[L + (R - L) / 3];
         int Khigh = in[L + (R - L) * 2 / 3];
 
+        if (Klow > Khigh)
+            swap(Klow, Khigh);
+
         int gt = countK(in, L, R, Klow, Khigh);
         int ans = tree.count(L, R, Klow, Khigh);
         if (ans != gt) {
