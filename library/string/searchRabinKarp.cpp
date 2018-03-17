@@ -43,7 +43,7 @@ void testSearchRabinKarp() {
 
     auto gt = searchNaive(S, key);
     auto ans = searchRabinKarp(S, key);
-    auto ans2 = searchRabinKarpLowercaseAlphabet(S, key);
+    auto ans2 = searchRabinKarp2(S, key);
     if (gt != ans || gt != ans2) {
         cerr << "Error: " << gt << " <-> " << ans << endl;
     }
