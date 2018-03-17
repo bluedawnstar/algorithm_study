@@ -1,24 +1,6 @@
 #pragma once
 
-#include "intMod.h"
 #include "gcd.h"
-
-// finds all solutions to ax = b (mod M)
-template <typename T, typename U>
-inline vector<T> solveModularEq(T a, T b, U M) {
-    vector<T> res;
-
-    T x, y;
-    T g = extGcd(a, M, x, y);
-    if (!(b % g)) {
-        x = (x * (b / g) % M + M) % M;
-        for (int i = 0; i < g; i++)
-            res.push_back((x + i * (M / g) % M + M) % M);
-    }
-    sort(res.begin(), res.end());
-
-    return res;
-}
 
 // https://e-maxx-eng.appspot.com/algebra/linear-diophantine-equation.html
 // find (x, y) satisfying ax + by = c (diophantine equation)

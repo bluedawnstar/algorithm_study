@@ -19,12 +19,7 @@ void testEquations() {
     return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Equations -------------------------" << endl;
-    cout << "* linear modular equation" << endl;
-    {
-        auto ans = solveModularEq(14, 30, 100);
-        assert(ans.size() == 2 && ans[0] == 45 && ans[1] == 95);
-    }
-    cout << "* linear diophantine equation" << endl;
+    // linear diophantine equation
     {
         int a = 7, b = 2, c = 5;
         int x, y, g;
