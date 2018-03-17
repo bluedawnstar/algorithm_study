@@ -28,4 +28,5 @@ int main(void) {
     TEST(RTree);
     TEST(QuadTree);
     TEST(MetricTree);
+    TEST(BlockTree);
 }

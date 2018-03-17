@@ -87,6 +87,9 @@
     <ClCompile Include="maxIndependentSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="blockTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -171,6 +174,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lcaSparseTableSimple.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="blockTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
