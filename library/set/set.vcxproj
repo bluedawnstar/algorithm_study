@@ -149,6 +149,7 @@
     <ClCompile Include="bitSet.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="unionFind.cpp" />
+    <ClCompile Include="veniceSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitSet.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="bitSetVariable.h" />
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="unionFindMap.h" />
+    <ClInclude Include="veniceSet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
