@@ -13,6 +13,7 @@ int main(void) {
     TEST(FenwickTree2D);
     TEST(FenwickTreeMultAdd);
     TEST(FenwickTreeMax);
+    TEST(PersistentFenwickTree);
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
     TEST(SegmentTreeCompact);
@@ -27,4 +28,5 @@ int main(void) {
     TEST(SegmentTreeLineSegment2D);
     TEST(SegmentTreeLineSegment2DSum);
     TEST(SqrtTree);
+    TEST(MergeSortTree);
 }

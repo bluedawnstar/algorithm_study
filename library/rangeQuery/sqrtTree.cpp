@@ -41,7 +41,7 @@ static int mult(const vector<int>& A, int L, int R, int mod) {
 }
 
 void testSqrtTree() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Sqrt-Tree -----------------------------" << endl;
     // Sum
@@ -97,6 +97,7 @@ void testSqrtTree() {
         int T = 1000000;
 #if _DEBUG
         N = 1000;
+        T = 1000;
 #endif
 
         vector<int> in(N);
