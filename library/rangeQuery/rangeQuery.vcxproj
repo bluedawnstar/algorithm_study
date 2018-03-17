@@ -167,6 +167,7 @@
     <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sqrtDecomposition.cpp" />
+    <ClCompile Include="sqrtTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="disjointSparseTable.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="sparseTableMin.h" />
     <ClInclude Include="sparseTableMinIndex.h" />
     <ClInclude Include="sqrtDecomposition.h" />
+    <ClInclude Include="sqrtTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

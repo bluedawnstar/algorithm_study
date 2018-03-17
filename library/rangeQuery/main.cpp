@@ -26,4 +26,5 @@ int main(void) {
     TEST(SegmentTreeLine2DArray);
     TEST(SegmentTreeLineSegment2D);
     TEST(SegmentTreeLineSegment2DSum);
+    TEST(SqrtTree);
 }

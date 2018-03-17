@@ -133,9 +133,8 @@ void testSegmentTreeCompact() {
     cout << "*** Segment tree vs compact segment tree" << endl;
     {
         int N = 10000;
-        
 #if _DEBUG
-        N = 100000;
+        N = 1000;
 #endif
         
         vector<int> T(N);
@@ -179,6 +178,10 @@ void testSegmentTreeCompact() {
     {
         int T = 100000;
         int N = 100000;
+#if _DEBUG
+        T = 1000;
+        N = 1000;
+#endif
         vector<int> in(N);
         
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
