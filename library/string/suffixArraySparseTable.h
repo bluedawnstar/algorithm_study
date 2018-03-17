@@ -50,6 +50,7 @@ struct SuffixArraySparseTable {
     //TODO: fill other important algorithms
 
 private:
+    // O(NlogN)
     void build(const char* s, int n) {
         N = n;
         logN = (int)log2(n) + 3;

@@ -10,6 +10,5 @@ int main(void) {
     TEST(MergeableHeap);
     TEST(LargestRectangle);
     TEST(JumpPointerSparseTable);
-    TEST(PersistentStack);
     TEST(CountUniqueNumbers);
 }

@@ -10,4 +10,5 @@ int main(void) {
     TEST(PositiveSum);
     TEST(IntegralImage);
     TEST(PersistentArray);
+    TEST(PersistentStack);
 }
