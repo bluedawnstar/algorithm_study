@@ -23,4 +23,5 @@ int main(void) {
     TEST(Bit);
     TEST(PrimalityTest);
     TEST(PrimeFactorLongLong);
+    TEST(ModularEquations);
 }

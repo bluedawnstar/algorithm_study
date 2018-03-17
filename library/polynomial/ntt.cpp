@@ -12,6 +12,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "multPolyMod.h"
 
@@ -29,9 +30,9 @@ void testNTT() {
             vector<int> B(TESTN);
 
             for (int i = 0; i < (int)A.size(); i++)
-                A[i] = (long long)rand() * rand() % MOD;
+                A[i] = RandInt32::get() % MOD;
             for (int i = 0; i < (int)B.size(); i++)
-                B[i] = (long long)rand() * rand() % MOD;
+                B[i] = RandInt32::get() % MOD;
 
             vector<int> out1 = multPolyFFTMod(A, B, MOD);
             vector<int> out2 = ntt.multiply(A, B);
@@ -50,8 +51,8 @@ void testNTT() {
         vector<int> in2(n);
         vector<int> out;
         for (int i = 0; i < n; i++) {
-            in1[i] = rand() % 1024;
-            in2[i] = rand() % 1024;
+            in1[i] = RandInt32::get() % 1024;
+            in2[i] = RandInt32::get() % 1024;
         }
 
         cout << "N = " << n << endl;

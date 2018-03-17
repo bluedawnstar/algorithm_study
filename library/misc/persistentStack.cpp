@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testPersistentStack() {
     return; //TODO: if you want to test functions of this file, make this line a comment.
@@ -28,14 +29,14 @@ void testPersistentStack() {
 
     vector<tuple<int, int, int>> gt; // (time, size, top)
     for (int i = 0; i < T; i++) {
-        int t = rand() % 4;
+        int t = RandInt32::get() % 4;
         if (t == 0 && !st.empty()) {
             st.pop_back();
             int size = (int)st.size();
             int time = ps.pop();
             gt.emplace_back(time, size, size > 0 ? st.back() : -1);
         } else {
-            int x = rand();
+            int x = RandInt32::get();
             st.push_back(x);
             int size = (int)st.size();
             int time = ps.push(x);

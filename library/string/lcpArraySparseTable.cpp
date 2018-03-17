@@ -11,15 +11,10 @@ using namespace std;
 #include <cassert>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
-template <typename T>
-vector<int> makeSuffixArrayFast(T s, int n);
-
-template <typename T>
-int commonPrefix(T s, int n, int i, int j);
-
-template <typename T>
-vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n);
+#include "suffixArray.h"
+#include "suffixArrayAlgo.h"
 
 void testLcpArraySparseTable() {
     return; //TODO: if you want to test string functions, make this line a comment.
@@ -28,12 +23,12 @@ void testLcpArraySparseTable() {
 
     string S("abdadafaaabdfaeef");
 
-    vector<int> a = makeSuffixArrayFast(S, (int)S.length());
-    vector<int> lcpArray = makeLcpArray(a, S, (int)S.length());
+    vector<int> a = SuffixArray::build(S);
+    vector<int> lcpArray = SuffixArray::buildLcpArray(a, S);
     LcpArraySparseTable lcpArrayST(lcpArray);
 
     for (int i = 0; i < 100; i++) {
-        int left = rand() % S.length(), right = rand() % S.length();
+        int left = RandInt32::get() % S.length(), right = RandInt32::get() % S.length();
         if (left > right)
             swap(left, right);
 
@@ -43,7 +38,7 @@ void testLcpArraySparseTable() {
             lcp = (int)S.length() - a[left];
 
         cout << "LCP(" << left << ", " << right << ") = " << lcp << endl;
-        assert(lcp == commonPrefix(S, (int)S.length(), a[left], a[right]));
+        assert(lcp == SuffixArrayAlgo::commonPrefixNaive(S, a[left], a[right]));
     }
 
     cout << "OK!" << endl;

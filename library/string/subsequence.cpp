@@ -20,6 +20,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static ostream& operator <<(ostream& os, const unordered_set<string>& rhs) {
     for (auto it : rhs)
@@ -31,13 +32,13 @@ static ostream& operator <<(ostream& os, const unordered_set<string>& rhs) {
 static string makeRandomString(int len) {
     string s;
     for (int i = 0; i < len; i++) {
-        s.push_back('a' + rand() % 26);
+        s.push_back('a' + RandInt32::get() % 26);
     }
     return s;
 }
 
 void testSubsequence() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Subsequence ------------------------" << endl;
     {

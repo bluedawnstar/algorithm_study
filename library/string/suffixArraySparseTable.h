@@ -20,37 +20,12 @@ struct SuffixArraySparseTable {
         return ch - 'a';
     }
 
-    template <typename T>
-    SuffixArraySparseTable(const T& S, int n) {
-        N = n;
-        logN = (int)log2(n) + 3;
-        P = vector<vector<int>>(logN, vector<int>(N));
+    SuffixArraySparseTable(const char* s, int n) {
+        build(s, n);
+    }
 
-        vector<Entry> L(N);
-
-        for (int i = 0; i < N; i++)
-            P[0][i] = ch2i(S[i]);
-
-        int stp, cnt;
-        for (stp = 1, cnt = 1; (cnt >> 1) < N; stp++, cnt <<= 1) {
-            for (int i = 0; i < N; i++) {
-                L[i].nr[0] = P[stp - 1][i];
-                L[i].nr[1] = i + cnt < N ? P[stp - 1][i + cnt] : -1;
-                L[i].p = i;
-            }
-            sort(L.begin(), L.end(), [](const Entry& a, const Entry& b) {
-                return a.nr[0] == b.nr[0] ? (a.nr[1] < b.nr[1])
-                                          : (a.nr[0] < b.nr[0]);
-            });
-
-            for (int i = 0; i < N; i++) {
-                if ((i > 0) && (L[i].nr[0] == L[i - 1].nr[0]) && (L[i].nr[1] == L[i - 1].nr[1]))
-                    P[stp][L[i].p] = P[stp][L[i - 1].p];
-                else
-                    P[stp][L[i].p] = i;
-            }
-        }
-        H = stp;
+    SuffixArraySparseTable(const string& s) {
+        build(&s[0], (int)s.length());
     }
 
     // (suffix position, suffix position)
@@ -73,4 +48,37 @@ struct SuffixArraySparseTable {
     }
 
     //TODO: fill other important algorithms
+
+private:
+    void build(const char* s, int n) {
+        N = n;
+        logN = (int)log2(n) + 3;
+        P = vector<vector<int>>(logN, vector<int>(N));
+
+        vector<Entry> L(N);
+
+        for (int i = 0; i < N; i++)
+            P[0][i] = ch2i(s[i]);
+
+        int stp, cnt;
+        for (stp = 1, cnt = 1; (cnt >> 1) < N; stp++, cnt <<= 1) {
+            for (int i = 0; i < N; i++) {
+                L[i].nr[0] = P[stp - 1][i];
+                L[i].nr[1] = i + cnt < N ? P[stp - 1][i + cnt] : -1;
+                L[i].p = i;
+            }
+            sort(L.begin(), L.end(), [](const Entry& a, const Entry& b) {
+                return a.nr[0] == b.nr[0] ? (a.nr[1] < b.nr[1])
+                    : (a.nr[0] < b.nr[0]);
+            });
+
+            for (int i = 0; i < N; i++) {
+                if ((i > 0) && (L[i].nr[0] == L[i - 1].nr[0]) && (L[i].nr[1] == L[i - 1].nr[1]))
+                    P[stp][L[i].p] = P[stp][L[i - 1].p];
+                else
+                    P[stp][L[i].p] = i;
+            }
+        }
+        H = stp;
+    }
 };

@@ -11,6 +11,7 @@ using namespace std;
 #include <cassert>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 #include "palindromicString.h"
 
@@ -42,7 +43,7 @@ void testPalindromicTree() {
     for (int i = 0; i < 100; i++) {
         string s;
         for (int j = 0; j < 100; j++)
-            s += 'a' + rand() % 3;
+            s += 'a' + RandInt32::get() % 3;
 
         // the number of palindromic strings
         {

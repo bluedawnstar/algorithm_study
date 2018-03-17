@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int countLTE(vector<int>& v, int L, int R, int K) {
     int res = 0;
@@ -68,7 +69,7 @@ static void test(vector<int>& in, WaveletTree<int>& tree, int N, int L, int R, i
     }
     // kth number
     {
-        int K = rand() % (R - L + 1);
+        int K = RandInt32::get() % (R - L + 1);
         int gt = kth(in, L, R, K);
         int ans = tree.kth(L, R, K);
         if (ans != gt) {
@@ -111,16 +112,16 @@ void testWaveletTree() {
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = rand() * rand();
+            in[j] = RandInt32::get();
         //for (int j = 0; j < N; j++)
         //    in[j] = j;
 
         WaveletTree<int> tree;
         tree.build(in);
 
-        int K = rand() % N;
-        int L = rand() % N;
-        int R = rand() % N;
+        int K = RandInt32::get() % N;
+        int L = RandInt32::get() % N;
+        int R = RandInt32::get() % N;
 
         if (L > R)
             swap(L, R);

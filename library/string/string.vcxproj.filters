@@ -105,6 +105,9 @@
     <ClCompile Include="subsequenceLCS.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lyndonFactorization.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -201,6 +204,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="subsequenceCount.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lyndonFactorization.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArrayAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArrayExt.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

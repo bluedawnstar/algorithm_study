@@ -17,6 +17,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int countLTE(vector<int>& v, int L, int R, int K) {
     int res = 0;
@@ -59,16 +60,16 @@ static void testSpeedTree() {
 
     vector<int> in(N);
     for (int j = 0; j < N; j++)
-        in[j] = rand() * rand();
+        in[j] = RandInt32::get();
 
     PROFILE_START(0);
     {
         WaveletTree<int> tree;
         tree.build(in);
         for (int i = 0; i < T; i++) {
-            int K = rand() % N;
-            int L = rand() % N;
-            int R = rand() % N;
+            int K = RandInt32::get() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
 
             if (L > R)
                 swap(L, R);
@@ -85,9 +86,9 @@ static void testSpeedTree() {
         WaveletTreeBitVector<int> tree;
         tree.build(in);
         for (int i = 0; i < T; i++) {
-            int K = rand() % N;
-            int L = rand() % N;
-            int R = rand() % N;
+            int K = RandInt32::get() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
 
             if (L > R)
                 swap(L, R);
@@ -108,16 +109,16 @@ static void testSpeedAll() {
 
     vector<int> in(N);
     for (int j = 0; j < N; j++)
-        in[j] = rand() * rand();
+        in[j] = RandInt32::get();
 
     vector<tuple<int, int, int>> qryKth(T);
     for (int i = 0; i < T; i++) {
-        int L = rand() % N;
-        int R = rand() % N;
+        int L = RandInt32::get() % N;
+        int R = RandInt32::get() % N;
 
         if (L > R)
             swap(L, R);
-        int K = rand() % (R - L + 1);
+        int K = RandInt32::get() % (R - L + 1);
 
         qryKth.emplace_back(L, R, K);
     }
@@ -182,7 +183,7 @@ static void test(vector<int>& in, WaveletTreeBitVector<int>& tree, int N, int L,
     }
     // kth number
     {
-        int K = rand() % (R - L + 1);
+        int K = RandInt32().get() % (R - L + 1);
         int gt = kth(in, L, R, K);
         int ans = tree.kth(L, R, K);
         if (ans != gt) {
@@ -228,16 +229,16 @@ void testWaveletTreeBitVector() {
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = rand() * rand();
+            in[j] = RandInt32::get();
         //for (int j = 0; j < N; j++)
         //    in[j] = j;
 
         WaveletTreeBitVector<int> tree;
         tree.build(in);
 
-        int K = rand() % N;
-        int L = rand() % N;
-        int R = rand() % N;
+        int K = RandInt32::get() % N;
+        int L = RandInt32::get() % N;
+        int R = RandInt32::get() % N;
 
         if (L > R)
             swap(L, R);

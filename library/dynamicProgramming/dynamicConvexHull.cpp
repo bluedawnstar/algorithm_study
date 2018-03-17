@@ -17,6 +17,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "../misc/jumpPointerSparseTable.h"
 #include "persistentLowerConvexHull.h"
@@ -104,7 +105,7 @@ void testDynamicConvexHull() {
     int MAXX = 1000;
     vector<pair<int, int>> in;
     for (int i = 0; i < N; i++) {
-        in.emplace_back(rand() % MAXX, rand() % MAXX);
+        in.emplace_back(RandInt32::get() % MAXX, RandInt32::get() % MAXX);
     }
     sort(in.begin(), in.end(), cmp);
     in.erase(unique(in.begin(), in.end(), cmpEQ), in.end());

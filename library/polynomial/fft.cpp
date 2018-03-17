@@ -10,6 +10,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #define EPSILON 1e-13
 
@@ -47,7 +48,7 @@ void testFFT() {
     for (int n = 32; n <= 2048; n <<= 1) {
         vector<Complex<double>> in(n);
         for (int i = 0; i < n; i++) {
-            in[i].first = rand() % 1024;
+            in[i].first = RandInt32::get() % 1024;
             in[i].second = 0;
         }
 

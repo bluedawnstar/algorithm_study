@@ -33,4 +33,5 @@ int main(void) {
     TEST(PrefixFunction);
     TEST(Subsequence);
     TEST(SubsequenceLCS);
+    TEST(LyndonFactorization);
 }

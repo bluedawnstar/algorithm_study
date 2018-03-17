@@ -15,6 +15,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 // https://www.acmicpc.net/problem/11066
 static long long solve(const vector<long long>& A) {
@@ -66,7 +67,7 @@ void testKnuthOptimization() {
     int N = 100;
     vector<long long> A(N);
     for (int i = 0; i < N; i++)
-        A[i] = rand() % 1000;
+        A[i] = RandInt32::get() % 1000;
 
     auto gt = solveNaive(A);
     auto ans = solve(A);

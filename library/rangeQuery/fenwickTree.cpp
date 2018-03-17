@@ -13,6 +13,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 static int sumSlow(vector<int>& v, int L, int R) {
     int res = 0;
@@ -74,8 +75,8 @@ void testFenwickTree() {
 
         for (int i = 0; i < 10000; i++) {
             if (i % 1) {
-                int idx = rand() % N;
-                int val = rand() % 100;
+                int idx = RandInt32::get() % N;
+                int val = RandInt32::get() % 100;
                 in[idx] = val;
                 fenwick.set(idx, val);
 
@@ -88,7 +89,7 @@ void testFenwickTree() {
                 }
                 assert(ans == gt);
             } else {
-                int R = rand() % N;
+                int R = RandInt32::get() % N;
                 int ans = fenwick.get(R);
                 int gt = sumSlow(in, R, R);
                 if (ans != gt) {
@@ -105,12 +106,12 @@ void testFenwickTree() {
         vector<int> in(N);
 
         for (int i = 0; i < N; i++)
-            in[i] = rand() % 1000;
+            in[i] = RandInt32::get() % 1000;
 
         FenwickTree<int> fenwick(in);
 
         for (int i = 0; i < N; i++) {
-            int R = rand() % N;
+            int R = RandInt32::get() % N;
             int sum = sumSlow(in, 0, R);
 
             int ans = fenwick.lowerBound(sum);

@@ -69,18 +69,15 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
-
-static int rand32() {
-    return (rand() & 0x3fff) * (rand() & 0xffff);
-}
+#include "../common/rand.h"
 
 static void makeData(vector<Vec2D<int>>& points, int size) {
     if ((int)points.size() < size)
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
-        points[i].x = rand();
-        points[i].y = rand();
+        points[i].x = RandInt32::get() % 65536;
+        points[i].y = RandInt32::get() % 65536;
     }
     random_shuffle(points.begin(), points.end());
 }
@@ -90,8 +87,8 @@ static void makeData(vector<Vec2D<int>>& points, int size, int R) {
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
-        points[i].x = rand32() % (2 * R + 1) % R;
-        points[i].y = ((rand() & 1) ? 1 : -1) * int(sqrt(1.0 * R * R - 1.0 * points[i].x * points[i].x));
+        points[i].x = RandInt32::get() % (2 * R + 1) % R;
+        points[i].y = ((RandInt32::get() & 1) ? 1 : -1) * int(sqrt(1.0 * R * R - 1.0 * points[i].x * points[i].x));
     }
     random_shuffle(points.begin(), points.end());
 }
@@ -181,7 +178,7 @@ void testConvexHull() {
     bool success = true;
     for (int i = 0; i < 1000; i++) {
         cout << "Case #" << i << "\r";
-        int N = rand() % 1000 + 1;
+        int N = RandInt32::get() % 1000 + 1;
         vector<Vec2D<int>> points(N);
         makeData(points, N);
         if (!testConvexHull(points)) {

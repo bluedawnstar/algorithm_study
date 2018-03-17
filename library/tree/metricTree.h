@@ -49,7 +49,7 @@ private:
         if (high - low <= 2)
             return;
 
-        swap(points[low + rand() % (high - low)], points[low]);
+        swap(points[low + randInt() % (high - low)], points[low]);
         auto center = points[low++];
 
         int mid = low + (high - low) / 2;
@@ -99,5 +99,9 @@ private:
         D dx = x1 - x2;
         D dy = y1 - y2;
         return dx * dx + dy * dy;
+    }
+
+    static int randInt() {
+        return (rand() & 0x7fff) * (rand() & 0x7fff);
     }
 };

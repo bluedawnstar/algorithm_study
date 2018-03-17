@@ -18,14 +18,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
-
-static int rand16() {
-    return rand() % 32768;
-}
-
-static int rand32() {
-    return rand16() * rand16();
-}
+#include "../common/rand.h"
 
 static int findNext(const vector<int>& A, int start, int x) {
     while (start < (int)A.size()) {
@@ -83,12 +76,12 @@ void testSegmentTreeCompactLazy() {
         int N = 10000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = rand() % (T * 10);
+            in[i] = RandInt32::get() % (T * 10);
 
         auto seg = makeCompactSegmentTreeLazyUpdate(in, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; });
         for (int i = N - 1; i >= 0; i--) {
-            int index = rand() % N;
-            int t = rand() % (T * 10);
+            int index = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
 
             seg.update(index, t);
             in[index] = t;
@@ -111,13 +104,13 @@ void testSegmentTreeCompactLazy() {
         int N = 10000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = rand() % (T * 10);
+            in[i] = RandInt32::get() % (T * 10);
 
         auto seg = makeCompactSegmentTreeLazyUpdate(in, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; });
         for (int i = N - 1; i >= 0; i--) {
-            int L = rand() % N;
-            int R = rand() % N;
-            int t = rand() % (T * 10);
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
             if (L > R)
                 swap(L, R);
 
@@ -149,12 +142,12 @@ void testSegmentTreeCompactLazy() {
 
         vector<int> T(N);
         for (int i = 0; i < N; i++)
-            T[i] = rand16();
+            T[i] = RandInt32::get() % 65536;
 
         vector<pair<int, int>> Q;
         for (int i = 0; i < N; i++) {
-            int a = rand32() % N;
-            int b = rand32() % N;
+            int a = RandInt32::get() % N;
+            int b = RandInt32::get() % N;
             Q.push_back({ min(a, b), max(a, b) });
         }
 
@@ -217,16 +210,16 @@ void testSegmentTreeCompactLazy() {
 
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {
-            if (rand() % 2) {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
+            if (RandInt32::get() % 2) {
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(1, L, R, 0);
             } else {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
-                int x = rand() % 100;
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
+                int x = RandInt32::get() % 100;
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(0, L, R, x);

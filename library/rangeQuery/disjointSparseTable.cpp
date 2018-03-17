@@ -14,6 +14,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 static const int MOD = 1000000007;
 
@@ -40,7 +41,7 @@ void testDisjointSparseTable() {
         int N = 10000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = rand() % 100;
+            in[i] = RandInt32::get() % 100;
 
         vector<int> prefixSum(N + 1);
         prefixSum[0] = 0;
@@ -51,8 +52,8 @@ void testDisjointSparseTable() {
         auto dst = makeDisjointSparseTable<int>(in, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < 1000; i++) {
-            int left = rand() % N;
-            int right = rand() % N;
+            int left = RandInt32::get() % N;
+            int right = RandInt32::get() % N;
             if (left > right)
                 swap(left, right);
 
@@ -66,13 +67,13 @@ void testDisjointSparseTable() {
         int N = 10000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = rand();
+            in[i] = RandInt32::get();
 
         auto dst = makeDisjointSparseTable<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
 
         for (int i = 0; i < 1000; i++) {
-            int left = rand() % N;
-            int right = rand() % N;
+            int left = RandInt32::get() % N;
+            int right = RandInt32::get() % N;
             if (left > right)
                 swap(left, right);
 

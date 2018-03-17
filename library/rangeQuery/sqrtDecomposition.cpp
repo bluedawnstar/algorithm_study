@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include <algorithm>
 #include "segmentTree.h"
@@ -31,17 +32,17 @@ void testSqrtDecomposition() {
         SqrtDecompositionLazy<int> sqrtDecom(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
 
         for (int i = 0; i < 10000; i++) {
-            if (rand() % 2) {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
+            if (RandInt32::get() % 2) {
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
                 if (L > R)
                     swap(L, R);
                 assert(segTree.query(L, R) == segTreeLazy.query(L, R));
                 assert(segTree.query(L, R) == sqrtDecom.query(L, R));
             } else {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
-                int x = rand() % 100;
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
+                int x = RandInt32::get() % 100;
                 if (L > R)
                     swap(L, R);
 
@@ -66,16 +67,16 @@ void testSqrtDecomposition() {
 
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {
-            if (rand() % 2) {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
+            if (RandInt32::get() % 2) {
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(1, L, R, 0);
             } else {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
-                int x = rand() % 100;
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
+                int x = RandInt32::get() % 100;
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(0, L, R, x);

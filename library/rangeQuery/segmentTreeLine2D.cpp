@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testSegmentTreeLine2D() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -26,7 +27,8 @@ void testSegmentTreeLine2D() {
 
         vector<SegmentTreeLine2DMax::Line> lines;
         for (int i = 0; i < N; i++)
-            lines.push_back(SegmentTreeLine2DMax::Line{ (long long)rand() - RAND_MAX / 2, (long long)rand() - RAND_MAX / 2 });
+            lines.push_back(SegmentTreeLine2DMax::Line{ (long long)RandInt32::get() % 65536 - 32768,
+                                                        (long long)RandInt32::get() % 65536 - 32768 });
         
         SegmentTreeLine2DMax tree(L, R);
         for (int i = 0; i < N; i++)
@@ -49,7 +51,8 @@ void testSegmentTreeLine2D() {
 
         vector<SegmentTreeLine2DMin::Line> lines;
         for (int i = 0; i < N; i++)
-            lines.push_back(SegmentTreeLine2DMin::Line{ (long long)rand() - RAND_MAX / 2, (long long)rand() - RAND_MAX / 2 });
+            lines.push_back(SegmentTreeLine2DMin::Line{ (long long)RandInt32::get() % 65536 - 32768,
+                                                        (long long)RandInt32::get() % 65536 - 32768 });
 
         SegmentTreeLine2DMin tree(L, R);
         for (int i = 0; i < N; i++)

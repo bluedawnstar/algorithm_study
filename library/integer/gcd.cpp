@@ -15,13 +15,10 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
-
-static unsigned int randU32() {
-    return (unsigned)rand() * (unsigned)rand() * (unsigned)rand();
-}
+#include "../common/rand.h"
 
 void testGcd() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- gcd() / lcm() / extGcd() -------------------------" << endl;
     {
@@ -43,8 +40,8 @@ void testGcd() {
 #endif
         vector<pair<unsigned int, unsigned int>> in(N);
         for (int i = 0; i < N; i++) {
-            in[i].first = randU32();
-            in[i].second = randU32();
+            in[i].first = RandUInt32::get();
+            in[i].second = RandUInt32::get();
 
             assert(gcd(in[i].first, in[i].second) == gcdFast(in[i].first, in[i].second));
         }

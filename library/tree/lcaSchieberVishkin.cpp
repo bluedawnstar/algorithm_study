@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "treeBasic.h"
 
@@ -66,8 +67,8 @@ void testLcaShieberVishkin() {
         PROFILE_START(0);
         int errCnt = 0;
         for (int i = 0; i < 100000; i++) {
-            int u = rand() % tree.mN;
-            int v = rand() % tree.mN;
+            int u = RandInt32::get() % tree.mN;
+            int v = RandInt32::get() % tree.mN;
             int lca = tree.findLCA(u, v);
             int lcaAns;
             if (u == 0 || v == 0) {
@@ -101,8 +102,8 @@ void testLcaShieberVishkin() {
         PROFILE_START(1);
         int errCnt = 0;
         for (int i = 0; i < 100000; i++) {
-            int u = rand() % tree.mN;
-            int v = rand() % tree.mN;
+            int u = RandInt32::get() % tree.mN;
+            int v = RandInt32::get() % tree.mN;
             int lca = svLCA.lca(u, v);
             int lcaAns;
             if (u == 0 || v == 0) {

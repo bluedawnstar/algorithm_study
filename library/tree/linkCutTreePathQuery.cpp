@@ -16,6 +16,7 @@ using namespace std;
 #include <numeric>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "treeBasic.h"
 
@@ -30,7 +31,7 @@ void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
     gTrV.resize(MAXN);
 
     for (int u = 1; u < MAXN; u++) {
-        int v = rand() % u;
+        int v = RandInt32::get() % u;
         tr.addEdge(u, v);
 
         lct.link(max(u, v), min(u, v));
@@ -94,11 +95,11 @@ void testLinkCutTreePathQuery() {
         buildTree(tr, lct);
 
         for (int i = 0; i < 1000; i++) {
-            int u = rand() % MAXN;
-            int v = rand() % MAXN;
-            int value = rand() % 1000;
+            int u = RandInt32::get() % MAXN;
+            int v = RandInt32::get() % MAXN;
+            int value = RandInt32::get() % 1000;
 
-            if (rand() % 2) {
+            if (RandInt32::get() % 2) {
                 update(tr, u, v, value);
                 lct.update(u, v, value);
             } else {
@@ -118,11 +119,11 @@ void testLinkCutTreePathQuery() {
         buildTree(tr, lct);
 
         for (int i = 0; i < 1000; i++) {
-            int u = rand() % MAXN;
-            int v = rand() % MAXN;
-            int value = rand() % 1000;
+            int u = RandInt32::get() % MAXN;
+            int v = RandInt32::get() % MAXN;
+            int value = RandInt32::get() % 1000;
 
-            if (rand() % 2) {
+            if (RandInt32::get() % 2) {
                 add(tr, u, v, value);
                 lct.update(u, v, value);
             } else {
@@ -145,11 +146,11 @@ void testLinkCutTreePathQuery() {
         buildTree(tr, lct);
 
         for (int i = 0; i < 100000; i++) {
-            int u = rand() % MAXN;
-            int v = rand() % MAXN;
-            int value = rand() % 1000;
+            int u = RandInt32::get() % MAXN;
+            int v = RandInt32::get() % MAXN;
+            int value = RandInt32::get() % 1000;
 
-            if (rand() % 2) {
+            if (RandInt32::get() % 2) {
                 lct.update(u, v, value);
             } else {
                 int ans = lct.query(u, v);

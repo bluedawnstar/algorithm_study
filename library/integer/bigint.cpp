@@ -17,11 +17,12 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static bigint getRandomBigint(int len) {
     string s;
     for (int i = 0; i < len; i++)
-        s += rand() % 10 + '0';
+        s += RandInt32::get() % 10 + '0';
     return bigint(s);
 }
 

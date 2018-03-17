@@ -13,9 +13,10 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testPersistentArray() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Persistent Array ----------" << endl;
 
@@ -27,8 +28,8 @@ void testPersistentArray() {
     in[0].resize(N);
 
     for (int i = 1; i < T; i++) {
-        int j = rand() % N;
-        int x = rand();
+        int j = RandInt32::get() % N;
+        int x = RandInt32::get();
         in[i] = in[i - 1];
         in[i][j] = x;
         pa.set(j, x);

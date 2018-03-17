@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #define MAXN    10000           // TODO: modify the maximum number of nodes
 #define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
@@ -131,8 +132,8 @@ void testTreeBasic() {
         PROFILE_START(0);
         int errCnt = 0;
         for (int i = 0; i < 100000; i++) {
-            int u = rand() % tree.mN;
-            int v = rand() % tree.mN;
+            int u = RandInt32::get() % tree.mN;
+            int v = RandInt32::get() % tree.mN;
             int lca = tree.findLCA(u, v);
             int lcaAns;
             if (u == 0 || v == 0) {

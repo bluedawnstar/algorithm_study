@@ -10,6 +10,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #define MOD     1000000007
 
@@ -67,8 +68,8 @@ void testConvolution() {
         vector<int> in2(n);
         vector<int> out;
         for (int i = 0; i < n; i++) {
-            in1[i] = rand() % 1024;
-            in2[i] = rand() % 1024;
+            in1[i] = RandInt32().get() % 1024;
+            in2[i] = RandInt32().get() % 1024;
         }
 
         cout << "N = " << n << endl;

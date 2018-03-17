@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static BipartiteGraphArray<int> buildGraphArray() {
     BipartiteGraphArray<int> graph(6, 6);
@@ -102,8 +103,8 @@ void testBipartiteMaching() {
         vector<pair<int, int>> qry;
         unordered_set<long long> S;
         for (int i = 0; i < E; i++) {
-            int u = rand() % N;
-            int v = rand() % N;
+            int u = RandInt32::get() % N;
+            int v = RandInt32::get() % N;
             if (u == v)
                 continue;
 

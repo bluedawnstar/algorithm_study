@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testSegmentTreeLine1D() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -30,8 +31,8 @@ void testSegmentTreeLine1D() {
 
         int minX = N, maxX = -1;
         for (int i = 0; i < T; i++) {
-            int a = rand() % X + D;
-            int b = rand() % X + D;
+            int a = RandInt32::get() % X + D;
+            int b = RandInt32::get() % X + D;
             if (a > b)
                 swap(a, b);
             tree.add(a, b, 1);

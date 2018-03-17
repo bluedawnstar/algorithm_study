@@ -15,6 +15,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testGomoryHuTree() {
     //return; //TODO: if you want to test a split function, make this line a comment.
@@ -70,12 +71,12 @@ void testGomoryHuTree() {
         MaxFlowDinic<int> dinic(N);
 
         for (int i = 0; i < E; i++) {
-            int u = rand() % N;
-            int v = rand() % N;
+            int u = RandInt32::get() % N;
+            int v = RandInt32::get() % N;
             if (u == v)
                 continue;
 
-            int flow = rand() % N + 1;
+            int flow = RandInt32::get() % N + 1;
 
             gomory.addEdge(u, v, flow);
             dinic.addEdge(u, v, flow, flow);
@@ -84,8 +85,8 @@ void testGomoryHuTree() {
         auto tree = gomory.build();
 
         for (int i = 0; i < T; i++) {
-            int s = rand() % N;
-            int t = rand() % N;
+            int s = RandInt32::get() % N;
+            int t = RandInt32::get() % N;
             if (s == t)
                 continue;
 
@@ -107,12 +108,12 @@ void testGomoryHuTree() {
         MaxFlowDinic<int> dinic(N);
 
         for (int i = 0; i < E; i++) {
-            int u = rand() % N;
-            int v = rand() % N;
+            int u = RandInt32().get() % N;
+            int v = RandInt32().get() % N;
             if (u == v)
                 continue;
 
-            int flow = rand() % N + 1;
+            int flow = RandInt32::get() % N + 1;
 
             gomory.addEdge(u, v, flow);
             dinic.addEdge(u, v, flow, flow);
@@ -121,8 +122,8 @@ void testGomoryHuTree() {
 
         vector<pair<int, int>> qry;
         for (int i = 0; i < T; i++) {
-            int s = rand() % N;
-            int t = rand() % N;
+            int s = RandInt32::get() % N;
+            int t = RandInt32::get() % N;
             if (s == t)
                 continue;
             qry.emplace_back(s, t);

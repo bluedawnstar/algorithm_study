@@ -15,6 +15,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static const int INF = ShortestAllPairs<int>::INF;
 
@@ -120,8 +121,8 @@ void testShortestPathAllPairs() {
         for (int T = 0; T < 10; T++) {
             vector<pair<int, int>> edges;
             for (int i = 0; i < E; i++) {
-                int u = rand() % N;
-                int v = rand() % N;
+                int u = RandInt32::get() % N;
+                int v = RandInt32::get() % N;
                 if (u == v)
                     continue;
                 edges.emplace_back(u, v);
@@ -132,7 +133,7 @@ void testShortestPathAllPairs() {
 
             ShortestAllPairs<int> graph(N);
             for (auto& e : edges)
-                graph.addEdge(e.first, e.second, (rand() % N) + 1);
+                graph.addEdge(e.first, e.second, (RandInt32::get() % N) + 1);
             for (int u = 0; u < N; u += 2) {
                 if (graph.edges[u].empty())
                     continue;

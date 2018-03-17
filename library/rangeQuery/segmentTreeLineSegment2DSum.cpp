@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testSegmentTreeLineSegment2DSum() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -29,7 +30,8 @@ void testSegmentTreeLineSegment2DSum() {
         vector<SegmentTreeLineSegment2DMaxSum::Line> lines;
         lines.push_back(SegmentTreeLineSegment2DMaxSum::Line{ 0ll, -65535ll });
         for (int i = 1; i < N; i++) {
-            lines.push_back(SegmentTreeLineSegment2DMaxSum::Line{ (long long)rand() % 100 - 50, (long long)rand() - RAND_MAX / 2 });
+            lines.push_back(SegmentTreeLineSegment2DMaxSum::Line{ (long long)RandInt32::get() % 100 - 50,
+                                                                  (long long)RandInt32::get() % 65536 - 32768 });
         }
 
         SegmentTreeLineSegment2DMaxSum tree(MAXX);
@@ -74,7 +76,8 @@ void testSegmentTreeLineSegment2DSum() {
         vector<SegmentTreeLineSegment2DMinSum::Line> lines;
         lines.push_back(SegmentTreeLineSegment2DMinSum::Line{ 0ll, 65535ll });
         for (int i = 1; i < N; i++) {
-            lines.push_back(SegmentTreeLineSegment2DMinSum::Line{ (long long)rand() % 100 - 50, (long long)rand() - RAND_MAX / 2 });
+            lines.push_back(SegmentTreeLineSegment2DMinSum::Line{ (long long)RandInt32::get() % 100 - 50,
+                                                                  (long long)RandInt32::get() % 65536 - 32768 });
         }
 
         SegmentTreeLineSegment2DMinSum tree(MAXX);

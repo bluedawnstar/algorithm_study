@@ -41,7 +41,7 @@ using namespace std;
 
 
 void testPrefixFunction() {
-    //return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Prefix Function ---------" << endl;
     // checkRepeatedSubstring()

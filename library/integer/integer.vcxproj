@@ -147,6 +147,7 @@
     <ClCompile Include="chineseRemainderTheorem.cpp" />
     <ClCompile Include="digit.cpp" />
     <ClCompile Include="equations.cpp" />
+    <ClCompile Include="equationsMod.cpp" />
     <ClCompile Include="eulerTheorem.cpp" />
     <ClCompile Include="factor.cpp" />
     <ClCompile Include="fraction.cpp" />
@@ -167,11 +168,13 @@
     <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="digit.h" />
     <ClInclude Include="equations.h" />
+    <ClInclude Include="equationsMod.h" />
     <ClInclude Include="eulerTheorem.h" />
     <ClInclude Include="factor.h" />
     <ClInclude Include="fraction.h" />
     <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gcd.h" />
+    <ClInclude Include="grayCode.h" />
     <ClInclude Include="intMod.h" />
     <ClInclude Include="intModExt.h" />
     <ClInclude Include="mobius.h" />

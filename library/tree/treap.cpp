@@ -105,7 +105,11 @@ void testTreap() {
         SplayTree<int> spt;
         Treap<int> tr;
 
+#ifdef _DEBUG
+        vector<int> in(300000);
+#else
         vector<int> in(3000000);
+#endif
         iota(in.begin(), in.end(), 0);
 
         cout << "1) Insertion test" << endl;

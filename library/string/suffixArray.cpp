@@ -5,37 +5,56 @@
 using namespace std;
 
 #include "suffixArray.h"
+#include "suffixArrayExt.h"
+#include "suffixArrayAlgo.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <cassert>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
+
+static string makeRandomString(int n) {
+    string s;
+    s.reserve(n);
+    for (int i = 0; i < n; i++)
+        s.push_back(RandInt32::get() % 26 + 'a');
+    return s;
+}
 
 void testSuffixArray() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    //return; //TODO: if you want to test string functions, make this line a comment.
 
-    cout << "-- makeSuffixArray() -------------" << endl;
+    cout << "-- Suffix Array --------------------" << endl;
+    {
+        string s("abdadafaaabdfaeef");
 
-    string S("abdadafaaabdfaeef");
+        vector<int> ans = SuffixArray::build(s);
+        vector<int> gt = makeSuffixArrayNaive(s, (int)s.length());
+        assert(ans == gt);
 
-    vector<int> a1 = makeSuffixArray(S, (int)S.length());
-    vector<int> a2 = makeSuffixArrayFast(S, (int)S.length());
+        long long cntAns = SuffixArrayAlgo::countSubstrings(ans, s);
+        long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
+        assert(cntAns == cntGT);
+    }
+    {
+        int T = 10;
+        while (T-- > 0) {
+            int N = 1000;
+            auto s = makeRandomString(N);
 
-    assert(a1 == a2);
+            vector<pair<string, int>> v;
+            v.reserve(N);
+            for (int i = 0; i < N; i++)
+                v.emplace_back(s.substr(i, N - i), i);
 
-    cout << "OK!" << endl;
+            sort(v.begin(), v.end());
 
-    cout << "-- countSubstrings() -------------" << endl;
-
-    long long cnt11 = countSubstrings(a1, S, (int)S.length());
-    long long cnt12 = countSubstrings(a2, S, (int)S.length());
-    long long cnt21 = countSubstringsFast(a1, S, (int)S.length());
-    long long cnt22 = countSubstringsFast(a2, S, (int)S.length());
-
-    assert(cnt11 == cnt12);
-    assert(cnt21 == cnt22);
-    assert(cnt11 == cnt21);
-
+            auto SA = SuffixArray::build(s);
+            for (int i = 0; i < N; i++)
+                assert(v[i].second == SA[i]);
+        }
+    }
     cout << "OK!" << endl;
 }

@@ -20,6 +20,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 #include "line.h"
 
@@ -85,8 +86,8 @@ void testLineSegmentAllIntersections() {
         vector<LineSegmentAllIntersections::LineSegment> segments;
         unordered_set<double> S;
         for (int i = 0; i < N; i++) {
-            double x1 = rand() % X, y1 = rand() % X;
-            double x2 = rand() % X, y2 = rand() % X;
+            double x1 = RandInt32::get() % X, y1 = RandInt32::get() % X;
+            double x2 = RandInt32::get() % X, y2 = RandInt32::get() % X;
             if (x1 == x2 || y1 == y2)
                 continue;
             if (S.find(y1 * X + x1) != S.end() || S.find(y2 * X + x2) != S.end())

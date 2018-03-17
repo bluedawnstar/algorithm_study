@@ -14,11 +14,7 @@ using namespace std;
 #include "suffixAutomaton.h"
 #include "../common/iostreamhelper.h"
 
-template <typename T>
-vector<int> makeSuffixArrayFast(T s, int n);
-
-template <typename T>
-vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n);
+#include "suffixArray.h"
 
 void testDistinctSubstringCounter() {
     return; //TODO: if you want to test string functions, make this line a comment.
@@ -32,8 +28,8 @@ void testDistinctSubstringCounter() {
 
     cout << "*** test with Suffix Array" << endl;
     {
-        vector<int> SA = makeSuffixArrayFast(S, (int)S.length());
-        vector<int> lcpArray = makeLcpArray(SA, S, (int)S.length());
+        vector<int> SA = SuffixArray::build(S);
+        vector<int> lcpArray = SuffixArray::buildLcpArray(SA, S);
 
         DistinctSubstringCounterWithSuffixArray<long long> dsc(SA, lcpArray, (int)lcpArray.size());
 

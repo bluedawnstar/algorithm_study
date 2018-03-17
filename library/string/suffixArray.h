@@ -2,9 +2,99 @@
 
 //--------- Building Suffix Array ---------------------------------------------
 
+struct SuffixArray {
+    static const int MaxCharN = 26;
+    static int ch2i(int c) { return c - 'a'; }
+
+    // O(NlogN)
+    static vector<int> build(const char* s, int n) {
+        vector<int> SA(n);
+        if (n <= 1)
+            return SA;
+
+        int m = MaxCharN;
+        vector<int> cnt(max(n, m)), currG(n), nextG(n);
+
+        for (int i = 0; i < n; i++) {
+            currG[i] = ch2i(s[i]);
+            ++cnt[currG[i]];
+        }
+        for (int i = 1; i < m; i++)
+            cnt[i] += cnt[i - 1];
+        for (int i = n - 1; i >= 0; i--)
+            SA[--cnt[currG[i]]] = i;
+
+        int len = 1;
+        do {
+            int g = 0;
+            for (int i = n - len; i < n; i++)
+                nextG[g++] = i;
+            for (int i = 0; i < n; i++) {
+                if (SA[i] >= len)
+                    nextG[g++] = SA[i] - len;
+            }
+
+            fill(cnt.begin(), cnt.begin() + m, 0);
+            for (int i = 0; i < n; i++)
+                ++cnt[currG[nextG[i]]];
+            for (int i = 1; i < m; i++)
+                cnt[i] += cnt[i - 1];
+            for (int i = n - 1; i >= 0; i--)
+                SA[--cnt[currG[nextG[i]]]] = nextG[i];
+
+            int curSA = SA[0];
+            nextG[curSA] = g = 0;
+            for (int i = 1; i < n; i++) {
+                int prvSA = curSA;
+                curSA = SA[i];
+
+                nextG[curSA] = (prvSA + len < n && curSA + len < n
+                    && currG[prvSA] == currG[curSA]
+                    && currG[prvSA + len] == currG[curSA + len])
+                    ? g : ++g;
+            }
+            swap(currG, nextG);
+
+            len <<= 1;
+            m = g + 1;
+        } while (m < n);
+
+        return SA;
+    }
+
+    static vector<int> build(const string& s) {
+        return build(&s[0], (int)s.length());
+    }
+
+
+    // Kasai algorithm - O(N)
+    static vector<int> buildLcpArray(const vector<int>& suffixArray, const char* s, int n) {
+        vector<int> rank(n), height(n);
+        for (int i = 0; i < n; i++)
+            rank[suffixArray[i]] = i;
+
+        for (int i = 0, h = 0; i < n; i++) {
+            if (rank[i] > 0) {
+                int j = suffixArray[rank[i] - 1];
+                while (i + h < n && j + h < n && s[i + h] == s[j + h])
+                    h++;
+                height[rank[i]] = h;
+                if (h > 0)
+                    h--;
+            }
+        }
+
+        return height;
+    }
+
+    static vector<int> buildLcpArray(const vector<int>& suffixArray, const string& s) {
+        return buildLcpArray(suffixArray, &s[0], (int)s.length());
+    }
+};
+
 //--- O(N (logN)^2) method ---
 template <typename T>
-vector<int> makeSuffixArray(T s, int n) {
+vector<int> makeSuffixArrayNaive(T s, int n) {
     // A structure to store suffixes and their indexes
     vector<pair<int, int>> suffixes(n);     // (current rank, next rank)
     vector<int> SA(n);
@@ -63,120 +153,4 @@ vector<int> makeSuffixArray(T s, int n) {
 
     // Return the suffix array
     return SA;
-}
-
-//--- O(N logN) ---
-template <typename T>
-vector<int> makeSuffixArrayFast(T s, int n) {
-    vector<int> SA(n);
-    if (n <= 1)
-        return SA;
-
-    int m = 26;                                     //TODO: check conversion from character to rank
-    vector<int> cnt(max(n, m)), currG(n), nextG(n);
-
-    for (int i = 0; i < n; i++) {
-        currG[i] = s[i] - 'a';                      //TODO: check conversion from character to rank
-        ++cnt[currG[i]];
-    }
-    for (int i = 1; i < m; i++)
-        cnt[i] += cnt[i - 1];
-    for (int i = n - 1; i >= 0; i--)
-        SA[--cnt[currG[i]]] = i;
-
-    int len = 1;
-    do {
-        int g = 0;
-        for (int i = n - len; i < n; i++)
-            nextG[g++] = i;
-        for (int i = 0; i < n; i++) {
-            if (SA[i] >= len)
-                nextG[g++] = SA[i] - len;
-        }
-
-        fill(cnt.begin(), cnt.begin() + m, 0);
-        for (int i = 0; i < n; i++)
-            ++cnt[currG[nextG[i]]];
-        for (int i = 1; i < m; i++)
-            cnt[i] += cnt[i - 1];
-        for (int i = n - 1; i >= 0; i--)
-            SA[--cnt[currG[nextG[i]]]] = nextG[i];
-
-        int curSA = SA[0];
-        nextG[curSA] = g = 0;
-        for (int i = 1; i < n; i++) {
-            int prvSA = curSA;
-            curSA = SA[i];
-
-            nextG[curSA] = (prvSA + len < n && curSA + len < n
-                && currG[prvSA] == currG[curSA]
-                && currG[prvSA + len] == currG[curSA + len])
-                ? g : ++g;
-        }
-        swap(currG, nextG);
-
-        len <<= 1;
-        m = g + 1;
-    } while (m < n);
-
-    return SA;
-}
-
-
-//--------- Calculating LCP ---------------------------------------------------
-
-// O(N)
-template <typename T>
-int commonPrefix(T s, int n, int i, int j) {
-    int res = 0;
-    while (i < n && j < n && s[i] == s[j]) {
-        i++; j++; res++;
-    }
-    return res;
-}
-
-// Kasai algorithm - O(N)
-template <typename T>
-vector<int> makeLcpArray(const vector<int>& suffixArray, T s, int n) {
-    vector<int> rank(n), height(n);
-    for (int i = 0; i < n; i++)
-        rank[suffixArray[i]] = i;
-
-    for (int i = 0, h = 0; i < n; i++) {
-        if (rank[i] > 0) {
-            int j = suffixArray[rank[i] - 1];
-            while (i + h < n && j + h < n && s[i + h] == s[j + h])
-                h++;
-            height[rank[i]] = h;
-            if (h > 0)
-                h--;
-        }
-    }
-
-    return height;
-}
-
-//--------- Counting Distinct Substrings --------------------------------------
-
-// O(N^2)
-template <typename T>
-long long countSubstrings(const vector<int>& suffixArray, T s, int n) {
-    long long ans = n - suffixArray[0];
-    for (int i = 1; i < n; i++) {
-        int lcp = commonPrefix(s, n, suffixArray[i - 1], suffixArray[i]);
-        ans += n - suffixArray[i] - lcp;
-    }
-    return ans;
-}
-
-// O(N)
-template <typename T>
-long long countSubstringsFast(const vector<int>& suffixArray, T s, int n) {
-    long long ans = 0;
-
-    vector<int> lcp = makeLcpArray(suffixArray, s, n);
-    for (int i = 0; i < (int)lcp.size(); i++) {
-        ans += n - suffixArray[i] - lcp[i];
-    }
-    return ans;
 }

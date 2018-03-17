@@ -18,6 +18,7 @@ using namespace std;
 #include <fstream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static bool isPrimeNumber(long long x, const vector<long long>& primes) {
     int idx = 0;
@@ -28,18 +29,6 @@ static bool isPrimeNumber(long long x, const vector<long long>& primes) {
         p = primes[++idx];
     }
     return true;
-}
-
-static int rand16() {
-    return rand() & 0x7fff;
-}
-
-static int rand32() {
-    return (rand16() * rand16() & 0xffff) * rand16();
-}
-
-static long long rand64() {
-    return (long long)rand32() * rand32();
 }
 
 void testPrimalityTest() {
@@ -61,7 +50,7 @@ void testPrimalityTest() {
         cout << "-- GT | Rho | Fermat | Miller ---" << endl;
         int T = 10000;
         while (T-- > 0) {
-            long long x = rand64();
+            long long x = RandInt64::get();
             auto gt = isPrimeNumber(x);
             auto ans = PrimalityTest<long long>::isPrimeNumber(x);
             if (gt != ans)

@@ -13,6 +13,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 static int xorSlow(vector<int>& v, int L, int R) {
     int res = 0;
@@ -31,12 +32,12 @@ void testFenwickTreeXor() {
         FenwickTreeXor<int> xorTree(N);
         vector<int> in(N);
         for (int i = 0; i < N; i++) {
-            in[i] = rand();
+            in[i] = RandInt32::get() % 65536;
             xorTree.add(i, in[i]);
         }
         for (int i = 0; i < T; i++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
             if (L > R)
                 swap(L, R);
             assert(xorTree.query(L) == xorSlow(in, 0, L));
@@ -46,7 +47,7 @@ void testFenwickTreeXor() {
             assert(xorTree.get(L) == in[L]);
             assert(xorTree.get(R) == in[R]);
             assert(xorTree.queryRange(L, R) == xorSlow(in, L, R));
-            in[R] = rand();
+            in[R] = RandInt32::get() % 65536;
             xorTree.set(R, in[R]);
             assert(xorTree.get(R) == in[R]);
         }

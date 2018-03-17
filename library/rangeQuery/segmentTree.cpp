@@ -17,6 +17,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testSegmentTree() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -75,12 +76,12 @@ void testSegmentTree() {
 
         vector<int> T(N);
         for (int i = 0; i < N; i++)
-            T[i] = rand();
+            T[i] = RandInt32::get() % 65536;
 
         vector<pair<int, int>> Q;
         for (int i = 0; i < N; i++) {
-            int a = rand() * rand() % N;
-            int b = rand() * rand() % N;
+            int a = RandInt32::get() % N;
+            int b = RandInt32::get() % N;
             Q.push_back({ min(a, b), max(a, b) });
         }
 
@@ -121,16 +122,16 @@ void testSegmentTree() {
 
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {
-            if (rand() % 2) {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
+            if (RandInt32::get() % 2) {
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(1, L, R, 0);
             } else {
-                int L = rand() % (int)in.size();
-                int R = rand() % (int)in.size();
-                int x = rand() % 100;
+                int L = RandInt32::get() % (int)in.size();
+                int R = RandInt32::get() % (int)in.size();
+                int x = RandInt32::get() % 100;
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(0, L, R, x);

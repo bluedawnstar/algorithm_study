@@ -102,6 +102,7 @@ inline vector<pair<int, int>> getPrimeFactors2(int x) {
     return res;
 }
 
+#if 0
 // return prime factors of x
 inline vector<int> getPrimeFactorsFast(int x) {
     vector<int> res;
@@ -151,6 +152,7 @@ inline vector<pair<int,int>> getPrimeFactorsFast2(int x) {
 
     return res;
 }
+#endif
 
 // <PRECONDITION>
 //   - 'primes' has all primes in [0, sqrt(N)]

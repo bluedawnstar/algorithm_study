@@ -17,6 +17,7 @@ using namespace std;
 #include <set>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 static long long distL2(const pair<long long, long long>& L, const pair<long long, long long>& R) {
     return (R.first - L.first) * (R.first - L.first) + (R.second - L.second) * (R.second - L.second);
@@ -50,7 +51,7 @@ void testClosestPair() {
     vector<pair<long long, long long>> points;
     set<pair<long long, long long>> S;
     for (int i = 0; i < N; i++) {
-        auto p = make_pair((long long)rand(), (long long)rand());
+        auto p = make_pair(RandInt64::get() % 65536, RandInt64::get() % 65536);
         if (S.find(p) != S.end())
             continue;
 

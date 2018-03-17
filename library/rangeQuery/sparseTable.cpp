@@ -19,6 +19,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 void testSparseTable() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -52,7 +53,7 @@ void testSparseTable() {
         int N = 10000;
         vector<int> inSum(N);
         for (int i = 0; i < N; i++)
-            inSum[i] = rand();
+            inSum[i] = RandInt32::get() % 65536;
 
         vector<int> prefixSum(N + 1);
         prefixSum[0] = 0;
@@ -63,8 +64,8 @@ void testSparseTable() {
         auto sparseTable2 = makeSparseTable<int>(inSum, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < 10000; i++) {
-            int left = rand() % N;
-            int right = rand() % N;
+            int left = RandInt32::get() % N;
+            int right = RandInt32::get() % N;
             if (left > right)
                 swap(left, right);
 
@@ -81,12 +82,12 @@ void testSparseTable() {
         int TN = 10;
         vector<int> T(N);
         for (int i = 0; i < N; i++)
-            T[i] = rand();
+            T[i] = RandInt32().get() % 65536;
 
         vector<pair<int, int>> Q;
         for (int i = 0; i < N; i++) {
-            int a = rand() * rand() % N;
-            int b = rand() * rand() % N;
+            int a = RandInt32::get() % N;
+            int b = RandInt32::get() % N;
             Q.push_back({ min(a, b), max(a, b) });
         }
 

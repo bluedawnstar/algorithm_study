@@ -19,6 +19,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "segmentTreeCompact.h"
 
@@ -32,19 +33,19 @@ void testFenwickTreeMax() {
     vector<int> in(N);
 
     for (int i = 0; i < N; i++)
-        in[i] = rand();
+        in[i] = RandInt32::get() % 65536;
 
     FenwickTreeMax<int> ft(in, 0);
 
     auto segTree = makeCompactSegmentTree(in, [](int a, int b) { return max(a, b); }, 0);
     for (int i = 0; i < 1000; i++) {
-        int R = rand() % N;
+        int R = RandInt32::get() % N;
         assert(ft.get(R) == segTree.query(0, R));
     }
 
     vector<int> R(T);
     for (int i = 0; i < T; i++)
-        R[i] = rand() % N;
+        R[i] = RandInt32::get() % N;
 
     PROFILE_START(0);
     for (int i = 0; i < T; i++) {

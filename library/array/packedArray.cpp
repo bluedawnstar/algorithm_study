@@ -13,6 +13,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testPackedArray() {
     return; //TODO: if you want to test functions of this file, make this line a comment.
@@ -26,7 +27,7 @@ void testPackedArray() {
 
     vector<int> v(N);
     for (int i = 0; i < N; i++) {
-        v[i] = rand() * rand() % N;
+        v[i] = RandInt32::get() % N;
     }
 
     for (int i = 0; i < N; i++)

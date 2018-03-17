@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int findFirst(const vector<int>& A, int start, int R) {
     while (start > R)
@@ -63,7 +64,7 @@ void testJumpPointerSparseTable() {
         vector<int> in(N);
         in[0] = -1;
         for (int i = 1; i < N; i++)
-            in[i] = rand() % i;
+            in[i] = RandInt32::get() % i;
 
         JumpPointerSparseTable rast(N);
         rast.build(in);

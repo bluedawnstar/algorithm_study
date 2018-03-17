@@ -2,7 +2,8 @@
 
 #include "intMod.h"
 
-//https://librewiki.net/wiki/%EC%A4%91%EA%B5%AD%EC%9D%B8%EC%9D%98_%EB%82%98%EB%A8%B8%EC%A7%80_%EC%A0%95%EB%A6%AC 
+// https://librewiki.net/wiki/%EC%A4%91%EA%B5%AD%EC%9D%B8%EC%9D%98_%EB%82%98%EB%A8%B8%EC%A7%80_%EC%A0%95%EB%A6%AC 
+// https://e-maxx-eng.appspot.com/algebra/chinese-remainder-theorem.html
 
 /*
 중국인의 나머지 정리는, 어떤 수 x를 서로소인 m1, m2, m3, ..., mn으로 각각 나눴을 때 나머지가 r1, r2, r3, ..., rn 이라고 할 때

@@ -15,6 +15,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int countLess(vector<int>& v, int L, int R, int K) {
     int res = 0;
@@ -59,7 +60,7 @@ static int countK(vector<int>& v, int L, int R, int Klo, int Khi) {
 static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int R) {
     // get number
     {
-        int K = rand() % N;
+        int K = RandInt32::get() % N;
         int gt = in[K];
         int ans = matrix.get(K);
         if (ans != gt) {
@@ -70,7 +71,7 @@ static void test(vector<int>& in, WaveletMatrix<int>& matrix, int N, int L, int 
     }
     // kth number
     {
-        int K = rand() % (R - L + 1);
+        int K = RandInt32::get() % (R - L + 1);
         int gt = kth(in, L, R, K);
         int ans = matrix.kth(L, R, K);
         if (ans != gt) {
@@ -131,7 +132,7 @@ void testWaveletMatrix() {
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = rand() * rand();
+            in[j] = RandInt32::get();
         //for (int j = 0; j < N; j++)
         //    in[j] = j;
 
@@ -139,8 +140,8 @@ void testWaveletMatrix() {
         matrix.build(in);
 
         for (int j = 0; j < 10; j++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
 
             if (L > R)
                 swap(L, R);

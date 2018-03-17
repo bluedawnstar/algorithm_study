@@ -15,14 +15,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
-
-static int rand16() {
-    return rand() % 32768;
-}
-
-static int rand32() {
-    return rand16() * rand16();
-}
+#include "../common/rand.h"
 
 static int getMaxSubarray(const vector<int>& v, int L, int R) {
     int ans = v[L];
@@ -58,15 +51,15 @@ void testSegmentTreeMaxSubarray() {
         vector<int> in(N);
 
         for (int i = 0; i < N; i++)
-            in[i] = rand16() % 10 - 5;
+            in[i] = RandInt32::get() % 10 - 5;
 
         SegmentTreeMaxSubarray<int> tree(N);
         tree.build(in);
 
         int T = 100;
         for (int i = 0; i < T; i++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
             if (L > R)
                 swap(L, R);
 
@@ -83,15 +76,15 @@ void testSegmentTreeMaxSubarray() {
         vector<int> in(N);
 
         for (int i = 0; i < N; i++)
-            in[i] = rand16() - 16384;
+            in[i] = RandInt32::get() % 32768 - 16384;
 
         SegmentTreeMaxSubarray<int> tree(N);
         tree.build(in);
 
         int T = 100;
         for (int i = 0; i < T; i++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
             if (L > R)
                 swap(L, R);
 

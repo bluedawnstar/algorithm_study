@@ -16,6 +16,7 @@ using namespace std;
 #include <numeric>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "redBlackTree.h"
 #include "treap.h"
@@ -78,8 +79,8 @@ void testLinkCutTree() {
         PROFILE_START(0);
         int errCnt = 0;
         for (int i = 0; i < 100000; i++) {
-            int u = rand() % N;
-            int v = rand() % N;
+            int u = RandInt32::get() % N;
+            int v = RandInt32::get() % N;
             int lca = lct.lca(u, v);
             int lcaAns;
             if (u == 0 || v == 0) {

@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int maxWeightedIndependentSet(vector<unsigned long long>& g, const vector<int>& weights) {
     int res = 0;
@@ -48,17 +49,17 @@ void testMaxIndependentSet() {
     cout << "-- Max Weighted Independent Set -----------------------" << endl;
     {
         for (int step = 0; step < 10; step++) {
-            int N = rand() % 16 + 1;
+            int N = RandInt32::get() % 16 + 1;
 
             vector<unsigned long long> G(N);
             vector<int> weights(N);
 
             for (int i = 0; i < N; i++)
-                weights[i] = rand() % 1000;
+                weights[i] = RandInt32::get() % 1000;
 
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < i; j++)
-                    if (rand() & 1) {
+                    if (RandInt32::get() & 1) {
                         G[i] |= 1ull << j;
                         G[j] |= 1ull << i;
                     }
@@ -78,11 +79,11 @@ void testMaxIndependentSet() {
         vector<unsigned long long> G(N);
         vector<int> weights(N);
         for (int i = 0; i < N; i++)
-            weights[i] = rand() % 1000;
+            weights[i] = RandInt32::get() % 1000;
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < i; j++) {
-                if (rand() & 1) {
+                if (RandInt32::get() & 1) {
                     G[i] |= 1ull << j;
                     G[j] |= 1ull << i;
                 }

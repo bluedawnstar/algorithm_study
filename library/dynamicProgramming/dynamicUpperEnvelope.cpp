@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testDynamicUpperEnvelope() {
     return; //TODO: if you want to test functions of this file, make this line a comment.
@@ -50,7 +51,8 @@ void testDynamicUpperEnvelope() {
 
         vector<DynamicUpperEnvelope::Line> lines;
         for (int i = 0; i < N; i++)
-            lines.push_back(DynamicUpperEnvelope::Line{ (long long)rand() - RAND_MAX / 2, (long long)rand() - RAND_MAX / 2 });
+            lines.push_back(DynamicUpperEnvelope::Line{ (long long)RandInt32::get() % 65536 - 32768,
+                                                        (long long)RandInt32::get() % 65536 - 32768 });
 
         DynamicUpperEnvelope envelope;
         for (int i = 0; i < N; i++)

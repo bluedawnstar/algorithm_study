@@ -13,6 +13,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static void checkSearch(RBTreeSimple<int>& rbt, vector<int>& in) {
     for (int i = 0; i < (int)in.size(); i++) {
@@ -30,7 +31,7 @@ static void checkIndex(RBTreeSimple<int>& rbt, vector<int>& in) {
 }
 
 void testRBTreeSimple() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "--- Simple Red-Black Tree -------------------------------" << endl;
 
@@ -59,7 +60,7 @@ void testRBTreeSimple() {
             assert(rbt.upperBound(N - 1) == nullptr);
 
             for (int j = 0; j < 20; j++) {
-                int gt = rand() % N;
+                int gt = RandInt32::get() % N;
                 assert(rbt.lowerBound(gt)->value == gt);
             }
 

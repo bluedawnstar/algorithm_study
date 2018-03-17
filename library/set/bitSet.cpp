@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #define N   (1024 - 31)
 
@@ -52,11 +53,11 @@ void testBitSet() {
         bs3.init(N);
 
         for (int i = 0; i < 10000; i++) {
-            switch (rand() % 8) {
+            switch (RandInt32::get() % 8) {
             case 0:
             {
-                int pos = rand() % N;
-                bool val = (rand() % 2) == 1;
+                int pos = RandInt32::get() % N;
+                bool val = (RandInt32::get() % 2) == 1;
                 bs1.set(pos, val);
                 bs2.set(pos, val);
                 bs3.set(pos, val);
@@ -64,7 +65,7 @@ void testBitSet() {
             }
             case 1:
             {
-                int pos = rand() % N;
+                int pos = RandInt32::get() % N;
                 bs1.reset(pos);
                 bs2.reset(pos);
                 bs3.reset(pos);
@@ -72,7 +73,7 @@ void testBitSet() {
             }
             case 2:
             {
-                int pos = rand() % N;
+                int pos = RandInt32::get() % N;
                 bs1.flip(pos);
                 bs2.flip(pos);
                 bs3.flip(pos);
@@ -80,7 +81,7 @@ void testBitSet() {
             }
             case 3:
             {
-                int n = rand() % 128 + 1;
+                int n = RandInt32::get() % 128 + 1;
                 bs1 <<= n;
                 bs2 <<= n;
                 bs3 <<= n;
@@ -88,7 +89,7 @@ void testBitSet() {
             }
             case 4:
             {
-                int n = rand() % 128 + 1;
+                int n = RandInt32::get() % 128 + 1;
                 bs1 >>= n;
                 bs2 >>= n;
                 bs3 >>= n;
@@ -134,39 +135,39 @@ void testBitSet() {
         BitSetVariable bs2;
 
         for (int i = 0; i < 10000; i++) {
-            switch (rand() % 5) {
+            switch (RandInt32::get() % 5) {
             case 0:
             {
-                int pos = rand() % N;
-                bool val = (rand() % 2) == 1;
+                int pos = RandInt32::get() % N;
+                bool val = (RandInt32::get() % 2) == 1;
                 bs1.set(pos, val);
                 bs2.set(pos, val);
                 break;
             }
             case 1:
             {
-                int pos = rand() % N;
+                int pos = RandInt32::get() % N;
                 bs1.reset(pos);
                 bs2.reset(pos);
                 break;
             }
             case 2:
             {
-                int pos = rand() % N;
+                int pos = RandInt32::get() % N;
                 bs1.flip(pos);
                 bs2.flip(pos);
                 break;
             }
             case 3:
             {
-                int n = rand() % 128 + 1;
+                int n = RandInt32::get() % 128 + 1;
                 //bs1 <<= n;
                 //bs2 <<= n;
                 break;
             }
             case 4:
             {
-                int n = rand() % 128 + 1;
+                int n = RandInt32::get() % 128 + 1;
                 bs1 >>= n;
                 bs2 >>= n;
                 break;
@@ -180,7 +181,7 @@ void testBitSet() {
         vector<int> index;
 
         for (int i = 0; i < N / 10; i++)
-            index.push_back(rand() % N);
+            index.push_back(RandInt32::get() % N);
         sort(index.begin(), index.end());
         index.erase(unique(index.begin(), index.end()), index.end());
 

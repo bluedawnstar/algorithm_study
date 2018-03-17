@@ -32,6 +32,7 @@ void sortSqrt(vector<pair<pair<T, T>, U>>& vec, int blockSize) {
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 void testSortSqrt() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -42,8 +43,8 @@ void testSortSqrt() {
     int MAXN = 100;
     int queryN = 50;
     for (int i = 0; i < queryN; i++) {
-        int l = rand() % MAXN + 1;
-        int r = rand() % MAXN + 1;
+        int l = RandInt32::get() % MAXN + 1;
+        int r = RandInt32::get() % MAXN + 1;
         if (l > r)
             swap(l, r);
         v.push_back(make_pair(l, r)); v2.push_back(make_pair(make_pair(l, r), i));

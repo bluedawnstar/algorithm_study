@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testEulerTour() {
     return; //TODO: if you want to test a split function, make this line a comment.
@@ -41,14 +42,14 @@ void testEulerTour() {
         EulerTourTree tree(N, LOGN);
 
         for (int v = 1; v < N; v++) {
-            int u = rand() % v;
+            int u = RandInt32::get() % v;
             tree.addEdge(u, v);
         }
         tree.build(0);
 
         for (int i = 0; i < 1000; i++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
             if (L > R)
                 swap(L, R);
 
@@ -69,15 +70,15 @@ void testEulerTour() {
         EulerTourTree tree(N, LOGN);
 
         for (int v = 1; v < N; v++) {
-            int u = rand() % v;
+            int u = RandInt32::get() % v;
             tree.addEdge(u, v);
         }
         tree.build(0);
 
         PROFILE_START(0);
         for (int i = 0; i < TESTN; i++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
             if (L > R)
                 swap(L, R);
             int lca1 = tree.findLCA(L, R);
@@ -88,8 +89,8 @@ void testEulerTour() {
 
         PROFILE_START(1);
         for (int i = 0; i < TESTN; i++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
             if (L > R)
                 swap(L, R);
 

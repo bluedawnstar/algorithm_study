@@ -18,6 +18,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static long long distL2(int x1, int y1, int x2, int y2) {
     long long dx = x1 - x2;
@@ -32,15 +33,15 @@ void testMetricTree() {
     {
         int T = 10000;
         for (int i = 0; i < T; i++) {
-            int qx = rand() % 100 - 50;
-            int qy = rand() % 100 - 50;
-            int n = rand() % 100 + 1;
+            int qx = RandInt32::get() % 100 - 50;
+            int qy = RandInt32::get() % 100 - 50;
+            int n = RandInt32::get() % 100 + 1;
 
             vector<pair<int,int>> P(n);
             long long minDist = numeric_limits<long long>::max();
             for (int i = 0; i < n; i++) {
-                P[i].first = rand() % 100 - 50;
-                P[i].second = rand() % 100 - 50;
+                P[i].first = RandInt32::get() % 100 - 50;
+                P[i].second = RandInt32::get() % 100 - 50;
                 minDist = min(minDist, distL2(qx, qy, P[i].first, P[i].second));
             }
 

@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "suffixArray.h"
+#include "suffixArrayAlgo.h"
 #include "lcpArraySparseTable.h"
 
 //
@@ -82,8 +83,8 @@ struct LongestCommonStringLengthWithSuffixArray {
         }
 
         // making suffix array, LCP array, sparse table for LCP array
-        mSA = makeSuffixArrayFast(mSS);
-        mLCP = makeLcpArray(mSA, mSS, (int)mSS.length());
+        mSA = SuffixArray::build(mSS);
+        mLCP = SuffixArray::buildLcpArray(mSA, mSS);
         LcpArraySparseTable sparseTable(mLCP);
 
         // check forward

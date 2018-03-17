@@ -17,6 +17,7 @@ using namespace std;
 #include <fstream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "primalityTest.h"
 #include "primeNumberBasic.h"
@@ -30,18 +31,6 @@ static bool isPrimeNumber(long long x, const vector<long long>& primes) {
         p = primes[++idx];
     }
     return true;
-}
-
-static int rand16() {
-    return rand() & 0x7fff;
-}
-
-static int rand32() {
-    return (rand16() * rand16() & 0xffff) * rand16();
-}
-
-static long long rand64() {
-    return (long long)rand32() * rand32();
 }
 
 void testPrimeFactorLongLong() {
@@ -94,7 +83,7 @@ void testPrimeFactorLongLong() {
 
         int T = 1000;
         while (T-- > 0) {
-            long long x = rand64() + 1;
+            long long x = RandInt64::get() + 1;
             auto gt = PrimalityTest<long long>::isPrimeNumber(x);
 
             auto t = pfLL.factorize(x);
@@ -116,7 +105,7 @@ void testPrimeFactorLongLong() {
 
         PROFILE_START(0);
         while (T-- > 0) {
-            long long x = rand64() + 1;
+            long long x = RandInt64::get() + 1;
             auto t = pfLL.factorize(x);
             if (x > 1 && t.empty())
                 cout << "ERROR!" << endl;

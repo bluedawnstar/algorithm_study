@@ -13,6 +13,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int sum(const vector<int>& v, int left, int right) {
     int res = 0;
@@ -31,13 +32,13 @@ void testPositiveSum() {
 
     vector<int> v(N);
     for (int i = 0; i < N; i++) {
-        v[i] = rand() % N;
+        v[i] = RandInt32::get() % N;
     }
     PrefixSum<int> S(v);
 
     for (int i = 0; i < T; i++) {
-        int L = rand() * rand() % N;
-        int R = rand() * rand() % N;
+        int L = RandInt32::get() % N;
+        int R = RandInt32::get() % N;
         if (L > R)
             swap(L, R);
 

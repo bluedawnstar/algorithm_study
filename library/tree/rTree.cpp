@@ -17,6 +17,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static double pointToRectL2(int x, int y, int x1, int y1, int x2, int y2) {
     double dx = x2 - x1;
@@ -43,17 +44,17 @@ void testRTree() {
     {
         int T = 1000;
         for (int i = 0; i < T; i++) {
-            int qx = rand() % 1000 - 500;
-            int qy = rand() % 1000 - 500;
-            int n = rand() % 100 + 1;
+            int qx = RandInt32::get() % 1000 - 500;
+            int qy = RandInt32::get() % 1000 - 500;
+            int n = RandInt32::get() % 100 + 1;
 
             vector<RTree<int>::Rect> R(n);
             double minDist = DBL_MAX;
             for (int i = 0; i < n; i++) {
-                int x1 = rand() % 1000 - 500;
-                int y1 = rand() % 1000 - 500;
-                int x2 = x1 + rand() % 10;
-                int y2 = y1 + rand() % 10;
+                int x1 = RandInt32::get() % 1000 - 500;
+                int y1 = RandInt32::get() % 1000 - 500;
+                int x2 = x1 + RandInt32::get() % 10;
+                int y2 = y1 + RandInt32::get() % 10;
                 R[i] = RTree<int>::Rect{ x1, y1, x2, y2 };
                 minDist = min(minDist, pointToRectL2(qx, qy, x1, y1, x2, y2));
             }

@@ -149,6 +149,7 @@
     <ClCompile Include="distinctSubstringCounter.cpp" />
     <ClCompile Include="hashing.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
+    <ClCompile Include="lyndonFactorization.cpp" />
     <ClCompile Include="subsequenceLCS.cpp" />
     <ClCompile Include="longestCommonSubstring_queryTwoStringAmongStrings.cpp" />
     <ClCompile Include="main.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="distinctSubstringCounter.h" />
     <ClInclude Include="hashing.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
+    <ClInclude Include="lyndonFactorization.h" />
     <ClInclude Include="subsequenceCheck.h" />
     <ClInclude Include="subsequenceLCS.h" />
     <ClInclude Include="palindromicString.h" />
@@ -194,6 +196,8 @@
     <ClInclude Include="split.h" />
     <ClInclude Include="subsequenceCount.h" />
     <ClInclude Include="suffixArray.h" />
+    <ClInclude Include="suffixArrayAlgo.h" />
+    <ClInclude Include="suffixArrayExt.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />
     <ClInclude Include="suffixAutomatonAlgo.h" />

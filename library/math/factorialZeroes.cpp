@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static long long f(int x) {
     long long res = 1;
@@ -51,8 +52,8 @@ void testFactorialZeroes() {
     }
 
     for (int i = 0; i < 1000000; i++) {
-        long long L = rand() * rand();
-        long long R = rand() * rand();
+        long long L = RandInt64::get();
+        long long R = RandInt64::get();
         if (L > R)
             swap(L, R);
         assert(countTrailingZeroesOfFactorial(0, L) == countTrailingZeroesOfFactorial(L));

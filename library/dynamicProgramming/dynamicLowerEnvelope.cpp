@@ -16,9 +16,10 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 void testDynamicLowerEnvelope() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Dynamic Lower Envelope (convex hull for minimum) -----------" << endl;
     {
@@ -50,7 +51,8 @@ void testDynamicLowerEnvelope() {
 
         vector<DynamicLowerEnvelope::Line> lines;
         for (int i = 0; i < N; i++)
-            lines.push_back(DynamicLowerEnvelope::Line{ (long long)rand() - RAND_MAX / 2, (long long)rand() - RAND_MAX / 2 });
+            lines.push_back(DynamicLowerEnvelope::Line{ (long long)RandInt32::get() % 65536 - RAND_MAX / 2,
+                                                        (long long)RandInt32::get() % 65536 - RAND_MAX / 2 });
 
         DynamicLowerEnvelope envelope;
         for (int i = 0; i < N; i++)

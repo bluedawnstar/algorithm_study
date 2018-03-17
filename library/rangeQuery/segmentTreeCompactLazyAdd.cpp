@@ -16,14 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
-
-static int rand16() {
-    return rand() % 32768;
-}
-
-static int rand32() {
-    return rand16() * rand16();
-}
+#include "../common/rand.h"
 
 static int findNext(const vector<int>& A, int start, int x) {
     while (start < (int)A.size()) {
@@ -83,12 +76,12 @@ void testSegmentTreeCompactLazyAdd() {
         int N = 100000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = rand() % (T * 10);
+            in[i] = RandInt32::get() % (T * 10);
 
         auto seg = makeCompactSegmentTreeLazyAdd(in, [](int a, int b) { return min(a, b); });
         for (int i = N - 1; i >= 0; i--) {
-            int idx = rand() % N;
-            int t = rand() % (T * 10);
+            int idx = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
 
             seg.add(idx, t - in[idx]);
             in[idx] = t;
@@ -111,13 +104,13 @@ void testSegmentTreeCompactLazyAdd() {
         int N = 1000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = rand() % (T * 10);
+            in[i] = RandInt32::get() % (T * 10);
 
         auto seg = makeCompactSegmentTreeLazyAdd(in, [](int a, int b) { return min(a, b); });
         for (int i = N - 1; i >= 0; i--) {
-            int L = rand() % N;
-            int R = rand() % N;
-            int t = rand() % 10;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            int t = RandInt32::get() % 10;
             if (L > R)
                 swap(L, R);
 
@@ -151,12 +144,12 @@ void testSegmentTreeCompactLazyAdd() {
 
         vector<int> T(N);
         for (int i = 0; i < N; i++)
-            T[i] = rand16();
+            T[i] = RandInt32::get() % 65536;
 
         vector<pair<int, int>> Q;
         for (int i = 0; i < N; i++) {
-            int a = rand32() % N;
-            int b = rand32() % N;
+            int a = RandInt32::get() % N;
+            int b = RandInt32::get() % N;
             Q.push_back({ min(a, b), max(a, b) });
         }
 

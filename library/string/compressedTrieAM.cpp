@@ -20,6 +20,7 @@ using namespace std;
 #include <vector>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "compressedTrie.h"
 
@@ -43,7 +44,7 @@ static string makeRandomString(int n) {
     string s;
     s.reserve(n);
     for (int i = 0; i < n; i++)
-        s.push_back(rand() % 26 + 'a');
+        s.push_back(RandInt32::get() % 26 + 'a');
     return s;
 }
 
@@ -134,7 +135,7 @@ void testCompressedTrieAM() {
         vector<string> in;
 
         for (int i = 0; i < N; i++)
-            in.push_back(makeRandomString(rand() % L + 1));
+            in.push_back(makeRandomString(RandInt32::get() % L + 1));
 
         PROFILE_START(0);
         {

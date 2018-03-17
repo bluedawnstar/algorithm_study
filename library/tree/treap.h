@@ -16,7 +16,7 @@ struct Treap {
 
         void init() {
             parent = left = right = nullptr;
-            priority = rand() * rand();
+            priority = (rand() & 0x7fff) * (rand() & 0x7fff);
             cnt = 1;
         }
     };

@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int findNearest(const vector<vector<int>>& vec3D, const vector<bool>& erased, const vector<int>& point3D) {
     int res = -1;
@@ -156,9 +157,9 @@ void testKDTree() {
         int N = 1000;
         vector<vector<int>> in(N, vector<int>(3));
         for (int i = 0; i < N; i++) {
-            in[i][0] = rand();
-            in[i][1] = rand();
-            in[i][2] = rand();
+            in[i][0] = RandInt32::get() % 65536;
+            in[i][1] = RandInt32::get() % 65536;
+            in[i][2] = RandInt32::get() % 65536;
             tree.insert(in[i]);
         }
 
@@ -166,9 +167,9 @@ void testKDTree() {
 
         vector<vector<int>> qry(QN, vector<int>(3));
         for (int i = 0; i < QN; i++) {
-            qry[i][0] = rand();
-            qry[i][1] = rand();
-            qry[i][2] = rand();
+            qry[i][0] = RandInt32::get() % 65536;
+            qry[i][1] = RandInt32::get() % 65536;
+            qry[i][2] = RandInt32::get() % 65536;
         }
 
         vector<vector<int>> out1(QN);
@@ -208,9 +209,9 @@ void testKDTree() {
             int N = 1000;
             vector<vector<int>> in(N, vector<int>(3));
             for (int i = 0; i < N; i++) {
-                in[i][0] = rand();
-                in[i][1] = rand();
-                in[i][2] = rand();
+                in[i][0] = RandInt32::get() % 65536;
+                in[i][1] = RandInt32::get() % 65536;
+                in[i][2] = RandInt32::get() % 65536;
                 tree.insert(in[i]);
             }
 
@@ -218,7 +219,7 @@ void testKDTree() {
 
             vector<bool> erased(N);
             for (int i = 0; i < N / 2; i++) {
-                erased[(rand() * rand()) % N] = true;
+                erased[RandInt32::get() % N] = true;
             }
             for (int i = 0; i < N; i++) {
                 if (erased[i])
@@ -227,9 +228,9 @@ void testKDTree() {
 
             vector<vector<int>> qry(QN, vector<int>(3));
             for (int i = 0; i < QN; i++) {
-                qry[i][0] = rand();
-                qry[i][1] = rand();
-                qry[i][2] = rand();
+                qry[i][0] = RandInt32::get() % 65536;
+                qry[i][1] = RandInt32::get() % 65536;
+                qry[i][2] = RandInt32::get() % 65536;
             }
 
             vector<vector<int>> out1(QN);
@@ -266,9 +267,9 @@ void testKDTree() {
             int N = 1000;
             vector<vector<int>> in(N, vector<int>(3));
             for (int i = 0; i < N; i++) {
-                in[i][0] = rand();
-                in[i][1] = rand();
-                in[i][2] = rand();
+                in[i][0] = RandInt32::get() % 65536;
+                in[i][1] = RandInt32::get() % 65536;
+                in[i][2] = RandInt32::get() % 65536;
                 tree.insert(in[i]);
             }
 
@@ -280,23 +281,23 @@ void testKDTree() {
             vector<vector<int>> qryMax(QN, vector<int>(3));
             for (int i = 0; i < QN; i++) {
 #ifdef TEST_WIDE
-                int x = rand() - 32768 / 2, y = rand() + 32768 / 2;
+                int x = RandInt32::get() % 65536 - 32768 / 2, y = RandInt32::get() % 65536 + 32768 / 2;
 #else
-                int x = rand(), y = x + 100;
+                int x = RandInt32::get() % 65536, y = x + 100;
 #endif
                 qryMin[i][0] = min(x, y); qryMax[i][0] = max(x, y);
 
 #ifdef TEST_WIDE
-                x = rand() - 32768 / 2, y = rand() + 32768 / 2;
+                x = RandInt32::get() % 65536 - 32768 / 2, y = RandInt32::get() % 65536 + 32768 / 2;
 #else
-                x = rand(), y = x + 100;
+                x = RandInt32::get() % 65536, y = x + 100;
 #endif
                 qryMin[i][1] = min(x, y); qryMax[i][1] = max(x, y);
 
 #ifdef TEST_WIDE
-                x = rand() - 32768 / 2, y = rand() + 32768 / 2;
+                x = RandInt32::get() % 65536 - 32768 / 2, y = RandInt32::get() % 65536 + 32768 / 2;
 #else
-                x = rand(), y = x + 100;
+                x = RandInt32::get() % 65536, y = x + 100;
 #endif
                 qryMin[i][2] = min(x, y); qryMax[i][2] = max(x, y);
             }
@@ -389,9 +390,9 @@ void testKDTree() {
         int N = 1000;
         vector<vector<int>> in(N, vector<int>(3));
         for (int i = 0; i < N; i++) {
-            in[i][0] = rand();
-            in[i][1] = rand();
-            in[i][2] = rand();
+            in[i][0] = RandInt32::get() % 65536;
+            in[i][1] = RandInt32::get() % 65536;
+            in[i][2] = RandInt32::get() % 65536;
             tree.insert(in[i]);
         }
 
@@ -399,9 +400,9 @@ void testKDTree() {
 
         vector<vector<int>> qry(QN, vector<int>(3));
         for (int i = 0; i < QN; i++) {
-            qry[i][0] = rand();
-            qry[i][1] = rand();
-            qry[i][2] = rand();
+            qry[i][0] = RandInt32::get() % 65536;
+            qry[i][1] = RandInt32::get() % 65536;
+            qry[i][2] = RandInt32::get() % 65536;
         }
 
         vector<vector<KDTree<int,3>::Node*>> out1(QN);
@@ -453,9 +454,9 @@ void testKDTree() {
 
         PROFILE_START(0);
         for (int i = 0; i < N; i++) {
-            in[i][0] = rand();
-            in[i][1] = rand();
-            in[i][2] = rand();
+            in[i][0] = RandInt32::get() % 65536;
+            in[i][1] = RandInt32::get() % 65536;
+            in[i][2] = RandInt32::get() % 65536;
             tree.insert(in[i]);
         }
         PROFILE_STOP(0);
@@ -464,9 +465,9 @@ void testKDTree() {
 
         vector<vector<int>> qry(QN, vector<int>(3));
         for (int i = 0; i < QN; i++) {
-            qry[i][0] = rand();
-            qry[i][1] = rand();
-            qry[i][2] = rand();
+            qry[i][0] = RandInt32::get() % 65536;
+            qry[i][1] = RandInt32::get() % 65536;
+            qry[i][2] = RandInt32::get() % 65536;
         }
 
         vector<vector<int>> out1(QN);

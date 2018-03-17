@@ -14,6 +14,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 static int count(vector<bool>& v, int L, int R) {
     int res = 0;
@@ -33,7 +34,7 @@ void testBitVectorRank() {
     for (int i = 0; i < T; i++) {
         vector<bool> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = bool(rand() & 1);
+            in[j] = bool(RandInt32::get() & 1);
 
         BitVectorRank vec;
         vec.init(N);
@@ -44,8 +45,8 @@ void testBitVectorRank() {
         vec.buildRank();
 
         for (int j = 0; j < 10; j++) {
-            int L = rand() % N;
-            int R = rand() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
 
             if (L > R)
                 swap(L, R);

@@ -4,6 +4,8 @@
 #include "primeNumberBasic.h"
 #include "primeFactor.h"
 
+// https://e-maxx-eng.appspot.com/algebra/primitive-root.html
+
 struct PrimitiveRootFinder {
     static int find(int n) {
         unordered_set<int> s;

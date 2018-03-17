@@ -63,7 +63,7 @@ protected:
 
         while (!millerRabin(n)) {
             int c;
-            for (c = 1, x = n; x == n; c = 1 + rand() % (n - 1)) {
+            for (c = 1, x = n; x == n; c = 1 + randInt() % (n - 1)) {
                 x = go(n, c);
             }
             if (x < 0)
@@ -109,6 +109,10 @@ private:
              + (rand() & 0x7fff) * (1ll << 32)
              + (rand() & 0x7fff) * (1ll << 16)
              + (rand() & 0x7fff);
+    }
+
+    static int randInt() {
+        return (rand() & 0x7fff) * (rand() & 0x7fff);
     }
 
     static long long gcd(long long p, long long q) {

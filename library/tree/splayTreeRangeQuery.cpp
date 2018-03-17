@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+#include "../common/rand.h"
 
 #include "redBlackTree.h"
 #include "../rangeQuery/segmentTreeLazy.h"
@@ -108,7 +109,7 @@ void testSplayRangeQuery() {
         spt.build(N);
 
         for (int i = 0; i < N; i++) {
-            int x = rand() % 100;
+            int x = RandInt32::get() % 100;
             segt.update(i, x);
             spt.update(i, x);
         }
@@ -121,10 +122,10 @@ void testSplayRangeQuery() {
         for (int i = 0; i < N * 4; i++) {
             int left, right, value;
 
-            switch (rand() % 4) {
+            switch (RandInt32::get() % 4) {
             case 0:
-                left = rand() % N;
-                value = rand() % 100;
+                left = RandInt32::get() % N;
+                value = RandInt32::get() % 100;
                 segt.update(left, value);
                 spt.update(left, value);
                 assert(segt.query(left, left) == spt.query(left));
@@ -134,11 +135,11 @@ void testSplayRangeQuery() {
                 assert(segt.query(1, N - 2) == spt.query(1, N - 2));
                 break;
             case 1:
-                left = rand() % N;
-                right = rand() % N;
+                left = RandInt32::get() % N;
+                right = RandInt32::get() % N;
                 if (left > right)
                     swap(left, right);
-                value = rand() % 100;
+                value = RandInt32::get() % 100;
                 segt.updateRange(left, right, value);
                 spt.update(left, right, value);
                 assert(segt.query(left, right) == spt.query(left, right));
@@ -149,7 +150,7 @@ void testSplayRangeQuery() {
                 break;
             case 2:
             {
-                left = rand() % N;
+                left = RandInt32::get() % N;
                 int v1 = segt.query(left, left);
                 int v2 = spt.query(left);
                 if (v1 != v2)
@@ -159,8 +160,8 @@ void testSplayRangeQuery() {
             }
             case 3:
             {
-                left = rand() % N;
-                right = rand() % N;
+                left = RandInt32::get() % N;
+                right = RandInt32::get() % N;
                 if (left > right)
                     swap(left, right);
                 int v1 = segt.query(left, right);
@@ -189,7 +190,7 @@ void testSplayRangeQuery() {
         random_shuffle(possible.begin(), possible.end());
 
         for (int i = 0; i < N * 4; i++) {
-            switch (rand() % 4) {
+            switch (RandInt32::get() % 4) {
             case 0: // insert
                 if (!possible.empty()) {
                     int x = possible.front();
@@ -201,7 +202,7 @@ void testSplayRangeQuery() {
                 break;
             case 1: // erase
                 if (!vec.empty()) {
-                    int idx = rand() % (int)vec.size();
+                    int idx = RandInt32::get() % (int)vec.size();
                     int x = vec[idx];
                     possible.push_back(x);
                     vec.erase(vec.begin() + idx);
@@ -218,15 +219,15 @@ void testSplayRangeQuery() {
                 break;
             case 2: // query
                 if (!vec.empty()) {
-                    int idx = rand() % (int)vec.size();
+                    int idx = RandInt32::get() % (int)vec.size();
                     assert(vec[idx] == spt.query(idx));
                     assert(accumulate(vec.begin(), vec.end(), 0) == spt.query(0, spt.size() - 1));
                 }
                 break;
             case 3: // query
                 if (!vec.empty()) {
-                    int left = rand() % (int)vec.size();
-                    int right = rand() % (int)vec.size();;
+                    int left = RandInt32::get() % (int)vec.size();
+                    int right = RandInt32::get() % (int)vec.size();;
                     if (left > right)
                         swap(left, right);
 
@@ -254,7 +255,7 @@ void testSplayRangeQuery() {
         spt.build(N);
 
         for (int i = 0; i < N; i++) {
-            int x = rand() % 100;
+            int x = RandInt32::get() % 100;
             segt.update(i, x);
             spt.update(i, x);
         }
@@ -264,11 +265,11 @@ void testSplayRangeQuery() {
         in.reserve(tN);
 
         for (int i = 0; i < tN; i++) {
-            int l = rand() % N;
-            int r = rand() % N;
+            int l = RandInt32::get() % N;
+            int r = RandInt32::get() % N;
             if (l > r)
                 swap(l, r);
-            in.emplace_back(rand() % 2, l, r, rand() % 100);
+            in.emplace_back(RandInt32::get() % 2, l, r, RandInt32::get() % 100);
         }
 
         PROFILE_START(0);

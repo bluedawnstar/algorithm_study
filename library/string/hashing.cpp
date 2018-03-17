@@ -13,12 +13,13 @@ using namespace std;
 #include <algorithm>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 static string makeRandomString(int n) {
     string s;
     s.reserve(n);
     for (int i = 0; i < n; i++)
-        s.push_back(rand() % 26 + 'a');
+        s.push_back(RandInt32::get() % 26 + 'a');
     return s;
 }
 
@@ -32,7 +33,7 @@ static int countUniqueSubstrings(const string& s) {
 }
 
 void testHashing() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Hashing ---------------------------------------------" << endl;
     {
