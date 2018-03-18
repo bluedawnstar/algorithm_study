@@ -107,12 +107,12 @@ struct SegmentTreeMaxSubarray {
     }
 
 
-    T query(int index) {
+    T query(int index) const {
         return tree[index + N].bestSum;
     }
 
     // inclusive
-    T query(int left, int right) {
+    T query(int left, int right) const {
         Node resL = { -INF, -INF, -INF, -INF };
         Node resR = { -INF, -INF, -INF, -INF };
 

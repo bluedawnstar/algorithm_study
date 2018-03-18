@@ -26,7 +26,7 @@ using namespace std;
 vector<int> gTrV;
 
 template <typename Op>
-void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
+static void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
     gTrV.clear();
     gTrV.resize(MAXN);
 
@@ -41,7 +41,7 @@ void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
     tr.makeLcaTable();
 }
 
-void update(Tree& tr, int u, int v, int value) {
+static void update(Tree& tr, int u, int v, int value) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         gTrV[u] = value;
@@ -54,7 +54,7 @@ void update(Tree& tr, int u, int v, int value) {
     gTrV[lca] = value;
 }
 
-void add(Tree& tr, int u, int v, int value) {
+static void add(Tree& tr, int u, int v, int value) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         gTrV[u] += value;
@@ -67,7 +67,7 @@ void add(Tree& tr, int u, int v, int value) {
     gTrV[lca] += value;
 }
 
-int query(Tree& tr, int u, int v) {
+static int query(Tree& tr, int u, int v) {
     int res = 0;
 
     int lca = tr.findLCA(u, v);

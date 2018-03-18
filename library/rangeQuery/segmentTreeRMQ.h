@@ -71,7 +71,7 @@ struct RMQ {
     }
 
     // inclusive
-    int query(int left, int right) {
+    int query(int left, int right) const {
         left += N;
         right += N;
         int ret = INT_MAX;

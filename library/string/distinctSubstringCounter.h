@@ -65,7 +65,7 @@ struct DistinctSubstringCounterWithSuffixArray {
         return currSuffixPos--;
     }
 
-    T query(int right) {
+    T query(int right) const {
         return fsum.sumRange(currSuffixPos + 1, right);
     }
 };
@@ -83,7 +83,7 @@ struct DistinctSubstringCounterWithSuffixAutomaton : public SuffixAutomaton {
         update(last);
     }
 
-    T query(int left) {
+    T query(int left) const {
         return bit.sumRange(left, state[last].len - 1);
     }
 

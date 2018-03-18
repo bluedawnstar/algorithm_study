@@ -30,7 +30,7 @@ struct PrefixSum {
 
 
     // inclusive (0 <= left <= right < N)
-    T query(int left, int right) {
+    T query(int left, int right) const {
         return sum[right + 1] - sum[left];
     }
 };

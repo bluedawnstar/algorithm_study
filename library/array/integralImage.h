@@ -24,7 +24,7 @@ struct IntegralImage {
     }
 
     // inclusive (0 <= left <= right < N), (0 <= top <= bottom < N)
-    T query(int left, int top, int right, int bottom) {
+    T query(int left, int top, int right, int bottom) const {
         return sum[bottom + 1][right + 1] - sum[bottom + 1][left] - sum[top][right + 1] + sum[top][left];
     }
 };

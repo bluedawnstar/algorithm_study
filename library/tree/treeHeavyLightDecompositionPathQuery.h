@@ -56,7 +56,7 @@ struct HLDPathQuery {
         mSegTrees[path].update(index, cost);
     }
 
-    T query(int u, int v) {
+    T query(int u, int v) const {
         int lca = mHld.mTree.findLCA(u, v);
         return mBinOp(queryTopdown(lca, u), queryTopdown(lca, v));
     }
@@ -87,7 +87,7 @@ struct HLDPathQuery {
 
 protected:
     // return max value a path from u to v (u is an ancestor of v)
-    T queryTopdown(int u, int v) {
+    T queryTopdown(int u, int v) const {
         if (u == v)
             return mDefaultValue;
 

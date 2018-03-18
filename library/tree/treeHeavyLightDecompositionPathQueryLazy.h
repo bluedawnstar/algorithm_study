@@ -64,7 +64,7 @@ struct HLDPathQueryLazy {
         updateRangeTopdown(lca, v, cost);
     }
 
-    T query(int u, int v) {
+    T query(int u, int v) const {
         int lca = mHld.mTree.findLCA(u, v);
         return mMergeOp(queryTopdown(lca, u), queryTopdown(lca, v));
     }
@@ -97,7 +97,7 @@ struct HLDPathQueryLazy {
         }
     }
 
-    T queryVertex(int u, int v) {
+    T queryVertex(int u, int v) const {
         int lca = mHld.mTree.findLCA(u, v);
         if (lca == mHld.mRoot)
             return mMergeOp(mMergeOp(queryTopdown(lca, u), queryTopdown(lca, v)), mRootValue);
@@ -130,7 +130,7 @@ protected:
     }
 
     // return max value a path from u to v (u is an ancestor of v)
-    T queryTopdown(int u, int v) {
+    T queryTopdown(int u, int v) const {
         if (u == v)
             return mDefaultValue;
 

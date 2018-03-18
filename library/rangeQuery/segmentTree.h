@@ -97,7 +97,7 @@ struct SegmentTree {
 
 
     // inclusive
-    T query(int left, int right) {
+    T query(int left, int right) const {
         return querySub(left, right, 1, 0, N - 1);
     }
 
@@ -142,7 +142,7 @@ private:
         return tree[node] = mergeOp(leftSum, rightSum);
     }
 
-    T querySub(int left, int right, int node, int nodeLeft, int nodeRight) {
+    T querySub(int left, int right, int node, int nodeLeft, int nodeRight) const {
         if (right < nodeLeft || nodeRight < left)
             return defaultValue;
 

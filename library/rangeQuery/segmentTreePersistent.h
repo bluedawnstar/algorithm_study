@@ -85,7 +85,7 @@ struct PersistentSegmentTree {
 
 
     // inclusive
-    T query(int left, int right) {
+    T query(int left, int right) const {
         return querySub(trees.back(), left, right, 0, N - 1);
     }
 
@@ -116,7 +116,7 @@ struct PersistentSegmentTree {
     //--- with history ---
 
     // inclusive
-    T query(int historyIndex, int left, int right) {
+    T query(int historyIndex, int left, int right) const {
         return querySub(trees[historyIndex], left, right, 0, N - 1);
     }
 
@@ -188,7 +188,7 @@ private:
         return make_pair(value, createNode(value, L.second, R.second));
     }
 
-    T querySub(Node* node, int left, int right, int nodeLeft, int nodeRight) {
+    T querySub(Node* node, int left, int right, int nodeLeft, int nodeRight) const {
         if (right < nodeLeft || nodeRight < left)
             return defaultValue;
 

@@ -73,12 +73,12 @@ struct CompactSegmentTree {
 
     //--- query
 
-    T query(int index) {
+    T query(int index) const {
         return tree[index + N];
     }
 
     // inclusive
-    T query(int left, int right) {
+    T query(int left, int right) const {
         T resL = defaultValue;
         T resR = defaultValue;
 
@@ -137,7 +137,7 @@ struct CompactSegmentTree {
     // find next position where f(x) is true in [start, N)
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
-    int findNext(int start, const function<bool(int)>& f) {
+    int findNext(int start, const function<bool(int)>& f) const {
         int shiftN = 0;
         int cur = start + N, R = RealN - 1 + N;
 
@@ -165,7 +165,7 @@ struct CompactSegmentTree {
     // find previous position where f(x) is true in [0, start]
     //   f(x): OOOOOOOOxxxxxxxxxxx
     //                ^          S
-    int findPrev(int start, const function<bool(int)>& f) {
+    int findPrev(int start, const function<bool(int)>& f) const {
         int shiftN = 0;
         int cur = start + N, L = N;
 

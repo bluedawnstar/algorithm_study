@@ -31,7 +31,7 @@ struct SegmentTreeLine1D {
     }
 
     // return N - covered area
-    int queryNotCovered() {
+    int queryNotCovered() const {
         return tree[1].first == 0 ? tree[1].second : 0;
     }
 

@@ -72,7 +72,7 @@ struct DisjointSparseTable {
 
 
     // O(1), inclusive
-    T query(int left, int right) {
+    T query(int left, int right) const {
         if (left == right)
             return value[0][left];
 
