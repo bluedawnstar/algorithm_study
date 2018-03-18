@@ -41,8 +41,14 @@ struct SuffixArray {
         return (int)suffixArray.size();
     }
 
+    // get suffix index from suffix array index
     int operator[](int index) const {
         return suffixArray[index];
+    }
+
+    // get suffix array index from suffix index
+    int suffixToSuffixArray(int index) const {
+        return suffixArrayRev[index];
     }
 
     // inclusive (left index to Suffix Array, left index to Suffix Array) -- not suffix index
@@ -58,6 +64,100 @@ struct SuffixArray {
         int saL = suffixArrayRev[left];
         int saR = suffixArrayRev[right];
         return lcp(min(saL, saR), max(saL, saR));
+    }
+
+    //--- find
+
+    // return min{x | lcp(left, x) <= length}, (left < x < N)
+    // - left : left index of suffix array
+    // - length : LCP length
+    //
+    //  .....OOOOOOOOOOOOOOOOOOOOOOOxxxxxxxxx
+    //       left(lcp > length)     ^
+    int lowerBoundLcpForward(int left, int length) const {
+        int n = (int)suffixArray.size();
+        if (left >= n - 1)
+            return n;
+
+        int lo = left + 1, hi = n - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (lcp(left, mid) <= length)
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
+
+        return lo;
+    }
+
+    // return min{x | lcp(left, x) < length}, (left < x < N)
+    // - left : left index of suffix array
+    // - length : LCP length
+    //
+    //  .....OOOOOOOOOOOOOOOOOOOOOOOxxxxxxxxx
+    //       left(lcp >= length)    ^
+    int upperBoundLcpForward(int left, int length) const {
+        int n = (int)suffixArray.size();
+        if (left >= n - 1)
+            return n;
+
+        int lo = left + 1, hi = n - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (lcp(left, mid) < length)
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
+
+        return lo;
+    }
+
+    // return max{x | lcp(x, right) <= length}, (0 <= x < right)
+    // - right : right index of suffix array
+    // - length : LCP length
+    // 
+    //  xxxxxxxxxOOOOOOOOOOOOOOOOOOOOOOO.....
+    //          ^      (lcp > length)right
+    int lowerBoundLcpBackward(int right, int length) const {
+        int n = (int)suffixArray.size();
+        if (right <= 0)
+            return -1;
+
+        int lo = 0, hi = right - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (lcp(mid, right) > length)
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
+
+        return hi;
+    }
+
+    // return max{x | lcp(x, right) < length}, (0 <= x < right)
+    // - right : right index of suffix array
+    // - length : LCP length
+    // 
+    //  xxxxxxxxxOOOOOOOOOOOOOOOOOOOOOOO.....
+    //          ^     (lcp >= length)right
+    int upperBoundLcpBackward(int right, int length) const {
+        int n = (int)suffixArray.size();
+        if (right <= 0)
+            return -1;
+
+        int lo = 0, hi = right - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (lcp(mid, right) >= length)
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
+
+        return hi;
     }
 
     //------------------------------------------------------------------------
@@ -146,66 +246,3 @@ struct SuffixArray {
         return buildLcpArray(suffixArray, &s[0], (int)s.length());
     }
 };
-
-//--- O(N (logN)^2) method ---
-template <typename T>
-vector<int> makeSuffixArrayNaive(T s, int n) {
-    // A structure to store suffixes and their indexes
-    vector<pair<int, int>> suffixes(n);     // (current rank, next rank)
-    vector<int> SA(n);
-
-    auto cmp = [&suffixes](int a, int b) {
-        return (suffixes[a].first != suffixes[b].first)
-            ? suffixes[a].first < suffixes[b].first
-            : suffixes[a].second < suffixes[b].second;
-    };
-
-    for (int i = 0; i < n; i++)
-        SA[i] = i;
-
-    // Store suffixes and their indexes in an array of structures.
-    // The structure is needed to sort the suffixes alphabatically
-    // and maintain their old indexes while sorting
-    for (int i = 0; i < n; i++) {
-        suffixes[i].first = s[i] - 'a';                             //TODO: check conversion from character to rank
-        suffixes[i].second = ((i + 1) < n) ? (s[i + 1] - 'a') : -1; //TODO: check conversion from character to rank
-    }
-
-    // Sort the suffixes using the comparison function defined above.
-    sort(SA.begin(), SA.end(), cmp);
-
-    for (int k = 4; k < 2 * n; k = k * 2) {
-        // Assigning rank and index values to first suffix
-        int rank = 0;
-        int prevRank = suffixes[SA[0]].first;
-        suffixes[SA[0]].first = rank;
-
-        // Assigning rank to suffixes
-        for (int i = 1; i < n; i++) {
-            int curI = SA[i];
-            int prvI = SA[i - 1];
-            // If first rank and next ranks are same as that of previous
-            // suffix in array, assign the same new rank to this suffix
-            if (suffixes[curI].first == prevRank &&
-                suffixes[curI].second == suffixes[prvI].second) {
-                prevRank = suffixes[curI].first;
-                suffixes[curI].first = rank;
-            } else { // Otherwise increment rank and assign
-                prevRank = suffixes[curI].first;
-                suffixes[curI].first = ++rank;
-            }
-        }
-
-        // Assign next rank to every suffix
-        for (int i = 0; i < n; i++) {
-            int nextI = SA[i] + k / 2;
-            suffixes[SA[i]].second = (nextI < n) ? suffixes[nextI].first : -1;
-        }
-
-        // Sort the suffixes according to first k characters
-        sort(SA.begin(), SA.end(), cmp);
-    }
-
-    // Return the suffix array
-    return SA;
-}

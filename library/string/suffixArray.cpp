@@ -5,7 +5,6 @@
 using namespace std;
 
 #include "suffixArray.h"
-#include "suffixArrayExt.h"
 #include "suffixArrayAlgo.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -23,8 +22,34 @@ static string makeRandomString(int n) {
     return s;
 }
 
+static string makeRandomString(int n, int charCnt) {
+    string s;
+    s.reserve(n);
+    for (int i = 0; i < n; i++)
+        s.push_back(RandInt32::get() % charCnt + 'a');
+    return s;
+}
+
+static int lowerBoundForwardSlow(const vector<int>& sa, int left, int length, const string& s) {
+    for (int i = left + 1; i < (int)sa.size(); i++) {
+        if (SuffixArrayAlgo::commonPrefixNaive(s, sa[left], sa[i]) <= length)
+            return i;
+    }
+
+    return (int)sa.size();
+}
+
+static int lowerBoundBackwardSlow(const vector<int>& sa, int right, int length, const string& s) {
+    for (int i = right - 1; i >= 0; i--) {
+        if (SuffixArrayAlgo::commonPrefixNaive(s, sa[i], sa[right]) <= length)
+            return i;
+    }
+
+    return -1;
+}
+
 void testSuffixArray() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    //return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Suffix Array --------------------" << endl;
     {
@@ -54,6 +79,24 @@ void testSuffixArray() {
             auto SA = SuffixArray::buildSuffixArray(s);
             for (int i = 0; i < N; i++)
                 assert(v[i].second == SA[i]);
+        }
+    }
+    {
+        int N = 100;
+        int T = 10;
+        int L = 5;
+        string s = makeRandomString(N, 3);
+
+        SuffixArray SA(s);
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < T; j++) {
+                int len = RandInt32::get() % L;
+                assert(SA.lowerBoundLcpForward(i, len) == lowerBoundForwardSlow(SA.suffixArray, i, len, s));
+                assert(SA.upperBoundLcpForward(i, len) == lowerBoundForwardSlow(SA.suffixArray, i, len - 1, s));
+                assert(SA.lowerBoundLcpBackward(i, len) == lowerBoundBackwardSlow(SA.suffixArray, i, len, s));
+                assert(SA.upperBoundLcpBackward(i, len) == lowerBoundBackwardSlow(SA.suffixArray, i, len - 1, s));
+            }
         }
     }
     cout << "OK!" << endl;

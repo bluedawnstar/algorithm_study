@@ -197,7 +197,6 @@
     <ClInclude Include="subsequenceCount.h" />
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArrayAlgo.h" />
-    <ClInclude Include="suffixArrayExt.h" />
     <ClInclude Include="suffixArraySparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />
     <ClInclude Include="suffixAutomatonAlgo.h" />
