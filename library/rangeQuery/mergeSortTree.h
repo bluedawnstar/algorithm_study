@@ -31,7 +31,7 @@ struct MergeSortTree {
     }
 
 
-    // O(logN * logN), inclusive (0 <= left <= right < N)
+    // O((logN)^2), inclusive (0 <= left <= right < N)
     int countLessThanOrEqual(int left, int right, T val) const {
         return countLessThanOrEqualSub(left, right, val, 0, 0, N - 1);
     }
@@ -40,7 +40,7 @@ struct MergeSortTree {
         return countLessThanOrEqualSub(0, N - 1, val, 0, 0, N - 1);
     }
 
-    // count a value k, O(logN * logN), inclusive (0 <= left <= right < N)
+    // count a value k, O((logN)^2), inclusive (0 <= left <= right < N)
     int count(int left, int right, T val) const {
         return countLessThanOrEqual(left, right, val) - countLessThanOrEqual(left, right, val - 1);
     }
@@ -49,7 +49,7 @@ struct MergeSortTree {
         return countLessThanOrEqual(val) - countLessThanOrEqual(val - 1);
     }
 
-    // count a value k, O(logN * logN), inclusive (0 <= left <= right < N)
+    // count a value k, O((logN)^2), inclusive (0 <= left <= right < N)
     int count(int left, int right, T valLow, T valHigh) const {
         return countLessThanOrEqual(left, right, valHigh) - countLessThanOrEqual(left, right, valLow - 1);
     }
@@ -58,7 +58,7 @@ struct MergeSortTree {
         return countLessThanOrEqual(valHigh) - countLessThanOrEqual(valLow - 1);
     }
 
-    // O(logN * logN * logA), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
+    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
     // If not found, return valHigh
     T kth(int left, int right, int k, T valLow, T valHigh) const {
         T lo = valLow, hi = valHigh;
@@ -72,7 +72,7 @@ struct MergeSortTree {
         return lo; // lower bound
     }
 
-    // O(logN * logN * logA), inclusive (0 <= k < N)
+    // O((logN)^2 * logA), inclusive (0 <= k < N)
     T kth(int k) const {
         return tree[0][k];
     }

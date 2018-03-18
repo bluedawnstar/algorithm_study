@@ -41,7 +41,7 @@ struct MergeSortTreeIndex {
     }
 
 
-    // O(logN * logN), inclusive (0 <= left <= right < N)
+    // O((logN)^3), inclusive (0 <= left <= right < N)
     int countLessThanOrEqual(int left, int right, T val) const {
         int lo = 0, hi = right - left;
         while (lo <= hi) {
@@ -58,7 +58,7 @@ struct MergeSortTreeIndex {
         return countLessThanOrEqual(0, N - 1, val);
     }
 
-    // count a value k, O(logN * logN), inclusive (0 <= left <= right < N)
+    // count a value k, O((logN)^3), inclusive (0 <= left <= right < N)
     int count(int left, int right, T val) const {
         return countLessThanOrEqual(left, right, val) - countLessThanOrEqual(left, right, val - 1);
     }
@@ -67,7 +67,7 @@ struct MergeSortTreeIndex {
         return countLessThanOrEqual(0, N - 1, val) - countLessThanOrEqual(0, N - 1, val - 1);
     }
 
-    // count a value k, O(logN * logN), inclusive (0 <= left <= right < N)
+    // count a value k, O((logN)^3), inclusive (0 <= left <= right < N)
     int count(int left, int right, T valLow, T valHigh) const {
         return countLessThanOrEqual(left, right, valHigh) - countLessThanOrEqual(left, right, valLow - 1);
     }
@@ -77,22 +77,22 @@ struct MergeSortTreeIndex {
     }
 
 
-    // O(logN * logN * logA), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
+    // O((logN)^2), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
     int kthIndex(int left, int right, int k) const {
         return kthSub(left, right, k, 0, 0, N - 1);
     }
 
-    // O(logN * logN * logA), inclusive (0 <= k < N)
+    // O((logN)^2), inclusive (0 <= k < N)
     int kthIndex(int k) const {
         return kthSub(0, N - 1, k, 0, 0, N - 1);
     }
 
-    // O(logN * logN * logA), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
+    // O((logN)^2), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
     T kth(int left, int right, int k) const {
         return values[kthSub(left, right, k, 0, 0, N - 1)];
     }
 
-    // O(logN * logN * logA), inclusive (0 <= k < N)
+    // O((logN)^2), inclusive (0 <= k < N)
     T kth(int k) const {
         return values[kthSub(0, N - 1, k, 0, 0, N - 1)];
     }
