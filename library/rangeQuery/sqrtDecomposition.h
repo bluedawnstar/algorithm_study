@@ -125,7 +125,7 @@ struct SqrtDecompositionLazy {
         }
     }
 
-    T query(int l, int r) {
+    T query(int l, int r) const {
         T res = defaultValue;
 
         int blockL = l / blockSize;
@@ -172,7 +172,7 @@ private:
             blockValues[block] = mergeOp(blockValues[block], values[l++]);
     }
 
-    T mergeValue(int l, int r) {
+    T mergeValue(int l, int r) const {
         T res = defaultValue;
 
         while (l < r)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../rangeQuery/sparseTableMin.h"
+#include "suffixArray.h"
 #include "../rangeQuery/segmentTreeRMQ.h"
 #include "../rangeQuery/fenwickTreeMultAdd.h"
 
@@ -10,19 +10,17 @@ struct DistinctSubstringCounterWithSuffixArray {
     int N;
     int currSuffixPos;
 
-    SparseTableMin  lcpTable;
+    SuffixArray     SA;
     RMQ             addedSuffix;    // suffix string poistion
     vector<int>     revSA;          // suffix string position to suffix array index
 
     FenwickTreeMultAdd<T>   fsum;
 
-    DistinctSubstringCounterWithSuffixArray(const vector<int>& SA, const vector<int>& lcpArray, int n)
-        : lcpTable(lcpArray), addedSuffix(n), fsum(n), revSA(n) {
-        N = n;
-        currSuffixPos = N - 1;
+    DistinctSubstringCounterWithSuffixArray(const string& s)
+        : N((int)s.length()), currSuffixPos(N - 1), SA(s), addedSuffix(N), fsum(N), revSA(N) {
 
         for (int i = 0; i < N; i++)
-            revSA[SA[i]] = i;
+            revSA[SA.suffixArray[i]] = i;
     }
 
     // extend from right to left in string
@@ -35,8 +33,8 @@ struct DistinctSubstringCounterWithSuffixArray {
 
             lo = 0, hi = suffix;
             while (lo <= hi) {
-                int mid = (lo + hi) / 2;
-                if (lcpTable.query(mid, suffix) > prevLCP)
+                int mid = lo + (hi - lo) / 2;
+                if (SA.lcp(mid - 1, suffix) > prevLCP)
                     hi = mid - 1;
                 else
                     lo = mid + 1;
@@ -45,8 +43,8 @@ struct DistinctSubstringCounterWithSuffixArray {
 
             lo = suffix + 1, hi = N - 1;
             while (lo <= hi) {
-                int mid = (lo + hi) / 2;
-                if (lcpTable.query(suffix + 1, mid) <= prevLCP)
+                int mid = lo + (hi - lo) / 2;
+                if (SA.lcp(suffix, mid) <= prevLCP)
                     hi = mid - 1;
                 else
                     lo = mid + 1;
@@ -57,7 +55,7 @@ struct DistinctSubstringCounterWithSuffixArray {
             if (nextSuffixPos >= INT_MAX)
                 break;
             int nextSuffix = revSA[nextSuffixPos];
-            int currLCP = lcpTable.query(min(suffix, nextSuffix) + 1, max(suffix, nextSuffix));
+            int currLCP = SA.lcp(min(suffix, nextSuffix), max(suffix, nextSuffix));
             fsum.addRange(nextSuffixPos + prevLCP, nextSuffixPos + currLCP - 1, -1);
             prevLCP = currLCP;
         }

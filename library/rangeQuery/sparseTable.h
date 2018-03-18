@@ -63,18 +63,18 @@ struct SparseTable {
 
 
     // O(1), inclusive
-    T query(int left, int right) {
+    T query(int left, int right) const {
         right++;
         if (right <= left)
             return defaultValue;
 
         int k = H[right - left];
-        vector<T>& mink = value[k];
+        const vector<T>& mink = value[k];
         return mergeOp(mink[left], mink[right - (1 << k)]);
     }
 
     // O(log(right - left + 1)), inclusive
-    T queryNoOverlap(int left, int right) {
+    T queryNoOverlap(int left, int right) const {
         right++;
         if (right <= left)
             return defaultValue;

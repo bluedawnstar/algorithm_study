@@ -74,13 +74,13 @@ struct SparseTableIndex {
 
     // O(1), inclusive
     // return index
-    int query(int left, int right) {
+    int query(int left, int right) const {
         right++;
         if (right <= left)
             return -1;
 
         int k = H[right - left];
-        vector<int>& mink = value[k];
+        const vector<int>& mink = value[k];
 
         int a = mink[left];
         int b = mink[right - (1 << k)];
@@ -88,7 +88,7 @@ struct SparseTableIndex {
     }
 
     // O(log(right - left + 1)), inclusive
-    int queryNoOverlap(int left, int right) {
+    int queryNoOverlap(int left, int right) const {
         right++;
         if (right <= left)
             return -1;

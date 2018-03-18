@@ -9,20 +9,33 @@
 struct LcpArraySparseTable {
     SparseTableMin lcpTable;
     
+    LcpArraySparseTable() {
+    }
+
+
     // PRECONDITION: lcpArray[i] = LCP(SA[i], SA[i - 1])
     LcpArraySparseTable(const int lcpArray[], int n)
         : lcpTable(lcpArray, n) {
-        // no action
     }
 
     LcpArraySparseTable(const vector<int>& lcpArray)
         : lcpTable(lcpArray) {
-        // no action
     }
+
+
+    // PRECONDITION: lcpArray[i] = LCP(SA[i], SA[i - 1])
+    void build(const int lcpArray[], int n) {
+        lcpTable.build(lcpArray, n);
+    }
+
+    void build(const vector<int>& lcpArray) {
+        lcpTable.build(lcpArray);
+    }
+
 
     // inclusive (left SA index, right SA index)
     // CAUTION: if left == right, lcp() will return INT_MAX
-    int lcp(int left, int right) {
+    int lcp(int left, int right) const {
         return lcpTable.query(left + 1, right);
     }
 };

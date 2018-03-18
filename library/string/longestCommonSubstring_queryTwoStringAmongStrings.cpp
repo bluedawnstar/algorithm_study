@@ -21,8 +21,7 @@ struct LongestCommonStringLengthWithSuffixArray {
 
     vector<int> mSuffixToStrID;
 
-    vector<int> mSA;
-    vector<int> mLCP;
+    SuffixArray mSA;
 
     vector<int> mAns;
     vector<pair<int, int>> mQIn;
@@ -83,9 +82,7 @@ struct LongestCommonStringLengthWithSuffixArray {
         }
 
         // making suffix array, LCP array, sparse table for LCP array
-        mSA = SuffixArray::build(mSS);
-        mLCP = SuffixArray::buildLcpArray(mSA, mSS);
-        LcpArraySparseTable sparseTable(mLCP);
+        mSA.build(mSS, 'a', 'z' + 1);
 
         // check forward
         vector<int> lastSAIndex(mN, -1);
@@ -101,7 +98,7 @@ struct LongestCommonStringLengthWithSuffixArray {
                     if (lastSAIndex[lStrID] < 0)
                         continue;
 
-                    int lcp = sparseTable.lcp(lastSAIndex[lStrID], i);
+                    int lcp = mSA.lcp(lastSAIndex[lStrID], i);
 
                     int maxLen = min(mS[lStrID].second - mSA[lastSAIndex[lStrID]],
                                      mS[rStrID].second - mSA[i]);
@@ -129,7 +126,7 @@ struct LongestCommonStringLengthWithSuffixArray {
                     if (lastSAIndex[lStrID] < 0)
                         continue;
 
-                    int lcp = sparseTable.lcp(i, lastSAIndex[lStrID]);
+                    int lcp = mSA.lcp(i, lastSAIndex[lStrID]);
 
                     int maxLen = min(mS[lStrID].second - mSA[lastSAIndex[lStrID]],
                                      mS[rStrID].second - mSA[i]);
@@ -149,64 +146,6 @@ struct LongestCommonStringLengthWithSuffixArray {
             res[i] = mAns[mQIndex[mQIn[i].first][mQIn[i].second]];
 
         return res;
-    }
-
-private:
-    vector<int> makeSuffixArrayFast(const string& s) {
-        int n = (int)s.length();
-
-        vector<int> SA(n);
-        if (n <= 1)
-            return SA;
-
-        int m = 27;                                     // caution: alphabet + delemiter
-        vector<int> cnt(max(n, m)), currG(n), nextG(n);
-
-        for (int i = 0; i < n; i++) {
-            currG[i] = s[i] - 'a';
-            ++cnt[currG[i]];
-        }
-        for (int i = 1; i < m; i++)
-            cnt[i] += cnt[i - 1];
-        for (int i = n - 1; i >= 0; i--)
-            SA[--cnt[currG[i]]] = i;
-
-        int len = 1;
-        do {
-            int g = 0;
-            for (int i = n - len; i < n; i++)
-                nextG[g++] = i;
-            for (int i = 0; i < n; i++) {
-                if (SA[i] >= len)
-                    nextG[g++] = SA[i] - len;
-            }
-
-            fill(cnt.begin(), cnt.begin() + m, 0);
-            for (int i = 0; i < n; i++)
-                ++cnt[currG[nextG[i]]];
-            for (int i = 1; i < m; i++)
-                cnt[i] += cnt[i - 1];
-            for (int i = n - 1; i >= 0; i--)
-                SA[--cnt[currG[nextG[i]]]] = nextG[i];
-
-            int curSA = SA[0];
-            nextG[curSA] = g = 0;
-            for (int i = 1; i < n; i++) {
-                int prvSA = curSA;
-                curSA = SA[i];
-
-                nextG[curSA] = (prvSA + len < n && curSA + len < n
-                    && currG[prvSA] == currG[curSA]
-                    && currG[prvSA + len] == currG[curSA + len])
-                    ? g : ++g;
-            }
-            swap(currG, nextG);
-
-            len <<= 1;
-            m = g + 1;
-        } while (m < n);
-
-        return SA;
     }
 };
 

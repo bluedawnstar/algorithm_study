@@ -1,23 +1,9 @@
 #pragma once
 
 struct SuffixTree {
-    static const size_t MaxCharN = 26;
-
-    static int ch2i(char ch) {
-        return ch - 'a';
-    }
-
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
         return (int)__popcnt(x);
-        /*
-        x = x - ((x >> 1) & 0x55555555);
-        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-        x = (x + (x >> 4)) & 0x0F0F0F0F;
-        x = x + (x >> 8);
-        x = x + (x >> 16);
-        return int(x & 0x0000003F);
-        */
 #else
         return __builtin_popcount(x);
 #endif
@@ -99,21 +85,21 @@ struct SuffixTree {
     int             mActiveLen;
     int*            mLeafEnd;
 
+    int             mCharMin;
+    int             mCharMax;
+
     //SuffixTree() {
     //    init(0);
     //}
 
-    explicit SuffixTree(int maxN) {
+    explicit SuffixTree(int maxN, int charMin = 'a', int charMax = 'z') : mCharMin(charMin), mCharMax(charMax) {
         init(maxN);
     }
 
     void init(int maxN) {
         mNodes.resize(maxN * 2);
         mInts.resize(maxN * 2);
-        clear();
-    }
 
-    void clear() {
         mNodeN = 0;
         mIntN = 0;
 
@@ -148,6 +134,14 @@ struct SuffixTree {
 
         if (finalize)
             setSuffixIndex();
+    }
+
+    int ch2i(int ch) const {
+        return ch - mCharMin;
+    }
+
+    int charSize() const {
+        return mCharMax - mCharMin + 1;
     }
 
     void extend(char ch) {
@@ -303,7 +297,7 @@ private:
             node->suffixIndex = (int)mText.length() - node->depth - node->getLength();
         else {
             node->suffixIndex = -1;
-            for (int i = 0; i < MaxCharN; i++) {
+            for (int i = 0; i <= mCharMax - mCharMin; i++) {
                 if (node->hasChild(i))
                     setSuffixIndex(node->getChild(i));
             }
@@ -315,7 +309,7 @@ private:
             return;
 
         node->suffixIndex = -1;
-        for (int i = 0; i < MaxCharN; i++) {
+        for (int i = 0; i <= mCharMax - mCharMin; i++) {
             if (node->hasChild(i))
                 resetSuffixIndex(node->getChild(i));
         }

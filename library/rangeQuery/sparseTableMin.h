@@ -49,13 +49,13 @@ struct SparseTableMin {
 
 
     // inclusive
-    int query(int left, int right) {
+    int query(int left, int right) const {
         right++;
         if (right <= left)
             return INT_MAX;
 
         int k = H[right - left];
-        vector<int>& mink = value[k];
+        const vector<int>& mink = value[k];
         return min(mink[left], mink[right - (1 << k)]);
     }
 };

@@ -28,10 +28,7 @@ void testDistinctSubstringCounter() {
 
     cout << "*** test with Suffix Array" << endl;
     {
-        vector<int> SA = SuffixArray::build(S);
-        vector<int> lcpArray = SuffixArray::buildLcpArray(SA, S);
-
-        DistinctSubstringCounterWithSuffixArray<long long> dsc(SA, lcpArray, (int)lcpArray.size());
+        DistinctSubstringCounterWithSuffixArray<long long> dsc(S);
 
         int suffixPos = dsc.currSuffixPos;
         do {

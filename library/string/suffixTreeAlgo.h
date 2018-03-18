@@ -173,8 +173,8 @@ private:
         }
 
         idx += node->getLength();
-        if (node->hasChild(SuffixTree::ch2i(s[idx])))
-            return dfsCheckSubstring(node->getChild(SuffixTree::ch2i(s[idx])), s, N, idx);
+        if (node->hasChild(tree.ch2i(s[idx])))
+            return dfsCheckSubstring(node->getChild(tree.ch2i(s[idx])), s, N, idx);
         else
             return false;
     }
@@ -208,8 +208,8 @@ private:
         }
 
         idx += node->getLength();
-        if (node->hasChild(SuffixTree::ch2i(s[idx])))
-            return dfsSearch(result, node->getChild(SuffixTree::ch2i(s[idx])), s, N, idx);
+        if (node->hasChild(tree.ch2i(s[idx])))
+            return dfsSearch(result, node->getChild(tree.ch2i(s[idx])), s, N, idx);
         else
             return false;
     }

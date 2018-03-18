@@ -56,13 +56,13 @@ struct SparseTableMinIndex {
 
 
     // inclusive
-    int query(int left, int right) {
+    int query(int left, int right) const {
         right++;
         if (right <= left)
             return left;    //invalid range
 
         int k = H[right - left];
-        vector<int>& mink = value[k];
+        const vector<int>& mink = value[k];
 
         if (in[mink[left]] < in[mink[right - (1 << k)]])
             return mink[left];

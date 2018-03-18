@@ -24,13 +24,13 @@ static string makeRandomString(int n) {
 }
 
 void testSuffixArray() {
-    //return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test string functions, make this line a comment.
 
     cout << "-- Suffix Array --------------------" << endl;
     {
         string s("abdadafaaabdfaeef");
 
-        vector<int> ans = SuffixArray::build(s);
+        vector<int> ans = SuffixArray::buildSuffixArray(s);
         vector<int> gt = makeSuffixArrayNaive(s, (int)s.length());
         assert(ans == gt);
 
@@ -51,7 +51,7 @@ void testSuffixArray() {
 
             sort(v.begin(), v.end());
 
-            auto SA = SuffixArray::build(s);
+            auto SA = SuffixArray::buildSuffixArray(s);
             for (int i = 0; i < N; i++)
                 assert(v[i].second == SA[i]);
         }
