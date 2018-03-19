@@ -8,7 +8,7 @@ struct CentroidDecomposition {
     int root;
 
     int decomposeTree(Tree& tree, int start) {
-        N = (int)tree.mN;
+        N = (int)tree.N;
         edges = vector<vector<int>>(N);
         parent = vector<int>(N);
         treeSize = vector<int>(N);
@@ -35,7 +35,7 @@ protected:
         }
         treeSize[centroid] = size;
 
-        for (int v : tree.mE[centroid]) {
+        for (int v : tree.edges[centroid]) {
             if (visited[v])
                 continue;
 
@@ -51,7 +51,7 @@ protected:
 
     int findCentroid(Tree& tree, int u, int from, int size) {
         bool isMajor = true;
-        for (int v : tree.mE[u]) {
+        for (int v : tree.edges[u]) {
             if (v == from || visited[v])
                 continue;
 
@@ -82,7 +82,7 @@ protected:
     void dfsSize(Tree& tree, int u, int from) {
         treeSize[u] = 1;
         parent[u] = from;
-        for (int v : tree.mE[u]) {
+        for (int v : tree.edges[u]) {
             if (v == from || visited[v])
                 continue;
 

@@ -107,9 +107,8 @@ void testSegmentTreePersistent() {
     cout << "*** Persistent segment tree vs RMQ" << endl;
     {
         int N = 1000000;
-
-#if _DEBUG
-        N = 100000;
+#ifdef _DEBUG
+        N = 10000;
 #endif
 
         vector<int> T(N);
@@ -153,6 +152,10 @@ void testSegmentTreePersistent() {
     {
         int T = 100000;
         int N = 1000000;
+#ifdef _DEBUG
+        T = 1000;
+        N = 10000;
+#endif
         vector<int> in(N);
 
         auto segTree = makePersistentSegmentTree(in, [](int a, int b) { return a + b; });
@@ -237,6 +240,10 @@ void testSegmentTreePersistent() {
     {
         int T = 100000;
         int N = 1000000;
+#ifdef _DEBUG
+        T = 1000;
+        N = 10000;
+#endif
         vector<int> in(N);
 
         auto segTree = makePersistentSegmentTree(in, [](int a, int b) { return a + b; });

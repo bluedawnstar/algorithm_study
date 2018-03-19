@@ -31,6 +31,9 @@ void testBitVectorRank() {
 
     int N = 100;
     int T = 10000;
+#ifdef _DEBUG
+    T = 1000;
+#endif
     for (int i = 0; i < T; i++) {
         vector<bool> in(N);
         for (int j = 0; j < N; j++)

@@ -2,22 +2,22 @@
 
 // Heavy Light Decomposition
 struct HeavyLightDecomposition {
-    Tree& mTree;
+    Tree& tree;
 
-    int mRoot;
-    vector<vector<int>> mHeavyPaths;        // heavy paths
-    vector<int>         mHeavyPathIndex;    // convert node number(0 ~ N - 1) to index of heavy paths (mHeavyPaths)
+    int root;
+    vector<vector<int>> heavyPaths;         // heavy paths
+    vector<int>         heavyPathIndex;     // convert node number(0 ~ N - 1) to index of heavy paths (heavyPaths)
 
-    HeavyLightDecomposition(Tree& tree) : mTree(tree), mRoot(0) {
+    explicit HeavyLightDecomposition(Tree& tree) : tree(tree), root(0) {
         // no action
     }
 
     void doHLD(int root) {
-        mRoot = root;
-        mHeavyPaths.clear();
-        mHeavyPathIndex.resize(mTree.mN, -1);
+        root = root;
+        heavyPaths.clear();
+        heavyPathIndex.resize(tree.N, -1);
 
-        vector<bool> visited(mTree.mN);
+        vector<bool> visited(tree.N);
 
         queue<int> Q;
         Q.push(root);
@@ -26,7 +26,7 @@ struct HeavyLightDecomposition {
             int u = Q.front();
             Q.pop();
 
-            for (int v : mTree.mE[u]) {
+            for (int v : tree.edges[u]) {
                 if (visited[v])
                     continue;
                 Q.push(v);
@@ -36,35 +36,35 @@ struct HeavyLightDecomposition {
             if (u == root)
                 continue;
 
-            int p = mTree.mP[0][u];
+            int p = tree.P[0][u];
 
-            if (mTree.mTreeSize[u] * 2 >= mTree.mTreeSize[p] && p != root) {
+            if (tree.treeSize[u] * 2 >= tree.treeSize[p] && p != root) {
                 // heavy path -> add u to parent's heavy path
-                int parentPath = mHeavyPathIndex[p];
-                mHeavyPaths[parentPath].push_back(u);
-                mHeavyPathIndex[u] = parentPath;
+                int parentPath = heavyPathIndex[p];
+                heavyPaths[parentPath].push_back(u);
+                heavyPathIndex[u] = parentPath;
             } else {
                 // light path -> make new heavy path
-                mHeavyPathIndex[u] = mHeavyPaths.size();
-                mHeavyPaths.push_back(vector<int>(2));
-                mHeavyPaths.back()[0] = p;
-                mHeavyPaths.back()[1] = u;
+                heavyPathIndex[u] = heavyPaths.size();
+                heavyPaths.push_back(vector<int>(2));
+                heavyPaths.back()[0] = p;
+                heavyPaths.back()[1] = u;
             }
         }
     }
 
     // PRECONDITION: v is not the root
     int indexInPath(int v) {
-        assert(v != mRoot);
-        int topOfPath = mHeavyPaths[mHeavyPathIndex[v]][0];
-        return mTree.mLevel[mTree.mP[0][v]] - mTree.mLevel[topOfPath];
+        assert(v != root);
+        int topOfPath = heavyPaths[heavyPathIndex[v]][0];
+        return tree.level[tree.P[0][v]] - tree.level[topOfPath];
     }
 
     // PRECONDITION: path is the index of v's heavy path
     // PRECONDITION: v is not the root
     int indexInPath(int path, int v) {
-        assert(v != mRoot);
-        int topOfPath = mHeavyPaths[path][0];
-        return mTree.mLevel[mTree.mP[0][v]] - mTree.mLevel[topOfPath];
+        assert(v != root);
+        int topOfPath = heavyPaths[path][0];
+        return tree.level[tree.P[0][v]] - tree.level[topOfPath];
     }
 };

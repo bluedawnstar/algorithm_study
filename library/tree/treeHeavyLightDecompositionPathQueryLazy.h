@@ -4,105 +4,105 @@
 
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct HLDPathQueryLazy {
-    HeavyLightDecomposition& mHld;
+    HeavyLightDecomposition& hld;
 
     typedef SegmentTreeLazy<T, MergeOp, BlockOp> SegTreeT;
 
-    T                   mDefaultValue;
-    MergeOp             mMergeOp;
-    BlockOp             mBlockOp;
-    vector<SegTreeT>    mSegTrees;
+    T                   defaultValue;
+    MergeOp             mergeOp;
+    BlockOp             blockOp;
+    vector<SegTreeT>    segTrees;
 
-    HLDPathQueryLazy(HeavyLightDecomposition& hld, T dflt = T())
-        : mHld(hld), mMergeOp(), mBlockOp(), mDefaultValue(dflt) {
+    explicit HLDPathQueryLazy(HeavyLightDecomposition& hld, T dflt = T())
+        : hld(hld), mergeOp(), blockOp(), defaultValue(dflt) {
         // no action
     }
 
     HLDPathQueryLazy(HeavyLightDecomposition& hld, MergeOp mop, BlockOp bop, T dflt = T())
-        : mHld(hld), mMergeOp(mop), mBlockOp(bop), mDefaultValue(dflt) {
+        : hld(hld), mergeOp(mop), blockOp(bop), defaultValue(dflt) {
         // no action
     }
 
     void build() {
-        mSegTrees.clear();
-        mSegTrees.reserve(mHld.mHeavyPaths.size());
+        segTrees.clear();
+        segTrees.reserve(hld.heavyPaths.size());
 
         // make segment trees on all heavy path
-        for (const auto& path : mHld.mHeavyPaths) {
+        for (const auto& path : hld.heavyPaths) {
             int m = (int)path.size() - 1;
-            mSegTrees.push_back(SegTreeT(m, mBinOp, mDefaultValue));
+            segTrees.push_back(SegTreeT(m, mergeOp, defaultValue));
         }
     }
 
     void build(T initValue) {
-        mSegTrees.clear();
-        mSegTrees.reserve(mHld.mHeavyPaths.size());
+        segTrees.clear();
+        segTrees.reserve(hld.heavyPaths.size());
 
         // make segment trees on all heavy path
-        for (const auto& path : mHld.mHeavyPaths) {
+        for (const auto& path : hld.heavyPaths) {
             int m = (int)path.size() - 1;
-            mSegTrees.push_back(SegTreeT(m, mBinOp, mDefaultValue));
-            mSegTrees.back().updateRange(0, m, initValue);
+            segTrees.push_back(SegTreeT(m, mergeOp, blockOp, defaultValue));
+            segTrees.back().updateRange(0, m, initValue);
         }
     }
 
 
     // update a value of an edge(u-v)
     void update(int u, int v, T cost) {
-        if (u >= 0 && mHld.mTree.mP[0][u] == v)
+        if (u >= 0 && hld.tree.P[0][u] == v)
             swap(u, v);
         //assert(gP[0][v] == u);
 
-        int path = mHld.mHeavyPathIndex[v];
-        int index = mHld.indexInPath(path, v);
-        mSegTrees[path].update(index, cost);
+        int path = hld.heavyPathIndex[v];
+        int index = hld.indexInPath(path, v);
+        segTrees[path].update(index, cost);
     }
 
     void updateRange(int u, int v, T cost) {
-        int lca = mHld.mTree.findLCA(u, v);
+        int lca = hld.tree.findLCA(u, v);
         updateRangeTopdown(lca, u, cost);
         updateRangeTopdown(lca, v, cost);
     }
 
-    T query(int u, int v) const {
-        int lca = mHld.mTree.findLCA(u, v);
-        return mMergeOp(queryTopdown(lca, u), queryTopdown(lca, v));
+    T query(int u, int v) {
+        int lca = hld.tree.findLCA(u, v);
+        return mergeOp(queryTopdown(lca, u), queryTopdown(lca, v));
     }
 
     //--- to update & query vertexes
 
-    T mRootValue = mDefaultValue;
+    T rootValue = defaultValue;
 
     // update a value of an edge(parent of v, v) or a vertex(v)
     void updateVertex(int v, T cost) {
-        if (v == mHld.mRoot) {
-            mRootValue = cost;
+        if (v == hld.mRoot) {
+            rootValue = cost;
             return;
         }
 
-        int path = mHld.mHeavyPathIndex[v];
-        int index = mHld.indexInPath(path, v);
-        mSegTrees[path].update(index, cost);
+        int path = hld.heavyPathIndex[v];
+        int index = hld.indexInPath(path, v);
+        segTrees[path].update(index, cost);
     }
 
     void updateRangeVertex(int u, int v, T cost) {
-        int lca = mHld.mTree.findLCA(u, v);
-        if (lca == mHld.mRoot) {
+        int lca = hld.tree.findLCA(u, v);
+        if (lca == hld.mRoot) {
             updateRangeTopdown(lca, u, cost);
             updateRangeTopdown(lca, v, cost);
-            mRootValue += cost;
+            rootValue += cost;
         } else {
-            updateRangeTopdown(mHld.mTree.mP[0][lca], u, cost);
+            updateRangeTopdown(hld.tree.P[0][lca], u, cost);
             updateRangeTopdown(lca, v, cost);
         }
     }
 
-    T queryVertex(int u, int v) const {
-        int lca = mHld.mTree.findLCA(u, v);
-        if (lca == mHld.mRoot)
-            return mMergeOp(mMergeOp(queryTopdown(lca, u), queryTopdown(lca, v)), mRootValue);
+    T queryVertex(int u, int v) {
+        int lca = hld.tree.findLCA(u, v);
+        if (lca == hld.mRoot)
+            return mergeOp(mergeOp(queryTopdown(lca, u), queryTopdown(lca, v)), rootValue);
         else
-            return mMergeOp(queryTopdown(mHld.mTree.mP[0][lca], u), queryTopdown(lca, v));
+            return mergeOp(queryTopdown(hld.tree.P[0][lca], u), queryTopdown(lca, v));
     }
 
 protected:
@@ -110,45 +110,45 @@ protected:
         if (u == v)
             return;
 
-        if (mHld.mHeavyPathIndex[u] == mHld.mHeavyPathIndex[v]) {
-            int path = mHld.mHeavyPathIndex[u];
+        if (hld.heavyPathIndex[u] == hld.heavyPathIndex[v]) {
+            int path = hld.heavyPathIndex[u];
 
-            int first = mHld.indexInPath(path, u) + 1;
-            int last = mHld.indexInPath(path, v);
-            return mSegTrees[path].updateRange(first, last, value);
+            int first = hld.indexInPath(path, u) + 1;
+            int last = hld.indexInPath(path, v);
+            return segTrees[path].updateRange(first, last, value);
         }
 
-        int path = mHld.mHeavyPathIndex[v];
-        int topOfPath = mHld.mHeavyPaths[path][0];
+        int path = hld.heavyPathIndex[v];
+        int topOfPath = hld.heavyPaths[path][0];
 
         //assert(topOfPath != v);
 
-        int last = mHld.indexInPath(path, v);
-        mSegTrees[path].updateRange(0, last, value);
+        int last = hld.indexInPath(path, v);
+        segTrees[path].updateRange(0, last, value);
 
         updateRangeTopdown(u, topOfPath, value);
     }
 
     // return max value a path from u to v (u is an ancestor of v)
-    T queryTopdown(int u, int v) const {
+    T queryTopdown(int u, int v) {
         if (u == v)
-            return mDefaultValue;
+            return defaultValue;
 
-        if (mHld.mHeavyPathIndex[u] == mHld.mHeavyPathIndex[v]) {
-            int path = mHld.mHeavyPathIndex[u];
+        if (hld.heavyPathIndex[u] == hld.heavyPathIndex[v]) {
+            int path = hld.heavyPathIndex[u];
 
-            int first = mHld.indexInPath(path, u) + 1;
-            int last = mHld.indexInPath(path, v);
-            return mSegTrees[path].query(first, last);
+            int first = hld.indexInPath(path, u) + 1;
+            int last = hld.indexInPath(path, v);
+            return segTrees[path].query(first, last);
         }
 
-        int path = mHld.mHeavyPathIndex[v];
-        int topOfPath = mHld.mHeavyPaths[path][0];
+        int path = hld.heavyPathIndex[v];
+        int topOfPath = hld.heavyPaths[path][0];
 
         //assert(topOfPath != v);
 
-        int last = mHld.indexInPath(path, v);
-        return mBinOp(queryTopdown(u, topOfPath), mSegTrees[path].query(0, last));
+        int last = hld.indexInPath(path, v);
+        return mergeOp(queryTopdown(u, topOfPath), segTrees[path].query(0, last));
     }
 };
 

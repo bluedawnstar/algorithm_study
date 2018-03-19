@@ -80,6 +80,9 @@ void testSparseTable() {
     {
         int N = 1000000;
         int TN = 10;
+#ifdef _DEBUG
+        N = 10000;
+#endif
         vector<int> T(N);
         for (int i = 0; i < N; i++)
             T[i] = RandInt32().get() % 65536;

@@ -78,6 +78,9 @@ void testTreapRangeQuery() {
     cout << "OK!" << endl;
     {
         int N = 10000;
+#ifdef _DEBUG
+        N = 1000;
+#endif
         auto segt = makeSegmentTreeLazy(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         auto tr = makeTreapRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
 
@@ -168,7 +171,11 @@ void testTreapRangeQuery() {
     cout << "OK!" << endl;
 
     {
+#ifdef _DEBUG
+        const int N = 1000;
+#else
         const int N = 10000;
+#endif
 
         auto tr = makeTreapRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         vector<int> vec;
@@ -239,6 +246,9 @@ void testTreapRangeQuery() {
     cout << "*** Speed test SegmentTreeLazy vs SplayTreeRangeQuery vs TreapRangeQuery ***" << endl;
     {
         int N = 1000000;
+#ifdef _DEBUG
+        N = 10000;
+#endif
         auto segt = makeSegmentTreeLazy(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         auto spt = makeSplayTreeRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         auto tr = makeTreapRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
@@ -255,6 +265,9 @@ void testTreapRangeQuery() {
         }
 
         int tN = 1000000;
+#ifdef _DEBUG
+        tN = 10000;
+#endif
         vector<tuple<int, int, int, int>> in;
         in.reserve(tN);
 

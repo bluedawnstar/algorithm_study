@@ -103,6 +103,9 @@ void testSplayRangeQuery() {
     cout << "OK!" << endl;
     {
         int N = 10000;
+#ifdef _DEBUG
+        N = 1000;
+#endif
         auto segt = makeSegmentTreeLazy(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         auto spt = makeSplayTreeRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
 
@@ -179,8 +182,11 @@ void testSplayRangeQuery() {
     cout << "OK!" << endl;
 
     {
+#ifdef _DEBUG
+        const int N = 1000;
+#else
         const int N = 10000;
-
+#endif
         auto spt = makeSplayTreeRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         vector<int> vec;
 
@@ -249,6 +255,9 @@ void testSplayRangeQuery() {
     cout << "*** Speed test SegmentTreeLazy vs SplayTreeRangeQuery ***" << endl;
     {
         int N = 100000;
+#ifdef _DEBUG
+        N = 10000;
+#endif
         auto segt = makeSegmentTreeLazy(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         auto spt = makeSplayTreeRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
 
@@ -261,6 +270,9 @@ void testSplayRangeQuery() {
         }
 
         int tN = 1000000;
+#ifdef _DEBUG
+        tN = 10000;
+#endif
         vector<tuple<int, int, int, int>> in;
         in.reserve(tN);
 

@@ -194,10 +194,6 @@ void testKDTree() {
         assert(out1 == out2);
     }
     //----------------------------------------------
-//#undef PROFILE_START
-//#define PROFILE_START(n)
-//#undef PROFILE_STOP
-//#define PROFILE_STOP(n)
     cout << "*** delete & search nearest neighbor" << endl;
     {
         //for (int seed = 0; seed < 100; seed++)

@@ -69,9 +69,8 @@ void testSegmentTree() {
     cout << "*** Segment tree vs RMQ" << endl;
     {
         int N = 1000000;
-
 #if _DEBUG
-        N = 100000;
+        N = 10000;
 #endif
 
         vector<int> T(N);
@@ -115,6 +114,10 @@ void testSegmentTree() {
     {
         int T = 100000;
         int N = 1000000;
+#ifdef _DEBUG
+        T = 1000;
+        N = 10000;
+#endif
         vector<int> in(N);
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });

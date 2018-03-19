@@ -5,23 +5,23 @@ public:
     UnionFind() {
     }
 
-    UnionFind(int N) : mParent(N, 0), mRank(N, 0) {
+    UnionFind(int N) : parent(N, 0), rank(N, 0) {
         for (int i = 0; i < N; i++)
-            mParent[i] = i;
+            parent[i] = i;
     }
 
     void init(int N) {
-        mParent.resize(N);
-        mRank.assign(N, 0);
+        parent.resize(N);
+        rank.assign(N, 0);
         for (int i = 0; i < N; i++)
-            mParent[i] = i;
+            parent[i] = i;
     }
 
 
     int findSet(int x) {
-        if (mParent[x] == x)
+        if (parent[x] == x)
             return x;
-        return mParent[x] = findSet(mParent[x]);
+        return parent[x] = findSet(parent[x]);
     }
 
     int unionSet(int x, int y) {
@@ -30,18 +30,18 @@ public:
         if (xset == yset)
             return xset;
 
-        if (mRank[xset] < mRank[yset]) {
-            mParent[xset] = yset;
+        if (rank[xset] < rank[yset]) {
+            parent[xset] = yset;
             return yset;
         } else {
-            mParent[yset] = xset;
-            if (mRank[xset] == mRank[yset])
-                mRank[xset]++;
+            parent[yset] = xset;
+            if (rank[xset] == rank[yset])
+                rank[xset]++;
             return xset;
         }
     }
 
 private:
-    vector<int> mParent;
-    vector<int> mRank;
+    vector<int> parent;
+    vector<int> rank;
 };

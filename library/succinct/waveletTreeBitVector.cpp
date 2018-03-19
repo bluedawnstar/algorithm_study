@@ -57,10 +57,14 @@ static void testSpeedTree() {
 
     int N = 100000;
     int T = 1000000;
+#ifdef _DEBUG
+    N = 10000;
+    T = 100000;
+#endif
 
     vector<int> in(N);
     for (int j = 0; j < N; j++)
-        in[j] = RandInt32::get();
+        in[j] = RandInt32::get() % 65536;
 
     PROFILE_START(0);
     {
@@ -76,7 +80,7 @@ static void testSpeedTree() {
 
             int ans = tree.countLessOrEqual(K);
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(0);
@@ -95,7 +99,7 @@ static void testSpeedTree() {
 
             int ans = tree.countLessOrEqual(K);
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(1);
@@ -106,10 +110,14 @@ static void testSpeedAll() {
 
     int N = 100000;
     int T = 1000000;
+#ifdef _DEBUG
+    N = 10000;
+    T = 10000;
+#endif
 
     vector<int> in(N);
     for (int j = 0; j < N; j++)
-        in[j] = RandInt32::get();
+        in[j] = RandInt32::get() % 65536;
 
     vector<tuple<int, int, int>> qryKth(T);
     for (int i = 0; i < T; i++) {
@@ -131,7 +139,7 @@ static void testSpeedAll() {
             auto& t = qryKth[i];
             int ans = tree.kth(get<0>(t), get<1>(t), get<2>(t));
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(0);
@@ -144,7 +152,7 @@ static void testSpeedAll() {
             auto& t = qryKth[i];
             int ans = tree.kth(get<0>(t), get<1>(t), get<2>(t));
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(1);
@@ -157,7 +165,7 @@ static void testSpeedAll() {
             auto& t = qryKth[i];
             int ans = matrix.kth(get<0>(t), get<1>(t), get<2>(t));
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(2);
@@ -229,10 +237,13 @@ void testWaveletTreeBitVector() {
 
     int N = 100;
     int T = 10000;
+#ifdef _DEBUG
+    T = 100;
+#endif
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = RandInt32::get();
+            in[j] = RandInt32::get() % 65536;
         //for (int j = 0; j < N; j++)
         //    in[j] = j;
 

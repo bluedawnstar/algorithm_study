@@ -133,7 +133,7 @@ void testSegmentTreeCompact() {
     cout << "*** Segment tree vs compact segment tree" << endl;
     {
         int N = 10000;
-#if _DEBUG
+#ifdef _DEBUG
         N = 1000;
 #endif
         
@@ -178,7 +178,7 @@ void testSegmentTreeCompact() {
     {
         int T = 100000;
         int N = 100000;
-#if _DEBUG
+#ifdef _DEBUG
         T = 1000;
         N = 1000;
 #endif

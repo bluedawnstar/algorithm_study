@@ -7,10 +7,10 @@ struct BitVectorRank {
     static const int INDEX_MASK = 0x1F;
     static const int INDEX_SHIFT = 5;
 
-    int mN;
-    int mCount;
-    vector<unsigned int> mV;
-    vector<int> mRank;
+    int                  N;
+    int                  bitCount;
+    vector<unsigned int> values;
+    vector<int>          rank;
 
     BitVectorRank() {
         //init(0);
@@ -21,37 +21,37 @@ struct BitVectorRank {
     }
 
     void init(int size) {
-        mN = size;
-        mCount = 0;
-        mV = vector<unsigned int>((size + BIT_SIZE - 1) / BIT_SIZE + 1);
-        mRank = vector<int>(mV.size() + 1);
+        N = size;
+        bitCount = 0;
+        values = vector<unsigned int>((size + BIT_SIZE - 1) / BIT_SIZE + 1);
+        rank = vector<int>(values.size() + 1);
     }
 
 
     int size() const {
-        return mN;
+        return N;
     }
 
     void set() {
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            mV[i] = BIT_ALL;
+            values[i] = BIT_ALL;
 
-        int r = mN & INDEX_MASK;
+        int r = N & INDEX_MASK;
         if (r != 0)
-            mV[n] = (1u << r) - 1u;
+            values[n] = (1u << r) - 1u;
     }
 
     void set(int pos) {
-        mV[pos >> INDEX_SHIFT] |= 1u << (pos & INDEX_MASK);
+        values[pos >> INDEX_SHIFT] |= 1u << (pos & INDEX_MASK);
     }
 
     void reset() {
-        fill(mV.begin(), mV.end(), 0u);
+        fill(values.begin(), values.end(), 0u);
     }
 
     void reset(int pos) {
-        mV[pos >> INDEX_SHIFT] &= ~(1u << (pos & INDEX_MASK));
+        values[pos >> INDEX_SHIFT] &= ~(1u << (pos & INDEX_MASK));
     }
 
     void set(int pos, bool val) {
@@ -62,39 +62,39 @@ struct BitVectorRank {
     }
 
     unsigned int get(int pos) const {
-        return mV[pos >> INDEX_SHIFT] & (1u << (pos & INDEX_MASK));
+        return values[pos >> INDEX_SHIFT] & (1u << (pos & INDEX_MASK));
     }
 
     bool test(int pos) const {
-        return (mV[pos >> INDEX_SHIFT] & (1u << (pos & INDEX_MASK))) != 0;
+        return (values[pos >> INDEX_SHIFT] & (1u << (pos & INDEX_MASK))) != 0;
     }
 
     //--- after set ---
 
     void buildRank() {
-        mCount = 0;
-        if (mN == 0)
+        bitCount = 0;
+        if (N == 0)
             return;
-        for (int i = 0; i < (int)mV.size(); i++) {
-            mRank[i] = mCount;
-            mCount += popcount(mV[i]);
+        for (int i = 0; i < (int)values.size(); i++) {
+            rank[i] = bitCount;
+            bitCount += popcount(values[i]);
         }
-        mRank[mV.size()] = mCount;
+        rank[values.size()] = bitCount;
     }
 
     int count() const {
-        return mCount;
+        return bitCount;
     }
 
     // inclusive [0, pos]
     int rank1(int pos) const {
         if (pos < 0)
             return 0;
-        else if (pos >= mN - 1)
-            return mCount;
+        else if (pos >= N - 1)
+            return bitCount;
         int idx = ++pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
-        return mRank[idx] + popcount(mV[idx] & ((1u << off) - 1u));
+        return rank[idx] + popcount(values[idx] & ((1u << off) - 1u));
     }
 
     // inclusive [left, right]

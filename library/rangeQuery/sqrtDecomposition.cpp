@@ -59,6 +59,10 @@ void testSqrtDecomposition() {
     {
         int T = 100000;
         int N = 1000000;
+#ifdef _DEBUG
+        T = 1000;
+        N = 10000;
+#endif
         vector<int> in(N);
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });

@@ -9,8 +9,8 @@ struct LcaSchieberVishkin {
     vector<int>         parent;
     vector<int>         preorder;   // visit time of nodes
     vector<int>         head;       // 
-    vector<int>         I;          // 
-    vector<int>         A;          // 
+    vector<int>         path;       // 
+    vector<int>         A;          // all
     int                 time;
 
     LcaSchieberVishkin() {
@@ -34,7 +34,7 @@ struct LcaSchieberVishkin {
 
     // O(1)
     int lca(int x, int y) const {
-        int hb = (I[x] == I[y]) ? lsb(I[x]) : msb(I[x] ^ I[y]);
+        int hb = (path[x] == path[y]) ? lsb(path[x]) : msb(path[x] ^ path[y]);
         int hz = lsb(A[x] & A[y] & (~hb + 1));
         int ex = enterIntoStrip(x, hz);
         int ey = enterIntoStrip(y, hz);
@@ -46,7 +46,7 @@ private:
         this->N = N;
         parent.resize(N);
         preorder.resize(N);
-        I.resize(N);
+        path.resize(N);
         head.resize(N);
         A.resize(N);
         time = 0;
@@ -55,20 +55,20 @@ private:
     // p: parent node of u
     void dfs1(vector<vector<int>>& edges, int u, int p) {
         parent[u] = p;
-        I[u] = preorder[u] = time++;
+        path[u] = preorder[u] = time++;
         for (int v : edges[u]) {
             if (v == p)
                 continue;
             dfs1(edges, v, u);
-            if (lsb(I[v]) > lsb(I[u]))
-                I[u] = I[v];
+            if (lsb(path[v]) > lsb(path[u]))
+                path[u] = path[v];
         }
-        head[I[u]] = u;
+        head[path[u]] = u;
     }
 
     // p: parent node of u
     void dfs2(vector<vector<int>>& edges, int u, int p, int up) {
-        A[u] = up | lsb(I[u]);
+        A[u] = up | lsb(path[u]);
         for (int v : edges[u]) {
             if (v == p)
                 continue;
@@ -77,10 +77,10 @@ private:
     }
 
     int enterIntoStrip(int x, int hz) const {
-        if (lsb(I[x]) == hz)
+        if (lsb(path[x]) == hz)
             return x;
         int hw = msb(A[x] & (hz - 1));
-        return parent[head[I[x] & (~hw + 1) | hw]];
+        return parent[head[path[x] & (~hw + 1) | hw]];
     }
 
 

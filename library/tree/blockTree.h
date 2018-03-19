@@ -10,12 +10,12 @@ struct BlockTree {
     struct Fragment {
         const BlockTree& tree;
 
-        int id;
-        T value;
+        int         id;
+        T           value;
 
-        int maxLevel;
+        int         maxLevel;
 
-        int parent;
+        int         parent;
         vector<int> nodes;
         vector<int> levelFreq;
 
@@ -51,21 +51,21 @@ struct BlockTree {
         }
     };
 
-    vector<vector<int>> edges;      // all nodes
-    int N;                          // 
-    int sqrtN;                      // 
-    vector<int> level;              // 
-    vector<int> parent;             // 
-    vector<int> treeSize;           // 
-    vector<T> valueInLevel;         // 
+    vector<vector<int>> edges;          // all nodes
+    int                 N;              // 
+    int                 sqrtN;          // 
+    vector<int>         level;          // 
+    vector<int>         parent;         // 
+    vector<int>         treeSize;       // 
+    vector<T>           valueInLevel;   // 
 
-    vector<vector<int>> edges2;     // fragment nodes
-    vector<int> fragId;             // node id -> fragment id
-    vector<Fragment> frags;         // 
+    vector<vector<int>> edges2;         // fragment nodes
+    vector<int>         fragId;         // node id -> fragment id
+    vector<Fragment>    frags;          // 
 
-    T         defaultValue;
-    MergeOp   mergeOp;
-    BlockOp   blockOp;
+    T                   defaultValue;
+    MergeOp             mergeOp;
+    BlockOp             blockOp;
 
     BlockTree(MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {

@@ -2,9 +2,9 @@
 
 template <typename T = int, int KD = 2>
 struct KDTreeNoUpdate {
-    vector<int> tree;
-    vector<vector<T>> points;
-    vector<pair<T, T>> bound; // [min, max)
+    vector<int>         tree;
+    vector<vector<T>>   points;
+    vector<pair<T, T>>  bound;  // [min, max)
 
     KDTreeNoUpdate() {
     }

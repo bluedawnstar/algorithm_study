@@ -30,25 +30,25 @@ static Tree makeLcaTree() {
     tree.addEdge(0, 2);
 
     int i, p = 1;
-    for (i = 3; i < tree.mN / 4; i++) {
+    for (i = 3; i < tree.N / 4; i++) {
         tree.addEdge(p, i);
         p = i;
     }
 
     p = 1;
-    for (; i < tree.mN * 2 / 4; i++) {
+    for (; i < tree.N * 2 / 4; i++) {
         tree.addEdge(p, i);
         p = i;
     }
 
     p = 2;
-    for (; i < tree.mN * 3 / 4; i++) {
+    for (; i < tree.N * 3 / 4; i++) {
         tree.addEdge(p, i);
         p = i;
     }
 
     p = 2;
-    for (; i < tree.mN; i++) {
+    for (; i < tree.N; i++) {
         tree.addEdge(p, i);
         p = i;
     }
@@ -67,21 +67,21 @@ void testLcaShieberVishkin() {
         PROFILE_START(0);
         int errCnt = 0;
         for (int i = 0; i < 100000; i++) {
-            int u = RandInt32::get() % tree.mN;
-            int v = RandInt32::get() % tree.mN;
+            int u = RandInt32::get() % tree.N;
+            int v = RandInt32::get() % tree.N;
             int lca = tree.findLCA(u, v);
             int lcaAns;
             if (u == 0 || v == 0) {
                 lcaAns = 0;
-            } else if ((u != 2 && u < tree.mN / 2) != (v != 2 && v < tree.mN / 2)) {
+            } else if ((u != 2 && u < tree.N / 2) != (v != 2 && v < tree.N / 2)) {
                 lcaAns = 0;
-            } else if (u != 2 && u < tree.mN / 2) {
-                if ((u >= tree.mN / 4) != (v >= tree.mN / 4))
+            } else if (u != 2 && u < tree.N / 2) {
+                if ((u >= tree.N / 4) != (v >= tree.N / 4))
                     lcaAns = 1;
                 else
                     lcaAns = min(u, v);
             } else {
-                if ((u >= tree.mN * 3 / 4) != (v >= tree.mN * 3 / 4))
+                if ((u >= tree.N * 3 / 4) != (v >= tree.N * 3 / 4))
                     lcaAns = 2;
                 else
                     lcaAns = min(u, v);
@@ -97,26 +97,26 @@ void testLcaShieberVishkin() {
     {
         auto tree = makeLcaTree();  // make a test tree
 
-        LcaSchieberVishkin svLCA(tree.mE, 0);
+        LcaSchieberVishkin svLCA(tree.edges, 0);
 
         PROFILE_START(1);
         int errCnt = 0;
         for (int i = 0; i < 100000; i++) {
-            int u = RandInt32::get() % tree.mN;
-            int v = RandInt32::get() % tree.mN;
+            int u = RandInt32::get() % tree.N;
+            int v = RandInt32::get() % tree.N;
             int lca = svLCA.lca(u, v);
             int lcaAns;
             if (u == 0 || v == 0) {
                 lcaAns = 0;
-            } else if ((u != 2 && u < tree.mN / 2) != (v != 2 && v < tree.mN / 2)) {
+            } else if ((u != 2 && u < tree.N / 2) != (v != 2 && v < tree.N / 2)) {
                 lcaAns = 0;
-            } else if (u != 2 && u < tree.mN / 2) {
-                if ((u >= tree.mN / 4) != (v >= tree.mN / 4))
+            } else if (u != 2 && u < tree.N / 2) {
+                if ((u >= tree.N / 4) != (v >= tree.N / 4))
                     lcaAns = 1;
                 else
                     lcaAns = min(u, v);
             } else {
-                if ((u >= tree.mN * 3 / 4) != (v >= tree.mN * 3 / 4))
+                if ((u >= tree.N * 3 / 4) != (v >= tree.N * 3 / 4))
                     lcaAns = 2;
                 else
                     lcaAns = min(u, v);

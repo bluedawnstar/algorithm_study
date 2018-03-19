@@ -72,8 +72,13 @@ void testSegmentTreeCompactLazy() {
     }
     cout << "*** findNext() & findPrev()" << endl;
     {
+#ifdef _DEBUG
+        static const int T = 100;
+        int N = 1000;
+#else
         static const int T = 1000;
         int N = 10000;
+#endif
         vector<int> in(N);
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
@@ -100,8 +105,13 @@ void testSegmentTreeCompactLazy() {
         }
     }
     {
+#ifdef _DEBUG
+        static const int T = 100;
+        int N = 1000;
+#else
         static const int T = 1000;
         int N = 10000;
+#endif
         vector<int> in(N);
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
@@ -135,9 +145,8 @@ void testSegmentTreeCompactLazy() {
     cout << "*** Segment tree vs compact segment tree" << endl;
     {
         int N = 10000;
-
-#if _DEBUG
-        N = 10000;
+#ifdef _DEBUG
+        N = 1000;
 #endif
 
         vector<int> T(N);
@@ -195,8 +204,7 @@ void testSegmentTreeCompactLazy() {
 
         int T = 100000;
         int N = 100000;
-
-#if _DEBUG
+#ifdef _DEBUG
         T = 1000;
         N = 1000;
 #endif

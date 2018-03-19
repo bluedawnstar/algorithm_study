@@ -35,8 +35,8 @@ void testDfsTour() {
         // node: 0 1 1 2 3 3 2 0
         vector<pair<int, int>> gtVT = vector<pair<int, int>>{ { 0, 7 },{ 1, 2 },{ 3, 6 },{ 4, 5 } };
         vector<int> gtT2N = { 0, 1, 1, 2, 3, 3, 2, 0 };
-        assert(tree.mVisTime == gtVT);
-        assert(tree.mTime2Node == gtT2N);
+        assert(tree.visTime == gtVT);
+        assert(tree.time2Node == gtT2N);
     }
 
     cout << "OK!" << endl;

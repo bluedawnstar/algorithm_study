@@ -3,27 +3,26 @@
 #include "treeBasic.h"
 
 struct DfsTourTree : public Tree {
-    vector<pair<int, int>>  mVisTime;   // node index to (visit time, leave time)
-    vector<int>             mTime2Node; // time to node index (0 <= time < 2 * N)
-    int                     mCurrTime;  //
+    vector<pair<int, int>> visTime;     // node index to (visit time, leave time)
+    vector<int>            time2Node;   // time to node index (0 <= time < 2 * N)
+    int                    currTime;    //
 
     //--- tree construction ---------------------------------------------------
 
-    DfsTourTree() {
-        mN = 0;
-        mLogN = 0;
+    DfsTourTree() : Tree() {
+        currTime = 0;
     }
 
-    DfsTourTree(int N, int logN) : Tree(N, logN), mVisTime(N), mTime2Node(N * 2) {
-        mCurrTime = 0;
+    DfsTourTree(int N, int logN) : Tree(N, logN), visTime(N), time2Node(N * 2) {
+        currTime = 0;
     }
 
     void init(int N, int logN) {
         Tree::init(N, logN);
 
-        mVisTime.assign(N, make_pair(0, 0));
-        mTime2Node.assign(N * 2, 0);
-        mCurrTime = 0;
+        visTime.assign(N, make_pair(0, 0));
+        time2Node.assign(N * 2, 0);
+        currTime = 0;
     }
 
     void build(int root) {
@@ -34,26 +33,26 @@ struct DfsTourTree : public Tree {
 
     // return true if u is an ancestor of v
     bool isAncestor(int u, int v) const {
-        return mVisTime[u].first <= mVisTime[v].first && mVisTime[v].second <= mVisTime[u].second;
+        return visTime[u].first <= visTime[v].first && visTime[v].second <= visTime[u].second;
     }
 
 private:
     //--------- DFS -----------------------------------------------------------
     void dfs(int u, int parent) {
-        mVisTime[u].first = mCurrTime;
-        mTime2Node[mCurrTime++] = u;
+        visTime[u].first = currTime;
+        time2Node[currTime++] = u;
 
-        mP[0][u] = parent;
-        for (int v : mE[u]) {
+        P[0][u] = parent;
+        for (int v : edges[u]) {
             if (v == parent)
                 continue;
 
-            mLevel[v] = mLevel[u] + 1;
+            level[v] = level[u] + 1;
             dfs(v, u);
         }
 
-        mVisTime[u].second = mCurrTime;
-        mTime2Node[mCurrTime++] = u;
+        visTime[u].second = currTime;
+        time2Node[currTime++] = u;
     }
 
     void dfsIter(int root) {
@@ -63,26 +62,26 @@ private:
             int vi;         // child index
         };
         vector<Item> st;
-        st.reserve(mN);
+        st.reserve(N);
 
         st.push_back(Item{ root, -1, -1 });
         while (!st.empty()) {
             Item& it = st.back();
             if (++it.vi == 0) {
                 // enter ...
-                mP[0][it.u] = it.parent;
-                mVisTime[it.u].first = mCurrTime;
-                mTime2Node[mCurrTime++] = it.u;
+                P[0][it.u] = it.parent;
+                visTime[it.u].first = currTime;
+                time2Node[currTime++] = it.u;
             }
-            if (it.vi >= (int)mE[it.u].size()) {
+            if (it.vi >= (int)edges[it.u].size()) {
                 // leave ...
-                mVisTime[it.u].second = mCurrTime;
-                mTime2Node[mCurrTime++] = it.u;
+                visTime[it.u].second = currTime;
+                time2Node[currTime++] = it.u;
                 st.pop_back();
-            } else if (mE[it.u][it.vi] != it.parent) {
+            } else if (edges[it.u][it.vi] != it.parent) {
                 // recursion
-                int v = mE[it.u][it.vi];
-                mLevel[v] = mLevel[it.u] + 1;
+                int v = edges[it.u][it.vi];
+                level[v] = level[it.u] + 1;
                 st.push_back(Item{ v, it.u, -1 });
             }
         }

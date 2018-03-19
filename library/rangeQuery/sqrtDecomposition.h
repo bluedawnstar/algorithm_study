@@ -54,6 +54,7 @@ struct SqrtDecompositionLazy {
         blockLazyExist.resize(blockCount);
     }
 
+    // O(n)
     void build(T value, int n) {
         init(n);
         fill(values.begin(), values.begin() + n, value);
@@ -61,6 +62,7 @@ struct SqrtDecompositionLazy {
             updateBlockValue(i);
     }
 
+    // O(n)
     void build(const T v[], int n) {
         init(n);
         copy(v, v + n, values.begin());
@@ -73,6 +75,7 @@ struct SqrtDecompositionLazy {
     }
 
 
+    // O(sqrt(n))
     void update(int l, int r, T x) {
         int blockL = l / blockSize;
         int blockR = r / blockSize;
@@ -125,6 +128,7 @@ struct SqrtDecompositionLazy {
         }
     }
 
+    // O(sqrt(n))
     T query(int l, int r) const {
         T res = defaultValue;
 

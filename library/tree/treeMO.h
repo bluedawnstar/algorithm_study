@@ -45,25 +45,25 @@ struct TreeMO {
     }
 
     void build(vector<pair<int, int>>& Q, function<void(int, int)> onAdd, function<void(int, int)> onRemove) {
-        active = vector<bool>(tree.mN);
+        active = vector<bool>(tree.N);
         this->onAdd = onAdd;
         this->onRemove = onRemove;
 
         lca.reserve(Q.size());
         MO.reserve(Q.size());
         for (int i = 0; i < (int)Q.size(); i++) {
-            //assert(mVisTime[Q[i].first][0] <= mVisTime[Q[i].second][0]);
+            //assert(visTime[Q[i].first][0] <= visTime[Q[i].second][0]);
             int L = Q[i].first, R = Q[i].second;
 
             int lc = tree.findLCA(L, R);
             lca.push_back(lc == L ? -1 : lc);
             if (lc == L)
-                MO.emplace_back(tree.mVisTime[L].first, tree.mVisTime[R].first, i);
+                MO.emplace_back(tree.visTime[L].first, tree.visTime[R].first, i);
             else
-                MO.emplace_back(tree.mVisTime[L].second, tree.mVisTime[R].first, i);
+                MO.emplace_back(tree.visTime[L].second, tree.visTime[R].first, i);
         }
 
-        int blockN = (int)sqrt(2 * tree.mN);
+        int blockN = (int)sqrt(2 * tree.N);
         sort(MO.begin(), MO.end(), [blockN](const auto& l, const auto& r) {
             if (get<0>(l) / blockN != get<0>(r) / blockN)
                 return get<0>(l) / blockN < get<0>(r) / blockN;
@@ -74,7 +74,7 @@ struct TreeMO {
     //--- query ---------------------------------------------------------------
     
     void add(int t) {
-        int u = tree.mTime2Node[t];
+        int u = tree.time2Node[t];
         if (active[u]) {
             remove(t);
         } else {
@@ -84,7 +84,7 @@ struct TreeMO {
     }
 
     void remove(int t) {
-        int u = tree.mTime2Node[t];
+        int u = tree.time2Node[t];
         if (!active[u]) {
             add(t);
         } else {

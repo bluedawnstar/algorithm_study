@@ -63,10 +63,14 @@ static void testSpeed() {
 
     int N = 100000;
     int T = 1000000;
+#ifdef _DEBUG
+    N = 10000;
+    T = 10000;
+#endif
 
     vector<int> in(N);
     for (int j = 0; j < N; j++)
-        in[j] = RandInt32::get();
+        in[j] = RandInt32::get() % 65536;
 
     vector<tuple<int, int, int>> qryKth(T);
     for (int i = 0; i < T; i++) {
@@ -88,7 +92,7 @@ static void testSpeed() {
             auto& t = qryKth[i];
             int ans = matrix.kth(get<0>(t), get<1>(t), get<2>(t));
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(0);
@@ -101,7 +105,7 @@ static void testSpeed() {
             auto& t = qryKth[i];
             int ans = matrix.kth(get<0>(t), get<1>(t), get<2>(t));
             if (ans < 0)
-                cerr << "I'll never be shown!" << endl;
+                cerr << "It'll never be shown!" << endl;
         }
     }
     PROFILE_STOP(1);
@@ -173,7 +177,7 @@ static void test(vector<int>& in, WaveletMatrixArray<int>& matrix, int N, int L,
 }
 
 void testWaveletMatrixArray() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Wavelet Matrix Array --------------------------------------" << endl;
 
@@ -182,7 +186,7 @@ void testWaveletMatrixArray() {
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = RandInt32::get();
+            in[j] = RandInt32::get() % 65536;
 
         WaveletMatrixArray<int> matrix;
         matrix.build(in);

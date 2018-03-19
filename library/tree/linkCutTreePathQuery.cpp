@@ -20,8 +20,13 @@ using namespace std;
 
 #include "treeBasic.h"
 
+#ifdef _DEBUG
+#define MAXN    10000
+#define LOGN    18
+#else
 #define MAXN    100000
 #define LOGN    18
+#endif
 
 vector<int> gTrV;
 
@@ -45,11 +50,11 @@ static void update(Tree& tr, int u, int v, int value) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         gTrV[u] = value;
-        u = tr.mP[0][u];
+        u = tr.P[0][u];
     }
     while (v != lca) {
         gTrV[v] = value;
-        v = tr.mP[0][v];
+        v = tr.P[0][v];
     }
     gTrV[lca] = value;
 }
@@ -58,11 +63,11 @@ static void add(Tree& tr, int u, int v, int value) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         gTrV[u] += value;
-        u = tr.mP[0][u];
+        u = tr.P[0][u];
     }
     while (v != lca) {
         gTrV[v] += value;
-        v = tr.mP[0][v];
+        v = tr.P[0][v];
     }
     gTrV[lca] += value;
 }
@@ -73,11 +78,11 @@ static int query(Tree& tr, int u, int v) {
     int lca = tr.findLCA(u, v);
     while (u != lca) {
         res += gTrV[u];
-        u = tr.mP[0][u];
+        u = tr.P[0][u];
     }
     while (v != lca) {
         res += gTrV[v];
-        v = tr.mP[0][v];
+        v = tr.P[0][v];
     }
     res += gTrV[lca];
 

@@ -9,32 +9,32 @@ struct BitSetSimple {
     static const int INDEX_MASK = 0x1F;
     static const int INDEX_SHIFT = 5;
 
-    int mN;
+    int N;
 
-    unsigned mEndMask;
-    vector<unsigned> mV;
+    unsigned endMask;
+    vector<unsigned> values;
 
-    void init(int N) {
-        mN = N;
+    void init(int n) {
+        N = n;
 
         int r = N % BIT_SIZE;
-        mEndMask = r ? ((BIT_ONE << r) - BIT_ONE) : BIT_ALL;
-        mV = vector<unsigned>((N + BIT_SIZE - 1) / BIT_SIZE);
+        endMask = r ? ((BIT_ONE << r) - BIT_ONE) : BIT_ALL;
+        values = vector<unsigned>((N + BIT_SIZE - 1) / BIT_SIZE);
     }
 
     int size() const {
-        return mN;
+        return N;
     }
 
     int count() const {
         int res = 0;
-        for (int i = 0; i < (int)mV.size(); i++)
-            res += popCount(mV[i]);
+        for (int i = 0; i < (int)values.size(); i++)
+            res += popCount(values[i]);
         return res;
     }
 
     bool all() const {
-        return count() >= mN;
+        return count() >= N;
     }
 
     bool any() const {
@@ -46,15 +46,15 @@ struct BitSetSimple {
     }
 
     bool test(int pos) const {
-        return (mV[pos >> INDEX_SHIFT] & (BIT_ONE << (pos & INDEX_MASK))) != 0;
+        return (values[pos >> INDEX_SHIFT] & (BIT_ONE << (pos & INDEX_MASK))) != 0;
     }
 
     BitSetSimple& set() {
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            mV[i] = BIT_ALL;
-        if (mEndMask + 1 != 0)
-            mV[n] = mEndMask;
+            values[i] = BIT_ALL;
+        if (endMask + 1 != 0)
+            values[n] = endMask;
         return *this;
     }
 
@@ -62,58 +62,58 @@ struct BitSetSimple {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
         if (value) {
-            if ((mV[idx] & (BIT_ONE << off)) == 0)
-                mV[idx] |= BIT_ONE << off;
+            if ((values[idx] & (BIT_ONE << off)) == 0)
+                values[idx] |= BIT_ONE << off;
         } else {
-            if (mV[idx] & (BIT_ONE << off))
-                mV[idx] &= ~(BIT_ONE << off);
+            if (values[idx] & (BIT_ONE << off))
+                values[idx] &= ~(BIT_ONE << off);
         }
         return *this;
     }
 
     BitSetSimple& reset() {
-        int n = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n = (N + BIT_SIZE - 1) >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            mV[i] = 0;
+            values[i] = 0;
         return *this;
     }
 
     BitSetSimple& reset(int pos) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
-        if (mV[idx] & (BIT_ONE << off))
-            mV[idx] &= ~(BIT_ONE << off);
+        if (values[idx] & (BIT_ONE << off))
+            values[idx] &= ~(BIT_ONE << off);
 
         return *this;
     }
 
     BitSetSimple& flip() {
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            mV[i] ^= BIT_ALL;
-        if (mEndMask + 1 != 0)
-            mV[n] ^= mEndMask;
+            values[i] ^= BIT_ALL;
+        if (endMask + 1 != 0)
+            values[n] ^= endMask;
         return *this;
     }
 
     BitSetSimple& flip(int pos) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
-        if ((mV[idx] & (BIT_ONE << off)) == 0)
-            mV[idx] |= BIT_ONE << off;
+        if ((values[idx] & (BIT_ONE << off)) == 0)
+            values[idx] |= BIT_ONE << off;
         else
-            mV[idx] &= ~(BIT_ONE << off);
+            values[idx] &= ~(BIT_ONE << off);
         return *this;
     }
 
     bool operator ==(const BitSetSimple& rhs) const {
-        int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
-        int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n1 = (N + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n2 = (rhs.N + BIT_SIZE - 1) >> INDEX_SHIFT;
         if (n1 != n2)
             return false;
 
         for (int i = 0; i < n1; i++) {
-            if (mV[i] != rhs.mV[i])
+            if (values[i] != rhs.values[i])
                 return false;
         }
         return true;
@@ -124,86 +124,86 @@ struct BitSetSimple {
     }
 
     BitSetSimple& operator |=(const BitSetSimple& rhs) {
-        int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
-        int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n1 = (N + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n2 = (rhs.N + BIT_SIZE - 1) >> INDEX_SHIFT;
 
         int n = min(n1, n2);
         for (int i = 0; i < n; i++)
-            mV[i] |= rhs.mV[i];
+            values[i] |= rhs.values[i];
 
         return *this;
     }
 
     BitSetSimple& operator &=(const BitSetSimple& rhs) {
-        int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
-        int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n1 = (N + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n2 = (rhs.N + BIT_SIZE - 1) >> INDEX_SHIFT;
 
         int n = min(n1, n2);
         for (int i = 0; i < n; i++)
-            mV[i] &= rhs.mV[i];
+            values[i] &= rhs.values[i];
 
         return *this;
     }
 
     BitSetSimple& operator ^=(const BitSetSimple& rhs) {
-        int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
-        int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n1 = (N + BIT_SIZE - 1) >> INDEX_SHIFT;
+        int n2 = (rhs.N + BIT_SIZE - 1) >> INDEX_SHIFT;
 
         int n = min(n1, n2);
         for (int i = 0; i < n; i++)
-            mV[i] ^= rhs.mV[i];
+            values[i] ^= rhs.values[i];
 
         return *this;
     }
 
     BitSetSimple operator |(const BitSetSimple& rhs) {
         BitSetSimple bs = *this;
-        bs.init(mN);
+        bs.init(N);
 
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            bs.mV[i] = mV[i] | rhs.mV[i];
-        if (mEndMask + 1 != 0)
-            bs.mV[n] = (mV[n] | rhs.mV[n]);
+            bs.values[i] = values[i] | rhs.values[i];
+        if (endMask + 1 != 0)
+            bs.values[n] = (values[n] | rhs.values[n]);
 
         return bs;
     }
 
     BitSetSimple operator &(const BitSetSimple& rhs) {
         BitSetSimple bs = *this;
-        bs.init(mN);
+        bs.init(N);
 
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            bs.mV[i] = mV[i] & rhs.mV[i];
-        if (mEndMask + 1 != 0)
-            bs.mV[n] = mV[n] & rhs.mV[n];
+            bs.values[i] = values[i] & rhs.values[i];
+        if (endMask + 1 != 0)
+            bs.values[n] = values[n] & rhs.values[n];
 
         return bs;
     }
 
     BitSetSimple operator ^(const BitSetSimple& rhs) {
         BitSetSimple bs = *this;
-        bs.init(mN);
+        bs.init(N);
 
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            bs.mV[i] = mV[i] ^ rhs.mV[i];
-        if (mEndMask + 1 != 0)
-            bs.mV[n] = mV[n] ^ rhs.mV[n];
+            bs.values[i] = values[i] ^ rhs.values[i];
+        if (endMask + 1 != 0)
+            bs.values[n] = values[n] ^ rhs.values[n];
 
         return bs;
     }
 
     BitSetSimple operator ~() const {
         BitSetSimple bs = *this;
-        bs.init(mN);
+        bs.init(N);
 
-        int n = mN >> INDEX_SHIFT;
+        int n = N >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
-            bs.mV[i] = ~mV[i];
-        if (mEndMask + 1 != 0)
-            bs.mV[n] = ~mV[n] & mEndMask;
+            bs.values[i] = ~values[i];
+        if (endMask + 1 != 0)
+            bs.values[n] = ~values[n] & endMask;
 
         return bs;
     }
@@ -212,8 +212,8 @@ struct BitSetSimple {
         if (n <= 0)
             return *this;
 
-        if (n >= mN) {
-            fill(mV.begin(), mV.end(), 0);
+        if (n >= N) {
+            fill(values.begin(), values.end(), 0);
             return *this;
         }
 
@@ -221,27 +221,27 @@ struct BitSetSimple {
         int r = n & INDEX_MASK;
 
         if (r == 0) {
-            int t = (mN - 1) >> INDEX_SHIFT;
+            int t = (N - 1) >> INDEX_SHIFT;
             int s = t - d;
 
             while (s >= 0)
-                mV[t--] = mV[s--];
+                values[t--] = values[s--];
             while (t >= 0)
-                mV[t--] = 0;
+                values[t--] = 0;
         } else {
-            int t = (mN - 1) >> INDEX_SHIFT;
+            int t = (N - 1) >> INDEX_SHIFT;
             int s1 = t - d;
             int s0 = s1 - 1;
 
             while (s0 >= 0)
-                mV[t--] = (mV[s1--] << r) | (mV[s0--] >> (BIT_SIZE - r));
+                values[t--] = (values[s1--] << r) | (values[s0--] >> (BIT_SIZE - r));
             if (s1 >= 0)
-                mV[t--] = (mV[s1--] << r);
+                values[t--] = (values[s1--] << r);
             while (t >= 0)
-                mV[t--] = 0;
+                values[t--] = 0;
         }
-        if (mEndMask + 1 != 0)
-            mV[mN >> INDEX_SHIFT] &= mEndMask;
+        if (endMask + 1 != 0)
+            values[N >> INDEX_SHIFT] &= endMask;
 
         return *this;
     }
@@ -250,38 +250,38 @@ struct BitSetSimple {
         if (n <= 0)
             return *this;
 
-        if (n >= mN) {
-            fill(mV.begin(), mV.end(), 0);
+        if (n >= N) {
+            fill(values.begin(), values.end(), 0);
             return *this;
         }
 
         int d = n >> INDEX_SHIFT;
         int r = n & INDEX_MASK;
 
-        int VN = (int)mV.size();
+        int VN = (int)values.size();
 
         if (r == 0) {
             int t = 0;
             int s = t + d;
 
             while (s < VN)
-                mV[t++] = mV[s++];
+                values[t++] = values[s++];
             while (t < VN)
-                mV[t++] = 0;
+                values[t++] = 0;
         } else {
             int t = 0;
             int s0 = t + d;
             int s1 = s0 + 1;
 
             while (s1 < VN)
-                mV[t++] = (mV[s0++] >> r) | (mV[s1++] << (BIT_SIZE - r));
+                values[t++] = (values[s0++] >> r) | (values[s1++] << (BIT_SIZE - r));
             if (s0 < VN)
-                mV[t++] = (mV[s0++] >> r);
+                values[t++] = (values[s0++] >> r);
             while (t < VN)
-                mV[t++] = 0;
+                values[t++] = 0;
         }
-        if (mEndMask + 1 != 0)
-            mV[mN >> INDEX_SHIFT] &= mEndMask;
+        if (endMask + 1 != 0)
+            values[N >> INDEX_SHIFT] &= endMask;
 
         return *this;
     }
@@ -289,9 +289,9 @@ struct BitSetSimple {
     //-----------------------------------------------------
 
     int firstClearBit() const {
-        for (int i = 0; i < (int)mV.size(); i++) {
-            if (mV[i] != BIT_ALL) {
-                int m = (int)~mV[i];
+        for (int i = 0; i < (int)values.size(); i++) {
+            if (values[i] != BIT_ALL) {
+                int m = (int)~values[i];
                 return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -299,9 +299,9 @@ struct BitSetSimple {
     }
 
     int first() const {
-        for (int i = 0; i < (int)mV.size(); i++) {
-            if (mV[i]) {
-                int m = (int)mV[i];
+        for (int i = 0; i < (int)values.size(); i++) {
+            if (values[i]) {
+                int m = (int)values[i];
                 return i * BIT_SIZE + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -309,28 +309,28 @@ struct BitSetSimple {
     }
 
     int last() const {
-        for (int i = (int)mV.size() - 1; i >= 0; i--) {
-            if (mV[i])
-                return i * BIT_SIZE + BIT_SIZE - clz(mV[i]) - 1;
+        for (int i = (int)values.size() - 1; i >= 0; i--) {
+            if (values[i])
+                return i * BIT_SIZE + BIT_SIZE - clz(values[i]) - 1;
         }
         return -1;
     }
 
     // pos < next(pos) < N (or -1)
     int next(int pos) const {
-        if (++pos >= mN)
+        if (++pos >= N)
             return -1;
 
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)mV[index] & (BIT_ALL << offset);
+        int m = (int)values[index] & (BIT_ALL << offset);
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
 
-        for (int i = index + 1; i < (int)mV.size(); i++) {
-            if (mV[i]) {
-                m = (int)mV[i];
+        for (int i = index + 1; i < (int)values.size(); i++) {
+            if (values[i]) {
+                m = (int)values[i];
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -346,13 +346,13 @@ struct BitSetSimple {
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)mV[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
+        int m = (int)values[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
 
         for (int i = index - 1; i >= 0; i--) {
-            if (mV[i])
-                return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
+            if (values[i])
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz(values[i]) - 1;
         }
 
         return -1;

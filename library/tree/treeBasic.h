@@ -3,7 +3,7 @@
 /*
 <How to use>
     1) call add() to construct tree
-    2) call build() to fill mP, mLevel, and mTreeSize
+    2) call build() to fill P, level, and treeSize
        - It will call dfs() / dfsIter() or bfs() to set level and parent table
        - It will also call makeLcaTable() to create LCA table
     3) call query functions
@@ -12,45 +12,41 @@
 // N : the number of nodes
 // logN : modify LCA table size (log2(MAXN))
 struct Tree {
-    int                 mN;         // the number of vertex
-    int                 mLogN;      // ceil(log2(mN))
+    int                 N;          // the number of vertex
+    int                 logN;       // ceil(log2(N))
 
-    vector<vector<int>> mE;         // edges (vertex number)
-    vector<vector<int>> mP;         // mP[0][n] points to the parent
+    vector<vector<int>> edges;      // edges (vertex number)
+    vector<vector<int>> P;          // P[0][n] points to the parent
                                     // parent & acestors
 
-    vector<int>         mLevel;     // depth (root is 0)
-    vector<int>         mTreeSize;  // call dfsSize() to calculate tree size
+    vector<int>         level;      // depth (root is 0)
+    vector<int>         treeSize;   // call dfsSize() to calculate tree size
 
     //--- tree construction ---------------------------------------------------
 
-    Tree() {
-        mN = 0;
-        mLogN = 0;
+    Tree() : N(0), logN(0) {
     }
 
-    Tree(int N, int logN) : mE(N), mP(logN, vector<int>(N)), mLevel(N), mTreeSize(N) {
-        mN = N;
-        mLogN = logN;
+    Tree(int n, int logN) : N(n), logN(logN), edges(n), P(logN, vector<int>(n)), level(n), treeSize(n) {
     }
 
-    void init(int N, int logN) {
-        mN = N;
-        mLogN = logN;
+    void init(int _n, int _logN) {
+        N = _n;
+        logN = _logN;
 
-        mE = vector<vector<int>>(N);
-        mP = vector<vector<int>>(logN, vector<int>(N));
-        mLevel.assign(N, 0);
-        mTreeSize.assign(N, 0);
+        edges = vector<vector<int>>(N);
+        P = vector<vector<int>>(logN, vector<int>(N));
+        level.assign(N, 0);
+        treeSize.assign(N, 0);
     }
 
     void addEdge(int u, int v) {
-        mE[u].push_back(v);
-        mE[v].push_back(u);
+        edges[u].push_back(v);
+        edges[v].push_back(u);
     }
 
     void addEdgeDirected(int u, int v) {
-        mE[u].push_back(v);
+        edges[u].push_back(v);
     }
 
     void build(int root) {
@@ -63,17 +59,17 @@ struct Tree {
     //--- DFS -----------------------------------------------------------------
 
     void dfs(int u, int parent) {
-        mTreeSize[u] = 1;
-        mP[0][u] = parent;
+        treeSize[u] = 1;
+        P[0][u] = parent;
 
-        for (int v : mE[u]) {
+        for (int v : edges[u]) {
             if (v == parent)
                 continue;
 
-            mLevel[v] = mLevel[u] + 1;
+            level[v] = level[u] + 1;
             dfs(v, u);
 
-            mTreeSize[u] += mTreeSize[v];
+            treeSize[u] += treeSize[v];
         }
     }
 
@@ -84,27 +80,27 @@ struct Tree {
             int vi;         // child index
         };
         vector<Item> st;
-        st.reserve(mN);
+        st.reserve(N);
 
         st.push_back(Item{ root, -1, -1 });
         while (!st.empty()) {
             Item& it = st.back();
             if (++it.vi == 0) {
                 // enter ...
-                mTreeSize[it.u] = 1;
-                mP[0][it.u] = it.parent;
+                treeSize[it.u] = 1;
+                P[0][it.u] = it.parent;
             }
 
             if (it.vi > 0)
-                mTreeSize[it.u] += mTreeSize[mE[it.u][it.vi - 1]];
+                treeSize[it.u] += treeSize[edges[it.u][it.vi - 1]];
 
-            if (it.vi >= (int)mE[it.u].size()) {
+            if (it.vi >= (int)edges[it.u].size()) {
                 // leave ...
                 st.pop_back();
-            } else if (mE[it.u][it.vi] != it.parent) {
+            } else if (edges[it.u][it.vi] != it.parent) {
                 // recursion
-                int v = mE[it.u][it.vi];
-                mLevel[v] = mLevel[it.u] + 1;
+                int v = edges[it.u][it.vi];
+                level[v] = level[it.u] + 1;
                 st.push_back(Item{ v, it.u, -1 });
             }
         }
@@ -113,34 +109,34 @@ struct Tree {
     //--- BFS -----------------------------------------------------------------
 
     void dfsSize(int u, int parent) {
-        mTreeSize[u] = 1;
-        for (int v : mE[u]) {
+        treeSize[u] = 1;
+        for (int v : edges[u]) {
             if (v != parent) {
                 dfsSize(v, u);
-                mTreeSize[u] += mTreeSize[v];
+                treeSize[u] += treeSize[v];
             }
         }
     }
 
     void bfs(int root) {
-        vector<bool> visited(mN);
+        vector<bool> visited(N);
 
         queue<int> Q;
         Q.push(root);
-        mP[0][root] = -1;
+        P[0][root] = -1;
         visited[root] = true;
         while (!Q.empty()) {
             int u = Q.front();
             Q.pop();
 
-            for (int v : mE[u]) {
+            for (int v : edges[u]) {
                 if (visited[v])
                     continue;
 
                 visited[v] = true;
 
-                mP[0][v] = u;
-                mLevel[v] = mLevel[u] + 1;
+                P[0][v] = u;
+                level[v] = level[u] + 1;
                 Q.push(v);
             }
         }
@@ -149,10 +145,10 @@ struct Tree {
     //--- LCA -----------------------------------------------------------------
 
     void makeLcaTable() {
-        for (int i = 1; i < mLogN; i++) {
-            for (int j = 0; j < mN; j++) {
-                int pp = mP[i - 1][j];
-                mP[i][j] = pp < 0 ? pp : mP[i - 1][pp];
+        for (int i = 1; i < logN; i++) {
+            for (int j = 0; j < N; j++) {
+                int pp = P[i - 1][j];
+                P[i][j] = pp < 0 ? pp : P[i - 1][pp];
             }
         }
     }
@@ -163,7 +159,7 @@ struct Tree {
 
         for (int i = 0; dist > 0; i++) {
             if (dist & 1)
-                node = mP[i][node];
+                node = P[i][node];
             dist >>= 1;
         }
 
@@ -171,33 +167,33 @@ struct Tree {
     }
 
     int findLCA(int A, int B) {
-        if (mLevel[A] < mLevel[B])
+        if (level[A] < level[B])
             swap(A, B);
 
-        A = climbTree(A, mLevel[A] - mLevel[B]);
+        A = climbTree(A, level[A] - level[B]);
 
         if (A == B)
             return A;
 
         int bitCnt = 0;
-        for (int x = mLevel[A]; x; x >>= 1)
+        for (int x = level[A]; x; x >>= 1)
             bitCnt++;
 
         for (int i = bitCnt - 1; i >= 0; i--) {
-            if (mP[i][A] > 0 && mP[i][A] != mP[i][B]) {
-                A = mP[i][A];
-                B = mP[i][B];
+            if (P[i][A] > 0 && P[i][A] != P[i][B]) {
+                A = P[i][A];
+                B = P[i][B];
             }
         }
 
-        return mP[0][A];
+        return P[0][A];
     }
 
     //--- Centroid ------------------------------------------------------------
 
     int findCentroid(int u, int parent, int N) {
         bool isMajor = true;
-        for (int v : mE[u]) {
+        for (int v : edges[u]) {
             if (v == parent)
                 continue;
 
@@ -205,27 +201,27 @@ struct Tree {
             if (res != -1)
                 return res;
 
-            if (mTreeSize[v] + mTreeSize[v] > N)
+            if (treeSize[v] + treeSize[v] > N)
                 isMajor = false;
         }
 
-        if (isMajor && (N - mTreeSize[u]) * 2 <= N)
+        if (isMajor && (N - treeSize[u]) * 2 <= N)
             return u;
 
         return -1;
     }
 
     int findCentroid(int start) {
-        mTreeSize = vector<int>(mN);
+        treeSize = vector<int>(N);
         dfsSize(start, -1);
-        return findCentroid(start, -1, mTreeSize[start]);
+        return findCentroid(start, -1, treeSize[start]);
     }
 
     //--- Center --------------------------------------------------------------
 
     void dfsDist(vector<int>& dist, int u, int parent, int d) {
         dist[u] = d;
-        for (int v : mE[u]) {
+        for (int v : edges[u]) {
             if (v != parent)
                 dfsDist(dist, v, u, d + 1);
         }
@@ -233,8 +229,8 @@ struct Tree {
 
     int findFarthest(const vector<int>& dist) {
         int index = -1;
-        for (int i = 0; i < mN; i++) {
-            if (dist[i] != mN && (index == -1 || dist[index] < dist[i]))
+        for (int i = 0; i < N; i++) {
+            if (dist[i] != N && (index == -1 || dist[index] < dist[i]))
                 index = i;
         }
         return index;
@@ -246,7 +242,7 @@ struct Tree {
             return true;
         }
         path.push_back(u);
-        for (int v : mE[u]) {
+        for (int v : edges[u]) {
             if (v != parent && dfsPath(path, v, u, target))
                 return true;
         }
@@ -255,7 +251,7 @@ struct Tree {
     }
 
     vector<int> findCenters(int start) {
-        vector<int> dist(mN, mN);
+        vector<int> dist(N, N);
 
         dfsDist(dist, start, -1, 0);
         start = findFarthest(dist);
@@ -273,21 +269,21 @@ struct Tree {
 
     vector<int> findCentersEx() {
         vector<int> leaves;
-        leaves.reserve(mN);
+        leaves.reserve(N);
 
-        vector<int> deg(mN);
-        for (int u = 0; u < mN; u++) {
-            deg[u] = (int)mE[u].size();
+        vector<int> deg(N);
+        for (int u = 0; u < N; u++) {
+            deg[u] = (int)edges[u].size();
             if (deg[u] <= 1)
                 leaves.push_back(u);
         }
 
         int removedLeaves = (int)leaves.size();
-        while (removedLeaves < mN) {
+        while (removedLeaves < N) {
             vector<int> newLeaves;
-            newLeaves.reserve(mN);
+            newLeaves.reserve(N);
             for (int u : leaves) {
-                for (int v : mE[u]) {
+                for (int v : edges[u]) {
                     if (--deg[v] == 1)
                         newLeaves.push_back(v);
                 }
@@ -301,7 +297,7 @@ struct Tree {
     //--- Diameter ------------------------------------------------------------
 
     int getDiameter() {
-        vector<int> dist(mN, mN);
+        vector<int> dist(N, N);
 
         dfsDist(dist, 0, -1, 0);
         int farthest = findFarthest(dist);
@@ -343,9 +339,9 @@ struct Tree {
 
     unsigned long long rootedHash(int u, int parent) {
         vector<unsigned long long> hs;
-        hs.reserve(mE[u].size());
+        hs.reserve(edges[u].size());
 
-        for (int v : mE[u]) {
+        for (int v : edges[u]) {
             if (v != parent)
                 hs.push_back(rootedHash(v, u));
         }
@@ -361,9 +357,9 @@ struct Tree {
 
     unsigned long long rootedHash2(int u, int parent) {
         vector<unsigned long long> res;
-        res.reserve(mE[u].size());
+        res.reserve(edges[u].size());
 
-        for (int v : mE[u]) {
+        for (int v : edges[u]) {
             if (parent != v)
                 res.push_back(rootedHash(v, u));
         }

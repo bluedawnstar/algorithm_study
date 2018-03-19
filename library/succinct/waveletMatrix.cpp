@@ -132,7 +132,7 @@ void testWaveletMatrix() {
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = RandInt32::get();
+            in[j] = RandInt32::get() % 65536;
         //for (int j = 0; j < N; j++)
         //    in[j] = j;
 

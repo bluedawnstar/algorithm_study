@@ -11,10 +11,10 @@ template <typename T>
 struct WaveletMatrixArray {
     static const T NaN = numeric_limits<T>::min();
 
-    int mN;
-    int mH;
-    T mMaxVal;
-    vector<vector<int>> mV; // MSB bit first
+    int                 N;
+    int                 H;
+    T                   maxVal;
+    vector<vector<int>> values; // MSB bit first
 
     WaveletMatrixArray() {
     }
@@ -32,36 +32,36 @@ struct WaveletMatrixArray {
         build(&in[0], (int)in.size(), maxVal);
     }
 
-    void build(const T* first, int N) {
-        build(first, N, (N == 0) ? 0 : *max_element(first, first + N));
+    void build(const T* first, int n) {
+        build(first, n, (n == 0) ? 0 : *max_element(first, first + n));
     }
 
-    void build(const T* first, int N, int maxVal) {
-        mN = N;
-        mMaxVal = maxVal;
+    void build(const T* first, int n, int maxVal) {
+        this->N = n;
+        this->maxVal = maxVal;
 
-        mH = 1;
-        while (mMaxVal >= (T(1) << mH))
-            ++mH;
+        H = 1;
+        while (maxVal >= (T(1) << H))
+            ++H;
 
-        mV = vector<vector<int>>(mH, vector<int>(mN + 1));
+        values = vector<vector<int>>(H, vector<int>(N + 1));
 
         vector<T> cur(first, first + N);
-        vector<T> next(mN);
-        for (int i = 0; i < mH; i++) {
-            T mask = T(1) << (mH - i - 1);
+        vector<T> next(N);
+        for (int i = 0; i < H; i++) {
+            T mask = T(1) << (H - i - 1);
 
-            vector<int>& v = mV[i];
+            vector<int>& v = values[i];
 
             int zeroN = 0;
-            for (int j = 0; j < mN; j++) {
+            for (int j = 0; j < N; j++) {
                 v[j] = zeroN;
                 zeroN += ((cur[j] & mask) == 0);
             }
-            v[mN] = zeroN;
+            v[N] = zeroN;
 
             int zeroPos = 0, onePos = zeroN;
-            for (int j = 0; j < mN; j++) {
+            for (int j = 0; j < N; j++) {
                 if (cur[j] & mask) {
                     next[onePos++] = cur[j];
                 } else {
@@ -74,14 +74,14 @@ struct WaveletMatrixArray {
 
 
     int size() const {
-        return mN;
+        return N;
     }
 
     // (0 <= pos < N)
     T get(int pos) const {
         T val = 0;
-        for (int i = 0; i < mH; i++) {
-            const vector<int>& v = mV[i];
+        for (int i = 0; i < H; i++) {
+            const vector<int>& v = values[i];
 
             if (v[pos] == v[pos + 1]) {
                 val = (val << 1) | 1;
@@ -101,8 +101,8 @@ struct WaveletMatrixArray {
         }
 
         T val = 0;
-        for (int i = 0; i < mH; i++) {
-            const vector<int>& v = mV[i];
+        for (int i = 0; i < H; i++) {
+            const vector<int>& v = values[i];
 
             int count = v[right + 1] - v[left];
             if (k >= count) {
@@ -140,15 +140,15 @@ struct WaveletMatrixArray {
     // return (the number of val, numbers less than val, numbers greater than val)
     // inclusive (0 <= left <= right < N)
     tuple<int, int, int> countEx(int left, int right, T val) const {
-        if (val > mMaxVal) {
+        if (val > maxVal) {
             return make_tuple(0, right - left + 1, 0);
         }
 
         int lt = 0, gt = 0;
-        for (int i = 0; i < mH; i++) {
-            const vector<int>& v = mV[i];
+        for (int i = 0; i < H; i++) {
+            const vector<int>& v = values[i];
 
-            if ((val >> (mH - i - 1)) & 1) {
+            if ((val >> (H - i - 1)) & 1) {
                 int leftN = left - v[left];
                 int rightN = right + 1 - v[right + 1];
 

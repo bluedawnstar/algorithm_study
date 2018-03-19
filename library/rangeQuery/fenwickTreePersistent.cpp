@@ -135,6 +135,10 @@ void testPersistentFenwickTree() {
     {
         int N = 100;
         int T = 1000;
+#ifdef _DEBUG
+        N = 100;
+        T = 100;
+#endif
         vector<vector<int>> in(T);
         PartiallyPersistentFenwickTree<int> fenwick(N);
 

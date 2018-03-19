@@ -2,41 +2,41 @@
 
 // Sparse table for random access in a linked list
 struct JumpPointerSparseTable {
-    int                 mN;         // the number of vertex
-    int                 mLogN;      // 
-    vector<vector<int>> mP;         // mP[0][n] points to the parent
+    int                 N;         // the number of vertex
+    int                 logN;      // 
+    vector<vector<int>> P;         // P[0][n] points to the parent
                                     // parent & acestors
 
     JumpPointerSparseTable(int N) {
         init(N);
     }
 
-    void init(int N) {
-        mN = N;
-        mLogN = (int)log2(N) + 1;
-        mP.resize(mLogN);
-        for (int i = 0; i < mLogN; i++)
-            mP[i].resize(mN);
+    void init(int n) {
+        N = n;
+        logN = (int)log2(N) + 1;
+        P.resize(logN);
+        for (int i = 0; i < logN; i++)
+            P[i].resize(N);
     }
 
     // for batch building
     // O(NlogN)
     void build() {
-        for (int i = 1; i < mLogN; i++) {
-            for (int j = 0; j < mN; j++) {
-                int pp = mP[i - 1][j];
-                mP[i][j] = pp < 0 ? pp : mP[i - 1][pp];
+        for (int i = 1; i < logN; i++) {
+            for (int j = 0; j < N; j++) {
+                int pp = P[i - 1][j];
+                P[i][j] = pp < 0 ? pp : P[i - 1][pp];
             }
         }
     }
 
     void build(const int A[], int n) {
-        copy(A, A + n, mP[0].begin());
+        copy(A, A + n, P[0].begin());
         build();
     }
 
     void build(const vector<int>& A) {
-        copy(A.begin(), A.end(), mP[0].begin());
+        copy(A.begin(), A.end(), P[0].begin());
         build();
     }
 
@@ -44,10 +44,10 @@ struct JumpPointerSparseTable {
     // x = index, next = x's next index (pointer)
     // 0 <= x < N, -1 <= next < N
     void add(int x, int next) {
-        mP[0][x] = next;
-        for (int i = 1; i < mLogN; i++) {
-            int pp = mP[i - 1][x];
-            mP[i][x] = pp < 0 ? pp : mP[i - 1][pp];
+        P[0][x] = next;
+        for (int i = 1; i < logN; i++) {
+            int pp = P[i - 1][x];
+            P[i][x] = pp < 0 ? pp : P[i - 1][pp];
         }
     }
 
@@ -59,7 +59,7 @@ struct JumpPointerSparseTable {
 
         for (int i = 0; dist > 0; i++) {
             if (dist & 1)
-                x = mP[i][x];
+                x = P[i][x];
             dist >>= 1;
         }
 
@@ -74,12 +74,12 @@ struct JumpPointerSparseTable {
             return start;
 
         int res = start;
-        for (int i = mLogN - 1; i >= 0; i--) {
-            int next = mP[i][res];
+        for (int i = logN - 1; i >= 0; i--) {
+            int next = P[i][res];
             if (0 <= next && next < leftLimit)
                 res = next;
         }
-        return mP[0][res] >= leftLimit ? mP[0][res] : res;
+        return P[0][res] >= leftLimit ? P[0][res] : res;
     }
 
     // find first position where f(x) is true in [start, N)
@@ -90,19 +90,19 @@ struct JumpPointerSparseTable {
             return start;
 
         int res = start;
-        for (int i = mLogN - 1; i >= 0; i--) {
-            int next = mP[i][res];
+        for (int i = logN - 1; i >= 0; i--) {
+            int next = P[i][res];
             if (0 <= next && !f(next))
                 res = next;
         }
-        return f(mP[0][res]) ? mP[0][res] : res;
+        return f(P[0][res]) ? P[0][res] : res;
     }
 
     // get last value from start in range [start, rightLimit]
     int findLast(int start, int rightLimit) const {
         int res = start;
-        for (int i = mLogN - 1; i >= 0; i--) {
-            int next = mP[i][res];
+        for (int i = logN - 1; i >= 0; i--) {
+            int next = P[i][res];
             if (0 <= next && next <= rightLimit)
                 res = next;
         }
@@ -115,8 +115,8 @@ struct JumpPointerSparseTable {
     //         S         ^
     int findLast(int start, const function<bool(int)>& f) const {
         int res = start;
-        for (int i = mLogN - 1; i >= 0; i--) {
-            int next = mP[i][res];
+        for (int i = logN - 1; i >= 0; i--) {
+            int next = P[i][res];
             if (0 <= next && f(next))
                 res = next;
         }

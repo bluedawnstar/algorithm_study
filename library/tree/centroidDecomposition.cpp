@@ -76,7 +76,7 @@ void testCentroidDecomposition() {
     cout << "*** Tree #1 ***" << endl;
     {
         auto tree = makeTree(); // make a test tree
-        dumpTree(tree.mE, 16);
+        dumpTree(tree.edges, 16);
 
         CentroidDecomposition cd;
 
@@ -88,7 +88,7 @@ void testCentroidDecomposition() {
     cout << "*** Tree #2 ***" << endl;
     {
         auto tree = makeTree2(); // make a test tree
-        dumpTree(tree.mE, 15);
+        dumpTree(tree.edges, 15);
 
         CentroidDecomposition cd;
 

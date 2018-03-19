@@ -95,7 +95,7 @@ void testSqrtTree() {
     {
         int N = 1000000;
         int T = 1000000;
-#if _DEBUG
+#ifdef _DEBUG
         N = 1000;
         T = 1000;
 #endif

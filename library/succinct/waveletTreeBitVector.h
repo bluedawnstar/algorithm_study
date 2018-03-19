@@ -144,9 +144,9 @@ struct WaveletTreeBitVector {
                 int idx = pos >> BitVectorRank::INDEX_SHIFT;
                 if (idx != ((pos + 1) >> BitVectorRank::INDEX_SHIFT)) {
                     if (orgX1 < orgX2) {
-                        --rank.mRank[idx + 1];
+                        --rank.rank[idx + 1];
                     } else {
-                        ++rank.mRank[idx + 1];
+                        ++rank.rank[idx + 1];
                     }
                 }
             }

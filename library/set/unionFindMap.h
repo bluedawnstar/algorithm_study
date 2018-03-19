@@ -2,19 +2,19 @@
 
 class UnionFindMap {
 public:
-    UnionFindMap() : mElemMap() {
+    UnionFindMap() : elemMap() {
     }
 
     void init() {
-        mElemMap.clear();
+        elemMap.clear();
     }
 
     void add(int x) {
-        mElemMap[x] = pair<int, int>(x, 0);
+        elemMap[x] = pair<int, int>(x, 0);
     }
 
     bool exist(int x) const {
-        return mElemMap.find(x) != mElemMap.end();
+        return elemMap.find(x) != elemMap.end();
     }
 
     int findSet(int x) {
@@ -23,9 +23,9 @@ public:
             return x;
         }
 
-        if (mElemMap[x].first == x)
+        if (elemMap[x].first == x)
             return x;
-        return mElemMap[x].first = findSet(mElemMap[x].first);
+        return elemMap[x].first = findSet(elemMap[x].first);
     }
 
     int unionSet(int x, int y) {
@@ -34,18 +34,18 @@ public:
         if (xset == yset)
             return xset;
 
-        if (mElemMap[xset].second < mElemMap[yset].second) {
-            mElemMap[xset].first = yset;
+        if (elemMap[xset].second < elemMap[yset].second) {
+            elemMap[xset].first = yset;
             return yset;
         } else {
-            mElemMap[yset].first = xset;
-            if (mElemMap[xset].second == mElemMap[yset].second)
-                mElemMap[xset].second++;
+            elemMap[yset].first = xset;
+            if (elemMap[xset].second == elemMap[yset].second)
+                elemMap[xset].second++;
             return xset;
         }
     }
 
 private:
     // first is 'parent', second is 'rank'
-    unordered_map<int, pair<int, int>> mElemMap;
+    unordered_map<int, pair<int, int>> elemMap;
 };

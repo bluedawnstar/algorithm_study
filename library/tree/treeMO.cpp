@@ -9,6 +9,9 @@ using namespace std;
 
 #include "treeMO.h"
 
+// https://www.hackerrank.com/contests/w34/challenges/path-statistics/submissions/code/1302522860
+// https://www.hackerrank.com/contests/w27/challenges/coprime-paths
+
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>

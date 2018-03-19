@@ -31,9 +31,9 @@ static int findLast(const vector<int>& A, int start, int R) {
 }
 
 void testJumpPointerSparseTable() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
-    cout << "--- Random Access Sparse Table -------------" << endl;
+    cout << "--- Jump Pointer Sparse Table -------------" << endl;
     {
         int N = 100;
         vector<int> in(N);

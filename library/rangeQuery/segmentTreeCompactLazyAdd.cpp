@@ -72,8 +72,13 @@ void testSegmentTreeCompactLazyAdd() {
     }
     cout << "*** findNext() & findPrev()" << endl;
     {
+#ifdef _DEBUG
+        static const int T = 100;
+        int N = 10000;
+#else
         static const int T = 1000;
         int N = 100000;
+#endif
         vector<int> in(N);
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
@@ -137,8 +142,7 @@ void testSegmentTreeCompactLazyAdd() {
     cout << "*** Fenwick Tree vs Compact Segment Tree Lazy Add" << endl;
     {
         int N = 1000000;
-
-#if _DEBUG
+#ifdef _DEBUG
         N = 10000;
 #endif
 

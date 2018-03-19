@@ -4,52 +4,50 @@
 #include "../rangeQuery/sparseTableMinIndex.h"
 
 struct EulerTourTree : public Tree {
-    vector<int>     mFirstVisTime;  // node index to first visit time
-    vector<int>     mEuler;         // time to node index
-    SparseTableMinIndex mRMQ;       // RMQ for LCA
+    vector<int>         firstVisTime;   // node index to first visit time
+    vector<int>         euler;          // time to node index
+    SparseTableMinIndex rmq;            // RMQ for LCA
 
     //--- tree construction ---------------------------------------------------
 
-    EulerTourTree() {
-        mN = 0;
-        mLogN = 0;
+    EulerTourTree() : Tree() {
     }
 
-    EulerTourTree(int N, int logN) : Tree(N, logN), mFirstVisTime(N, -1) {
+    EulerTourTree(int N, int logN) : Tree(N, logN), firstVisTime(N, -1) {
     }
 
     void init(int N, int logN) {
         Tree::init(N, logN);
-        mFirstVisTime.assign(N, -1);
+        firstVisTime.assign(N, -1);
     }
 
     void build(int root) {
         dfs(root, -1);
         makeLcaTable();
 
-        vector<int> level(mEuler.size());
-        for (int i = 0; i < (int)mEuler.size(); i++)
-            level[i] = mLevel[mEuler[i]];
-        mRMQ.build(level);
+        vector<int> level(euler.size());
+        for (int i = 0; i < (int)euler.size(); i++)
+            level[i] = level[euler[i]];
+        rmq.build(level);
     }
 
     //--------- DFS -----------------------------------------------------------
 
     void dfs(int u, int parent) {
-        if (mFirstVisTime[u] < 0)
-            mFirstVisTime[u] = (int)mEuler.size();
+        if (firstVisTime[u] < 0)
+            firstVisTime[u] = (int)euler.size();
 
-        mEuler.push_back(u);
+        euler.push_back(u);
 
-        mP[0][u] = parent;
-        for (int v : mE[u]) {
+        P[0][u] = parent;
+        for (int v : edges[u]) {
             if (v == parent)
                 continue;
 
-            mLevel[v] = mLevel[u] + 1;
+            level[v] = level[u] + 1;
             dfs(v, u);
 
-            mEuler.push_back(u);
+            euler.push_back(u);
         }
     }
 
@@ -58,10 +56,10 @@ struct EulerTourTree : public Tree {
     // O(1) - faster than findLCA() when N < 75000 experimentally
     //      - slower than findLCA() when N >= 75000 experimentally because Euler path is longer than node size
     int findLCAFast(int nodeL, int nodeR) {
-        int timeL = mFirstVisTime[nodeL];
-        int timeR = mFirstVisTime[nodeR];
+        int timeL = firstVisTime[nodeL];
+        int timeR = firstVisTime[nodeR];
         if (timeL > timeR)
             swap(timeL, timeR);
-        return mEuler[mRMQ.query(timeL, timeR)];
+        return euler[rmq.query(timeL, timeR)];
     }
 };
