@@ -66,6 +66,9 @@
     <ClCompile Include="divideConquerOptimization_OptimalSquareDistance1D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bitonicTour.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -123,6 +126,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="divideConquerOptimization_OptimalSquareDistance1D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitonicTour.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

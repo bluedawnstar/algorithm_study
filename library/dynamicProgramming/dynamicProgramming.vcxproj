@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bitDP.cpp" />
+    <ClCompile Include="bitonicTour.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="digitDP.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitDP.h" />
+    <ClInclude Include="bitonicTour.h" />
     <ClInclude Include="convexHullTrickMin.h" />
     <ClInclude Include="convexHullTrickMax.h" />
     <ClInclude Include="digitDP.h" />

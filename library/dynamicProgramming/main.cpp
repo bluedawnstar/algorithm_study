@@ -21,4 +21,5 @@ int main(void) {
     TEST(DivideAndConquerOptimization);
     TEST(OptimalSquareDistance1D);
     TEST(KnuthOptimization);
+    TEST(BitonicTour);
 }
