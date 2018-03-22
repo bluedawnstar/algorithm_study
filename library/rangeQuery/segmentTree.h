@@ -186,14 +186,12 @@ SegmentTree<T, BinOp> makeSegmentTree(int size, BinOp op, T dfltValue = T()) {
 
 template <typename T, typename BinOp>
 SegmentTree<T, BinOp> makeSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    auto segTree = SegmentTree<T, BinOp>(arr, size, op, dfltValue);
-    return segTree;
+    return SegmentTree<T, BinOp>(arr, size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 SegmentTree<T, BinOp> makeSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    auto segTree = SegmentTree<T, BinOp>(v, op, dfltValue);
-    return segTree;
+    return SegmentTree<T, BinOp>(v, op, dfltValue);
 }
 
 /* example

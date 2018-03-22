@@ -260,12 +260,10 @@ PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(BinOp op, T dfltValue 
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTree<T, BinOp>(v, op, dfltValue);
-    return segTree;
+    return PersistentSegmentTree<T, BinOp>(v, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    auto segTree = PersistentSegmentTree<T, BinOp>(arr, size, op, dfltValue);
-    return segTree;
+    return PersistentSegmentTree<T, BinOp>(arr, size, op, dfltValue);
 }

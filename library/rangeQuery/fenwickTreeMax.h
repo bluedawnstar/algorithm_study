@@ -2,7 +2,6 @@
 
 //--------- Fenwick Tree for Max ----------------------------------------------
 
-// for sum from 0 to pos
 template <typename T>
 struct FenwickTreeMax {
     vector<T>   tree;
@@ -61,6 +60,7 @@ struct FenwickTreeMax {
         return res;
     }
 
+private:
     void set(int pos, T val) {
         pos++;
 

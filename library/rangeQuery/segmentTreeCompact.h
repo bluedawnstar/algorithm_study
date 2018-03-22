@@ -209,14 +209,10 @@ CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltVa
 
 template <typename T, typename BinOp>
 CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    auto segTree = CompactSegmentTree<T, BinOp>((int)v.size(), op, dfltValue);
-    segTree.build(v);
-    return segTree;
+    return CompactSegmentTree<T, BinOp>(v, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
 CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    auto segTree = CompactSegmentTree<T, BinOp>(size, op, dfltValue);
-    segTree.build(arr, size);
-    return segTree;
+    return CompactSegmentTree<T, BinOp>(arr, size, op, dfltValue);
 }

@@ -258,15 +258,11 @@ makeCompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dfltValue = 
 template <typename T, typename BinOp, typename BlockOp>
 CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
 makeCompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dfltValue = T()) {
-    auto segTree = CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>((int)v.size(), op, bop, dfltValue);
-    segTree.build(v);
-    return segTree;
+    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(v, op, bop, dfltValue);
 }
 
 template <typename T, typename BinOp, typename BlockOp>
 CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
 makeCompactSegmentTreeLazyUpdate(const T arr[], int size, BinOp op, BlockOp bop, T dfltValue = T()) {
-    auto segTree = CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(size, op, bop, dfltValue);
-    segTree.build(arr, size);
-    return segTree;
+    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(arr, size, op, bop, dfltValue);
 }
