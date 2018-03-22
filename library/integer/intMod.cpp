@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testIntMod() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Modular Operations -------------------------" << endl;
 
@@ -28,6 +28,7 @@ void testIntMod() {
         int MOD = 1000000007;
         long long a = 124124124214123412ll, b = 39039834038204432ll;
         assert(modMul(a, b, (long long)MOD) == modMul(int(a % MOD), int(b % MOD), MOD));
+        assert(modMul2(a, b, (long long)MOD) == modMul(int(a % MOD), int(b % MOD), MOD));
     }
 
     vector<int> modR = modInvPrimeRange(96, 97);

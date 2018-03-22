@@ -131,6 +131,20 @@ inline long long modMul(long long a, long long b, long long M) {
 #endif
 }
 
+inline long long modMul2(long long a, long long b, long long M) {
+#ifdef __GNUC__
+    return (long long)((__int128_t)(a % M) * (b % M) % M);
+#else
+    if (b == 0)
+        return 0;
+
+    long long res = modMul2(a, b / 2, M);
+    res = (res + res) % M;
+
+    return ((b & 1) == 0) ? res : (res + a) % M;
+#endif
+}
+
 inline long long modPow(long long x, long long n, long long M) {
 #ifdef __GNUC__
     if (n == 0)
