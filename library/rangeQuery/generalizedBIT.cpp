@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "generalBinaryIndexedTree.h"
+#include "generalizedBIT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -52,33 +52,33 @@ void testGeneralBinaryIndexedTree() {
         vector<int> in{ 1, 9, 2, 7, 5, 4, 6 };
         int N = (int)in.size();
 
-        auto bitSum = makeGeneralBIT(in, [](int a, int b) { return a + b; }, 0);
-        auto bitMin = makeGeneralBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
-        auto bitMax = makeGeneralBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+        auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
+        auto bitMin = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+        auto bitMax = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
 
         assert(bitSum.query(0) == 1);
         assert(bitSum.query(3) == 7);
 
-        assert(bitSum.queryRange(0, 3) == 19);
-        assert(bitSum.queryRange(1, 3) == 18);
+        assert(bitSum.query(0, 3) == 19);
+        assert(bitSum.query(1, 3) == 18);
 
-        assert(bitMin.queryRange(0, 3) == 1);
-        assert(bitMin.queryRange(1, 3) == 2);
+        assert(bitMin.query(0, 3) == 1);
+        assert(bitMin.query(1, 3) == 2);
 
-        assert(bitMax.queryRange(0, 3) == 9);
-        assert(bitMax.queryRange(1, 3) == 9);
+        assert(bitMax.query(0, 3) == 9);
+        assert(bitMax.query(1, 3) == 9);
 
         bitSum.update(1, 0);
-        assert(bitSum.queryRange(0, 3) == 10);
-        assert(bitSum.queryRange(1, 3) == 9);
+        assert(bitSum.query(0, 3) == 10);
+        assert(bitSum.query(1, 3) == 9);
 
         bitMin.update(2, 8);
-        assert(bitMin.queryRange(0, 3) == 1);
-        assert(bitMin.queryRange(1, 3) == 7);
+        assert(bitMin.query(0, 3) == 1);
+        assert(bitMin.query(1, 3) == 7);
 
         bitMax.update(0, 10);
-        assert(bitMax.queryRange(0, 3) == 10);
-        assert(bitMax.queryRange(1, 3) == 9);
+        assert(bitMax.query(0, 3) == 10);
+        assert(bitMax.query(1, 3) == 9);
     }
     {
         int MaxV = 100;
@@ -87,7 +87,7 @@ void testGeneralBinaryIndexedTree() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % MaxV;
 
-        auto bitSum = makeGeneralBIT(in, [](int a, int b) { return a + b; }, 0);
+        auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
         for (int i = 0; i < N; i++) {
             int idx = RandInt32::get() % N;
             int val = RandInt32::get() % MaxV;
@@ -96,22 +96,22 @@ void testGeneralBinaryIndexedTree() {
             bitSum.add(idx, val);
 
             for (int j = i; j < N; j++)
-                assert(bitSum.queryRange(i, j) == sumSlow(in, i, j));
+                assert(bitSum.query(i, j) == sumSlow(in, i, j));
         }
     }
     {
         int MaxV = 10000;
-        int N = 1024;
+        int N = 1000;
 #ifdef _DEBUG
-        int N = 100;
+        N = 100;
 #endif
         vector<int> in(N);
         for (int i = 0; i < N; i++)
-            in[i] = RandInt32::get() % MaxV;
+            in[i] = N - i;
 
-        auto bitSum = makeGeneralBIT(in, [](int a, int b) { return a + b; }, 0);
-        auto bitMin = makeGeneralBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
-        auto bitMax = makeGeneralBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+        auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
+        auto bitMin = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+        auto bitMax = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
 
         for (int i = 0; i < N; i++) {
             int idx = RandInt32::get() % N;
@@ -124,16 +124,54 @@ void testGeneralBinaryIndexedTree() {
 
             for (int j = i; j < N; j++) {
 #ifndef _DEBUG
-                if (bitSum.queryRange(i, j) != sumSlow(in, i, j))
+                if (bitSum.query(i, j) != sumSlow(in, i, j))
                     cout << "Mismatch! line at " << __LINE__ << endl;;
-                if (bitMin.queryRange(i, j) != minSlow(in, i, j))
+                if (bitMin.query(i, j) != minSlow(in, i, j))
                     cout << "Mismatch! line at " << __LINE__ << endl;;
-                if (bitMax.queryRange(i, j) != maxSlow(in, i, j))
+                if (bitMax.query(i, j) != maxSlow(in, i, j))
                     cout << "Mismatch! line at " << __LINE__ << endl;;
 #endif
-                assert(bitSum.queryRange(i, j) == sumSlow(in, i, j));
-                assert(bitMin.queryRange(i, j) == minSlow(in, i, j));
-                assert(bitMax.queryRange(i, j) == maxSlow(in, i, j));
+                assert(bitSum.query(i, j) == sumSlow(in, i, j));
+                assert(bitMin.query(i, j) == minSlow(in, i, j));
+                assert(bitMax.query(i, j) == maxSlow(in, i, j));
+            }
+        }
+    }
+    {
+        int MaxV = 10000;
+        int N = 1024;
+#ifdef _DEBUG
+        N = 100;
+#endif
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % MaxV;
+
+        auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
+        auto bitMin = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+        auto bitMax = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+
+        for (int i = 0; i < N; i++) {
+            int idx = RandInt32::get() % N;
+            int val = RandInt32::get() % MaxV;
+
+            in[idx] = val;
+            bitSum.update(idx, val);
+            bitMin.update(idx, val);
+            bitMax.update(idx, val);
+
+            for (int j = i; j < N; j++) {
+#ifndef _DEBUG
+                if (bitSum.query(i, j) != sumSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+                if (bitMin.query(i, j) != minSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+                if (bitMax.query(i, j) != maxSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+#endif
+                assert(bitSum.query(i, j) == sumSlow(in, i, j));
+                assert(bitMin.query(i, j) == minSlow(in, i, j));
+                assert(bitMax.query(i, j) == maxSlow(in, i, j));
             }
         }
     }
@@ -186,10 +224,10 @@ void testGeneralBinaryIndexedTree() {
             PROFILE_START(2);
             {
                 int res = 0;
-                auto bit = makeGeneralBIT(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+                auto bit = makeGeneralizedBIT(T, [](int a, int b) { return min(a, b); }, INT_MAX);
                 for (int i = 0; i < 10; i++) {
                     for (auto& it : Q) {
-                        res += bit.queryRange(it.first, it.second);
+                        res += bit.query(it.first, it.second);
                     }
                 }
                 cout << "result = " << res << endl;

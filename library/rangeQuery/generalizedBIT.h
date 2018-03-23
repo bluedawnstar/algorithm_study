@@ -1,50 +1,54 @@
 #pragma once
 
-//--------- General Fenwick Tree (Binary Indexed Tree) --------------------------------
+//--------- Generalized Binary Indexed Tree (Generalized Fenwick Tree) --------------------------------
+
+// This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2017/3)
 
 template <typename T, typename BinOp = function<T(T, T)>>
-struct GeneralBIT {
-    int N;                  // power of 2
+struct GeneralizedBIT {
+    int N;                  // 
+    int M;                  // power of 2
     vector<T> tree;         // forward BIT
     vector<T> treeR;        // backward BIT
 
     T       defaultValue;
     BinOp   mergeOp;
 
-    explicit GeneralBIT(BinOp op, T dflt = T())
+    explicit GeneralizedBIT(BinOp op, T dflt = T())
         : N(0), mergeOp(op), defaultValue(dflt) {
     }
 
-    GeneralBIT(int n, BinOp op, T dflt = T())
+    GeneralizedBIT(int n, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         init(n);
     }
 
-    GeneralBIT(const T value, int n, BinOp op, T dflt = T())
+    GeneralizedBIT(const T value, int n, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(value, n);
     }
 
-    GeneralBIT(const T arr[], int n, BinOp op, T dflt = T())
+    GeneralizedBIT(const T arr[], int n, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
     }
 
-    GeneralBIT(const vector<T>& v, BinOp op, T dflt = T())
+    GeneralizedBIT(const vector<T>& v, BinOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(v);
     }
 
 
     void init(int n) {
-        N = 1;
-        while (N < n)
-            N <<= 1;
+        N = n;
+        M = 1;
+        while (M < n)
+            M <<= 1;
 
-        tree = vector<T>(N + 1, defaultValue);
+        tree = vector<T>(M + 1, defaultValue);
         treeR = vector<T>(N, defaultValue);
     }
-
+    
     void build(T value, int n) {
         init(n);
         for (int i = 0; i < n; i++)
@@ -62,19 +66,24 @@ struct GeneralBIT {
     }
 
 
+    void clear() {
+        fill(tree.begin(), tree.end(), defaultValue);
+        fill(treeR.begin(), treeR.end(), defaultValue);
+    }
+
+
     void add(int pos, T val) {
         update(pos, query(pos) + val);
     }
 
     void update(int pos, T val) {
         int i, j;
-        if (pos & 1) {
-            i = j = pos;
+
+        i = j = pos | 1;
+        if (pos & 1)
             treeR[i] = val;
-        } else {
-            i = j = pos + 1;
+        else
             tree[i] = val;
-        }
 
         int mask = 2;
         while (i < N && j > 0) {
@@ -82,8 +91,7 @@ struct GeneralBIT {
             if ((i & mask) == 0) {
                 i += i & -i;
                 tree[i] = mergeOp(tree[i - half], treeR[i - half]);
-            } 
-            if (j & mask) {
+            } else {
                 j &= j - 1;
                 treeR[j] = mergeOp(tree[j + half], treeR[j + half]);
             }
@@ -91,30 +99,25 @@ struct GeneralBIT {
         }
     }
 
-
     // inclusive
     T query(int pos) const {
         return (pos & 1) ? treeR[pos] : tree[pos + 1];
     }
 
     // inclusive
-    T queryRange(int left, int right) const {
+    T query(int left, int right) const {
         T res = defaultValue;
+        if (left == 0) {
+            for (int R = right + 1; 0 < R; R &= R - 1)
+                res = mergeOp(res, tree[R]);
+        } else {
+            int R = right + 1;
+            for (int next = R & (R - 1); left <= next; R = next, next = R & (R - 1))
+                res = mergeOp(res, tree[R]);
 
-        int R = right + 1;
-        int nextR = R & (R - 1);
-        while (0 < R && left <= nextR) {
-            res = mergeOp(res, tree[R]);
-            R = nextR;
-            nextR = R & (R - 1);
+            for (int L = left; L < R; L += L & -L)
+                res = mergeOp(res, treeR[L]);
         }
-
-        int L = left;
-        while (L < R) {
-            res = mergeOp(res, treeR[L]);
-            L += L & -L;
-        }
-
         return res;
     }
 
@@ -129,16 +132,16 @@ private:
 };
 
 template <typename T, typename BinOp>
-GeneralBIT<T, BinOp> makeGeneralBIT(int size, BinOp op, T dfltValue = T()) {
-    return GeneralBIT<T, BinOp>(size, op, dfltValue);
+GeneralizedBIT<T, BinOp> makeGeneralizedBIT(int size, BinOp op, T dfltValue = T()) {
+    return GeneralizedBIT<T, BinOp>(size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-GeneralBIT<T, BinOp> makeGeneralBIT(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return GeneralBIT<T, BinOp>(arr, size, op, dfltValue);
+GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const T arr[], int size, BinOp op, T dfltValue = T()) {
+    return GeneralizedBIT<T, BinOp>(arr, size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-GeneralBIT<T, BinOp> makeGeneralBIT(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return GeneralBIT<T, BinOp>(v, op, dfltValue);
+GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const vector<T>& v, BinOp op, T dfltValue = T()) {
+    return GeneralizedBIT<T, BinOp>(v, op, dfltValue);
 }

@@ -90,7 +90,7 @@
     <ClCompile Include="mergeSortTreeIndex.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="generalBinaryIndexedTree.cpp">
+    <ClCompile Include="generalizedBIT.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -197,7 +197,7 @@
     <ClInclude Include="mergeSortTreeIndex.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="generalBinaryIndexedTree.h">
+    <ClInclude Include="generalizedBIT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
