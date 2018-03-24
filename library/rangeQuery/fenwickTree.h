@@ -101,58 +101,62 @@ struct FenwickTree {
     void set(int pos, T val) {
         add(pos, val - get(pos));
     }
-
-    // returns min(i | sum[0,i] >= sum)
-    int lowerBound(T sum) const {
-        --sum;
-
-        int N = (int)tree.size() - 1;
-        int pos = 0;
-
-        int blockSize = N;
-        while (blockSize & (blockSize - 1))
-            blockSize &= blockSize - 1;
-
-        for (; blockSize > 0; blockSize >>= 1) {
-            int nextPos = pos + blockSize;
-            if (nextPos < N && sum >= tree[nextPos]) {
-                sum -= tree[nextPos];
-                pos = nextPos;
-            }
-        }
-
-        return pos;
-    }
-
-    //---
-
-    // returns min(i | sum[0,i] >= sum)
-    int findFirst(int left, int right, T sum) const {
-        int lo = left, hi = right;
-
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (sumRange(left, mid) < sum)
-                lo = mid + 1;
-            else
-                hi = mid - 1;
-        }
-
-        return lo;
-    }
-
-    // returns min(i | sum[i,N-1] < sum)
-    int findLast(int left, int right, T sum) const {
-        int lo = left, hi = right;
-
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (sumRange(mid, right) < sum)
-                hi = mid - 1;
-            else
-                lo = mid + 1;
-        }
-
-        return lo;
-    }
 };
+
+// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// returns min(i | sum[0,i] >= sum)
+template <typename T>
+inline int lowerBound(const FenwickTree<T>& ft, T sum) {
+    --sum;
+
+    int N = (int)ft.tree.size() - 1;
+    int pos = 0;
+
+    int blockSize = N;
+    while (blockSize & (blockSize - 1))
+        blockSize &= blockSize - 1;
+
+    for (; blockSize > 0; blockSize >>= 1) {
+        int nextPos = pos + blockSize;
+        if (nextPos < N && sum >= ft.tree[nextPos]) {
+            sum -= ft.tree[nextPos];
+            pos = nextPos;
+        }
+    }
+
+    return pos;
+}
+
+// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// returns min(i | sum[0,i] >= sum)
+template <typename T>
+inline int findFirst(const FenwickTree<T>& ft, int left, int right, T sum) {
+    int lo = left, hi = right;
+
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (ft.sumRange(left, mid) < sum)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+
+    return lo;
+}
+
+// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// returns min(i | sum[i,N-1] < sum)
+template <typename T>
+inline int findLast(const FenwickTree<T>& ft, int left, int right, T sum) {
+    int lo = left, hi = right;
+
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (ft.sumRange(mid, right) < sum)
+            hi = mid - 1;
+        else
+            lo = mid + 1;
+    }
+
+    return lo;
+}

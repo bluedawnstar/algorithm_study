@@ -131,75 +131,6 @@ struct CompactSegmentTree {
                 tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
         }
     }
-
-    //--- find
-
-    // find next position where f(x) is true in [start, N)
-    //   f(x): xxxxxxxxxxxOOOOOOOO
-    //         S          ^
-    int findNext(int start, const function<bool(int)>& f) const {
-        int shiftN = 0;
-        int cur = start + N, R = RealN - 1 + N;
-
-        while (true) {
-            if (f(tree[cur])) {
-                if (cur < N) {
-                    cur <<= 1;
-                    shiftN--;
-                } else {
-                    return cur - N;
-                }
-            } else {
-                if (++cur >(R >> shiftN))
-                    break;
-
-                int n = ctz(cur);
-                cur >>= n;
-                shiftN += n;
-            }
-        }
-
-        return -1;
-    }
-
-    // find previous position where f(x) is true in [0, start]
-    //   f(x): OOOOOOOOxxxxxxxxxxx
-    //                ^          S
-    int findPrev(int start, const function<bool(int)>& f) const {
-        int shiftN = 0;
-        int cur = start + N, L = N;
-
-        while (true) {
-            if (f(tree[cur])) {
-                if (cur < N) {
-                    cur = (cur << 1) | 1;
-                    shiftN--;
-                } else {
-                    return cur - N;
-                }
-            } else {
-                if (cur <= (L >> shiftN))
-                    break;
-
-                int n = ctz(cur);
-                cur >>= n;
-                shiftN += n;
-
-                cur--;
-            }
-        }
-
-        return -1;
-    }
-
-private:
-    int ctz(unsigned x) const {
-#ifndef __GNUC__
-        return (int)_tzcnt_u32(x);
-#else
-        return __builtin_ctz(x);
-#endif
-    }
 };
 
 template <typename T, typename BinOp>
@@ -215,4 +146,76 @@ CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op
 template <typename T, typename BinOp>
 CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return CompactSegmentTree<T, BinOp>(arr, size, op, dfltValue);
+}
+
+//-----------------------------------------------------------------------------
+
+// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// find next position where f(x) is true in [start, N)
+//   f(x): xxxxxxxxxxxOOOOOOOO
+//         S          ^
+template <typename T, typename BinOp>
+inline int findNext(const CompactSegmentTree<T,BinOp>& st, int start, const function<bool(T)>& f) {
+    int shiftN = 0;
+    int cur = start + st.N, R = st.RealN - 1 + st.N;
+
+    while (true) {
+        if (f(st.tree[cur])) {
+            if (cur < st.N) {
+                cur <<= 1;
+                shiftN--;
+            } else {
+                return cur - st.N;
+            }
+        } else {
+            if (++cur > (R >> shiftN))
+                break;
+
+#ifndef __GNUC__
+            int n = (int)_tzcnt_u32(cur);
+#else
+            int n = __builtin_ctz(cur);
+#endif
+            cur >>= n;
+            shiftN += n;
+        }
+    }
+
+    return -1;
+}
+
+// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// find previous position where f(x) is true in [0, start]
+//   f(x): OOOOOOOOxxxxxxxxxxx
+//                ^          S
+template <typename T, typename BinOp>
+inline int findPrev(const CompactSegmentTree<T, BinOp>& st, int start, const function<bool(T)>& f) {
+    int shiftN = 0;
+    int cur = start + st.N, L = st.N;
+
+    while (true) {
+        if (f(st.tree[cur])) {
+            if (cur < st.N) {
+                cur = (cur << 1) | 1;
+                shiftN--;
+            } else {
+                return cur - st.N;
+            }
+        } else {
+            if (cur <= (L >> shiftN))
+                break;
+
+#ifndef __GNUC__
+            int n = (int)_tzcnt_u32(cur);
+#else
+            int n = __builtin_ctz(cur);
+#endif
+            cur >>= n;
+            shiftN += n;
+
+            cur--;
+        }
+    }
+
+    return -1;
 }

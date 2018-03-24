@@ -114,11 +114,11 @@ void testFenwickTree() {
             int R = RandInt32::get() % N;
             int sum = sumSlow(in, 0, R);
 
-            int ans = fenwick.lowerBound(sum);
+            int ans = lowerBound(fenwick, sum);
             int gt = lowerBoundSlow(in, sum);
             if (ans != gt) {
                 cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
-                ans = fenwick.lowerBound(sum);
+                ans = lowerBound(fenwick, sum);
             }
             assert(ans == gt);
         }

@@ -84,13 +84,13 @@ void testSegmentTreeCompact() {
             seg.add(idx, t - in[idx]);
             in[idx] = t;
 
-            int ans1 = seg.findNext(i, [](int x) {
+            int ans1 = findNext<int>(seg, i, [](int x) {
                 return x <= T;
             });
             int gt1 = findNext(in, i, T);
             assert(gt1 == ans1);
 
-            int ans2 = seg.findPrev(i, [](int x) {
+            int ans2 = findPrev<int>(seg, i, [](int x) {
                 return x <= T;
             });
             int gt2 = findPrev(in, i, T);
@@ -116,13 +116,13 @@ void testSegmentTreeCompact() {
             for (int j = L; j <= R; j++)
                 in[j] += t;
 
-            int ans1 = seg.findNext(i, [](int x) {
+            int ans1 = findNext<int>(seg, i, [](int x) {
                 return x <= T;
             });
             int gt1 = findNext(in, i, T);
             assert(gt1 == ans1);
 
-            int ans2 = seg.findPrev(i, [](int x) {
+            int ans2 = findPrev<int>(seg, i, [](int x) {
                 return x <= T;
             });
             int gt2 = findPrev(in, i, T);
