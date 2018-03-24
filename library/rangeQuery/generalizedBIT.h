@@ -72,30 +72,30 @@ struct GeneralizedBIT {
     }
 
     void update(int pos, T val) {
-        int i = pos & ~1;
-        int j = pos | 1;
+        int curr = pos & ~1;
+        int prev = pos | 1;
 
         if (pos & 1)
-            treeR[j] = val;
+            treeR[prev] = val;
         else
-            tree[j] = val;
+            tree[prev] = val;
 
         int mask = 2;
-        for (i |= mask; i <= N; j = i, i = (i & (i - 1)) | mask) {
-            if (j & mask)
-                treeR[i] = mergeOp(tree[j], treeR[j]);
+        for (curr |= mask; curr <= N; prev = curr, curr = (curr & (curr - 1)) | mask) {
+            if (prev & mask)
+                treeR[curr] = mergeOp(tree[prev], treeR[prev]);
             else
-                tree[i] = mergeOp(tree[j], treeR[j]);
+                tree[curr] = mergeOp(tree[prev], treeR[prev]);
             mask <<= 1;
         }
     }
 
-    // inclusive
+    // inclusive (0 <= pos < N)
     T query(int pos) const {
         return (pos & 1) ? treeR[pos] : tree[pos + 1];
     }
 
-    // inclusive
+    // inclusive (0 <= left <= right < N)
     T query(int left, int right) const {
         T res = defaultValue;
         if (left == 0) {
@@ -119,6 +119,23 @@ private:
 
         for (int i = pos; i > 0; i &= i - 1)
             treeR[i] = mergeOp(treeR[i], val);
+    }
+
+    // pop count
+    static int popcount(unsigned x) {
+#ifndef __GNUC__
+        return (int)__popcnt(x);
+        /*
+        x = x - ((x >> 1) & 0x55555555);
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+        x = (x + (x >> 4)) & 0x0F0F0F0F;
+        x = x + (x >> 8);
+        x = x + (x >> 16);
+        return x & 0x0000003F;
+        */
+#else
+        return __builtin_popcount(x);
+#endif
     }
 };
 
