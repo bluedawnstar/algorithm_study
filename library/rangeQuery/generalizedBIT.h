@@ -7,7 +7,6 @@
 template <typename T, typename BinOp = function<T(T, T)>>
 struct GeneralizedBIT {
     int N;                  // 
-    int M;                  // power of 2
     vector<T> tree;         // forward BIT
     vector<T> treeR;        // backward BIT
 
@@ -41,11 +40,7 @@ struct GeneralizedBIT {
 
     void init(int n) {
         N = n;
-        M = 1;
-        while (M < n)
-            M <<= 1;
-
-        tree = vector<T>(M + 1, defaultValue);
+        tree = vector<T>(N + 1, defaultValue);
         treeR = vector<T>(N, defaultValue);
     }
     
@@ -77,24 +72,20 @@ struct GeneralizedBIT {
     }
 
     void update(int pos, T val) {
-        int i, j;
+        int i = pos & ~1;
+        int j = pos | 1;
 
-        i = j = pos | 1;
         if (pos & 1)
-            treeR[i] = val;
+            treeR[j] = val;
         else
-            tree[i] = val;
+            tree[j] = val;
 
         int mask = 2;
-        while (i < N && j > 0) {
-            int half = mask >> 1;
-            if ((i & mask) == 0) {
-                i += i & -i;
-                tree[i] = mergeOp(tree[i - half], treeR[i - half]);
-            } else {
-                j &= j - 1;
-                treeR[j] = mergeOp(tree[j + half], treeR[j + half]);
-            }
+        for (i |= mask; i <= N; j = i, i = (i & (i - 1)) | mask) {
+            if (j & mask)
+                treeR[i] = mergeOp(tree[j], treeR[j]);
+            else
+                tree[i] = mergeOp(tree[j], treeR[j]);
             mask <<= 1;
         }
     }
