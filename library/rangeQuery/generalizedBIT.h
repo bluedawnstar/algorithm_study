@@ -120,23 +120,6 @@ private:
         for (int i = pos; i > 0; i &= i - 1)
             treeR[i] = mergeOp(treeR[i], val);
     }
-
-    // pop count
-    static int popcount(unsigned x) {
-#ifndef __GNUC__
-        return (int)__popcnt(x);
-        /*
-        x = x - ((x >> 1) & 0x55555555);
-        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-        x = (x + (x >> 4)) & 0x0F0F0F0F;
-        x = x + (x >> 8);
-        x = x + (x >> 16);
-        return x & 0x0000003F;
-        */
-#else
-        return __builtin_popcount(x);
-#endif
-    }
 };
 
 template <typename T, typename BinOp>
