@@ -22,8 +22,8 @@ void testDfsTour() {
 
     cout << "--- DFS Tour Tree -----------------------------" << endl;
     {
-        int N = 4, LOGN = 4;
-        DfsTourTree tree(N, LOGN);
+        int N = 4;
+        DfsTourTree tree(N);
 
         tree.addEdge(0, 1);
         tree.addEdge(0, 2);

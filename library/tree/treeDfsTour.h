@@ -13,11 +13,11 @@ struct DfsTourTree : public Tree {
         currTime = 0;
     }
 
-    DfsTourTree(int N, int logN) : Tree(N, logN), visTime(N), time2Node(N * 2) {
-        currTime = 0;
+    explicit DfsTourTree(int N, int logN = 0) {
+        init(N, logN);
     }
 
-    void init(int N, int logN) {
+    void init(int N, int logN = 0) {
         Tree::init(N, logN);
 
         visTime.assign(N, make_pair(0, 0));

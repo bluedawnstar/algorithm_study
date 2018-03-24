@@ -19,10 +19,9 @@ using namespace std;
 #include "../common/rand.h"
 
 #define MAXN    10000           // TODO: modify the maximum number of nodes
-#define LOGN    15              // TODO: modify LCA table size (log2(MAXN))
 
 static Tree makeTree() {
-    Tree tree(10, 4);
+    Tree tree(10);
 
     tree.addEdge(0, 1);
     tree.addEdge(0, 3);
@@ -38,7 +37,7 @@ static Tree makeTree() {
 }
 
 static Tree makeLcaTree() {
-    Tree tree(MAXN, LOGN);
+    Tree tree(MAXN);
 
     tree.addEdge(0, 1);
     tree.addEdge(0, 2);
@@ -71,7 +70,7 @@ static Tree makeLcaTree() {
 }
 
 static Tree makeTreeForCenter() {
-    Tree tree(4, 4);
+    Tree tree(4);
 
     tree.addEdge(0, 3);
     tree.addEdge(3, 1);

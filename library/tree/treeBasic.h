@@ -13,7 +13,7 @@
 // logN : modify LCA table size (log2(MAXN))
 struct Tree {
     int                 N;          // the number of vertex
-    int                 logN;       // ceil(log2(N))
+    int                 logN;       // log2(N - 1) + 2
 
     vector<vector<int>> edges;      // edges (vertex number)
     vector<vector<int>> P;          // P[0][n] points to the parent
@@ -27,12 +27,20 @@ struct Tree {
     Tree() : N(0), logN(0) {
     }
 
-    Tree(int n, int logN) : N(n), logN(logN), edges(n), P(logN, vector<int>(n)), level(n), treeSize(n) {
+    explicit Tree(int n, int logN = 0) {
+        init(n, logN);
     }
 
-    void init(int _n, int _logN) {
+    void init(int _n, int _logN = 0) {
         N = _n;
         logN = _logN;
+        if (logN <= 0) {
+#ifndef __GNUC__
+            logN = _lzcnt_u32(1u) - _lzcnt_u32((unsigned int)(N - 1)) + 2;
+#else
+            logN = __builtin_clz(1u) - __builtin_clz((unsigned int)(N - 1)) + 2;
+#endif
+        }
 
         edges = vector<vector<int>>(N);
         P = vector<vector<int>>(logN, vector<int>(N));

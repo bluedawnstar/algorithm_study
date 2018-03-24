@@ -13,10 +13,11 @@ struct EulerTourTree : public Tree {
     EulerTourTree() : Tree() {
     }
 
-    EulerTourTree(int N, int logN) : Tree(N, logN), firstVisTime(N, -1) {
+    explicit EulerTourTree(int N, int logN = 0) {
+        init(N, logN);
     }
 
-    void init(int N, int logN) {
+    void init(int N, int logN = 0) {
         Tree::init(N, logN);
         firstVisTime.assign(N, -1);
     }
@@ -25,10 +26,10 @@ struct EulerTourTree : public Tree {
         dfs(root, -1);
         makeLcaTable();
 
-        vector<int> level(euler.size());
+        vector<int> lvl(euler.size());
         for (int i = 0; i < (int)euler.size(); i++)
-            level[i] = level[euler[i]];
-        rmq.build(level);
+            lvl[i] = level[euler[i]];
+        rmq.build(lvl);
     }
 
     //--------- DFS -----------------------------------------------------------

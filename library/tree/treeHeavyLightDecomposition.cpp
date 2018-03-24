@@ -78,7 +78,7 @@ void testHeavyLightDecomposition_org() {
 }
 
 void testHeavyLightDecomposition() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Heavy-Light Decomposition -----------------------" << endl;
     {

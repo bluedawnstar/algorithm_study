@@ -23,8 +23,8 @@ void testEulerTour() {
 
     cout << "--- Euler Tour Tree -----------------------------" << endl;
     {
-        int N = 8, LOGN = 4;
-        EulerTourTree tree(N, LOGN);
+        int N = 8;
+        EulerTourTree tree(N);
         tree.addEdge(0, 1);
         tree.addEdge(0, 2);
         tree.addEdge(1, 3);
@@ -38,8 +38,8 @@ void testEulerTour() {
         assert(tree.findLCAFast(5, 3) == 1);
     }
     {
-        int N = 1000, LOGN = 14;
-        EulerTourTree tree(N, LOGN);
+        int N = 1000;
+        EulerTourTree tree(N);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
@@ -66,8 +66,8 @@ void testEulerTour() {
     {
         //int TESTN = 10000000;
         int TESTN = 10000;
-        int N = 75000, LOGN = int(log2(N) + 1);
-        EulerTourTree tree(N, LOGN);
+        int N = 75000;
+        EulerTourTree tree(N);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
