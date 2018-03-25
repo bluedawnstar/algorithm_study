@@ -43,8 +43,45 @@ static int maxSlow(vector<int>& v, int L, int R) {
     return res;
 }
 
+
+static int findNext(const vector<int>& A, int start, int x) {
+    while (start < (int)A.size()) {
+        if (A[start] <= x)
+            return start;
+        start++;
+    }
+    return -1;
+}
+
+static int findPrev(const vector<int>& A, int start, int x) {
+    while (start >= 0) {
+        if (A[start] <= x)
+            return start;
+        start--;
+    }
+    return -1;
+}
+
+static int lowerBound(const vector<int>& A, int start, int x) {
+    while (start < (int)A.size()) {
+        if (A[start] >= x)
+            break;
+        start++;
+    }
+    return start;
+}
+
+static int lowerBoundBackward(const vector<int>& A, int start, int x) {
+    while (start >= 0) {
+        if (A[start] >= x)
+            break;
+        start--;
+    }
+    return start;
+}
+
 void testGeneralBinaryIndexedTree() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- General FenwickTree (General Binary Indexed Tree) -------------------" << endl;
     {
@@ -173,6 +210,60 @@ void testGeneralBinaryIndexedTree() {
                 assert(bitMin.query(i, j) == minSlow(in, i, j));
                 assert(bitMax.query(i, j) == maxSlow(in, i, j));
             }
+        }
+    }
+    cout << "--- lower bound & upper bound" << endl;
+    {
+        static const int T = 1000;
+        int N = 100000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % (T * 10);
+
+        auto bit = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+        for (int i = N - 1; i >= 0; i--) {
+            int idx = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
+
+            bit.update(idx, t);
+            in[idx] = t;
+
+            int ans1 = lowerBound<int>(bit, i, N - 1, T);
+            int gt1 = lowerBound(in, i, T);
+            assert(gt1 == ans1);
+
+            int ans2 = lowerBoundBackward(bit, 0, i, T);
+            int gt2 = lowerBoundBackward(in, i, T);
+            assert(gt2 == ans2);
+        }
+    }
+    cout << "--- findNext() & findPrev()" << endl;
+    {
+        static const int T = 1000;
+        int N = 100000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % (T * 10);
+
+        auto bit = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+        for (int i = N - 1; i >= 0; i--) {
+            int idx = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
+
+            bit.update(idx, t);
+            in[idx] = t;
+
+            int ans1 = findNext<int>(bit, i, [](int x) {
+                return x <= T;
+            });
+            int gt1 = findNext(in, i, T);
+            assert(gt1 == ans1);
+
+            int ans2 = findPrev<int>(bit, i, [](int x) {
+                return x <= T;
+            });
+            int gt2 = findPrev(in, i, T);
+            assert(gt2 == ans2);
         }
     }
     {

@@ -136,3 +136,130 @@ template <typename T, typename BinOp>
 GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const vector<T>& v, BinOp op, T dfltValue = T()) {
     return GeneralizedBIT<T, BinOp>(v, op, dfltValue);
 }
+
+//-----------------------------------------------------------------------------
+
+// PRECONDITION: tree's range operation is monotonically increasing
+// return min(x | query(left, i) >= value, left <= i <= right)
+//    xxxxxxxOOOOOOoooooo
+//    L      ^          R
+template <typename T, typename BinOp>
+inline int lowerBound(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+    int lo = left, hi = right;
+
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (st.query(left, mid) < value)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+
+    return lo;
+}
+
+// PRECONDITION: tree's range operation is monotonically increasing
+// return min(x | query(left, i) > value, left <= i <= right)
+//    xxxxxxxOOOOOOoooooo
+//    L            ^    R
+template <typename T, typename BinOp>
+inline int upperBound(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+    int lo = left, hi = right;
+
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (st.query(left, mid) <= value)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+
+    return lo;
+}
+
+// PRECONDITION: tree's range operation is monotonically increasing
+// return max(x | query(left, i) >= value, left <= i <= right)
+//    oooooooOOOOOOxxxxxx
+//    L           ^     R
+template <typename T, typename BinOp>
+inline int lowerBoundBackward(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+    int lo = left, hi = right;
+
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (st.query(mid, right) < value)
+            hi = mid - 1;
+        else
+            lo = mid + 1;
+    }
+
+    return hi;
+}
+
+// PRECONDITION: tree's range operation is monotonically increasing
+// return min(x | query(left, i) > value, left <= i <= right)
+//    oooooooOOOOOOxxxxxx
+//    L     ^           R
+template <typename T, typename BinOp>
+inline int upperBoundBackward(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+    int lo = left, hi = right;
+
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (st.query(mid, right) <= value)
+            hi = mid - 1;
+        else
+            lo = mid + 1;
+    }
+
+    return hi;
+}
+
+
+// PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// find next position where f(x) is true in [start, N)
+//   f(x): xxxxxxxxxxxOOOOOOOO
+//         S          ^
+template <typename T, typename BinOp>
+inline int findNext(const GeneralizedBIT<T, BinOp>& gbit, int start, const function<bool(T)>& f) {
+    int pos = start;
+    while (pos < gbit.N) {
+        if ((pos & 1) == 0) {
+            pos++;
+            if (f(gbit.tree[pos]))
+                return pos - 1;
+        }
+        if (pos < gbit.N && f(gbit.treeR[pos])) {
+            return pos;
+            pos += pos & -pos;
+        }
+
+        while (pos < gbit.N && !f(gbit.treeR[pos]))
+            pos += pos & -pos;
+    }
+
+    return -1;
+}
+
+// PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// find previous position where f(x) is true in [0, start]
+//   f(x): OOOOOOOOxxxxxxxxxxx
+//                ^          S
+template <typename T, typename BinOp>
+inline int findPrev(const GeneralizedBIT<T, BinOp>& gbit, int start, const function<bool(T)>& f) {
+    int pos = start + 1;
+    while (pos > 0) {
+        if ((pos & 1) == 0) {
+            pos--;
+            if (f(gbit.treeR[pos]))
+                return pos;
+        }
+        if (pos > 0 && f(gbit.tree[pos]))
+            return pos - 1;
+
+        while (pos > 0 && !f(gbit.tree[pos]))
+            pos &= pos - 1;
+    }
+
+    return -1;
+}

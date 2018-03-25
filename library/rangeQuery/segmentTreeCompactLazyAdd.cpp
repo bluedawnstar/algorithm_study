@@ -37,7 +37,7 @@ static int findPrev(const vector<int>& A, int start, int x) {
 }
 
 void testSegmentTreeCompactLazyAdd() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Compact Segment Tree - Lazy Add ----------------------------------------" << endl;
     {
