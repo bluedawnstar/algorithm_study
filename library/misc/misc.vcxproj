@@ -152,6 +152,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mergeableHeap.cpp" />
     <ClCompile Include="JumpPointerSparseTable.cpp" />
+    <ClCompile Include="minQueue.cpp" />
+    <ClCompile Include="minStack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="countUniqueNumbers.h" />
@@ -159,6 +161,8 @@
     <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />
     <ClInclude Include="JumpPointerSparseTable.h" />
+    <ClInclude Include="minQueue.h" />
+    <ClInclude Include="minStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

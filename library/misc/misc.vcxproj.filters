@@ -33,6 +33,12 @@
     <ClCompile Include="JumpPointerSparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="minStack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="minQueue.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h">
@@ -48,6 +54,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="JumpPointerSparseTable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minStack.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minQueue.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

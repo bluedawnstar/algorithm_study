@@ -11,4 +11,6 @@ int main(void) {
     TEST(LargestRectangle);
     TEST(JumpPointerSparseTable);
     TEST(CountUniqueNumbers);
+    TEST(MinStack);
+    TEST(MinQueue);
 }
