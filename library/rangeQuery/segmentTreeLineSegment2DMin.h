@@ -61,7 +61,7 @@ struct SegmentTreeLineSegment2DMin {
     }
 
     // query max f(x)
-    // O(NlogN)
+    // O(logN)
     long long query(int x) {
         return querySub(x, 1, 0, N - 1);
     }
