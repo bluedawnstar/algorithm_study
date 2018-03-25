@@ -294,13 +294,14 @@ struct bigint {
         bigint res;
         res.sign = sign * v.sign;
         res.a.resize(a.size() + v.a.size());
-        for (int i = 0; i < (int)a.size(); ++i)
+        for (int i = 0; i < (int)a.size(); ++i) {
             if (a[i])
                 for (int j = 0, carry = 0; j < (int)v.a.size() || carry; ++j) {
                     long long cur = res.a[i + j] + (long long)a[i] * (j < (int)v.a.size() ? v.a[j] : 0) + carry;
                     carry = (int)(cur / base);
                     res.a[i + j] = (int)(cur % base);
                 }
+        }
         res.trim();
         return res;
     }

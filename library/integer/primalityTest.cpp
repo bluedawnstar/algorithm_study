@@ -46,6 +46,23 @@ void testPrimalityTest() {
                 cout << "[" << i << "] " << gt << ", " << ans << endl;
         }
     }
+#if 0
+    {
+        cout << "*** prime numbers for Garner Algorithm" << endl;
+        int x = 1000000000;
+        for (int i = 0; i < 200; x++) {
+            auto gt = isPrimeNumber(x);
+            auto ans = PrimalityTest<int>::isPrimeNumber(x);
+            if (gt != ans)
+                cout << "[" << i << "] " << gt << ", " << ans << endl;
+            if (gt) {
+                cout << x << "," << endl;
+                i++;
+            }
+        }
+        return;
+    }
+#endif
     {
         cout << "-- GT | Rho | Fermat | Miller ---" << endl;
         int T = 10000;
