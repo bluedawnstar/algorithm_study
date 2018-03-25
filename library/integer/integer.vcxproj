@@ -151,6 +151,7 @@
     <ClCompile Include="eulerTheorem.cpp" />
     <ClCompile Include="factor.cpp" />
     <ClCompile Include="fraction.cpp" />
+    <ClCompile Include="garnerAlgorithm.cpp" />
     <ClCompile Include="gcd.cpp" />
     <ClCompile Include="intMod.cpp" />
     <ClCompile Include="main.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="factor.h" />
     <ClInclude Include="fraction.h" />
     <ClInclude Include="fractionAlgo.h" />
+    <ClInclude Include="garnerAlgorithm.h" />
     <ClInclude Include="gcd.h" />
     <ClInclude Include="grayCode.h" />
     <ClInclude Include="intMod.h" />

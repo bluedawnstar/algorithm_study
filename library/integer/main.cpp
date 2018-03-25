@@ -24,4 +24,5 @@ int main(void) {
     TEST(PrimalityTest);
     TEST(PrimeFactorLongLong);
     TEST(ModularEquations);
+    TEST(GarnerAlgorithm);
 }
