@@ -3,14 +3,18 @@
 #include "chineseRemainderTheorem.h"
 #include "bigint.h"
 
-// https://e-maxx-eng.appspot.com/algebra/chinese-remainder-theorem.html
-// 
-// Garner Algorithm (x10 faster than bigint)
-//
-// 1. Coverage
-//   { x | x < 10^450 }, N = 100
-//   { x | x < 10^900 }, N = 200
-//
+/*
+https://e-maxx-eng.appspot.com/algebra/chinese-remainder-theorem.html
+ 
+Garner Algorithm (x10 faster than bigint)
+
+1. Formula
+   x = a0 + a1 * p1 + a2 * p1 * p2 + ... + an * p1 * p2 * ... * pn
+
+2. Coverage
+   { x | x < 10^450 }, N = 100
+   { x | x < 10^900 }, N = 200
+*/
 struct GarnerBigInt {
     static constexpr int N = 200;
     const int* P;
