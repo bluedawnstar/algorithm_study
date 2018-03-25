@@ -103,8 +103,8 @@ struct FenwickTree {
     }
 };
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// returns min(i | sum[0,i] >= sum)
+// PRECONDITION: tree's values are monotonically increasing
+// returns min(i | sum[0, i] >= sum)
 template <typename T>
 inline int lowerBound(const FenwickTree<T>& ft, T sum) {
     --sum;
@@ -127,8 +127,8 @@ inline int lowerBound(const FenwickTree<T>& ft, T sum) {
     return pos;
 }
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// returns min(i | sum[0,i] >= sum)
+// PRECONDITION: tree's values are monotonically increasing
+// returns min(i | sum[left, i] >= sum)
 template <typename T>
 inline int findFirst(const FenwickTree<T>& ft, int left, int right, T sum) {
     int lo = left, hi = right;
@@ -144,8 +144,8 @@ inline int findFirst(const FenwickTree<T>& ft, int left, int right, T sum) {
     return lo;
 }
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// returns min(i | sum[i,N-1] < sum)
+// PRECONDITION: tree's values are monotonically increasing
+// returns min(i | sum[i, right] < sum)
 template <typename T>
 inline int findLast(const FenwickTree<T>& ft, int left, int right, T sum) {
     int lo = left, hi = right;

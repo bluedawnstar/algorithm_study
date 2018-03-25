@@ -43,8 +43,10 @@ void testSegmentTreeCompactLazy() {
 
     cout << "-- Compact Segment Tree Lazy ----------------------------------------" << endl;
     {
-        auto segTree = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; }, [](int a, int k) { return a * k; });
-        auto segTree2 = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, INT_MAX);
+        auto segTree = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1},
+            [](int a, int b) { return a + b; }, [](int a, int k) { return a * k; });
+        auto segTree2 = makeCompactSegmentTreeLazyUpdate(vector<int>{6, 5, 4, 3, 2, 1},
+            [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, numeric_limits<int>::max());
 
         int ans;
 
@@ -83,7 +85,8 @@ void testSegmentTreeCompactLazy() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
 
-        auto seg = makeCompactSegmentTreeLazyUpdate(in, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; });
+        auto seg = makeCompactSegmentTreeLazyUpdate(in,
+            [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, numeric_limits<int>::max(), true);
         for (int i = N - 1; i >= 0; i--) {
             int index = RandInt32::get() % N;
             int t = RandInt32::get() % (T * 10);
@@ -116,7 +119,8 @@ void testSegmentTreeCompactLazy() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
 
-        auto seg = makeCompactSegmentTreeLazyUpdate(in, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; });
+        auto seg = makeCompactSegmentTreeLazyUpdate(in,
+            [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, numeric_limits<int>::max(), true);
         for (int i = N - 1; i >= 0; i--) {
             int L = RandInt32::get() % N;
             int R = RandInt32::get() % N;
@@ -163,7 +167,7 @@ void testSegmentTreeCompactLazy() {
         PROFILE_START(0);
         {
             int res = 0;
-            auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);
@@ -176,7 +180,7 @@ void testSegmentTreeCompactLazy() {
         PROFILE_START(1);
         {
             int res = 0;
-            auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);
@@ -189,7 +193,8 @@ void testSegmentTreeCompactLazy() {
         PROFILE_START(2);
         {
             int res = 0;
-            auto seg = makeCompactSegmentTreeLazyUpdate(T, [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, INT_MAX);
+            auto seg = makeCompactSegmentTreeLazyUpdate(T,
+                [](int a, int b) { return min(a, b); }, [](int a, int k) { return a; }, numeric_limits<int>::max());
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);
@@ -262,7 +267,7 @@ void testSegmentTreeCompactLazy() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree.query(L, R) == INT_MAX)
+                if (segTree.query(L, R) == numeric_limits<int>::max())
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);
@@ -278,7 +283,7 @@ void testSegmentTreeCompactLazy() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree1.query(L, R) == INT_MAX)
+                if (segTree1.query(L, R) == numeric_limits<int>::max())
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);
@@ -294,7 +299,7 @@ void testSegmentTreeCompactLazy() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree2.query(L, R) == INT_MAX)
+                if (segTree2.query(L, R) == numeric_limits<int>::max())
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);
@@ -310,7 +315,7 @@ void testSegmentTreeCompactLazy() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree3.query(L, R) == INT_MAX)
+                if (segTree3.query(L, R) == numeric_limits<int>::max())
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);

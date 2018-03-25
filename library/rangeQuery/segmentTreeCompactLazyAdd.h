@@ -47,12 +47,13 @@ struct CompactSegmentTreeLazyAdd {
     void init(int size) {
         RealN = size;
         N = size + (size & 1);
+#ifndef __GNUC__
+        H = 32 - (int)_lzcnt_u32(N);
+#else
+        H = 32 - __builtin_clz(N);
+#endif
         tree.assign(N * 2, defaultValue);
         treeLazy.assign(N, defaultValue);
-
-        H = 0;
-        for (int i = N; i; i >>= 1)
-            H++;
     }
 
     void build(T value, int size) {
@@ -169,82 +170,4 @@ CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const vector<T
 template <typename T, typename BinOp>
 CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return CompactSegmentTreeLazyAdd<T, BinOp>(arr, size, op, dfltValue);
-}
-
-//-----------------------------------------------------------------------------
-
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// find next position where f(x) is true in [start, N)
-//   f(x): xxxxxxxxxxxOOOOOOOO
-//         S          ^
-template <typename T, typename BinOp>
-int findNext(CompactSegmentTreeLazyAdd<T, BinOp>& st, int start, const function<bool(T)>& f) {
-    st.pushDown(start + st.N);
-
-    int shiftN = 0;
-    int cur = start + st.N, R = st.RealN - 1 + st.N;
-
-    while (true) {
-        st.pushDownOne(cur);
-        if (f(st.tree[cur])) {
-            if (cur < st.N) {
-                cur <<= 1;
-                shiftN--;
-            } else {
-                return cur - st.N;
-            }
-        } else {
-            if (++cur > (R >> shiftN))
-                break;
-
-#ifndef __GNUC__
-            int n = (int)_tzcnt_u32(cur);
-#else
-            int n = __builtin_ctz(cur);
-#endif
-            cur >>= n;
-            shiftN += n;
-        }
-    }
-
-    return -1;
-}
-
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// find previous position where f(x) is true in [0, start]
-//   f(x): OOOOOOOOxxxxxxxxxxx
-//                ^          S
-template <typename T, typename BinOp>
-int findPrev(CompactSegmentTreeLazyAdd<T, BinOp>& st, int start, const function<bool(T)>& f) {
-    st.pushDown(start + st.N);
-
-    int shiftN = 0;
-    int cur = start + st.N, L = st.N;
-
-    while (true) {
-        st.pushDownOne(cur);
-        if (f(st.tree[cur])) {
-            if (cur < st.N) {
-                cur = (cur << 1) | 1;
-                shiftN--;
-            } else {
-                return cur - st.N;
-            }
-        } else {
-            if (cur <= (L >> shiftN))
-                break;
-
-#ifndef __GNUC__
-            int n = (int)_tzcnt_u32(cur);
-#else
-            int n = __builtin_ctz(cur);
-#endif
-            cur >>= n;
-            shiftN += n;
-
-            cur--;
-        }
-    }
-
-    return -1;
 }

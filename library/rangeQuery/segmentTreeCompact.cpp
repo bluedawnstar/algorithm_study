@@ -42,7 +42,7 @@ void testSegmentTreeCompact() {
     cout << "-- Compact Segment Tree ----------------------------------------" << endl;
     {
         auto segTree = makeCompactSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
-        auto segTree2 = makeCompactSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
+        auto segTree2 = makeCompactSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
 
         int ans;
 
@@ -76,7 +76,7 @@ void testSegmentTreeCompact() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
 
-        auto seg = makeCompactSegmentTree(in, [](int a, int b) { return min(a, b); });
+        auto seg = makeCompactSegmentTree(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max(), true);
         for (int i = N - 1; i >= 0; i--) {
             int idx = RandInt32::get() % N;
             int t = RandInt32::get() % (T * 10);
@@ -104,7 +104,7 @@ void testSegmentTreeCompact() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
 
-        auto seg = makeCompactSegmentTree(in, [](int a, int b) { return min(a, b); });
+        auto seg = makeCompactSegmentTree(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max(), true);
         for (int i = N - 1; i >= 0; i--) {
             int L = RandInt32::get() % N;
             int R = RandInt32::get() % N;
@@ -151,7 +151,7 @@ void testSegmentTreeCompact() {
         PROFILE_START(0);
         {
             int res = 0;
-            auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);
@@ -164,7 +164,7 @@ void testSegmentTreeCompact() {
         PROFILE_START(1);
         {
             int res = 0;
-            auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);
@@ -229,7 +229,7 @@ void testSegmentTreeCompact() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree.query(L, R) == INT_MAX)
+                if (segTree.query(L, R) == numeric_limits<int>::max())
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);
@@ -245,7 +245,7 @@ void testSegmentTreeCompact() {
             if (get<0>(q)) {
                 int L = get<1>(q);
                 int R = get<2>(q);
-                if (segTree2.query(L, R) == INT_MAX)
+                if (segTree2.query(L, R) == numeric_limits<int>::max())
                     cout << "It'll Never be shown!" << endl;
             } else {
                 int L = get<1>(q);

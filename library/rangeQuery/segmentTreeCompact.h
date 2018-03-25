@@ -20,35 +20,42 @@ struct CompactSegmentTree {
         : RealN(0), N(0), tree(), mergeOp(op), defaultValue(dflt) {
     }
 
-    CompactSegmentTree(int size, BinOp op, T dflt = T())
+    CompactSegmentTree(int size, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
-        init(size);
+        init(size, alignPowerOf2);
     }
 
-    CompactSegmentTree(T value, int n, BinOp op, T dflt = T())
+    CompactSegmentTree(T value, int n, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
-        build(value, n);
+        build(value, n, alignPowerOf2);
     }
 
-    CompactSegmentTree(const T arr[], int n, BinOp op, T dflt = T())
+    CompactSegmentTree(const T arr[], int n, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
-        build(arr, n);
+        build(arr, n, alignPowerOf2);
     }
 
-    CompactSegmentTree(const vector<T>& v, BinOp op, T dflt = T())
+    CompactSegmentTree(const vector<T>& v, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
-        build(v);
+        build(v, alignPowerOf2);
     }
 
 
-    void init(int size) {
+    void init(int size, bool alignPowerOf2 = false) {
         RealN = size;
-        N = size + (size & 1);
+        if (alignPowerOf2) {
+#ifndef __GNUC__
+            N = 1 << (32 - (int)_lzcnt_u32(size - 1));
+#else
+            N = 1 << (32 - __builtin_clz(size - 1));
+#endif
+        } else
+            N = size + (size & 1);
         tree.assign(N * 2, defaultValue);
     }
 
-    void build(T value, int size) {
-        init(size);
+    void build(T value, int size, bool alignPowerOf2 = false) {
+        init(size, alignPowerOf2);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = value;
@@ -57,8 +64,8 @@ struct CompactSegmentTree {
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const T arr[], int size) {
-        init(size);
+    void build(const T arr[], int size, bool alignPowerOf2 = false) {
+        init(size, alignPowerOf2);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = arr[i];
@@ -67,8 +74,8 @@ struct CompactSegmentTree {
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+    void build(const vector<T>& v, bool alignPowerOf2 = false) {
+        build(&v[0], (int)v.size(), alignPowerOf2);
     }
 
     //--- query
@@ -134,85 +141,77 @@ struct CompactSegmentTree {
 };
 
 template <typename T, typename BinOp>
-CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltValue = T()) {
-    return CompactSegmentTree<T, BinOp>(size, op, dfltValue);
+CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTree<T, BinOp>(size, op, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp>
-CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return CompactSegmentTree<T, BinOp>(v, op, dfltValue);
+CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTree<T, BinOp>(v, op, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp>
-CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return CompactSegmentTree<T, BinOp>(arr, size, op, dfltValue);
+CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTree<T, BinOp>(arr, size, op, dfltValue, alignPowerOf2);
 }
 
 //-----------------------------------------------------------------------------
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-1: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-2: N is aligned to power of 2
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
 template <typename T, typename BinOp>
 inline int findNext(const CompactSegmentTree<T,BinOp>& st, int start, const function<bool(T)>& f) {
-    int shiftN = 0;
-    int cur = start + st.N, R = st.RealN - 1 + st.N;
+    int cur = start + st.N;
 
     while (true) {
         if (f(st.tree[cur])) {
-            if (cur < st.N) {
+            if (cur < st.N)
                 cur <<= 1;
-                shiftN--;
-            } else {
+            else
                 return cur - st.N;
-            }
         } else {
-            if (++cur > (R >> shiftN))
+            ++cur;
+            if ((cur & (cur - 1)) == 0)
                 break;
 
 #ifndef __GNUC__
-            int n = (int)_tzcnt_u32(cur);
+            cur >>= (int)_tzcnt_u32(cur);
 #else
-            int n = __builtin_ctz(cur);
+            cur >>= __builtin_ctz(cur);
 #endif
-            cur >>= n;
-            shiftN += n;
         }
     }
 
     return -1;
 }
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-1: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-2: N is aligned to power of 2
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
 template <typename T, typename BinOp>
 inline int findPrev(const CompactSegmentTree<T, BinOp>& st, int start, const function<bool(T)>& f) {
-    int shiftN = 0;
-    int cur = start + st.N, L = st.N;
+    int cur = start + st.N;
 
     while (true) {
         if (f(st.tree[cur])) {
-            if (cur < st.N) {
+            if (cur < st.N)
                 cur = (cur << 1) | 1;
-                shiftN--;
-            } else {
+            else
                 return cur - st.N;
-            }
         } else {
-            if (cur <= (L >> shiftN))
+            if ((cur & (cur - 1)) == 0)
                 break;
 
 #ifndef __GNUC__
-            int n = (int)_tzcnt_u32(cur);
+            cur >>= (int)_tzcnt_u32(cur);
 #else
-            int n = __builtin_ctz(cur);
+            cur >>= __builtin_ctz(cur);
 #endif
-            cur >>= n;
-            shiftN += n;
-
             cur--;
         }
     }

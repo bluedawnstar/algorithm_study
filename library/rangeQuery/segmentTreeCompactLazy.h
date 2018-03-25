@@ -23,41 +23,51 @@ struct CompactSegmentTreeLazyUpdate {
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
     }
 
-    CompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dflt = T())
+    CompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
-        init(size);
+        init(size, alignPowerOf2);
     }
 
-    CompactSegmentTreeLazyUpdate(T value, int n, BinOp op, BlockOp bop, T dflt = T())
+    CompactSegmentTreeLazyUpdate(T value, int n, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
-        build(value, n);
+        build(value, n, alignPowerOf2);
     }
 
-    CompactSegmentTreeLazyUpdate(const T arr[], int n, BinOp op, BlockOp bop, T dflt = T())
+    CompactSegmentTreeLazyUpdate(const T arr[], int n, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
-        build(arr, n);
+        build(arr, n, alignPowerOf2);
     }
 
-    CompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dflt = T())
+    CompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
-        build(v);
+        build(v, alignPowerOf2);
     }
 
 
-    void init(int size) {
+    void init(int size, bool alignPowerOf2 = false) {
         RealN = size;
-        N = size + (size & 1);
+        if (alignPowerOf2) {
+#ifndef __GNUC__
+            H = 32 - (int)_lzcnt_u32(size - 1);
+#else
+            H = 32 - __builtin_clz(size - 1);
+#endif
+            N = 1 << H++;
+        } else {
+            N = size + (size & 1);
+#ifndef __GNUC__
+            H = 32 - (int)_lzcnt_u32(N);
+#else
+            H = 32 - __builtin_clz(N);
+#endif
+        }
         tree.assign(N * 2, defaultValue);
         treeLazy.assign(N, defaultValue);
         lazyExist.assign(N, false);
-
-        H = 0;
-        for (int i = N; i; i >>= 1)
-            H++;
     }
 
-    void build(T value, int size) {
-        init(size);
+    void build(T value, int size, bool alignPowerOf2 = false) {
+        init(size, alignPowerOf2);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = value;
@@ -66,8 +76,8 @@ struct CompactSegmentTreeLazyUpdate {
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const T arr[], int size) {
-        init(size);
+    void build(const T arr[], int size, bool alignPowerOf2 = false) {
+        init(size, alignPowerOf2);
 
         for (int i = 0; i < size; i++)
             tree[N + i] = arr[i];
@@ -76,8 +86,8 @@ struct CompactSegmentTreeLazyUpdate {
             tree[i] = mergeOp(tree[i << 1], tree[(i << 1) | 1]);
     }
 
-    void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+    void build(const vector<T>& v, bool alignPowerOf2 = false) {
+        build(&v[0], (int)v.size(), alignPowerOf2);
     }
 
     //--- query
@@ -177,37 +187,37 @@ struct CompactSegmentTreeLazyUpdate {
 
 template <typename T, typename BinOp, typename BlockOp>
 CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
-makeCompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dfltValue = T()) {
-    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(size, op, bop, dfltValue);
+makeCompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(size, op, bop, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp, typename BlockOp>
 CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
-makeCompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dfltValue = T()) {
-    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(v, op, bop, dfltValue);
+makeCompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(v, op, bop, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp, typename BlockOp>
 CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
-makeCompactSegmentTreeLazyUpdate(const T arr[], int size, BinOp op, BlockOp bop, T dfltValue = T()) {
-    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(arr, size, op, bop, dfltValue);
+makeCompactSegmentTreeLazyUpdate(const T arr[], int size, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(arr, size, op, bop, dfltValue, alignPowerOf2);
 }
 
 //-----------------------------------------------------------------------------
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-1: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-2: N is aligned to power of 2
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
 template <typename T, typename BinOp, typename BlockOp>
 int findNext(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, const function<bool(T)>& f) {
-    st.pushDown(start, start);
-
     int shiftN = 0;
-    int cur = start + st.N, R = st.RealN - 1 + st.N;
+    int cur = start + st.N;
 
+    st.pushDown(start, start);
     while (true) {
-        st.pushDownOne(cur, 1 << (shiftN - 1));
+        st.pushDownOne(cur, 1 << shiftN);
         if (f(st.tree[cur])) {
             if (cur < st.N) {
                 cur <<= 1;
@@ -216,7 +226,8 @@ int findNext(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, con
                 return cur - st.N;
             }
         } else {
-            if (++cur > (R >> shiftN))
+            ++cur;
+            if ((cur & (cur - 1)) == 0)
                 break;
 
 #ifndef __GNUC__
@@ -232,19 +243,19 @@ int findNext(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, con
     return -1;
 }
 
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-1: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// PRECONDITION-2: N is aligned to power of 2
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
 template <typename T, typename BinOp, typename BlockOp>
 int findPrev(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, const function<bool(T)>& f) {
-    st.pushDown(start, start);
-
     int shiftN = 0;
-    int cur = start + st.N, L = st.N;
+    int cur = start + st.N;
 
+    st.pushDown(start, start);
     while (true) {
-        st.pushDownOne(cur, 1 << (shiftN - 1));
+        st.pushDownOne(cur, 1 << shiftN);
         if (f(st.tree[cur])) {
             if (cur < st.N) {
                 cur = (cur << 1) | 1;
@@ -253,7 +264,7 @@ int findPrev(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, con
                 return cur - st.N;
             }
         } else {
-            if (cur <= (L >> shiftN))
+            if ((cur & (cur - 1)) == 0)
                 break;
 
 #ifndef __GNUC__

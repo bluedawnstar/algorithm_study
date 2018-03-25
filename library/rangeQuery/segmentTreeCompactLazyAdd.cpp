@@ -37,7 +37,7 @@ static int findPrev(const vector<int>& A, int start, int x) {
 }
 
 void testSegmentTreeCompactLazyAdd() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- Compact Segment Tree - Lazy Add ----------------------------------------" << endl;
     {
@@ -69,72 +69,6 @@ void testSegmentTreeCompactLazyAdd() {
 
         ans = segTree.query(1, 5);
         assert(ans == 16);
-    }
-    cout << "*** findNext() & findPrev()" << endl;
-    {
-#ifdef _DEBUG
-        static const int T = 100;
-        int N = 10000;
-#else
-        static const int T = 1000;
-        int N = 100000;
-#endif
-        vector<int> in(N);
-        for (int i = 0; i < N; i++)
-            in[i] = RandInt32::get() % (T * 10);
-
-        auto seg = makeCompactSegmentTreeLazyAdd(in, [](int a, int b) { return min(a, b); });
-        for (int i = N - 1; i >= 0; i--) {
-            int idx = RandInt32::get() % N;
-            int t = RandInt32::get() % (T * 10);
-
-            seg.add(idx, t - in[idx]);
-            in[idx] = t;
-
-            int ans1 = findNext<int>(seg, i, [](int x) {
-                return x <= T;
-            });
-            int gt1 = findNext(in, i, T);
-            assert(gt1 == ans1);
-
-            int ans2 = findPrev<int>(seg, i, [](int x) {
-                return x <= T;
-            });
-            int gt2 = findPrev(in, i, T);
-            assert(gt2 == ans2);
-        }
-    }
-    {
-        static const int T = 1000;
-        int N = 1000;
-        vector<int> in(N);
-        for (int i = 0; i < N; i++)
-            in[i] = RandInt32::get() % (T * 10);
-
-        auto seg = makeCompactSegmentTreeLazyAdd(in, [](int a, int b) { return min(a, b); });
-        for (int i = N - 1; i >= 0; i--) {
-            int L = RandInt32::get() % N;
-            int R = RandInt32::get() % N;
-            int t = RandInt32::get() % 10;
-            if (L > R)
-                swap(L, R);
-
-            seg.addRange(L, R, t);
-            for (int j = L; j <= R; j++)
-                in[j] += t;
-
-            int ans1 = findNext<int>(seg, i, [](int x) {
-                return x <= T;
-            });
-            int gt1 = findNext(in, i, T);
-            assert(gt1 == ans1);
-
-            int ans2 = findPrev<int>(seg, i, [](int x) {
-                return x <= T;
-            });
-            int gt2 = findPrev(in, i, T);
-            assert(gt2 == ans2);
-        }
     }
     cout << "OK!" << endl;
 
