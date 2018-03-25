@@ -149,7 +149,7 @@
     <ClCompile Include="disjointSparseTable.cpp" />
     <ClCompile Include="fenwickTree.cpp" />
     <ClCompile Include="fenwickTree2D.cpp" />
-    <ClCompile Include="fenwickTreeMax.cpp" />
+    <ClCompile Include="fenwickTreeEx.cpp" />
     <ClCompile Include="fenwickTreeMultAdd.cpp" />
     <ClCompile Include="fenwickTreePersistent.cpp" />
     <ClCompile Include="fenwickTreeXor.cpp" />
@@ -177,7 +177,7 @@
     <ClInclude Include="disjointSparseTable.h" />
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
-    <ClInclude Include="fenwickTreeMax.h" />
+    <ClInclude Include="fenwickTreeEx.h" />
     <ClInclude Include="fenwickTreeMultAdd.h" />
     <ClInclude Include="fenwickTreePersistent.h" />
     <ClInclude Include="fenwickTreeXor.h" />

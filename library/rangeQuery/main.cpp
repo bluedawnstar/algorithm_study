@@ -12,7 +12,7 @@ int main(void) {
     TEST(FenwickTreeXor);
     TEST(FenwickTree2D);
     TEST(FenwickTreeMultAdd);
-    TEST(FenwickTreeMax);
+    TEST(FenwickTreeEx);
     TEST(PersistentFenwickTree);
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);

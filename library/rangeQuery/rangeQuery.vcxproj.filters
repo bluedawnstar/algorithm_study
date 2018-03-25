@@ -51,9 +51,6 @@
     <ClCompile Include="sqrtDecomposition.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="fenwickTreeMax.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="fenwickTreeXor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -91,6 +88,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="generalizedBIT.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="fenwickTreeEx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,9 +138,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fenwickTree2D.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="fenwickTreeMax.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fenwickTreeMultAdd.h">
@@ -198,6 +195,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="generalizedBIT.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fenwickTreeEx.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

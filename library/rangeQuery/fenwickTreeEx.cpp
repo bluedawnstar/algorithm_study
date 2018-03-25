@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "fenwickTreeMax.h"
+#include "fenwickTreeEx.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -23,10 +23,10 @@ using namespace std;
 
 #include "segmentTreeCompact.h"
 
-void testFenwickTreeMax() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+void testFenwickTreeEx() {
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- FenwickTree for Max ---------------------------------" << endl;
+    cout << "-- Extended FenwickTree ---------------------------------" << endl;
 
     int N = 1000;
     int T = 10000;
@@ -35,12 +35,11 @@ void testFenwickTreeMax() {
     for (int i = 0; i < N; i++)
         in[i] = RandInt32::get() % 65536;
 
-    FenwickTreeMax<int> ft(in, 0);
-
+    auto ft = makeFenwickTreeEx(in, [](int a, int b) { return max(a, b); }, 0);
     auto segTree = makeCompactSegmentTree(in, [](int a, int b) { return max(a, b); }, 0);
     for (int i = 0; i < 1000; i++) {
         int R = RandInt32::get() % N;
-        assert(ft.get(R) == segTree.query(0, R));
+        assert(ft.query(R) == segTree.query(0, R));
     }
 
     vector<int> R(T);
@@ -49,7 +48,7 @@ void testFenwickTreeMax() {
 
     PROFILE_START(0);
     for (int i = 0; i < T; i++) {
-        if (ft.get(R[i]) < 0)
+        if (ft.query(R[i]) < 0)
             cerr << "This statements is for preventing optimization" << endl;
     }
     PROFILE_STOP(0);
