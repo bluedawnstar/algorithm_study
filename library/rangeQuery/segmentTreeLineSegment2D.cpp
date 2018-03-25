@@ -21,10 +21,10 @@ void testSegmentTreeLineSegment2D() {
 
     cout << "-- Segment Tree for 2D Line Segments -----------------------------" << endl;
     {
-        int N = 100;
+        int N = 1000;
         int MAXX = 1000;
 
-        int L = 10, R = 200;
+        int L = 10, R = 900;
 
         vector<SegmentTreeLineSegment2DMax::Line> lines;
         vector<pair<int, int>> ranges;
@@ -53,16 +53,16 @@ void testSegmentTreeLineSegment2D() {
                 gt[x - L] = max(gt[x - L], lines[i].get(x));
         }
 
-        for (int i = L; i <= R; i++)
-            ans[i - L] = tree.query(i);
+        for (int x = L; x <= R; x++)
+            ans[x - L] = tree.query(x);
 
         assert(gt == ans);
     }
     {
-        int N = 100;
+        int N = 1000;
         int MAXX = 1000;
 
-        int L = 10, R = 200;
+        int L = 10, R = 900;
 
         vector<SegmentTreeLineSegment2DMin::Line> lines;
         vector<pair<int, int>> ranges;

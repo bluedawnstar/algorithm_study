@@ -86,6 +86,15 @@ private:
             return;
 
         pushDown(node, nodeLeft, nodeRight);
+        if (nodeLeft == nodeRight) {
+            if (l.get(nodeLeft) < treeLazy[node].get(nodeLeft)) {
+                treeLazy[node] = l;
+                lazyExist[node] = true;
+                pushDown(node, nodeLeft, nodeRight);
+            }
+            return;
+        }
+
         if (left <= nodeLeft && nodeRight <= right) {
             int cl = l.compare(treeL[node], nodeLeft);
             int cr = l.compare(treeR[node], nodeRight);
@@ -94,20 +103,18 @@ private:
                     treeLazy[node] = l;
                     lazyExist[node] = true;
                     pushDown(node, nodeLeft, nodeRight);
+                    return;
                 }
-                // this line segment is fully exposed
+            } else if (cl == 2 && cr == 0)
                 return;
-            }
         }
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         addSub(l, left, right, (node << 1), nodeLeft, mid);
         addSub(l, left, right, (node << 1) | 1, mid + 1, nodeRight);
 
-        if (nodeLeft < nodeRight) {
-            treeL[node] = treeL[node << 1];
-            treeR[node] = treeR[(node << 1) | 1];
-        }
+        treeL[node] = treeL[node << 1];
+        treeR[node] = treeR[(node << 1) | 1];
     }
 
     long long querySub(int x, int node, int nodeLeft, int nodeRight) {
