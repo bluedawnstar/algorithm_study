@@ -30,5 +30,5 @@ int main(void) {
     TEST(SqrtTree);
     TEST(MergeSortTree);
     TEST(MergeSortTreeIndex);
-    TEST(GeneralBinaryIndexedTree);
+    TEST(GeneralizedBIT);
 }

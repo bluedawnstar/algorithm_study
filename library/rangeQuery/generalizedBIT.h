@@ -3,7 +3,6 @@
 //--------- Generalized Binary Indexed Tree (Generalized Fenwick Tree) --------------------------------
 
 // This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2017/3)
-
 template <typename T, typename BinOp = function<T(T, T)>>
 struct GeneralizedBIT {
     int N;                  // 
@@ -41,7 +40,7 @@ struct GeneralizedBIT {
     void init(int n) {
         N = n;
         tree = vector<T>(N + 1, defaultValue);
-        treeR = vector<T>(N, defaultValue);
+        treeR = vector<T>(N + 1, defaultValue);
     }
     
     void build(T value, int n) {
@@ -67,10 +66,12 @@ struct GeneralizedBIT {
     }
 
 
+    // inclusive (0 <= pos < N)
     void add(int pos, T val) {
         update(pos, query(pos) + val);
     }
 
+    // inclusive (0 <= pos < N)
     void update(int pos, T val) {
         int curr = pos & ~1;
         int prev = pos | 1;
@@ -90,6 +91,38 @@ struct GeneralizedBIT {
         }
     }
 
+    void update(int left, int right, T val) {
+        for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
+            tree[L] = val;
+
+        for (int L = left | 1, R = right; L <= R; L += 2)
+            treeR[L] = val;
+
+        int mask = 2;
+
+        int leftMask = left << 1;
+        int rightMask = ~right << 1;
+
+        int L = (left & ~1) | mask;
+        int R = (right & ~1) | mask;
+        while (L <= N) {
+            int half = mask >> 1;
+            mask <<= 1;
+
+            int maxR = min(R, N);
+            for (int i = L + (leftMask & mask), j = i - half; i <= maxR; i += mask, j += mask)
+                tree[i] = mergeOp(tree[j], treeR[j]);
+
+            maxR = min(R - (rightMask & mask), N - half);
+            for (int i = L, j = i + half; i <= maxR; i += mask, j += mask)
+                treeR[i] = mergeOp(tree[j], treeR[j]);
+
+            L = (L & (L - 1)) | mask;
+            R = (R & (R - 1)) | mask;
+        }
+    }
+
+
     // inclusive (0 <= pos < N)
     T query(int pos) const {
         return (pos & 1) ? treeR[pos] : tree[pos + 1];
@@ -99,7 +132,7 @@ struct GeneralizedBIT {
     T query(int left, int right) const {
         T res = defaultValue;
         if (left == 0) {
-            for (int R = right + 1; 0 < R; R &= R - 1)
+            for (int R = right + 1; R > 0; R &= R - 1)
                 res = mergeOp(res, tree[R]);
         } else {
             int R = right + 1;

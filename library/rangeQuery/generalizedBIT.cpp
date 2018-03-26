@@ -22,6 +22,11 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeCompact.h"
 
+static void updateSlow(vector<int>& v, int L, int R, int x) {
+    while (L <= R)
+        v[L++] = x;
+}
+
 static int sumSlow(vector<int>& v, int L, int R) {
     int res = 0;
     while (L <= R)
@@ -80,8 +85,8 @@ static int lowerBoundBackward(const vector<int>& A, int start, int x) {
     return start;
 }
 
-void testGeneralBinaryIndexedTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+void testGeneralizedBIT() {
+    //return; //TODO: if you want to test a split function, make this line a comment.
 
     cout << "-- General FenwickTree (General Binary Indexed Tree) -------------------" << endl;
     {
@@ -212,6 +217,50 @@ void testGeneralBinaryIndexedTree() {
             }
         }
     }
+    {
+        int MaxV = 10000;
+        int N = 1024;
+#ifdef _DEBUG
+        //N = 100;
+        N = 10;
+#endif
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % MaxV;
+
+        auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
+        auto bitMin = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+        auto bitMax = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+
+        for (int i = 0; i < N; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            int val = RandInt32::get() % MaxV;
+            if (L > R)
+                swap(L, R);
+
+            updateSlow(in, L, R, val);
+            bitSum.update(L, R, val);
+            bitMin.update(L, R, val);
+            bitMax.update(L, R, val);
+
+            for (int j = i; j < N; j++) {
+#ifndef _DEBUG
+                if (bitSum.query(i, j) != sumSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+                if (bitMin.query(i, j) != minSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+                if (bitMax.query(i, j) != maxSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+#endif
+                if (bitSum.query(i, j) != sumSlow(in, i, j))
+                    cout << bitSum.query(i, j) << ", " << sumSlow(in, i, j) << endl;
+                assert(bitSum.query(i, j) == sumSlow(in, i, j));
+                assert(bitMin.query(i, j) == minSlow(in, i, j));
+                assert(bitMax.query(i, j) == maxSlow(in, i, j));
+            }
+        }
+    }
     cout << "--- lower bound & upper bound" << endl;
     {
         static const int T = 1000;
@@ -268,7 +317,8 @@ void testGeneralBinaryIndexedTree() {
     }
     {
         cout << "-- Performance Test -----------------------" << endl;
-        cout << "*** Segment tree vs Compact segment tree vs GeneralBIT" << endl;
+        cout << "*** Segment tree vs Compact segment tree vs GeneralizedBIT" << endl;
+        cout << "* range query..." << endl;
         {
             int N = 500000;
 #ifdef _DEBUG
@@ -289,7 +339,7 @@ void testGeneralBinaryIndexedTree() {
             PROFILE_START(0);
             {
                 int res = 0;
-                auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+                auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
                 for (int i = 0; i < 10; i++) {
                     for (auto& it : Q) {
                         res += seg.query(it.first, it.second);
@@ -302,7 +352,7 @@ void testGeneralBinaryIndexedTree() {
             PROFILE_START(1);
             {
                 int res = 0;
-                auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+                auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
                 for (int i = 0; i < 10; i++) {
                     for (auto& it : Q) {
                         res += seg.query(it.first, it.second);
@@ -315,13 +365,70 @@ void testGeneralBinaryIndexedTree() {
             PROFILE_START(2);
             {
                 int res = 0;
-                auto bit = makeGeneralizedBIT(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+                auto bit = makeGeneralizedBIT(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
                 for (int i = 0; i < 10; i++) {
                     for (auto& it : Q) {
                         res += bit.query(it.first, it.second);
                     }
                 }
                 cout << "result = " << res << endl;
+            }
+            PROFILE_STOP(2);
+        }
+        cout << "* range update..." << endl;
+        {
+            int N = 10000;
+#ifdef _DEBUG
+            N = 1000;
+#endif
+
+            vector<int> T(N);
+            for (int i = 0; i < N; i++)
+                T[i] = RandInt32::get() % 65536;
+
+            vector<tuple<int, int, int>> Q;
+            for (int i = 0; i < N; i++) {
+                int a = RandInt32::get() % N;
+                int b = RandInt32::get() % N;
+                Q.emplace_back(min(a, b), max(a, b), RandInt32::get());
+            }
+
+            PROFILE_START(0);
+            {
+                int res = 0;
+                auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+                for (int i = 0; i < 10; i++) {
+                    for (auto& it : Q) {
+                        seg.updateRange(get<0>(it), get<1>(it), get<2>(it));
+                    }
+                }
+                cout << "result = " << seg.query(0, N - 1) << endl;
+            }
+            PROFILE_STOP(0);
+
+            PROFILE_START(1);
+            {
+                int res = 0;
+                auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+                for (int i = 0; i < 10; i++) {
+                    for (auto& it : Q) {
+                        seg.updateRange(get<0>(it), get<1>(it), get<2>(it));
+                    }
+                }
+                cout << "result = " << seg.query(0, N - 1) << endl;
+            }
+            PROFILE_STOP(1);
+
+            PROFILE_START(2);
+            {
+                int res = 0;
+                auto bit = makeGeneralizedBIT(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+                for (int i = 0; i < 10; i++) {
+                    for (auto& it : Q) {
+                        bit.update(get<0>(it), get<1>(it), get<2>(it));
+                    }
+                }
+                cout << "result = " << bit.query(0, N - 1) << endl;
             }
             PROFILE_STOP(2);
         }
