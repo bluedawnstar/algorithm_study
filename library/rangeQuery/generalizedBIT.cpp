@@ -88,7 +88,7 @@ static int lowerBoundBackward(const vector<int>& A, int start, int x) {
 void testGeneralizedBIT() {
     //return; //TODO: if you want to test a split function, make this line a comment.
 
-    cout << "-- General FenwickTree (General Binary Indexed Tree) -------------------" << endl;
+    cout << "-- Generalized Binary Indexed Tree (Generalized FenwickTree) -------------------" << endl;
     {
                      // 0  1  2  3  4  5  6
         vector<int> in{ 1, 9, 2, 7, 5, 4, 6 };
@@ -264,7 +264,7 @@ void testGeneralizedBIT() {
     cout << "--- lower bound & upper bound" << endl;
     {
         static const int T = 1000;
-        int N = 100000;
+        int N = 10000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
@@ -289,7 +289,7 @@ void testGeneralizedBIT() {
     cout << "--- findNext() & findPrev()" << endl;
     {
         static const int T = 1000;
-        int N = 100000;
+        int N = 50000;
         vector<int> in(N);
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % (T * 10);
@@ -372,6 +372,63 @@ void testGeneralizedBIT() {
                     }
                 }
                 cout << "result = " << res << endl;
+            }
+            PROFILE_STOP(2);
+        }
+        cout << "* point update..." << endl;
+        {
+            int N = 500000;
+#ifdef _DEBUG
+            N = 1000;
+#endif
+
+            vector<int> T(N);
+            for (int i = 0; i < N; i++)
+                T[i] = RandInt32::get() % 65536;
+
+            vector<pair<int,int>> Q;
+            for (int i = 0; i < N; i++) {
+                int a = RandInt32::get() % N;
+                int b = RandInt32::get();
+                Q.emplace_back(a, b);
+            }
+
+            PROFILE_START(0);
+            {
+                int res = 0;
+                auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+                for (int i = 0; i < 10; i++) {
+                    for (auto& it : Q) {
+                        seg.update(it.first, it.second);
+                    }
+                }
+                cout << "result = " << seg.query(0, N - 1) << endl;
+            }
+            PROFILE_STOP(0);
+
+            PROFILE_START(1);
+            {
+                int res = 0;
+                auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+                for (int i = 0; i < 10; i++) {
+                    for (auto& it : Q) {
+                        seg.update(it.first, it.second);
+                    }
+                }
+                cout << "result = " << seg.query(0, N - 1) << endl;
+            }
+            PROFILE_STOP(1);
+
+            PROFILE_START(2);
+            {
+                int res = 0;
+                auto bit = makeGeneralizedBIT(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+                for (int i = 0; i < 10; i++) {
+                    for (auto& it : Q) {
+                        bit.update(it.first, it.second);
+                    }
+                }
+                cout << "result = " << bit.query(0, N - 1) << endl;
             }
             PROFILE_STOP(2);
         }
