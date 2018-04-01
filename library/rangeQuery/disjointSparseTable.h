@@ -97,24 +97,23 @@ DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const vector<T>& arr, BinO
 }
 
 /* example
-????????????????????
-1) Min Sparse Table (RMQ)
-auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return min(a, b); }, INT_MAX);
-...
-sparseTable.query(left, right);
+    1) Min Sparse Table (RMQ)
+        auto sparseTable = makeDisjointSparseTable<int>(v, [](int a, int b) { return min(a, b); }, INT_MAX);
+        ...
+        sparseTable.query(left, right);
 
-2) Max Sparse Table
-auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return max(a, b); });
-...
-sparseTable.query(left, right);
+    2) Max Sparse Table
+        auto sparseTable = makeDisjointSparseTable<int>(v, [](int a, int b) { return max(a, b); });
+        ...
+        sparseTable.query(left, right);
 
-3) GCD Sparse Table
-auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return gcd(a, b); });
-...
-sparseTable.query(left, right);
+    3) GCD Sparse Table
+        auto sparseTable = makeDisjointSparseTable<int>(v, [](int a, int b) { return gcd(a, b); });
+        ...
+        sparseTable.query(left, right);
 
-4) Sum Sparse Table
-auto sparseTable = makeSparseTable<int>(v, N, [](int a, int b) { return a + b; });
-...
-sparseTable.queryNoOverlap(left, right);
+    4) Sum Sparse Table
+        auto sparseTable = makeDisjointSparseTable<int>(v, [](int a, int b) { return a + b; });
+        ...
+        sparseTable.query(left, right);
 */
