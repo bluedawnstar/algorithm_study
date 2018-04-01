@@ -13,4 +13,5 @@ int main(void) {
     TEST(CountUniqueNumbers);
     TEST(MinStack);
     TEST(MinQueue);
+    TEST(ReservoirSampling);
 }
