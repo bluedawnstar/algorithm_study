@@ -150,6 +150,7 @@
     <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="redBlackTreeSimple.cpp" />
     <ClCompile Include="rTree.cpp" />
+    <ClCompile Include="rangeQuery-SparseTableOnTree.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
     <ClCompile Include="treeEulerTour.cpp" />
     <ClCompile Include="intervalTree.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="quadTree.h" />
     <ClInclude Include="redBlackTreeSimple.h" />
     <ClInclude Include="rTree.h" />
+    <ClInclude Include="rangeQuery-SparseTableOnTree.h" />
     <ClInclude Include="splayTreeRangeQuery.h" />
     <ClInclude Include="treapRangeQuery.h" />
     <ClInclude Include="treeDfsTour.h" />
