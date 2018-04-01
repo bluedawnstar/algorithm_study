@@ -97,15 +97,20 @@ struct SparseTableIndex {
         int res = -1;
 
         int length = right - left;
-        for (int i = 0; length; length >>= 1, i++) {
-            if (length & 1) {
-                right -= (1 << i);
+        while (length) {
+#ifndef __GNUC__
+            int i = (int)_tzcnt_u32(length);
+#else
+            int i = __builtin_ctz(length);
+#endif
+            right -= (1 << i);
 
-                int idx = value[i][right];
-                val = mergeOp(val, in[idx]);
-                if (val == in[idx])
-                    res = idx;
-            }
+            int idx = value[i][right];
+            val = mergeOp(val, in[idx]);
+            if (val == in[idx])
+                res = idx;
+
+            length &= length - 1;
         }
 
         return res;
@@ -123,23 +128,23 @@ SparseTableIndex<T, BinOp> makeSparseTableIndex(const T arr[], int size, BinOp o
 }
 
 /* example
-1) Min Sparse Table (RMQ)
-auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return min(a, b); }, INT_MAX);
-...
-sparseTable.query(left, right);
+    1) Min Sparse Table (RMQ)
+        auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return min(a, b); }, INT_MAX);
+        ...
+        sparseTable.query(left, right);
 
-2) Max Sparse Table
-auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return max(a, b); });
-...
-sparseTable.query(left, right);
+    2) Max Sparse Table
+        auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return max(a, b); });
+        ...
+        sparseTable.query(left, right);
 
-3) GCD Sparse Table
-auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return gcd(a, b); });
-...
-sparseTable.query(left, right);
+    3) GCD Sparse Table
+        auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return gcd(a, b); });
+        ...
+        sparseTable.query(left, right);
 
-4) Sum Sparse Table
-auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return a + b; });
-...
-sparseTable.queryNoOverlap(left, right);
+    4) Sum Sparse Table
+        auto sparseTable = makeSparseTableIndex<int>(v, N, [](int a, int b) { return a + b; });
+        ...
+        sparseTable.queryNoOverlap(left, right);
 */

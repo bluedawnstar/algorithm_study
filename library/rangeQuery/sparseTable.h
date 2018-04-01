@@ -82,11 +82,16 @@ struct SparseTable {
         T res = defaultValue;
 
         int length = right - left;
-        for (int i = 0; length; length >>= 1, i++) {
-            if (length & 1) {
-                right -= (1 << i);
-                res = mergeOp(res, value[i][right]);
-            }
+        while (length) {
+#ifndef __GNUC__
+            int i = (int)_tzcnt_u32(length);
+#else
+            int i = __builtin_ctz(length);
+#endif
+            right -= (1 << i);
+            res = mergeOp(res, value[i][right]);
+
+            length &= length - 1;
         }
 
         return res;
