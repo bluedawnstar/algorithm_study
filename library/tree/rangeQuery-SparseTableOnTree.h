@@ -222,8 +222,8 @@ private:
 #endif
             length &= length - 1;
 
-            int left = climbTree(v, length);
-            res = mergeOp(res, value[i][left]);
+            int node = climbTree(v, length);
+            res = mergeOp(res, value[i][node]);
         }
 
         return res;
