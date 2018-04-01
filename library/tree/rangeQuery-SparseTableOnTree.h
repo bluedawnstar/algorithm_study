@@ -214,12 +214,16 @@ private:
         T res = defaultValue;
 
         int length = vLevel - uLevel + 1;
-        for (int i = 0, j = length; j; j >>= 1, i++) {
-            if (j & 1) {
-                length -= 1 << i;
-                int left = climbTree(v, length);
-                res = mergeOp(res, value[i][left]);
-            }
+        while (length) {
+#ifndef __GNUC__
+            int i = (int)_tzcnt_u32(length);
+#else
+            int i = __builtin_ctz(length);
+#endif
+            length &= length - 1;
+
+            int left = climbTree(v, length);
+            res = mergeOp(res, value[i][left]);
         }
 
         return res;
