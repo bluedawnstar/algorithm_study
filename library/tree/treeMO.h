@@ -5,8 +5,8 @@
 /* MO's algorithm
 
 1. How to use
-    1) build EulerTourTree
-        EulerTourTree tree(N, logN);
+    1) build DfsTourTree
+        DfsTourTree tree(N, logN);
         //... add edges to tree
         tree.build();
 
