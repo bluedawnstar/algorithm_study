@@ -369,10 +369,22 @@ protected:
     }
 
     void deleteRecursive(Node* node) {
-        if (node != sentinel) {
-            deleteRecursive(node->left);
-            deleteRecursive(node->right);
-            destroyNode(node);
+        if (node == nullptr || node == sentinel)
+            return;
+
+        vector<Node*> nodes;
+        nodes.push_back(node);
+
+        while (!nodes.empty()) {
+            Node* p = nodes.back();
+            nodes.pop_back();
+
+            if (p->left != sentinel)
+                nodes.push_back(p->left);
+            if (p->right != sentinel)
+                nodes.push_back(p->right);
+
+            destroyNode(p);
         }
     }
 
