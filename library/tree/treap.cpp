@@ -19,17 +19,29 @@ using namespace std;
 #include "redBlackTree.h"
 #include "splayTree.h"
 
-void checkSearch(RBTree<int>& rbt, vector<int>& in);
-void checkIndex(RBTree<int>& rbt, vector<int>& in);
+static void checkSearch(RBTree<int>& rbt, vector<int>& in) {
+    for (int i = 0; i < (int)in.size(); i++) {
+        int x = in[i];
+        assert(rbt.find(x)->value.value == x);
+    }
+}
 
-void checkSearch(Treap<int>& tr, vector<int>& in) {
+static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
+    assert(rbt.size() == (int)in.size());
+    for (int i = 0; i < (int)in.size(); i++) {
+        assert(rbt[i]->value.value == in[i]);
+        assert(rbt.indexOf(rbt[i]) == i);
+    }
+}
+
+static void checkSearch(Treap<int>& tr, vector<int>& in) {
     for (int i = 0; i < (int)in.size(); i++) {
         int x = in[i];
         assert(tr.find(x)->value == x);
     }
 }
 
-void checkIndex(Treap<int>& tr, vector<int>& in) {
+static void checkIndex(Treap<int>& tr, vector<int>& in) {
     assert((tr.tree != nullptr ? tr.tree->cnt : 0) == tr.size());
     assert(tr.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {

@@ -142,6 +142,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="avlTree.cpp" />
+    <ClCompile Include="benchmarkBST.cpp" />
+    <ClCompile Include="binarySearchTree.cpp" />
     <ClCompile Include="blockTree.cpp" />
     <ClCompile Include="centroidDecomposition.cpp" />
     <ClCompile Include="lcaSchieberVishkin.cpp" />
@@ -151,6 +154,7 @@
     <ClCompile Include="redBlackTreeSimple.cpp" />
     <ClCompile Include="rTree.cpp" />
     <ClCompile Include="rangeQuery-SparseTableOnTree.cpp" />
+    <ClCompile Include="scapegoatTree.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
     <ClCompile Include="treeEulerTour.cpp" />
     <ClCompile Include="intervalTree.cpp" />
@@ -171,6 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
+    <ClInclude Include="avlTree.h" />
+    <ClInclude Include="binarySearchTree.h" />
     <ClInclude Include="blockTree.h" />
     <ClInclude Include="centroidDecomposition.h" />
     <ClInclude Include="lcaSchieberVishkin.h" />
@@ -181,6 +187,7 @@
     <ClInclude Include="redBlackTreeSimple.h" />
     <ClInclude Include="rTree.h" />
     <ClInclude Include="rangeQuery-SparseTableOnTree.h" />
+    <ClInclude Include="scapegoatTree.h" />
     <ClInclude Include="splayTreeRangeQuery.h" />
     <ClInclude Include="treapRangeQuery.h" />
     <ClInclude Include="treeDfsTour.h" />

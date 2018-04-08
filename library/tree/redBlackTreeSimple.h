@@ -110,71 +110,71 @@ struct RBTreeSimple {
         }
     };
 
-    Node*       mRoot;     // root node
-    bool        mDuplicate;
-    int         mCount;
+    Node*       root;     // root node
+    bool        duplicate;
+    int         count;
 
     //-----------------------------------------------------------
 
     RBTreeSimple() {
-        mRoot = nullptr;
-        mDuplicate = false;
-        mCount = 0;
+        root = nullptr;
+        duplicate = false;
+        count = 0;
     }
 
     RBTreeSimple(const RBTreeSimple<T>& tree) {
-        mRoot = nullptr;
-        mDuplicate = false;
-        mCount = 0;
-        copyRecursive(tree.mRoot);
+        root = nullptr;
+        duplicate = false;
+        count = 0;
+        copyRecursive(tree.root);
     }
 
     virtual ~RBTreeSimple() {
-        deleteRecursive(mRoot);
+        deleteRecursive(root);
     }
 
     RBTreeSimple<T>& operator =(const RBTreeSimple<T>& tree) {
         if (this != &tree) {
-            deleteRecursive(mRoot);
-            mDuplicate = tree.mDuplicate;
-            mRoot = nullptr;
-            copyRecursive(tree.mRoot);
+            deleteRecursive(root);
+            duplicate = tree.duplicate;
+            root = nullptr;
+            copyRecursive(tree.root);
         }
         return *this;
     }
 
     int size() const {
-        return mCount;
+        return count;
     }
 
     bool empty() const {
-        return mCount == 0;
+        return count == 0;
     }
 
     bool canDuplicate() const {
-        return mDuplicate;
+        return duplicate;
     }
 
     void enableDuplicate(bool enable) {
-        mDuplicate = enable;
+        duplicate = enable;
     }
 
     const Node* begin() const {
-        return minimum(mRoot);
+        return minimum(root);
     }
 
     Node* begin() {
-        return mRoot ? mRoot->minimum() : nullptr;
+        return root ? root->minimum() : nullptr;
     }
 
     // inclusive
     const Node* end() const {
-        return mRoot ? mRoot->maximum() : nullptr;
+        return root ? root->maximum() : nullptr;
     }
 
     // inclusive
     Node* end() {
-        return maximum(mRoot);
+        return maximum(root);
     }
 
     bool exist(const T& key) const {
@@ -182,13 +182,13 @@ struct RBTreeSimple {
     }
 
     Node* operator [](int index) const {
-        assert((mRoot != nullptr ? mRoot->cnt : 0) == mCount);
+        assert((root != nullptr ? root->cnt : 0) == count);
 
-        if (index < 0 || index >= mCount)
+        if (index < 0 || index >= count)
             return nullptr;
 
         int n = index;
-        Node* p = mRoot;
+        Node* p = root;
         while (p != nullptr) {
             while (p->left != nullptr && p->left->cnt > n)
                 p = p->left;
@@ -203,7 +203,7 @@ struct RBTreeSimple {
     }
 
     int indexOf(Node* p) const {
-        assert((mRoot != nullptr ? mRoot->cnt : 0) == mCount);
+        assert((root != nullptr ? root->cnt : 0) == count);
 
         if (p == nullptr)
             return -1;
@@ -224,7 +224,7 @@ struct RBTreeSimple {
     }
 
     Node* find(const T& key) const {
-        Node *p = mRoot;
+        Node *p = root;
 
         while (p != nullptr && !(p->value == key)) {
             if (key < p->value)
@@ -237,11 +237,11 @@ struct RBTreeSimple {
     }
 
     Node* lowerBound(const T& key) const {
-        if (mRoot == nullptr)
+        if (root == nullptr)
             return nullptr;
 
         Node* y = nullptr;
-        Node* x = mRoot;
+        Node* x = root;
         while (x != nullptr) {
             if (!(x->value < key)) {
                 y = x;
@@ -253,11 +253,11 @@ struct RBTreeSimple {
     }
 
     Node* upperBound(const T& key) const {
-        if (mRoot == nullptr)
+        if (root == nullptr)
             return nullptr;
 
         Node* y = nullptr;
-        Node* x = mRoot;
+        Node* x = root;
         while (x != nullptr) {
             if (key < x->value) {
                 y = x;
@@ -278,7 +278,7 @@ struct RBTreeSimple {
         Node* y;
 
         x->color = rbcRed;
-        while ((x != mRoot) && (x->parent && x->parent->color == rbcRed)) {
+        while ((x != root) && (x->parent && x->parent->color == rbcRed)) {
             if (x->parent == x->parent->parent->left) {
                 y = x->parent->parent->right;
 
@@ -317,7 +317,7 @@ struct RBTreeSimple {
                 }
             }
         }
-        mRoot->color = rbcBlack;
+        root->color = rbcBlack;
 
         return ins;
     }
@@ -348,7 +348,7 @@ struct RBTreeSimple {
 
         if (y->parent == nullptr)
             // if deleting node is root, then replace root with x
-            mRoot = x;
+            root = x;
         else {
             // splice in child node
             if (y == y->parent->left)
@@ -377,21 +377,21 @@ struct RBTreeSimple {
     }
 
     void clear() {
-        deleteRecursive(mRoot);
-        mRoot = nullptr;
+        deleteRecursive(root);
+        root = nullptr;
     }
 
 protected:
     Node* createNode(const T& item) {
         Node* p = new Node(item);
-        mCount++;
+        count++;
         return p;
     }
 
     void destroyNode(Node* node) {
         assert(node != nullptr);
         delete node;
-        mCount--;
+        count--;
     }
 
     void copyRecursive(const Node* node) {
@@ -412,12 +412,12 @@ protected:
 
     pair<Node*, bool> insertBST(const T& item) {
         Node* parent = nullptr;
-        Node* x = mRoot;
+        Node* x = root;
 
         while (x != nullptr) {
             parent = x;
 
-            if (item == x->value && !mDuplicate) {
+            if (item == x->value && !duplicate) {
                 return make_pair(x, false);
             } else {
                 if (item < x->value)
@@ -431,7 +431,7 @@ protected:
         newNode->parent = parent;
 
         if (parent == nullptr)
-            mRoot = newNode;
+            root = newNode;
         else {
             if (newNode->value < parent->value)
                 parent->left = newNode;
@@ -457,7 +457,7 @@ protected:
         // link node's parent to y
         y->parent = node->parent;
         if (node->parent == nullptr)
-            mRoot = y;
+            root = y;
         else {
             if (node == node->parent->left)
                 node->parent->left = y;
@@ -487,7 +487,7 @@ protected:
         // link node's parent to y
         y->parent = node->parent;
         if (node->parent == nullptr)
-            mRoot = y;
+            root = y;
         else {
             if (node == node->parent->right)
                 node->parent->right = y;
@@ -508,7 +508,7 @@ protected:
             return;
 
         Node *w, *x = node;
-        while ((x != mRoot) && (x->color == rbcBlack)) {
+        while ((x != root) && (x->color == rbcBlack)) {
             if (x == x->parent->left) {
                 w = x->parent->right;
                 if (!w)
@@ -538,7 +538,7 @@ protected:
                     x->parent->color = rbcBlack;
                     w->right->color = rbcBlack;
                     rotateLeft(x->parent);
-                    x = mRoot;
+                    x = root;
                 }
             } else {
                 w = x->parent->left;
@@ -569,7 +569,7 @@ protected:
                     x->parent->color = rbcBlack;
                     w->left->color = rbcBlack;
                     rotateRight(x->parent);
-                    x = mRoot;
+                    x = root;
                 }
             }
         }

@@ -21,11 +21,23 @@ using namespace std;
 #include "redBlackTree.h"
 #include "../rangeQuery/segmentTreeLazy.h"
 
-void checkSearch(RBTree<int>& rbt, vector<int>& in);
-void checkIndex(RBTree<int>& rbt, vector<int>& in);
+static void checkSearch(RBTree<int>& rbt, vector<int>& in) {
+    for (int i = 0; i < (int)in.size(); i++) {
+        int x = in[i];
+        assert(rbt.find(x)->value.value == x);
+    }
+}
+
+static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
+    assert(rbt.size() == (int)in.size());
+    for (int i = 0; i < (int)in.size(); i++) {
+        assert(rbt[i]->value.value == in[i]);
+        assert(rbt.indexOf(rbt[i]) == i);
+    }
+}
 
 template <typename T, typename MergeOp, typename BlockOp>
-void checkSearch(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) {
+static void checkSearch(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) {
     for (int i = 0; i < (int)in.size(); i++) {
         int x = in[i];
         assert(spt.find(x)->value == x);
@@ -33,7 +45,7 @@ void checkSearch(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in)
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-void checkIndex(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) {
+static void checkIndex(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) {
     assert((spt.tree != nullptr ? spt.tree->cnt : 0) == spt.size());
     assert(spt.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {

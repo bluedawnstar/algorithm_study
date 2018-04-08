@@ -370,9 +370,9 @@ struct LinkCutTreeArrayPathQuery {
         LinkCutTreeT::makeRoot(&nodes[u]);
     }
 
-    // link x to y
-    bool link(int u, int v) {
-        return LinkCutTreeT::link(&nodes[u], &nodes[v]);
+    // link v to u
+    bool link(int v, int u) {
+        return LinkCutTreeT::link(&nodes[v], &nodes[u]);
     }
 
     void cut(int u, int v) {

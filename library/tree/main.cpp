@@ -14,7 +14,10 @@ int main(void) {
     TEST(LcaSparseTable);
     TEST(LcaShieberVishkin);
     TEST(BST);
+    TEST(RedBlackTree);
     TEST(RBTreeSimple);
+    TEST(AVLTree);
+    TEST(ScapegoatTree);
     TEST(Splay);
     TEST(SplayRangeQuery);
     TEST(Treap);
@@ -30,4 +33,6 @@ int main(void) {
     TEST(MetricTree);
     TEST(BlockTree);
     TEST(SparseTableOnTree);
+
+    TEST(BenchmarkBST);
 }
