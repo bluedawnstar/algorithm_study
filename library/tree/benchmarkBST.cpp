@@ -100,12 +100,16 @@ void testBenchmarkBST() {
     cout << "--- Benchmark Test of Binary Search Trees ---------------------" << endl;
 
     int N = 1000000;
+#ifdef _DEBUG
+    N = 100000;
+#endif
 
     cout << "1) Insert sorted elements" << endl;
     {
         vector<int> in(N);
         iota(in.begin(), in.end(), 0);
 
+        //{ cout << "BST:       "; BST<int> tree;                 testInsertSorted(tree, in); } // too much slow!!!
         { cout << "set:       "; set<int> tree;                 testInsertSorted(tree, in); }
         { cout << "RBT:       "; RBTree<int> tree;              testInsertSorted(tree, in); }
         { cout << "AVL:       "; AVLTree<int> tree;             testInsertSorted(tree, in); }
@@ -125,6 +129,7 @@ void testBenchmarkBST() {
         random_shuffle(in.begin(), in.end());
         random_shuffle(key.begin(), key.end());
 
+        { cout << "BST:       "; BST<int> tree;                 testInsertAndSearchRandom(tree, in, key); }
         { cout << "set:       "; set<int> tree;                 testInsertAndSearchRandom(tree, in, key); }
         { cout << "RBT:       "; RBTree<int> tree;              testInsertAndSearchRandom(tree, in, key); }
         { cout << "AVL:       "; AVLTree<int> tree;             testInsertAndSearchRandom(tree, in, key); }
@@ -144,6 +149,7 @@ void testBenchmarkBST() {
         random_shuffle(in.begin(), in.end());
         random_shuffle(key.begin(), key.end());
 
+        { cout << "BST:       "; BST<int> tree;                 testInsertAndEraseRandom(tree, in, key); }
         { cout << "set:       "; set<int> tree;                 testInsertAndEraseRandom(tree, in, key); }
         { cout << "RBT:       "; RBTree<int> tree;              testInsertAndEraseRandom(tree, in, key); }
         { cout << "AVL:       "; AVLTree<int> tree;             testInsertAndEraseRandom(tree, in, key); }
