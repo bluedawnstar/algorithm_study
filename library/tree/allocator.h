@@ -10,10 +10,10 @@ struct Allocator {
             n = 0;
         }
     };
-    stack<shared_ptr<ChunkT>> mChunks;
+    stack<shared_ptr<ChunkT>> chunks;
 
     Allocator() {
-        mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
+        chunks.push(shared_ptr<ChunkT>(new ChunkT()));
     }
 
     ~Allocator() {
@@ -21,12 +21,12 @@ struct Allocator {
     }
 
     T* alloc() {
-        if (mChunks.top()->n >= ChunkSizeN)
-            mChunks.push(shared_ptr<ChunkT>(new ChunkT()));
-        return &mChunks.top()->values[mChunks.top()->n++];
+        if (chunks.top()->n >= ChunkSizeN)
+            chunks.push(shared_ptr<ChunkT>(new ChunkT()));
+        return &chunks.top()->values[chunks.top()->n++];
     }
 
     void clear() {
-        stack<shared_ptr<ChunkT>>().swap(mChunks);
+        stack<shared_ptr<ChunkT>>().swap(chunks);
     }
 };
