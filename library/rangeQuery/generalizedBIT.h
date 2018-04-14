@@ -2,7 +2,7 @@
 
 //--------- Generalized Binary Indexed Tree (Generalized Fenwick Tree) --------------------------------
 
-// This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2017/3)
+// This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2018/3)
 template <typename T, typename BinOp = function<T(T, T)>>
 struct GeneralizedBIT {
     int N;                  // 
