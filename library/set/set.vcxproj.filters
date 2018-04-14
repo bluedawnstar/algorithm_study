@@ -27,6 +27,9 @@
     <ClCompile Include="veniceSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="rangeSet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -45,6 +48,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="veniceSet.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rangeSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

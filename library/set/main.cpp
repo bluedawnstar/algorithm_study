@@ -8,4 +8,5 @@ using namespace std;
 int main(void) {
     TEST(UnionFind);
     TEST(BitSet);
+    TEST(RangeSet);
 }
