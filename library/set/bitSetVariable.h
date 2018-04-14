@@ -312,7 +312,7 @@ struct BitSetVariable {
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
 
-        for (int i = index - 1; i < (int)values.size(); i--) {
+        for (int i = index - 1; i >= 0; i--) {
             if (values[i])
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(values[i]) - 1;
         }

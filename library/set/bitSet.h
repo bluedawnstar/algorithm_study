@@ -383,7 +383,7 @@ struct BitSet {
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
 
-        for (int i = index - 1; i < (int)mV.size(); i--) {
+        for (int i = index - 1; i >= 0; i--) {
             if (mV[i])
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
         }
