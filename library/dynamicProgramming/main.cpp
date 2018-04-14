@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void) {
     TEST(Subsequence);
+    TEST(LongestCommonSubsequence);
     TEST(PalindromicSubsequence);
     TEST(PalindromicSubstring);
     TEST(Knapsack);

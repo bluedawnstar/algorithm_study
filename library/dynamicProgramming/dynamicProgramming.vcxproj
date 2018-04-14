@@ -155,8 +155,10 @@
     <ClCompile Include="dynamicConvexHull.cpp" />
     <ClCompile Include="dynamicLowerEnvelope.cpp" />
     <ClCompile Include="dynamicUpperEnvelope.cpp" />
+    <ClCompile Include="editDistance.cpp" />
     <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
+    <ClCompile Include="longestCommonSubsequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxProductSumOfSubarray.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
@@ -177,8 +179,10 @@
     <ClInclude Include="dynamicLowerEnvelope.h" />
     <ClInclude Include="dynamicConvexHullUpper.h" />
     <ClInclude Include="dynamicUpperEnvelope.h" />
+    <ClInclude Include="editDistance.h" />
     <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
+    <ClInclude Include="longestCommonSubsequence.h" />
     <ClInclude Include="maxProductSumOfSubarray.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />

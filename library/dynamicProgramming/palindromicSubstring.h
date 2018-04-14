@@ -2,9 +2,9 @@
 
 inline int countPalindromicSubstring(string s) {
     int N = (int)s.length();
-    vector<vector<int>> dp(N, vector<int>(N));
+    vector<vector<int>> dp(N, vector<int>(N));  // length
 
-    int res = 0;
+    int res = 0;                                // count
 
     for (int i = 0; i < N; i++) {
         dp[i][i] = 1;

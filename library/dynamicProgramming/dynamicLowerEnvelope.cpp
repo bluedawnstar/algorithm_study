@@ -19,7 +19,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testDynamicLowerEnvelope() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Dynamic Lower Envelope (convex hull for minimum) -----------" << endl;
     {
