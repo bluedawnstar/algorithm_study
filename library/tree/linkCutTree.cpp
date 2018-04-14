@@ -67,7 +67,7 @@ static LinkCutTreeArray<int> makeLcaTree() {
 
 
 void testLinkCutTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Link-Cut Tree ----------------------------------" << endl;
     // LCA test 

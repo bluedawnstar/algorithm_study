@@ -40,7 +40,7 @@ static vector<int> countNaive(const vector<int>& A, const vector<pair<int, int>>
 }
 
 void testCountUniqueNumbers() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Count Unique Numbers with Ranges -------------" << endl;
 

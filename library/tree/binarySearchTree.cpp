@@ -30,7 +30,7 @@ static void checkIndex(BST<int>& bst, vector<int>& in) {
 }
 
 void testBST() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Binary Search Tree ----------------------------------" << endl;
 

@@ -38,7 +38,7 @@ static double pointToRectL2(int x, int y, int x1, int y1, int x2, int y2) {
 }
 
 void testRTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- R-Tree ----------------------------------" << endl;
     {

@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testSumOfPower() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Sum of Power -------------------------" << endl;
 

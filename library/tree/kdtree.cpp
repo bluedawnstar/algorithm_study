@@ -106,7 +106,7 @@ static vector<vector<int>> searchRegion(const vector<vector<int>>& vec3D, const 
 }
 
 void testKDTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- KD-Tree ----------------------------------" << endl;
     cout << "*** insert" << endl;

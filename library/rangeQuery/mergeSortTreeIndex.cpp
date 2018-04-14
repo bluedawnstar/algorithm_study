@@ -118,7 +118,7 @@ static void test(vector<int>& in, MergeSortTreeIndex<int>& tree, int N, int L, i
 }
 
 void testMergeSortTreeIndex() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Merge Sort Tree with Index -----------------------------------" << endl;
 

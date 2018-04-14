@@ -90,7 +90,7 @@ static int query(Tree& tr, int u, int v) {
 }
 
 void testLinkCutTreePathQuery() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Link-Cut Tree with Path Query ----------------------------------" << endl;
 

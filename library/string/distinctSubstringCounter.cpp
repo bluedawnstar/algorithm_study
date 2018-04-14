@@ -17,7 +17,7 @@ using namespace std;
 #include "suffixArray.h"
 
 void testDistinctSubstringCounter() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- DistinctSubstringCounter class -------------" << endl;
 

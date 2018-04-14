@@ -42,7 +42,7 @@ void build(MinCostMaxFlowSPFA<int>& network, const vector<int>& A, const vector<
 }
 
 void testMinCostMaxFlowSPFA() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Min-Cost Max-Flow - SPFA ---------" << endl;
     // https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes

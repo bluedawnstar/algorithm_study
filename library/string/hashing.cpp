@@ -33,7 +33,7 @@ static int countUniqueSubstrings(const string& s) {
 }
 
 void testHashing() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Hashing ---------------------------------------------" << endl;
     {

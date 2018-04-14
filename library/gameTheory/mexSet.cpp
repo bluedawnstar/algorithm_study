@@ -35,7 +35,7 @@ static int getMex(const vector<int>& in) {
 }
 
 void testMexTrie() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Mex Set --------------------------" << endl;
     {

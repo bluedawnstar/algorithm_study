@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testBlockTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Block-Tree (Sqrt-Tree) -------------------" << endl;
     {

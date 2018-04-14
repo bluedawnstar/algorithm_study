@@ -50,7 +50,7 @@ static void checkIndex(SplayTree<int>& spt, vector<int>& in) {
 }
 
 void testSplay() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Splay Tree ----------------------------------" << endl;
 

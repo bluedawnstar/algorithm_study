@@ -21,7 +21,7 @@ using namespace std;
 
 // template codes for MO's algorithm on a tree
 void testTreeMO() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     //TODO: step1 - make a tree
     DfsTourTree tree(N, LOGN);

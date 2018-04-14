@@ -33,7 +33,7 @@ static int lowerBoundSlow(vector<int>& v, int k) {
 }
 
 void testFenwickTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- FenwickTree (Binary Indexed Tree) -------------------" << endl;
     {

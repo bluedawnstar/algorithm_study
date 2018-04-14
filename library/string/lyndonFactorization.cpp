@@ -23,7 +23,7 @@ static string makeRandomString(int n) {
 }
 
 void testLyndonFactorization() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Lyndon Factorization --------------------------------" << endl;
     {

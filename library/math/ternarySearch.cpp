@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testTernarySearch() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Ternary Search -----------------------" << endl;
     cout << findMaxWithTernary(-100, 100, [](double x) { return -x*x + 4 * x - 7; }) << endl;

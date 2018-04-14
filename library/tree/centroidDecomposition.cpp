@@ -70,7 +70,7 @@ static void dumpTree(vector<vector<int>>& tree, int N) {
 #define LOGN    11
 
 void testCentroidDecomposition() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Centroid Decomposition ---------------------------" << endl;
     cout << "*** Tree #1 ***" << endl;

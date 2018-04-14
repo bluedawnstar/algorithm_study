@@ -25,7 +25,7 @@ static int count(vector<bool>& v, int L, int R) {
 }
 
 void testBitVectorRank() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- BitVector with Rank --------------------------------------" << endl;
 

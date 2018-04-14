@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testGaussianElimination() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Gaussian Elimination -----------------------" << endl;
     auto ans = gauss(Matrix<double>(vector<vector<double>>{ { 4, 2, -1 }, { 2, 4, 3 }, { -1, 3, 5 } }), vector<double>{ 5, 19, 20 });

@@ -15,7 +15,7 @@ using namespace std;
 #define MOD     1000000007
 
 void testMultPolyMod() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Modular Polynomial Multiplication ----------------" << endl;
 

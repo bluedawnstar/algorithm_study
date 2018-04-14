@@ -23,7 +23,7 @@ bool check(const vector<Complex<double>>& l, const vector<Complex<double>>& r) {
 }
 
 void testFFT() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- FFT ------------------------" << endl;
 

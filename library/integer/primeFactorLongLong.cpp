@@ -34,7 +34,7 @@ static bool isPrimeNumber(long long x, const vector<long long>& primes) {
 }
 
 void testPrimeFactorLongLong() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     srand((unsigned int)time(nullptr));
 

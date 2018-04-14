@@ -130,7 +130,7 @@ static bool check(vector<pair<int, int>>& L, vector<pair<int, int>>& R) {
 }
 
 void testBasicUndirectedGraph() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Basic Undirected Graph ---------" << endl;
     cout << "* Shortest path" << endl;

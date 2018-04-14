@@ -228,7 +228,7 @@ static void test(vector<int>& in, WaveletTreeBitVector<int>& tree, int N, int L,
 }
 
 void testWaveletTreeBitVector() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Wavelet Tree with Bit Vector --------------------------------------" << endl;
 

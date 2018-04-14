@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testGeneralGraphMaxMatching() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- General Graph - Max Matching -------------" << endl;
     {

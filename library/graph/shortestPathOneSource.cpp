@@ -34,7 +34,7 @@ static ShortestPath<int> buildGraph() {
 }
 
 void testShortestPath() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Shortest Path ---------" << endl;
     auto graph = buildGraph();

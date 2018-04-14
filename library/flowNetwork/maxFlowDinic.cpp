@@ -14,7 +14,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testMaxFlowDinic() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Max Flow - Dinic ---------" << endl;
 

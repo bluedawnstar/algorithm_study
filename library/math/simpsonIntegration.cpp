@@ -21,7 +21,7 @@ using namespace std;
 #endif
 
 void testSimpsonIntegration() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simpson Integration -----------------------" << endl;
     cout << SimpsonIntegration::integrate([](double x) { return sin(x); }, 0, M_PI) << endl;

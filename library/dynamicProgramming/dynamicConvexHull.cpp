@@ -90,7 +90,7 @@ static void testUpper(const vector<int>& X, const vector<int>& Y) {
 }
 
 void testDynamicConvexHull() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Dynamic Convex Hull ------------------------" << endl;
 

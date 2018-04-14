@@ -106,7 +106,7 @@ static void test(vector<int>& in, WaveletTree<int>& tree, int N, int L, int R, i
 }
 
 void testWaveletTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Wavelet Tree --------------------------------------" << endl;
 

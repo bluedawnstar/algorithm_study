@@ -21,7 +21,7 @@ using namespace std;
 #include "primeNumberEratosthenes.h"
 
 void testFactor() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- getFactors(int x) -------------------------" << endl;
     for (int i = 0; i <= 100; i++) {

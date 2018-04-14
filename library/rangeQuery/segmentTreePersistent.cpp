@@ -23,7 +23,7 @@ using namespace std;
 #include "segmentTreeRMQ.h"
 
 void testSegmentTreePersistent() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Persistent Segment Tree ----------------------------------------" << endl;
 

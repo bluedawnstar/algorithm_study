@@ -82,7 +82,7 @@ static int solveWoC36_P6_2(const vector<int>& X, const vector<int>& Y, const vec
 }
 
 void testPersistentConvexHull() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Persistent Convex Hull ------------------------" << endl;
     assert(solveWoC36_P6(vector<int>{3, 4, 14, 5, 6}, vector<int>{4, 9, 12, 8, 9}, vector<int>{0, 0, 9, 12, 13}) == 17);

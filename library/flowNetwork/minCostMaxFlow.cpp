@@ -42,7 +42,7 @@ static void build(MinCostMaxFlow<int>& network, const vector<int>& A, const vect
 }
 
 void testMinCostMaxFlow() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Min-Cost Max-Flow ---------" << endl;
     // https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes

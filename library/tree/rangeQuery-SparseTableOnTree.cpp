@@ -71,7 +71,7 @@ static T pathSumSlow(SparseTableOnTree<T, BinOp>& tree, int u, int v) {
 }
 
 void testSparseTableOnTree() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Range Query - Sparse Table on Tree ----------------------------------" << endl;
     {

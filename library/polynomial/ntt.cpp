@@ -19,7 +19,7 @@ using namespace std;
 #define MOD     998244353
 
 void testNTT() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- NTT ------------------------" << endl;
     {

@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testVector() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Vector Class ------------------------" << endl;
 

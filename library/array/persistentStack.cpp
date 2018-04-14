@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testPersistentStack() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Persistent Stack ----------" << endl;
 

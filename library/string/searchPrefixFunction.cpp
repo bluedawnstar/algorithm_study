@@ -12,7 +12,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testSearchPrefixFunction() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- checkRepeatedString() ---------" << endl;            
     cout << checkRepeatedString("abcdefg") << endl;                 // (-1, -1)

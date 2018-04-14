@@ -31,7 +31,7 @@ static void checkIndex(RBTreeSimple<int>& rbt, vector<int>& in) {
 }
 
 void testRBTreeSimple() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simple Red-Black Tree -------------------------------" << endl;
 

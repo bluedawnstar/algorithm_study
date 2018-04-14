@@ -57,7 +57,7 @@ static Tree makeLcaTree() {
 }
 
 void testLcaShieberVishkin() {
-    return; //TODO: if you want to test a split function, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- LCA with Shieber Vishkin algorithm ------------------------------" << endl;
     {

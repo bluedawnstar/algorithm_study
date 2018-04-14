@@ -74,7 +74,7 @@ static ostream& operator <<(ostream& os, const tuple<int, int, Vec2D<double>>& t
 }
 
 void testLineSegmentAllIntersections() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Line Segment All Intersections ------------------" << endl;
 

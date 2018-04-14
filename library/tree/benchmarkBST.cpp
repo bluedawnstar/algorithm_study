@@ -95,7 +95,7 @@ static void testInsertAndEraseRandom(TreeT& tr, const vector<int>& add, const ve
 }
 
 void testBenchmarkBST() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Benchmark Test of Binary Search Trees ---------------------" << endl;
 

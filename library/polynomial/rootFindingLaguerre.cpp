@@ -17,7 +17,7 @@ static ostream& operator <<(ostream& os, const Complex<double>& c) {
 }
 
 void testRootFindingLaguerre() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Polynomial Root Finding - Laguerre -------------------" << endl;
     vector<Complex<double>> poly;

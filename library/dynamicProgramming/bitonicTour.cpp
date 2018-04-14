@@ -22,7 +22,7 @@ static double calcDist(int x1, int y1, int x2, int y2) {
 }
 
 void testBitonicTour() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bitonic Tour -----------------------------" << endl;
     {

@@ -42,7 +42,7 @@ void build(MinCostMaxFlowBellmanFord<int>& network, const vector<int>& A, const 
 }
 
 void testMinCostMaxFlowBellmanFord() {
-    //return; //TODO: if you want to test a split function, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Min-Cost Max-Flow - Bellman Ford ---------" << endl;
     // https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes

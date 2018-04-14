@@ -35,7 +35,7 @@ static vector<int> searchNaive(const string& text, const string& pattern) {
 }
 
 void testSearchRabinKarp() {
-    return; //TODO: if you want to test string functions, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Rabin Karp ---------" << endl;
     
