@@ -28,7 +28,7 @@ static ostream& operator <<(ostream& os, const unordered_set<string>& rhs) {
 }
 
 void testLongestCommonSubsequence() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Longest Common Subsequence ------------------------" << endl;
     {
