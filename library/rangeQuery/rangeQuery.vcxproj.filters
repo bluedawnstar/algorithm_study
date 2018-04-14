@@ -96,6 +96,9 @@
     <ClCompile Include="sparseTableReverse.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sparseTable2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -204,6 +207,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sparseTableReverse.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTable2D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

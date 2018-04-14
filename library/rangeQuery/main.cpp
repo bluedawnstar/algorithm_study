@@ -21,6 +21,7 @@ int main(void) {
     TEST(SegmentTreeCompactLazyAdd);
     TEST(SegmentTreeMaxSubarray);
     TEST(SparseTable);
+    TEST(SparseTable2D);
     TEST(DisjointSparseTable);
     TEST(SegmentTreeLine1D);
     TEST(SegmentTreeLine2D);
