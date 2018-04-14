@@ -155,6 +155,7 @@
     <ClCompile Include="simpsonIntegration.cpp" />
     <ClCompile Include="sumOfPower.cpp" />
     <ClCompile Include="ternarySearch.cpp" />
+    <ClCompile Include="triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="expressionParser.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="simpsonIntegration.h" />
     <ClInclude Include="sumOfPower.h" />
     <ClInclude Include="ternarySearch.h" />
+    <ClInclude Include="triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
