@@ -23,4 +23,5 @@ int main(void) {
     TEST(OptimalSquareDistance1D);
     TEST(KnuthOptimization);
     TEST(BitonicTour);
+    TEST(EggDropping);
 }

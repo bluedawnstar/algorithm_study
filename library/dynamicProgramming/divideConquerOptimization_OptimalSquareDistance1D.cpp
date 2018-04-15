@@ -71,7 +71,7 @@ static double calcDistanceL2(const vector<double>& vec, const vector<pair<int, i
 }
 
 void testOptimalSquareDistance1D() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- OptimalSquareDistance1D ------------------------------" << endl;
     {

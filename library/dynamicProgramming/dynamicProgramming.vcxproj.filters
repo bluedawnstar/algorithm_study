@@ -75,6 +75,9 @@
     <ClCompile Include="longestCommonSubsequence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="eggDropping.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -144,6 +147,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="divideConquerOptimization_OptimalKMeans1D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="eggDropping.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -156,6 +156,7 @@
     <ClCompile Include="dynamicLowerEnvelope.cpp" />
     <ClCompile Include="dynamicUpperEnvelope.cpp" />
     <ClCompile Include="editDistance.cpp" />
+    <ClCompile Include="eggDropping.cpp" />
     <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="longestCommonSubsequence.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="dynamicConvexHullUpper.h" />
     <ClInclude Include="dynamicUpperEnvelope.h" />
     <ClInclude Include="editDistance.h" />
+    <ClInclude Include="eggDropping.h" />
     <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
     <ClInclude Include="longestCommonSubsequence.h" />
