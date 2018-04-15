@@ -14,6 +14,20 @@ inline int factorialModNaive(int n, int M) {
     return result;
 }
 
+// https://acmcairoscience.wordpress.com/2015/04/06/factorial-calculation-modulo/
+// O(M*log_M(N))
+inline int factorialMod(int n, int M) {
+    long long res = 1;
+    while (n > 1) {
+        res = (res * ((n / M) % 2 ? M - 1 : 1)) % M;
+        for (int i = 2; i <= n % M; ++i)
+            res = (res * i) % M;
+        n /= M;
+    }
+    return int(res % M);
+}
+
+
 /*
 <Wilson's Theorem>
         (p - 1)! กี -1 (mod p)    (p > 1, p is a prime number)

@@ -26,7 +26,7 @@ static bigint getRandomBigint(int len) {
 }
 
 void testGarnerAlgorithm() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Garner Algorithm ----------------------------------" << endl;
     {
