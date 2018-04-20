@@ -23,7 +23,7 @@ struct MaxFlowEdmondsKarp {
     MaxFlowEdmondsKarp() : N(0) {
     }
 
-    MaxFlowEdmondsKarp(int n) : N(n), edges(N), parent(N, make_pair(-1, -1)) {
+    explicit MaxFlowEdmondsKarp(int n) : N(n), edges(N), parent(N, make_pair(-1, -1)) {
     }
 
     void init(int n) {

@@ -73,7 +73,7 @@ struct BipartiteGraph {
     //--- Min Vertex Cover ----------------------------------------------------
 
     // Must call this function after calcMaxMatchingXXX()
-    // return (chosen A, chosen B), V(E)
+    // return (chosen A, chosen B), O(V*E)
     pair<vector<bool>, vector<bool>> minVertexCover() {
         pair<vector<bool>, vector<bool>> res;
         res.first.assign(srcN, false);
@@ -106,7 +106,7 @@ struct BipartiteGraph {
     //--- Max Independent Set -------------------------------------------------
 
     // Must call this function after calcMaxMatchingXXX()
-    // return (chosen A, chosen B), V(E)
+    // return (chosen A, chosen B), O(V*E)
     pair<vector<bool>, vector<bool>> maxIndependentSet() {
         pair<vector<bool>, vector<bool>> res;
         res.first.assign(srcN, true);

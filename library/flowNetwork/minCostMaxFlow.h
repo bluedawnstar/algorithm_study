@@ -22,7 +22,7 @@ struct MinCostMaxFlow {
     MinCostMaxFlow() : N(0) {
     }
 
-    MinCostMaxFlow(int n) : N(n), edges(N), visited(N), cost(N) {
+    explicit MinCostMaxFlow(int n) : N(n), edges(N), visited(N), cost(N) {
     }
 
     void init(int n) {

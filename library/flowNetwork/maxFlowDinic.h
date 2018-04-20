@@ -23,7 +23,7 @@ struct MaxFlowDinic {
     MaxFlowDinic() : N(0) {
     }
 
-    MaxFlowDinic(int n) : N(n), edges(N), levels(N, -1) {
+    explicit MaxFlowDinic(int n) : N(n), edges(N), levels(N, -1) {
     }
 
     void init(int n) {

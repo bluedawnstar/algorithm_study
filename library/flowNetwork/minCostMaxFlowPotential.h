@@ -20,7 +20,7 @@ struct MinCostMaxFlowPotential {
     MinCostMaxFlowPotential() : N(0) {
     }
 
-    MinCostMaxFlowPotential(int n) : N(n), edges(N) {
+    explicit MinCostMaxFlowPotential(int n) : N(n), edges(N) {
     }
 
     void init(int n) {

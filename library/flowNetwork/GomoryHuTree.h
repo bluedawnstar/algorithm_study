@@ -7,7 +7,7 @@ struct GomoryHuTree {
     int N;
     vector<vector<pair<int, T>>> tree; // (v, flow)
 
-    GomoryHuTree(int n) : N(n), tree(N) {
+    explicit GomoryHuTree(int n) : N(n), tree(N) {
     }
 
     // O(N) --> O(logN) if RMQ on tree is used
@@ -50,7 +50,7 @@ struct GomoryHuTreeBuilder {
     GomoryHuTreeBuilder() : N(0) {
     }
 
-    GomoryHuTreeBuilder(int n) : N(n), edges(N + 1) {
+    explicit GomoryHuTreeBuilder(int n) : N(n), edges(N + 1) {
     }
 
     void init(int n) {

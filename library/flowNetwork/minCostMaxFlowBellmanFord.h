@@ -20,7 +20,7 @@ struct MinCostMaxFlowBellmanFord {
     MinCostMaxFlowBellmanFord() : N(0) {
     }
 
-    MinCostMaxFlowBellmanFord(int n) : N(n), edges(N) {
+    explicit MinCostMaxFlowBellmanFord(int n) : N(n), edges(N) {
     }
 
     void init(int n) {

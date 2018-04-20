@@ -23,7 +23,7 @@ struct MinCutMaxFlow {
     MinCutMaxFlow() : N(0) {
     }
 
-    MinCutMaxFlow(int n) : N(n), edges(N), parent(N, make_pair(-1, -1)) {
+    explicit MinCutMaxFlow(int n) : N(n), edges(N), parent(N, make_pair(-1, -1)) {
     }
 
     void init(int n) {

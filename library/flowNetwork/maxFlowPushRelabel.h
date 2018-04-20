@@ -28,7 +28,7 @@ struct MaxFlowPushRelabel {
     MaxFlowPushRelabel() : N(0) {
     }
 
-    MaxFlowPushRelabel(int n) : N(n), vertices(N, Vertex{ 0, 0 }), edges(N) {
+    explicit MaxFlowPushRelabel(int n) : N(n), vertices(N, Vertex{ 0, 0 }), edges(N) {
     }
 
     void init(int n) {

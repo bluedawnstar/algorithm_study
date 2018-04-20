@@ -20,7 +20,7 @@ struct MinCostMaxFlowSPFA {
     MinCostMaxFlowSPFA() : N(0) {
     }
 
-    MinCostMaxFlowSPFA(int n) : N(n), edges(N) {
+    explicit MinCostMaxFlowSPFA(int n) : N(n), edges(N) {
     }
 
     void init(int n) {
