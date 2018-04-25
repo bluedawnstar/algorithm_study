@@ -3,14 +3,17 @@
 #include <vector>
 using namespace std;
 
+// https://www.geeksforgeeks.org/push-relabel-algorithm-set-1-introduction-and-illustration/
+// https://www.geeksforgeeks.org/push-relabel-algorithm-set-2-implementation/
+
 // Push-Relabel
 template <typename T>
 struct MaxFlowPushRelabel {
     static const T INF = T(0x3f3f3f3f);
 
     struct Vertex {
-        T height;
-        T flow;
+        int height;
+        T   flow;
     };
 
     struct Edge {
@@ -49,6 +52,10 @@ struct MaxFlowPushRelabel {
         for (auto& vec : edges) {
             for (auto& e : vec)
                 e.flow = 0;
+        }
+        for (auto& v : vertices) {
+            v.height = 0;
+            v.flow = 0;
         }
     }
 
