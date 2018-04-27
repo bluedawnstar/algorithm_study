@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-using namespace std;
-
 // Edmonds-Karp Algorithm (Ford-Fulkerson method)
 template <typename T>
 struct MinCutMaxFlow {

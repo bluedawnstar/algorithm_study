@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-using namespace std;
-
 // https://www.geeksforgeeks.org/push-relabel-algorithm-set-1-introduction-and-illustration/
 // https://www.geeksforgeeks.org/push-relabel-algorithm-set-2-implementation/
 

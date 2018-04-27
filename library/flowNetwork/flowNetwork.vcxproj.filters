@@ -45,6 +45,9 @@
     <ClCompile Include="GomoryHuTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="globalMinCut.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="minCostMaxFlow.h">
@@ -72,6 +75,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="GomoryHuTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="globalMinCut.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-using namespace std;
-
 // Dinic Algorithm
 template <typename T>
 struct MaxFlowDinic {
