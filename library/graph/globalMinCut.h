@@ -85,7 +85,7 @@ private:
         return res;
     }
 
-    // Prim's Algorithm : O(E*logV)
+    // O(E*logV)
     static pair<T, int> minCutPhase(unordered_set<int>& vertices, vector<vector<int>>& group, vector<unordered_map<int,T>>& edges) {
         int N = (int)edges.size();
 
