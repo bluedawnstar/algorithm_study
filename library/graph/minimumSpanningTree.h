@@ -13,7 +13,7 @@ struct MinimumSpanningTree {
     MinimumSpanningTree() : N(0) {
     }
 
-    MinimumSpanningTree(int n) : N(n), edges(N) {
+    explicit MinimumSpanningTree(int n) : N(n), edges(N) {
     }
 
     void init(int n) {

@@ -80,5 +80,31 @@ void testMinimumSpanningTree() {
         assert(ans2 == 19);
         assert(isEqual(selected1, selected2));
     }
+    {
+        int T = 50;
+        int N = 2000;
+        
+        while (T-- > 0) {
+            MinimumSpanningTree<int> graph(N);
+            for (int i = 1; i < N; i++) {
+                int n = rand() % i + 1;
+                vector<int> to(i);
+                for (int j = 0; j < i; j++)
+                    to[j] = j;
+                random_shuffle(to.begin(), to.end());
+
+                for (int j = 0; j < n; j++)
+                    graph.addEdge(i, to[j], rand() % 100);
+            }
+            
+            vector<pair<int, int>> s1;
+            vector<int> s2;
+            auto ans1 = graph.kruskal(s1);
+            auto ans2 = graph.prim(s2);
+            if (ans1 != ans2)
+                cout << "Mismatch: " << ans1 << ", " << ans2 << endl;
+            assert(ans1 == ans2);
+        }
+    }
     cout << "OK" << endl;
 }

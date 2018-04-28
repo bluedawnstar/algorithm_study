@@ -146,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="globalMinCut.cpp" />
     <ClCompile Include="GomoryHuTree.cpp" />
     <ClCompile Include="maxFlowDinic.cpp" />
     <ClCompile Include="maxFlowEdmondsKarp.cpp" />
@@ -159,7 +158,6 @@
     <ClCompile Include="minCutMaxFlow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="globalMinCut.h" />
     <ClInclude Include="GomoryHuTree.h" />
     <ClInclude Include="maxFlowEdmondsKarp.h" />
     <ClInclude Include="maxFlowDinic.h" />
