@@ -22,4 +22,5 @@ int main(void) {
     TEST(MaxClique);
     TEST(MaxIndependentSet);
     TEST(Hamiltonian);
+    TEST(GlobalMinCut);
 }

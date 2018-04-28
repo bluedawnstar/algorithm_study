@@ -150,6 +150,7 @@
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartiteGraph.cpp" />
+    <ClCompile Include="globalMinCut.cpp" />
     <ClCompile Include="hamiltonian.cpp" />
     <ClCompile Include="maxClique.cpp" />
     <ClCompile Include="dag.cpp" />
@@ -170,6 +171,8 @@
     <ClInclude Include="bcc.h" />
     <ClInclude Include="bipartiteGraph.h" />
     <ClInclude Include="bipartiteGraphArray.h" />
+    <ClInclude Include="globalMinCut.h" />
+    <ClInclude Include="globalMinCutNaive.h" />
     <ClInclude Include="hamiltonian.h" />
     <ClInclude Include="maxClique.h" />
     <ClInclude Include="cycleDigraph.h" />
