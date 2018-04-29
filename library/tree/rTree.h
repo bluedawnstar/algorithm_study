@@ -1,10 +1,7 @@
 #pragma once
 
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct RTree {
-    static const T INF = 0x3f3f3f3f;
-    static const T NINF = -0x3f3f3f3f;
-
     struct Rect {
         T x1, y1, x2, y2;
     };
@@ -23,7 +20,7 @@ struct RTree {
     void build(const vector<Rect>& rects) {
         N = (int)rects.size();
         this->rects = rects;
-        bounds.assign(N, Rect{ INF, INF, NINF, NINF });
+        bounds.assign(N, Rect{ INF, INF, -INF, -INF });
         build(0, N, true, this->rects);
     }
 

@@ -5,11 +5,8 @@
 
 //--------- Segment Tree for Maximum Subarray ---------------------------------
 
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct SegmentTreeMaxSubarray {
-    static const T INF = 0x3f3f3f3f;                // TODO: define INF constant
-    //static const T INF = 0x3f3f3f3f3f3f3f3fll;
-
     struct Node {
         T   prefixSum;
         T   suffixSum;

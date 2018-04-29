@@ -1,10 +1,8 @@
 #pragma once
 
 // for directed graph
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct ShortestPath {
-    static const T INF = T(0x3f3f3f3f);
-
     int N;
     vector<vector<pair<int, T>>> edges;   // (vertex, weight)
     vector<T> dist;

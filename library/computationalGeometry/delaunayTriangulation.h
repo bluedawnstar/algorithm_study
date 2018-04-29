@@ -26,13 +26,10 @@ struct DelaunayTriangulation {
         }
     };
 
-
-    const T INF = 0x3f3f3f3f;
-
     vector<Vec2D<T>> points;
     vector<Triangle> triangles;
 
-    DelaunayTriangulation() {
+    explicit DelaunayTriangulation(T INF) {
         points.push_back(Vec2D<T>{ 0, INF });
         points.push_back(Vec2D<T>{ -INF, -INF });
         points.push_back(Vec2D<T>{ INF, -INF });

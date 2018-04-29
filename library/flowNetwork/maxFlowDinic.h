@@ -1,10 +1,8 @@
 #pragma once
 
 // Dinic Algorithm
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct MaxFlowDinic {
-    static const T INF = T(0x3f3f3f3f);
-
     struct Edge {
         int to;                     // v
         int revIndex;               // for (v -> u)

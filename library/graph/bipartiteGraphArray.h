@@ -1,10 +1,8 @@
 #pragma once
 
 // Simple, but slow
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct BipartiteGraphArray {
-    static const T INF = T(0x3f3f3f3f);
-
     int srcN;
     int dstN;
     vector<vector<bool>> edges;

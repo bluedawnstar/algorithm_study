@@ -2,8 +2,6 @@
 
 template <typename T>
 struct MaxWeightedIndependentSet {
-    static const T INF = T(0x3f3f3f3f);
-
     static T getMaxWeightedSum(const vector<vector<int>>& edges, const vector<T>& vertexWeights, int root) {
         vector<vector<T>> dp(edges.size(), vector<T>(2));
         dfsMaxWeightedSum(edges, vertexWeights, dp, root, -1);

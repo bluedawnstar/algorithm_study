@@ -1,10 +1,8 @@
 #pragma once
 
 // Assignment Problem - Hungarian Algorithm O(N^3)
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct AssignmentProblem {
-    static const T INF = T(0x3f3f3f3f);
-
     // N=rows, M=cols (N <= M)
     // Hungarian Algorithm O(N^3)
     static T doHungarian(vector<vector<T>>& A, int N, int M, vector<int>& assigned) {

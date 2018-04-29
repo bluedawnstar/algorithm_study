@@ -1,10 +1,8 @@
 #pragma once
 
 // undirected graph
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct GeneralGraphMaxMatching {
-    static const T INF = T(0x3f3f3f3f);
-
     int N;
     vector<vector<int>> edges;
 

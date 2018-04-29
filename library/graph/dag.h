@@ -3,10 +3,8 @@
 #include "../set/bitSetSimple.h"
 
 // Directed Acyclic Graph
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct DAG {
-    static const T INF = T(0x3f3f3f3f);
-
     int N;
     vector<vector<pair<int,T>>> edges;
 

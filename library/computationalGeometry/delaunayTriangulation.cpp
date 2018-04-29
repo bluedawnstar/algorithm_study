@@ -35,7 +35,7 @@ void testDelaunayTriangulation() {
 
     cout << "--- Delaunay Triangulation ---------------------------------" << endl;
 
-    DelaunayTriangulation<double> tr;
+    DelaunayTriangulation<double> tr(100000000.0);
     tr.add(0, 0);
     tr.add(4, 0);
     tr.add(2, 2);

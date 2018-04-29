@@ -2,9 +2,6 @@
 
 template <typename T = int, typename D = long long>
 struct MetricTree {
-    static const T INF = 0x3f3f3f3f;
-    static const T NINF = -0x3f3f3f3f;
-
     struct Rect {
         T x1, y1, x2, y2;
     };

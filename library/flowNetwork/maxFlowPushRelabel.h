@@ -4,10 +4,8 @@
 // https://www.geeksforgeeks.org/push-relabel-algorithm-set-2-implementation/
 
 // Push-Relabel
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct MaxFlowPushRelabel {
-    static const T INF = T(0x3f3f3f3f);
-
     struct Vertex {
         int height;
         T   flow;

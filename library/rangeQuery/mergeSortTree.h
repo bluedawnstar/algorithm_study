@@ -2,8 +2,6 @@
 
 template <typename T>
 struct MergeSortTree {
-    static const T INF = 0x3f3f3f3f;
-
     int               N;        // the size of array
     vector<vector<T>> tree;     // 
 

@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-static const int INF = ShortestAllPairs<int>::INF;
+static const int INF = 0x3f3f3f3f;
 
 void testShortestPathAllPairs() {
     return; //TODO: if you want to test, make this line a comment.
@@ -29,7 +29,7 @@ void testShortestPathAllPairs() {
         graph.addEdge(0, 1, 3);
         graph.addEdge(0, 2, 2);
         graph.addEdge(1, 0, 0);
-        graph.addEdge(2, 0, ShortestAllPairs<int>::INF);
+        graph.addEdge(2, 0, INF);
         graph.addEdge(2, 1, 0);
         
         //--- Floyd-Warshal

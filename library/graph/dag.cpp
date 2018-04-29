@@ -14,6 +14,8 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
+static const int INF = 0x3f3f3f3f;
+
 static DAG<int> buildGraph() {
     DAG<int> graph(6);
     graph.addEdge(5, 2, 0);
@@ -61,7 +63,7 @@ void testDAG() {
         auto graph = buildGraphForShortestPath();
         vector<int> res;
 
-        auto gt = vector<int>{ DAG<int>::INF, 0, 2, 6, 5, 3 };
+        auto gt = vector<int>{ INF, 0, 2, 6, 5, 3 };
         auto ans = graph.findShortestPath(1);
         assert(ans.first == gt);
     }

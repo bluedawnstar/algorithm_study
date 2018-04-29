@@ -1,9 +1,7 @@
 #pragma once
 
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct GomoryHuTree {
-    static const T INF = T(0x3f3f3f3f);
-
     int N;
     vector<vector<pair<int, T>>> tree; // (v, flow)
 

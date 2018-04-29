@@ -1,9 +1,7 @@
 #pragma once
 
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct ClosestPair {
-    static const T INF = 0x3f3f3f3f;
-
     // O(N*(logN)^2)
     static vector<pair<T, T>> findClosestPair(vector<pair<T, T>>& points) {
         vector<pair<T, T>> res(2);

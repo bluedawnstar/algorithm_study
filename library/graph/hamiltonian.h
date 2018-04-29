@@ -1,9 +1,7 @@
 #pragma once
 
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct Hamiltonian {
-    static const T INF = 0x3f3f3f3f;
-
     // Shortest Hamiltonian Cycle : O(2^N * N^2)
     // 'dist' is adjacent array
     // returns (distance, vertex order)

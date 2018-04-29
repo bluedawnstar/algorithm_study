@@ -1,10 +1,8 @@
 #pragma once
 
 // Edmonds-Karp Algorithm (Ford-Fulkerson method)
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct MinCutMaxFlow {
-    static const T INF = T(0x3f3f3f3f);
-
     struct Edge {
         int to;                     // v
         int revIndex;               // for (v -> u)

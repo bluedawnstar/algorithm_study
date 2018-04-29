@@ -3,12 +3,10 @@
 #include "../set/unionFind.h"
 
 // undirected graph
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct MinimumSpanningTree {
-    static const T INF = T(0x3f3f3f3f);
-
     int N;
-    vector<vector<pair<int, T>>>    edges;  // (v, weight)
+    vector<vector<pair<int, T>>> edges;  // (v, weight)
 
     MinimumSpanningTree() : N(0) {
     }
