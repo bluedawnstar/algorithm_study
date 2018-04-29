@@ -26,7 +26,7 @@ struct GarnerBigInt {
         makeTable();
     }
 
-    GarnerBigInt(int x) : A(N) {
+    explicit GarnerBigInt(int x) : A(N) {
         makeTable();
         for (int i = 0; i < N; i++)
             A[i] = x % P[i];
