@@ -1,18 +1,16 @@
 #pragma once
 
 // for undirected and connected graph
-template <typename T>
+template <typename T, const T INF = 0x3f3f3f3f>
 struct GlobalMinCut {
-    static const T INF = T(0x3f3f3f3f);
-
     struct Edge {
-        int to;                     // v
-        int revIndex;               // for (v -> u)
+        int to;                         // v
+        int revIndex;                   // for (v -> u)
 
-        T   weight;                 // > 0
+        T   weight;                     // > 0
     };
 
-    int N;                          // the number of vertices
+    int N;                              // the number of vertices
     vector<vector<Edge>> edges;
 
     GlobalMinCut() : N(0) {
@@ -38,13 +36,11 @@ struct GlobalMinCut {
     // find global minimum cut
     T doStoerWagner(vector<int>& cutGroup) {
         unordered_set<int> vertices;
-        vector<vector<int>> group(N);               // vertex group
+        vector<int> group(N, -1);                   // vertex group
         vector<unordered_map<int,T>> groupEdges(N); // (v, weight)
 
         for (int i = 0; i < N; i++) {
             vertices.insert(i);
-            group[i].push_back(i);
-
             auto& s = groupEdges[i];
             for (auto& e : edges[i])
                 s[e.to] += e.weight;
@@ -60,7 +56,12 @@ struct GlobalMinCut {
                 minCutGroup = r.second;
             }
         }
-        cutGroup = group[minCutGroup];
+
+        cutGroup.clear();
+        do {
+            cutGroup.push_back(minCutGroup);
+            minCutGroup = group[minCutGroup];
+        } while (minCutGroup >= 0);
 
         return minCut;
     }
@@ -86,7 +87,7 @@ private:
     }
 
     // O(E*logV)
-    static pair<T, int> minCutPhase(unordered_set<int>& vertices, vector<vector<int>>& group, vector<unordered_map<int,T>>& edges) {
+    static pair<T, int> minCutPhase(unordered_set<int>& vertices, vector<int>& group, vector<unordered_map<int,T>>& edges) {
         int N = (int)edges.size();
 
         int start = *vertices.begin();
@@ -126,7 +127,7 @@ private:
             res.first = merge(edges, u, v);
             res.second = v;
 
-            group[u].insert(group[u].end(), group[v].begin(), group[v].end());
+            group[u] = v;
             vertices.erase(v);
         }
         return res;

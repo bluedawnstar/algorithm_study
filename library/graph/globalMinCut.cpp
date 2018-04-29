@@ -261,6 +261,36 @@ void testGlobalMinCut() {
             assert(ans1 == ans2);
         }
     }
+    cout << "Step 5 : speed test" << endl;
+    {
+        int T = 1;
+        int N = 440;
+        int E = N * N;
+        int MaxCost = 1000000000;
+
+        {
+            GlobalMinCut<long long, 0x3f3f3f3f3f3f3f3fll> graph(N);
+            for (int j = 0; j < E; j++) {
+                int w = rand() % MaxCost + 1;
+                int u = rand() % N;
+                int v = rand() % N;
+                while (u == v)
+                    v = rand() % N;
+
+                graph.addEdge(u, v, w);
+            }
+
+            vector<int> group;
+            long long ans = 0;
+            PROFILE_HI_START(0);
+            for (int i = 0; i < T; i++)
+                ans += graph.doStoerWagner(group);
+            PROFILE_HI_STOP(0);
+
+            if (ans < 0)
+                cout << "Invalid value: " << ans << endl;
+        }
+    }
 
     cout << "OK" << endl;
 }
