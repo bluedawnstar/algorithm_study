@@ -5,7 +5,9 @@
 //--------- Scapegoat Tree ----------------------------------------------------
 
 template <typename T>
-struct ScapegoatTree : public BST<T> {
+struct ScapegoatTree : public BST<T, BSTNode<T>> {
+    typedef BSTNode<T>  Node;
+
     double alpha;
     double logFactor;
 

@@ -9,31 +9,32 @@
 //    2) operator <()
 
 template <typename T>
+struct BSTNode {
+    BSTNode<T>* parent;
+    BSTNode<T>* left;
+    BSTNode<T>* right;
+
+    int     cnt;
+    T       value;
+
+    void init() {
+        parent = this;
+        left = this;
+        right = this;
+        cnt = 0;
+    }
+
+    void init(const T& item, BSTNode<T>* sentinel) {
+        parent = sentinel;
+        left = sentinel;
+        right = sentinel;
+        cnt = 1;
+        value = item;
+    }
+};
+
+template <typename T, typename Node = BSTNode<T>>
 struct BST {
-    struct Node {
-        Node*   parent;
-        Node*   left;
-        Node*   right;
-
-        int     cnt;
-        T       value;
-
-        void init() {
-            parent = this;
-            left = this;
-            right = this;
-            cnt = 0;
-        }
-
-        void init(const T& item, Node* sentinel) {
-            parent = sentinel;
-            left = sentinel;
-            right = sentinel;
-            cnt = 1;
-            value = item;
-        }
-    };
-
     Node*       root;     // root node
     bool        duplicate;
     int         count;

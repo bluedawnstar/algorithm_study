@@ -10,34 +10,44 @@ enum RBColor {
 };
 
 template <typename T>
-struct RBData {
-    RBData() {
-        color = rbcBlack;
-    }
+struct RBNode {
+    RBNode<T>* parent;
+    RBNode<T>* left;
+    RBNode<T>* right;
 
-    RBData(const T& data) {
-        color = rbcBlack;
-        value = data;
-    }
-
-    bool operator ==(const RBData<T>& rhs) const {
-        return value == rhs.value;
-    }
-
-    bool operator <(const RBData<T>& rhs) const {
-        return value < rhs.value;
-    }
-
-    RBColor color;
+    int     cnt;
     T       value;
+
+    RBColor color = rbcBlack;
+
+    void init() {
+        parent = this;
+        left = this;
+        right = this;
+        cnt = 0;
+
+        color = rbcBlack;
+    }
+
+    void init(const T& item, RBNode<T>* sentinel) {
+        parent = sentinel;
+        left = sentinel;
+        right = sentinel;
+        cnt = 1;
+        value = item;
+
+        color = rbcBlack;
+    }
 };
 
 template <typename T>
-struct RBTree : public BST<RBData<T>> {
+struct RBTree : public BST<T, RBNode<T>> {
+    typedef RBNode<T>   Node;
+
     RBTree() {
     }
 
-    RBTree(const RBTree<T>& tree) : BST<RBData<T>>(tree) {
+    RBTree(const RBTree<T>& tree) : BST<T, RBNode<T>>(tree) {
     }
 
     RBTree<T>& operator =(const RBTree<T>& tree) {
@@ -46,23 +56,22 @@ struct RBTree : public BST<RBData<T>> {
     }
 
     pair<Node*,bool> insert(const T& item) {
-        RBData<T> rbitem(item);
-        pair<Node*, bool> ins = BST::insert(rbitem);
+        pair<Node*, bool> ins = BST::insert(item);
         if (!ins.second)
             return ins;
 
         Node* x = ins.first;
         Node* y;
 
-        x->value.color = rbcRed;
-        while ((x != root) && (x->parent->value.color == rbcRed)) {
+        x->color = rbcRed;
+        while ((x != root) && (x->parent->color == rbcRed)) {
             if (x->parent == x->parent->parent->left) {
                 y = x->parent->parent->right;
 
-                if (y->value.color == rbcRed) {
-                    x->parent->value.color = rbcBlack;
-                    y->value.color = rbcBlack;
-                    x->parent->parent->value.color = rbcRed;
+                if (y->color == rbcRed) {
+                    x->parent->color = rbcBlack;
+                    y->color = rbcBlack;
+                    x->parent->parent->color = rbcRed;
                     x = x->parent->parent;
                 } else {
                     if (x == x->parent->right) {
@@ -70,17 +79,17 @@ struct RBTree : public BST<RBData<T>> {
                         rotateLeft(x);
                     }
 
-                    x->parent->value.color = rbcBlack;
-                    x->parent->parent->value.color = rbcRed;
+                    x->parent->color = rbcBlack;
+                    x->parent->parent->color = rbcRed;
                     rotateRight(x->parent->parent);
                 }
             } else {
                 y = x->parent->parent->left;
 
-                if (y->value.color == rbcRed) {
-                    x->parent->value.color = rbcBlack;
-                    y->value.color = rbcBlack;
-                    x->parent->parent->value.color = rbcRed;
+                if (y->color == rbcRed) {
+                    x->parent->color = rbcBlack;
+                    y->color = rbcBlack;
+                    x->parent->parent->color = rbcRed;
                     x = x->parent->parent;
                 } else {
                     if (x == x->parent->left) {
@@ -88,13 +97,13 @@ struct RBTree : public BST<RBData<T>> {
                         rotateRight(x);
                     }
 
-                    x->parent->value.color = rbcBlack;
-                    x->parent->parent->value.color = rbcRed;
+                    x->parent->color = rbcBlack;
+                    x->parent->parent->color = rbcRed;
                     rotateLeft(x->parent->parent);
                 }
             }
         }
-        root->value.color = rbcBlack;
+        root->color = rbcBlack;
 
         return ins;
     }
@@ -136,12 +145,12 @@ struct RBTree : public BST<RBData<T>> {
 
         // if needed, save y data
         if (y != z)
-            swap(z->value.value, y->value.value);
+            swap(z->value, y->value);
 
         updateNodeToRoot(y->parent);
 
         // adjust tree under red-black rules
-        if (y != sentinel && y->value.color == rbcBlack)
+        if (y != sentinel && y->color == rbcBlack)
             deleteFixup(x);
 
         destroyNode(y);
@@ -219,64 +228,64 @@ protected:
             return;
 
         Node *w, *x = node;
-        while ((x != root) && (x->value.color == rbcBlack)) {
+        while ((x != root) && (x->color == rbcBlack)) {
             if (x == x->parent->left) {
                 w = x->parent->right;
 
-                if (w->value.color == rbcRed) {
-                    w->value.color = rbcBlack;
-                    x->parent->value.color = rbcRed;
+                if (w->color == rbcRed) {
+                    w->color = rbcBlack;
+                    x->parent->color = rbcRed;
                     rotateLeft(x->parent);
                     w = x->parent->right;
                 }
 
-                if ((w->left->value.color == rbcBlack) && (w->right->value.color == rbcBlack)) {
-                    w->value.color = rbcRed;
+                if ((w->left->color == rbcBlack) && (w->right->color == rbcBlack)) {
+                    w->color = rbcRed;
                     x = x->parent;
                 } else {
-                    if (w->right->value.color == rbcBlack) {
-                        w->left->value.color = rbcBlack;
-                        w->value.color = rbcRed;
+                    if (w->right->color == rbcBlack) {
+                        w->left->color = rbcBlack;
+                        w->color = rbcRed;
                         rotateRight(w);
                         w = x->parent->right;
                     }
 
-                    w->value.color = x->parent->value.color;
-                    x->parent->value.color = rbcBlack;
-                    w->right->value.color = rbcBlack;
+                    w->color = x->parent->color;
+                    x->parent->color = rbcBlack;
+                    w->right->color = rbcBlack;
                     rotateLeft(x->parent);
                     x = root;
                 }
             } else {
                 w = x->parent->left;
 
-                if (w->value.color == rbcRed) {
-                    w->value.color = rbcBlack;
-                    x->parent->value.color = rbcRed;
+                if (w->color == rbcRed) {
+                    w->color = rbcBlack;
+                    x->parent->color = rbcRed;
                     rotateRight(x->parent);
                     w = x->parent->left;
                 }
 
-                if ((w->right->value.color == rbcBlack) && (w->left->value.color == rbcBlack)) {
-                    w->value.color = rbcRed;
+                if ((w->right->color == rbcBlack) && (w->left->color == rbcBlack)) {
+                    w->color = rbcRed;
                     x = x->parent;
                 } else {
-                    if (w->left->value.color == rbcBlack) {
-                        w->right->value.color = rbcBlack;
-                        w->value.color = rbcRed;
+                    if (w->left->color == rbcBlack) {
+                        w->right->color = rbcBlack;
+                        w->color = rbcRed;
                         rotateLeft(w);
                         w = x->parent->left;
                     }
 
-                    w->value.color = x->parent->value.color;
-                    x->parent->value.color = rbcBlack;
-                    w->left->value.color = rbcBlack;
+                    w->color = x->parent->color;
+                    x->parent->color = rbcBlack;
+                    w->left->color = rbcBlack;
                     rotateRight(x->parent);
                     x = root;
                 }
             }
         }
 
-        x->value.color = rbcBlack;
+        x->color = rbcBlack;
     }
 };

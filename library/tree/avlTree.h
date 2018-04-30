@@ -5,36 +5,46 @@
 //--------- AVL Tree ----------------------------------------------------------
 
 template <typename T>
-struct AVLData {
-    AVLData() {
-        height = 1;
-    }
+struct AVLNode {
+    AVLNode<T>* parent;
+    AVLNode<T>* left;
+    AVLNode<T>* right;
 
-    AVLData(const T& data) {
-        height = 1;
-        value = data;
-    }
-
-    bool operator ==(const AVLData<T>& rhs) const {
-        return value == rhs.value;
-    }
-
-    bool operator <(const AVLData<T>& rhs) const {
-        return value < rhs.value;
-    }
-    
-    int     height;
+    int     cnt;
     T       value;
+
+    int     height = 1;
+
+    void init() {
+        parent = this;
+        left = this;
+        right = this;
+        cnt = 0;
+
+        height = 1;
+    }
+
+    void init(const T& item, AVLNode<T>* sentinel) {
+        parent = sentinel;
+        left = sentinel;
+        right = sentinel;
+        cnt = 1;
+        value = item;
+
+        height = 1;
+    }
 };
 
 template <typename T>
-struct AVLTree : public BST<AVLData<T>> {
+struct AVLTree : public BST<T, AVLNode<T>> {
+    typedef AVLNode<T>  Node;
+
     AVLTree() {
-        sentinel->value.height = 0;
+        sentinel->height = 0;
     }
 
     AVLTree(const AVLTree<T>& tree) : BST<AVLData<T>>(tree) {
-        sentinel->value.height = 0;
+        sentinel->height = 0;
     }
 
     AVLTree<T>& operator =(const AVLTree<T>& tree) {
@@ -43,8 +53,7 @@ struct AVLTree : public BST<AVLData<T>> {
     }
 
     pair<Node*, bool> insert(const T& val) {
-        AVLData<T> item(val);
-        pair<Node*, bool> ins = BST::insert(item);
+        pair<Node*, bool> ins = BST::insert(val);
         if (!ins.second)
             return ins;
 
@@ -54,11 +63,11 @@ struct AVLTree : public BST<AVLData<T>> {
 
             int balance = getBalance(x);
             if (balance > 1) {
-                if (!(val < x->left->value.value))
+                if (!(val < x->left->value))
                     rotateLeft(x->left);
                 rotateRight(x);
             } else if (balance < -1) {
-                if (val < x->right->value.value)
+                if (val < x->right->value)
                     rotateRight(x->right);
                 rotateLeft(x);
             } else {
@@ -108,7 +117,7 @@ struct AVLTree : public BST<AVLData<T>> {
 
         // if needed, save y data
         if (y != z)
-            swap(z->value.value, y->value.value);
+            swap(z->value, y->value);
 
         updateNodeToRoot(y->parent);
 
@@ -128,7 +137,7 @@ struct AVLTree : public BST<AVLData<T>> {
 
 protected:
     int getHeight(const Node* node) {
-        return (node == nullptr || node == sentinel) ? 0 : node->value.height;
+        return (node == nullptr || node == sentinel) ? 0 : node->height;
     }
 
     int getBalance(const Node* node) {
@@ -136,11 +145,11 @@ protected:
     }
 
     void updateHeight(Node* node) {
-        node->value.height = max(getHeight(node->left), getHeight(node->right)) + 1;
+        node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
     }
 
     virtual void onUpdateNode(Node* node) override {
-        BST<AVLData<T>>::onUpdateNode(node);
+        BST<T, AVLNode<T>>::onUpdateNode(node);
         updateHeight(node);
     }
 

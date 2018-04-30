@@ -22,14 +22,14 @@ using namespace std;
 static void checkSearch(RBTree<int>& rbt, vector<int>& in) {
     for (int i = 0; i < (int)in.size(); i++) {
         int x = in[i];
-        assert(rbt.find(x)->value.value == x);
+        assert(rbt.find(x)->value == x);
     }
 }
 
 static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
     assert(rbt.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {
-        assert(rbt[i]->value.value == in[i]);
+        assert(rbt[i]->value == in[i]);
         assert(rbt.indexOf(rbt[i]) == i);
     }
 }
@@ -160,7 +160,7 @@ void testTreap() {
 
             PROFILE_START(0);
             for (int i = 0; i < (int)t.size(); i++) {
-                if (rbt.find(t[i])->value.value != t[i])
+                if (rbt.find(t[i])->value != t[i])
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(0);

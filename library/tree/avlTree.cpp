@@ -22,27 +22,27 @@ using namespace std;
 static void checkSearch(AVLTree<int>& tree, vector<int>& in) {
     for (int i = 0; i < (int)in.size(); i++) {
         int x = in[i];
-        assert(tree.find(x)->value.value == x);
+        assert(tree.find(x)->value == x);
     }
 }
 
 static void checkIndex(AVLTree<int>& tree, vector<int>& in) {
     assert(tree.size() == (int)in.size());
     for (int i = 0; i < (int)in.size(); i++) {
-        assert(tree[i]->value.value == in[i]);
+        assert(tree[i]->value == in[i]);
         assert(tree.indexOf(tree[i]) == i);
     }
 }
 
 static int getHeight(const AVLTree<int>::Node* node) {
-    return node == nullptr ? 0 : node->value.height;
+    return node == nullptr ? 0 : node->height;
 }
 
 static void checkHeight(AVLTree<int>& tree, AVLTree<int>::Node* node) {
     if (!node || node == tree.sentinel)
         return;
 
-    assert(node->value.height == max(getHeight(node->left), getHeight(node->right)) + 1);
+    assert(node->height == max(getHeight(node->left), getHeight(node->right)) + 1);
     checkHeight(tree, node->left);
     checkHeight(tree, node->right);
 }
