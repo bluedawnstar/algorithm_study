@@ -3,22 +3,6 @@
 // KeyT must be a integer type
 template <typename KeyT, typename ValueT>
 struct SimpleHashMap {
-    struct Reference {
-        ValueT& ref;
-
-        Reference(ValueT& ref) : ref(ref) {
-        }
-
-        operator ValueT() const {
-            return ref;
-        }
-
-        Reference& operator =(ValueT val) {
-            ref = val;
-            return *this;
-        }
-    };
-
     ValueT  defaultValue;
 
     int     bucketCount;
@@ -68,7 +52,7 @@ struct SimpleHashMap {
         return get(index);
     }
 
-    Reference operator [](KeyT index) {
+    ValueT& operator [](KeyT index) {
         int bucket = int(index % bucketCount);
 
         auto& lst = buckets[bucket];
@@ -76,13 +60,13 @@ struct SimpleHashMap {
         auto itEnd = lst.end();
         for (auto it = lst.begin(); it != itEnd; ++it) {
             if (it->first == index)
-                return Reference(it->second);
+                return it->second;
             else if (it->first > index) {
-                return Reference(lst.emplace(it, index, defaultValue)->second);
+                return lst.emplace(it, index, defaultValue)->second;
             }
         }
 
         lst.emplace_back(index, defaultValue);
-        return Reference(lst.back().second);
+        return lst.back().second;
     }
 };
