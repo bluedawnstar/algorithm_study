@@ -9,4 +9,5 @@ int main(void) {
     TEST(UnionFind);
     TEST(BitSet);
     TEST(RangeSet);
+    TEST(SimpleHashMap);
 }

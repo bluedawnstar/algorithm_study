@@ -25,7 +25,7 @@ static int sum(const vector<vector<int>>& v, int left, int top, int right, int b
 }
 
 void testIntegralImage() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Integral Image ----------" << endl;
 
