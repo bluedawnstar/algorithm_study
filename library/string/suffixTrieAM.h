@@ -57,7 +57,7 @@ struct SuffixTrieAM {
 
         Node* getChild(int chIdx) const {
             if ((childSet & (1 << chIdx)) == 0)
-                return 0;
+                return nullptr;
             int idx = popcnt(childSet & ((1 << chIdx) - 1));
             return children[idx];
         }
@@ -75,7 +75,8 @@ struct SuffixTrieAM {
         void eraseChild(int chIdx) {
             int idx = popcnt(childSet & ((1 << chIdx) - 1));
             if ((childSet & (1 << chIdx)) != 0) {
-                children[idx] = nullptr;
+                //children[idx] = nullptr;
+                children.erase(children.begin() + idx);
                 childSet &= ~(1 << chIdx);
             }
         }

@@ -61,7 +61,7 @@ struct CompressedTrieAM {
 
         Node* getChild(int chIdx) const {
             if ((childSet & (1 << chIdx)) == 0)
-                return 0;
+                return nullptr;
             int idx = popcnt(childSet & ((1 << chIdx) - 1));
             return children[idx];
         }
