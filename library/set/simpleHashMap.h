@@ -5,6 +5,7 @@ template <typename KeyT, typename ValueT>
 struct SimpleHashMap {
     struct Reference {
         ValueT& ref;
+
         Reference(ValueT& ref) : ref(ref) {
         }
 
