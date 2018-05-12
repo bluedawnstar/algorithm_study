@@ -1,6 +1,5 @@
 #pragma once
 
-// KeyT must be a integer type
 template <typename KeyT, typename ValueT>
 struct SimpleHashMap {
     ValueT  defaultValue;
@@ -9,13 +8,15 @@ struct SimpleHashMap {
     int     bucketMask;
     vector<list<pair<KeyT, ValueT>>> buckets;
 
-    explicit SimpleHashMap(int bucketSizeBit = 24, ValueT dfltValue = ValueT())
-        : defaultValue(dfltValue), bucketCount(1 << bucketSizeBit), bucketMask(bucketCount - 1), buckets(bucketCount) {
+    function<int(const KeyT&)> hash;
+
+    explicit SimpleHashMap(const function<int(const KeyT&)>& hash, int bucketSizeBit = 24, ValueT dfltValue = ValueT())
+        : defaultValue(dfltValue), bucketCount(1 << bucketSizeBit), bucketMask(bucketCount - 1), buckets(bucketCount), hash(hash) {
     }
 
 
     ValueT get(KeyT index) const {
-        int bucket = int(index & bucketMask);
+        int bucket = hash(index) & bucketMask;
 
         auto& lst = buckets[bucket];
 
@@ -30,7 +31,7 @@ struct SimpleHashMap {
     }
 
     void set(KeyT index, ValueT value) {
-        int bucket = int(index & bucketMask);
+        int bucket = hash(index) & bucketMask;
 
         auto& lst = buckets[bucket];
 
@@ -53,7 +54,7 @@ struct SimpleHashMap {
     }
 
     ValueT& operator [](KeyT index) {
-        int bucket = int(index % bucketCount);
+        int bucket = hash(index) & bucketMask;
 
         auto& lst = buckets[bucket];
 
