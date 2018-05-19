@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "misc", "misc\misc.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gameTheory", "gameTheory\gameTheory.vcxproj", "{75CB0423-E435-46BD-9F15-3BE59E770205}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "memory", "memory\memory.vcxproj", "{E7D06957-BF6D-4972-9022-44C08E799BE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -181,6 +183,14 @@ Global
 		{75CB0423-E435-46BD-9F15-3BE59E770205}.Release|x64.Build.0 = Release|x64
 		{75CB0423-E435-46BD-9F15-3BE59E770205}.Release|x86.ActiveCfg = Release|Win32
 		{75CB0423-E435-46BD-9F15-3BE59E770205}.Release|x86.Build.0 = Release|Win32
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Debug|x64.ActiveCfg = Debug|x64
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Debug|x64.Build.0 = Debug|x64
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Debug|x86.ActiveCfg = Debug|Win32
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Debug|x86.Build.0 = Debug|Win32
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Release|x64.ActiveCfg = Release|x64
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Release|x64.Build.0 = Release|x64
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Release|x86.ActiveCfg = Release|Win32
+		{E7D06957-BF6D-4972-9022-44C08E799BE0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
