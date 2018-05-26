@@ -6,7 +6,7 @@ template <typename T, typename BinOp = function<T(T, T)>>
 struct HLDPathQuery {
     HeavyLightDecomposition& hld;
 
-    typedef SegmentTree<T, BinOp> SegTreeT;
+    typedef CompactSegmentTree<T, BinOp> SegTreeT;
 
     T                   defaultValue;
     BinOp               mergeOp;

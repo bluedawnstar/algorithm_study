@@ -6,7 +6,7 @@ template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = f
 struct HLDPathQueryLazy {
     HeavyLightDecomposition& hld;
 
-    typedef SegmentTreeLazy<T, MergeOp, BlockOp> SegTreeT;
+    typedef CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp> SegTreeT;
 
     T                   defaultValue;
     MergeOp             mergeOp;

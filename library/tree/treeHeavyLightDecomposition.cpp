@@ -9,8 +9,8 @@
 using namespace std;
 
 #include "treeBasic.h"
-#include "../rangeQuery/segmentTree.h"
-#include "../rangeQuery/segmentTreeLazy.h"
+#include "../rangeQuery/segmentTreeCompact.h"
+#include "../rangeQuery/segmentTreeCompactLazy.h"
 #include "../rangeQuery/fenwickTreeMultAdd.h"
 #include "treeHeavyLightDecomposition.h"
 #include "treeHeavyLightDecompositionPathQuery.h"
