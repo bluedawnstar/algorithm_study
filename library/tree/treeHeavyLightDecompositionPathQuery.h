@@ -67,7 +67,7 @@ struct HLDPathQuery {
 
     // update a value of an edge(parent of v, v) or a vertex(v)
     void updateVertex(int v, T cost) {
-        if (v == hld.mRoot) {
+        if (v == hld.root) {
             rootValue = cost;
             return;
         }
@@ -79,7 +79,7 @@ struct HLDPathQuery {
 
     T queryVertex(int u, int v) {
         int lca = hld.tree.findLCA(u, v);
-        if (lca == hld.mRoot)
+        if (lca == hld.root)
             return mergeOp(mergeOp(queryTopdown(lca, u), queryTopdown(lca, v)), rootValue);
         else
             return mergeOp(queryTopdown(hld.tree.P[0][lca], u), queryTopdown(lca, v));

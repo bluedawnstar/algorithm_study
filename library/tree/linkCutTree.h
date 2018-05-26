@@ -70,6 +70,21 @@ struct LinkCutTree {
         return true;
     }
 
+    static bool cut(Node* x, Node* y) {
+        makeRoot(x);
+        access(y);
+        if (y->left != x || x->right)
+            return false;   // x and y is not directly connected to each other
+
+        if (y->left) {
+            y->left->parent = nullptr;
+            y->left = nullptr;
+            update(y);
+        }
+
+        return true;
+    }
+
     // a represented tree to two represented trees
     //   which are a x's left sub-tree and x's right sub-tree including x
     static void cut(Node* x) {
@@ -200,7 +215,7 @@ template <typename T>
 struct LinkCutTreeArray {
     vector<typename LinkCutTree<T>::Node> nodes;
 
-    LinkCutTreeArray(int N) : nodes(N) {
+    explicit LinkCutTreeArray(int N) : nodes(N) {
         // no action
     }
 
@@ -234,11 +249,15 @@ struct LinkCutTreeArray {
         return LinkCutTree<T>::link(&nodes[x], &nodes[y]);
     }
 
+    void cut(int u, int v) {
+        LinkCutTreeT::cut(&nodes[u], &nodes[v]);
+    }
+
     void cut(int x) {
         LinkCutTree<T>::cut(&nodes[x]);
     }
 
     int access(int x) {
-        return LinkCutTree<T>::access(&nodes[x]);
+        return LinkCutTree<T>::access(&nodes[x]) - &nodes[0];
     }
 };

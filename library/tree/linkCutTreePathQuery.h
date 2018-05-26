@@ -198,6 +198,8 @@ struct LinkCutTreePathQuery {
             y->left = nullptr;
             update(y);
         }
+
+        return true;
     }
 
     // a represented tree to two represented trees
@@ -327,7 +329,7 @@ struct LinkCutTreeArrayPathQuery {
     typedef LinkCutTreePathQuery<T, Op> LinkCutTreeT;
     vector<typename LinkCutTreeT::Node> nodes;
 
-    LinkCutTreeArrayPathQuery(int N) : nodes(N) {
+    explicit LinkCutTreeArrayPathQuery(int N) : nodes(N) {
         // no action
     }
 
@@ -384,6 +386,6 @@ struct LinkCutTreeArrayPathQuery {
     }
 
     int access(int u) {
-        return LinkCutTreeT::access(&nodes[u]);
+        return LinkCutTreeT::access(&nodes[u]) - &nodes[0];
     }
 };
