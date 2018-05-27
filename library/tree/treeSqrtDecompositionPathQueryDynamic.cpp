@@ -149,8 +149,8 @@ void testDynamicTreeSqrtDecompositionPathQuery() {
 
             int uKth = RandInt32::get() % (treeSqrt.queryToRoot(u) + 1);
             int vKth = RandInt32::get() % (treeSqrt.queryToRoot(v) + 1);
-            assert(climbKthNaive(tree, u, uKth, values) == treeSqrt.climbKth(u, uKth, [](int u, int val) { return val; }));
-            assert(climbKthNaive(tree, v, vKth, values) == treeSqrt.climbKth(v, vKth, [](int u, int val) { return val; }));
+            assert(climbKthNaive(tree, u, uKth, values) == treeSqrt.climbKth(u, uKth, [](int val) { return val; }));
+            assert(climbKthNaive(tree, v, vKth, values) == treeSqrt.climbKth(v, vKth, [](int val) { return val; }));
         }
     }
     // test dynamic update

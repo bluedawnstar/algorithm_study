@@ -84,10 +84,10 @@ struct DynamicTreeSqrtDecompositionPathQuery {
 
     // kth >= 1, O(sqrt(N))
     // count = valueToCountF(index_of_node, value_or_sqrt_value_of_the_node)
-    int climbKth(int u, int kth, const function<int(int, T)>& valueToCountF) const {
+    int climbKth(int u, int kth, const function<int(T)>& valueToCountF) const {
         int p = jump[u];
-        int d = valueToCountF(u, sqrtValues[u]);
-        while (p >= 0 && d < kth) {
+        int d;
+        while (p >= 0 && (d = valueToCountF(sqrtValues[u])) < kth) {
             kth -= d;
             u = p;
             p = jump[u];
@@ -256,9 +256,9 @@ protected:
         return u;
     }
 
-    int climbKthNaive(int u, int kth, const function<int(int, T)>& valueToCountF) const {
+    int climbKthNaive(int u, int kth, const function<int(T)>& valueToCountF) const {
         while (u >= 0 && kth > 0) {
-            if (valueToCountF(u, values[u])) {
+            if (valueToCountF(values[u])) {
                 if (--kth == 0)
                     break;
             }
