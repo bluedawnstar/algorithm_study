@@ -105,6 +105,15 @@
     <ClCompile Include="benchmarkBST.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeSqrtDecomposition.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeSqrtDecompositionPathQuery.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeSqrtDecompositionPathQueryDynamic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -204,6 +213,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="scapegoatTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeSqrtDecomposition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeSqrtDecompositionPathQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeSqrtDecompositionPathQueryDynamic.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

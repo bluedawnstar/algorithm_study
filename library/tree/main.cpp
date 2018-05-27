@@ -33,6 +33,9 @@ int main(void) {
     TEST(MetricTree);
     TEST(BlockTree);
     TEST(SparseTableOnTree);
+    TEST(TreeSqrtDecomposition);
+    TEST(TreeSqrtDecompositionPathQuery);
+    TEST(DynamicTreeSqrtDecompositionPathQuery);
 
     TEST(BenchmarkBST);
 }

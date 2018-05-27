@@ -6,6 +6,8 @@ using namespace std;
 
 #include "blockTree.h"
 
+// http://codeforces.com/blog/entry/46843
+
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
