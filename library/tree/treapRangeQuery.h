@@ -35,7 +35,7 @@ struct TreapRangeQuery {
     int       count;
     Node*     tree;
 
-    TreapRangeQuery(T dflt = T())
+    explicit TreapRangeQuery(T dflt = T())
         : defaultValue(dflt), mergeOp(), blockOp() {
         count = 0;
         tree = nullptr;
