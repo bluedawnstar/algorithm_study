@@ -32,64 +32,27 @@ using namespace std;
 typedef long long           ll;
 typedef unsigned long long  ull;
 
-string remove(const string& s) {
-    int n = (int)s.length();
+// Complete the fewestOperationsToBalance function below.
+int fewestOperationsToBalance(string s) {
+    int L = 0, R = 0;
 
-    vector<int> dp(n + 1);
-
-    stack<int> st;
-    for (int i = 0; i < n; i++) {
-        if (s[i] == '(')
-            st.push(i);
-        else if (!st.empty()) {
-            int len = i - st.top() + 1;
-            st.pop();
-
-            dp[i + 1] = len + dp[i + 1 - len];
+    for (auto c : s) {
+        if (c == '(')
+            L++;
+        else {
+            if (L > 0)
+                L--;
+            else
+                R++;
         }
     }
 
-    string res;
-    res.reserve(n);
-    for (int i = (int)s.length() - 1; i >= 0; ) {
-        if (dp[i + 1] > 0)
-            i -= dp[i + 1];
-        else
-            res.push_back(s[i--]);
-    }
-    reverse(res.begin(), res.end());
-
-    if (res.empty())
-        return res;
-
-    int L = 0, R = (int)res.length() - 1;
-    while (L < R) {
-        if (res[L] != '(' || res[R] != ')')
-            break;
-        L++, R--;
-    }
-
-    if (L == 0)
-        return res;
-    else if (L >= R)
-        return string();
-    else
-        return res.substr(L, R - L + 1);
-}
-
-// Complete the fewestOperationsToBalance function below.
-int fewestOperationsToBalance(string s) {
-    int res = 0;
-
-    s = remove(s);
-    if (s.empty())
+    if (L == 0 && R == 0)
         return 0;
-    else if (s[0] == ')' && s.back() == '(')
+    else if (L > 0 && R > 0)
         return 2;
     else
         return 1;
-
-    return res;
 }
 
 int main(void) {
