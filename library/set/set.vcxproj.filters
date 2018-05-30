@@ -33,9 +33,6 @@
     <ClCompile Include="simpleHashMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="hashMapHAMT.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -60,9 +57,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="simpleHashMap.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="hashMapHAMT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

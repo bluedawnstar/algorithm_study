@@ -207,8 +207,6 @@ struct LinkCutTreePathQuery {
 
         access(ancestor);
         access(v);
-        //assert(ancestor->parent || ancestor->pathParent); // connected
-
         splay(ancestor);
         if (ancestor->right)
             ancestor->right->parent = nullptr;
@@ -270,8 +268,6 @@ struct LinkCutTreePathQuery {
 
         access(ancestor);
         access(v);
-        //assert(ancestor->parent || ancestor->pathParent); // connected
-
         splay(ancestor);
         if (ancestor->right)
             ancestor->right->parent = nullptr;
@@ -317,8 +313,6 @@ struct LinkCutTreePathQuery {
 
         access(ancestor);
         access(v);
-        //assert(ancestor->parent || ancestor->pathParent); // connected
-
         splay(ancestor);
         if (ancestor->right)
             ancestor->right->parent = nullptr;

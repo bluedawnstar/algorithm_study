@@ -38,15 +38,15 @@ struct SqrtMap {
 };
 
 void testSimpleHashMap() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simple Hash Map-----------------------------" << endl;
     {
         int T = 10000;
         int N = 1000000;
 
-        vector<int> gt(N, 0);
-        SimpleHashMap<int, int> shm([](int index) { return index; }, 0);
+        vector<int> gt(N);
+        SimpleHashMap<int, int> shm([](int index) { return index; }, 4);
         SqrtMap<int, int> sqrtm;
 
         for (int i = 0; i < T; i++) {
@@ -61,7 +61,7 @@ void testSimpleHashMap() {
             gt[idx] = value;
         }
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < T; i++) {
             assert(shm[i] == gt[i]);
             assert(sqrtm[i] == gt[i]);
         }

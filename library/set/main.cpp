@@ -10,5 +10,4 @@ int main(void) {
     TEST(BitSet);
     TEST(RangeSet);
     TEST(SimpleHashMap);
-    TEST(HashMapHAMT);
 }
