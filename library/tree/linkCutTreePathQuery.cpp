@@ -1,6 +1,7 @@
 #include <cassert>
 #include <queue>
 #include <vector>
+#include <functional>
 
 using namespace std;
 
@@ -30,8 +31,8 @@ using namespace std;
 
 vector<int> gTrV;
 
-template <typename Op>
-static void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
+template <typename Mop, typename Bop>
+static void buildTree(Tree& tr, LinkCutTreePathQueryArray<int,Mop,Bop>& lct) {
     gTrV.clear();
     gTrV.resize(MAXN);
 
@@ -44,6 +45,14 @@ static void buildTree(Tree& tr, LinkCutTreeArrayPathQuery<int,Op>& lct) {
 
     tr.dfs(0, -1);
     tr.makeLcaTable();
+}
+
+static void update(Tree& tr, int u, int value) {
+    gTrV[u] = value;
+}
+
+static void add(Tree& tr, int u, int value) {
+    gTrV[u] += value;
 }
 
 static void update(Tree& tr, int u, int v, int value) {
@@ -90,23 +99,70 @@ static int query(Tree& tr, int u, int v) {
 }
 
 void testLinkCutTreePathQuery() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Link-Cut Tree with Path Query ----------------------------------" << endl;
+    for (int i = 0; i < 1; i++) {
+        Tree tr(MAXN, LOGN);
+        auto lct = makeLinkCutTreePathQueryArray(MAXN, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        buildTree(tr, lct);
+
+        for (int j = 0; j < 1000; j++) {
+            int u = RandInt32::get() % MAXN;
+            int v = RandInt32::get() % MAXN;
+            int value = RandInt32::get() % 1000;
+
+            if (RandInt32::get() % 2) {
+                update(tr, u, value);
+                lct.update(u, value);
+            } else {
+                int ans1 = query(tr, u, v);
+                int ans2 = lct.query(u, v);
+                if (ans1 != ans2)
+                    cerr << "Mismatched! : " << ans1 << ", " << ans2 << endl;
+                assert(ans1 == ans2);
+            }
+        }
+    }
+    cout << "OK!" << endl;
 
     for (int i = 0; i < 1; i++) {
         Tree tr(MAXN, LOGN);
-        LinkCutTreeArrayPathQuery<int, PathQuerySetAndSumOpT<int>> lct(MAXN);
+        auto lct = makeLinkCutTreePathQueryArray(MAXN, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         buildTree(tr, lct);
 
-        for (int i = 0; i < 1000; i++) {
+        for (int j = 0; j < 1000; j++) {
+            int u = RandInt32::get() % MAXN;
+            int v = RandInt32::get() % MAXN;
+            int value = RandInt32::get() % 1000;
+
+            if (RandInt32::get() % 2) {
+                add(tr, u, value);
+                lct.add(u, value);
+            } else {
+                int ans1 = query(tr, u, v);
+                int ans2 = lct.query(u, v);
+                if (ans1 != ans2)
+                    cerr << "Mismatched! : " << ans1 << ", " << ans2 << endl;
+                assert(ans1 == ans2);
+            }
+        }
+    }
+    cout << "OK!" << endl;
+
+    for (int i = 0; i < 1; i++) {
+        Tree tr(MAXN, LOGN);
+        auto lct = makeLinkCutTreePathQueryArray(MAXN, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        buildTree(tr, lct);
+
+        for (int j = 0; j < 1000; j++) {
             int u = RandInt32::get() % MAXN;
             int v = RandInt32::get() % MAXN;
             int value = RandInt32::get() % 1000;
 
             if (RandInt32::get() % 2) {
                 update(tr, u, v, value);
-                lct.update(u, v, value);
+                lct.updateRange(u, v, value);
             } else {
                 int ans1 = query(tr, u, v);
                 int ans2 = lct.query(u, v);
@@ -116,21 +172,21 @@ void testLinkCutTreePathQuery() {
             }
         }
     }
-    cout << "OK!" << endl;
+    cout << "OK!        " << endl;
 
     for (int i = 0; i < 1; i++) {
         Tree tr(MAXN, LOGN);
-        LinkCutTreeArrayPathQuery<int, PathQueryAddAndSumOpT<int>> lct(MAXN);
+        auto lct = makeLinkCutTreePathQueryArray(MAXN, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
         buildTree(tr, lct);
 
-        for (int i = 0; i < 1000; i++) {
+        for (int j = 0; j < 1000; j++) {
             int u = RandInt32::get() % MAXN;
             int v = RandInt32::get() % MAXN;
             int value = RandInt32::get() % 1000;
 
             if (RandInt32::get() % 2) {
                 add(tr, u, v, value);
-                lct.update(u, v, value);
+                lct.addRange(u, v, value);
             } else {
                 int ans1 = query(tr, u, v);
                 int ans2 = lct.query(u, v);
@@ -141,28 +197,4 @@ void testLinkCutTreePathQuery() {
         }
     }
     cout << "OK!" << endl;
-
-    cout << "*** Speed Test ***" << endl;
-    {
-        PROFILE_START(0);
-
-        Tree tr(MAXN, LOGN);
-        LinkCutTreeArrayPathQuery<int, PathQueryAddAndSumOpT<int>> lct(MAXN);
-        buildTree(tr, lct);
-
-        for (int i = 0; i < 100000; i++) {
-            int u = RandInt32::get() % MAXN;
-            int v = RandInt32::get() % MAXN;
-            int value = RandInt32::get() % 1000;
-
-            if (RandInt32::get() % 2) {
-                lct.update(u, v, value);
-            } else {
-                int ans = lct.query(u, v);
-                if (ans < 0)
-                    cerr << "It'll never be shown!" << endl;
-            }
-        }
-        PROFILE_STOP(0);
-    }
 }

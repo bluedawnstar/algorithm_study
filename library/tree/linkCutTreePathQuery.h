@@ -1,42 +1,13 @@
 #pragma once
 
-template <typename T>
-struct PathQuerySetAndSumOpT {
-    static const T defaultValue = 0;
-
-    static void updateValue(T& value, const T& newValue) {
-        value = newValue;
-    }
-
-    static T mergeValue(const T& a, const T& b) {
-        return a + b;
-    }
-
-    static void updateRange(T& value, const T& newValue, int newN) {
-        value = newValue * newN;
-    }
-};
-
-template <typename T>
-struct PathQueryAddAndSumOpT {
-    static const T defaultValue = 0;
-
-    static void updateValue(T& value, const T& newValue) {
-        value += newValue;
-    }
-
-    static T mergeValue(const T& a, const T& b) {
-        return a + b;
-    }
-
-    static void updateRange(T& value, const T& newValue, int newN) {
-        value += newValue * newN;
-    }
-};
-
-
-template <typename T, typename Op>
+template <typename T, typename MergeOp, typename BlockOp>
 struct LinkCutTreePathQuery {
+    enum LazyT {
+        lzNone,
+        lzSet,
+        lzAdd
+    };
+
     struct Node {
         Node*   pathParent;
         Node*   parent;
@@ -45,166 +16,376 @@ struct LinkCutTreePathQuery {
 
         int     cnt;            // tree's size in a sub-tree
 
+        bool    revert;         // 
+
         T       value;          // 
         T       rangeValue;     // 
 
-        bool    lazyExist;      // 
-        T       lazy;           // 
-
-        bool    revert;
-
-        Node() {
-            init();
-        }
-
-        Node(const T& val) : value(val), rangeValue(val) {
-            init();
-        }
-
-        void init() {
-            pathParent = nullptr;
-            parent = left = right = nullptr;
-            cnt = 1;
-
-            rangeValue = value = lazy = typename Op::defaultValue;
-
-            revert = false;
-            lazy = false;
-        }
-
-        bool isRoot() const {
-            return !parent || !pathParent;
-        }
-
-        void pushDown() {
-            if (revert) {
-                revert = false;
-
-                swap(left, right);
-                if (left)
-                    left->revert = !left->revert;
-                if (right)
-                    right->revert = !right->revert;
-            }
-
-            if (!lazyExist)
-                return;
-
-            if (left) {
-                left->lazyExist = true;
-                typename Op::updateValue(left->lazy, lazy);
-                typename Op::updateValue(left->value, lazy);
-                typename Op::updateRange(left->rangeValue, lazy, left->cnt);
-            }
-            if (right) {
-                right->lazyExist = true;
-                typename Op::updateValue(right->lazy, lazy);
-                typename Op::updateValue(right->value, lazy);
-                typename Op::updateRange(right->rangeValue, lazy, right->cnt);
-            }
-            lazy = typename Op::defaultValue;
-            lazyExist = false;
-        }
-
-        void update() {
-            cnt = 1;
-            if (left)
-                cnt += left->cnt;
-            if (right)
-                cnt += right->cnt;
-
-            rangeValue = value;
-            if (left)
-                rangeValue = typename Op::mergeValue(rangeValue, left->rangeValue);
-            if (right)
-                rangeValue = typename Op::mergeValue(rangeValue, right->rangeValue);
-        }
+        LazyT   lazy;           // 
+        T       lazyValue;      // 
     };
 
-    static T query(Node* u, Node* v) {
-        makeRoot(u);
+    void initNode(Node* node, const T& dfltVal) {
+        node->pathParent = nullptr;
+        node->parent = node->left = node->right = nullptr;
+        node->cnt = 1;
+        node->revert = false;
+
+        node->rangeValue = node->value = node->lazyValue = dfltVal;
+        node->lazy = lzNone;
+    }
+
+    bool isRoot(Node* node) const {
+        return !node->parent && !node->pathParent;
+    }
+
+    void pushDown(Node* node) {
+        if (node->revert) {
+            node->revert = false;
+
+            swap(node->left, node->right);
+            if (node->left)
+                node->left->revert = !node->left->revert;
+            if (node->right)
+                node->right->revert = !node->right->revert;
+        }
+
+        if (node->lazy) {
+            if (node->left) {
+                node->left->lazy = node->lazy;
+                if (node->lazy == lzSet) {
+                    node->left->lazyValue = node->lazyValue;
+                    node->left->value = node->lazyValue;
+                    node->left->rangeValue = blockOp(node->lazyValue, node->left->cnt);
+                } else {
+                    node->left->lazyValue += node->lazyValue;
+                    node->left->value += node->lazyValue;
+                    node->left->rangeValue += blockOp(node->lazyValue, node->left->cnt);
+                }
+            }
+            if (node->right) {
+                node->right->lazy = node->lazy;
+                if (node->lazy == lzSet) {
+                    node->right->lazyValue = node->lazyValue;
+                    node->right->value = node->lazyValue;
+                    node->right->rangeValue = blockOp(node->lazyValue, node->right->cnt);
+                } else {
+                    node->right->lazyValue += node->lazyValue;
+                    node->right->value += node->lazyValue;
+                    node->right->rangeValue += blockOp(node->lazyValue, node->right->cnt);
+                }
+            }
+            node->lazyValue = defaultValue;
+            node->lazy = lzNone;
+        }
+    }
+
+    void update(Node* node) {
+        node->cnt = 1;
+        if (node->left)
+            node->cnt += node->left->cnt;
+        if (node->right)
+            node->cnt += node->right->cnt;
+
+        node->rangeValue = node->value;
+        if (node->left)
+            node->rangeValue = mergeOp(node->rangeValue, node->left->rangeValue);
+        if (node->right)
+            node->rangeValue = mergeOp(node->rangeValue, node->right->rangeValue);
+    }
+
+    //------------------------------------------------------------
+
+    T defaultValue;
+
+    MergeOp mergeOp;
+    BlockOp blockOp;
+
+    explicit LinkCutTreePathQuery(const MergeOp& mop, const BlockOp& bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    }
+
+    Node* parent(Node* x) {
+        access(x);
+        if (!x->left)
+            return nullptr;
+
+        pushDown(x);
+        x = x->left;
+        while (x->right) {
+            pushDown(x);
+            x = x->right;
+        }
+        access(x);
+        return x;
+    }
+
+    Node* findRoot(Node* v) {
+        access(v);
+        while (v->left) {
+            pushDown(v);
+            v = v->left;
+        }
+        splay(v);
+        return v;
+    }
+
+    // global depth of v (>= 0)
+    int depth(Node* v) {
+        access(v);
+        return v->cnt - 1;
+    }
+
+    bool isConnected(Node* v, Node* u) {
+        if (v == u)
+            return true;
+        access(v);
+        access(u);
+        return v->parent || v->pathParent;
+    }
+
+    //--- query
+
+    //PRECONDITION: v is connected to u
+    Node* lca(Node* v, Node* u) {
+        access(v);
+        return access(u);
+    }
+
+    // dist >= 0
+    // count = valueToCountF(index_of_node, value_or_sqrt_value_of_the_node)
+    Node* climb(Node* v, int dist) {
+        access(v);
+        while (v) {
+            if (v->right) {
+                if (v->right->cnt > dist) {
+                    v = v->right;
+                    continue;
+                }
+                dist -= v->right->cnt;
+            }
+            if (dist-- <= 0)
+                break;
+            v = v->left;
+        }
+        access(v);
+        return v;
+    }
+
+    // kth >= 1
+    // count = valueToCountF(index_of_node, value_or_sqrt_value_of_the_node)
+    Node* climbKth(Node* v, int kth, const function<int(T)>& valueToCountF) {
+        access(v);
+        while (v) {
+            int d;
+            if (v->right) {
+                d = valueToCountF(v->right->rangeValue);    // >= 0
+                if (d >= kth) {
+                    v = v->right;
+                    continue;
+                }
+                kth -= d;
+            }
+            d = valueToCountF(v->value);                    // 0 or 1
+            if (d >= kth)
+                break;
+            kth -= d;
+            v = v->left;
+        }
+        access(v);
+        return v;
+    }
+
+    T queryToRoot(Node* v) {
         access(v);
         return v->rangeValue;
     }
 
-    static void update(Node* u, Node* v, const T& value) {
-        makeRoot(u);
+    T queryToAncestor(Node* v, Node* ancestor) {
+        if (v == ancestor)
+            return v->value;
+
+        access(ancestor);
         access(v);
+        splay(ancestor);
+        if (ancestor->right)
+            ancestor->right->parent = nullptr;
+        splay(v);
+        v->parent = ancestor;
 
-        v->lazyExist = true;
-        typename Op::updateValue(v->lazy, value);
-        typename Op::updateValue(v->value, value);
-        typename Op::updateRange(v->rangeValue, value, v->cnt);
+        T res = mergeOp(ancestor->value, v->value);
+        if (v->left)
+            res = mergeOp(v->left->rangeValue, res);
+
+        return res;
+    }
+
+    T query(Node* v, Node* u) {
+        if (v == u)
+            return v->value;
+
+        Node* lc = lca(v, u);
+        if (lc == v)
+            return queryToAncestor(u, lc);
+        else if (lc == u)
+            return queryToAncestor(v, lc);
+
+        return mergeOp(queryToAncestor(v, lc), queryToAncestor(u, climb(u, depth(u) - depth(lc) - 1)));
+    }
+
+    //--- for accumulative operation
+    // Use this functions when MergeOp is 'add' (supporting subtraction)
+
+    T queryToAncestorAccumulative(Node* v, Node* ancestor) {
+        return queryToRoot(v) - queryToRoot(ancestor) + ancestor->value;
+    }
+
+    T queryAccumulative(Node* v, Node* u) {
+        Node* lc = lca(v, u);
+        return queryToRoot(v) + queryToRoot(u) - queryToRoot(lc) * 2 + lc->value;
+    }
+
+    //--- update
+
+    void update(Node* v, const T& value) {
+        access(v);
+        v->value = value;
+        update(v);
+    }
+
+    void add(Node* v, const T& value) {
+        access(v);
+        v->value += value;
+        update(v);
     }
 
 
-    static Node* root(Node* x) {
-        access(x);
-        while (x->left)
-            x = x->left;
-        splay(x);
-        return x;
+    void updateRangeToAncestor(Node* v, Node* ancestor, const T& value) {
+        if (v == ancestor) {
+            update(v, value);
+            return;
+        }
+
+        access(ancestor);
+        access(v);
+        splay(ancestor);
+        if (ancestor->right)
+            ancestor->right->parent = nullptr;
+        splay(v);
+        v->parent = ancestor;
+
+        if (v->left) {
+            v->left->lazy = lzSet;
+            v->left->lazyValue = value;
+            v->left->value = value;
+            v->left->rangeValue = blockOp(value, v->left->cnt);
+        }
+        v->value = value;
+        update(v);
+
+        ancestor->value = value;
+        update(ancestor);
     }
 
-    //PRECONDITION: x is connected to y
-    static Node* lca(Node* x, Node* y) {
-        access(x);
-        return access(y);
+    void updateRange(Node* v, Node* u, const T& value) {
+        if (v == u) {
+            update(v, value);
+            return;
+        }
+
+        Node* lc = lca(v, u);
+        if (lc == v)
+            updateRangeToAncestor(u, lc, value);
+        else if (lc == u)
+            updateRangeToAncestor(v, lc, value);
+        else {
+            updateRangeToAncestor(v, lc, value);
+            updateRangeToAncestor(u, climb(u, depth(u) - depth(lc) - 1), value);
+        }
     }
 
-    // global depth of x
-    static int depth(Node* x) {
-        access(x);
-        return x->cnt - 1;
+
+    void addRangeToAncestor(Node* v, Node* ancestor, const T& value) {
+        if (v == ancestor) {
+            add(v, value);
+            return;
+        }
+
+        access(ancestor);
+        access(v);
+        splay(ancestor);
+        if (ancestor->right)
+            ancestor->right->parent = nullptr;
+        splay(v);
+        v->parent = ancestor;
+
+        if (v->left) {
+            v->left->lazy = lzAdd;
+            v->left->lazyValue += value;
+            v->left->value += value;
+            v->left->rangeValue += blockOp(value, v->left->cnt);
+        }
+
+        v->value += value;
+        update(v);
+
+        ancestor->value += value;
+        update(ancestor);
     }
 
-    static bool isConnected(Node* x, Node* y) {
-        if (x == y)
-            return true;
-        access(x);
-        access(y);
-        return x->parent || x->pathParent;
+    void addRange(Node* v, Node* u, const T& value) {
+        if (v == u) {
+            add(v, value);
+            return;
+        }
+
+        Node* lc = lca(v, u);
+        if (lc == v)
+            addRangeToAncestor(u, lc, value);
+        else if (lc == u)
+            addRangeToAncestor(v, lc, value);
+        else {
+            addRangeToAncestor(v, lc, value);
+            addRangeToAncestor(u, climb(u, depth(u) - depth(lc) - 1), value);
+        }
     }
 
-    static void makeRoot(Node* x) {
-        access(x);
-        x->revert = !x->revert;
-    }
+    //--- 
 
-    // link x to y
-    static bool link(Node* x, Node* y) {
-        if (x == y)
+    // link v to u
+    bool link(Node* v, Node* u) {
+        if (v == u)
             return false;   // connected
-        access(x);
-        access(y);
-        if (x->parent || x->pathParent)
+
+        access(v);
+        access(u);
+        if (v->parent || v->pathParent)
             return false;   // connected
 
-        x->left = y;
-        y->parent = x;
-        update(x);
+        v->left = u;
+        u->parent = v;
+        update(v);
 
         return true;
     }
 
-    static bool cut(Node* x, Node* y) {
-        makeRoot(x);
-        access(y);
-        if (y->left != x || x->right)
-            return false;   // x and y is not directly connected to each other
+    bool cut(Node* v, Node* u) {
+        makeRoot(v);
+        access(u);
+        if (u->left != v || v->right)
+            return false;   // v and u is not directly connected to each other
 
-        if (y->left) {
-            y->left->parent = nullptr;
-            y->left = nullptr;
-            update(y);
+        if (u->left) {
+            u->left->parent = nullptr;
+            u->left = nullptr;
+            update(u);
         }
-
         return true;
     }
 
     // a represented tree to two represented trees
     //   which are a x's left sub-tree and x's right sub-tree including x
-    static void cut(Node* x) {
+    void cut(Node* x) {
         access(x);
         if (x->left) {
             x->left->parent = nullptr;
@@ -213,9 +394,10 @@ struct LinkCutTreePathQuery {
         }
     }
 
+    //--- internal functions
 
     // make x as the global root
-    static Node* access(Node* x) {
+    Node* access(Node* x) {
         splay(x);
         if (x->right) {
             x->right->pathParent = x;
@@ -243,42 +425,13 @@ struct LinkCutTreePathQuery {
         return last;
     }
 
-protected:
-    static void splay(Node* x) {
-        Node *y, *z;
-
-        while (x->parent) {
-            y = x->parent;
-            if (!y->parent) {
-                y->pushDown();
-                x->pushDown();
-                if (x == y->left)
-                    rotateRight(x);
-                else
-                    rotateLeft(x);
-            } else {
-                z = y->parent;
-                z->pushDown();
-                y->pushDown();
-                x->pushDown();
-                if (y == z->left) {
-                    if (x == y->left)
-                        rotateRight(y), rotateRight(x);
-                    else
-                        rotateLeft(x), rotateRight(x);
-                } else {
-                    if (x == y->right)
-                        rotateLeft(y), rotateLeft(x);
-                    else
-                        rotateRight(x), rotateLeft(x);
-                }
-            }
-        }
-        x->pushDown();
-        update(x);
+    void makeRoot(Node* x) {
+        access(x);
+        x->revert = !x->revert;
     }
 
-    static void rotateRight(Node* x) {
+protected:
+    void rotateRight(Node* x) {
         Node* y = x->parent;
         Node* z = y->parent;
         y->left = x->right;
@@ -298,7 +451,7 @@ protected:
         update(y);
     }
 
-    static void rotateLeft(Node* x) {
+    void rotateLeft(Node* x) {
         Node* y = x->parent;
         Node* z = y->parent;
         y->right = x->left;
@@ -318,74 +471,162 @@ protected:
         update(y);
     }
 
-    static void update(Node* x) {
-        if (x)
-            x->update();
+    void splay(Node* x) {
+        Node *y, *z;
+
+        while (x->parent) {
+            y = x->parent;
+            if (!y->parent) {
+                pushDown(y);
+                pushDown(x);
+                if (x == y->left)
+                    rotateRight(x);
+                else
+                    rotateLeft(x);
+            } else {
+                z = y->parent;
+                pushDown(z);
+                pushDown(y);
+                pushDown(x);
+                if (y == z->left) {
+                    if (x == y->left)
+                        rotateRight(y), rotateRight(x);
+                    else
+                        rotateLeft(x), rotateRight(x);
+                } else {
+                    if (x == y->right)
+                        rotateLeft(y), rotateLeft(x);
+                    else
+                        rotateRight(x), rotateLeft(x);
+                }
+            }
+        }
+        pushDown(x);
+        update(x);
     }
 };
 
-template <typename T, typename Op>
-struct LinkCutTreeArrayPathQuery {
-    typedef LinkCutTreePathQuery<T, Op> LinkCutTreeT;
+template <typename T, typename MergeOp, typename BlockOp>
+struct LinkCutTreePathQueryArray : public LinkCutTreePathQuery<T, MergeOp, BlockOp> {
+    typedef LinkCutTreePathQuery<T, MergeOp, BlockOp> LinkCutTreeT;
     vector<typename LinkCutTreeT::Node> nodes;
 
-    explicit LinkCutTreeArrayPathQuery(int N) : nodes(N) {
-        // no action
+    LinkCutTreePathQueryArray(int N, const MergeOp& mop, const BlockOp& bop, T dflt = T())
+        : LinkCutTreePathQuery<T, MergeOp, BlockOp>(mop, bop, dflt), nodes(N) {
+        for (int i = 0; i < N; i++)
+            LinkCutTreeT::initNode(&nodes[i], dflt);
     }
 
-    void setValue(int u, const T& value) {
-        nodes[u].value = value;
+    int parent(int v) {
+        return LinkCutTreeT::parent(&nodes[v]) - &nodes[0];
     }
 
-    const T& getValue(int u) const {
-        return nodes[u].value;
+    int findRoot(int v) {
+        return LinkCutTreeT::findRoot(&nodes[v]) - &nodes[0];
+    }
+
+    int lca(int v, int u) {
+        return LinkCutTreeT::lca(&nodes[v], &nodes[u]) - &nodes[0];
+    }
+
+    int depth(int v) {
+        return LinkCutTreeT::depth(&nodes[v]);
+    }
+
+    bool isConnected(int v, int u) {
+        return LinkCutTreeT::isConnected(&nodes[v], &nodes[u]);
+    }
+
+    //--- query
+
+    // kth >= 1
+    // count = valueToCountF(index_of_node, value_or_sqrt_value_of_the_node)
+    int climbKth(int v, int kth, const function<int(T)>& valueToCountF) {
+        return LinkCutTreeT::climbKth(&nodes[v], kth, valueToCountF) - &nodes[0];
+    }
+
+    T queryToRoot(int v) {
+        return LinkCutTreeT::queryToRoot(&nodes[v]);
+    }
+
+    T queryToAncestor(int v, int ancestor) {
+        return LinkCutTreeT::queryToAncestor(&nodes[v], &nodes[ancestor]);
+    }
+
+    T query(int v, int u) {
+        return LinkCutTreeT::query(&nodes[v], &nodes[u]);
+    }
+
+    //--- for accumulative operation
+    // Use this functions when MergeOp is 'add' (supporting subtraction)
+
+    T queryToAncestorAccumulative(int v, int ancestor) {
+        return LinkCutTreeT::queryToAncestorAccumulative(&nodes[v], &nodes[ancestor]);
+    }
+
+    T queryAccumulative(int v, int u) {
+        return LinkCutTreeT::queryAccumulative(&nodes[v], &nodes[u]);
+    }
+
+    //--- update
+
+    void update(int v, const T& value) {
+        LinkCutTreeT::update(&nodes[v], value);
+    }
+
+    void add(int v, const T& value) {
+        LinkCutTreeT::add(&nodes[v], value);
     }
 
 
-    T query(int u, int v) {
-        return LinkCutTreeT::query(&nodes[u], &nodes[v]);
+    void updateRangeToAncestor(int v, int ancestor, const T& value) {
+        LinkCutTreeT::updateRangeToAncestor(&nodes[v], &nodes[ancestor], value);
     }
 
-    void update(int u, int v, const T& value) {
-        LinkCutTreeT::update(&nodes[u], &nodes[v], value);
-    }
-
-
-    int root(int u) {
-        return LinkCutTreeT::root(&nodes[u]) - &nodes[0];
-    }
-
-    int lca(int u, int v) {
-        return LinkCutTreeT::lca(&nodes[u], &nodes[v]) - &nodes[0];
-    }
-
-    int depth(int u) {
-        return LinkCutTreeT::depth(&nodes[u]);
-    }
-
-    bool isConnected(int u, int v) {
-        return LinkCutTreeT::isConnected(&nodes[u], &nodes[v]);
+    void updateRange(int v, int u, const T& value) {
+        LinkCutTreeT::updateRange(&nodes[v], &nodes[u], value);
     }
 
 
-    void makeRoot(int u) {
-        LinkCutTreeT::makeRoot(&nodes[u]);
+    void addRangeToAncestor(int v, int ancestor, const T& value) {
+        LinkCutTreeT::addRangeToAncestor(&nodes[v], &nodes[ancestor], value);
     }
+
+    void addRange(int v, int u, const T& value) {
+        LinkCutTreeT::addRange(&nodes[v], &nodes[u], value);
+    }
+
+    //---
 
     // link v to u
     bool link(int v, int u) {
         return LinkCutTreeT::link(&nodes[v], &nodes[u]);
     }
 
-    void cut(int u, int v) {
-        LinkCutTreeT::cut(&nodes[u], &nodes[v]);
+    void cut(int v, int u) {
+        LinkCutTreeT::cut(&nodes[v], &nodes[u]);
     }
 
-    void cut(int u) {
-        LinkCutTreeT::cut(&nodes[u]);
+    void cut(int v) {
+        LinkCutTreeT::cut(&nodes[v]);
     }
 
-    int access(int u) {
-        return LinkCutTreeT::access(&nodes[u]) - &nodes[0];
+    //--- internal functions
+    int access(int v) {
+        return LinkCutTreeT::access(&nodes[v]) - &nodes[0];
+    }
+
+    void makeRoot(int v) {
+        return LinkCutTreeT::makeRoot(&nodes[v]);
     }
 };
+
+template <typename T, typename MergeOp, typename BlockOp>
+inline LinkCutTreePathQuery<T, MergeOp, BlockOp> makeLinkCutTreePathQuery(MergeOp mop, BlockOp bop, T dfltValue) {
+    return LinkCutTreePathQuery<T, MergeOp, BlockOp>(mop, bop, dfltValue);
+}
+
+template <typename T, typename MergeOp, typename BlockOp>
+inline LinkCutTreePathQueryArray<T, MergeOp, BlockOp> makeLinkCutTreePathQueryArray(int size, MergeOp mop, BlockOp bop, T dfltValue) {
+    return LinkCutTreePathQueryArray<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
+}

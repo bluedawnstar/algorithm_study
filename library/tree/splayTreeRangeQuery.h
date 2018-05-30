@@ -30,7 +30,7 @@ struct SplayTreeRangeQuery {
     int       count;
     Node*     tree;
 
-    SplayTreeRangeQuery(T dflt = T())
+    explicit SplayTreeRangeQuery(T dflt = T())
         : defaultValue(dflt), mergeOp(), blockOp() {
         count = 0;
         tree = nullptr;
