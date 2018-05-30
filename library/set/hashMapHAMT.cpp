@@ -1,13 +1,11 @@
 #include <memory>
 #include <functional>
-#include <map>
-#include <list>
 #include <vector>
 #include <algorithm>
 
 using namespace std;
 
-#include "simpleHashMap.h"
+#include "hashMapHAMT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -37,36 +35,46 @@ struct SqrtMap {
     }
 };
 
-void testSimpleHashMap() {
-    return; //TODO: if you want to test, make this line a comment.
+void testHashMapHAMT() {
+    //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Simple Hash Map-----------------------------" << endl;
+    cout << "--- Hash Map with HAMT -----------------------------" << endl;
     {
         int T = 10000;
         int N = 1000000;
+        //int T = 10;
+        //int N = 10;
 
         vector<int> gt(N, 0);
-        SimpleHashMap<int, int> shm([](int index) { return index; }, 0);
+        HashMapHAMT<int, int> shm([](int index) { return (unsigned int)index; }, 0);
         SqrtMap<int, int> sqrtm;
 
         for (int i = 0; i < T; i++) {
             int idx = RandInt32::get() % N;
             int value = RandInt32::get();
 
-            shm[idx] = value;
-            //shm.set(idx, value);
+            if (i == 0x53)
+                i = 0x53;
+
+            //shm[idx] = value;
+            shm.set(idx, value);
+            if (shm.get(idx) != value) {
+                cout << "[" << i << "] " << shm.get(idx) << ", " << value << endl;
+            }
 
             sqrtm[idx] = value;
-
             gt[idx] = value;
         }
 
         for (int i = 0; i < N; i++) {
-            assert(shm[i] == gt[i]);
+            //if (shm.get(i) != gt[i]) {
+            //    cout << "[" << i << "] " << shm.get(i) << ", " << gt[i] << endl;
+            //}
+            assert(shm.get(i) == gt[i]);
             assert(sqrtm[i] == gt[i]);
         }
     }
-    cout << "Speed test with long long : Simple Hash Map vs. unordered_map" << endl;
+    cout << "Speed test with long long : HAMT Hash Map vs. unordered_map" << endl;
     {
         int N = 10000000;
 
@@ -91,10 +99,10 @@ void testSimpleHashMap() {
         }
         {
             PROFILE_START(2);
-            SimpleHashMap<long long, int> shm([](long long index) { return (int)index; });
+            HashMapHAMT<long long, int> shm([](long long index) { return (unsigned int)index; });
             for (int i = 0; i < N; i++)
                 shm[in[i].first] = in[i].second;
-                //shm.set(in[i].first, in[i].second);
+            //shm.set(in[i].first, in[i].second);
             PROFILE_STOP(2);
 
             PROFILE_START(3);
