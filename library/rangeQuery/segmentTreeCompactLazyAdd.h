@@ -8,7 +8,7 @@
 
 // It's slower than FenwickTree 10x for just summation
 // (a.k.a. Starry Sky Tree)
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct CompactSegmentTreeLazyAdd {
     int       RealN;
     int       N;            // the size of array
@@ -17,28 +17,28 @@ struct CompactSegmentTreeLazyAdd {
     vector<T> treeLazy;     // 0 means "not lazy value"
 
     T         defaultValue;
-    BinOp     mergeOp;
+    MergeOp   mergeOp;
 
-    explicit CompactSegmentTreeLazyAdd(BinOp op, T dflt = T())
+    explicit CompactSegmentTreeLazyAdd(MergeOp op, T dflt = T())
         : mergeOp(), defaultValue(dflt) {
     }
 
-    CompactSegmentTreeLazyAdd(int size, BinOp op, T dflt = T())
+    CompactSegmentTreeLazyAdd(int size, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         init(size);
     }
 
-    CompactSegmentTreeLazyAdd(T value, int n, BinOp op, T dflt = T())
+    CompactSegmentTreeLazyAdd(T value, int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(value, n);
     }
 
-    CompactSegmentTreeLazyAdd(const T arr[], int n, BinOp op, T dflt = T())
+    CompactSegmentTreeLazyAdd(const T arr[], int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
     }
 
-    CompactSegmentTreeLazyAdd(const vector<T>& v, BinOp op, T dflt = T())
+    CompactSegmentTreeLazyAdd(const vector<T>& v, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(v);
     }
@@ -157,17 +157,17 @@ struct CompactSegmentTreeLazyAdd {
     }
 };
 
-template <typename T, typename BinOp>
-inline CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(int size, BinOp op, T dfltValue = T()) {
-    return CompactSegmentTreeLazyAdd<T, BinOp>(size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline CompactSegmentTreeLazyAdd<T, MergeOp> makeCompactSegmentTreeLazyAdd(int size, MergeOp op, T dfltValue = T()) {
+    return CompactSegmentTreeLazyAdd<T, MergeOp>(size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return CompactSegmentTreeLazyAdd<T, BinOp>(v, op, dfltValue);
+template <typename T, typename MergeOp>
+inline CompactSegmentTreeLazyAdd<T, MergeOp> makeCompactSegmentTreeLazyAdd(const vector<T>& v, MergeOp op, T dfltValue = T()) {
+    return CompactSegmentTreeLazyAdd<T, MergeOp>(v, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return CompactSegmentTreeLazyAdd<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline CompactSegmentTreeLazyAdd<T, MergeOp> makeCompactSegmentTreeLazyAdd(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return CompactSegmentTreeLazyAdd<T, MergeOp>(arr, size, op, dfltValue);
 }

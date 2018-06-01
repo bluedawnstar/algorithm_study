@@ -2,7 +2,7 @@
 
 // https://e-maxx-eng.appspot.com/data_structures/sqrt-tree.html
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct SqrtTree {
     int N;
     int H;
@@ -16,18 +16,18 @@ struct SqrtTree {
     vector<vector<T>> between;      // left and right side, A[i..j] (L <= i <= j <= R)
 
     T       defaultValue;
-    BinOp   mergeOp;
+    MergeOp mergeOp;
 
-    explicit SqrtTree(BinOp op, T dfltValue = T())
+    explicit SqrtTree(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
     }
 
-    SqrtTree(const T a[], int n, BinOp op, T dfltValue = T())
+    SqrtTree(const T a[], int n, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a, n);
     }
 
-    SqrtTree(const vector<T>& a, BinOp op, T dfltValue = T())
+    SqrtTree(const vector<T>& a, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a);
     }
@@ -134,12 +134,12 @@ private:
     }
 };
 
-template <typename T, typename BinOp>
-SqrtTree<T, BinOp> makeSqrtTree(const vector<T>& arr, BinOp op, T dfltValue = T()) {
-    return SqrtTree<T, BinOp>(arr, op, dfltValue);
+template <typename T, typename MergeOp>
+SqrtTree<T, MergeOp> makeSqrtTree(const vector<T>& arr, MergeOp op, T dfltValue = T()) {
+    return SqrtTree<T, MergeOp>(arr, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-SqrtTree<T, BinOp> makeSqrtTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return SqrtTree<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+SqrtTree<T, MergeOp> makeSqrtTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return SqrtTree<T, MergeOp>(arr, size, op, dfltValue);
 }

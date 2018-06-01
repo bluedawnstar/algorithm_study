@@ -5,7 +5,7 @@
 
 //--------- Persistent Segment Tree ----------------------------------------------
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct PersistentSegmentTree {
     struct Node {
         T       value;
@@ -15,28 +15,28 @@ struct PersistentSegmentTree {
     vector<Node*>   trees;
     int             N;              // the size of array
     T               defaultValue;
-    BinOp           mergeOp;
+    MergeOp         mergeOp;
 
-    explicit PersistentSegmentTree(BinOp op, T dflt = T())
+    explicit PersistentSegmentTree(MergeOp op, T dflt = T())
         : N(0), trees(), mergeOp(op), defaultValue(dflt) {
     }
 
-    PersistentSegmentTree(int n, BinOp op, T dflt = T())
+    PersistentSegmentTree(int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         init(n);
     }
 
-    PersistentSegmentTree(T value, int n, BinOp op, T dflt = T())
+    PersistentSegmentTree(T value, int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(value, n);
     }
 
-    PersistentSegmentTree(const T arr[], int n, BinOp op, T dflt = T())
+    PersistentSegmentTree(const T arr[], int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
     }
 
-    PersistentSegmentTree(const vector<T>& v, BinOp op, T dflt = T())
+    PersistentSegmentTree(const vector<T>& v, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(v);
     }
@@ -253,17 +253,17 @@ private:
     }
 };
 
-template <typename T, typename BinOp>
-inline PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(BinOp op, T dfltValue = T()) {
-    return PersistentSegmentTree<T, BinOp>(op, dfltValue);
+template <typename T, typename MergeOp>
+inline PersistentSegmentTree<T, MergeOp> makePersistentSegmentTree(MergeOp op, T dfltValue = T()) {
+    return PersistentSegmentTree<T, MergeOp>(op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return PersistentSegmentTree<T, BinOp>(v, op, dfltValue);
+template <typename T, typename MergeOp>
+inline PersistentSegmentTree<T, MergeOp> makePersistentSegmentTree(const vector<T>& v, MergeOp op, T dfltValue = T()) {
+    return PersistentSegmentTree<T, MergeOp>(v, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline PersistentSegmentTree<T, BinOp> makePersistentSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return PersistentSegmentTree<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline PersistentSegmentTree<T, MergeOp> makePersistentSegmentTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return PersistentSegmentTree<T, MergeOp>(arr, size, op, dfltValue);
 }

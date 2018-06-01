@@ -2,23 +2,23 @@
 
 //--------- General Sparse Table ----------------------------------------------
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct SparseTable2D {
-    int                 rowN;
-    int                 colN;
-    int                 logRowN;
-    int                 logColN;
+    int rowN;
+    int colN;
+    int logRowN;
+    int logColN;
 
     vector<vector<vector<vector<T>>>> values; // [logR][R][logC][C]
-    vector<int>         H;
-    T                   defaultValue;
-    BinOp               mergeOp;
+    vector<int> H;
+    T           defaultValue;
+    MergeOp     mergeOp;
 
-    explicit SparseTable2D(BinOp op, T dfltValue = T())
+    explicit SparseTable2D(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
     }
 
-    SparseTable2D(const vector<vector<T>>& a, BinOp op, T dfltValue = T())
+    SparseTable2D(const vector<vector<T>>& a, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a);
     }
@@ -135,9 +135,9 @@ struct SparseTable2D {
     }
 };
 
-template <typename T, typename BinOp>
-inline SparseTable2D<T, BinOp> makeSparseTable2D(const vector<vector<T>>& arr, BinOp op, T dfltValue = T()) {
-    return SparseTable2D<T, BinOp>(arr, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SparseTable2D<T, MergeOp> makeSparseTable2D(const vector<vector<T>>& arr, MergeOp op, T dfltValue = T()) {
+    return SparseTable2D<T, MergeOp>(arr, op, dfltValue);
 }
 
 /* example

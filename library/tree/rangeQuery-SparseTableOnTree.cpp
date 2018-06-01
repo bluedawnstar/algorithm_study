@@ -19,8 +19,8 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-template <typename T, typename BinOp>
-static T pathMinSlow(SparseTableOnTree<T, BinOp>& tree, int u, int v) {
+template <typename T, typename MergeOp>
+static T pathMinSlow(SparseTableOnTree<T, MergeOp>& tree, int u, int v) {
     int lca = tree.findLCA(u, v);
     
     T res = tree.value[0][lca];
@@ -36,8 +36,8 @@ static T pathMinSlow(SparseTableOnTree<T, BinOp>& tree, int u, int v) {
     return res;
 }
 
-template <typename T, typename BinOp>
-static T pathMaxSlow(SparseTableOnTree<T, BinOp>& tree, int u, int v) {
+template <typename T, typename MergeOp>
+static T pathMaxSlow(SparseTableOnTree<T, MergeOp>& tree, int u, int v) {
     int lca = tree.findLCA(u, v);
 
     T res = tree.value[0][lca];
@@ -53,8 +53,8 @@ static T pathMaxSlow(SparseTableOnTree<T, BinOp>& tree, int u, int v) {
     return res;
 }
 
-template <typename T, typename BinOp>
-static T pathSumSlow(SparseTableOnTree<T, BinOp>& tree, int u, int v) {
+template <typename T, typename MergeOp>
+static T pathSumSlow(SparseTableOnTree<T, MergeOp>& tree, int u, int v) {
     int lca = tree.findLCA(u, v);
 
     T res = tree.value[0][lca];

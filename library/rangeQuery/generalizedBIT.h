@@ -3,35 +3,35 @@
 //--------- Generalized Binary Indexed Tree (Generalized Fenwick Tree) --------------------------------
 
 // This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2018/3)
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct GeneralizedBIT {
     int N;                  // 
     vector<T> tree;         // forward BIT
     vector<T> treeR;        // backward BIT
 
     T       defaultValue;
-    BinOp   mergeOp;
+    MergeOp mergeOp;
 
-    explicit GeneralizedBIT(BinOp op, T dflt = T())
+    explicit GeneralizedBIT(MergeOp op, T dflt = T())
         : N(0), mergeOp(op), defaultValue(dflt) {
     }
 
-    GeneralizedBIT(int n, BinOp op, T dflt = T())
+    GeneralizedBIT(int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         init(n);
     }
 
-    GeneralizedBIT(const T value, int n, BinOp op, T dflt = T())
+    GeneralizedBIT(const T value, int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(value, n);
     }
 
-    GeneralizedBIT(const T arr[], int n, BinOp op, T dflt = T())
+    GeneralizedBIT(const T arr[], int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
     }
 
-    GeneralizedBIT(const vector<T>& v, BinOp op, T dflt = T())
+    GeneralizedBIT(const vector<T>& v, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(v);
     }
@@ -155,19 +155,19 @@ private:
     }
 };
 
-template <typename T, typename BinOp>
-inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(int size, BinOp op, T dfltValue = T()) {
-    return GeneralizedBIT<T, BinOp>(size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline GeneralizedBIT<T, MergeOp> makeGeneralizedBIT(int size, MergeOp op, T dfltValue = T()) {
+    return GeneralizedBIT<T, MergeOp>(size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return GeneralizedBIT<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline GeneralizedBIT<T, MergeOp> makeGeneralizedBIT(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return GeneralizedBIT<T, MergeOp>(arr, size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return GeneralizedBIT<T, BinOp>(v, op, dfltValue);
+template <typename T, typename MergeOp>
+inline GeneralizedBIT<T, MergeOp> makeGeneralizedBIT(const vector<T>& v, MergeOp op, T dfltValue = T()) {
+    return GeneralizedBIT<T, MergeOp>(v, op, dfltValue);
 }
 
 //-----------------------------------------------------------------------------
@@ -176,8 +176,8 @@ inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const vector<T>& v, BinOp op,
 // return min(x | query(left, i) >= value, left <= i <= right)
 //    xxxxxxxOOOOOOoooooo
 //    L      ^          R
-template <typename T, typename BinOp>
-inline int lowerBound(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+template <typename T, typename MergeOp>
+inline int lowerBound(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
 
     while (lo <= hi) {
@@ -195,8 +195,8 @@ inline int lowerBound(const GeneralizedBIT<T, BinOp>& st, int left, int right, T
 // return min(x | query(left, i) > value, left <= i <= right)
 //    xxxxxxxOOOOOOoooooo
 //    L            ^    R
-template <typename T, typename BinOp>
-inline int upperBound(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+template <typename T, typename MergeOp>
+inline int upperBound(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
 
     while (lo <= hi) {
@@ -214,8 +214,8 @@ inline int upperBound(const GeneralizedBIT<T, BinOp>& st, int left, int right, T
 // return max(x | query(left, i) >= value, left <= i <= right)
 //    oooooooOOOOOOxxxxxx
 //    L           ^     R
-template <typename T, typename BinOp>
-inline int lowerBoundBackward(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+template <typename T, typename MergeOp>
+inline int lowerBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
 
     while (lo <= hi) {
@@ -233,8 +233,8 @@ inline int lowerBoundBackward(const GeneralizedBIT<T, BinOp>& st, int left, int 
 // return min(x | query(left, i) > value, left <= i <= right)
 //    oooooooOOOOOOxxxxxx
 //    L     ^           R
-template <typename T, typename BinOp>
-inline int upperBoundBackward(const GeneralizedBIT<T, BinOp>& st, int left, int right, T value) {
+template <typename T, typename MergeOp>
+inline int upperBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
 
     while (lo <= hi) {
@@ -253,8 +253,8 @@ inline int upperBoundBackward(const GeneralizedBIT<T, BinOp>& st, int left, int 
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
-template <typename T, typename BinOp>
-inline int findNext(const GeneralizedBIT<T, BinOp>& gbit, int start, const function<bool(T)>& f) {
+template <typename T, typename MergeOp>
+inline int findNext(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
     int pos = start;
     while (pos < gbit.N) {
         if ((pos & 1) == 0) {
@@ -278,8 +278,8 @@ inline int findNext(const GeneralizedBIT<T, BinOp>& gbit, int start, const funct
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
-template <typename T, typename BinOp>
-inline int findPrev(const GeneralizedBIT<T, BinOp>& gbit, int start, const function<bool(T)>& f) {
+template <typename T, typename MergeOp>
+inline int findPrev(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
     int pos = start + 1;
     while (pos > 0) {
         if ((pos & 1) == 0) {

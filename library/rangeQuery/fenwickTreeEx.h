@@ -2,32 +2,32 @@
 
 //--------- Extended Fenwick Tree ----------------------------------------------
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct FenwickTreeEx {
     vector<T> tree;
 
     T         defaultValue;
-    BinOp     mergeOp;
+    MergeOp   mergeOp;
 
-    explicit FenwickTreeEx(BinOp op, T dflt = T())
+    explicit FenwickTreeEx(MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
     }
 
-    FenwickTreeEx(int n, BinOp op, T dflt = T())
+    FenwickTreeEx(int n, MergeOp op, T dflt = T())
         : tree(n + 1, dflt), mergeOp(op), defaultValue(dflt) {
     }
 
-    FenwickTreeEx(T value, int n, BinOp op, T dflt = T())
+    FenwickTreeEx(T value, int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(value, n);
     }
 
-    FenwickTreeEx(const T arr[], int n, BinOp op, T dflt = T())
+    FenwickTreeEx(const T arr[], int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
     }
 
-    FenwickTreeEx(const vector<T>& v, BinOp op, T dflt = T())
+    FenwickTreeEx(const vector<T>& v, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(v);
     }
@@ -77,22 +77,22 @@ struct FenwickTreeEx {
     }
 };
 
-template <typename T, typename BinOp>
-FenwickTreeEx<T, BinOp> makeFenwickTreeEx(int size, BinOp op, T dfltValue = T()) {
-    return FenwickTreeEx<T, BinOp>(size, op, dfltValue);
+template <typename T, typename MergeOp>
+FenwickTreeEx<T, MergeOp> makeFenwickTreeEx(int size, MergeOp op, T dfltValue = T()) {
+    return FenwickTreeEx<T, MergeOp>(size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-FenwickTreeEx<T, BinOp> makeFenwickTreeEx(T value, int size, BinOp op, T dfltValue = T()) {
-    return FenwickTreeEx<T, BinOp>(value, size, op, dfltValue);
+template <typename T, typename MergeOp>
+FenwickTreeEx<T, MergeOp> makeFenwickTreeEx(T value, int size, MergeOp op, T dfltValue = T()) {
+    return FenwickTreeEx<T, MergeOp>(value, size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-FenwickTreeEx<T, BinOp> makeFenwickTreeEx(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return FenwickTreeEx<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+FenwickTreeEx<T, MergeOp> makeFenwickTreeEx(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return FenwickTreeEx<T, MergeOp>(arr, size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-FenwickTreeEx<T, BinOp> makeFenwickTreeEx(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return FenwickTreeEx<T, BinOp>(v, op, dfltValue);
+template <typename T, typename MergeOp>
+FenwickTreeEx<T, MergeOp> makeFenwickTreeEx(const vector<T>& v, MergeOp op, T dfltValue = T()) {
+    return FenwickTreeEx<T, MergeOp>(v, op, dfltValue);
 }

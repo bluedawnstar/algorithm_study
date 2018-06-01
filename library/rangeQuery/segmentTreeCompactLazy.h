@@ -6,7 +6,7 @@
 //--------- Compact Segment Tree - Lazy Update --------------------------------
 
 // It's faster than SegmentTreeLazy 2x
-template <typename T, typename BinOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
+template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct CompactSegmentTreeLazyUpdate {
     int         RealN;
     int         N;          // the size of array
@@ -16,29 +16,29 @@ struct CompactSegmentTreeLazyUpdate {
     vector<bool> lazyExist; // 
 
     T           defaultValue;
-    BinOp       mergeOp;
+    MergeOp     mergeOp;
     BlockOp     blockOp;
 
-    CompactSegmentTreeLazyUpdate(BinOp op, BlockOp bop, T dflt = T())
+    CompactSegmentTreeLazyUpdate(MergeOp op, BlockOp bop, T dflt = T())
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
     }
 
-    CompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTreeLazyUpdate(int size, MergeOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
         init(size, alignPowerOf2);
     }
 
-    CompactSegmentTreeLazyUpdate(T value, int n, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTreeLazyUpdate(T value, int n, MergeOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
         build(value, n, alignPowerOf2);
     }
 
-    CompactSegmentTreeLazyUpdate(const T arr[], int n, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTreeLazyUpdate(const T arr[], int n, MergeOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
         build(arr, n, alignPowerOf2);
     }
 
-    CompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTreeLazyUpdate(const vector<T>& v, MergeOp op, BlockOp bop, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {
         build(v, alignPowerOf2);
     }
@@ -185,22 +185,22 @@ struct CompactSegmentTreeLazyUpdate {
     }
 };
 
-template <typename T, typename BinOp, typename BlockOp>
-inline CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
-makeCompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
-    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(size, op, bop, dfltValue, alignPowerOf2);
+template <typename T, typename MergeOp, typename BlockOp>
+inline CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>
+makeCompactSegmentTreeLazyUpdate(int size, MergeOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>(size, op, bop, dfltValue, alignPowerOf2);
 }
 
-template <typename T, typename BinOp, typename BlockOp>
-inline CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
-makeCompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
-    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(v, op, bop, dfltValue, alignPowerOf2);
+template <typename T, typename MergeOp, typename BlockOp>
+inline CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>
+makeCompactSegmentTreeLazyUpdate(const vector<T>& v, MergeOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>(v, op, bop, dfltValue, alignPowerOf2);
 }
 
-template <typename T, typename BinOp, typename BlockOp>
-inline CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
-makeCompactSegmentTreeLazyUpdate(const T arr[], int size, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
-    return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(arr, size, op, bop, dfltValue, alignPowerOf2);
+template <typename T, typename MergeOp, typename BlockOp>
+inline CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>
+makeCompactSegmentTreeLazyUpdate(const T arr[], int size, MergeOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>(arr, size, op, bop, dfltValue, alignPowerOf2);
 }
 
 //-----------------------------------------------------------------------------
@@ -210,8 +210,8 @@ makeCompactSegmentTreeLazyUpdate(const T arr[], int size, BinOp op, BlockOp bop,
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
-template <typename T, typename BinOp, typename BlockOp>
-int findNext(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, const function<bool(T)>& f) {
+template <typename T, typename MergeOp, typename BlockOp>
+int findNext(CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>& st, int start, const function<bool(T)>& f) {
     int shiftN = 0;
     int cur = start + st.N;
 
@@ -248,8 +248,8 @@ int findNext(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, con
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
-template <typename T, typename BinOp, typename BlockOp>
-int findPrev(CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>& st, int start, const function<bool(T)>& f) {
+template <typename T, typename MergeOp, typename BlockOp>
+int findPrev(CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>& st, int start, const function<bool(T)>& f) {
     int shiftN = 0;
     int cur = start + st.N;
 

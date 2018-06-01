@@ -5,25 +5,25 @@
 
 //--------- Disjoint Sparse Table ---------------------------------------------
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct DisjointSparseTable {
     int                 RealN;
     int                 N;
     vector<vector<T>>   value;
     vector<int>         H;
     T                   defaultValue;
-    BinOp               mergeOp;
+    MergeOp             mergeOp;
 
-    explicit DisjointSparseTable(BinOp op, T dfltValue = T())
+    explicit DisjointSparseTable(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
     }
 
-    DisjointSparseTable(const T a[], int n, BinOp op, T dfltValue = T())
+    DisjointSparseTable(const T a[], int n, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a, n);
     }
 
-    DisjointSparseTable(const vector<T>& a, BinOp op, T dfltValue = T())
+    DisjointSparseTable(const vector<T>& a, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a);
     }
@@ -81,19 +81,19 @@ struct DisjointSparseTable {
     }
 };
 
-template <typename T, typename BinOp>
-inline DisjointSparseTable<T, BinOp> makeDisjointSparseTable(BinOp op, T dfltValue = T()) {
-    return DisjointSparseTable<T, BinOp>(op, dfltValue);
+template <typename T, typename MergeOp>
+inline DisjointSparseTable<T, MergeOp> makeDisjointSparseTable(MergeOp op, T dfltValue = T()) {
+    return DisjointSparseTable<T, MergeOp>(op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return DisjointSparseTable<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline DisjointSparseTable<T, MergeOp> makeDisjointSparseTable(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return DisjointSparseTable<T, MergeOp>(arr, size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
-    return DisjointSparseTable<T, BinOp>(arr, op, dfltValue);
+template <typename T, typename MergeOp>
+inline DisjointSparseTable<T, MergeOp> makeDisjointSparseTable(const vector<T>& arr, MergeOp op, T dfltValue = T()) {
+    return DisjointSparseTable<T, MergeOp>(arr, op, dfltValue);
 }
 
 /* example

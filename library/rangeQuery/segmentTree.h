@@ -44,33 +44,33 @@ struct LcmOp {
 
 // The first 'node' number is 1, not 0
 // Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') are started from 0
-template <typename T, typename BinOp = function<T(T,T)>>
+template <typename T, typename MergeOp = function<T(T,T)>>
 struct SegmentTree {
     int       N;            // the size of array
     vector<T> tree;         // 
 
     T         defaultValue;
-    BinOp     mergeOp;
+    MergeOp   mergeOp;
 
-    explicit SegmentTree(BinOp op, T dflt = T())
+    explicit SegmentTree(MergeOp op, T dflt = T())
         : N(0), tree(), mergeOp(op), defaultValue(dflt) {
     }
 
-    SegmentTree(int size, BinOp op, T dflt = T())
+    SegmentTree(int size, MergeOp op, T dflt = T())
         : N(size), tree(size * 4, dflt), mergeOp(op), defaultValue(dflt) {
     }
 
-    SegmentTree(T value, int n, BinOp op, T dflt = T())
+    SegmentTree(T value, int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(value, n);
     }
 
-    SegmentTree(const T arr[], int n, BinOp op, T dflt = T())
+    SegmentTree(const T arr[], int n, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n);
     }
 
-    SegmentTree(const vector<T>& v, BinOp op, T dflt = T())
+    SegmentTree(const vector<T>& v, MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {
         build(v);
     }
@@ -179,19 +179,19 @@ private:
     }
 };
 
-template <typename T, typename BinOp>
-inline SegmentTree<T, BinOp> makeSegmentTree(int size, BinOp op, T dfltValue = T()) {
-    return SegmentTree<T, BinOp>(size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SegmentTree<T, MergeOp> makeSegmentTree(int size, MergeOp op, T dfltValue = T()) {
+    return SegmentTree<T, MergeOp>(size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline SegmentTree<T, BinOp> makeSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return SegmentTree<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SegmentTree<T, MergeOp> makeSegmentTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return SegmentTree<T, MergeOp>(arr, size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline SegmentTree<T, BinOp> makeSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T()) {
-    return SegmentTree<T, BinOp>(v, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SegmentTree<T, MergeOp> makeSegmentTree(const vector<T>& v, MergeOp op, T dfltValue = T()) {
+    return SegmentTree<T, MergeOp>(v, op, dfltValue);
 }
 
 /* example

@@ -7,35 +7,35 @@
 // http://codeforces.com/blog/entry/18051
 
 // It's faster than SegmentTree 140x
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct CompactSegmentTree {
     int       RealN;
     int       N;            // the size of array
     vector<T> tree;         //
     
     T         defaultValue;
-    BinOp     mergeOp;
+    MergeOp   mergeOp;
     
-    explicit CompactSegmentTree(BinOp op, T dflt = T())
+    explicit CompactSegmentTree(MergeOp op, T dflt = T())
         : RealN(0), N(0), tree(), mergeOp(op), defaultValue(dflt) {
     }
 
-    CompactSegmentTree(int size, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTree(int size, MergeOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
         init(size, alignPowerOf2);
     }
 
-    CompactSegmentTree(T value, int n, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTree(T value, int n, MergeOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
         build(value, n, alignPowerOf2);
     }
 
-    CompactSegmentTree(const T arr[], int n, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTree(const T arr[], int n, MergeOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
         build(arr, n, alignPowerOf2);
     }
 
-    CompactSegmentTree(const vector<T>& v, BinOp op, T dflt = T(), bool alignPowerOf2 = false)
+    CompactSegmentTree(const vector<T>& v, MergeOp op, T dflt = T(), bool alignPowerOf2 = false)
         : mergeOp(op), defaultValue(dflt) {
         build(v, alignPowerOf2);
     }
@@ -140,19 +140,19 @@ struct CompactSegmentTree {
     }
 };
 
-template <typename T, typename BinOp>
-inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
-    return CompactSegmentTree<T, BinOp>(size, op, dfltValue, alignPowerOf2);
+template <typename T, typename MergeOp>
+inline CompactSegmentTree<T, MergeOp> makeCompactSegmentTree(int size, MergeOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTree<T, MergeOp>(size, op, dfltValue, alignPowerOf2);
 }
 
-template <typename T, typename BinOp>
-inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
-    return CompactSegmentTree<T, BinOp>(v, op, dfltValue, alignPowerOf2);
+template <typename T, typename MergeOp>
+inline CompactSegmentTree<T, MergeOp> makeCompactSegmentTree(const vector<T>& v, MergeOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTree<T, MergeOp>(v, op, dfltValue, alignPowerOf2);
 }
 
-template <typename T, typename BinOp>
-inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
-    return CompactSegmentTree<T, BinOp>(arr, size, op, dfltValue, alignPowerOf2);
+template <typename T, typename MergeOp>
+inline CompactSegmentTree<T, MergeOp> makeCompactSegmentTree(const T arr[], int size, MergeOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+    return CompactSegmentTree<T, MergeOp>(arr, size, op, dfltValue, alignPowerOf2);
 }
 
 //-----------------------------------------------------------------------------
@@ -162,8 +162,8 @@ inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int si
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
-template <typename T, typename BinOp>
-inline int findNext(const CompactSegmentTree<T,BinOp>& st, int start, const function<bool(T)>& f) {
+template <typename T, typename MergeOp>
+inline int findNext(const CompactSegmentTree<T,MergeOp>& st, int start, const function<bool(T)>& f) {
     int cur = start + st.N;
 
     while (true) {
@@ -193,8 +193,8 @@ inline int findNext(const CompactSegmentTree<T,BinOp>& st, int start, const func
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
-template <typename T, typename BinOp>
-inline int findPrev(const CompactSegmentTree<T, BinOp>& st, int start, const function<bool(T)>& f) {
+template <typename T, typename MergeOp>
+inline int findPrev(const CompactSegmentTree<T, MergeOp>& st, int start, const function<bool(T)>& f) {
     int cur = start + st.N;
 
     while (true) {

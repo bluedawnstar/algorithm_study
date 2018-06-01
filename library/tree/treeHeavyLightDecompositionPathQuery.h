@@ -2,21 +2,21 @@
 
 //--- HLDPathQuery with Segment Tree ------------------------------------------
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct HLDPathQuery {
     HeavyLightDecomposition& hld;
 
-    typedef CompactSegmentTree<T, BinOp> SegTreeT;
+    typedef CompactSegmentTree<T, MergeOp> SegTreeT;
 
     T                   defaultValue;
-    BinOp               mergeOp;
+    MergeOp             mergeOp;
     vector<SegTreeT>    segTrees;
 
     explicit HLDPathQuery(HeavyLightDecomposition& hld, T dflt = T()) : hld(hld), mergeOp(), defaultValue(dflt) {
         // no action
     }
 
-    HLDPathQuery(HeavyLightDecomposition& hld, BinOp op, T dflt = T()) : hld(hld), mergeOp(op), defaultValue(dflt) {
+    HLDPathQuery(HeavyLightDecomposition& hld, MergeOp op, T dflt = T()) : hld(hld), mergeOp(op), defaultValue(dflt) {
         // no action
     }
 
@@ -109,7 +109,7 @@ protected:
     }
 };
 
-template <typename T, typename BinOp>
-inline HLDPathQuery<T, BinOp> makeHLDPathQuery(HeavyLightDecomposition& hld, BinOp op, T dfltValue = T()) {
-    return HLDPathQuery<T, BinOp>(hld, op, dfltValue);
+template <typename T, typename MergeOp>
+inline HLDPathQuery<T, MergeOp> makeHLDPathQuery(HeavyLightDecomposition& hld, MergeOp op, T dfltValue = T()) {
+    return HLDPathQuery<T, MergeOp>(hld, op, dfltValue);
 }

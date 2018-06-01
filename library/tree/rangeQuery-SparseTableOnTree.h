@@ -8,7 +8,7 @@
     4) call query functions
 */
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct SparseTableOnTree {
     int                 N;          // the number of vertex
     int                 logN;       // log2(N - 1) + 2
@@ -22,13 +22,13 @@ struct SparseTableOnTree {
     vector<vector<T>>   value;
     vector<int>         H;
     T                   defaultValue;
-    BinOp               mergeOp;
+    MergeOp             mergeOp;
 
-    explicit SparseTableOnTree(BinOp op, T dfltValue = T())
+    explicit SparseTableOnTree(MergeOp op, T dfltValue = T())
         : N(0), logN(0), mergeOp(op), defaultValue(dfltValue) {
     }
 
-    explicit SparseTableOnTree(int n, BinOp op, T dfltValue = T())
+    explicit SparseTableOnTree(int n, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         init(n, 0);
     }
@@ -230,12 +230,12 @@ private:
     }
 };
 
-template <typename T, typename BinOp>
-SparseTableOnTree<T, BinOp> makeSparseTableOnTree(BinOp op, T dfltValue = T()) {
-    return SparseTableOnTree<T, BinOp>(op, dfltValue);
+template <typename T, typename MergeOp>
+inline SparseTableOnTree<T, MergeOp> makeSparseTableOnTree(MergeOp op, T dfltValue = T()) {
+    return SparseTableOnTree<T, MergeOp>(op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-SparseTableOnTree<T, BinOp> makeSparseTableOnTree(int n, BinOp op, T dfltValue = T()) {
-    return SparseTableOnTree<T, BinOp>(n, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SparseTableOnTree<T, MergeOp> makeSparseTableOnTree(int n, MergeOp op, T dfltValue = T()) {
+    return SparseTableOnTree<T, MergeOp>(n, op, dfltValue);
 }

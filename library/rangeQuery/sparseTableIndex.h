@@ -5,26 +5,26 @@
 
 //--------- General Sparse Table ----------------------------------------------
 
-template <typename T, typename BinOp = function<T(T, T)>>
+template <typename T, typename MergeOp = function<T(T, T)>>
 struct SparseTableIndex {
     int                 N;
     vector<vector<int>> value;          // index to 'in'
     vector<int>         H;
     T                   defaultValue;
-    BinOp               mergeOp;
+    MergeOp             mergeOp;
 
     vector<T>           in;
 
-    explicit SparseTableIndex(BinOp op, T dfltValue = T())
+    explicit SparseTableIndex(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
     }
 
-    SparseTableIndex(const T a[], int n, BinOp op, T dfltValue = T())
+    SparseTableIndex(const T a[], int n, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a, n);
     }
 
-    SparseTableIndex(const vector<T>& a, BinOp op, T dfltValue = T())
+    SparseTableIndex(const vector<T>& a, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a);
     }
@@ -117,14 +117,14 @@ struct SparseTableIndex {
     }
 };
 
-template <typename T, typename BinOp>
-inline SparseTableIndex<T, BinOp> makeSparseTableIndex(const vector<T>& arr, int size, BinOp op, T dfltValue = T()) {
-    return SparseTableIndex<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SparseTableIndex<T, MergeOp> makeSparseTableIndex(const vector<T>& arr, int size, MergeOp op, T dfltValue = T()) {
+    return SparseTableIndex<T, MergeOp>(arr, size, op, dfltValue);
 }
 
-template <typename T, typename BinOp>
-inline SparseTableIndex<T, BinOp> makeSparseTableIndex(const T arr[], int size, BinOp op, T dfltValue = T()) {
-    return SparseTableIndex<T, BinOp>(arr, size, op, dfltValue);
+template <typename T, typename MergeOp>
+inline SparseTableIndex<T, MergeOp> makeSparseTableIndex(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return SparseTableIndex<T, MergeOp>(arr, size, op, dfltValue);
 }
 
 /* example
