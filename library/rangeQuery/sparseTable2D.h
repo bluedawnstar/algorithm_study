@@ -136,7 +136,7 @@ struct SparseTable2D {
 };
 
 template <typename T, typename BinOp>
-SparseTable2D<T, BinOp> makeSparseTable2D(const vector<vector<T>>& arr, BinOp op, T dfltValue = T()) {
+inline SparseTable2D<T, BinOp> makeSparseTable2D(const vector<vector<T>>& arr, BinOp op, T dfltValue = T()) {
     return SparseTable2D<T, BinOp>(arr, op, dfltValue);
 }
 

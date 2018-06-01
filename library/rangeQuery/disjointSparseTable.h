@@ -82,17 +82,17 @@ struct DisjointSparseTable {
 };
 
 template <typename T, typename BinOp>
-DisjointSparseTable<T, BinOp> makeDisjointSparseTable(BinOp op, T dfltValue = T()) {
+inline DisjointSparseTable<T, BinOp> makeDisjointSparseTable(BinOp op, T dfltValue = T()) {
     return DisjointSparseTable<T, BinOp>(op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
+inline DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return DisjointSparseTable<T, BinOp>(arr, size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
+inline DisjointSparseTable<T, BinOp> makeDisjointSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
     return DisjointSparseTable<T, BinOp>(arr, op, dfltValue);
 }
 

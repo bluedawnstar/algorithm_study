@@ -99,12 +99,12 @@ struct SparseTable {
 };
 
 template <typename T, typename BinOp>
-SparseTable<T, BinOp> makeSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
+inline SparseTable<T, BinOp> makeSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
     return SparseTable<T, BinOp>(arr, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-SparseTable<T, BinOp> makeSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
+inline SparseTable<T, BinOp> makeSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return SparseTable<T, BinOp>(arr, size, op, dfltValue);
 }
 

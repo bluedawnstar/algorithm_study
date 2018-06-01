@@ -158,16 +158,16 @@ struct CompactSegmentTreeLazyAdd {
 };
 
 template <typename T, typename BinOp>
-CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(int size, BinOp op, T dfltValue = T()) {
+inline CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(int size, BinOp op, T dfltValue = T()) {
     return CompactSegmentTreeLazyAdd<T, BinOp>(size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const vector<T>& v, BinOp op, T dfltValue = T()) {
+inline CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const vector<T>& v, BinOp op, T dfltValue = T()) {
     return CompactSegmentTreeLazyAdd<T, BinOp>(v, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const T arr[], int size, BinOp op, T dfltValue = T()) {
+inline CompactSegmentTreeLazyAdd<T, BinOp> makeCompactSegmentTreeLazyAdd(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return CompactSegmentTreeLazyAdd<T, BinOp>(arr, size, op, dfltValue);
 }

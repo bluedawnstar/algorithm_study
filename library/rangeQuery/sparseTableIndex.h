@@ -118,12 +118,12 @@ struct SparseTableIndex {
 };
 
 template <typename T, typename BinOp>
-SparseTableIndex<T, BinOp> makeSparseTableIndex(const vector<T>& arr, int size, BinOp op, T dfltValue = T()) {
+inline SparseTableIndex<T, BinOp> makeSparseTableIndex(const vector<T>& arr, int size, BinOp op, T dfltValue = T()) {
     return SparseTableIndex<T, BinOp>(arr, size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-SparseTableIndex<T, BinOp> makeSparseTableIndex(const T arr[], int size, BinOp op, T dfltValue = T()) {
+inline SparseTableIndex<T, BinOp> makeSparseTableIndex(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return SparseTableIndex<T, BinOp>(arr, size, op, dfltValue);
 }
 

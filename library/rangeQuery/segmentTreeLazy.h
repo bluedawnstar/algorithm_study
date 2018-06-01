@@ -178,18 +178,18 @@ private:
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return SegmentTreeLazy<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     auto segTree = SegmentTreeLazy<T, MergeOp, BlockOp>(v, mop, bop, dfltValue);
     return segTree;
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline SegmentTreeLazy<T, MergeOp, BlockOp> makeSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     auto segTree = SegmentTreeLazy<T, MergeOp, BlockOp>(arr, size, mop, bop, dfltValue);
     return segTree;
 }

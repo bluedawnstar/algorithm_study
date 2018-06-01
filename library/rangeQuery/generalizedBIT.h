@@ -156,17 +156,17 @@ private:
 };
 
 template <typename T, typename BinOp>
-GeneralizedBIT<T, BinOp> makeGeneralizedBIT(int size, BinOp op, T dfltValue = T()) {
+inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(int size, BinOp op, T dfltValue = T()) {
     return GeneralizedBIT<T, BinOp>(size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const T arr[], int size, BinOp op, T dfltValue = T()) {
+inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return GeneralizedBIT<T, BinOp>(arr, size, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const vector<T>& v, BinOp op, T dfltValue = T()) {
+inline GeneralizedBIT<T, BinOp> makeGeneralizedBIT(const vector<T>& v, BinOp op, T dfltValue = T()) {
     return GeneralizedBIT<T, BinOp>(v, op, dfltValue);
 }
 

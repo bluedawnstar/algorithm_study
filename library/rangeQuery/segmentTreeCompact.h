@@ -141,17 +141,17 @@ struct CompactSegmentTree {
 };
 
 template <typename T, typename BinOp>
-CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
     return CompactSegmentTree<T, BinOp>(size, op, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp>
-CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const vector<T>& v, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
     return CompactSegmentTree<T, BinOp>(v, op, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp>
-CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
+inline CompactSegmentTree<T, BinOp> makeCompactSegmentTree(const T arr[], int size, BinOp op, T dfltValue = T(), bool alignPowerOf2 = false) {
     return CompactSegmentTree<T, BinOp>(arr, size, op, dfltValue, alignPowerOf2);
 }
 

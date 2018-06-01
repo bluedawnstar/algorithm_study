@@ -332,16 +332,16 @@ private:
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(v, mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(arr, size, mop, bop, dfltValue);
 }

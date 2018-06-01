@@ -186,19 +186,19 @@ struct CompactSegmentTreeLazyUpdate {
 };
 
 template <typename T, typename BinOp, typename BlockOp>
-CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
+inline CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
 makeCompactSegmentTreeLazyUpdate(int size, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
     return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(size, op, bop, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp, typename BlockOp>
-CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
+inline CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
 makeCompactSegmentTreeLazyUpdate(const vector<T>& v, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
     return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(v, op, bop, dfltValue, alignPowerOf2);
 }
 
 template <typename T, typename BinOp, typename BlockOp>
-CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
+inline CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>
 makeCompactSegmentTreeLazyUpdate(const T arr[], int size, BinOp op, BlockOp bop, T dfltValue = T(), bool alignPowerOf2 = false) {
     return CompactSegmentTreeLazyUpdate<T, BinOp, BlockOp>(arr, size, op, bop, dfltValue, alignPowerOf2);
 }

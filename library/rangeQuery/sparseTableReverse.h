@@ -94,12 +94,12 @@ struct ReverseSparseTable {
 };
 
 template <typename T, typename BinOp>
-ReverseSparseTable<T, BinOp> makeReverseSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
+inline ReverseSparseTable<T, BinOp> makeReverseSparseTable(const vector<T>& arr, BinOp op, T dfltValue = T()) {
     return ReverseSparseTable<T, BinOp>(arr, op, dfltValue);
 }
 
 template <typename T, typename BinOp>
-ReverseSparseTable<T, BinOp> makeReverseSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
+inline ReverseSparseTable<T, BinOp> makeReverseSparseTable(const T arr[], int size, BinOp op, T dfltValue = T()) {
     return ReverseSparseTable<T, BinOp>(arr, size, op, dfltValue);
 }
 
