@@ -237,6 +237,6 @@ private:
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-BlockTree<T, MergeOp, BlockOp> makeBlockTree(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline BlockTree<T, MergeOp, BlockOp> makeBlockTree(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return BlockTree<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
 }

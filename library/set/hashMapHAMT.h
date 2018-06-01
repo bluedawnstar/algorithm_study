@@ -3,6 +3,8 @@
 #include <cassert>
 #include "../memory/fixedSizeAllocator.h"
 
+//!!! Not completed
+
 struct HAMTConfig {
     //* for bitmap
     //typedef unsigned int BitmapT;

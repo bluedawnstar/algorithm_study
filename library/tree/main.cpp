@@ -9,6 +9,9 @@ int main(void) {
     TEST(TreeBasic);
     TEST(HeavyLightDecomposition);
     TEST(DfsTour);
+    TEST(DfsTourTreePathSum);
+    TEST(DfsTourTreeSubtreeSum);
+    TEST(DfsTourTreeSubtreeUpdate);
     TEST(EulerTour);
     TEST(TreeMO);
     TEST(LcaSparseTable);

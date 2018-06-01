@@ -114,6 +114,15 @@
     <ClCompile Include="treeSqrtDecompositionPathQueryDynamic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeDfsTourPathSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeDfsTourSubtreeSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeDfsTourSubtreeUpdate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -222,6 +231,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeSqrtDecompositionPathQueryDynamic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeDfsTourPathSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeDfsTourSubtreeSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeDfsTourSubtreeUpdate.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

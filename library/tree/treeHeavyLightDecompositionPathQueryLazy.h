@@ -153,6 +153,6 @@ protected:
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-HLDPathQueryLazy<T, MergeOp, BlockOp> makeHLDPathQueryLazy(HeavyLightDecomposition& hld, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline HLDPathQueryLazy<T, MergeOp, BlockOp> makeHLDPathQueryLazy(HeavyLightDecomposition& hld, MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return HLDPathQueryLazy<T, MergeOp, BlockOp>(hld, mop, bop, dfltValue);
 }

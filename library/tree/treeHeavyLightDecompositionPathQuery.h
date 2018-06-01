@@ -110,6 +110,6 @@ protected:
 };
 
 template <typename T, typename BinOp>
-HLDPathQuery<T, BinOp> makeHLDPathQuery(HeavyLightDecomposition& hld, BinOp op, T dfltValue = T()) {
+inline HLDPathQuery<T, BinOp> makeHLDPathQuery(HeavyLightDecomposition& hld, BinOp op, T dfltValue = T()) {
     return HLDPathQuery<T, BinOp>(hld, op, dfltValue);
 }

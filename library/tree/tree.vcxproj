@@ -156,6 +156,9 @@
     <ClCompile Include="rangeQuery-SparseTableOnTree.cpp" />
     <ClCompile Include="scapegoatTree.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
+    <ClCompile Include="treeDfsTourPathSum.cpp" />
+    <ClCompile Include="treeDfsTourSubtreeSum.cpp" />
+    <ClCompile Include="treeDfsTourSubtreeUpdate.cpp" />
     <ClCompile Include="treeEulerTour.cpp" />
     <ClCompile Include="intervalTree.cpp" />
     <ClCompile Include="kdTree.cpp" />
@@ -194,6 +197,9 @@
     <ClInclude Include="splayTreeRangeQuery.h" />
     <ClInclude Include="treapRangeQuery.h" />
     <ClInclude Include="treeDfsTour.h" />
+    <ClInclude Include="treeDfsTourPathSum.h" />
+    <ClInclude Include="treeDfsTourSubtreeSum.h" />
+    <ClInclude Include="treeDfsTourSubtreeUpdate.h" />
     <ClInclude Include="treeEulerTour.h" />
     <ClInclude Include="intervalTree.h" />
     <ClInclude Include="kdTree.h" />
