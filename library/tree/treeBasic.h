@@ -197,6 +197,21 @@ struct Tree {
         return P[0][A];
     }
 
+    // find LCA when the root is different
+    int findLCA(int root, int A, int B) {
+        int lca = findLCA(A, B);
+
+        int temp = findLCA(A, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        temp = findLCA(B, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        return lca;
+    }
+
     //--- Centroid ------------------------------------------------------------
 
     int findCentroid(int u, int parent, int N) {

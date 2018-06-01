@@ -42,7 +42,7 @@ struct DfsTourTreeSubtreeUpdate : public Tree {
     //-- update
 
     void update(int u, T value) {
-        seg.updateRange(visTime[u].first, visTime[u].second, value);
+        seg.updateRange(visTime[u].first, visTime[u].second, value);    // update the subtree of u
     }
 
     //--- query
