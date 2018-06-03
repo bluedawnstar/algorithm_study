@@ -2,6 +2,7 @@
 
 #include "gcd.h"
 
+
 //--- int version -------------------------------
 
 inline int modAdd(int a, int b, int M) {
@@ -16,6 +17,8 @@ inline int modMul(int a, int b, int M) {
     return int((long long)(a % M) * (b % M) % M);
 }
 
+#if 0
+// recursive version
 inline int modPow(int x, int n, int M) {
     if (n == 0)
         return 1;
@@ -25,6 +28,22 @@ inline int modPow(int x, int n, int M) {
 
     return ((n & 1) == 0) ? p : int((long long)p * x % M);
 }
+#else
+// iterative version
+inline int modPow(int x, int n, int M) {
+    if (n == 0)
+        return 1;
+
+    long long t = x % M;
+    int res = 1;
+    for (; n > 0; n >>= 1) {
+        if (n & 1)
+            res = int(res * t % M);
+        t = t * t % M;
+    }
+    return res;
+}
+#endif
 
 // M is a prime number
 inline int modPowPrime(int x, long long n, int M) {
@@ -145,6 +164,8 @@ inline long long modMul2(long long a, long long b, long long M) {
 #endif
 }
 
+#if 0
+// recursive version
 inline long long modPow(long long x, long long n, long long M) {
 #ifdef __GNUC__
     if (n == 0)
@@ -164,6 +185,31 @@ inline long long modPow(long long x, long long n, long long M) {
     return ((n & 1) == 0) ? p : modMul(p, x, M);
 #endif
 }
+#else
+// iterative version
+inline long long modPow(long long x, long long n, long long M) {
+    if (n == 0)
+        return 1ll;
+
+    long long res = 1ll;
+#ifdef __GNUC__
+    long long t = x % M;
+    for (; n > 0; n >>= 1) {
+        if (n & 1)
+            res = (long long)((__int128_t)t * res % M);
+        t = (long long)((__int128_t)t * t % M);
+    }
+#else
+    long long t = x % M;
+    for (; n > 0; n >>= 1) {
+        if (n & 1)
+            res = modMul(res, t, M);
+        t = modMul(t, t, M);
+    }
+#endif
+    return res;
+}
+#endif
 
 // M is a prime number
 inline long long modPowPrime(long long x, long long n, long long M) {
