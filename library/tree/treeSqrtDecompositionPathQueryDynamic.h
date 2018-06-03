@@ -106,6 +106,23 @@ struct DynamicTreeSqrtDecompositionPathQuery {
     }
 
     // worst case O(N)
+    void updateSubtree(int u, const T& val) {
+        dfsUpdateSubtree(u, parent[u], val);
+    }
+
+    // worst case O(N)
+    void add(int u, const T& val) {
+        values[u] += val;
+        dfsUpdate(u, parent[u]);
+    }
+
+    // worst case O(N)
+    void addSubtree(int u, const T& val) {
+        dfsAddSubtree(u, parent[u], val);
+    }
+
+
+    // worst case O(N)
     // PRECONDITION: u must be not root
     // PRECONDITION: newParent >= 0
     void changeParent(int u, int newParent) {
@@ -232,6 +249,33 @@ protected:
                 dfsUpdate(v, u);
         }
     }
+
+    void dfsUpdateSubtree(int u, int par, const T& val) {
+        values[u] = val;
+        if (level[u] % sqrtN == 0)
+            sqrtValues[u] = values[u];
+        else
+            sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
+
+        for (auto v : edges[u]) {
+            if (v != par)
+                dfsUpdateSubtree(v, u, val);
+        }
+    }
+
+    void dfsAddSubtree(int u, int par, const T& val) {
+        values[u] += val;
+        if (level[u] % sqrtN == 0)
+            sqrtValues[u] = values[u];
+        else
+            sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
+
+        for (auto v : edges[u]) {
+            if (v != par)
+                dfsAddSubtree(v, u, val);
+        }
+    }
+
 
     int lcaNaive(int u, int v) const {
         if (u == v)
