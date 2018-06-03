@@ -202,8 +202,10 @@ struct LinkCutTreePathQuery {
     }
 
     T queryToAncestor(Node* v, Node* ancestor) {
-        if (v == ancestor)
+        if (v == ancestor) {
+            access(v);
             return v->value;
+        }
 
         access(ancestor);
         access(v);
@@ -223,8 +225,10 @@ struct LinkCutTreePathQuery {
     }
 
     T query(Node* v, Node* u) {
-        if (v == u)
+        if (v == u) {
+            access(v);
             return v->value;
+        }
 
         Node* lc = lca(v, u);
         if (lc == v)
