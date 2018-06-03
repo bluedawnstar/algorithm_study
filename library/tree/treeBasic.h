@@ -197,7 +197,7 @@ struct Tree {
         return P[0][A];
     }
 
-    // find LCA when the root is different
+    // find LCA when the root is changed
     int findLCA(int root, int A, int B) {
         int lca = findLCA(A, B);
 

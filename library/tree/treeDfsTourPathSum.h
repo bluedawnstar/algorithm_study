@@ -51,6 +51,10 @@ struct DfsTourTreePathSum : public Tree {
 
     //--- query
 
+    T query(int u) {
+        return ft.get(visTime[u].first);
+    }
+
     T query(int u, int v) {
         int lc = findLCA(u, v);
         return ft.sum(visTime[u].first) + ft.sum(visTime[v].first) - ft.sum(visTime[lc].first) * 2 + ft.get(visTime[lc].first);
@@ -117,3 +121,34 @@ private:
         }
     }
 };
+
+// tree connectivity test
+
+// PRECONDITION: u-v is directly connected
+template <typename T>
+inline void breakEdge(DfsTourTreePathSum<T>& connectivityTestTree, int u, int v) {
+    if (u < 0 || v < 0)
+        return;
+    if (connectivityTestTree.level[u] > connectivityTestTree.level[v])
+        swap(u, v);
+    if (connectivityTestTree.query(v) == 0)
+        connectivityTestTree.add(v, 1);
+}
+
+// PRECONDITION: u-v is directly connected
+template <typename T>
+inline void recoverEdge(DfsTourTreePathSum<T>& connectivityTestTree, int u, int v) {
+    if (u < 0 || v < 0)
+        return;
+    if (connectivityTestTree.level[u] > connectivityTestTree.level[v])
+        swap(u, v);
+    if (connectivityTestTree.query(v) != 0)
+        connectivityTestTree.add(v, -1);
+}
+
+template <typename T>
+inline bool isConnected(DfsTourTreePathSum<T>& connectivityTestTree, int u, int v) {
+    if (u == v)
+        return true;
+    return connectivityTestTree.queryExcludeLCA(u, v) == 0;
+}
