@@ -46,7 +46,7 @@ static int dfsMax(DfsTourTreeSubtreeUpdate<int>& tree, vector<int>& values, int 
 }
 
 void testDfsTourTreeSubtreeUpdate() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Tree Subtree Update -----------------------------" << endl;
     {

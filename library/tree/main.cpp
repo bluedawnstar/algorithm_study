@@ -36,7 +36,7 @@ int main(void) {
     TEST(MetricTree);
     TEST(BlockTree);
     TEST(SparseTableOnTree);
-    TEST(TreeSqrtDecomposition);
+    TEST(TreeSqrtDecompositionLCA);
     TEST(TreeSqrtDecompositionPathQuery);
     TEST(DynamicTreeSqrtDecompositionPathQuery);
 

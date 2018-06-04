@@ -105,9 +105,6 @@
     <ClCompile Include="benchmarkBST.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="treeSqrtDecomposition.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="treeSqrtDecompositionPathQuery.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -121,6 +118,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="treeDfsTourSubtreeUpdate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeSqrtDecompositionLCA.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -224,9 +224,6 @@
     <ClInclude Include="scapegoatTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="treeSqrtDecomposition.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="treeSqrtDecompositionPathQuery.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -240,6 +237,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeDfsTourSubtreeUpdate.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeSqrtDecompositionLCA.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

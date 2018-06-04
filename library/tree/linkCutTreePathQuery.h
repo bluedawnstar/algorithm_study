@@ -25,7 +25,7 @@ struct LinkCutTreePathQuery {
         T       lazyValue;      // 
     };
 
-    void initNode(Node* node, const T& dfltVal) {
+    void initNode(Node* node, T dfltVal) {
         node->pathParent = nullptr;
         node->parent = node->left = node->right = nullptr;
         node->cnt = 1;
@@ -253,20 +253,20 @@ struct LinkCutTreePathQuery {
 
     //--- update
 
-    void update(Node* v, const T& value) {
+    void update(Node* v, T value) {
         access(v);
         v->value = value;
         update(v);
     }
 
-    void add(Node* v, const T& value) {
+    void add(Node* v, T value) {
         access(v);
         v->value += value;
         update(v);
     }
 
 
-    void updateRangeToAncestor(Node* v, Node* ancestor, const T& value) {
+    void updateRangeToAncestor(Node* v, Node* ancestor, T value) {
         if (v == ancestor) {
             update(v, value);
             return;
@@ -295,7 +295,7 @@ struct LinkCutTreePathQuery {
         update(ancestor);
     }
 
-    void updateRange(Node* v, Node* u, const T& value) {
+    void updateRange(Node* v, Node* u, T value) {
         if (v == u) {
             update(v, value);
             return;
@@ -313,7 +313,7 @@ struct LinkCutTreePathQuery {
     }
 
 
-    void addRangeToAncestor(Node* v, Node* ancestor, const T& value) {
+    void addRangeToAncestor(Node* v, Node* ancestor, T value) {
         if (v == ancestor) {
             add(v, value);
             return;
@@ -343,7 +343,7 @@ struct LinkCutTreePathQuery {
         update(ancestor);
     }
 
-    void addRange(Node* v, Node* u, const T& value) {
+    void addRange(Node* v, Node* u, T value) {
         if (v == u) {
             add(v, value);
             return;
@@ -580,29 +580,29 @@ struct LinkCutTreePathQueryArray : public LinkCutTreePathQuery<T, MergeOp, Block
 
     //--- update
 
-    void update(int v, const T& value) {
+    void update(int v, T value) {
         LinkCutTreeT::update(&nodes[v], value);
     }
 
-    void add(int v, const T& value) {
+    void add(int v, T value) {
         LinkCutTreeT::add(&nodes[v], value);
     }
 
 
-    void updateRangeToAncestor(int v, int ancestor, const T& value) {
+    void updateRangeToAncestor(int v, int ancestor, T value) {
         LinkCutTreeT::updateRangeToAncestor(&nodes[v], &nodes[ancestor], value);
     }
 
-    void updateRange(int v, int u, const T& value) {
+    void updateRange(int v, int u, T value) {
         LinkCutTreeT::updateRange(&nodes[v], &nodes[u], value);
     }
 
 
-    void addRangeToAncestor(int v, int ancestor, const T& value) {
+    void addRangeToAncestor(int v, int ancestor, T value) {
         LinkCutTreeT::addRangeToAncestor(&nodes[v], &nodes[ancestor], value);
     }
 
-    void addRange(int v, int u, const T& value) {
+    void addRange(int v, int u, T value) {
         LinkCutTreeT::addRange(&nodes[v], &nodes[u], value);
     }
 

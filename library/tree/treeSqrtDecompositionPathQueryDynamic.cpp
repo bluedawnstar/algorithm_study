@@ -97,7 +97,7 @@ static int climbKthNaive(DynamicTreeSqrtDecompositionPathQuery<int, MergeOp>& tr
 }
 
 void testDynamicTreeSqrtDecompositionPathQuery() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    //return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Dynamic Tree with Sqrt Decomposition and Path Query ---------------------" << endl;
     // basic test
@@ -111,14 +111,14 @@ void testDynamicTreeSqrtDecompositionPathQuery() {
         vector<int> values(N);
 
         values[0] = RandInt32::get() & 1;
-        treeSqrt.setValue(0, values[0]);
+        treeSqrt.setInitValue(0, values[0]);
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
             tree.addEdge(u, v);
             treeSqrt.addEdge(u, v);
 
             values[v] = RandInt32::get() & 1;
-            treeSqrt.setValue(v, values[v]);
+            treeSqrt.setInitValue(v, values[v]);
         }
 
         tree.build(0);
@@ -163,13 +163,13 @@ void testDynamicTreeSqrtDecompositionPathQuery() {
         vector<int> values(N);
 
         values[0] = RandInt32::get() & 1;
-        treeSqrt.setValue(0, values[0]);
+        treeSqrt.setInitValue(0, values[0]);
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
             treeSqrt.addEdge(u, v);
 
             values[v] = RandInt32::get() & 1;
-            treeSqrt.setValue(v, values[v]);
+            treeSqrt.setInitValue(v, values[v]);
         }
 
         treeSqrt.build(0);

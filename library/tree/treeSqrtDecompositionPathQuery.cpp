@@ -62,7 +62,7 @@ static int climbKthNaive(Tree& tree, int u, int kth, vector<int>& values) {
 }
 
 void testTreeSqrtDecompositionPathQuery() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    //return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Tree with Sqrt Decomposition and Path Query ---------------------" << endl;
     {
@@ -75,14 +75,14 @@ void testTreeSqrtDecompositionPathQuery() {
         vector<int> values(N);
 
         values[0] = RandInt32::get() & 1;
-        treeSqrt.setValue(0, values[0]);
+        treeSqrt.setInitValue(0, values[0]);
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
             tree.addEdge(u, v);
             treeSqrt.addEdge(u, v);
 
             values[v] = RandInt32::get() & 1;
-            treeSqrt.setValue(v, values[v]);
+            treeSqrt.setInitValue(v, values[v]);
         }
 
         tree.build(0);

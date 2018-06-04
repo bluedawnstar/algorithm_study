@@ -17,11 +17,11 @@ struct TreeSqrtDecompositionPathQuery {
     T                   defaultValue;   // 
     MergeOp             mergeOp;        // 
 
-    TreeSqrtDecompositionPathQuery(MergeOp op, T dflt = T())
+    explicit TreeSqrtDecompositionPathQuery(const MergeOp& op, T dflt = T())
         : N(0), sqrtN(0), mergeOp(op), defaultValue(dflt) {
     }
 
-    explicit TreeSqrtDecompositionPathQuery(int n, MergeOp op, T dflt = T(), int sqrtN = 0)
+    TreeSqrtDecompositionPathQuery(int n, const MergeOp& op, T dflt = T(), int sqrtN = 0)
         : mergeOp(op), defaultValue(dflt) {
         init(n, sqrtN);
     }
@@ -50,7 +50,7 @@ struct TreeSqrtDecompositionPathQuery {
     }
 
     // before calling build()
-    void setValue(int u, const T& value) {
+    void setInitValue(int u, T value) {
         values[u] = value;
     }
 
@@ -61,7 +61,7 @@ struct TreeSqrtDecompositionPathQuery {
 
     //--- lca
 
-    // O(sqrt(H))
+    // O(sqrt(N))
     int lca(int u, int v) const {
         while (jump[u] != jump[v]) {
             if (level[u] > level[v])
@@ -71,7 +71,7 @@ struct TreeSqrtDecompositionPathQuery {
         return lcaNaive(u, v);
     }
 
-    // dist >= 0, O(sqrt(H))
+    // dist >= 0, O(sqrt(N))
     int climb(int u, int dist) const {
         int p = jump[u];
         while (p >= 0 && (level[u] - level[p]) <= dist) {
@@ -82,7 +82,7 @@ struct TreeSqrtDecompositionPathQuery {
         return climbNaive(u, dist);
     }
 
-    // kth >= 1, O(sqrt(H))
+    // kth >= 1, O(sqrt(N))
     // count = valueToCountF(index_of_node, value_or_sqrt_value_of_the_node)
     int climbKth(int u, int kth, const function<int(T)>& valueToCountF) const {
         int p = jump[u];
@@ -97,33 +97,34 @@ struct TreeSqrtDecompositionPathQuery {
 
     //--- update
 
-    // worst case O(N)
-    void update(int u, const T& val) {
+    // O(sqrt(N))
+    void update(int u, T val) {
         if (values[u] != val) {
             values[u] = val;
-            dfsUpdate(u, parent[u]);
+            dfsUpdateSqrt(u, parent[u]);
         }
     }
 
+    // O(sqrt(N))
+    void add(int u, T val) {
+        values[u] += val;
+        dfsUpdateSqrt(u, parent[u]);
+    }
+
+
     // worst case O(N)
-    void updateSubtree(int u, const T& val) {
+    void updateSubtree(int u, T val) {
         dfsUpdateSubtree(u, parent[u], val);
     }
 
     // worst case O(N)
-    void add(int u, const T& val) {
-        values[u] += val;
-        dfsUpdate(u, parent[u]);
-    }
-
-    // worst case O(N)
-    void addSubtree(int u, const T& val) {
+    void addSubtree(int u, T val) {
         dfsAddSubtree(u, parent[u], val);
     }
 
     //--- query
 
-    // O(sqrt(H))
+    // O(sqrt(N))
     T queryToRoot(int u) const {
         T res = sqrtValues[u];
         int p = jump[u];
@@ -134,7 +135,7 @@ struct TreeSqrtDecompositionPathQuery {
         return res;
     }
 
-    // O(sqrt(H))
+    // O(sqrt(N))
     T queryToAncestor(int u, int ancestor) const {
         T res = defaultValue;
         while (jump[u] != jump[ancestor]) {
@@ -144,7 +145,7 @@ struct TreeSqrtDecompositionPathQuery {
         return mergeOp(res, queryToAncestorNaive(u, ancestor));
     }
 
-    // dist >= 0, O(sqrt(H))
+    // dist >= 0, O(sqrt(N))
     T queryTowardRoot(int u, int dist) const {
         T res = defaultValue;
         int p = jump[u];
@@ -157,25 +158,32 @@ struct TreeSqrtDecompositionPathQuery {
         return mergeOp(res, queryTowardRootNaive(u, dist));
     }
 
-    // O(sqrt(H))
+    // O(sqrt(N))
     T query(int u, int v) const {
         if (u == v)
             return values[u];
 
-        if (level[u] > level[v])
-            swap(u, v);
+        T res = defaultValue;
+        while (jump[u] != jump[v]) {
+            if (level[u] > level[v])
+                swap(u, v);
+            res = mergeOp(res, sqrtValues[v]);
+            v = jump[v];
+        }
 
-        int lc = lca(u, v);
+        int lc = lcaNaive(u, v);
         if (lc == u)
-            return queryToAncestor(v, u);
-
-        return mergeOp(queryToAncestor(u, lc), queryTowardRoot(v, level[v] - level[lc] - 1));
+            return mergeOp(res, queryToAncestorNaive(v, u));
+        else if (lc == v)
+            return mergeOp(res, queryToAncestorNaive(u, v));
+        else
+            return mergeOp(res, mergeOp(queryToAncestorNaive(u, lc), queryTowardRootNaive(v, level[v] - level[lc] - 1)));
     }
 
     //--- for accumulative operation
     // Use this functions when MergeOp is 'add' (supporting subtraction)
 
-    // O(sqrt(H))
+    // O(sqrt(N))
     T queryToAncestorAccumulative(int u, int ancestor) const {
         T res = defaultValue;
         while (jump[u] != jump[ancestor]) {
@@ -185,19 +193,21 @@ struct TreeSqrtDecompositionPathQuery {
         return mergeOp(res, sqrtValues[u] - sqrtValues[ancestor] + values[ancestor]);
     }
 
-    // O(sqrt(H))
+    // O(sqrt(N))
     T queryAccumulative(int u, int v) const {
         if (u == v)
             return values[u];
 
-        if (level[u] > level[v])
-            swap(u, v);
+        T res = defaultValue;
+        while (jump[u] != jump[v]) {
+            if (level[u] > level[v])
+                swap(u, v);
+            res = mergeOp(res, sqrtValues[v]);
+            v = jump[v];
+        }
 
-        int lc = lca(u, v);
-        if (lc == u)
-            return queryToAncestorAccumulative(v, u);
-
-        return mergeOp(queryToAncestorAccumulative(u, lc), queryToAncestorAccumulative(v, lc)) - values[lc];
+        int lc = lcaNaive(u, v);
+        return mergeOp(res, sqrtValues[u] + sqrtValues[v] - 2 * sqrtValues[lc] + values[lc]);
     }
 
 protected:
@@ -220,19 +230,25 @@ protected:
         }
     }
 
-    void dfsUpdate(int u, int par) {
-        if (level[u] % sqrtN == 0)
+    void dfsUpdateSqrt(int u, int par) {
+        int d = level[u] % sqrtN;
+
+        if (d == 0)
             sqrtValues[u] = values[u];
         else
             sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
 
+        if (d == sqrtN - 1)
+            return;
+
         for (auto v : edges[u]) {
             if (v != par)
-                dfsUpdate(v, u);
+                dfsUpdateSqrt(v, u);
         }
     }
 
-    void dfsUpdateSubtree(int u, int par, const T& val) {
+
+    void dfsUpdateSubtree(int u, int par, T val) {
         values[u] = val;
         if (level[u] % sqrtN == 0)
             sqrtValues[u] = values[u];
@@ -245,7 +261,7 @@ protected:
         }
     }
 
-    void dfsAddSubtree(int u, int par, const T& val) {
+    void dfsAddSubtree(int u, int par, T val) {
         values[u] += val;
         if (level[u] % sqrtN == 0)
             sqrtValues[u] = values[u];

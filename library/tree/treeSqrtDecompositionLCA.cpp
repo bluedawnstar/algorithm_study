@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "treeSqrtDecomposition.h"
+#include "treeSqrtDecompositionLCA.h"
 
 // Ref: https://www.geeksforgeeks.org/sqrt-square-root-decomposition-set-2-lca-tree-osqrth-time/
 
@@ -22,7 +22,7 @@ using namespace std;
 #include <queue>
 #include "treeBasic.h"
 
-void testTreeSqrtDecomposition() {
+void testTreeSqrtDecompositionLCA() {
     return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Tree with Sqrt Decomposition ---------------------" << endl;
@@ -31,7 +31,7 @@ void testTreeSqrtDecomposition() {
         int T = 10000;
         
         Tree tree(N);
-        TreeSqrtDecomposition treeSqrt(N);
+        TreeSqrtDecompositionLCA treeSqrt(N);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
@@ -63,7 +63,7 @@ void testTreeSqrtDecomposition() {
 #endif
 
         Tree tree(N);
-        TreeSqrtDecomposition treeSqrt(N);
+        TreeSqrtDecompositionLCA treeSqrt(N);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;

@@ -175,7 +175,7 @@
     <ClCompile Include="linkCutTree.cpp" />
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="splayTree.cpp" />
-    <ClCompile Include="treeSqrtDecomposition.cpp" />
+    <ClCompile Include="treeSqrtDecompositionLCA.cpp" />
     <ClCompile Include="treeSqrtDecompositionPathQuery.cpp" />
     <ClCompile Include="treeSqrtDecompositionPathQueryDynamic.cpp" />
   </ItemGroup>
@@ -216,7 +216,7 @@
     <ClInclude Include="treeHeavyLightDecompositionPathQueryBIT.h" />
     <ClInclude Include="treeHeavyLightDecompositionPathQueryLazy.h" />
     <ClInclude Include="treeMO.h" />
-    <ClInclude Include="treeSqrtDecomposition.h" />
+    <ClInclude Include="treeSqrtDecompositionLCA.h" />
     <ClInclude Include="treeSqrtDecompositionPathQuery.h" />
     <ClInclude Include="treeSqrtDecompositionPathQueryDynamic.h" />
   </ItemGroup>

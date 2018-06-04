@@ -155,7 +155,7 @@ static int query(const vector<int>& parent, const vector<int>& values, int u, in
 
 
 void testLinkCutTreePathQuery() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Link-Cut Tree with Path Query ----------------------------------" << endl;
     {

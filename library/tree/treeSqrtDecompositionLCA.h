@@ -1,6 +1,6 @@
 #pragma once
 
-struct TreeSqrtDecomposition {
+struct TreeSqrtDecompositionLCA {
     int                 N;          // the number of vertex
     int                 sqrtN;      // sqrt(N)
 
@@ -11,11 +11,11 @@ struct TreeSqrtDecomposition {
     vector<int>         parent;     // 
     vector<int>         jump;       // to a ancestor
 
-    TreeSqrtDecomposition()
+    TreeSqrtDecompositionLCA()
         : N(0), sqrtN(0) {
     }
 
-    explicit TreeSqrtDecomposition(int n, int sqrtN = 0) {
+    explicit TreeSqrtDecompositionLCA(int n, int sqrtN = 0) {
         init(n, sqrtN);
     }
 
