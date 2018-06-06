@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bitSet.cpp" />
+    <ClCompile Include="bitSetRangeFlip.cpp" />
     <ClCompile Include="hashMapHAMT.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rangeSet.cpp" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitSet.h" />
+    <ClInclude Include="bitSetRangeFlip.h" />
     <ClInclude Include="bitSetSimple.h" />
     <ClInclude Include="bitSetVariable.h" />
     <ClInclude Include="hashMapHAMT.h" />

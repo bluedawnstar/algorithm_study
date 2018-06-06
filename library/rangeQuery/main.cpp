@@ -33,4 +33,5 @@ int main(void) {
     TEST(MergeSortTreeIndex);
     TEST(GeneralizedBIT);
     TEST(ReverseSparseTable);
+    TEST(SegmentTreeBitFlip);
 }

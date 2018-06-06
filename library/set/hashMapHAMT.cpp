@@ -35,8 +35,9 @@ struct SqrtMap {
     }
 };
 
+//[Notice] not completed
 void testHashMapHAMT() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Hash Map with HAMT -----------------------------" << endl;
     {

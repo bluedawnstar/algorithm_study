@@ -8,6 +8,7 @@ using namespace std;
 int main(void) {
     TEST(UnionFind);
     TEST(BitSet);
+    TEST(BitSetRangeUpdate);
     TEST(RangeSet);
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);
