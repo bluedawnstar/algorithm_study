@@ -351,11 +351,11 @@ protected:
 };
 
 template <typename T, typename MergeOp>
-inline DynamicTreeSqrtDecompositionPathQuery<T, MergeOp> makeDynamicTreeSqrtDecompositionPathQuery(MergeOp op, T dfltValue) {
+inline DynamicTreeSqrtDecompositionPathQuery<T, MergeOp> makeDynamicTreeSqrtDecompositionPathQuery(const MergeOp& op, T dfltValue) {
     return DynamicTreeSqrtDecompositionPathQuery<T, MergeOp>(op, dfltValue);
 }
 
 template <typename T, typename MergeOp>
-inline DynamicTreeSqrtDecompositionPathQuery<T, MergeOp> makeDynamicTreeSqrtDecompositionPathQuery(int size, MergeOp op, T dfltValue, int sqrtN = 0) {
+inline DynamicTreeSqrtDecompositionPathQuery<T, MergeOp> makeDynamicTreeSqrtDecompositionPathQuery(int size, const MergeOp& op, T dfltValue, int sqrtN = 0) {
     return DynamicTreeSqrtDecompositionPathQuery<T, MergeOp>(size, op, dfltValue, sqrtN);
 }

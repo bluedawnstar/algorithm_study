@@ -97,7 +97,7 @@ static int climbKthNaive(DynamicTreeSqrtDecompositionPathQuery<int, MergeOp>& tr
 }
 
 void testDynamicTreeSqrtDecompositionPathQuery() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Dynamic Tree with Sqrt Decomposition and Path Query ---------------------" << endl;
     // basic test
