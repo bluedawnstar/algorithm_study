@@ -51,6 +51,9 @@
     <ClCompile Include="closestPair.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="distanceSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="line.h">
@@ -84,6 +87,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="closestPair.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="distanceSumManhattan.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="distanceSumChebyshev.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
