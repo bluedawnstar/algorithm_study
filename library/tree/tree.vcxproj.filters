@@ -123,6 +123,9 @@
     <ClCompile Include="treeSqrtDecompositionLCA.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treePathSqrtDecomposition.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -240,6 +243,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeSqrtDecompositionLCA.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treePathSqrtDecomposition.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

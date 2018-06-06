@@ -39,6 +39,7 @@ int main(void) {
     TEST(TreeSqrtDecompositionLCA);
     TEST(TreeSqrtDecompositionPathQuery);
     TEST(DynamicTreeSqrtDecompositionPathQuery);
+    TEST(TreePathSqrtDecomposition);
 
     TEST(BenchmarkBST);
 }
