@@ -126,6 +126,9 @@
     <ClCompile Include="treePathSqrtDecomposition.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treePathSqrtDecompositionSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -246,6 +249,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treePathSqrtDecomposition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treePathSqrtDecompositionSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

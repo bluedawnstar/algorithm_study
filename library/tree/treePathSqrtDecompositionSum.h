@@ -2,8 +2,8 @@
 
 #include "treeBasic.h"
 
-template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct TreePathSqrtDecomposition : public Tree {
+template <typename T>
+struct TreePathSqrtDecompositionSum : public Tree {
     int         root;                   // 
     int         sqrtN;                  // 
     int         branchN;                // 
@@ -23,16 +23,10 @@ struct TreePathSqrtDecomposition : public Tree {
     vector<LazyT>   branchLazy;         // 
     vector<T>       branchLazyValues;   // 
 
-    T               defaultValue;       // 
-    MergeOp         mergeOp;            // 
-    BlockOp         blockOp;            // 
-
-    TreePathSqrtDecomposition(const MergeOp& mop, const BlockOp& bop, T dfltValue = T())
-        : Tree(), mergeOp(mop), blockOp(bop), defaultValue(dfltValue)  {
+    TreePathSqrtDecompositionSum() : Tree() {
     }
 
-    explicit TreePathSqrtDecomposition(int N, const MergeOp& mop, const BlockOp& bop, T dfltValue = T(), int logN = 0)
-        : Tree(N, logN), mergeOp(mop), blockOp(bop), defaultValue(dfltValue) {
+    explicit TreePathSqrtDecompositionSum(int N, int logN = 0) : Tree(N, logN) {
         init(N, logN);
     }
 
@@ -58,10 +52,10 @@ struct TreePathSqrtDecomposition : public Tree {
         makeLcaTable();
 
         branchN = (int)branchSize.size();
-        values.assign(N, defaultValue);
-        branchValues.assign(branchN, defaultValue);
+        values.assign(N, 0);
+        branchValues.assign(branchN, 0);
         branchLazy.assign(branchN, lzNone);
-        branchLazyValues.assign(branchN, defaultValue);
+        branchLazyValues.assign(branchN, 0);
     }
 
     // call after build()
@@ -69,7 +63,7 @@ struct TreePathSqrtDecomposition : public Tree {
         values[v] = val;
 
         int b = nodeToBranch[v];
-        branchValues[b] = mergeOp(branchValues[b], val);
+        branchValues[b] += val;
     }
 
     //--- lca
@@ -172,20 +166,20 @@ struct TreePathSqrtDecomposition : public Tree {
 
     // O(sqrt(N))
     T query(int u, int v) {
-        T res = defaultValue;
+        T res = 0;
         while (nodeToBranch[v] != nodeToBranch[u]) {
             if (level[branchHead[nodeToBranch[u]]] > level[branchHead[nodeToBranch[v]]])
                 swap(u, v);
 
             int b = nodeToBranch[v];
             if (v == branchTail[b])
-                res = mergeOp(res, branchValues[b]);
+                res += branchValues[b];
             else
-                res = mergeOp(res, queryInBranch(v, branchHead[b]));
+                res += queryInBranch(v, branchHead[b]);
             v = branchHead[b];
             v = P[0][v];
         }
-        return mergeOp(res, queryInBranch(v, u));
+        return res + queryInBranch(v, u);
     }
 
 private:
@@ -283,7 +277,7 @@ private:
         }
 
         branchLazy[branch] = lzNone;
-        branchLazyValues[branch] = defaultValue;
+        branchLazyValues[branch] = 0;
     }
 
     void recalcBranchValue(int branch) {
@@ -293,19 +287,19 @@ private:
         T val = values[v];
         while (v != u) {
             v = P[0][v];
-            val = mergeOp(val, values[v]);
+            val += values[v];
         }
         branchValues[branch] = val;
     }
 
     void updateBranch(int branch, T val) {
-        branchValues[branch] = blockOp(val, branchSize[branch]);
+        branchValues[branch] = val * branchSize[branch];
         branchLazy[branch] = lzSet;
         branchLazyValues[branch] = val;
     }
 
     void addBranch(int branch, T val) {
-        branchValues[branch] += val * branchSize[branch];   //TODO: fix it
+        branchValues[branch] += val * branchSize[branch];
         if (branchLazy[branch] != lzSet)
             branchLazy[branch] = lzAdd;
         branchLazyValues[branch] += val;
@@ -319,12 +313,13 @@ private:
         int b = nodeToBranch[v];
         applyBranch(b);
 
+        branchValues[b] += val - values[v];
         values[v] = val;
         while (v != u) {
             v = P[0][v];
+            branchValues[b] += val - values[v];
             values[v] = val;
         }
-        recalcBranchValue(b);
     }
 
     void addInBranch(int v, int u, T val) {
@@ -334,12 +329,13 @@ private:
         int b = nodeToBranch[v];
         applyBranch(b);
 
+        branchValues[b] += val;
         values[v] += val;
         while (v != u) {
             v = P[0][v];
+            branchValues[b] += val;
             values[v] += val;
         }
-        recalcBranchValue(b);
     }
 
     T queryInBranch(int v, int u) {
@@ -348,27 +344,16 @@ private:
 
         int b = nodeToBranch[v];
         if (branchLazy[b] == lzSet)
-            return blockOp(branchLazyValues[b], level[v] - level[u] + 1);
+            return branchLazyValues[b] * (level[v] - level[u] + 1);
 
         applyBranch(b);
 
         T res = values[v];
         while (v != u) {
             v = P[0][v];
-            res = mergeOp(res, values[v]);
+            res += values[v];
         }
-        
+
         return res;
     }
 };
-
-
-template <typename T, typename MergeOp, typename BlockOp>
-inline TreePathSqrtDecomposition<T, MergeOp, BlockOp> makeTreePathSqrtDecomposition(const MergeOp& mop, const BlockOp& bop, T dfltValue) {
-    return TreePathSqrtDecomposition<T, MergeOp, BlockOp>(mop, bop, dfltValue);
-}
-
-template <typename T, typename MergeOp, typename BlockOp>
-inline TreePathSqrtDecomposition<T, MergeOp, BlockOp> makeTreePathSqrtDecomposition(int size, const MergeOp& mop, const BlockOp& bop, T dfltValue) {
-    return TreePathSqrtDecomposition<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
-}
