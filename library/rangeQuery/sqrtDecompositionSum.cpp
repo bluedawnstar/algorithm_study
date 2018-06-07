@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#include "sqrtDecomposition.h"
+#include "sqrtDecompositionSum.h"
 
 // related question: https://www.hackerrank.com/contests/101hack49/challenges/bigger-arrays
 
@@ -20,16 +20,16 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeLazy.h"
 
-void testSqrtDecomposition() {
+void testSqrtDecompositionSum() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Sqrt Decomposition ------------------------" << endl;
+    cout << "--- Sqrt Decomposition for Sum ------------------------" << endl;
     {
         vector<int> in{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
         auto segTreeLazy = makeSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
-        SqrtDecompositionLazy<int> sqrtDecom(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
+        SqrtDecompositionLazySum<int> sqrtDecom(in);
 
         for (int i = 0; i < 10000; i++) {
             if (RandInt32::get() % 2) {
@@ -67,7 +67,7 @@ void testSqrtDecomposition() {
 
         auto segTree = makeSegmentTree(in, [](int a, int b) { return a + b; });
         auto segTreeLazy = makeSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
-        SqrtDecompositionLazy<int> sqrtDecom(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
+        SqrtDecompositionLazySum<int> sqrtDecom(in);
 
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {

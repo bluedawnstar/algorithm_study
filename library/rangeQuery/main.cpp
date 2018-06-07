@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void) {
     TEST(SqrtDecomposition);
+    TEST(SqrtDecompositionSum);
     TEST(MOAlgorithm);
     TEST(FenwickTree);
     TEST(FenwickTreeXor);

@@ -102,6 +102,9 @@
     <ClCompile Include="segmentTreeBitFlip.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sqrtDecompositionSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -216,6 +219,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeBitFlip.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sqrtDecompositionSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

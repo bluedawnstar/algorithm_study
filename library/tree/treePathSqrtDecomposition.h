@@ -305,7 +305,7 @@ private:
     }
 
     void addBranch(int branch, T val) {
-        branchValues[branch] += val * branchSize[branch];
+        branchValues[branch] += val * branchSize[branch];   //TODO: fix it
         if (branchLazy[branch] != lzSet)
             branchLazy[branch] = lzAdd;
         branchLazyValues[branch] += val;

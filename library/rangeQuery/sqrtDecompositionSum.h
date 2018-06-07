@@ -1,7 +1,7 @@
 #pragma once
 
-template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct SqrtDecompositionLazy {
+template <typename T>
+struct SqrtDecompositionLazySum {
     int N;
     int blockSize;
     int blockCount;
@@ -17,34 +17,25 @@ struct SqrtDecompositionLazy {
     vector<LazyT> blockLazy;
     vector<T> blockLazyValues;
 
-    T         defaultValue;
-    MergeOp   mergeOp;
-    BlockOp   blockOp;
-
-    SqrtDecompositionLazy(MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    SqrtDecompositionLazySum() {
         N = 0;
         blockSize = 0;
         blockCount = 0;
     }
 
-    explicit SqrtDecompositionLazy(int n, MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    explicit SqrtDecompositionLazySum(int n) {
         init(n);
     }
 
-    SqrtDecompositionLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    SqrtDecompositionLazySum(T value, int n) {
         build(value, n);
     }
 
-    SqrtDecompositionLazy(const T v[], int n, MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    SqrtDecompositionLazySum(const T v[], int n) {
         build(v, n);
     }
 
-    explicit SqrtDecompositionLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    explicit SqrtDecompositionLazySum(const vector<T>& v) {
         build(v);
     }
 
@@ -54,9 +45,9 @@ struct SqrtDecompositionLazy {
         blockSize = (int)sqrt(n);
         blockCount = (N + blockSize - 1) / blockSize;
 
-        values.assign(blockCount * blockSize, defaultValue);
-        blockValues.assign(blockCount, defaultValue);
-        blockLazyValues.assign(blockCount, defaultValue);
+        values.assign(blockCount * blockSize, 0);
+        blockValues.assign(blockCount, 0);
+        blockLazyValues.assign(blockCount, 0);
         blockLazy.assign(blockCount, lzNone);
     }
 
@@ -154,21 +145,22 @@ private:
         int l = block * blockSize;
         int r = l + blockSize;
 
-        T val = defaultValue;
+        T sum = 0;
         while (l < r)
-            val = mergeOp(val, values[l++]);
+            sum += values[l++];
 
-        blockValues[block] = val;
+        blockValues[block] = sum;
     }
 
+
     void updateBlock(int block, T val) {
-        blockValues[block] = blockOp(val, blockSize);
+        blockValues[block] = val * blockSize;
         blockLazy[block] = lzSet;
         blockLazyValues[block] = val;
     }
 
     void addBlock(int block, T val) {
-        blockValues[block] += val * blockSize;      //TODO: fix it
+        blockValues[block] += val * blockSize;
         if (blockLazy[block] != lzSet)
             blockLazy[block] = lzAdd;
         blockLazyValues[block] += val;
@@ -184,10 +176,12 @@ private:
         }
 
         applyBlock(block);
-        while (l <= r)
-            values[l++] = val;
 
-        recalcBlockValue(block);
+        while (l <= r) {
+            blockValues[block] += val - values[l];
+            values[l] = val;
+            l++;
+        }
     }
 
     void addInBlock(int l, int r, T val) {
@@ -199,10 +193,12 @@ private:
         }
 
         applyBlock(block);
-        while (l <= r)
-            values[l++] += val;
 
-        recalcBlockValue(block);
+        while (l <= r) {
+            blockValues[block] += val;
+            values[l] += val;
+            l++;
+        }
     }
 
     T queryInBlock(int l, int r) {
@@ -212,14 +208,14 @@ private:
             return blockValues[block];
 
         if (blockLazy[block] == lzSet)
-            return blockOp(blockLazyValues[block], r - l + 1);
+            return blockLazyValues[block] * (r - l + 1);
 
         applyBlock(block);
 
-        T res = defaultValue;
+        T sum = 0;
         while (l <= r)
-            res = mergeOp(res, values[l++]);
+            sum += values[l++];
 
-        return res;
+        return sum;
     }
 };
