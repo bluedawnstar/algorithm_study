@@ -22,6 +22,11 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeCompact.h"
 
+static void addSlow(vector<int>& v, int L, int R, int x) {
+    while (L <= R)
+        v[L++] += x;
+}
+
 static void updateSlow(vector<int>& v, int L, int R, int x) {
     while (L <= R)
         v[L++] = x;
@@ -86,7 +91,7 @@ static int lowerBoundBackward(const vector<int>& A, int start, int x) {
 }
 
 void testGeneralizedBIT() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Generalized Binary Indexed Tree (Generalized FenwickTree) -------------------" << endl;
     {
@@ -243,6 +248,50 @@ void testGeneralizedBIT() {
             bitSum.update(L, R, val);
             bitMin.update(L, R, val);
             bitMax.update(L, R, val);
+
+            for (int j = i; j < N; j++) {
+#ifndef _DEBUG
+                if (bitSum.query(i, j) != sumSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+                if (bitMin.query(i, j) != minSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+                if (bitMax.query(i, j) != maxSlow(in, i, j))
+                    cout << "Mismatch! line at " << __LINE__ << endl;;
+#endif
+                if (bitSum.query(i, j) != sumSlow(in, i, j))
+                    cout << bitSum.query(i, j) << ", " << sumSlow(in, i, j) << endl;
+                assert(bitSum.query(i, j) == sumSlow(in, i, j));
+                assert(bitMin.query(i, j) == minSlow(in, i, j));
+                assert(bitMax.query(i, j) == maxSlow(in, i, j));
+            }
+        }
+    }
+    {
+        int MaxV = 10000;
+        int N = 1024;
+#ifdef _DEBUG
+        //N = 100;
+        N = 10;
+#endif
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % MaxV;
+
+        auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
+        auto bitMin = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
+        auto bitMax = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+
+        for (int i = 0; i < N; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            int val = RandInt32::get() % MaxV;
+            if (L > R)
+                swap(L, R);
+
+            addSlow(in, L, R, val);
+            bitSum.add(L, R, val);
+            bitMin.add(L, R, val);
+            bitMax.add(L, R, val);
 
             for (int j = i; j < N; j++) {
 #ifndef _DEBUG

@@ -91,6 +91,16 @@ struct GeneralizedBIT {
         }
     }
 
+    void add(int left, int right, T val) {
+        for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
+            tree[L] += val;
+
+        for (int L = left | 1, R = right; L <= R; L += 2)
+            treeR[L] += val;
+
+        rebuild(left, right);
+    }
+
     void update(int left, int right, T val) {
         for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
             tree[L] = val;
@@ -98,28 +108,7 @@ struct GeneralizedBIT {
         for (int L = left | 1, R = right; L <= R; L += 2)
             treeR[L] = val;
 
-        int mask = 2;
-
-        int leftMask = left << 1;
-        int rightMask = ~right << 1;
-
-        int L = (left & ~1) | mask;
-        int R = (right & ~1) | mask;
-        while (L <= N) {
-            int half = mask >> 1;
-            mask <<= 1;
-
-            int maxR = min(R, N);
-            for (int i = L + (leftMask & mask), j = i - half; i <= maxR; i += mask, j += mask)
-                tree[i] = mergeOp(tree[j], treeR[j]);
-
-            maxR = min(R - (rightMask & mask), N - half);
-            for (int i = L, j = i + half; i <= maxR; i += mask, j += mask)
-                treeR[i] = mergeOp(tree[j], treeR[j]);
-
-            L = (L & (L - 1)) | mask;
-            R = (R & (R - 1)) | mask;
-        }
+        rebuild(left, right);
     }
 
 
@@ -152,6 +141,31 @@ private:
 
         for (int i = pos; i > 0; i &= i - 1)
             treeR[i] = mergeOp(treeR[i], val);
+    }
+
+    void rebuild(int left, int right) {
+        int mask = 2;
+
+        int leftMask = left << 1;
+        int rightMask = ~right << 1;
+
+        int L = (left & ~1) | mask;
+        int R = (right & ~1) | mask;
+        while (L <= N) {
+            int half = mask >> 1;
+            mask <<= 1;
+
+            int maxR = min(R, N);
+            for (int i = L + (leftMask & mask), j = i - half; i <= maxR; i += mask, j += mask)
+                tree[i] = mergeOp(tree[j], treeR[j]);
+
+            maxR = min(R - (rightMask & mask), N - half);
+            for (int i = L, j = i + half; i <= maxR; i += mask, j += mask)
+                treeR[i] = mergeOp(tree[j], treeR[j]);
+
+            L = (L & (L - 1)) | mask;
+            R = (R & (R - 1)) | mask;
+        }
     }
 };
 

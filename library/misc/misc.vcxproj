@@ -151,7 +151,7 @@
     <ClCompile Include="largestRectangle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mergeableHeap.cpp" />
-    <ClCompile Include="JumpPointerSparseTable.cpp" />
+    <ClCompile Include="jumpPointerSparseTable.cpp" />
     <ClCompile Include="minQueue.cpp" />
     <ClCompile Include="minStack.cpp" />
     <ClCompile Include="reservoirSampling.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="cycleDetection.h" />
     <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />
-    <ClInclude Include="JumpPointerSparseTable.h" />
+    <ClInclude Include="jumpPointerSparseTable.h" />
     <ClInclude Include="minQueue.h" />
     <ClInclude Include="minStack.h" />
     <ClInclude Include="reservoirSampling.h" />

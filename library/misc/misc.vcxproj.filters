@@ -30,9 +30,6 @@
     <ClCompile Include="countUniqueNumbers.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="JumpPointerSparseTable.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="minStack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -40,6 +37,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="reservoirSampling.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="jumpPointerSparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,9 +56,6 @@
     <ClInclude Include="countUniqueNumbers.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="JumpPointerSparseTable.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="minStack.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -66,6 +63,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="reservoirSampling.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="jumpPointerSparseTable.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
