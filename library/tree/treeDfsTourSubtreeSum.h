@@ -49,6 +49,11 @@ struct DfsTourTreeSubtreeSum : public Tree {
         return ft.sumRange(visTime[u].first, visTime[u].second);
     }
 
+    // return true if u is an ancestor of v
+    bool isAncestor(int u, int v) const {
+        return visTime[u].first <= visTime[v].first && visTime[v].second <= visTime[u].second;
+    }
+
 private:
     //--------- DFS -----------------------------------------------------------
     void dfs(int u, int parent) {

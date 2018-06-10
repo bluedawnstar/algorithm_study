@@ -22,7 +22,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-#include "treeSqrtDecompositionPathQuery.h"
+#include "treeBlockTreePathQuery.h"
 
 static void pathUpdateNaive(Tree& tree, int u, int v, int val, vector<int>& values) {
     if (tree.level[u] > tree.level[v])
@@ -96,7 +96,7 @@ static int climbKthNaive(Tree& tree, int u, int kth, vector<int>& values) {
 }
 
 void testTreePathSqrtDecomposition() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Tree Path Sqrt Decomposition ---------------------" << endl;
     {
@@ -245,7 +245,7 @@ void testTreePathSqrtDecomposition() {
             tree.update(u, v, val);
         }
     }
-    cout << "Speed test : TreePathSqrtDecomposition vs. TreeSqrtDecompositionPathQuery" << endl;
+    cout << "Speed test : TreePathSqrtDecomposition vs. BlockTreePathQuery" << endl;
     {
         struct MergeOp {
             int operator()(int a, int b) const {
@@ -261,7 +261,7 @@ void testTreePathSqrtDecomposition() {
 #endif
 
         auto tree = makeTreePathSqrtDecomposition(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
-        auto treeSqrt = makeTreeSqrtDecompositionPathQuery(N, MergeOp(), 0);
+        auto treeSqrt = makeBlockTreePathQuery(N, MergeOp(), 0);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
