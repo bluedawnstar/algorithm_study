@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "treeSqrtDecompositionLCA.h"
+#include "treeBlockTreeLCA.h"
 
 // Ref: https://www.geeksforgeeks.org/sqrt-square-root-decomposition-set-2-lca-tree-osqrth-time/
 
@@ -22,16 +22,16 @@ using namespace std;
 #include <queue>
 #include "treeBasic.h"
 
-void testTreeSqrtDecompositionLCA() {
+void testBlockTreeLCA() {
     return; //TODO: if you want to test a split function, make this line to a comment.
 
-    cout << "--- Tree with Sqrt Decomposition ---------------------" << endl;
+    cout << "--- Block Tree for LCA ---------------------" << endl;
     {
         int N = 10000;
         int T = 10000;
         
         Tree tree(N);
-        TreeSqrtDecompositionLCA treeSqrt(N);
+        BlockTreeLCA treeSqrt(N);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;
@@ -63,7 +63,7 @@ void testTreeSqrtDecompositionLCA() {
 #endif
 
         Tree tree(N);
-        TreeSqrtDecompositionLCA treeSqrt(N);
+        BlockTreeLCA treeSqrt(N);
 
         for (int v = 1; v < N; v++) {
             int u = RandInt32::get() % v;

@@ -1,9 +1,9 @@
 #pragma once
 
 template <typename T, typename MergeOp = function<T(T, T)>>
-struct TreeSqrtDecompositionPathQuery {
+struct BlockTreePathQuery {
     int                 N;              // the number of vertex
-    int                 sqrtN;          // sqrt(N)
+    int                 sqrtN;          // sqrt(N) or sqrt(H)
 
     vector<vector<int>> edges;          // edges (vertex number)
 
@@ -17,11 +17,11 @@ struct TreeSqrtDecompositionPathQuery {
     T                   defaultValue;   // 
     MergeOp             mergeOp;        // 
 
-    explicit TreeSqrtDecompositionPathQuery(const MergeOp& op, T dflt = T())
+    explicit BlockTreePathQuery(const MergeOp& op, T dflt = T())
         : N(0), sqrtN(0), mergeOp(op), defaultValue(dflt) {
     }
 
-    TreeSqrtDecompositionPathQuery(int n, const MergeOp& op, T dflt = T(), int sqrtN = 0)
+    BlockTreePathQuery(int n, const MergeOp& op, T dflt = T(), int sqrtN = 0)
         : mergeOp(op), defaultValue(dflt) {
         init(n, sqrtN);
     }
@@ -109,17 +109,6 @@ struct TreeSqrtDecompositionPathQuery {
     void add(int u, T val) {
         values[u] += val;
         dfsUpdateSqrt(u, parent[u]);
-    }
-
-
-    // worst case O(N)
-    void updateSubtree(int u, T val) {
-        dfsUpdateSubtree(u, parent[u], val);
-    }
-
-    // worst case O(N)
-    void addSubtree(int u, T val) {
-        dfsAddSubtree(u, parent[u], val);
     }
 
     //--- query
@@ -248,33 +237,6 @@ protected:
     }
 
 
-    void dfsUpdateSubtree(int u, int par, T val) {
-        values[u] = val;
-        if (level[u] % sqrtN == 0)
-            sqrtValues[u] = values[u];
-        else
-            sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
-
-        for (auto v : edges[u]) {
-            if (v != par)
-                dfsUpdateSubtree(v, u, val);
-        }
-    }
-
-    void dfsAddSubtree(int u, int par, T val) {
-        values[u] += val;
-        if (level[u] % sqrtN == 0)
-            sqrtValues[u] = values[u];
-        else
-            sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
-
-        for (auto v : edges[u]) {
-            if (v != par)
-                dfsAddSubtree(v, u, val);
-        }
-    }
-
-
     int lcaNaive(int u, int v) const {
         if (u == v)
             return u;
@@ -333,11 +295,11 @@ protected:
 };
 
 template <typename T, typename MergeOp>
-inline TreeSqrtDecompositionPathQuery<T, MergeOp> makeTreeSqrtDecompositionPathQuery(const MergeOp& op, T dfltValue) {
-    return TreeSqrtDecompositionPathQuery<T, MergeOp>(op, dfltValue);
+inline BlockTreePathQuery<T, MergeOp> makeBlockTreePathQuery(const MergeOp& op, T dfltValue) {
+    return BlockTreePathQuery<T, MergeOp>(op, dfltValue);
 }
 
 template <typename T, typename MergeOp>
-inline TreeSqrtDecompositionPathQuery<T, MergeOp> makeTreeSqrtDecompositionPathQuery(int size, const MergeOp& op, T dfltValue, int sqrtN = 0) {
-    return TreeSqrtDecompositionPathQuery<T, MergeOp>(size, op, dfltValue, sqrtN);
+inline BlockTreePathQuery<T, MergeOp> makeBlockTreePathQuery(int size, const MergeOp& op, T dfltValue, int sqrtN = 0) {
+    return BlockTreePathQuery<T, MergeOp>(size, op, dfltValue, sqrtN);
 }
