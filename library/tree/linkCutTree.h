@@ -34,11 +34,6 @@ struct LinkCutTree {
         return x;
     }
 
-    static Node* lca(Node* x, Node* y) {
-        access(x);
-        return access(y);
-    }
-
     // global depth of x
     static int depth(Node* x) {
         access(x);
@@ -51,6 +46,32 @@ struct LinkCutTree {
         access(x);
         access(y);
         return x->parent != nullptr || x->pathParent != nullptr;
+    }
+
+
+    static Node* lca(Node* x, Node* y) {
+        access(x);
+        return access(y);
+    }
+
+    // dist >= 0
+    // count = valueToCountF(index_of_node, value_or_sqrt_value_of_the_node)
+    Node* climb(Node* v, int dist) {
+        access(v);
+        while (v) {
+            if (v->right) {
+                if (v->right->cnt > dist) {
+                    v = v->right;
+                    continue;
+                }
+                dist -= v->right->cnt;
+            }
+            if (dist-- <= 0)
+                break;
+            v = v->left;
+        }
+        access(v);
+        return v;
     }
 
 
