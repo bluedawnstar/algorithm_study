@@ -105,12 +105,6 @@
     <ClCompile Include="benchmarkBST.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="treeSqrtDecompositionPathQuery.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="treeSqrtDecompositionPathQueryDynamic.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="treeDfsTourPathSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -120,13 +114,25 @@
     <ClCompile Include="treeDfsTourSubtreeUpdate.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="treeSqrtDecompositionLCA.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="treePathSqrtDecomposition.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="treePathSqrtDecompositionSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreeLCA.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreePathQuery.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreePathQueryDynamic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreeSubtreeUpdate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreeSubtreeUpdateDynamic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,12 +236,6 @@
     <ClInclude Include="scapegoatTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="treeSqrtDecompositionPathQuery.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="treeSqrtDecompositionPathQueryDynamic.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="treeDfsTourPathSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -245,13 +245,25 @@
     <ClInclude Include="treeDfsTourSubtreeUpdate.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="treeSqrtDecompositionLCA.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="treePathSqrtDecomposition.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treePathSqrtDecompositionSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreeLCA.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreePathQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreePathQueryDynamic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreeSubtreeUpdate.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreeSubtreeUpdateDynamic.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -36,9 +36,11 @@ int main(void) {
     TEST(MetricTree);
     TEST(BlockTree);
     TEST(SparseTableOnTree);
-    TEST(TreeSqrtDecompositionLCA);
-    TEST(TreeSqrtDecompositionPathQuery);
-    TEST(DynamicTreeSqrtDecompositionPathQuery);
+    TEST(BlockTreeLCA);
+    TEST(BlockTreePathQuery);
+    TEST(DynamicBlockTreePathQuery);
+    TEST(BlockTreeSubtreeUpdate);
+    TEST(BlockTreeSubtreeUpdateDynamic);
     TEST(TreePathSqrtDecomposition);
 
     TEST(BenchmarkBST);

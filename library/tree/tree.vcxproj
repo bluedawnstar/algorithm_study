@@ -155,6 +155,8 @@
     <ClCompile Include="rTree.cpp" />
     <ClCompile Include="rangeQuery-SparseTableOnTree.cpp" />
     <ClCompile Include="scapegoatTree.cpp" />
+    <ClCompile Include="treeBlockTreeSubtreeUpdate.cpp" />
+    <ClCompile Include="treeBlockTreeSubtreeUpdateDynamic.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
     <ClCompile Include="treeDfsTourPathSum.cpp" />
     <ClCompile Include="treeDfsTourSubtreeSum.cpp" />
@@ -177,9 +179,9 @@
     <ClCompile Include="splayTree.cpp" />
     <ClCompile Include="treePathSqrtDecomposition.cpp" />
     <ClCompile Include="treePathSqrtDecompositionSum.cpp" />
-    <ClCompile Include="treeSqrtDecompositionLCA.cpp" />
-    <ClCompile Include="treeSqrtDecompositionPathQuery.cpp" />
-    <ClCompile Include="treeSqrtDecompositionPathQueryDynamic.cpp" />
+    <ClCompile Include="treeBlockTreeLCA.cpp" />
+    <ClCompile Include="treeBlockTreePathQuery.cpp" />
+    <ClCompile Include="treeBlockTreePathQueryDynamic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
@@ -198,6 +200,8 @@
     <ClInclude Include="scapegoatTree.h" />
     <ClInclude Include="splayTreeRangeQuery.h" />
     <ClInclude Include="treapRangeQuery.h" />
+    <ClInclude Include="treeBlockTreeSubtreeUpdate.h" />
+    <ClInclude Include="treeBlockTreeSubtreeUpdateDynamic.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeDfsTourPathSum.h" />
     <ClInclude Include="treeDfsTourSubtreeSum.h" />
@@ -220,9 +224,9 @@
     <ClInclude Include="treeMO.h" />
     <ClInclude Include="treePathSqrtDecomposition.h" />
     <ClInclude Include="treePathSqrtDecompositionSum.h" />
-    <ClInclude Include="treeSqrtDecompositionLCA.h" />
-    <ClInclude Include="treeSqrtDecompositionPathQuery.h" />
-    <ClInclude Include="treeSqrtDecompositionPathQueryDynamic.h" />
+    <ClInclude Include="treeBlockTreeLCA.h" />
+    <ClInclude Include="treeBlockTreePathQuery.h" />
+    <ClInclude Include="treeBlockTreePathQueryDynamic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
