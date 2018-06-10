@@ -45,7 +45,7 @@ struct GlobalMinCutNaive64 {
     }
 
     pair<T, unsigned long long> solve() {
-        int idx = min_element(cost.begin(), cost.end()) - cost.begin();
+        int idx = int(min_element(cost.begin(), cost.end()) - cost.begin());
 
         ans = cost[idx];
         ansGroup = 1ull << idx;
@@ -133,7 +133,7 @@ struct GlobalMinCutNaive {
     }
 
     T solve() {
-        int idx = min_element(cost.begin(), cost.end()) - cost.begin();
+        int idx = int(min_element(cost.begin(), cost.end()) - cost.begin());
 
         ans = cost[idx];
 

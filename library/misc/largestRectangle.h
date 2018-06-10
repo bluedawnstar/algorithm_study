@@ -21,10 +21,10 @@ int largestRectangle(vector<int>& heights) {
 }
 
 int largestRectangle(const vector<vector<bool>>& matrix) {
-    int rows = matrix.size();
+    int rows = (int)matrix.size();
     if (rows == 0)
         return 0;
-    int cols = matrix[0].size();
+    int cols = (int)matrix[0].size();
 
     vector<int> height(cols + 1, 0);    // heights
 

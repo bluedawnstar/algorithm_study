@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable: 4334)
 
 // O(3^N * N)
 inline int minLengthSteinerTree(vector<vector<int>> G, vector<int> verticesToConnect) {

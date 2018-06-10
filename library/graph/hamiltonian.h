@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable: 4334)
 
 template <typename T, const T INF = 0x3f3f3f3f>
 struct Hamiltonian {

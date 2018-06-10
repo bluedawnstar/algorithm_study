@@ -97,7 +97,7 @@ private:
             return 0;
 
         if (left <= nodeLeft && nodeRight <= right)
-            return upper_bound(tree[node].begin(), tree[node].end(), k) - tree[node].begin();
+            return int(upper_bound(tree[node].begin(), tree[node].end(), k) - tree[node].begin());
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         return countLessThanOrEqualSub(left, right, k, 2 * node + 1, nodeLeft, mid)

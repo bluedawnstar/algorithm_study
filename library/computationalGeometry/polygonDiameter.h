@@ -9,8 +9,8 @@ template <typename T>
 inline double calcPolygonDiameter(const vector<Vec2D<T>>& polygon) {
     int N = (int)polygon.size();
 
-    int left = min_element(polygon.begin(), polygon.end()) - polygon.begin();
-    int right = max_element(polygon.begin(), polygon.end()) - polygon.begin();
+    int left = int(min_element(polygon.begin(), polygon.end()) - polygon.begin());
+    int right = int(max_element(polygon.begin(), polygon.end()) - polygon.begin());
 
     Vec2D<double> calipersA{ 0, 1 };
     double res = (polygon[right] - polygon[left]).norm();               // calculate 

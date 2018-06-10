@@ -45,7 +45,7 @@ struct HeavyLightDecomposition {
                 heavyPathIndex[u] = parentPath;
             } else {
                 // light path -> make new heavy path
-                heavyPathIndex[u] = heavyPaths.size();
+                heavyPathIndex[u] = (int)heavyPaths.size();
                 heavyPaths.push_back(vector<int>(2));
                 heavyPaths.back()[0] = p;
                 heavyPaths.back()[1] = u;

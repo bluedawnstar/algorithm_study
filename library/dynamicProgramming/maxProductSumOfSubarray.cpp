@@ -20,6 +20,8 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+#pragma warning(disable: 4334)
+
 void testProductSumOfSubarray() {
     return; //TODO: if you want to test, make this line a comment.
 

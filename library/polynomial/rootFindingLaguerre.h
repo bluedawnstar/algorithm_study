@@ -9,7 +9,7 @@
 struct LaguerreMethod {
     // Low order first
     static Complex<double> findOneRoot(const vector<Complex<double>>& poly, Complex<double> x) {
-        int n = poly.size() - 1;
+        int n = (int)poly.size() - 1;
         
         vector<Complex<double>> p1 = derivative(poly);
         vector<Complex<double>> p2 = derivative(p1);

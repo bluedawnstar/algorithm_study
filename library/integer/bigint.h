@@ -60,7 +60,7 @@ struct bigint {
                 sign = -sign;
             ++pos;
         }
-        for (int i = s.size() - 1; i >= pos; i -= baseDigitN) {
+        for (int i = (int)s.size() - 1; i >= pos; i -= baseDigitN) {
             int x = 0;
             for (int j = max(pos, i - baseDigitN + 1); j <= i; j++)
                 x = x * 10 + s[j] - '0';
@@ -89,7 +89,7 @@ struct bigint {
 
     long long longValue() const {
         long long res = 0;
-        for (int i = a.size() - 1; i >= 0; i--)
+        for (int i = (int)a.size() - 1; i >= 0; i--)
             res = res * base + a[i];
         return res * sign;
     }
@@ -216,7 +216,7 @@ struct bigint {
         if (v < 0)
             v = -v;
         int m = 0;
-        for (int i = a.size() - 1; i >= 0; --i)
+        for (int i = (int)a.size() - 1; i >= 0; --i)
             m = (a[i] + m * (long long)base) % v;
         return m * sign;
     }
@@ -232,7 +232,7 @@ struct bigint {
             return sign < v.sign;
         if (a.size() != v.a.size())
             return a.size() * sign < v.a.size() * v.sign;
-        for (int i = a.size() - 1; i >= 0; i--)
+        for (int i = (int)a.size() - 1; i >= 0; i--)
             if (a[i] != v.a[i])
                 return a[i] * sign < v.a[i] * sign;
         return false;
@@ -352,7 +352,7 @@ struct bigint {
     }
 
     static vector<long long> multiplyKaratsuba(const vector<long long>& a, const vector<long long>& b) {
-        int n = a.size();
+        int n = (int)a.size();
         vector<long long> res(n + n);
         if (n <= 32) {
             for (int i = 0; i < n; i++)
@@ -397,7 +397,7 @@ struct bigint {
         bigint q, r;
         q.a.resize(a.a.size());
 
-        for (int i = a.a.size() - 1; i >= 0; i--) {
+        for (int i = (int)a.a.size() - 1; i >= 0; i--) {
             r *= base;
             r += bigint(a.a[i]);
             int s1 = r.a.size() <= b.a.size() ? 0 : r.a[b.a.size()];

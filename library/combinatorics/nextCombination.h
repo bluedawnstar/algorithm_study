@@ -7,7 +7,7 @@ inline void init_combination(vector<int>& comb, int n, int r) {
 }
 
 inline bool next_combination(vector<int>& comb, int n) {
-    int k = comb.size();
+    int k = (int)comb.size();
     int p = k - 1;
 
     if (comb[p] >= n)
