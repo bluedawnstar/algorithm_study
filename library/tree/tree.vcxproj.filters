@@ -87,9 +87,6 @@
     <ClCompile Include="maxIndependentSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="blockTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="rangeQuery-SparseTableOnTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -133,6 +130,21 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="treeBlockTreeSubtreeUpdateDynamic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreePathSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreePathSumDynamic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreeSubtreeSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreeSubtreeSumDynamic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="treeBlockTreeLevelUpdate.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -221,9 +233,6 @@
     <ClInclude Include="lcaSparseTableSimple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="blockTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="rangeQuery-SparseTableOnTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -264,6 +273,21 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeBlockTreeSubtreeUpdateDynamic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreePathSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreePathSumDynamic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreeSubtreeSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreeSubtreeSumDynamic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeBlockTreeLevelUpdate.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

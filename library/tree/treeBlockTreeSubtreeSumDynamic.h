@@ -1,7 +1,7 @@
 #pragma once
 
-template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct DynamicBlockTreeSubtreeUpdate {
+template <typename T>
+struct DynamicBlockTreeSubtreeSum {
     int                 N;                  // the number of vertex
     int                 sqrtN;              // sqrt(N) or sqrt(H)
 
@@ -26,16 +26,10 @@ struct DynamicBlockTreeSubtreeUpdate {
     vector<T>           pathValuesInBlock;  // 
     vector<T>           subtreeValuesInBlock;// 
 
-    T                   defaultValue;       // 
-    MergeOp             mergeOp;            // 
-    BlockOp             blockOp;            // 
-
-    DynamicBlockTreeSubtreeUpdate(const MergeOp& mop, const BlockOp& bop, T dflt = T())
-        : N(0), sqrtN(0), mergeOp(mop), blockOp(bop), defaultValue(dflt) {
+    DynamicBlockTreeSubtreeSum() : N(0), sqrtN(0) {
     }
 
-    DynamicBlockTreeSubtreeUpdate(int n, const MergeOp& mop, const BlockOp& bop, T dflt = T(), int sqrtN = 0)
-        : mergeOp(mop), blockOp(bop), defaultValue(dflt) {
+    explicit DynamicBlockTreeSubtreeSum(int n, int sqrtN = 0) {
         init(n, sqrtN);
     }
 
@@ -170,7 +164,7 @@ struct DynamicBlockTreeSubtreeUpdate {
         } else {
             int blockId = blockRoot[u];
 
-            pushUpSubtreeValueAndSize(p, blockId, -treeSizeInBlock[u]);
+            pushUpSubtreeValueAndSize(p, blockId, -subtreeValuesInBlock[u], -treeSizeInBlock[u]);
 
             dfsGetSubBlocks(u, parent[u], blockId, blockEdges[u]);
             if (!blockEdges[u].empty()) {
@@ -209,7 +203,7 @@ struct DynamicBlockTreeSubtreeUpdate {
         } else {
             int blockId = blockRoot[u];
 
-            pushUpSubtreeValueAndSize(par, blockRoot[par], treeSizeInBlock[u]);
+            pushUpSubtreeValueAndSize(par, blockRoot[par], subtreeValuesInBlock[u], treeSizeInBlock[u]);
             dfsPushDownNewParent(u, par, blockRoot[u], blockRoot[par]);
 
             if (!blockEdges[u].empty()) {
@@ -243,7 +237,7 @@ struct DynamicBlockTreeSubtreeUpdate {
         u = parent[blockRoot[u]];
         while (u >= 0) {
             applyBlock(u);
-            res = mergeOp(res, pathValuesInBlock[u]);
+            res += pathValuesInBlock[u];
             u = parent[blockRoot[u]];
         }
         return res;
@@ -253,28 +247,30 @@ struct DynamicBlockTreeSubtreeUpdate {
     T queryToAncestor(int u, int ancestor) {
         applyBlock(ancestor);
 
-        T res = defaultValue;
+        T res = 0;
         while (blockRoot[u] != blockRoot[ancestor]) {
             applyBlock(u);
-            res = mergeOp(res, pathValuesInBlock[u]);
+            res += pathValuesInBlock[u];
             u = parent[blockRoot[u]];
         }
-        return mergeOp(res, queryToAncestorNaive(u, ancestor));
+        res += pathValuesInBlock[u] - pathValuesInBlock[ancestor] + values[ancestor];
+        return res;
     }
 
     // dist >= 0, O(sqrt(N) * a)
     T queryTowardRoot(int u, int dist) {
-        T res = defaultValue;
+        T res = 0;
         int p = parent[blockRoot[u]];
         while (p >= 0 && levelInBlock[u] < dist) {
             applyBlock(u);
             dist -= levelInBlock[u] + 1;
-            res = mergeOp(res, pathValuesInBlock[u]);
+            res += pathValuesInBlock[u];
             u = p;
             p = parent[blockRoot[u]];
         }
         applyBlock(u);
-        return mergeOp(res, queryTowardRootNaive(u, dist));
+        res += queryTowardRootNaive(u, dist);
+        return res;
     }
 
     // O(sqrt(N) * a)
@@ -283,29 +279,26 @@ struct DynamicBlockTreeSubtreeUpdate {
         if (u == v)
             return values[u];
 
-        T res = defaultValue;
+        T res = 0;
         while (blockRoot[u] != blockRoot[v]) {
             if (blockRootLevel[blockRoot[u]] > blockRootLevel[blockRoot[v]])
                 swap(u, v);
             applyBlock(v);
-            res = mergeOp(res, pathValuesInBlock[v]);
+            res += pathValuesInBlock[v];
             v = parent[blockRoot[v]];
         }
 
         int lc = lcaNaive(u, v);
         applyBlock(lc);
 
-        if (lc == u)
-            return mergeOp(res, queryToAncestorNaive(v, u));
-        else if (lc == v)
-            return mergeOp(res, queryToAncestorNaive(u, v));
-        else
-            return mergeOp(res, mergeOp(queryToAncestorNaive(u, lc), queryTowardRootNaive(v, levelInBlock[v] - levelInBlock[lc] - 1)));
+        res += pathValuesInBlock[u] + pathValuesInBlock[v] - 2 * pathValuesInBlock[lc] + values[lc];
+
+        return res;
     }
 
     T querySubtree(int u) {
         applyBlock(u);
-        return mergeOp(subtreeValuesInBlock[u], dfsQuerySubtree(u, parent[u], blockRoot[u]));
+        return subtreeValuesInBlock[u] + dfsQuerySubtree(u, parent[u], blockRoot[u]);
     }
 
 protected:
@@ -326,7 +319,7 @@ protected:
             blockRootLevel[u] = blockRootLevel[par];
             levelInBlock[u] = levelInBlock[par] + 1;
 
-            pathValuesInBlock[u] = mergeOp(pathValuesInBlock[par], values[u]);
+            pathValuesInBlock[u] = pathValuesInBlock[par] + values[u];
         }
 
         treeSizeInBlock[u] = 1;
@@ -338,7 +331,7 @@ protected:
 
         if (depth % sqrtN != 0) {
             treeSizeInBlock[par] += treeSizeInBlock[u];
-            subtreeValuesInBlock[par] = mergeOp(subtreeValuesInBlock[par], subtreeValuesInBlock[u]);
+            subtreeValuesInBlock[par] += subtreeValuesInBlock[u];
         }
     }
 #else
@@ -379,7 +372,7 @@ protected:
                     blockRootLevel[v] = blockRootLevel[u];
                     levelInBlock[v] = levelInBlock[p] + 1;
 
-                    pathValuesInBlock[v] = mergeOp(pathValuesInBlock[p], values[v]);
+                    pathValuesInBlock[v] = pathValuesInBlock[p] + values[v];
 
                     treeSizeInBlock[v] = 1;
                     subtreeValuesInBlock[v] = values[v];
@@ -401,7 +394,7 @@ protected:
             for (auto v : nodes[i]) {
                 auto p = parent[v];
                 treeSizeInBlock[p] += treeSizeInBlock[v];
-                subtreeValuesInBlock[p] = mergeOp(subtreeValuesInBlock[p], subtreeValuesInBlock[v]);
+                subtreeValuesInBlock[p] += subtreeValuesInBlock[v];
             }
         }
     }
@@ -457,7 +450,7 @@ protected:
         if (blockRoot[u] == u)
             pathValuesInBlock[u] = values[u];
         else
-            pathValuesInBlock[u] = mergeOp(pathValuesInBlock[p], val);
+            pathValuesInBlock[u] = pathValuesInBlock[p] + val;
 
         subtreeValuesInBlock[u] = values[u];
         for (auto v : edges[u]) {
@@ -465,7 +458,7 @@ protected:
                 dfsApply(v, u, blockId, lazy, val);
         }
         if (blockRoot[u] != u)
-            subtreeValuesInBlock[p] = mergeOp(subtreeValuesInBlock[p], subtreeValuesInBlock[u]);
+            subtreeValuesInBlock[p] += subtreeValuesInBlock[u];
     }
 
     void applyBlock(int u) {
@@ -476,7 +469,7 @@ protected:
         dfsApply(blockId, parent[blockId], blockId, blockLazy[blockId], blockLazyValues[blockId]);
 
         blockLazy[blockId] = lzNone;
-        blockLazyValues[blockId] = defaultValue;
+        blockLazyValues[blockId] = 0;
     }
 
 
@@ -499,7 +492,7 @@ protected:
         if (blockLazy[u] != lzNone) {
             dfsApplyToRebuild(u, parent[u], u, blockLazy[u], blockLazyValues[u]);
             blockLazy[u] = lzNone;
-            blockLazyValues[u] = defaultValue;
+            blockLazyValues[u] = 0;
         }
         for (auto v : blockEdges[u])
             dfsApplyBlockToRebuild(v);
@@ -516,7 +509,7 @@ protected:
         if (blockRoot[u] == u)
             pathValuesInBlock[u] = values[u];
         else
-            pathValuesInBlock[u] = mergeOp(pathValuesInBlock[p], values[u]);
+            pathValuesInBlock[u] = pathValuesInBlock[p] + values[u];
 
         for (auto v : edges[u]) {
             if (v != p)
@@ -524,15 +517,9 @@ protected:
         }
     }
 
-    void pushUpSubtreeValue(int u, int blockId) {
+    void pushUpSubtreeValue(int u, int blockId, T delta) {
         while (u >= 0 && blockRoot[u] == blockId) {
-            auto t = values[u];
-            for (auto v : edges[u]) {
-                if (v != parent[u] && blockRoot[v] != v)
-                    t = mergeOp(t, subtreeValuesInBlock[v]);
-            }
-            subtreeValuesInBlock[u] = t;
-
+            subtreeValuesInBlock[u] += delta;
             u = parent[u];
         }
     }
@@ -540,9 +527,11 @@ protected:
     void updateValue(int u, bool add, T val) {
         applyBlock(u);
 
+        T delta = val;
         if (!add) {
             if (values[u] == val)
                 return;
+            delta -= values[u];
             values[u] = val;
         } else {
             if (!val)
@@ -551,7 +540,7 @@ protected:
         }
 
         dfsPushDownPathValue(u, parent[u], blockRoot[u]);
-        pushUpSubtreeValue(u, blockRoot[u]);
+        pushUpSubtreeValue(u, blockRoot[u], delta);
     }
 
     //--- update a subtree
@@ -562,12 +551,12 @@ protected:
         if (add == false) {
             blockLazy[u] = lzSet;
             blockLazyValues[u] = val;
-            subtreeValuesInBlock[u] = blockOp(val, treeSizeInBlock[u]);
+            subtreeValuesInBlock[u] = val * treeSizeInBlock[u];
         } else {
             if (blockLazy[u] == lzNone)
                 blockLazy[u] = lzAdd;
             blockLazyValues[u] += val;
-            subtreeValuesInBlock[u] += val * treeSizeInBlock[u];            //TODO: fix it
+            subtreeValuesInBlock[u] += val * treeSizeInBlock[u];
         }
 
         for (auto v : blockEdges[u])
@@ -588,14 +577,14 @@ protected:
         if (blockRoot[u] == u)
             pathValuesInBlock[u] = values[u];
         else
-            pathValuesInBlock[u] = mergeOp(pathValuesInBlock[p], val);
+            pathValuesInBlock[u] = pathValuesInBlock[p] + val;
 
         subtreeValuesInBlock[u] = values[u];
         for (auto v : edges[u]) {
             if (v != p) {
                 dfsPushDownSubtreeValue(v, u, blockId, lazy, val);
                 if (blockRoot[v] != v)
-                    subtreeValuesInBlock[u] = mergeOp(subtreeValuesInBlock[u], subtreeValuesInBlock[v]);
+                    subtreeValuesInBlock[u] += subtreeValuesInBlock[v];
             }
         }
     }
@@ -606,8 +595,9 @@ protected:
 
         applyBlock(u);
 
+        auto oldSubtreeValue = subtreeValuesInBlock[u];
         dfsPushDownSubtreeValue(u, parent[u], blockRoot[u], add ? lzAdd : lzSet, val);
-        pushUpSubtreeValue(parent[u], blockRoot[u]);
+        pushUpSubtreeValue(parent[u], blockRoot[u], subtreeValuesInBlock[u] - oldSubtreeValue);
     }
 
     //--- change parent
@@ -623,16 +613,10 @@ protected:
         }
     }
 
-    void pushUpSubtreeValueAndSize(int u, int blockId, int sizeDelta) {
+    void pushUpSubtreeValueAndSize(int u, int blockId, T delta, int sizeDelta) {
         while (u >= 0 && blockRoot[u] == blockId) {
-            auto t = values[u];
-            for (auto v : edges[u]) {
-                if (v != parent[u] && blockRoot[v] != v)
-                    t = mergeOp(t, subtreeValuesInBlock[v]);
-            }
-            subtreeValuesInBlock[u] = t;
+            subtreeValuesInBlock[u] += delta;
             treeSizeInBlock[u] += sizeDelta;
-
             u = parent[u];
         }
     }
@@ -645,7 +629,7 @@ protected:
             pathValuesInBlock[u] = values[u];
             levelInBlock[u] = 0;
         } else {
-            pathValuesInBlock[u] = mergeOp(pathValuesInBlock[p], values[u]);
+            pathValuesInBlock[u] = pathValuesInBlock[p] + values[u];
             levelInBlock[u] = levelInBlock[p] + 1;
         }
         blockRoot[u] = newBlockId;
@@ -684,7 +668,7 @@ protected:
         if (u != ancestor) {
             do {
                 u = parent[u];
-                res = mergeOp(res, values[u]);
+                res += values[u];
             } while (u != ancestor);
         }
         return res;
@@ -695,7 +679,7 @@ protected:
         if (dist > 0) {
             do {
                 u = parent[u];
-                res = mergeOp(res, values[u]);
+                res += values[u];
             } while (u >= 0 && --dist > 0);
         }
         return res;
@@ -704,7 +688,7 @@ protected:
     T dfsQueryBlockValues(int u) {
         T res = subtreeValuesInBlock[u];
         for (auto v : blockEdges[u])
-            res = mergeOp(res, dfsQueryBlockValues(v));
+            res += dfsQueryBlockValues(v);
         return res;
     }
 
@@ -712,23 +696,11 @@ protected:
         if (blockRoot[u] != blockId)
             return dfsQueryBlockValues(u);
 
-        T res = defaultValue;
+        T res = 0;
         for (auto v : edges[u]) {
             if (v != p)
-                res = mergeOp(res, dfsQuerySubtree(v, u, blockId));
+                res += dfsQuerySubtree(v, u, blockId);
         }
         return res;
     }
 };
-
-template <typename T, typename MergeOp, typename BlockOp>
-inline DynamicBlockTreeSubtreeUpdate<T, MergeOp, BlockOp>
-makeDynamicBlockTreeSubtreeUpdate(const MergeOp& mop, const BlockOp& bop, T dfltValue) {
-    return DynamicBlockTreeSubtreeUpdate<T, MergeOp, BlockOp>(mop, bop, dfltValue);
-}
-
-template <typename T, typename MergeOp, typename BlockOp>
-inline DynamicBlockTreeSubtreeUpdate<T, MergeOp, BlockOp>
-makeDynamicBlockTreeSubtreeUpdate(int size, const MergeOp& mop, const BlockOp& bop, T dfltValue, int sqrtN = 0) {
-    return DynamicBlockTreeSubtreeUpdate<T, MergeOp, BlockOp>(size, mop, bop, dfltValue, sqrtN);
-}

@@ -1,12 +1,15 @@
 #pragma once
 
+#ifndef CACHE_BLOCK_NODES
 #define CACHE_BLOCK_NODES
+#endif
 
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct BlockTreeSubtreeUpdate {
     int                 N;                  // the number of vertex
     int                 sqrtN;              // sqrt(N) or sqrt(H)
 
+    int                 root;
     vector<vector<int>> edges;              // edges (vertex number)
     vector<int>         parent;             // 
 
@@ -47,6 +50,7 @@ struct BlockTreeSubtreeUpdate {
         if (sqrtN <= 0)
             sqrtN = (int)sqrt(N);
 
+        root = 0;
         edges = vector<vector<int>>(N);
         parent.assign(N, -1);
 
@@ -79,6 +83,7 @@ struct BlockTreeSubtreeUpdate {
 
     // O(N)
     void build(int root) {
+        this->root = root;
         dfsBuild(root, -1, 0);
     }
 
@@ -193,6 +198,7 @@ struct BlockTreeSubtreeUpdate {
 
     // O(sqrt(N) * a)
     T query(int u, int v) {
+        applyBlock(u);
         if (u == v)
             return values[u];
 
@@ -220,44 +226,6 @@ struct BlockTreeSubtreeUpdate {
         applyBlock(u);
         return mergeOp(subtreeValuesInBlock[u], dfsQuerySubtree(u, parent[u], blockRoot[u]));
     }
-
-    //--- for accumulative operation
-    // Use this functions when MergeOp is 'add' (supporting subtraction)
-
-    // O(sqrt(N) * a)
-    T queryToAncestorAccumulative(int u, int ancestor) {
-        applyBlock(ancestor);
-
-        T res = defaultValue;
-        while (blockRoot[u] != blockRoot[ancestor]) {
-            applyBlock(u);
-            res = mergeOp(res, pathValuesInBlock[u]);
-            u = parent[blockRoot[u]];
-        }
-        return mergeOp(res, pathValuesInBlock[u] - pathValuesInBlock[ancestor] + values[ancestor]);
-    }
-
-    // O(sqrt(N) * a)
-    T queryAccumulative(int u, int v) {
-        if (u == v)
-            return values[u];
-
-        T res = defaultValue;
-        while (blockRoot[u] != blockRoot[v]) {
-            if (blockRootLevel[blockRoot[u]] > blockRootLevel[blockRoot[v]])
-                swap(u, v);
-            applyBlock(v);
-            res = mergeOp(res, pathValuesInBlock[v]);
-            v = parent[blockRoot[v]];
-        }
-
-        int lc = lcaNaive(u, v);
-        applyBlock(lc);
-
-        return mergeOp(res, pathValuesInBlock[u] + pathValuesInBlock[v] - 2 * pathValuesInBlock[lc] + values[lc]);
-    }
-
-    //---------------------
 
 protected:
 #if 0
@@ -538,11 +506,12 @@ protected:
 
         subtreeValuesInBlock[u] = values[u];
         for (auto v : edges[u]) {
-            if (v != p)
+            if (v != p) {
                 dfsPushDownSubtreeValue(v, u, blockId, lazy, val);
+                if (blockRoot[v] != v)
+                    subtreeValuesInBlock[u] = mergeOp(subtreeValuesInBlock[u], subtreeValuesInBlock[v]);
+            }
         }
-        if (blockRoot[u] != u)
-            subtreeValuesInBlock[p] = mergeOp(subtreeValuesInBlock[p], subtreeValuesInBlock[u]);
     }
 
     void updateSubtree(int u, bool add, T val) {

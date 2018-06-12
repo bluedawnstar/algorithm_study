@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "treeBlockTreeSubtreeUpdateDynamic.h"
+#include "treeBlockTreeSubtreeSumDynamic.h"
 
 // Ref: https://www.geeksforgeeks.org/sqrt-square-root-decomposition-set-2-lca-tree-osqrth-time/
 
@@ -137,16 +137,16 @@ static int subtreeQueryNaive(const vector<vector<int>>& edges, const vector<int>
 }
 
 
-void testBlockTreeSubtreeUpdateDynamic() {
+void testBlockTreeSubtreeSumDynamic() {
     //return; //TODO: if you want to test a split function, make this line to a comment.
 
-    cout << "--- Dynamic Block Tree for Path & Subtree Query ---------------------" << endl;
+    cout << "--- Dynamic Block Tree for Path & Subtree Sum ---------------------" << endl;
     {
         int N = 10000;
         int T = 10000;
 
         Tree tree(N);
-        auto treeBlock = makeDynamicBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        DynamicBlockTreeSubtreeSum<int> treeBlock(N);
 
         vector<int> values(N);
 
@@ -197,7 +197,7 @@ void testBlockTreeSubtreeUpdateDynamic() {
         int T = 10000;
 
         Tree tree(N);
-        auto treeBlock = makeDynamicBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        DynamicBlockTreeSubtreeSum<int> treeBlock(N);
 
         vector<int> values(N);
 
@@ -251,7 +251,7 @@ void testBlockTreeSubtreeUpdateDynamic() {
         int N = 10000;
         int T = 10000;
 
-        auto treeBlock = makeDynamicBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        DynamicBlockTreeSubtreeSum<int> treeBlock(N);
 
         vector<vector<int>> edges(N);
         vector<int> parent(N, -1);
@@ -316,7 +316,7 @@ void testBlockTreeSubtreeUpdateDynamic() {
         int N = 100000;
         int T = 100000;
 
-        auto treeBlock = makeDynamicBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        DynamicBlockTreeSubtreeSum<int> treeBlock(N);
 
         vector<int> values(N);
 
@@ -355,7 +355,7 @@ void testBlockTreeSubtreeUpdateDynamic() {
         int N = 100000;
         int T = 100000;
 
-        auto treeBlock = makeDynamicBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        DynamicBlockTreeSubtreeSum<int> treeBlock(N);
 
         treeBlock.setInitValue(0, RandInt32::get() % 100);
         for (int v = 1; v < N; v++) {

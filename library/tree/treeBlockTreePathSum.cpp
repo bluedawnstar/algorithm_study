@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "treeBlockTreePathQuery.h"
+#include "treeBlockTreePathSum.h"
 
 // Ref: https://www.geeksforgeeks.org/sqrt-square-root-decomposition-set-2-lca-tree-osqrth-time/
 
@@ -55,16 +55,16 @@ static int climbKthNaive(Tree& tree, int u, int kth, vector<int>& values) {
     return u;
 }
 
-void testBlockTreePathQuery() {
+void testBlockTreePathSum() {
     return; //TODO: if you want to test a split function, make this line to a comment.
 
-    cout << "--- Block Tree for Path Query ---------------------" << endl;
+    cout << "--- Block Tree for Path Sum ---------------------" << endl;
     {
         int N = 10000;
         int T = 10000;
 
         Tree tree(N);
-        auto treeSqrt = makeBlockTreePathQuery(N, [](int a, int b) { return a + b; }, 0);
+        BlockTreePathSum<int> treeSqrt(N);
 
         vector<int> values(N);
 

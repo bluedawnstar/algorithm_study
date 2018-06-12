@@ -169,36 +169,6 @@ struct BlockTreePathQuery {
             return mergeOp(res, mergeOp(queryToAncestorNaive(u, lc), queryTowardRootNaive(v, level[v] - level[lc] - 1)));
     }
 
-    //--- for accumulative operation
-    // Use this functions when MergeOp is 'add' (supporting subtraction)
-
-    // O(sqrt(N))
-    T queryToAncestorAccumulative(int u, int ancestor) const {
-        T res = defaultValue;
-        while (jump[u] != jump[ancestor]) {
-            res = mergeOp(res, sqrtValues[u]);
-            u = jump[u];
-        }
-        return mergeOp(res, sqrtValues[u] - sqrtValues[ancestor] + values[ancestor]);
-    }
-
-    // O(sqrt(N))
-    T queryAccumulative(int u, int v) const {
-        if (u == v)
-            return values[u];
-
-        T res = defaultValue;
-        while (jump[u] != jump[v]) {
-            if (level[u] > level[v])
-                swap(u, v);
-            res = mergeOp(res, sqrtValues[v]);
-            v = jump[v];
-        }
-
-        int lc = lcaNaive(u, v);
-        return mergeOp(res, sqrtValues[u] + sqrtValues[v] - 2 * sqrtValues[lc] + values[lc]);
-    }
-
 protected:
     void dfsBuild(int u, int par) {
         parent[u] = par;

@@ -1,7 +1,7 @@
 #pragma once
 
-template <typename T, typename MergeOp = function<T(T, T)>>
-struct DynamicBlockTreePathQuery {
+template <typename T>
+struct DynamicBlockTreePathSum {
     int                 N;              // the number of vertex
     int                 sqrtN;          // sqrt(N) or sqrt(H)
 
@@ -14,15 +14,12 @@ struct DynamicBlockTreePathQuery {
 
     vector<T>           values;         // 
     vector<T>           sqrtValues;     // 
-    T                   defaultValue;   // 
-    MergeOp             mergeOp;        // 
 
-    explicit DynamicBlockTreePathQuery(const MergeOp& op, T dflt = T())
-        : N(0), sqrtN(0), mergeOp(op), defaultValue(dflt) {
+    DynamicBlockTreePathSum()
+        : N(0), sqrtN(0), mergeOp(op), 0(dflt) {
     }
 
-    DynamicBlockTreePathQuery(int n, const MergeOp& op, T dflt = T(), int sqrtN = 0)
-        : mergeOp(op), defaultValue(dflt) {
+    explicit DynamicBlockTreePathSum(int n, int sqrtN = 0) {
         init(n, sqrtN);
     }
 
@@ -37,8 +34,8 @@ struct DynamicBlockTreePathQuery {
         parent.assign(N, -1);
         jump.assign(N, -1);
 
-        values.assign(N, defaultValue);
-        sqrtValues.assign(N, defaultValue);
+        values.assign(N, 0);
+        sqrtValues.assign(N, 0);
     }
 
     //--- build
@@ -136,7 +133,7 @@ struct DynamicBlockTreePathQuery {
         T res = sqrtValues[u];
         int p = jump[u];
         while (p >= 0) {
-            res = mergeOp(res, sqrtValues[p]);
+            res += sqrtValues[p];
             p = jump[p];
         }
         return res;
@@ -144,25 +141,27 @@ struct DynamicBlockTreePathQuery {
 
     // O(sqrt(N))
     T queryToAncestor(int u, int ancestor) const {
-        T res = defaultValue;
+        T res = 0;
         while (jump[u] != jump[ancestor]) {
-            res = mergeOp(res, sqrtValues[u]);
+            res += sqrtValues[u];
             u = jump[u];
         }
-        return mergeOp(res, queryToAncestorNaive(u, ancestor));
+        res += sqrtValues[u] - sqrtValues[ancestor] + values[ancestor];
+        return res;
     }
 
     // dist >= 0, O(sqrt(N))
     T queryTowardRoot(int u, int dist) const {
-        T res = defaultValue;
+        T res = 0;
         int p = jump[u];
         while (p >= 0 && (level[u] - level[p]) <= dist) {
             dist -= (level[u] - level[p]);
-            res = mergeOp(res, sqrtValues[u]);
+            res += sqrtValues[u];
             u = p;
             p = jump[u];
         }
-        return mergeOp(res, queryTowardRootNaive(u, dist));
+        res += queryTowardRootNaive(u, dist);
+        return res;
     }
 
     // O(sqrt(N))
@@ -170,23 +169,20 @@ struct DynamicBlockTreePathQuery {
         if (u == v)
             return values[u];
 
-        T res = defaultValue;
+        T res = 0;
         while (jump[u] != jump[v]) {
             if (level[u] > level[v])
                 swap(u, v);
-            res = mergeOp(res, sqrtValues[v]);
+            res += sqrtValues[v];
             v = jump[v];
         }
 
         int lc = lcaNaive(u, v);
-        if (lc == u)
-            return mergeOp(res, queryToAncestorNaive(v, u));
-        else if (lc == v)
-            return mergeOp(res, queryToAncestorNaive(u, v));
-        else
-            return mergeOp(res, mergeOp(queryToAncestorNaive(u, lc), queryTowardRootNaive(v, level[v] - level[lc] - 1)));
+        res += sqrtValues[u] + sqrtValues[v] - 2 * sqrtValues[lc] + values[lc];
+
+        return res;
     }
-    
+
 protected:
     void dfsBuild(int u, int par) {
         parent[u] = par;
@@ -198,7 +194,7 @@ protected:
             sqrtValues[u] = values[u];
         } else {
             jump[u] = jump[par];
-            sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
+            sqrtValues[u] = sqrtValues[par] + values[u];
         }
 
         for (auto v : edges[u]) {
@@ -213,7 +209,7 @@ protected:
         if (d == 0)
             sqrtValues[u] = values[u];
         else
-            sqrtValues[u] = mergeOp(sqrtValues[par], values[u]);
+            sqrtValues[u] = sqrtValues[par] + values[u];
 
         if (d == sqrtN - 1)
             return;
@@ -259,17 +255,6 @@ protected:
         return u;
     }
 
-    T queryToAncestorNaive(int u, int ancestor) const {
-        T res = values[u];
-        if (u != ancestor) {
-            do {
-                u = parent[u];
-                res = mergeOp(res, values[u]);
-            } while (u != ancestor);
-        }
-        return res;
-    }
-
     T queryTowardRootNaive(int u, int dist) const {
         T res = values[u];
         if (dist > 0) {
@@ -281,13 +266,3 @@ protected:
         return res;
     }
 };
-
-template <typename T, typename MergeOp>
-inline DynamicBlockTreePathQuery<T, MergeOp> makeDynamicBlockTreePathQuery(const MergeOp& op, T dfltValue) {
-    return DynamicBlockTreePathQuery<T, MergeOp>(op, dfltValue);
-}
-
-template <typename T, typename MergeOp>
-inline DynamicBlockTreePathQuery<T, MergeOp> makeDynamicBlockTreePathQuery(int size, const MergeOp& op, T dfltValue, int sqrtN = 0) {
-    return DynamicBlockTreePathQuery<T, MergeOp>(size, op, dfltValue, sqrtN);
-}

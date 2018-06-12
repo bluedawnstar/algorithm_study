@@ -1,14 +1,14 @@
 #pragma once
 
 // <How to Use>
-//  1. construct without size -> init() -> add() -> build() -> update() / query()
-//  2. construct with size -> add() -> build() -> update() / query()
+//  1. construct without size -> init() -> addEdge() -> build() -> update() / query()
+//  2. construct with size -> addEdge() -> build() -> update() / query()
 
 // Sqrt-Tree of Tree
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct BlockTree {
+struct BlockTreeLevelUpdate {
     struct Fragment {
-        const BlockTree& tree;
+        const BlockTreeLevelUpdate& tree;
 
         int         id;
         T           value;
@@ -19,13 +19,13 @@ struct BlockTree {
         vector<int> nodes;
         vector<int> levelFreq;
 
-        Fragment(int id, const BlockTree& tree) : tree(tree), id(id) {
+        Fragment(int id, const BlockTreeLevelUpdate& tree) : tree(tree), id(id) {
             value = tree.defaultValue;
             maxLevel = -1;
             parent = -1;
         }
 
-        void add(int v) {
+        void addNode(int v) {
             int levelDelta = tree.level[v] - tree.level[id];
             nodes.push_back(v);
 
@@ -67,11 +67,11 @@ struct BlockTree {
     MergeOp             mergeOp;
     BlockOp             blockOp;
 
-    BlockTree(MergeOp mop, BlockOp bop, T dflt = T())
+    BlockTreeLevelUpdate(MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
     }
 
-    BlockTree(int size, MergeOp mop, BlockOp bop, T dflt = T())
+    BlockTreeLevelUpdate(int size, MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         init(size);
     }
@@ -191,7 +191,13 @@ struct BlockTree {
 
     // update all nodes to have same level
     void updateLevel(int level, T val) {
-        valueInLevel[level] = mergeOp(valueInLevel[level], val);
+        valueInLevel[level] = val;
+        for (Fragment& f : frags)
+            f.update(level, val);
+    }
+
+    void addLevel(int level, T val) {
+        valueInLevel[level] += val;
         for (Fragment& f : frags)
             f.update(level, val);
     }
@@ -230,13 +236,13 @@ private:
             return;
         fragId[u] = (int)frags.size() - 1;
 
-        frag.add(u);
+        frag.addNode(u);
         for (int v : edges[u])
             buildFragment(v, frag);
     }
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline BlockTree<T, MergeOp, BlockOp> makeBlockTree(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return BlockTree<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
+inline BlockTreeLevelUpdate<T, MergeOp, BlockOp> makeBlockTreeLevelUpdate(int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return BlockTreeLevelUpdate<T, MergeOp, BlockOp>(size, mop, bop, dfltValue);
 }

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "blockTree.h"
+#include "treeBlockTreeLevelUpdate.h"
 
 // http://codeforces.com/blog/entry/46843
 
@@ -18,13 +18,13 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testBlockTree() {
+void testBlockTreeLevelUpdate() {
     return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Block-Tree (Sqrt-Tree) -------------------" << endl;
     {
         int N = 1000;
-        auto tree = makeBlockTree(N, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; }, 0);
+        auto tree = makeBlockTreeLevelUpdate(N, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; }, 0);
 
         //TODO: tree.addEdge(u, v);
         // ...

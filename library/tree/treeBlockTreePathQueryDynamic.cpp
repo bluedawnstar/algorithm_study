@@ -145,7 +145,6 @@ void testDynamicBlockTreePathQuery() {
             int v = RandInt32::get() % N;
             auto gt = pathQueryNaive(tree, u, v, values);
             assert(gt == treeSqrt.query(u, v));
-            assert(gt == treeSqrt.queryAccumulative(u, v));
 
             int uKth = RandInt32::get() % (treeSqrt.queryToRoot(u) + 1);
             int vKth = RandInt32::get() % (treeSqrt.queryToRoot(v) + 1);
@@ -196,7 +195,6 @@ void testDynamicBlockTreePathQuery() {
                 int v = RandInt32::get() % N;
                 auto gt = pathQueryNaive(treeSqrt, u, v, values);
                 assert(gt == treeSqrt.query(u, v));
-                assert(gt == treeSqrt.queryAccumulative(u, v));
             }
         }
     }

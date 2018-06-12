@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "treeBlockTreeSubtreeUpdate.h"
+#include "treeBlockTreeSubtreeSum.h"
 
 // Ref: https://www.geeksforgeeks.org/sqrt-square-root-decomposition-set-2-lca-tree-osqrth-time/
 
@@ -80,16 +80,16 @@ static int querySubtreeNaive(Tree& tree, vector<int>& values, int u, int parent)
     return res;
 }
 
-void testBlockTreeSubtreeUpdate() {
+void testBlockTreeSubtreeSum() {
     return; //TODO: if you want to test a split function, make this line to a comment.
 
-    cout << "--- Block Tree for Path & Subtree Query ---------------------" << endl;
+    cout << "--- Block Tree for Path & Subtree Sum ---------------------" << endl;
     {
         int N = 10000;
         int T = 10000;
 
         Tree tree(N);
-        auto treeBlock = makeBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        BlockTreeSubtreeSum<int> treeBlock(N);
 
         vector<int> values(N);
 
@@ -140,7 +140,7 @@ void testBlockTreeSubtreeUpdate() {
         int T = 10000;
 
         Tree tree(N);
-        auto treeBlock = makeBlockTreeSubtreeUpdate(N, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0, 2);
+        BlockTreeSubtreeSum<int> treeBlock(N);
 
         vector<int> values(N);
 

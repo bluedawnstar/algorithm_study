@@ -34,13 +34,17 @@ int main(void) {
     TEST(RTree);
     TEST(QuadTree);
     TEST(MetricTree);
-    TEST(BlockTree);
     TEST(SparseTableOnTree);
+    TEST(BlockTreeLevelUpdate);
     TEST(BlockTreeLCA);
     TEST(BlockTreePathQuery);
+    TEST(BlockTreePathSum);
     TEST(DynamicBlockTreePathQuery);
+    TEST(DynamicBlockTreePathSum);
     TEST(BlockTreeSubtreeUpdate);
+    TEST(BlockTreeSubtreeSum);
     TEST(BlockTreeSubtreeUpdateDynamic);
+    TEST(BlockTreeSubtreeSumDynamic);
     TEST(TreePathSqrtDecomposition);
 
     TEST(BenchmarkBST);

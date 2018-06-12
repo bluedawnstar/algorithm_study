@@ -145,7 +145,7 @@
     <ClCompile Include="avlTree.cpp" />
     <ClCompile Include="benchmarkBST.cpp" />
     <ClCompile Include="binarySearchTree.cpp" />
-    <ClCompile Include="blockTree.cpp" />
+    <ClCompile Include="treeBlockTreeLevelUpdate.cpp" />
     <ClCompile Include="centroidDecomposition.cpp" />
     <ClCompile Include="lcaSchieberVishkin.cpp" />
     <ClCompile Include="maxIndependentSet.cpp" />
@@ -155,6 +155,10 @@
     <ClCompile Include="rTree.cpp" />
     <ClCompile Include="rangeQuery-SparseTableOnTree.cpp" />
     <ClCompile Include="scapegoatTree.cpp" />
+    <ClCompile Include="treeBlockTreePathSum.cpp" />
+    <ClCompile Include="treeBlockTreePathSumDynamic.cpp" />
+    <ClCompile Include="treeBlockTreeSubtreeSum.cpp" />
+    <ClCompile Include="treeBlockTreeSubtreeSumDynamic.cpp" />
     <ClCompile Include="treeBlockTreeSubtreeUpdate.cpp" />
     <ClCompile Include="treeBlockTreeSubtreeUpdateDynamic.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
@@ -187,7 +191,7 @@
     <ClInclude Include="allocator.h" />
     <ClInclude Include="avlTree.h" />
     <ClInclude Include="binarySearchTree.h" />
-    <ClInclude Include="blockTree.h" />
+    <ClInclude Include="treeBlockTreeLevelUpdate.h" />
     <ClInclude Include="centroidDecomposition.h" />
     <ClInclude Include="lcaSchieberVishkin.h" />
     <ClInclude Include="lcaSparseTableSimple.h" />
@@ -200,6 +204,10 @@
     <ClInclude Include="scapegoatTree.h" />
     <ClInclude Include="splayTreeRangeQuery.h" />
     <ClInclude Include="treapRangeQuery.h" />
+    <ClInclude Include="treeBlockTreePathSum.h" />
+    <ClInclude Include="treeBlockTreePathSumDynamic.h" />
+    <ClInclude Include="treeBlockTreeSubtreeSum.h" />
+    <ClInclude Include="treeBlockTreeSubtreeSumDynamic.h" />
     <ClInclude Include="treeBlockTreeSubtreeUpdate.h" />
     <ClInclude Include="treeBlockTreeSubtreeUpdateDynamic.h" />
     <ClInclude Include="treeDfsTour.h" />
