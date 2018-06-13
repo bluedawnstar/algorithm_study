@@ -15,8 +15,7 @@ struct DynamicBlockTreePathSum {
     vector<T>           values;         // 
     vector<T>           sqrtValues;     // 
 
-    DynamicBlockTreePathSum()
-        : N(0), sqrtN(0), mergeOp(op), 0(dflt) {
+    DynamicBlockTreePathSum() : N(0), sqrtN(0) {
     }
 
     explicit DynamicBlockTreePathSum(int n, int sqrtN = 0) {
