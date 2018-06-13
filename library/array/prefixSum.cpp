@@ -22,13 +22,17 @@ static int sum(const vector<int>& v, int left, int right) {
     return res;
 }
 
-void testPositiveSum() {
+void testPrefixSum() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Positive Sum ----------" << endl;
+    cout << "--- Prefix Sum ----------" << endl;
 
     int N = 1000000;
     int T = 1000;
+#ifdef _DEBUG
+    N = 10000;
+    T = 1000;
+#endif
 
     vector<int> v(N);
     for (int i = 0; i < N; i++) {

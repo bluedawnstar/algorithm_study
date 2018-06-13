@@ -6,9 +6,10 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
+    TEST(PrefixSum);
+    TEST(PrefixSum2D);
     TEST(PackedArray);
-    TEST(PositiveSum);
-    TEST(IntegralImage);
     TEST(PersistentArray);
     TEST(PersistentStack);
+    TEST(SortedVector);
 }

@@ -146,19 +146,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="integralImage.cpp" />
+    <ClCompile Include="prefixSum2D.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="packedArray.cpp" />
     <ClCompile Include="persistentArray.cpp" />
     <ClCompile Include="persistentStack.cpp" />
     <ClCompile Include="prefixSum.cpp" />
+    <ClCompile Include="sortedVector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="integralImage.h" />
+    <ClInclude Include="prefixSum2D.h" />
     <ClInclude Include="packedArray.h" />
     <ClInclude Include="persistentArray.h" />
     <ClInclude Include="persistentStack.h" />
     <ClInclude Include="prefixSum.h" />
+    <ClInclude Include="sortedVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

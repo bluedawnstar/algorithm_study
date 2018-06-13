@@ -21,9 +21,6 @@
     <ClCompile Include="packedArray.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="integralImage.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="prefixSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -33,12 +30,15 @@
     <ClCompile Include="persistentStack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="prefixSum2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sortedVector.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="packedArray.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="integralImage.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="prefixSum.h">
@@ -48,6 +48,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="persistentStack.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixSum2D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortedVector.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

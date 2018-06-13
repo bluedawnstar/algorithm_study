@@ -1,13 +1,13 @@
 #pragma once
 
 template <typename T>
-struct IntegralImage {
+struct PrefixSum2D {
     vector<vector<T>> sum;
 
-    IntegralImage() {
+    PrefixSum2D() {
     }
 
-    explicit IntegralImage(const vector<vector<T>>& in) {
+    explicit PrefixSum2D(const vector<vector<T>>& in) {
         build(in);
     }
 

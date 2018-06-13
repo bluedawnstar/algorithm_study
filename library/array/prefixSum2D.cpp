@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "integralImage.h"
+#include "prefixSum2D.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -24,10 +24,10 @@ static int sum(const vector<vector<int>>& v, int left, int top, int right, int b
     return res;
 }
 
-void testIntegralImage() {
+void testPrefixSum2D() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Integral Image ----------" << endl;
+    cout << "--- Prefix Sum 2D ----------" << endl;
 
     int N = 100;
     int T = 1000;
@@ -38,7 +38,7 @@ void testIntegralImage() {
             v[i][j] = RandInt32::get() % N;
     }
 
-    IntegralImage<int> S(v);
+    PrefixSum2D<int> S(v);
 
     for (int i = 0; i < T; i++) {
         int L = RandInt32::get() % N;
