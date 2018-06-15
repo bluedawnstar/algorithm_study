@@ -1,16 +1,27 @@
 #pragma once
 
-#define forn(i, n) for (int i = 0; i < (int)(n); i++)
+// Split & Build
 
 template <typename T>
 struct SortedVector {
     struct Block {
+        Block* prev;
+        Block* next;
+
         int idx;
         int cnt;
         vector<T> v;
 
         void init(int K) {
             v.resize(K);
+            prev = nullptr;
+            next = nullptr;
+        }
+
+        void build(int i, T val) {
+            idx = i;
+            cnt = 1;
+            v[0] = val;
         }
 
         void build(int i, int n, const T* data) {
@@ -19,6 +30,21 @@ struct SortedVector {
 
             memcpy(&v[0], data, sizeof(T) * n);
             sort(v.begin(), v.begin() + n);
+        }
+
+        void eraseFirst(T val) {
+            int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
+            if (i < cnt - 1)
+                memcpy(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
+            idx++;
+            cnt--;
+        }
+
+        void eraseLast(T val) {
+            int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
+            if (i < cnt - 1)
+                memcpy(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
+            cnt--;
         }
 
         int countLessOrEqual(int val) const {
@@ -47,6 +73,9 @@ struct SortedVector {
 
     int blockN;
     vector<Block> blocks;
+    Block* unused;
+    Block* head;
+    Block* tail;
 
     int maxN;       // max count
     int K;          // max block size
@@ -57,6 +86,10 @@ struct SortedVector {
             K = int(ceil(sqrt(maxN)));
         if (M <= 0)
             M = ((maxN + K - 1) / K) * 4;
+
+        unused = nullptr;
+        head = nullptr;
+        tail = nullptr;
 
         blocks.resize(M);
         for (int i = 0; i < M; i++)
@@ -75,13 +108,120 @@ struct SortedVector {
         blockN = 0;
         for (int i = 0; i < n; i += K)
             blocks[blockN++].build(i, min(K, n - i), v + i);
+
+        initLinkedList();
     }
 
     void build(const vector<T>& v) {
         build(&v[0], (int)v.size());
     }
 
-    // call rebuild() after K(=sqrt(N)) queries
+    //--- update
+
+    void insert(int pos, T x) {
+        check();
+
+        Block* blk = splitBlock(pos);
+        blk = insertBlock(blk);
+        values[valueN] = x;
+        blk->build(valueN, values[valueN]);
+        valueN++;
+    }
+
+    void erase(int pos) {
+        if (pos >= valueN)
+            return;
+
+        check();
+
+        int idx = pos;
+        Block* blk = findBlock(head, idx);
+
+        if (blk->cnt <= 1) {
+            eraseBlock(blk);
+            --blockN;
+        } else if (idx == 0) {
+            blk->eraseFirst(values[blk->idx]);
+        } else if (idx == blk->cnt - 1) {
+            blk->eraseLast(values[blk->idx + idx]);
+        } else {
+            int i = blk->idx;
+            int cnt = blk->cnt;
+
+            blk = insertBlock(blk->next);
+            blk->build(i + idx + 1, cnt - idx - 1, &values[i + idx + 1]);
+            blk->prev->build(i, idx, &values[i]);
+        }
+    }
+
+    //--- query
+
+    int countLessOrEqual(int L, int R, T x) {
+        check();
+
+        if (L == R)
+            return int(values[L] <= x);
+
+        int res = 0;
+        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
+            res += pL->countLessOrEqual(x);
+
+        return res;
+    }
+
+    int countLess(int L, int R, T x) {
+        check();
+
+        if (L == R)
+            return int(values[L] < x);
+
+        int res = 0;
+        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
+            res += pL->countLess(x);
+
+        return res;
+    }
+
+    int countGreaterOrEqual(int L, int R, T x) {
+        check();
+
+        if (L == R)
+            return int(values[L] >= x);
+
+        int res = 0;
+        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
+            res += pL->countGreaterOrEqual(x);
+
+        return res;
+    }
+
+    int countGreater(int L, int R, T x) {
+        check();
+
+        if (L == R)
+            return int(values[L] > x);
+
+        int res = 0;
+        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
+            res += pL->countGreater(x);
+
+        return res;
+    }
+
+    int count(int L, int R, T x) {
+        check();
+
+        if (L == R)
+            return int(values[L] == x);
+
+        int res = 0;
+        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
+            res += pL->count(x);
+
+        return res;
+    }
+
+private:
     void rebuild() {
         vector<int> v(values.size());
 
@@ -96,104 +236,119 @@ struct SortedVector {
         blockN = 0;
         for (int i = 0; i < valueN; i += K)
             blocks[blockN++].build(i, min(K, valueN - i), &values[i]);
+
+        initLinkedList();
     }
 
-    //--- update
-
-    void insert(int pos, T x) {
-        check();
-
-        int blk = split(pos);
-        shiftR(blk);
-        values[valueN] = x;
-        blocks[blk].build(valueN, 1, &values[valueN]);
-        valueN++;
-    }
-
-    void erase(int pos) {
-        check();
-
-        split(pos + 1);
-        shiftL(split(pos));
-    }
-
-    //--- query
-
-    int countLessOrEqual(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (L = split(L), R = split(R + 1); L < R; L++)
-            res += blocks[L].countLessOrEqual(x);
-        return res;
-    }
-
-    int countLess(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (L = split(L), R = split(R + 1); L < R; L++)
-            res += blocks[L].countLess(x);
-        return res;
-    }
-
-    int countGreaterOrEqual(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (L = split(L), R = split(R + 1); L < R; L++)
-            res += blocks[L].countGreaterOrEqual(x);
-        return res;
-    }
-
-    int countGreater(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (L = split(L), R = split(R + 1); L < R; L++)
-            res += blocks[L].countGreater(x);
-        return res;
-    }
-
-    int count(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (L = split(L), R = split(R + 1); L < R; L++)
-            res += blocks[L].count(x);
-        return res;
-    }
-
-private:
     void check() {
-        if (blockN >= (int)blocks.size() - 2)
+        if (blockN >= M - 2)
             rebuild();
     }
 
-    // return the index of next block
-    int split(int idx) {
-        int blk = 0;
-        while (blk < blockN && idx >= blocks[blk].cnt)
-            idx -= blocks[blk++].cnt;
+    //--- block management
 
-        if (idx) {
-            int i = blocks[blk].idx;
-            int cnt = blocks[blk].cnt;
-
-            shiftR(blk);
-            blocks[blk + 1].build(i + idx, cnt - idx, &values[i + idx]);
-            blocks[blk].build(i, idx, &values[i]);
-            blk++;
+    Block* findBlock(Block* start, int& idx) {
+        Block* blk = start;
+        while (blk && idx >= blk->cnt) {
+            idx -= blk->cnt;
+            blk = blk->next;
         }
         return blk;
     }
 
-    void shiftR(int blk) {
-        rotate(blocks.begin() + blk, blocks.begin() + blockN, blocks.begin() + blockN + 1);
-        ++blockN;
+    // return the pointer of next block
+    Block* splitBlock(Block* start, int idx) {
+        Block* blk = findBlock(start, idx);
+        if (idx) {
+            int i = blk->idx;
+            int cnt = blk->cnt;
+
+            blk = insertBlock(blk->next);
+            blk->build(i + idx, cnt - idx, &values[i + idx]);
+            blk->prev->build(i, idx, &values[i]);
+        }
+        return blk;
     }
-    void shiftL(int blk) {
-        rotate(blocks.begin() + blk, blocks.begin() + blk + 1, blocks.begin() + blockN);
-        --blockN;
+
+    Block* splitBlock(int idx) {
+        return splitBlock(head, idx);
+    }
+
+    Block* insertBlock(Block* blk) {
+        Block* newBlock = popUnusedBlock();
+        insertBlockBefore(blk, newBlock);
+        ++blockN;
+        return newBlock;
+    }
+
+    //--- linked list
+
+    void initLinkedList() {
+        if (blockN == 0)
+            head = tail = nullptr;
+        else {
+            for (int i = 1; i < blockN; i++) {
+                blocks[i - 1].next = &blocks[i];
+                blocks[i].prev = &blocks[i - 1];
+            }
+            head = &blocks[0];
+            tail = &blocks[blockN - 1];
+            head->prev = nullptr;
+            tail->next = nullptr;
+        }
+
+        if (blockN >= M)
+            unused = nullptr;
+        else {
+            for (int i = blockN + 1; i < M; i++)
+                blocks[i - 1].next = &blocks[i];
+            blocks[M - 1].next = nullptr;
+            unused = &blocks[blockN];
+        }
+    }
+
+    void pushUnusedBlock(Block* blk) {
+        blk->next = unused;
+        unused = blk;
+    }
+
+    Block* popUnusedBlock() {
+        Block* res = unused;
+        unused = unused->next;
+        return res;
+    }
+
+    void insertBlockBefore(Block* pos, Block* newBlock) {
+        if (!head) {
+            newBlock->prev = nullptr;
+            newBlock->next = nullptr;
+            head = newBlock;
+            tail = newBlock;
+        } else if (pos == nullptr) {
+            tail->next = newBlock;
+            newBlock->prev = tail;
+            newBlock->next = nullptr;
+            tail = newBlock;
+        } else {
+            if (pos->prev)
+                pos->prev->next = newBlock;
+            else
+                head = newBlock;
+            newBlock->prev = pos->prev;
+            newBlock->next = pos;
+            pos->prev = newBlock;
+        }
+    }
+
+    void eraseBlock(Block* pos) {
+        if (pos == head)
+            head = head->next;
+        if (pos == tail)
+            tail = tail->prev;
+        if (pos->prev)
+            pos->prev->next = pos->next;
+        if (pos->next)
+            pos->next->prev = pos->prev;
+        pushUnusedBlock(pos);
     }
 };
