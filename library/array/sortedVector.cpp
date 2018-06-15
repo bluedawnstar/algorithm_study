@@ -63,11 +63,19 @@ void testSortedVector() {
                 if (L > R)
                     swap(L, R);
 
+                assert(sv.get(L) == vec[L]);
+                assert(sv.get(R) == vec[R]);
+
                 int gt = countLessOrEqual(vec, L, R, val);
                 int ans = sv.countLessOrEqual(L, R, val);
-                //if (gt != ans)
-                //    cout << "Mismatched: " << gt << ", " << ans << endl;
-                //assert(gt == ans);
+                if (gt != ans)
+                    cout << "Mismatched: " << gt << ", " << ans << endl;
+                assert(gt == ans);
+
+                vec[L] = RandInt32::get();
+                vec[R] = RandInt32::get();
+                sv.update(L, vec[L]);
+                sv.update(R, vec[R]);
             }
         }
     }

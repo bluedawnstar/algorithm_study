@@ -35,7 +35,7 @@ struct SortedVector {
         void eraseFirst(T val) {
             int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
             if (i < cnt - 1)
-                memcpy(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
+                memmove(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
             idx++;
             cnt--;
         }
@@ -43,27 +43,41 @@ struct SortedVector {
         void eraseLast(T val) {
             int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
             if (i < cnt - 1)
-                memcpy(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
+                memmove(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
             cnt--;
         }
 
-        int countLessOrEqual(int val) const {
+        void update(T oldVal, T newVal) {
+            int del = int(lower_bound(v.begin(), v.begin() + cnt, oldVal) - v.begin());
+            int ins = int(lower_bound(v.begin(), v.begin() + cnt, newVal) - v.begin());
+            
+            if (ins > del + 1)
+                memmove(&v[del], &v[del + 1], sizeof(T) * (--ins - del));
+            else if (ins < del)
+                memmove(&v[ins + 1], &v[ins], sizeof(T) * (del - ins));
+            else
+                ins = del;
+
+            v[ins] = newVal;
+        }
+
+        int countLessOrEqual(T val) const {
             return int(upper_bound(v.begin(), v.begin() + cnt, val) - v.begin());
         }
 
-        int countLess(int val) const {
+        int countLess(T val) const {
             return int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
         }
 
-        int countGreaterOrEqual(int val) const {
+        int countGreaterOrEqual(T val) const {
             return cnt - countLess(val);
         }
 
-        int countGreater(int val) const {
+        int countGreater(T val) const {
             return cnt - countLessOrEqual(val);
         }
 
-        int count(int val) const {
+        int count(T val) const {
             return int(upper_bound(v.begin(), v.begin() + cnt, val) - lower_bound(v.begin(), v.begin() + cnt, val));
         }
     };
@@ -154,13 +168,32 @@ struct SortedVector {
         }
     }
 
+    T get(int pos) {
+        int idx = pos;
+        Block* blk = findBlock(head, idx);
+        return values[blk->idx + idx];
+    }
+
+    void update(int pos, T val) {
+        int idx = pos;
+        Block* blk = findBlock(head, idx);
+
+        if (!blk)
+            return;
+
+        T oldVal = values[blk->idx + idx];
+        values[blk->idx + idx] = val;
+
+        if (blk->cnt == 1)
+            blk->v[0] = val;
+        else
+            blk->update(oldVal, val);
+    }
+
     //--- query
 
     int countLessOrEqual(int L, int R, T x) {
         check();
-
-        if (L == R)
-            return int(values[L] <= x);
 
         int res = 0;
         for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
@@ -172,9 +205,6 @@ struct SortedVector {
     int countLess(int L, int R, T x) {
         check();
 
-        if (L == R)
-            return int(values[L] < x);
-
         int res = 0;
         for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
             res += pL->countLess(x);
@@ -184,9 +214,6 @@ struct SortedVector {
 
     int countGreaterOrEqual(int L, int R, T x) {
         check();
-
-        if (L == R)
-            return int(values[L] >= x);
 
         int res = 0;
         for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
@@ -198,9 +225,6 @@ struct SortedVector {
     int countGreater(int L, int R, T x) {
         check();
 
-        if (L == R)
-            return int(values[L] > x);
-
         int res = 0;
         for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
             res += pL->countGreater(x);
@@ -210,9 +234,6 @@ struct SortedVector {
 
     int count(int L, int R, T x) {
         check();
-
-        if (L == R)
-            return int(values[L] == x);
 
         int res = 0;
         for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
@@ -226,9 +247,9 @@ private:
         vector<int> v(values.size());
 
         valueN = 0;
-        for (int i = 0; i < blockN; i++) {
-            memcpy(&v[valueN], &values[blocks[i].idx], blocks[i].cnt * sizeof(T));
-            valueN += blocks[i].cnt;
+        for (Block* p = head; p; p = p->next) {
+            memcpy(&v[valueN], &values[p->idx], sizeof(T) * p->cnt);
+            valueN += p->cnt;
         }
 
         swap(values, v);
