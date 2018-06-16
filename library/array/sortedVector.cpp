@@ -25,6 +25,42 @@ static int countLessOrEqual(vector<int>& v, int L, int R, int val) {
     return res;
 }
 
+static int countLess(vector<int>& v, int L, int R, int val) {
+    int res = 0;
+    while (L <= R) {
+        if (v[L++] < val)
+            res++;
+    }
+    return res;
+}
+
+static int countGreaterOrEqual(vector<int>& v, int L, int R, int val) {
+    int res = 0;
+    while (L <= R) {
+        if (v[L++] >= val)
+            res++;
+    }
+    return res;
+}
+
+static int countGreater(vector<int>& v, int L, int R, int val) {
+    int res = 0;
+    while (L <= R) {
+        if (v[L++] > val)
+            res++;
+    }
+    return res;
+}
+
+static int count(vector<int>& v, int L, int R, int val) {
+    int res = 0;
+    while (L <= R) {
+        if (v[L++] == val)
+            res++;
+    }
+    return res;
+}
+
 void testSortedVector() {
     //return; //TODO: if you want to test, make this line a comment.
 
@@ -71,6 +107,11 @@ void testSortedVector() {
                 if (gt != ans)
                     cout << "Mismatched: " << gt << ", " << ans << endl;
                 assert(gt == ans);
+
+                assert(countLess(vec, L, R, val) == sv.countLess(L, R, val));
+                assert(countGreaterOrEqual(vec, L, R, val) == sv.countGreaterOrEqual(L, R, val));
+                assert(countGreater(vec, L, R, val) == sv.countGreater(L, R, val));
+                assert(count(vec, L, R, val) == sv.count(L, R, val));
 
                 vec[L] = RandInt32::get();
                 vec[R] = RandInt32::get();

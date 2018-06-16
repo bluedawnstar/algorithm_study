@@ -1,7 +1,6 @@
 #pragma once
 
 // Split & Build
-
 template <typename T>
 struct SortedVector {
     struct Block {
@@ -67,14 +66,6 @@ struct SortedVector {
 
         int countLess(T val) const {
             return int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
-        }
-
-        int countGreaterOrEqual(T val) const {
-            return cnt - countLess(val);
-        }
-
-        int countGreater(T val) const {
-            return cnt - countLessOrEqual(val);
         }
 
         int count(T val) const {
@@ -146,8 +137,6 @@ struct SortedVector {
         if (pos >= valueN)
             return;
 
-        check();
-
         int idx = pos;
         Block* blk = findBlock(head, idx);
 
@@ -165,6 +154,8 @@ struct SortedVector {
             blk = insertBlock(blk->next);
             blk->build(i + idx + 1, cnt - idx - 1, &values[i + idx + 1]);
             blk->prev->build(i, idx, &values[i]);
+
+            check();
         }
     }
 
@@ -196,8 +187,20 @@ struct SortedVector {
         check();
 
         int res = 0;
-        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
-            res += pL->countLessOrEqual(x);
+
+        int idxL = L;
+        Block* pL = findBlock(head, idxL);
+        int idxR = R - L + idxL;
+        Block* pR = findBlock(pL, idxR);
+
+        if (pL == pR) {
+            res = countLessOrEqualNaive(pL, idxL, idxR, x);
+        } else {
+            res = countLessOrEqualNaive(pL, idxL, pL->cnt - 1, x);
+            for (pL = pL->next; pL != pR; pL = pL->next)
+                res += pL->countLessOrEqual(x);
+            res += countLessOrEqualNaive(pR, 0, idxR, x);
+        }
 
         return res;
     }
@@ -206,38 +209,50 @@ struct SortedVector {
         check();
 
         int res = 0;
-        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
-            res += pL->countLess(x);
+
+        int idxL = L;
+        Block* pL = findBlock(head, idxL);
+        int idxR = R - L + idxL;
+        Block* pR = findBlock(pL, idxR);
+
+        if (pL == pR) {
+            res = countLessNaive(pL, idxL, idxR, x);
+        } else {
+            res = countLessNaive(pL, idxL, pL->cnt - 1, x);
+            for (pL = pL->next; pL != pR; pL = pL->next)
+                res += pL->countLess(x);
+            res += countLessNaive(pR, 0, idxR, x);
+        }
 
         return res;
     }
 
     int countGreaterOrEqual(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
-            res += pL->countGreaterOrEqual(x);
-
-        return res;
+        return (R - L + 1) - countLess(L, R, x);
     }
 
     int countGreater(int L, int R, T x) {
-        check();
-
-        int res = 0;
-        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
-            res += pL->countGreater(x);
-
-        return res;
+        return (R - L + 1) - countLessOrEqual(L, R, x);
     }
 
     int count(int L, int R, T x) {
         check();
 
         int res = 0;
-        for (Block *pL = splitBlock(L), *pR = splitBlock(pL, R - L + 1); pL != pR; pL = pL->next)
-            res += pL->count(x);
+
+        int idxL = L;
+        Block* pL = findBlock(head, idxL);
+        int idxR = R - L + idxL;
+        Block* pR = findBlock(pL, idxR);
+
+        if (pL == pR) {
+            res = countNaive(pL, idxL, idxR, x);
+        } else {
+            res = countNaive(pL, idxL, pL->cnt - 1, x);
+            for (pL = pL->next; pL != pR; pL = pL->next)
+                res += pL->count(x);
+            res += countNaive(pR, 0, idxR, x);
+        }
 
         return res;
     }
@@ -301,6 +316,36 @@ private:
         ++blockN;
         return newBlock;
     }
+
+    //--- naive operations
+
+    int countLessOrEqualNaive(Block* blk, int L, int R, T x) {
+        L += blk->idx;
+        R += blk->idx;
+        int res = 0;
+        while (L <= R)
+            res += (values[L++] <= x);
+        return res;
+    }
+
+    int countLessNaive(Block* blk, int L, int R, T x) {
+        L += blk->idx;
+        R += blk->idx;
+        int res = 0;
+        while (L <= R)
+            res += (values[L++] < x);
+        return res;
+    }
+
+    int countNaive(Block* blk, int L, int R, T x) {
+        L += blk->idx;
+        R += blk->idx;
+        int res = 0;
+        while (L <= R)
+            res += (values[L++] == x);
+        return res;
+    }
+
 
     //--- linked list
 
