@@ -161,6 +161,7 @@
     <ClCompile Include="searchRabinKarp.cpp" />
     <ClCompile Include="split.cpp" />
     <ClCompile Include="subsequence.cpp" />
+    <ClCompile Include="substrHashing.cpp" />
     <ClCompile Include="suffixArray.cpp" />
     <ClCompile Include="suffixArraySparseTable.cpp" />
     <ClCompile Include="suffixArray_notUsed.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="searchRabinKarp.h" />
     <ClInclude Include="split.h" />
     <ClInclude Include="subsequenceCount.h" />
+    <ClInclude Include="substrHashing.h" />
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArrayAlgo.h" />
     <ClInclude Include="suffixArraySparseTable.h" />

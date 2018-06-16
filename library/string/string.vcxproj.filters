@@ -108,6 +108,9 @@
     <ClCompile Include="lyndonFactorization.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="substrHashing.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -210,6 +213,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixArrayAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="substrHashing.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

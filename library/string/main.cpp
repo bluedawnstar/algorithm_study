@@ -34,4 +34,5 @@ int main(void) {
     TEST(Subsequence);
     TEST(SubsequenceLCS);
     TEST(LyndonFactorization);
+    TEST(SubstrHashing);
 }

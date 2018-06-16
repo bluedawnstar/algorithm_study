@@ -99,11 +99,6 @@ struct AhoCorasickAM {
         }
     }
 
-    // return true if it's a new string.
-    void insert(const string& s, int id) {
-        return insert(&s[0], (int)s.length(), id);
-    }
-
     void insert(const char* s, int len, int id) {
         if (len <= 0)
             return;
@@ -116,6 +111,11 @@ struct AhoCorasickAM {
             p = p->getChild(idx);
         }
         p->terminal = id;
+    }
+
+    // return true if it's a new string.
+    void insert(const string& s, int id) {
+        return insert(&s[0], (int)s.length(), id);
     }
 
     // return exactly matched word
@@ -137,12 +137,6 @@ struct AhoCorasickAM {
     }
 
     // prefix matching
-    // return (prefix_matching_length, word_matched?)
-    pair<int, int> search(const string& s) const {
-        return search(&s[0], (int)s.length());
-    }
-
-    // prefix matching
     // return (prefix_matching_length, string_id_if_exactly_matched)
     pair<int, int> search(const char* s, int len) const {
         if (len <= 0)
@@ -156,6 +150,12 @@ struct AhoCorasickAM {
                 return make_pair(i, -1);
         }
         return make_pair(len, p->terminal);
+    }
+
+    // prefix matching
+    // return (prefix_matching_length, string_id_if_exactly_matched)
+    pair<int, int> search(const string& s) const {
+        return search(&s[0], (int)s.length());
     }
 
     //--- Aho-Corasick --------------------------------------------------------
