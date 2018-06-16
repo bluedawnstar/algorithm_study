@@ -17,12 +17,14 @@ struct VectorRangeCount {
             next = nullptr;
         }
 
+        // O(1)
         void build(int i, T val) {
             idx = i;
             cnt = 1;
             v[0] = val;
         }
 
+        // O(sqrt(N) * log(N))
         void build(int i, int n, const T* data) {
             idx = i;
             cnt = n;
@@ -31,6 +33,7 @@ struct VectorRangeCount {
             sort(v.begin(), v.begin() + n);
         }
 
+        // O(log(N) + sqrt(N))
         void eraseFirst(T val) {
             int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
             if (i < cnt - 1)
@@ -39,6 +42,7 @@ struct VectorRangeCount {
             cnt--;
         }
 
+        // O(log(N) + sqrt(N))
         void eraseLast(T val) {
             int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
             if (i < cnt - 1)
@@ -46,6 +50,7 @@ struct VectorRangeCount {
             cnt--;
         }
 
+        // O(log(N) + sqrt(N))
         void update(T oldVal, T newVal) {
             int del = int(lower_bound(v.begin(), v.begin() + cnt, oldVal) - v.begin());
             int ins = int(lower_bound(v.begin(), v.begin() + cnt, newVal) - v.begin());
@@ -60,14 +65,17 @@ struct VectorRangeCount {
             v[ins] = newVal;
         }
 
+        // O(log(N))
         int countLessOrEqual(T val) const {
             return int(upper_bound(v.begin(), v.begin() + cnt, val) - v.begin());
         }
 
+        // O(log(N))
         int countLess(T val) const {
             return int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
         }
 
+        // O(log(N))
         int count(T val) const {
             return int(upper_bound(v.begin(), v.begin() + cnt, val) - lower_bound(v.begin(), v.begin() + cnt, val));
         }
@@ -106,6 +114,7 @@ struct VectorRangeCount {
 
     //--- build
 
+    // O(N * log(N))
     void build(const T* v, int n) {
         valueN = n;
         memcpy(&values[0], v, sizeof(T) * n);
@@ -123,6 +132,7 @@ struct VectorRangeCount {
 
     //--- update
 
+    // O(sqrt(N))
     void insert(int pos, T x) {
         check();
 
@@ -133,6 +143,7 @@ struct VectorRangeCount {
         valueN++;
     }
 
+    // O(sqrt(N) * log(N))
     void erase(int pos) {
         if (pos >= valueN)
             return;
@@ -159,12 +170,14 @@ struct VectorRangeCount {
         }
     }
 
+    // O(sqrt(N))
     T get(int pos) {
         int idx = pos;
         Block* blk = findBlock(head, idx);
         return values[blk->idx + idx];
     }
 
+    // O(sqrt(N) + log(N))
     void update(int pos, T val) {
         int idx = pos;
         Block* blk = findBlock(head, idx);
@@ -183,6 +196,7 @@ struct VectorRangeCount {
 
     //--- query
 
+    // O(sqrt(N) * log(N))
     int countLessOrEqual(int L, int R, T x) {
         check();
 
@@ -205,6 +219,7 @@ struct VectorRangeCount {
         return res;
     }
 
+    // O(sqrt(N) * log(N))
     int countLess(int L, int R, T x) {
         check();
 
@@ -227,14 +242,17 @@ struct VectorRangeCount {
         return res;
     }
 
+    // O(sqrt(N) * log(N))
     int countGreaterOrEqual(int L, int R, T x) {
         return (R - L + 1) - countLess(L, R, x);
     }
 
+    // O(sqrt(N) * log(N))
     int countGreater(int L, int R, T x) {
         return (R - L + 1) - countLessOrEqual(L, R, x);
     }
 
+    // O(sqrt(N) * log(N))
     int count(int L, int R, T x) {
         check();
 

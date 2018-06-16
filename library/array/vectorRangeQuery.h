@@ -19,12 +19,14 @@ struct VectorRangeQuery {
             next = nullptr;
         }
 
+        // O(1)
         void build(int i, T val) {
             idx = i;
             cnt = 1;
             prefix[0] = suffix[0] = val;
         }
 
+        // O(sqrt(N))
         void build(int i, int n, const T* data, const MergeOp& mergeOp) {
             idx = i;
             cnt = n;
@@ -37,6 +39,7 @@ struct VectorRangeQuery {
             }
         }
 
+        // O(sqrt(N))
         void eraseFirst(const T* data, const MergeOp& mergeOp) {
             idx++;
             cnt--;
@@ -46,6 +49,7 @@ struct VectorRangeQuery {
                 prefix[i] = mergeOp(prefix[i - 1], data[i]);
         }
 
+        // O(sqrt(N))
         void eraseLast(const T* data, const MergeOp& mergeOp) {
             cnt--;
 
@@ -54,12 +58,14 @@ struct VectorRangeQuery {
                 suffix[i] = mergeOp(data[j], suffix[i - 1]);
         }
 
+        // O(sqrt(N))
         void updatePrefix(const T* data, const MergeOp& mergeOp) {
             prefix[0] = data[0];
             for (int i = 1; i < cnt; i++)
                 prefix[i] = mergeOp(prefix[i - 1], data[i]);
         }
 
+        // O(sqrt(N))
         void updatePrefix(int offset, const T* data, const MergeOp& mergeOp) {
             if (offset == 0) {
                 prefix[0] = data[0];
@@ -69,12 +75,14 @@ struct VectorRangeQuery {
                 prefix[i] = mergeOp(prefix[i - 1], data[i]);
         }
 
+        // O(sqrt(N))
         void updateSuffix(const T* data, const MergeOp& mergeOp) {
             suffix[0] = data[cnt - 1];
             for (int i = 1, j = cnt - 2; i < cnt; i++, j--)
                 suffix[i] = mergeOp(data[j], suffix[i - 1]);
         }
 
+        // O(sqrt(N))
         void updateSuffix(int offset, const T* data, const MergeOp& mergeOp) {
             if (offset == cnt - 1) {
                 suffix[0] = data[cnt - 1];
@@ -84,14 +92,17 @@ struct VectorRangeQuery {
                 suffix[i] = mergeOp(data[j], suffix[i - 1]);
         }
 
+        // O(1)
         T query() const {
             return prefix[cnt - 1];
         }
 
+        // O(1)
         T queryPrefix(int R) const {
             return prefix[R];
         }
 
+        // O(1)
         T querySuffix(int L) const {
             return suffix[cnt - 1 - L];
         }
@@ -134,6 +145,7 @@ struct VectorRangeQuery {
 
     //--- build
 
+    // O(N * log(N))
     void build(const T* v, int n) {
         valueN = n;
         memcpy(&values[0], v, sizeof(T) * n);
@@ -151,6 +163,7 @@ struct VectorRangeQuery {
 
     //--- update
 
+    // O(sqrt(N))
     void insert(int pos, T x) {
         check();
 
@@ -161,6 +174,7 @@ struct VectorRangeQuery {
         valueN++;
     }
 
+    // O(sqrt(N))
     void erase(int pos) {
         if (pos >= valueN)
             return;
@@ -188,12 +202,14 @@ struct VectorRangeQuery {
         }
     }
 
+    // O(sqrt(N))
     T get(int pos) {
         int idx = pos;
         Block* blk = findBlock(head, idx);
         return values[blk->idx + idx];
     }
 
+    // O(sqrt(N))
     void update(int pos, T val) {
         int idx = pos;
         Block* blk = findBlock(head, idx);
@@ -213,6 +229,7 @@ struct VectorRangeQuery {
 
     //--- query
 
+    // O(sqrt(N))
     T query(int L, int R) {
         check();
 

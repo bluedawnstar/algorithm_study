@@ -17,6 +17,7 @@ struct VectorRangeSum {
             next = nullptr;
         }
 
+        // O(1)
         void build(int i, T val) {
             idx = i;
             cnt = 1;
@@ -24,6 +25,7 @@ struct VectorRangeSum {
             v[1] = val;
         }
 
+        // O(sqrt(N))
         void build(int i, int n, const T* data) {
             idx = i;
             cnt = n;
@@ -33,19 +35,23 @@ struct VectorRangeSum {
                 v[i] = v[i - 1] + data[i - 1];
         }
 
+        // O(1)
         void eraseLast() {
             cnt--;
         }
 
+        // O(sqrt(N))
         void update(int offset, T delta) {
             for (int i = offset + 1; i <= cnt; i++)
                 v[i] += delta;
         }
 
+        // O(1)
         T sum() const {
             return v[cnt] - v[0];
         }
 
+        // O(1)
         T sumRange(int L, int R) const {
             return v[R + 1] - v[L];
         }
@@ -84,6 +90,8 @@ struct VectorRangeSum {
 
     //--- build
 
+
+    // O(N * log(N))
     void build(const T* v, int n) {
         valueN = n;
         memcpy(&values[0], v, sizeof(T) * n);
@@ -101,6 +109,7 @@ struct VectorRangeSum {
 
     //--- update
 
+    // O(sqrt(N))
     void insert(int pos, T x) {
         check();
 
@@ -111,6 +120,7 @@ struct VectorRangeSum {
         valueN++;
     }
 
+    // O(sqrt(N))
     void erase(int pos) {
         if (pos >= valueN)
             return;
@@ -137,12 +147,14 @@ struct VectorRangeSum {
         }
     }
 
+    // O(sqrt(N))
     T get(int pos) {
         int idx = pos;
         Block* blk = findBlock(head, idx);
         return values[blk->idx + idx];
     }
 
+    // O(sqrt(N))
     void update(int pos, T val) {
         int idx = pos;
         Block* blk = findBlock(head, idx);
@@ -162,6 +174,7 @@ struct VectorRangeSum {
 
     //--- query
 
+    // O(sqrt(N))
     T sum(int L, int R) {
         check();
 
