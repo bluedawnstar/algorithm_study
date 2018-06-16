@@ -11,5 +11,7 @@ int main(void) {
     TEST(PackedArray);
     TEST(PersistentArray);
     TEST(PersistentStack);
-    TEST(SortedVector);
+    TEST(VectorRangeCount);
+    TEST(VectorRangeSum);
+    TEST(VectorRangeQuery);
 }

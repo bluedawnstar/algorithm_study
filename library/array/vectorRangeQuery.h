@@ -1,18 +1,20 @@
 #pragma once
 
 // Split & Build
-template <typename T>
-struct SortedVector {
+template <typename T, typename MergeOp = function<T(T,T)>>
+struct VectorRangeQuery {
     struct Block {
         Block* prev;
         Block* next;
 
         int idx;
         int cnt;
-        vector<T> v;
+        vector<T> prefix;
+        vector<T> suffix;
 
         void init(int K) {
-            v.resize(K);
+            prefix.resize(K);
+            suffix.resize(K);
             prev = nullptr;
             next = nullptr;
         }
@@ -20,58 +22,84 @@ struct SortedVector {
         void build(int i, T val) {
             idx = i;
             cnt = 1;
-            v[0] = val;
+            prefix[0] = suffix[0] = val;
         }
 
-        void build(int i, int n, const T* data) {
+        void build(int i, int n, const T* data, const MergeOp& mergeOp) {
             idx = i;
             cnt = n;
 
-            memcpy(&v[0], data, sizeof(T) * n);
-            sort(v.begin(), v.begin() + n);
+            prefix[0] = data[0];
+            suffix[0] = data[n - 1];
+            for (int i = 1, j = n - 2; i < n; i++, j--) {
+                prefix[i] = mergeOp(prefix[i - 1], data[i]);
+                suffix[i] = mergeOp(data[j], suffix[i - 1]);
+            }
         }
 
-        void eraseFirst(T val) {
-            int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
-            if (i < cnt - 1)
-                memmove(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
+        void eraseFirst(const T* data, const MergeOp& mergeOp) {
             idx++;
             cnt--;
+
+            prefix[0] = data[0];
+            for (int i = 1; i < cnt; i++)
+                prefix[i] = mergeOp(prefix[i - 1], data[i]);
         }
 
-        void eraseLast(T val) {
-            int i = int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
-            if (i < cnt - 1)
-                memmove(&v[i], &v[i + 1], sizeof(T) * (cnt - i - 1));
+        void eraseLast(const T* data, const MergeOp& mergeOp) {
             cnt--;
+
+            suffix[0] = data[cnt - 1];
+            for (int i = 1, j = cnt - 2; i < cnt; i++, j--)
+                suffix[i] = mergeOp(data[j], suffix[i - 1]);
         }
 
-        void update(T oldVal, T newVal) {
-            int del = int(lower_bound(v.begin(), v.begin() + cnt, oldVal) - v.begin());
-            int ins = int(lower_bound(v.begin(), v.begin() + cnt, newVal) - v.begin());
-            
-            if (ins > del + 1)
-                memmove(&v[del], &v[del + 1], sizeof(T) * (--ins - del));
-            else if (ins < del)
-                memmove(&v[ins + 1], &v[ins], sizeof(T) * (del - ins));
-            else
-                ins = del;
-
-            v[ins] = newVal;
+        void updatePrefix(const T* data, const MergeOp& mergeOp) {
+            prefix[0] = data[0];
+            for (int i = 1; i < cnt; i++)
+                prefix[i] = mergeOp(prefix[i - 1], data[i]);
         }
 
-        int countLessOrEqual(T val) const {
-            return int(upper_bound(v.begin(), v.begin() + cnt, val) - v.begin());
+        void updatePrefix(int offset, const T* data, const MergeOp& mergeOp) {
+            if (offset == 0) {
+                prefix[0] = data[0];
+                offset++;
+            }
+            for (int i = offset; i < cnt; i++)
+                prefix[i] = mergeOp(prefix[i - 1], data[i]);
         }
 
-        int countLess(T val) const {
-            return int(lower_bound(v.begin(), v.begin() + cnt, val) - v.begin());
+        void updateSuffix(const T* data, const MergeOp& mergeOp) {
+            suffix[0] = data[cnt - 1];
+            for (int i = 1, j = cnt - 2; i < cnt; i++, j--)
+                suffix[i] = mergeOp(data[j], suffix[i - 1]);
         }
 
-        int count(T val) const {
-            return int(upper_bound(v.begin(), v.begin() + cnt, val) - lower_bound(v.begin(), v.begin() + cnt, val));
+        void updateSuffix(int offset, const T* data, const MergeOp& mergeOp) {
+            if (offset == cnt - 1) {
+                suffix[0] = data[cnt - 1];
+                offset--;
+            }
+            for (int i = cnt - 1 - offset, j = offset; i < cnt; i++, j--)
+                suffix[i] = mergeOp(data[j], suffix[i - 1]);
+        }
+
+        T query() const {
+            return prefix[cnt - 1];
+        }
+
+        T queryPrefix(int R) const {
+            return prefix[R];
+        }
+
+        T querySuffix(int L) const {
+            return suffix[cnt - 1 - L];
         }
     };
+
+    int maxN;       // max count
+    int K;          // max block size
+    int M;          // max block count
 
     int valueN;
     vector<T> values;
@@ -82,11 +110,11 @@ struct SortedVector {
     Block* head;
     Block* tail;
 
-    int maxN;       // max count
-    int K;          // max block size
-    int M;          // max block count
+    T defaultValue;
+    MergeOp mergeOp;
 
-    explicit SortedVector(int maxN, int k = 0, int m = 0) : maxN(maxN), K(k), M(m), values(maxN) {
+    VectorRangeQuery(const MergeOp& mop, T dfltValue, int maxN, int k = 0, int m = 0)
+        : maxN(maxN), K(k), M(m), values(maxN), defaultValue(dfltValue), mergeOp(mop) {
         if (K <= 0)
             K = int(ceil(sqrt(maxN)));
         if (M <= 0)
@@ -112,7 +140,7 @@ struct SortedVector {
 
         blockN = 0;
         for (int i = 0; i < n; i += K)
-            blocks[blockN++].build(i, min(K, n - i), v + i);
+            blocks[blockN++].build(i, min(K, n - i), v + i, mergeOp);
 
         initLinkedList();
     }
@@ -144,16 +172,17 @@ struct SortedVector {
             eraseBlock(blk);
             --blockN;
         } else if (idx == 0) {
-            blk->eraseFirst(values[blk->idx]);
+            blk->eraseFirst(&values[blk->idx + 1], mergeOp);
         } else if (idx == blk->cnt - 1) {
-            blk->eraseLast(values[blk->idx + idx]);
+            blk->eraseLast(&values[blk->idx], mergeOp);
         } else {
             int i = blk->idx;
             int cnt = blk->cnt;
 
             blk = insertBlock(blk->next);
-            blk->build(i + idx + 1, cnt - idx - 1, &values[i + idx + 1]);
-            blk->prev->build(i, idx, &values[i]);
+            blk->build(i + idx + 1, cnt - idx - 1, &values[i + idx + 1], mergeOp);
+            blk->prev->cnt = idx;
+            blk->prev->updateSuffix(&values[i], mergeOp);
 
             check();
         }
@@ -172,86 +201,36 @@ struct SortedVector {
         if (!blk)
             return;
 
-        T oldVal = values[blk->idx + idx];
         values[blk->idx + idx] = val;
 
         if (blk->cnt == 1)
-            blk->v[0] = val;
-        else
-            blk->update(oldVal, val);
+            blk->prefix[0] = blk->suffix[0] = val;
+        else {
+            blk->updatePrefix(idx, &values[blk->idx], mergeOp);
+            blk->updateSuffix(idx, &values[blk->idx], mergeOp);
+        }
     }
 
     //--- query
 
-    int countLessOrEqual(int L, int R, T x) {
+    T query(int L, int R) {
         check();
-
-        int res = 0;
 
         int idxL = L;
         Block* pL = findBlock(head, idxL);
+
         int idxR = R - L + idxL;
         Block* pR = findBlock(pL, idxR);
 
-        if (pL == pR) {
-            res = countLessOrEqualNaive(pL, idxL, idxR, x);
-        } else {
-            res = countLessOrEqualNaive(pL, idxL, pL->cnt - 1, x);
-            for (pL = pL->next; pL != pR; pL = pL->next)
-                res += pL->countLessOrEqual(x);
-            res += countLessOrEqualNaive(pR, 0, idxR, x);
-        }
-
-        return res;
-    }
-
-    int countLess(int L, int R, T x) {
-        check();
-
-        int res = 0;
-
-        int idxL = L;
-        Block* pL = findBlock(head, idxL);
-        int idxR = R - L + idxL;
-        Block* pR = findBlock(pL, idxR);
+        T res = defaultValue;
 
         if (pL == pR) {
-            res = countLessNaive(pL, idxL, idxR, x);
+            res = mergeOp(res, queryRange(pL, idxL, idxR));
         } else {
-            res = countLessNaive(pL, idxL, pL->cnt - 1, x);
+            res = mergeOp(res, pL->querySuffix(idxL));
             for (pL = pL->next; pL != pR; pL = pL->next)
-                res += pL->countLess(x);
-            res += countLessNaive(pR, 0, idxR, x);
-        }
-
-        return res;
-    }
-
-    int countGreaterOrEqual(int L, int R, T x) {
-        return (R - L + 1) - countLess(L, R, x);
-    }
-
-    int countGreater(int L, int R, T x) {
-        return (R - L + 1) - countLessOrEqual(L, R, x);
-    }
-
-    int count(int L, int R, T x) {
-        check();
-
-        int res = 0;
-
-        int idxL = L;
-        Block* pL = findBlock(head, idxL);
-        int idxR = R - L + idxL;
-        Block* pR = findBlock(pL, idxR);
-
-        if (pL == pR) {
-            res = countNaive(pL, idxL, idxR, x);
-        } else {
-            res = countNaive(pL, idxL, pL->cnt - 1, x);
-            for (pL = pL->next; pL != pR; pL = pL->next)
-                res += pL->count(x);
-            res += countNaive(pR, 0, idxR, x);
+                res = mergeOp(res, pL->query());
+            res = mergeOp(res, pR->queryPrefix(idxR));
         }
 
         return res;
@@ -271,7 +250,7 @@ private:
 
         blockN = 0;
         for (int i = 0; i < valueN; i += K)
-            blocks[blockN++].build(i, min(K, valueN - i), &values[i]);
+            blocks[blockN++].build(i, min(K, valueN - i), &values[i], mergeOp);
 
         initLinkedList();
     }
@@ -300,8 +279,9 @@ private:
             int cnt = blk->cnt;
 
             blk = insertBlock(blk->next);
-            blk->build(i + idx, cnt - idx, &values[i + idx]);
-            blk->prev->build(i, idx, &values[i]);
+            blk->build(i + idx, cnt - idx, &values[i + idx], mergeOp);
+            blk->prev->cnt = idx;
+            blk->prev->updateSuffix(&values[i], mergeOp);
         }
         return blk;
     }
@@ -319,33 +299,12 @@ private:
 
     //--- naive operations
 
-    int countLessOrEqualNaive(Block* blk, int L, int R, T x) {
-        L += blk->idx;
-        R += blk->idx;
-        int res = 0;
+    T queryRange(Block* blk, int L, int R) {
+        T res = values[blk->idx + L++];
         while (L <= R)
-            res += (values[L++] <= x);
+            res = mergeOp(res, values[blk->idx + L++]);
         return res;
     }
-
-    int countLessNaive(Block* blk, int L, int R, T x) {
-        L += blk->idx;
-        R += blk->idx;
-        int res = 0;
-        while (L <= R)
-            res += (values[L++] < x);
-        return res;
-    }
-
-    int countNaive(Block* blk, int L, int R, T x) {
-        L += blk->idx;
-        R += blk->idx;
-        int res = 0;
-        while (L <= R)
-            res += (values[L++] == x);
-        return res;
-    }
-
 
     //--- linked list
 

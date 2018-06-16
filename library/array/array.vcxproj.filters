@@ -33,7 +33,13 @@
     <ClCompile Include="prefixSum2D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="sortedVector.cpp">
+    <ClCompile Include="vectorRangeCount.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="vectorRangeSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="vectorRangeQuery.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +59,13 @@
     <ClInclude Include="prefixSum2D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="sortedVector.h">
+    <ClInclude Include="vectorRangeCount.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vectorRangeSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vectorRangeQuery.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "sortedVector.h"
+#include "vectorRangeCount.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -61,10 +61,10 @@ static int count(vector<int>& v, int L, int R, int val) {
     return res;
 }
 
-void testSortedVector() {
-    //return; //TODO: if you want to test, make this line a comment.
+void testVectorRangeCount() {
+    return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Sorted Vector ----------" << endl;
+    cout << "--- Vector Range Count ----------" << endl;
     {
         int N = 100000;
         int T = 100000;
@@ -77,8 +77,8 @@ void testSortedVector() {
         for (int i = 0; i < N; i++)
             vec[i] = RandInt32::get();
 
-        SortedVector<int> sv(N + T);
-        sv.build(vec);
+        VectorRangeCount<int> vrc(N + T);
+        vrc.build(vec);
 
         for (int i = 0; i < T; i++) {
             int cmd = RandInt32::get() % 3;
@@ -86,11 +86,11 @@ void testSortedVector() {
                 int j = RandInt32::get() % ((int)vec.size() + 1);
                 int val = RandInt32::get();
                 vec.insert(vec.begin() + j, val);
-                sv.insert(j, val);
+                vrc.insert(j, val);
             } else if (cmd == 1) {
                 int j = RandInt32::get() % (int)vec.size();
                 vec.erase(vec.begin() + j);
-                sv.erase(j);
+                vrc.erase(j);
             } else {
                 int L = RandInt32::get() % (int)vec.size();
                 int R = RandInt32::get() % (int)vec.size();
@@ -99,24 +99,24 @@ void testSortedVector() {
                 if (L > R)
                     swap(L, R);
 
-                assert(sv.get(L) == vec[L]);
-                assert(sv.get(R) == vec[R]);
+                assert(vrc.get(L) == vec[L]);
+                assert(vrc.get(R) == vec[R]);
 
                 int gt = countLessOrEqual(vec, L, R, val);
-                int ans = sv.countLessOrEqual(L, R, val);
+                int ans = vrc.countLessOrEqual(L, R, val);
                 if (gt != ans)
                     cout << "Mismatched: " << gt << ", " << ans << endl;
                 assert(gt == ans);
 
-                assert(countLess(vec, L, R, val) == sv.countLess(L, R, val));
-                assert(countGreaterOrEqual(vec, L, R, val) == sv.countGreaterOrEqual(L, R, val));
-                assert(countGreater(vec, L, R, val) == sv.countGreater(L, R, val));
-                assert(count(vec, L, R, val) == sv.count(L, R, val));
+                assert(countLess(vec, L, R, val) == vrc.countLess(L, R, val));
+                assert(countGreaterOrEqual(vec, L, R, val) == vrc.countGreaterOrEqual(L, R, val));
+                assert(countGreater(vec, L, R, val) == vrc.countGreater(L, R, val));
+                assert(count(vec, L, R, val) == vrc.count(L, R, val));
 
                 vec[L] = RandInt32::get();
                 vec[R] = RandInt32::get();
-                sv.update(L, vec[L]);
-                sv.update(R, vec[R]);
+                vrc.update(L, vec[L]);
+                vrc.update(R, vec[R]);
             }
         }
     }
@@ -132,8 +132,8 @@ void testSortedVector() {
         for (int i = 0; i < N; i++)
             vec[i] = RandInt32::get();
 
-        SortedVector<int> sv(N + T);
-        sv.build(vec);
+        VectorRangeCount<int> vrc(N + T);
+        vrc.build(vec);
 
         PROFILE_START(0);
 
@@ -143,11 +143,11 @@ void testSortedVector() {
             if (cmd == 0) {
                 int j = RandInt32::get() % (cnt + 1);
                 int val = RandInt32::get();
-                sv.insert(j, val);
+                vrc.insert(j, val);
                 cnt++;
             } else if (cmd == 1) {
                 int j = RandInt32::get() % cnt;
-                sv.erase(j);
+                vrc.erase(j);
                 cnt--;
             } else {
                 int L = RandInt32::get() % cnt;
@@ -157,7 +157,7 @@ void testSortedVector() {
                 if (L > R)
                     swap(L, R);
 
-                int gt = sv.countLessOrEqual(L, R, val);
+                int gt = vrc.countLessOrEqual(L, R, val);
                 if (gt < 0)
                     cout << "ERROR!" << endl;
             }
