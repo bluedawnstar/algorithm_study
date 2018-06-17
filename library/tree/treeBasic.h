@@ -22,8 +22,6 @@ struct Tree {
     vector<int>         level;      // depth (root is 0)
     vector<int>         treeSize;   // call dfsSize() to calculate tree size
 
-    //--- tree construction ---------------------------------------------------
-
     Tree() : N(0), logN(0) {
     }
 
@@ -161,7 +159,7 @@ struct Tree {
         }
     }
 
-    int climbTree(int node, int dist) {
+    int climbTree(int node, int dist) const {
         if (dist <= 0)
             return node;
 
@@ -174,7 +172,7 @@ struct Tree {
         return node;
     }
 
-    int findLCA(int A, int B) {
+    int findLCA(int A, int B) const {
         if (level[A] < level[B])
             swap(A, B);
 
@@ -198,7 +196,7 @@ struct Tree {
     }
 
     // find LCA when the root is changed
-    int findLCA(int root, int A, int B) {
+    int findLCA(int root, int A, int B) const {
         int lca = findLCA(A, B);
 
         int temp = findLCA(A, root);
@@ -210,6 +208,10 @@ struct Tree {
             lca = temp;
 
         return lca;
+    }
+
+    int distance(int u, int v) const {
+        return level[u] + level[v] - level[findLCA(u, v)] * 2;
     }
 
     //--- Centroid ------------------------------------------------------------

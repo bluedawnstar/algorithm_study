@@ -138,7 +138,7 @@ static int subtreeQueryNaive(const vector<vector<int>>& edges, const vector<int>
 
 
 void testBlockTreeSubtreeSumDynamic() {
-    //return; //TODO: if you want to test a split function, make this line to a comment.
+    return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Dynamic Block Tree for Path & Subtree Sum ---------------------" << endl;
     {

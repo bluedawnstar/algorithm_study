@@ -15,6 +15,7 @@ struct CentroidDecomposition {
         visited = vector<bool>(N);
 
         dfsSize(tree, start, -1);
+
         root = decomposeTreeSub(tree, start);
         parent[root] = -1;
 

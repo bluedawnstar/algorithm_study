@@ -147,6 +147,9 @@
     <ClCompile Include="treeBlockTreeLevelUpdate.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeWithCentroidDecomposition.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -288,6 +291,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeBlockTreeLevelUpdate.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeWithCentroidDecomposition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeWithCentroidDecomposition_algo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
