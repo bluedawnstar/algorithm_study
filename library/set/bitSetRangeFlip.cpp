@@ -31,7 +31,7 @@ static void flip(vector<bool>& v, int left, int right) {
 }
 
 void testBitSetRangeUpdate() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bit Set with Range Flip ---------------------------" << endl;
     {
@@ -54,7 +54,7 @@ void testBitSetRangeUpdate() {
                 flip(v, left, right);
                 bs.flip(left, right);
             } else {
-                assert(countOne(v, left, right) == st.countOne(left, right));
+                assert(countOne(v, left, right) == bs.countOne(left, right));
             }
         }
     }

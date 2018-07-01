@@ -3,8 +3,6 @@
 #include <cassert>
 #include "../memory/fixedSizeAllocator.h"
 
-//!!! Not completed
-
 struct HAMTConfig {
     //* for bitmap
     //typedef unsigned int BitmapT;
@@ -30,6 +28,7 @@ struct HAMTConfig {
 };
 
 // HAMT with 32bit
+template <int _MAX_DEPTH = 5, int _HASH_BITS = 32, int _CHUNK_SIZE = 128>
 struct HAMTConfigUInt32 {
     // for bitmap
     typedef unsigned int BitmapT;
@@ -42,28 +41,29 @@ struct HAMTConfigUInt32 {
     static const int HASH_BITMAP_INDEX_BITS = 5;
     static const unsigned int HASH_BITMAP_INDEX_MASK = 0x1F;
 
-    static const int ROOT_HASH_BITS = 2;
-    static const unsigned int ROOT_HASH_MASK = 0xc0000000u;
+    static const int ROOT_HASH_BITS = _HASH_BITS - _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
+    static const unsigned int ROOT_HASH_MASK = 0xffffffffu << (_MAX_DEPTH * HASH_BITMAP_INDEX_BITS);
 
-    static const int HAMT_BITS = 30;
+    static const int HAMT_BITS = _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
     static const int MAX_HAMT_DEPTH = HAMT_BITS / HASH_BITMAP_INDEX_BITS;
 
     // for memory allocation
-    static const int CHUNK_SIZE = 128;
+    static const int CHUNK_SIZE = _CHUNK_SIZE;
 
     static int calcAllocSize(int n) {
         static const int sSizeTable[33] = {
-            0,  4,  4,  4,  8,  8,  8,  8,          // 1 ~ 7
-            10, 10, 12, 12, 14, 14, 16, 16,         // 8 ~ 15
-            18, 18, 20, 20, 22, 22, 24, 24,         // 16 ~ 23
-            26, 26, 28, 28, 30, 30, 32, 32,         // 24 ~ 31
-            32                                      // 32
+             0,
+             4,  4,  4,  4,  8,  8,  8,  8, //  1 ~  8
+            10, 10, 12, 12, 14, 14, 16, 16, //  9 ~ 16
+            18, 18, 20, 20, 22, 22, 24, 24, // 17 ~ 24
+            26, 26, 28, 28, 30, 30, 32, 32  // 25 ~ 32
         };
         return sSizeTable[n];
     }
 };
 
 // HAMT with 64bit
+template <int _MAX_DEPTH = 5, int _HASH_BITS = 32, int _CHUNK_SIZE = 128>
 struct HAMTConfigUInt64 {
     // for bitmap
     typedef unsigned long long BitmapT;
@@ -76,22 +76,22 @@ struct HAMTConfigUInt64 {
     static const int HASH_BITMAP_INDEX_BITS = 6;
     static const unsigned int HASH_BITMAP_INDEX_MASK = 0x3F;
 
-    static const int ROOT_HASH_BITS = 2;
-    static const unsigned int ROOT_HASH_MASK = 0xc0000000u;
+    static const int ROOT_HASH_BITS = _HASH_BITS - _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
+    static const unsigned int ROOT_HASH_MASK = 0xffffffffu << (_MAX_DEPTH * HASH_BITMAP_INDEX_BITS);
 
-    static const int HAMT_BITS = 30;
+    static const int HAMT_BITS = _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
     static const int MAX_HAMT_DEPTH = HAMT_BITS / HASH_BITMAP_INDEX_BITS;
 
     // for memory allocation
-    static const int CHUNK_SIZE = 128;
+    static const int CHUNK_SIZE = _CHUNK_SIZE;
 
     static int calcAllocSize(int n) {
         static const int sSizeTable[65] = {
-            0,   8,  8,  8,  8,  8,  8,  8, 16, 16, 16, 16, 16, 16, 16, 16, // 0 ~ 15
-            20, 20, 20, 20, 24, 24, 24, 24, 28, 28, 28, 28, 32, 32, 32, 32, // 16 ~ 31
-            34, 34, 36, 36, 38, 38, 40, 40, 42, 42, 44, 44, 46, 46, 48, 48, // 32 ~ 47
-            50, 50, 52, 52, 54, 54, 56, 56, 58, 58, 60, 60, 62, 62, 64, 64, // 48 ~ 63
-            64                                                              // 64
+             0,
+             8,  8,  8,  8,  8,  8,  8,  8, 16, 16, 16, 16, 16, 16, 16, 16, //  1 ~ 16
+            20, 20, 20, 20, 24, 24, 24, 24, 28, 28, 28, 28, 32, 32, 32, 32, // 17 ~ 32
+            34, 34, 36, 36, 38, 38, 40, 40, 42, 42, 44, 44, 46, 46, 48, 48, // 33 ~ 48
+            50, 50, 52, 52, 54, 54, 56, 56, 58, 58, 60, 60, 62, 62, 64, 64  // 49 ~ 64
         };
         return sSizeTable[n];
     }
@@ -121,11 +121,11 @@ struct HAMTConfigUInt32Depth1 {
 
     static int calcAllocSize(int n) {
         static const int sSizeTable[33] = {
-            0,  4,  4,  4,  8,  8,  8,  8,          // 1 ~ 7
-            10, 10, 12, 12, 14, 14, 16, 16,         // 8 ~ 15
-            18, 18, 20, 20, 22, 22, 24, 24,         // 16 ~ 23
-            26, 26, 28, 28, 30, 30, 32, 32,         // 24 ~ 31
-            32                                      // 32
+             0,
+             4,  4,  4,  4,  8,  8,  8,  8, //  1 ~  8
+            10, 10, 12, 12, 14, 14, 16, 16, //  9 ~ 16
+            18, 18, 20, 20, 22, 22, 24, 24, // 17 ~ 24
+            26, 26, 28, 28, 30, 30, 32, 32  // 25 ~ 32
         };
         return sSizeTable[n];
     }
@@ -155,17 +155,17 @@ struct HAMTConfigUInt64Depth1 {
 
     static int calcAllocSize(int n) {
         static const int sSizeTable[65] = {
-            0,   8,  8,  8,  8,  8,  8,  8, 16, 16, 16, 16, 16, 16, 16, 16, // 0 ~ 15
-            20, 20, 20, 20, 24, 24, 24, 24, 28, 28, 28, 28, 32, 32, 32, 32, // 16 ~ 31
-            34, 34, 36, 36, 38, 38, 40, 40, 42, 42, 44, 44, 46, 46, 48, 48, // 32 ~ 47
-            50, 50, 52, 52, 54, 54, 56, 56, 58, 58, 60, 60, 62, 62, 64, 64, // 48 ~ 63
-            64                                                              // 64
+             0,
+             8,  8,  8,  8,  8,  8,  8,  8, 16, 16, 16, 16, 16, 16, 16, 16, //  1 ~ 16
+            20, 20, 20, 20, 24, 24, 24, 24, 28, 28, 28, 28, 32, 32, 32, 32, // 17 ~ 32
+            34, 34, 36, 36, 38, 38, 40, 40, 42, 42, 44, 44, 46, 46, 48, 48, // 33 ~ 48
+            50, 50, 52, 52, 54, 54, 56, 56, 58, 58, 60, 60, 62, 62, 64, 64  // 49 ~ 64
         };
         return sSizeTable[n];
     }
 };
 
-template <typename KeyT, typename ValueT, typename ConfigT = HAMTConfigUInt32>
+template <typename KeyT, typename ValueT, typename ConfigT = HAMTConfigUInt32<>>
 class HashMapHAMT {
     typedef unsigned int HashValueT;
     typedef typename ConfigT::BitmapT BitmapT;
@@ -258,7 +258,6 @@ class HashMapHAMT {
         }
 
         ~HAMTNode() {
-            assert(bitmap == 0);
             assert(data == nullptr);
         }
 
@@ -276,7 +275,6 @@ class HashMapHAMT {
 
         void destroy(HAMTAllocator& allocator) {
             allocator.deallocate(count(), data);
-            bitmap = 0;
             data = nullptr;
         }
 
@@ -340,7 +338,7 @@ class HashMapHAMT {
             auto offset = posToOffset(pos);
             if (bitmap & (ConfigT::BitmapT(1) << pos)) {
                 eraseOffset(offset, allocator);
-                bitmap &= ~(BitmapT(1) << pos);
+                bitmap &= ~(ConfigT::BitmapT(1) << pos);
             }
         }
 
@@ -372,12 +370,10 @@ class HashMapHAMT {
                 } else {
                     data = reinterpret_cast<HAMTPointer*>(allocator.allocate(newSize));
                 }
-                data[offset] = value;
-            } else {
-                data[cnt] = value;
-                if (offset < cnt)
-                    rotate(data + offset, data + cnt, data + cnt + 1);
+            } else if (offset < cnt) {
+                memmove(data + offset + 1, data + offset, (cnt - offset) * sizeof(HAMTPointer));
             }
+            data[offset] = value;
         }
 
         void eraseOffset(int offset, HAMTAllocator& allocator) {
@@ -395,7 +391,7 @@ class HashMapHAMT {
                     destroy(allocator);
                     data = pdst;
                 } else if (offset < cnt - 1) {
-                    rotate(data + offset, data + offset + 1, data + cnt);
+                    memcpy(data + offset, data + offset + 1, (cnt - offset - 1) * sizeof(HAMTPointer));
                 }
             }
         }
@@ -423,6 +419,11 @@ class HashMapHAMT {
         HAMTListNode(const KeyT& key, const ValueT& value) {
             ::new (val) pair<KeyT, ValueT>(key, value);
             next = nullptr;
+        }
+
+        ~HAMTListNode() {
+            val2.first.~KeyT();
+            val2.second.~ValueT();
         }
 
         const KeyT& getFirst() const {
@@ -695,8 +696,6 @@ class HashMapHAMT {
             pointer.set(hamtNode, true);
 
             if (hamtIndex == hamtIndex2) {
-                if (depth >= ConfigT::MAX_HAMT_DEPTH)
-                    cout << "ERROR!" << endl;
                 assert(depth < ConfigT::MAX_HAMT_DEPTH);
                 hamtNode->insert(hamtIndex, HAMTPointer(), pointerAllocator);
                 return split(*hamtNode->get(hamtIndex), hamtHash, depth + 1, key, value, oldList);
