@@ -152,6 +152,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rangeSet.cpp" />
     <ClCompile Include="simpleHashMap.cpp" />
+    <ClCompile Include="sparseSet.cpp" />
     <ClCompile Include="unionFind.cpp" />
     <ClCompile Include="veniceSet.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="hashMapHAMT.h" />
     <ClInclude Include="rangeSet.h" />
     <ClInclude Include="simpleHashMap.h" />
+    <ClInclude Include="sparseSet.h" />
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="unionFindMap.h" />
     <ClInclude Include="veniceSet.h" />

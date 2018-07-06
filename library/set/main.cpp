@@ -12,4 +12,5 @@ int main(void) {
     TEST(RangeSet);
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);
+    TEST(SparseSet);
 }

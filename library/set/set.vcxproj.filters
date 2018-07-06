@@ -39,6 +39,9 @@
     <ClCompile Include="bitSetRangeFlip.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sparseSet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -69,6 +72,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitSetRangeFlip.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
