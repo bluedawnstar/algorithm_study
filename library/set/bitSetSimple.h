@@ -14,6 +14,13 @@ struct BitSetSimple {
     unsigned endMask;
     vector<unsigned> values;
 
+    BitSetSimple() {
+    }
+
+    explicit BitSetSimple(int n) {
+        init(n);
+    }
+
     void init(int n) {
         N = n;
 

@@ -15,6 +15,13 @@ struct BitSet {
     unsigned mEndMask;
     vector<unsigned> mV;
 
+    BitSet() {
+    }
+
+    explicit BitSet(int n) {
+        init(n);
+    }
+
     void init(int N) {
         mN = N;
         mBitCnt = 0;

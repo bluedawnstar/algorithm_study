@@ -22,4 +22,8 @@ void testTreeWithCentroidDecomposition() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Tree With Centroid Decomposition ---------------------------" << endl;
+
+    // ...
+
+    cout << "OK!" << endl;
 }

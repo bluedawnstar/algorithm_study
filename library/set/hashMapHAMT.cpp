@@ -49,12 +49,12 @@ struct SqrtMap {
     }
 
     typename map<KeyT, ValueT>::mapped_type& operator[](unsigned long long key) {
-        return maps[key & MASK][key];
+        return maps[key & MASK][(KeyT)key];
     }
 };
 
 void testHashMapHAMT() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Hash Map with HAMT -----------------------------" << endl;
     {
@@ -164,7 +164,7 @@ void testHashMapHAMT() {
             PROFILE_STOP(7);
         }
     }
-    cout << "Speed test with long long : HAMT Hash Map vs. unordered_map" << endl;
+    cout << "Speed test with string : HAMT Hash Map vs. unordered_map" << endl;
     {
         int N = 10000000;
 
