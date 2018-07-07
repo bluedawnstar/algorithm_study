@@ -42,6 +42,9 @@
     <ClCompile Include="sparseSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bitSubsets.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -75,6 +78,18 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sparseSet.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitSetSimple64.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitSetVariable64.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitSet64.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitSubsets.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

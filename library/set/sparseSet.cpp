@@ -30,7 +30,7 @@ static vector<int> toVector(BitSetSimple& bs) {
 
 
 void testSparseSet() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Sparse Set ------------------------" << endl;
     {

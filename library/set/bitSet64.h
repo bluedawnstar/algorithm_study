@@ -1,48 +1,47 @@
 #pragma once
 
-// BitSet class with mBitCnt member variable
-struct BitSet {
-    static int clz(unsigned x) {
-#ifndef __GNUC__
-        return (int)__lzcnt(x);
+// BitSet64 class with mBitCnt member variable
+struct BitSet64 {
+    static int clz(unsigned long long x) {
+#if defined(_M_X64)
+        return (int)_lzcnt_u64(x);
+#elif defined(__GNUC__)
+        return __builtin_clzll(x);
 #else
-        return __builtin_clz(x);
+        if ((x >> 32) != 0)
+            return (int)_lzcnt_u32(unsigned(x >> 32));
+        else
+            return 32 + (int)_lzcnt_u32(unsigned(x));
 #endif
     }
 
-    static int popCount(unsigned x) {
-#ifndef __GNUC__
-        return (int)__popcnt(x);
-        /*
-        x = x - ((x >> 1) & 0x55555555);
-        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-        x = (x + (x >> 4)) & 0x0F0F0F0F;
-        x = x + (x >> 8);
-        x = x + (x >> 16);
-        return x & 0x0000003F;
-        */
+    static int popCount(unsigned long long x) {
+#if defined(_M_X64)
+        return (int)__popcnt64(x);
+#elif defined(__GNUC__)
+        return __builtin_popcountll(x);
 #else
-        return __builtin_popcount(x);
+        return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
 #endif
     }
 
-    static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = (unsigned)-1;
-    static const unsigned BIT_ONE = 1u;
+    static const int BIT_SIZE = sizeof(unsigned long long) * 8;
+    static const unsigned long long BIT_ALL = (unsigned long long)-1ll;
+    static const unsigned long long BIT_ONE = 1ull;
 
-    static const int INDEX_MASK = 0x1F;
-    static const int INDEX_SHIFT = 5;
+    static const int INDEX_MASK = 0x3F;
+    static const int INDEX_SHIFT = 6;
 
     int mN;
     int mBitCnt;
 
-    unsigned mEndMask;
-    vector<unsigned> mV;
+    unsigned long long mEndMask;
+    vector<unsigned long long> mV;
 
-    BitSet() {
+    BitSet64() {
     }
 
-    explicit BitSet(int n) {
+    explicit BitSet64(int n) {
         init(n);
     }
 
@@ -52,7 +51,7 @@ struct BitSet {
 
         int r = N % BIT_SIZE;
         mEndMask = r ? ((BIT_ONE << r) - BIT_ONE) : BIT_ALL;
-        mV = vector<unsigned>((N + BIT_SIZE - 1) / BIT_SIZE);
+        mV = vector<unsigned long long>((N + BIT_SIZE - 1) / BIT_SIZE);
     }
 
     int size() const {
@@ -79,7 +78,7 @@ struct BitSet {
         return (mV[pos >> INDEX_SHIFT] & (BIT_ONE << (pos & INDEX_MASK))) != 0;
     }
 
-    BitSet& set() {
+    BitSet64& set() {
         if (mBitCnt < mN) {
             int n = mN >> INDEX_SHIFT;
             for (int i = 0; i < n; i++)
@@ -92,7 +91,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& set(int pos, bool value = true) {
+    BitSet64& set(int pos, bool value = true) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
         if (value) {
@@ -109,7 +108,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& reset() {
+    BitSet64& reset() {
         if (mBitCnt > 0) {
             int n = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
             for (int i = 0; i < n; i++)
@@ -119,7 +118,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& reset(int pos) {
+    BitSet64& reset(int pos) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
         if (mV[idx] & (BIT_ONE << off)) {
@@ -130,7 +129,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& flip() {
+    BitSet64& flip() {
         int n = mN >> INDEX_SHIFT;
         for (int i = 0; i < n; i++)
             mV[i] ^= BIT_ALL;
@@ -142,7 +141,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& flip(int pos) {
+    BitSet64& flip(int pos) {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
         if ((mV[idx] & (BIT_ONE << off)) == 0) {
@@ -155,7 +154,7 @@ struct BitSet {
         return *this;
     }
 
-    bool operator ==(const BitSet& rhs) const {
+    bool operator ==(const BitSet64& rhs) const {
         if (mBitCnt != rhs.mBitCnt)
             return false;
 
@@ -171,11 +170,11 @@ struct BitSet {
         return true;
     }
 
-    bool operator !=(const BitSet& rhs) const {
+    bool operator !=(const BitSet64& rhs) const {
         return !operator ==(rhs);
     }
 
-    BitSet& operator |=(const BitSet& rhs) {
+    BitSet64& operator |=(const BitSet64& rhs) {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
 
@@ -186,7 +185,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& operator &=(const BitSet& rhs) {
+    BitSet64& operator &=(const BitSet64& rhs) {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
 
@@ -197,7 +196,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& operator ^=(const BitSet& rhs) {
+    BitSet64& operator ^=(const BitSet64& rhs) {
         int n1 = (mN + BIT_SIZE - 1) >> INDEX_SHIFT;
         int n2 = (rhs.mN + BIT_SIZE - 1) >> INDEX_SHIFT;
 
@@ -208,8 +207,8 @@ struct BitSet {
         return *this;
     }
 
-    BitSet operator |(const BitSet& rhs) {
-        BitSet bs = *this;
+    BitSet64 operator |(const BitSet64& rhs) {
+        BitSet64 bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -221,8 +220,8 @@ struct BitSet {
         return bs;
     }
 
-    BitSet operator &(const BitSet& rhs) {
-        BitSet bs = *this;
+    BitSet64 operator &(const BitSet64& rhs) {
+        BitSet64 bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -234,8 +233,8 @@ struct BitSet {
         return bs;
     }
 
-    BitSet operator ^(const BitSet& rhs) {
-        BitSet bs = *this;
+    BitSet64 operator ^(const BitSet64& rhs) {
+        BitSet64 bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -247,8 +246,8 @@ struct BitSet {
         return bs;
     }
 
-    BitSet operator ~() const {
-        BitSet bs = *this;
+    BitSet64 operator ~() const {
+        BitSet64 bs = *this;
         bs.init(mN);
 
         int n = mN >> INDEX_SHIFT;
@@ -261,7 +260,7 @@ struct BitSet {
         return bs;
     }
 
-    BitSet& operator <<=(int n) {
+    BitSet64& operator <<=(int n) {
         if (n <= 0)
             return *this;
 
@@ -301,7 +300,7 @@ struct BitSet {
         return *this;
     }
 
-    BitSet& operator >>=(int n) {
+    BitSet64& operator >>=(int n) {
         if (n <= 0)
             return *this;
 
@@ -355,8 +354,8 @@ struct BitSet {
     int firstClearBit() const {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i] != BIT_ALL) {
-                int m = (int)~mV[i];
-                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                long long m = (long long)~mV[i];
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
             }
         }
         return size();
@@ -365,8 +364,8 @@ struct BitSet {
     int first() const {
         for (int i = 0; i < (int)mV.size(); i++) {
             if (mV[i]) {
-                int m = (int)mV[i];
-                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                long long m = (long long)mV[i];
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
             }
         }
         return -1;
@@ -388,14 +387,14 @@ struct BitSet {
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)mV[index] & (BIT_ALL << offset);
+        long long m = (long long)mV[index] & (BIT_ALL << offset);
         if (m)
-            return (index << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+            return (index << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
 
         for (int i = index + 1; i < (int)mV.size(); i++) {
             if (mV[i]) {
-                m = (int)mV[i];
-                return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
+                m = (long long)mV[i];
+                return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
             }
         }
 
@@ -410,7 +409,7 @@ struct BitSet {
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)mV[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
+        long long m = (long long)mV[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
 

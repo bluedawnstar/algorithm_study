@@ -13,4 +13,5 @@ int main(void) {
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);
     TEST(SparseSet);
+    TEST(BitSubsets);
 }
