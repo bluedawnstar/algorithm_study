@@ -254,7 +254,7 @@ struct BitSubsets {
         return res;
     }
 
-    // return index of kth bit
+    // return index of kth bit (1 <= k)
     int kthBit(SubsetT& subset, int k) {
         auto src = subset.get();
         for (int i = 0; i < sqrtBlockN; i++) {
