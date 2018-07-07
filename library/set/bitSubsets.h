@@ -1,7 +1,6 @@
 #pragma once
 
 struct BitSubsets {
-#if 0
     static int clz(unsigned x) {
 #ifndef __GNUC__
         return (int)__lzcnt(x);
@@ -18,16 +17,6 @@ struct BitSubsets {
 #endif
     }
 
-    typedef unsigned int T;
-    typedef int SignedT;
-
-    static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = (unsigned)-1;
-    static const unsigned BIT_ONE = 1u;
-
-    static const int INDEX_MASK = 0x1F;
-    static const int INDEX_SHIFT = 5;
-#else
     static int clz(unsigned long long x) {
 #if defined(_M_X64)
         return (int)_lzcnt_u64(x);
@@ -51,6 +40,17 @@ struct BitSubsets {
 #endif
     }
 
+#if 0
+    typedef unsigned int T;
+    typedef int SignedT;
+
+    static const int BIT_SIZE = sizeof(unsigned) * 8;
+    static const unsigned BIT_ALL = (unsigned)-1;
+    static const unsigned BIT_ONE = 1u;
+
+    static const int INDEX_MASK = 0x1F;
+    static const int INDEX_SHIFT = 5;
+#else
     typedef unsigned long long T;
     typedef long long SignedT;
 
