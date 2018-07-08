@@ -15,6 +15,7 @@ using namespace std;
 #include "../common/profile.h"
 
 // https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes
+// https://www.hackerrank.com/contests/w38/challenges/cargo-delivery/problem
 
 #define NODE_BALL_S 0
 #define NODE_BOX_S  100

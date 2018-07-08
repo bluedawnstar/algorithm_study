@@ -45,6 +45,9 @@
     <ClCompile Include="bitSubsets.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="vanEmdeBoasTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -90,6 +93,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitSubsets.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vanEmdeBoasTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

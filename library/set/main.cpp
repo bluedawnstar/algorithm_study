@@ -14,4 +14,5 @@ int main(void) {
     TEST(HashMapHAMT);
     TEST(SparseSet);
     TEST(BitSubsets);
+    TEST(VanEmdeBoasTree);
 }

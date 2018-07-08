@@ -27,7 +27,7 @@ static bool verify(int N, BitSubsets& bss, BitSubsets::SubsetT& subset, BitSetSi
 }
 
 void testBitSubsets() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bit Subset ------------------------" << endl;
     {
@@ -112,7 +112,7 @@ void testBitSubsets() {
         assert(verify(N, bss, mss[7], bs64[7]));
         if (!verify(N, bss, mss[8], bs64[8]))
             cout << "Mismatched! at Set OR #2" << endl;
-        assert(verify(N, bss, 8, bs64[8]));
+        assert(verify(N, bss, mss[8], bs64[8]));
 
         bss.doOr(subsets[0], subsets[1]);
         bss.doOr(mss[9], subsets[0]);
