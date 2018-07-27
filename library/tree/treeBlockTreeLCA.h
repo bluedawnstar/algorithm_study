@@ -23,7 +23,7 @@ struct BlockTreeLCA {
         N = _n;
         sqrtN = _sqrtN;
         if (sqrtN <= 0)
-            sqrtN = (int)sqrt(N);
+            sqrtN = int(sqrt(N));
 
         edges = vector<vector<int>>(N);
         level.assign(N, 0);

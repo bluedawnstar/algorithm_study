@@ -1,7 +1,7 @@
 #pragma once
 
 vector<int> countUniqueNumbers(const vector<int>& in, const vector<pair<int, int>>& rangeQuery) {
-    int N = (int)in.size();
+    int N = int(in.size());
 
     //--- compaction of input values
 
@@ -10,7 +10,7 @@ vector<int> countUniqueNumbers(const vector<int>& in, const vector<pair<int, int
     t.erase(unique(t.begin(), t.end()), t.end());
 
     unordered_map<int, int> M;
-    for (int i = 0; i < (int)t.size(); i++) {
+    for (int i = 0; i < int(t.size()); i++) {
         M[t[i]] = i;
     }
 
@@ -20,7 +20,7 @@ vector<int> countUniqueNumbers(const vector<int>& in, const vector<pair<int, int
 
     //--- query
 
-    int Q = (int)rangeQuery.size();
+    int Q = int(rangeQuery.size());
 
     vector<int> ans(Q);
     vector<vector<pair<int, int>>> qry(N);   // [left] -> (right, ans index)

@@ -12,7 +12,7 @@ struct AhoCorasickAM {
 
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
@@ -115,12 +115,12 @@ struct AhoCorasickAM {
 
     // return true if it's a new string.
     void insert(const string& s, int id) {
-        return insert(&s[0], (int)s.length(), id);
+        return insert(&s[0], int(s.length()), id);
     }
 
     // return exactly matched word
     Node* find(const string& s) const {
-        return find(&s[0], (int)s.length());
+        return find(&s[0], int(s.length()));
     }
 
     // return exactly matched word
@@ -155,7 +155,7 @@ struct AhoCorasickAM {
     // prefix matching
     // return (prefix_matching_length, string_id_if_exactly_matched)
     pair<int, int> search(const string& s) const {
-        return search(&s[0], (int)s.length());
+        return search(&s[0], int(s.length()));
     }
 
     //--- Aho-Corasick --------------------------------------------------------
@@ -199,7 +199,7 @@ struct AhoCorasickAM {
     // search all patterns in s
     // return (last_character_in_s, pattern_id)s
     vector<pair<int, int>> doAhoCorasick(const string& s) const {
-        return doAhoCorasick(&s[0], (int)s.length());
+        return doAhoCorasick(&s[0], int(s.length()));
     }
 
     vector<pair<int, int>> doAhoCorasick(const char* s, int len) const {
@@ -214,7 +214,7 @@ struct AhoCorasickAM {
             if (state->hasChild(chIdx))
                 state = state->getChild(chIdx);
 
-            for (int j = 0; j < (int)state->output.size(); j++)
+            for (int j = 0; j < int(state->output.size()); j++)
                 ret.push_back(make_pair(i, state->output[j]));
         }
         return ret;

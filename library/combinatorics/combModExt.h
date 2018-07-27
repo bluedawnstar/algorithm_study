@@ -72,7 +72,7 @@ struct CombModGeneral {
 
     // nCr (n <= maxN), P is prime factors
     CombModGeneral(int maxN, long long M, const vector<pair<int, int>>& P)
-        : M(M), PN((int)P.size()), P(P), fact(maxN + 2), pow(maxN + 2, vector<long long>(PN)),
+        : M(M), PN(int(P.size())), P(P), fact(maxN + 2), pow(maxN + 2, vector<long long>(PN)),
           c(maxN + 2, vector<int>(PN)), g(maxN + 2) {
 
         // make factorial, power, g and c table
@@ -87,7 +87,7 @@ struct CombModGeneral {
             c[i] = c[i - 1];
 
             int divisor = 1;
-            for (int j = 0; j < (int)P.size(); j++) {
+            for (int j = 0; j < int(P.size()); j++) {
                 pow[i][j] = pow[i - 1][j] * P[j].first % M;
                 if (i % P[j].first == 0) {
                     for (int k = i; k % P[j].first == 0; k /= P[j].first) {

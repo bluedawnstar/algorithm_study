@@ -17,7 +17,7 @@ struct DistinctSubstringCounterWithSuffixArray {
     FenwickTreeMultAdd<T>   fsum;
 
     DistinctSubstringCounterWithSuffixArray(const string& s)
-        : N((int)s.length()), currSuffixPos(N - 1), SA(s), addedSuffix(N), fsum(N), revSA(N) {
+        : N(int(s.length())), currSuffixPos(N - 1), SA(s), addedSuffix(N), fsum(N), revSA(N) {
 
         for (int i = 0; i < N; i++)
             revSA[SA.suffixArray[i]] = i;

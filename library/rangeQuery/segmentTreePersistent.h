@@ -53,7 +53,7 @@ struct PersistentSegmentTree {
 
 
     int getHistorySize() const {
-        return (int)trees.size();
+        return int(trees.size());
     }
 
 
@@ -80,7 +80,7 @@ struct PersistentSegmentTree {
     }
 
     T build(const vector<T>& v) {
-        return build(&v[0], (int)v.size());
+        return build(&v[0], int(v.size()));
     }
 
 

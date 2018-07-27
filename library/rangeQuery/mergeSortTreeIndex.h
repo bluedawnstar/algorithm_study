@@ -35,7 +35,7 @@ struct MergeSortTreeIndex {
     }
 
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
 
@@ -116,8 +116,8 @@ private:
         if (nodeLeft == nodeRight)
             return tree[node][0];
 
-        int cnt = upper_bound(tree[2 * node + 1].begin(), tree[2 * node + 1].end(), right)
-                - lower_bound(tree[2 * node + 1].begin(), tree[2 * node + 1].end(), left);
+        int cnt = int(upper_bound(tree[2 * node + 1].begin(), tree[2 * node + 1].end(), right)
+                      - lower_bound(tree[2 * node + 1].begin(), tree[2 * node + 1].end(), left));
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         if (cnt > k)

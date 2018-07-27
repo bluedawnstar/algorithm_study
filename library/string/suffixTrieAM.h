@@ -12,7 +12,7 @@ struct SuffixTrieAM {
 
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
@@ -212,7 +212,7 @@ struct SuffixTrieAM {
     // prefix matching
     // return (prefix_matching_length, suffix_index)
     pair<int, int> search(const string& s) const {
-        return search(&s[0], (int)s.length());
+        return search(&s[0], int(s.length()));
     }
 
     // prefix matching

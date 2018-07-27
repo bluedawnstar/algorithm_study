@@ -6,8 +6,8 @@
 inline vector<int> searchRabinKarp(const string& text, const string& pattern) {
     const unsigned long long p = 31ll;
 
-    int N = (int)text.length();
-    int M = (int)pattern.length();
+    int N = int(text.length());
+    int M = int(pattern.length());
 
     unsigned long long dM = 1;
     for (int i = 1; i <= M; i++) // pre-caculate p^M % q for subtraction
@@ -49,8 +49,8 @@ inline vector<int> searchRabinKarp2(const string& text, const string& pattern) {
     const long long q = 100000015277ll; //TODO: it can be changed with another value
     const long long d = 3355439ll;      //TODO: it can be changed with another value
 
-    int N = (int)text.length();
-    int M = (int)pattern.length();
+    int N = int(text.length());
+    int M = int(pattern.length());
 
     long long dM = 1;
     for (int i = 1; i <= M; i++) // pre-caculate d^M % q for subtraction

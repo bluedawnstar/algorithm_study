@@ -22,7 +22,7 @@ static int findNearest(const vector<vector<int>>& vec3D, const vector<bool>& era
     int res = -1;
     double dist = numeric_limits<double>::max();
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         if (erased[i])
             continue;
 
@@ -45,7 +45,7 @@ static int findNearest(const vector<vector<int>>& vec3D, const vector<int>& poin
     int res = -1;
     double dist = numeric_limits<double>::max();
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         double d = 0.0;
         for (int j = 0; j < 3; j++) {
             d += double(vec3D[i][j] - point3D[j]) * double(vec3D[i][j] - point3D[j]);
@@ -64,7 +64,7 @@ static int findNearest(const vector<vector<int>>& vec3D, const vector<int>& poin
 static vector<vector<int>> searchRegion(const vector<vector<int>>& vec3D, const vector<int>& pointMin, const vector<int>& pointMax) {
     vector<vector<int>> res;
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         bool isIn = true;
         for (int j = 0; j < 3; j++) {
             if (vec3D[i][j] < pointMin[j] || pointMax[j] < vec3D[i][j]) {
@@ -82,7 +82,7 @@ static vector<vector<int>> searchRegion(const vector<vector<int>>& vec3D, const 
 static int countRegion(const vector<vector<int>>& vec3D, const vector<int>& pointMin, const vector<int>& pointMax) {
     int res = 0;
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         bool isIn = true;
         for (int j = 0; j < 3; j++) {
             if (vec3D[i][j] < pointMin[j] || pointMax[j] < vec3D[i][j]) {
@@ -252,7 +252,7 @@ void testKDTreeNoUpdate() {
                     break;
                 }
 
-                for (int j = 0; j < (int)out1[i].size(); j++) {
+                for (int j = 0; j < int(out1[i].size()); j++) {
                     if (tree.points[out1[i][j]][0] != tree.points[out2[i][j]][0] ||
                         tree.points[out1[i][j]][1] != tree.points[out2[i][j]][1] ||
                         tree.points[out1[i][j]][2] != tree.points[out2[i][j]][2]) {

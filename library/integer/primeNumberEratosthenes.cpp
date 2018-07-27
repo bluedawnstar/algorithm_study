@@ -36,7 +36,7 @@ void testPrimeNumberEratosthenes() {
     {
         auto v = eratosthenes(100);
         cout << "(";
-        for (int i = 0; i < (int)v.size(); i++) {
+        for (int i = 0; i < int(v.size()); i++) {
             if (v[i])
                 cout << i << ", ";
         }
@@ -44,11 +44,11 @@ void testPrimeNumberEratosthenes() {
 
         v = eratosthenes(NN);
 
-        int L = (int)sqrt(NN) + 10, R = NN;
+        int L = int(sqrt(NN)) + 10, R = NN;
         auto v2 = eratosthenes(L, R);
         assert(check(v, L, v2, 0, R - L + 1));
 
-        L = (int)sqrt(NN) - 10, R = NN;
+        L = int(sqrt(NN)) - 10, R = NN;
         v2 = eratosthenes(L, R);
         assert(check(v, L, v2, 0, R - L + 1));
 

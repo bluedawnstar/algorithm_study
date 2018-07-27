@@ -395,7 +395,7 @@ namespace LineSegmentAllIntersections {
     // returns (line 1 id, line 2 id, intersection point)
     vector<tuple<int, int, Vec2D<double>>> findAllIntersections(vector<LineSegment>& v, double epsilon) {
         priority_queue<Event, vector<Event>, greater<Event>> Q;
-        for (int i = 0; i < (int)v.size(); i++) {
+        for (int i = 0; i < int(v.size()); i++) {
             Q.emplace(v[i].a, i, -1, 0);
             Q.emplace(v[i].b, i, -1, 2);
             v[i].id = i;

@@ -25,7 +25,7 @@ struct PrefixSum {
     }
 
     void build(const vector<T>& in) {
-        build(&in[0], (int)in.size());
+        build(&in[0], int(in.size()));
     }
 
 

@@ -25,7 +25,7 @@ struct SuffixArraySparseTable {
     }
 
     SuffixArraySparseTable(const string& s) {
-        build(&s[0], (int)s.length());
+        build(&s[0], int(s.length()));
     }
 
     // (suffix position, suffix position)
@@ -53,7 +53,7 @@ private:
     // O(NlogN)
     void build(const char* s, int n) {
         N = n;
-        logN = (int)log2(n) + 3;
+        logN = int(log2(n)) + 3;
         P = vector<vector<int>>(logN, vector<int>(N));
 
         vector<Entry> L(N);

@@ -22,7 +22,7 @@ typedef long long ll;
 
 // https://www.hackerrank.com/contests/w30/challenges/poles
 ll solveWoC30_WithMin(int KK, vector<pair<int,int>>& xw) {
-    int NN = (int)xw.size();
+    int NN = int(xw.size());
     vector<ll> sumW(NN);
     vector<ll> sumXW(NN);
     vector<vector<ll>> dp(KK + 1, vector<ll>(NN));
@@ -55,7 +55,7 @@ ll solveWoC30_WithMin(int KK, vector<pair<int,int>>& xw) {
 }
 
 ll solveWoC30_WithMax(int KK, vector<pair<int, int>>& xw) {
-    int NN = (int)xw.size();
+    int NN = int(xw.size());
     vector<ll> sumW(NN);
     vector<ll> sumXW(NN);
     vector<vector<ll>> dp(KK + 1, vector<ll>(NN));

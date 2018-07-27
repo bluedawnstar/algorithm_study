@@ -4,24 +4,24 @@
 struct BitSet64 {
     static int clz(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)_lzcnt_u64(x);
+        return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)
         return __builtin_clzll(x);
 #else
         if ((x >> 32) != 0)
-            return (int)_lzcnt_u32(unsigned(x >> 32));
+            return int(_lzcnt_u32(unsigned(x >> 32)));
         else
-            return 32 + (int)_lzcnt_u32(unsigned(x));
+            return 32 + int(_lzcnt_u32(unsigned(x)));
 #endif
     }
 
     static int popCount(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)__popcnt64(x);
+        return int(__popcnt64(x));
 #elif defined(__GNUC__)
         return __builtin_popcountll(x);
 #else
-        return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
+        return int(__popcnt(unsigned(x))) + int(__popcnt(unsigned(x >> 32)));
 #endif
     }
 
@@ -313,7 +313,7 @@ struct BitSet64 {
         int d = n >> INDEX_SHIFT;
         int r = n & INDEX_MASK;
 
-        int VN = (int)mV.size();
+        int VN = int(mV.size());
 
         if (r == 0) {
             int t = 0;
@@ -346,13 +346,13 @@ struct BitSet64 {
 
     int recalcCount() {
         mBitCnt = 0;
-        for (int i = 0; i < (int)mV.size(); i++)
+        for (int i = 0; i < int(mV.size()); i++)
             mBitCnt += popCount(mV[i]);
         return mBitCnt;
     }
 
     int firstClearBit() const {
-        for (int i = 0; i < (int)mV.size(); i++) {
+        for (int i = 0; i < int(mV.size()); i++) {
             if (mV[i] != BIT_ALL) {
                 long long m = (long long)~mV[i];
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
@@ -362,7 +362,7 @@ struct BitSet64 {
     }
 
     int first() const {
-        for (int i = 0; i < (int)mV.size(); i++) {
+        for (int i = 0; i < int(mV.size()); i++) {
             if (mV[i]) {
                 long long m = (long long)mV[i];
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
@@ -372,7 +372,7 @@ struct BitSet64 {
     }
 
     int last() const {
-        for (int i = (int)mV.size() - 1; i >= 0; i--) {
+        for (int i = int(mV.size()) - 1; i >= 0; i--) {
             if (mV[i])
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
         }
@@ -391,7 +391,7 @@ struct BitSet64 {
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
 
-        for (int i = index + 1; i < (int)mV.size(); i++) {
+        for (int i = index + 1; i < int(mV.size()); i++) {
             if (mV[i]) {
                 m = (long long)mV[i];
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;

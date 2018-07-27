@@ -3,7 +3,7 @@
 struct BitSubsets {
     static int clz(unsigned x) {
 #ifndef __GNUC__
-        return (int)__lzcnt(x);
+        return int(__lzcnt(x));
 #else
         return __builtin_clz(x);
 #endif
@@ -11,7 +11,7 @@ struct BitSubsets {
 
     static int popCount(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
 #else
         return __builtin_popcount(x);
 #endif
@@ -19,24 +19,24 @@ struct BitSubsets {
 
     static int clz(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)_lzcnt_u64(x);
+        return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)
         return __builtin_clzll(x);
 #else
         if ((x >> 32) != 0)
-            return (int)_lzcnt_u32(unsigned(x >> 32));
+            return int(_lzcnt_u32(unsigned(x >> 32)));
         else
-            return 32 + (int)_lzcnt_u32(unsigned(x));
+            return 32 + int(_lzcnt_u32(unsigned(x)));
 #endif
     }
 
     static int popCount(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)__popcnt64(x);
+        return int(__popcnt64(x));
 #elif defined(__GNUC__)
         return __builtin_popcountll(x);
 #else
-        return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
+        return int(__popcnt(unsigned(x))) + int(__popcnt(unsigned(x >> 32)));
 #endif
     }
 
@@ -45,7 +45,7 @@ struct BitSubsets {
     typedef int SignedT;
 
     static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = (unsigned)-1;
+    static const unsigned BIT_ALL = unsigned(-1);
     static const unsigned BIT_ONE = 1u;
 
     static const int INDEX_MASK = 0x1F;
@@ -196,7 +196,7 @@ struct BitSubsets {
 
     void init(int _valueN) {
         N = _valueN;
-        sqrtBlockSize = ((int)sqrt(N) + BIT_SIZE - 1) / BIT_SIZE;
+        sqrtBlockSize = (int(sqrt(N)) + BIT_SIZE - 1) / BIT_SIZE;
         sqrtBlockBitN = sqrtBlockSize * BIT_SIZE;
         sqrtBlockN = (N + sqrtBlockBitN - 1) / sqrtBlockBitN;
 
@@ -405,7 +405,7 @@ struct BitSubsets {
     }
 
     void destroySubsets(SubsetVectorT& subsets) {
-        for (int i = 0; i < (int)subsets.size(); i++)
+        for (int i = 0; i < int(subsets.size()); i++)
             destroySubset(subsets[i]);
         subsets.clear();
     }

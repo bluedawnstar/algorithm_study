@@ -3,8 +3,8 @@
 
 // O(3^N * N)
 inline int minLengthSteinerTree(vector<vector<int>> G, vector<int> verticesToConnect) {
-    int N = (int)G.size();
-    int M = (int)verticesToConnect.size();
+    int N = int(G.size());
+    int M = int(verticesToConnect.size());
     if (M <= 1)
         return 0;
 

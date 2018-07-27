@@ -221,7 +221,7 @@ struct BasicDigraph {
         res.first.assign(N, 0);
 
         for (int i = 0; i < N; i++) {
-            res.second += (int)edges[i].size();
+            res.second += int(edges[i].size());
             for (int v : edges[i])
                 res.first[v]++;
         }
@@ -236,7 +236,7 @@ struct BasicDigraph {
         int in = 0;
         int out = 0;
         for (int i = 0; i < N; i++) {
-            int deg = (int)edges[i].size() - indeg.first[i];    // out_deg - in_deg
+            int deg = int(edges[i].size()) - indeg.first[i];    // out_deg - in_deg
             if (deg == 1)
                 out++;
             else if (deg == -1)
@@ -252,7 +252,7 @@ struct BasicDigraph {
         auto indeg = calcInDegree();
 
         for (int i = 0; i < N; i++) {
-            if ((int)edges[i].size() != indeg.first[i])
+            if (int(edges[i].size()) != indeg.first[i])
                 return false;
         }
         return true;
@@ -264,7 +264,7 @@ struct BasicDigraph {
         int in = 0, out = 0;
         int start = 0, finish = 0;
         for (int i = 0; i < N; i++) {
-            int deg = (int)edges[i].size() - indeg.first[i];
+            int deg = int(edges[i].size()) - indeg.first[i];
             if (deg == 1) {
                 out++;
                 start = i;
@@ -295,7 +295,7 @@ struct BasicDigraph {
         int out = 0;
         int start = 0;
         for (int i = 0; i < N; i++) {
-            int deg = (int)edges[i].size() - indeg[i];
+            int deg = int(edges[i].size()) - indeg[i];
             if (deg == 1) {
                 out++;
                 start = i;

@@ -8,7 +8,7 @@ template <typename T, typename U>
 U bitonicTourCost(vector<pair<T, T>>& A, const function<U(const pair<T,T>&, const pair<T,T>&)>& distF) {
     sort(A.begin(), A.end());
 
-    int N = (int)A.size();
+    int N = int(A.size());
     vector<vector<U>> dp(N, vector<U>(N, -1));
 
     dp[0][0] = 0;

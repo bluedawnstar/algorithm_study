@@ -34,7 +34,7 @@ void testPackedArray() {
         arr.set(i * BIT, BIT, v[i]);
 
     for (int i = 0; i < N; i++) {
-        int x = (int)arr.get(i * BIT, BIT);
+        int x = int(arr.get(i * BIT, BIT));
         if (x != v[i]) {
             cerr << "gt = " << v[i] << ", x = " << x << endl;
         }

@@ -11,7 +11,7 @@ struct SuffixArrayAlgo {
     }
 
     static int commonPrefixNaive(const string& s, int i, int j) {
-        return commonPrefixNaive(&s[0], (int)s.length(), i, j);
+        return commonPrefixNaive(&s[0], int(s.length()), i, j);
     }
 
     // O(N^2)
@@ -25,7 +25,7 @@ struct SuffixArrayAlgo {
     }
 
     static long long countSubstringsNaive(const vector<int>& suffixArray, const string& s) {
-        return countSubstringsNaive(suffixArray, &s[0], (int)s.length());
+        return countSubstringsNaive(suffixArray, &s[0], int(s.length()));
     }
 
     // O(N)
@@ -33,14 +33,14 @@ struct SuffixArrayAlgo {
         long long ans = 0;
 
         vector<int> lcp = SuffixArray::buildLcpArray(suffixArray, s, n);
-        for (int i = 0; i < (int)lcp.size(); i++) {
+        for (int i = 0; i < int(lcp.size()); i++) {
             ans += n - suffixArray[i] - lcp[i];
         }
         return ans;
     }
 
     static long long countSubstrings(const vector<int>& suffixArray, const string& s) {
-        return countSubstrings(suffixArray, &s[0], (int)s.length());
+        return countSubstrings(suffixArray, &s[0], int(s.length()));
     }
 };
 

@@ -120,7 +120,7 @@ struct WaveletTree {
 
         // (1 <= pos < N)
         void swap(int pos, T* first, T orgX1, T orgX2) {
-            if (pos + 1 >= (int)freq.size() || valLow == valHigh)
+            if (pos + 1 >= int(freq.size()) || valLow == valHigh)
                 return;
 
             int ltCount = freq[pos - 1];
@@ -161,7 +161,7 @@ struct WaveletTree {
 
     // inclusive
     void build(const vector<T>& in, T valLow, T valHigh) {
-        build(&in[0], (int)in.size(), valLow, valHigh);
+        build(&in[0], int(in.size()), valLow, valHigh);
     }
 
     void build(const T* in, int size) {
@@ -178,7 +178,7 @@ struct WaveletTree {
     }
 
     void build(const vector<T>& in) {
-        build(&in[0], (int)in.size());
+        build(&in[0], int(in.size()));
     }
 
 

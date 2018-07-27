@@ -31,12 +31,12 @@ static string makeRandomString(int n, int charCnt) {
 }
 
 static int lowerBoundForwardSlow(const vector<int>& sa, int left, int length, const string& s) {
-    for (int i = left + 1; i < (int)sa.size(); i++) {
+    for (int i = left + 1; i < int(sa.size()); i++) {
         if (SuffixArrayAlgo::commonPrefixNaive(s, sa[left], sa[i]) <= length)
             return i;
     }
 
-    return (int)sa.size();
+    return int(sa.size());
 }
 
 static int lowerBoundBackwardSlow(const vector<int>& sa, int right, int length, const string& s) {
@@ -56,7 +56,7 @@ void testSuffixArray() {
         string s("abdadafaaabdfaeef");
 
         vector<int> ans = SuffixArray::buildSuffixArray(s);
-        vector<int> gt = makeSuffixArrayNaive(s, (int)s.length());
+        vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
         assert(ans == gt);
 
         long long cntAns = SuffixArrayAlgo::countSubstrings(ans, s);

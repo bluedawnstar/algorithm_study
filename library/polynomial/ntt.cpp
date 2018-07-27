@@ -29,9 +29,9 @@ void testNTT() {
             vector<int> A(TESTN);
             vector<int> B(TESTN);
 
-            for (int i = 0; i < (int)A.size(); i++)
+            for (int i = 0; i < int(A.size()); i++)
                 A[i] = RandInt32::get() % MOD;
-            for (int i = 0; i < (int)B.size(); i++)
+            for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % MOD;
 
             vector<int> out1 = multPolyFFTMod(A, B, MOD);

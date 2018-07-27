@@ -10,14 +10,14 @@ struct Matrix {
     Matrix(int _N) : N(_N), val(_N, vector<T>(_N)) {
     }
 
-    Matrix(const vector<vector<T>>& rhs) : N((int)rhs.size()), val(rhs) {
+    Matrix(const vector<vector<T>>& rhs) : N(int(rhs.size())), val(rhs) {
     }
 
-    Matrix(vector<vector<T>>&& rhs) : N((int)rhs.size()), val(move(rhs)) {
+    Matrix(vector<vector<T>>&& rhs) : N(int(rhs.size())), val(move(rhs)) {
     }
 
     template <typename U>
-    Matrix(const vector<vector<U>>& rhs) : N((int)rhs.size()), val(N, vector<T>(N)) {
+    Matrix(const vector<vector<U>>& rhs) : N(int(rhs.size())), val(N, vector<T>(N)) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
                 val[i][j] = (T)rhs[i][j];
@@ -32,20 +32,20 @@ struct Matrix {
 
 
     Matrix& operator =(const vector<vector<T>>& rhs) {
-        N = (int)rhs.N;
+        N = int(rhs.N);
         val = rhs;
         return *this;
     }
 
     Matrix& operator =(vector<vector<T>>&& rhs) {
-        N = (int)rhs.size();
+        N = int(rhs.size());
         val = move(rhs);
         return *this;
     }
 
     template <typename U>
     Matrix& operator =(const vector<vector<U>>& rhs) {
-        N = (int)rhs.size();
+        N = int(rhs.size());
 
         val.assign(N, vector<T>(N));
         for (int i = 0; i < N; i++)
@@ -57,7 +57,7 @@ struct Matrix {
 
     template <typename U>
     Matrix& operator =(const Matrix<U>& rhs) {
-        N = (int)rhs.size();
+        N = int(rhs.size());
 
         val.assign(N, vector<T>(N));
         for (int i = 0; i < N; i++)

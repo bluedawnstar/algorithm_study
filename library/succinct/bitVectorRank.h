@@ -75,7 +75,7 @@ struct BitVectorRank {
         bitCount = 0;
         if (N == 0)
             return;
-        for (int i = 0; i < (int)values.size(); i++) {
+        for (int i = 0; i < int(values.size()); i++) {
             rank[i] = bitCount;
             bitCount += popcount(values[i]);
         }
@@ -116,7 +116,7 @@ struct BitVectorRank {
 
     static int popcount(unsigned int x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);

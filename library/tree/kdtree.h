@@ -130,7 +130,7 @@ struct KDTree {
         _searchKNN(root, point, 0, pq, K, bnd);
 
         vector<Node*> res(pq.size());
-        for (int i = (int)pq.size() - 1; i >= 0; i--) {
+        for (int i = int(pq.size()) - 1; i >= 0; i--) {
             res[i] = pq.top().second;
             pq.pop();
         }
@@ -395,7 +395,7 @@ protected:
         if (node == nullptr)
             return;
 
-        if ((int)pq.size() >= K) {
+        if (int(pq.size()) >= K) {
             for (int i = 0; i < KD; i++) {
                 if (point[i] + pq.top().first < bound[i].first || bound[i].second <= point[i] - pq.top().first)
                     return;
@@ -405,9 +405,9 @@ protected:
         int currD = depth % KD;
 
         auto dist = calcDistance(node, point);
-        if ((int)pq.size() < K || dist < pq.top().first) {
+        if (int(pq.size()) < K || dist < pq.top().first) {
             pq.emplace(dist, node);
-            if ((int)pq.size() > K)
+            if (int(pq.size()) > K)
                 pq.pop();
         }
 
@@ -418,7 +418,7 @@ protected:
             _searchKNN(node->left, point, depth + 1, pq, K, bound);
             bound[currD].second = temp.second;
 
-            if ((int)pq.size() < K || node->point[currD] <= point[currD] + pq.top().first) {
+            if (int(pq.size()) < K || node->point[currD] <= point[currD] + pq.top().first) {
                 bound[currD].first = max(bound[currD].first, node->point[currD]);
                 _searchKNN(node->right, point, depth + 1, pq, K, bound);
                 bound[currD].first = temp.first;
@@ -430,7 +430,7 @@ protected:
             _searchKNN(node->right, point, depth + 1, pq, K, bound);
             bound[currD].first = temp.first;
 
-            if ((int)pq.size() < K || point[currD] - pq.top().first < node->point[currD]) {
+            if (int(pq.size()) < K || point[currD] - pq.top().first < node->point[currD]) {
                 bound[currD].second = min(bound[currD].second, node->point[currD]);
                 _searchKNN(node->left, point, depth + 1, pq, K, bound);
                 bound[currD].second = temp.second;

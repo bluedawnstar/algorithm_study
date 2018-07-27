@@ -48,7 +48,7 @@ struct CompactSegmentTreeLazyUpdate {
         RealN = size;
         if (alignPowerOf2) {
 #ifndef __GNUC__
-            H = 32 - (int)_lzcnt_u32(size - 1);
+            H = 32 - int(_lzcnt_u32(size - 1));
 #else
             H = 32 - __builtin_clz(size - 1);
 #endif
@@ -56,7 +56,7 @@ struct CompactSegmentTreeLazyUpdate {
         } else {
             N = size + (size & 1);
 #ifndef __GNUC__
-            H = 32 - (int)_lzcnt_u32(N);
+            H = 32 - int(_lzcnt_u32(N));
 #else
             H = 32 - __builtin_clz(N);
 #endif
@@ -87,7 +87,7 @@ struct CompactSegmentTreeLazyUpdate {
     }
 
     void build(const vector<T>& v, bool alignPowerOf2 = false) {
-        build(&v[0], (int)v.size(), alignPowerOf2);
+        build(&v[0], int(v.size()), alignPowerOf2);
     }
 
     //--- query
@@ -231,7 +231,7 @@ int findNext(CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>& st, int start, c
                 break;
 
 #ifndef __GNUC__
-            int n = (int)_tzcnt_u32(cur);
+            int n = int(_tzcnt_u32(cur));
 #else
             int n = __builtin_ctz(cur);
 #endif
@@ -268,7 +268,7 @@ int findPrev(CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp>& st, int start, c
                 break;
 
 #ifndef __GNUC__
-            int n = (int)_tzcnt_u32(cur);
+            int n = int(_tzcnt_u32(cur));
 #else
             int n = __builtin_ctz(cur);
 #endif

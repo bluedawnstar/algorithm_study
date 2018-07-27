@@ -9,7 +9,7 @@
 struct LaguerreMethod {
     // Low order first
     static Complex<double> findOneRoot(const vector<Complex<double>>& poly, Complex<double> x) {
-        int n = (int)poly.size() - 1;
+        int n = int(poly.size()) - 1;
         
         vector<Complex<double>> p1 = derivative(poly);
         vector<Complex<double>> p2 = derivative(p1);
@@ -49,7 +49,7 @@ struct LaguerreMethod {
 private:
     // Low order first
     static pair<vector<Complex<double>>, Complex<double>> horner(const vector<Complex<double>>& poly, Complex<double> x0) {
-        int N = (int)poly.size();
+        int N = int(poly.size());
         vector<Complex<double>> b = vector<Complex<double>>(max(1, N - 1));
 
         for (int i = N - 1; i > 0; i--)
@@ -64,7 +64,7 @@ private:
 
     // Low order first
     static vector<Complex<double>> derivative(const vector<Complex<double>>& poly) {
-        int N = (int)poly.size();
+        int N = int(poly.size());
         vector<Complex<double>> r = vector<Complex<double>>(max(1, N - 1));
         for (int i = 1; i < N; i++)
             r[i - 1] = poly[i] * Complex<double>(i, 0);

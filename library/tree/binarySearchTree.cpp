@@ -15,15 +15,15 @@ using namespace std;
 #include "../common/profile.h"
 
 static void checkSearch(BST<int>& bst, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(bst.find(x)->value == x);
     }
 }
 
 static void checkIndex(BST<int>& bst, vector<int>& in) {
-    assert(bst.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(bst.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(bst[i]->value == in[i]);
         assert(bst.indexOf(bst[i]) == i);
     }
@@ -44,7 +44,7 @@ void testBST() {
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p = bst.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -88,7 +88,7 @@ void testBST() {
                 if (!b)
                     cerr << "It'll never be shown!" << endl;
                 assert(b);
-                assert(bst.size() == (int)t.size());
+                assert(bst.size() == int(t.size()));
                 checkSearch(bst, org);
                 checkIndex(bst, org);
             }

@@ -29,8 +29,8 @@ struct MaxFlowEdmondsKarp {
 
     // add edges to a directed graph
     void addEdge(int u, int v, T capacity, T capacityRev) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, 0, capacity });
         edges[v].push_back(Edge{ u, uN, 0, capacityRev });
     }
@@ -81,7 +81,7 @@ private:
             int u = q.front();
             q.pop();
 
-            for (int i = 0; i < (int)edges[u].size(); i++) {
+            for (int i = 0; i < int(edges[u].size()); i++) {
                 auto& e = edges[u][i];
                 if (parent[e.to].first == -1 && (e.capacity - e.flow) > 0) {
                     q.push(e.to);

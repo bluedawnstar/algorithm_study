@@ -50,8 +50,8 @@ void testSortSqrt() {
         v.push_back(make_pair(l, r)); v2.push_back(make_pair(make_pair(l, r), i));
     }
 
-    sortSqrt(v, (int)sqrt(MAXN));
-    sortSqrt(v2, (int)sqrt(MAXN));
+    sortSqrt(v, int(sqrt(MAXN)));
+    sortSqrt(v2, int(sqrt(MAXN)));
 
     for (int i = 0; i < queryN; i++) {
         assert(v[i] == v2[i].first);

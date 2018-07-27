@@ -57,7 +57,7 @@ struct AssignmentProblem {
         }
 
         assigned.assign(N, -1);
-        for (int i = 1; i < (int)assignRev.size(); i++) {
+        for (int i = 1; i < int(assignRev.size()); i++) {
             assigned[assignRev[i] - 1] = i - 1;
         }
 

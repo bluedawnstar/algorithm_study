@@ -8,7 +8,7 @@ struct CentroidDecomposition {
     int root;
 
     int decomposeTree(Tree& tree, int start) {
-        N = (int)tree.N;
+        N = int(tree.N);
         edges = vector<vector<int>>(N);
         parent = vector<int>(N);
         treeSize = vector<int>(N);

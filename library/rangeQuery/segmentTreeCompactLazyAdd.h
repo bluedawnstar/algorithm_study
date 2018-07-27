@@ -48,7 +48,7 @@ struct CompactSegmentTreeLazyAdd {
         RealN = size;
         N = size + (size & 1);
 #ifndef __GNUC__
-        H = 32 - (int)_lzcnt_u32(N);
+        H = 32 - int(_lzcnt_u32(N));
 #else
         H = 32 - __builtin_clz(N);
 #endif
@@ -77,7 +77,7 @@ struct CompactSegmentTreeLazyAdd {
     }
 
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
     //--- query

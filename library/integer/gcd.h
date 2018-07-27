@@ -53,7 +53,7 @@ inline unsigned int gcdFast(unsigned int p, unsigned int q) {
         return p;
 
 #ifdef __GNUC__
-    int shift = (int)__builtin_ctz(p | q);
+    int shift = int(__builtin_ctz(p | q));
 
     p >>= __builtin_ctz(p);
     do {
@@ -92,7 +92,7 @@ inline unsigned long long gcdFast(unsigned long long p, unsigned long long q) {
         return p;
 
 #ifdef __GNUC__
-    int shift = (int)__builtin_ctzll(p | q);
+    int shift = int(__builtin_ctzll(p | q));
 
     p >>= __builtin_ctzll(p);
     do {
@@ -107,7 +107,7 @@ inline unsigned long long gcdFast(unsigned long long p, unsigned long long q) {
 
     return p << shift;
 #elif defined(_M_X64) 
-    int shift = (int)_tzcnt_u64(p | q);
+    int shift = int(_tzcnt_u64(p | q));
 
     p >>= _tzcnt_u64(p);
     do {

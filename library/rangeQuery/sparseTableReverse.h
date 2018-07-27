@@ -38,7 +38,7 @@ struct ReverseSparseTable {
 
         H.resize(n + 1);
         H[1] = 0;
-        for (int i = 2; i < (int)H.size(); i++)
+        for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
         value.resize(H.back() + 1, vector<T>(n, defaultValue));
@@ -53,7 +53,7 @@ struct ReverseSparseTable {
     }
 
     void build(const vector<T>& a) {
-        build(&a[0], (int)a.size());
+        build(&a[0], int(a.size()));
     }
 
 
@@ -79,7 +79,7 @@ struct ReverseSparseTable {
         int length = right - left;
         while (length) {
 #ifndef __GNUC__
-            int i = (int)_tzcnt_u32(length);
+            int i = int(_tzcnt_u32(length));
 #else
             int i = __builtin_ctz(length);
 #endif

@@ -24,7 +24,7 @@ using namespace std;
 #include "persistentUpperConvexHull.h"
 
 static void testLower(const vector<int>& X, const vector<int>& Y) {
-    int N = (int)X.size();
+    int N = int(X.size());
 
     DynamicLowerConvexHull<int> ch(N + 1);
     PersistentLowerConvexHull<int> gt(N + 1);
@@ -57,7 +57,7 @@ static void testLower(const vector<int>& X, const vector<int>& Y) {
 }
 
 static void testUpper(const vector<int>& X, const vector<int>& Y) {
-    int N = (int)X.size();
+    int N = int(X.size());
 
     DynamicUpperConvexHull<int> ch(N + 1);
     PersistentUpperConvexHull<int> gt(N + 1);

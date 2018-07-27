@@ -19,7 +19,7 @@ using namespace std;
 #include "../common/rand.h"
 
 static int findNext(const vector<int>& A, int start, int x) {
-    while (start < (int)A.size()) {
+    while (start < int(A.size())) {
         if (A[start] <= x)
             return start;
         start++;
@@ -42,7 +42,7 @@ void testSegmentTreeCompactLazyAdd() {
     cout << "-- Compact Segment Tree - Lazy Add ----------------------------------------" << endl;
     {
         vector<int> freq{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
-        int N = (int)freq.size();
+        int N = int(freq.size());
 
         FenwickTree<int> fenwick;
         auto segTree = makeCompactSegmentTreeLazyAdd(freq, [](int a, int b) { return a + b; });

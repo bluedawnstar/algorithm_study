@@ -253,7 +253,7 @@ struct LinkCutTreeArray {
     }
 
     int lca(int u, int v) {
-        return LinkCutTree<T>::lca(&nodes[u], &nodes[v]) - &nodes[0];
+        return int(LinkCutTree<T>::lca(&nodes[u], &nodes[v]) - &nodes[0]);
     }
 
     int depth(int u) {

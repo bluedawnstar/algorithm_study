@@ -13,7 +13,7 @@ struct CompressedTrieAM {
 
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
@@ -92,7 +92,7 @@ struct CompressedTrieAM {
 
     // return true if it's a new string.
     bool insert(const string& s) {
-        return insert(&s[0], (int)s.length());
+        return insert(&s[0], int(s.length()));
     }
 
     // return true if it's a new string.
@@ -142,7 +142,7 @@ struct CompressedTrieAM {
 
     // return exactly matched word
     Node* find(const string& s) const {
-        return find(&s[0], (int)s.length());
+        return find(&s[0], int(s.length()));
     }
 
     // return exactly matched word
@@ -168,7 +168,7 @@ struct CompressedTrieAM {
     // prefix matching
     // return (prefix_matching_length, word_matched?)
     pair<int, bool> search(const string& s) const {
-        return search(&s[0], (int)s.length());
+        return search(&s[0], int(s.length()));
     }
 
     // prefix matching
@@ -195,7 +195,7 @@ struct CompressedTrieAM {
 
     // remove a exactly matched word, but the real node is not deleted
     bool remove(const string& s) {
-        return remove(&s[0], (int)s.length());
+        return remove(&s[0], int(s.length()));
     }
 
     // remove a exactly matched word, but the real node is not deleted
@@ -211,7 +211,7 @@ struct CompressedTrieAM {
 
     // delete a exactly matched word
     bool erase(const string& s, bool all = false, bool merge = true) {
-        return erase(&s[0], (int)s.length(), all, merge);
+        return erase(&s[0], int(s.length()), all, merge);
     }
 
     // delete a exactly matched word

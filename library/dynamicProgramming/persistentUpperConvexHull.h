@@ -28,14 +28,14 @@ struct PersistentUpperConvexHull {
     //PRECONDITION: x[i] < x[i + 1]
     // return convex ID (the index to points and next)
     int add(T x, T y) {
-        return add((int)points.size() - 1, x, y);        
+        return add(int(points.size()) - 1, x, y);        
     }
 
     //PRECONDITION: x[i] < x[i + 1]
     // return convex ID (the index to points and next)
     // -1 <= convexID (old convex ID)
     int add(int convexID, T x, T y) {
-        int idx = (int)points.size();
+        int idx = int(points.size());
         points.emplace_back(x, y);
         next.push_back(convexID);
 
@@ -74,7 +74,7 @@ struct PersistentUpperConvexHull {
     // return convex ID (the index to points and next)
     // It's faster than add()
     int addLinear(T x, T y) {
-        return addLinear((int)points.size() - 1, x, y);
+        return addLinear(int(points.size()) - 1, x, y);
     }
 
     //PRECONDITION: x[i] < x[i + 1]
@@ -82,7 +82,7 @@ struct PersistentUpperConvexHull {
     // It's faster than add()
     // -1 <= convexID (old convex ID)
     int addLinear(int convexID, T x, T y) {
-        int idx = (int)points.size();
+        int idx = int(points.size());
         points.emplace_back(x, y);
         next.push_back(convexID);
 

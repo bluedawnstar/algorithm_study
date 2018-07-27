@@ -51,7 +51,7 @@ struct TreeMO {
 
         lca.reserve(Q.size());
         MO.reserve(Q.size());
-        for (int i = 0; i < (int)Q.size(); i++) {
+        for (int i = 0; i < int(Q.size()); i++) {
             //assert(visTime[Q[i].first][0] <= visTime[Q[i].second][0]);
             int L = Q[i].first, R = Q[i].second;
 
@@ -63,7 +63,7 @@ struct TreeMO {
                 MO.emplace_back(tree.visTime[L].second, tree.visTime[R].first, i);
         }
 
-        int blockN = (int)sqrt(2 * tree.N);
+        int blockN = int(sqrt(2 * tree.N));
         sort(MO.begin(), MO.end(), [blockN](const auto& l, const auto& r) {
             if (get<0>(l) / blockN != get<0>(r) / blockN)
                 return get<0>(l) / blockN < get<0>(r) / blockN;

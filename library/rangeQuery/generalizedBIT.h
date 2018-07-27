@@ -42,21 +42,24 @@ struct GeneralizedBIT {
         tree = vector<T>(N + 1, defaultValue);
         treeR = vector<T>(N + 1, defaultValue);
     }
-    
+
+    // O(NlogN)
     void build(T value, int n) {
         init(n);
         for (int i = 0; i < n; i++)
             initUpdate(i, value);
     }
 
+    // O(NlogN)
     void build(const T arr[], int n) {
         init(n);
         for (int i = 0; i < n; i++)
             initUpdate(i, arr[i]);
     }
 
+    // O(NlogN)
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
 
@@ -66,12 +69,12 @@ struct GeneralizedBIT {
     }
 
 
-    // inclusive (0 <= pos < N)
+    // inclusive (0 <= pos < N), O(logN)
     void add(int pos, T val) {
         update(pos, query(pos) + val);
     }
 
-    // inclusive (0 <= pos < N)
+    // inclusive (0 <= pos < N), O(logN)
     void update(int pos, T val) {
         int curr = pos & ~1;
         int prev = pos | 1;
@@ -91,6 +94,7 @@ struct GeneralizedBIT {
         }
     }
 
+    // O(klogN)
     void add(int left, int right, T val) {
         for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
             tree[L] += val;
@@ -101,6 +105,7 @@ struct GeneralizedBIT {
         rebuild(left, right);
     }
 
+    // O(klogN)
     void update(int left, int right, T val) {
         for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
             tree[L] = val;
@@ -112,12 +117,12 @@ struct GeneralizedBIT {
     }
 
 
-    // inclusive (0 <= pos < N)
+    // inclusive (0 <= pos < N), O(logN)
     T query(int pos) const {
         return (pos & 1) ? treeR[pos] : tree[pos + 1];
     }
 
-    // inclusive (0 <= left <= right < N)
+    // inclusive (0 <= left <= right < N), O(logN)
     T query(int left, int right) const {
         T res = defaultValue;
         if (left == 0) {
@@ -143,6 +148,7 @@ private:
             treeR[i] = mergeOp(treeR[i], val);
     }
 
+    // O(klogN)
     void rebuild(int left, int right) {
         int mask = 2;
 
@@ -190,6 +196,7 @@ inline GeneralizedBIT<T, MergeOp> makeGeneralizedBIT(const vector<T>& v, MergeOp
 // return min(x | query(left, i) >= value, left <= i <= right)
 //    xxxxxxxOOOOOOoooooo
 //    L      ^          R
+// O((logN)^2)
 template <typename T, typename MergeOp>
 inline int lowerBound(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
@@ -209,6 +216,7 @@ inline int lowerBound(const GeneralizedBIT<T, MergeOp>& st, int left, int right,
 // return min(x | query(left, i) > value, left <= i <= right)
 //    xxxxxxxOOOOOOoooooo
 //    L            ^    R
+// O((logN)^2)
 template <typename T, typename MergeOp>
 inline int upperBound(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
@@ -228,6 +236,7 @@ inline int upperBound(const GeneralizedBIT<T, MergeOp>& st, int left, int right,
 // return max(x | query(left, i) >= value, left <= i <= right)
 //    oooooooOOOOOOxxxxxx
 //    L           ^     R
+// O((logN)^2)
 template <typename T, typename MergeOp>
 inline int lowerBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
@@ -247,6 +256,7 @@ inline int lowerBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, in
 // return min(x | query(left, i) > value, left <= i <= right)
 //    oooooooOOOOOOxxxxxx
 //    L     ^           R
+// O((logN)^2)
 template <typename T, typename MergeOp>
 inline int upperBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, int right, T value) {
     int lo = left, hi = right;
@@ -267,6 +277,7 @@ inline int upperBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, in
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
+// O(logN)
 template <typename T, typename MergeOp>
 inline int findNext(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
     int pos = start;
@@ -292,6 +303,7 @@ inline int findNext(const GeneralizedBIT<T, MergeOp>& gbit, int start, const fun
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
+// O(logN)
 template <typename T, typename MergeOp>
 inline int findPrev(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
     int pos = start + 1;

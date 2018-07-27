@@ -85,7 +85,7 @@ void testSparseTable2D() {
         auto Q = makeQuery2D(RowN, ColN, T);
 
         auto spt = makeSparseTable2D(A, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
-        for (int i = 0; i < (int)Q.size(); i++) {
+        for (int i = 0; i < int(Q.size()); i++) {
             auto& q = Q[i];
             int gt = minSlow(A, get<0>(q), get<1>(q), get<2>(q), get<3>(q));
             int ans = spt.query(get<0>(q), get<1>(q), get<2>(q), get<3>(q));
@@ -100,7 +100,7 @@ void testSparseTable2D() {
         auto Q = makeQuery2D(RowN, ColN, T);
 
         auto spt = makeSparseTable2D(A, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
-        for (int i = 0; i < (int)Q.size(); i++) {
+        for (int i = 0; i < int(Q.size()); i++) {
             auto& q = Q[i];
             int gt = maxSlow(A, get<0>(q), get<1>(q), get<2>(q), get<3>(q));
             int ans = spt.query(get<0>(q), get<1>(q), get<2>(q), get<3>(q));
@@ -115,7 +115,7 @@ void testSparseTable2D() {
         auto Q = makeQuery2D(RowN, ColN, T);
 
         auto spt = makeSparseTable2D(A, [](int a, int b) { return a + b; });
-        for (int i = 0; i < (int)Q.size(); i++) {
+        for (int i = 0; i < int(Q.size()); i++) {
             auto& q = Q[i];
             int gt = sumSlow(A, get<0>(q), get<1>(q), get<2>(q), get<3>(q));
             int ans = spt.queryNoOverlap(get<0>(q), get<1>(q), get<2>(q), get<3>(q));

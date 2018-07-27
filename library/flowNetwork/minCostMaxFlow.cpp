@@ -23,8 +23,8 @@ using namespace std;
 #define NODE_T      201
 
 static void build(MinCostMaxFlow<int>& network, const vector<int>& A, const vector<int>& C, const vector<vector<int>>& B) {
-    int N = (int)A.size();
-    int M = (int)C.size();
+    int N = int(A.size());
+    int M = int(C.size());
 
     for (int i = 0; i < N; i++)
         network.addEdge(NODE_S, NODE_BALL_S + i, A[i], 0);

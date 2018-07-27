@@ -21,7 +21,7 @@ struct ShortestAllPairs : public ShortestPath<T> {
             for (int i = 0; i < N; i++) {
                 updated = false;
                 for (int u = 0; u < N; u++) {
-                    for (int j = 0; j < (int)edges[u].size(); j++) {
+                    for (int j = 0; j < int(edges[u].size()); j++) {
                         int v = edges[u][j].first;
                         T w = edges[u][j].second;
                         if (h[v] > h[u] + w) {
@@ -74,7 +74,7 @@ struct ShortestAllPairs : public ShortestPath<T> {
                 if (d[u] < w)
                     continue;
 
-                for (int i = 0; i < (int)edges[u].size(); i++) {
+                for (int i = 0; i < int(edges[u].size()); i++) {
                     int v = edges[u][i].first;
                     T vDist = w + edges[u][i].second + h[u] - h[v];
                     if (d[v] > vDist) {

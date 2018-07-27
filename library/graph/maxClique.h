@@ -5,11 +5,11 @@
 // Undirected graph
 struct MaxClique {
     static int doBronKerbosch(const vector<unsigned long long>& G, const vector<int>& weights) {
-        return doBronKerbosch(G, 0ull, (1ull << (int)G.size()) - 1ull, 0ull, weights);
+        return doBronKerbosch(G, 0ull, (1ull << int(G.size())) - 1ull, 0ull, weights);
     }
 
     static int doBronKerbosch(const vector<vector<int>>& edges, const vector<int>& weights) {
-        int N = (int)edges.size();
+        int N = int(edges.size());
 
         vector<unsigned long long> G(N);
         for (int u = 0; u < N; u++) {
@@ -26,7 +26,7 @@ private:
     // returns maximum weighted sum among all cliques
     static int doBronKerbosch(const vector<unsigned long long>& G, unsigned long long cur,
                               unsigned long long allowed, unsigned long long forbidden, const vector<int>& weights) {
-        int N = (int)G.size();
+        int N = int(G.size());
 
         if (allowed == 0 && forbidden == 0) {
             int res = 0;
@@ -52,7 +52,7 @@ private:
 
     static int clz(unsigned x) {
 #ifndef __GNUC__
-        return (int)__lzcnt(x);
+        return int(__lzcnt(x));
 #else
         return __builtin_clz(x);
 #endif

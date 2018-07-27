@@ -134,7 +134,7 @@ struct DAG {
 
     vector<BitSetSimple> getTransitiveClosure(const vector<int>& sorted) const {
         vector<BitSetSimple> res;
-        for (int i = (int)sorted.size() - 1; i >= 0; i--) {
+        for (int i = int(sorted.size()) - 1; i >= 0; i--) {
             int u = sorted[i];
 
             res[u].init(N);
@@ -207,7 +207,7 @@ private:
 
     static int clz(unsigned x) {
 #ifndef __GNUC__
-        return (int)__lzcnt(x);
+        return int(__lzcnt(x));
 #else
         return __builtin_clz(x);
 #endif

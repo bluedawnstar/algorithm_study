@@ -59,7 +59,7 @@ struct SuffixTreeAlgo {
     }
 
     bool isSubstring(const string& s) const {
-        return isSubstring(&s[0], (int)s.length());
+        return isSubstring(&s[0], int(s.length()));
     }
 
     bool isSubstring(const char* s, int N) const {
@@ -67,7 +67,7 @@ struct SuffixTreeAlgo {
     }
 
     pair<Node*, int> search(const string& s) const {
-        return search(&s[0], (int)s.length());
+        return search(&s[0], int(s.length()));
     }
 
     pair<Node*, int> search(const char* s, int N) const {
@@ -130,7 +130,7 @@ private:
         for (int i = 0; i < tree.mNodeN; i++) {
             Node* p = (Node*)&tree.mNodes[i];
             if (p->isLeaf()) {
-                int idx = (int)tree.mText.length() - p->depth - p->getLength();
+                int idx = int(tree.mText.length()) - p->depth - p->getLength();
                 res[idx] = p;
             }
         }

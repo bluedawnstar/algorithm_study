@@ -17,6 +17,7 @@ struct PartiallyPersistentFenwickTree {
     //--- query
 
     // sum from 0 to pos
+    // O(logN)
     T sum(int pos) const {
         pos++;
 
@@ -29,6 +30,7 @@ struct PartiallyPersistentFenwickTree {
         return res;
     }
 
+    // O((logN)^2)
     T sum(int time, int pos) const {
         pos++;
 
@@ -41,7 +43,7 @@ struct PartiallyPersistentFenwickTree {
         return res;
     }
 
-    // inclusive
+    // inclusive, O(logN)
     T sumRange(int left, int right) const {
         T res = sum(right);
         if (left > 0)
@@ -49,7 +51,7 @@ struct PartiallyPersistentFenwickTree {
         return res;
     }
 
-    // inclusive
+    // inclusive, O((logN)^2)
     T sumRange(int time, int left, int right) const {
         T res = sum(time, right);
         if (left > 0)
@@ -60,22 +62,24 @@ struct PartiallyPersistentFenwickTree {
     //--- update
 
     // return current time
+    // O(logN)
     int add(int pos, T val) {
         addSub(pos, val);
         return currTime++;
     }
 
-    // inclusive
     // return current time
+    // inclusive, O(logN)
     int addRange(int left, int right, T val) {
         addSub(left, val);
-        if (right + 1 < (int)tree.size() - 1)
+        if (right + 1 < int(tree.size()) - 1)
             addSub(right + 1, -val);
         return currTime++;
     }
 
     //--- point operations
 
+    // O(logN)
     T get(int pos) const {
         T res = getLastAt(pos + 1);
         if (pos > 0) {
@@ -87,6 +91,7 @@ struct PartiallyPersistentFenwickTree {
         return res;
     }
 
+    // O((logN)^2)
     T get(int time, int pos) const {
         T res = getAt(time, pos + 1);
         if (pos > 0) {
@@ -99,6 +104,7 @@ struct PartiallyPersistentFenwickTree {
     }
 
     // return current time
+    // O(logN)
     int set(int pos, T val) {
         addSub(pos, val - get(pos));
         return currTime++;
@@ -112,6 +118,7 @@ struct PartiallyPersistentFenwickTree {
         return tree[index][i - 1];
     }
 
+    // O(1)
     T getLastAt(int index) const {
         return tree[index].back();
     }
@@ -123,10 +130,11 @@ struct PartiallyPersistentFenwickTree {
         tree[index].push_back(val);
     }
 
+    // O(logN)
     void addSub(int pos, T val) {
         pos++;
 
-        while (pos < (int)tree.size()) {
+        while (pos < int(tree.size())) {
             setAt(pos, getLastAt(pos) + val);
             pos += pos & -pos;      // add lowest bit
         }
@@ -136,11 +144,12 @@ struct PartiallyPersistentFenwickTree {
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
 // returns min(i | sum[0,i] >= sum)
+// O(logN)
 template <typename T>
 int lowerBound(const PartiallyPersistentFenwickTree<T>& ft, T sum) {
     --sum;
 
-    int N = (int)ft.tree.size() - 1;
+    int N = int(ft.tree.size()) - 1;
     int pos = 0;
 
     int blockSize = N;
@@ -160,11 +169,12 @@ int lowerBound(const PartiallyPersistentFenwickTree<T>& ft, T sum) {
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
 // returns min(i | sum[0,i] >= sum)
+// O((logN)^2)
 template <typename T>
 int lowerBound(const PartiallyPersistentFenwickTree<T>& ft, int time, T sum) {
     --sum;
 
-    int N = (int)ft.tree.size() - 1;
+    int N = int(ft.tree.size()) - 1;
     int pos = 0;
 
     int blockSize = N;
@@ -185,6 +195,7 @@ int lowerBound(const PartiallyPersistentFenwickTree<T>& ft, int time, T sum) {
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
 // returns min(i | sum[0,i] >= sum)
+// O((logN)^2)
 template <typename T>
 int findFirst(const PartiallyPersistentFenwickTree<T>& ft, int left, int right, T sum) {
     int lo = left, hi = right;
@@ -202,6 +213,7 @@ int findFirst(const PartiallyPersistentFenwickTree<T>& ft, int left, int right, 
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
 // returns min(i | sum[i,N-1] < sum)
+// O((logN)^2)
 template <typename T>
 int findLast(const PartiallyPersistentFenwickTree<T>& ft, int left, int right, T sum) {
     int lo = left, hi = right;
@@ -220,6 +232,7 @@ int findLast(const PartiallyPersistentFenwickTree<T>& ft, int left, int right, T
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
 // returns min(i | sum[0,i] >= sum)
+// O((logN)^3)
 template <typename T>
 int findFirst(const PartiallyPersistentFenwickTree<T>& ft, int time, int left, int right, T sum) {
     int lo = left, hi = right;
@@ -237,6 +250,7 @@ int findFirst(const PartiallyPersistentFenwickTree<T>& ft, int time, int left, i
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
 // returns min(i | sum[i,N-1] < sum)
+// O((logN)^3)
 template <typename T>
 int findLast(const PartiallyPersistentFenwickTree<T>& ft, int time, int left, int right, T sum) {
     int lo = left, hi = right;

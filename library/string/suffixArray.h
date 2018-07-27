@@ -33,12 +33,12 @@ struct SuffixArray {
     }
 
     void build(const string& s, int charMin = 'a', int charMax = 'z') {
-        build(&s[0], (int)s.length(), charMin, charMax);
+        build(&s[0], int(s.length()), charMin, charMax);
     }
 
 
     int size() const {
-        return (int)suffixArray.size();
+        return int(suffixArray.size());
     }
 
     // get suffix index from suffix array index
@@ -54,7 +54,7 @@ struct SuffixArray {
     // inclusive (left index to Suffix Array, left index to Suffix Array) -- not suffix index
     int lcp(int left, int right) const {
         if (left == right)
-            return (int)suffixArray.size() - suffixArray[left];
+            return int(suffixArray.size()) - suffixArray[left];
         else
             return lcpSparseTable.lcp(left, right);
     }
@@ -75,7 +75,7 @@ struct SuffixArray {
     //  .....OOOOOOOOOOOOOOOOOOOOOOOxxxxxxxxx
     //       left(lcp > length)     ^
     int lowerBoundLcpForward(int left, int length) const {
-        int n = (int)suffixArray.size();
+        int n = int(suffixArray.size());
         if (left >= n - 1)
             return n;
 
@@ -98,7 +98,7 @@ struct SuffixArray {
     //  .....OOOOOOOOOOOOOOOOOOOOOOOxxxxxxxxx
     //       left(lcp >= length)    ^
     int upperBoundLcpForward(int left, int length) const {
-        int n = (int)suffixArray.size();
+        int n = int(suffixArray.size());
         if (left >= n - 1)
             return n;
 
@@ -121,7 +121,7 @@ struct SuffixArray {
     //  xxxxxxxxxOOOOOOOOOOOOOOOOOOOOOOO.....
     //          ^      (lcp > length)right
     int lowerBoundLcpBackward(int right, int length) const {
-        int n = (int)suffixArray.size();
+        int n = int(suffixArray.size());
         if (right <= 0)
             return -1;
 
@@ -144,7 +144,7 @@ struct SuffixArray {
     //  xxxxxxxxxOOOOOOOOOOOOOOOOOOOOOOO.....
     //          ^     (lcp >= length)right
     int upperBoundLcpBackward(int right, int length) const {
-        int n = (int)suffixArray.size();
+        int n = int(suffixArray.size());
         if (right <= 0)
             return -1;
 
@@ -219,7 +219,7 @@ struct SuffixArray {
     }
 
     static vector<int> buildSuffixArray(const string& s, int charMin = 'a', int charMax = 'z') {
-        return buildSuffixArray(&s[0], (int)s.length(), charMin, charMax);
+        return buildSuffixArray(&s[0], int(s.length()), charMin, charMax);
     }
 
     // Kasai algorithm - O(N)
@@ -243,6 +243,6 @@ struct SuffixArray {
     }
 
     static vector<int> buildLcpArray(const vector<int>& suffixArray, const string& s) {
-        return buildLcpArray(suffixArray, &s[0], (int)s.length());
+        return buildLcpArray(suffixArray, &s[0], int(s.length()));
     }
 };

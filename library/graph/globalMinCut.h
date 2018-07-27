@@ -26,8 +26,8 @@ struct GlobalMinCut {
 
     // add edges to undirected graph
     void addEdge(int u, int v, T w) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, w });
         edges[v].push_back(Edge{ u, uN, w });
     }
@@ -49,7 +49,7 @@ struct GlobalMinCut {
         T minCut = INF;
         int minCutGroup;
 
-        while ((int)vertices.size() >= 2 && minCut > 0) {
+        while (int(vertices.size()) >= 2 && minCut > 0) {
             auto r = minCutPhase(vertices, group, groupEdges);
             if (minCut > r.first) {
                 minCut = r.first;
@@ -88,7 +88,7 @@ private:
 
     // O(E*logV)
     static pair<T, int> minCutPhase(unordered_set<int>& vertices, vector<int>& group, vector<unordered_map<int,T>>& edges) {
-        int N = (int)edges.size();
+        int N = int(edges.size());
 
         int start = *vertices.begin();
 

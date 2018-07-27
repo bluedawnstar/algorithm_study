@@ -29,12 +29,12 @@ struct SparseTable2D {
     }
 
     void build(const vector<vector<T>>& a) {
-        rowN = (int)a.size();
-        colN = (int)a[0].size();
+        rowN = int(a.size());
+        colN = int(a[0].size());
 
         H.resize(max(rowN, colN) + 1);
         H[1] = 0;
-        for (int i = 2; i < (int)H.size(); i++)
+        for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
         logRowN = H[rowN] + 1;
@@ -104,7 +104,7 @@ struct SparseTable2D {
         int lengthY = bottom - top;
         while (lengthY) {
 #ifndef __GNUC__
-            int i = (int)_tzcnt_u32(lengthY);
+            int i = int(_tzcnt_u32(lengthY));
 #else
             int i = __builtin_ctz(lengthY);
 #endif
@@ -116,7 +116,7 @@ struct SparseTable2D {
                 int lengthX = right - left;
                 while (lengthX) {
 #ifndef __GNUC__
-                    int j = (int)_tzcnt_u32(lengthX);
+                    int j = int(_tzcnt_u32(lengthX));
 #else
                     int j = __builtin_ctz(lengthX);
 #endif

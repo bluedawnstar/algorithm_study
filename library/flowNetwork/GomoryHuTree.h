@@ -58,8 +58,8 @@ struct GomoryHuTreeBuilder {
 
     // add edges to a undirected graph
     void addEdge(int u, int v, T capacity) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, 0, capacity });
         edges[v].push_back(Edge{ u, uN, 0, capacity });
     }
@@ -92,7 +92,7 @@ struct GomoryHuTreeBuilder {
                     int u = Q.front();
                     Q.pop();
 
-                    for (int i = 0; i < (int)edges[u].size(); i++) {
+                    for (int i = 0; i < int(edges[u].size()); i++) {
                         Edge& e = edges[u][i];
                         int v = e.to;
                         if (prev[v].first == -1 && (e.capacity - e.flow) > 0) {

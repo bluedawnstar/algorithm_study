@@ -27,12 +27,12 @@ using namespace std;
 static vector<tuple<int, int, Vec2D<double>>> findAllIntersectionsSlow(vector<LineSegmentAllIntersections::LineSegment>& segments) {
     vector<tuple<int, int, Vec2D<double>>> res;
 
-    for (int i = 0; i < (int)segments.size(); i++)
+    for (int i = 0; i < int(segments.size()); i++)
         segments[i].id = i;
 
     Vec2D<double> pt;
-    for (int i = 0; i < (int)segments.size(); i++) {
-        for (int j = i + 1; j < (int)segments.size(); j++) {
+    for (int i = 0; i < int(segments.size()); i++) {
+        for (int j = i + 1; j < int(segments.size()); j++) {
             if (segmentIntersection(segments[i].a, segments[i].b, segments[j].a, segments[j].b, pt))
                 res.emplace_back(segments[i].id, segments[j].id, pt);
         }
@@ -42,7 +42,7 @@ static vector<tuple<int, int, Vec2D<double>>> findAllIntersectionsSlow(vector<Li
 }
 
 static void sort(vector<tuple<int, int, Vec2D<double>>>& v) {
-    for (int i = 0; i < (int)v.size(); i++) {
+    for (int i = 0; i < int(v.size()); i++) {
         v[i] = make_tuple(min(get<0>(v[i]), get<1>(v[i])), max(get<0>(v[i]), get<1>(v[i])), get<2>(v[i]));
     }
     sort(v.begin(), v.end());
@@ -52,7 +52,7 @@ static bool compare(const vector<tuple<int, int, Vec2D<double>>>& L, const vecto
     if (L.size() != R.size())
         return false;
 
-    for (int i = 0; i < (int)L.size(); i++) {
+    for (int i = 0; i < int(L.size()); i++) {
         if (get<0>(L[i]) != get<0>(R[i]) || get<1>(L[i]) != get<1>(R[i]))
             return false;
 

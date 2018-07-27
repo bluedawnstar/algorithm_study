@@ -33,7 +33,7 @@ vector<int> makeSuffixArray(T s, int n) {
         vector<int> g2(n + 1);
         g2[n] = -1;
         g2[perm[0]] = 0;
-        for (int i = 1; i < (int)perm.size(); i++) {
+        for (int i = 1; i < int(perm.size()); i++) {
             if (op(perm[i - 1], perm[i]))
                 g2[perm[i]] = g2[perm[i - 1]] + 1;
             else

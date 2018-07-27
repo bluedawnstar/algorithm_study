@@ -10,10 +10,10 @@ struct MOAlgorithm {
         vector<tuple<int, int, int>> qry;
         qry.reserve(Q.size());
 
-        for (int i = 0; i < (int)Q.size(); i++)
+        for (int i = 0; i < int(Q.size()); i++)
             qry.emplace_back(Q[i].first, Q[i].second, i);
 
-        int blockN = (int)sqrt(Q.size());
+        int blockN = int(sqrt(Q.size()));
         sort(qry.begin(), qry.end(), [blockN](const auto& l, const auto& r) {
             if (get<0>(l) / blockN != get<0>(r) / blockN)
                 return get<0>(l) / blockN < get<0>(r) / blockN;

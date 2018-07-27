@@ -66,7 +66,7 @@ struct LineSegmentIntersection {
 
     // Shamos-Hoey algorithm : O(NlogN)
     static pair<int,int> findIntersection(vector<LineSegment>& v) {
-        int n = (int)v.size();
+        int n = int(v.size());
         vector<Event> e;
         e.reserve(n * 2);
         for (int i = 0; i < n; i++) {

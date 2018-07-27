@@ -4,24 +4,24 @@
 struct BitSetSimple64 {
     static int clz(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)_lzcnt_u64(x);
+        return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)
         return __builtin_clzll(x);
 #else
         if ((x >> 32) != 0)
-            return (int)_lzcnt_u32(unsigned(x >> 32));
+            return int(_lzcnt_u32(unsigned(x >> 32)));
         else
-            return 32 + (int)_lzcnt_u32(unsigned(x));
+            return 32 + int(_lzcnt_u32(unsigned(x)));
 #endif
     }
 
     static int popCount(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)__popcnt64(x);
+        return int(__popcnt64(x));
 #elif defined(__GNUC__)
         return __builtin_popcountll(x);
 #else
-        return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
+        return int(__popcnt(unsigned(x))) + int(__popcnt(unsigned(x >> 32)));
 #endif
     }
 
@@ -58,7 +58,7 @@ struct BitSetSimple64 {
 
     int count() const {
         int res = 0;
-        for (int i = 0; i < (int)values.size(); i++)
+        for (int i = 0; i < int(values.size()); i++)
             res += popCount(values[i]);
         return res;
     }
@@ -288,7 +288,7 @@ struct BitSetSimple64 {
         int d = n >> INDEX_SHIFT;
         int r = n & INDEX_MASK;
 
-        int VN = (int)values.size();
+        int VN = int(values.size());
 
         if (r == 0) {
             int t = 0;
@@ -319,7 +319,7 @@ struct BitSetSimple64 {
     //-----------------------------------------------------
 
     int firstClearBit() const {
-        for (int i = 0; i < (int)values.size(); i++) {
+        for (int i = 0; i < int(values.size()); i++) {
             if (values[i] != BIT_ALL) {
                 long long m = (long long)~values[i];
                 return i * BIT_SIZE + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
@@ -329,7 +329,7 @@ struct BitSetSimple64 {
     }
 
     int first() const {
-        for (int i = 0; i < (int)values.size(); i++) {
+        for (int i = 0; i < int(values.size()); i++) {
             if (values[i]) {
                 long long m = (long long)values[i];
                 return i * BIT_SIZE + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
@@ -339,7 +339,7 @@ struct BitSetSimple64 {
     }
 
     int last() const {
-        for (int i = (int)values.size() - 1; i >= 0; i--) {
+        for (int i = int(values.size()) - 1; i >= 0; i--) {
             if (values[i])
                 return i * BIT_SIZE + BIT_SIZE - clz(values[i]) - 1;
         }
@@ -358,7 +358,7 @@ struct BitSetSimple64 {
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
 
-        for (int i = index + 1; i < (int)values.size(); i++) {
+        for (int i = index + 1; i < int(values.size()); i++) {
             if (values[i]) {
                 m = (long long)values[i];
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz((unsigned long long)(m & -m)) - 1;
@@ -390,7 +390,7 @@ struct BitSetSimple64 {
 
 
     int kth(int k) {
-        for (int i = 0; i < (int)values.size(); i++) {
+        for (int i = 0; i < int(values.size()); i++) {
             if (values[i]) {
                 int n = popCount(values[i]);
 

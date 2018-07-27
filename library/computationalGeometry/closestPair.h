@@ -12,7 +12,7 @@ struct ClosestPair {
             return left.second < right.second;
         });
 
-        findSub(points, 0, (int)points.size() - 1, res, INF);
+        findSub(points, 0, int(points.size()) - 1, res, INF);
 
         return res;
     }

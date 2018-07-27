@@ -37,7 +37,7 @@ void testRangeSet() {
         // merge
         sort(gt.begin(), gt.end());
         int j = 0;
-        for (int i = 1; i < (int)gt.size(); i++) {
+        for (int i = 1; i < int(gt.size()); i++) {
             if (gt[j].second >= gt[i].first)
                 gt[j].second = max(gt[j].second, gt[i].second);
             else

@@ -8,7 +8,7 @@ T calcArea2(const vector<Vec2D<T>>& polygon) {
     T res = 0;
 
     if (polygon.size() > 2) {
-        int last = (int)polygon.size() - 1;
+        int last = int(polygon.size()) - 1;
         for (int i = 0; i < last; i++)
             res += polygon[i].x * polygon[i + 1].y - polygon[i + 1].x * polygon[i].y;
         res += polygon[last].x * polygon[0].y - polygon[0].x * polygon[last].y;
@@ -20,8 +20,8 @@ T calcArea2(const vector<Vec2D<T>>& polygon) {
 template <typename T>
 bool isInside(const vector<Vec2D<T>>& polygon, Vec2D<T> pt) {
     int crossCnt = 0;
-    for (int i = 0; i < (int)polygon.size(); i++) {
-        int j = (i + 1) % (int)polygon.size();
+    for (int i = 0; i < int(polygon.size()); i++) {
+        int j = (i + 1) % int(polygon.size());
         if ((polygon[i].y > pt.y) != (polygon[j].y > pt.y)) {
             double atX = double(polygon[j].x - polygon[i].x) * (pt.y - polygon[i].y) /
                 double(polygon[j].y - polygon[i].y) + polygon[i].x;
@@ -38,7 +38,7 @@ bool isInside(const vector<Vec2D<T>>& polygon, Vec2D<T> pt) {
 // returning intersection between a polygon and the left side of AB vector
 template <typename T>
 vector<Vec2D<double>> cutPolygon(const vector<Vec2D<T>>& polygon, Vec2D<double> a, Vec2D<double> b) {
-    int N = (int)polygon.size();
+    int N = int(polygon.size());
     vector<bool> inside(N, false);
     for (int i = 0; i < N; i++)
         inside[i] = cross(a, b, polygon[i]) >= 0;
@@ -78,8 +78,8 @@ vector<Vec2D<double>> clipPolygon(const vector<Vec2D<T>>& polygon, T x1, T y1, T
 
 template <typename T>
 bool isPolygonIntersect(const vector<Vec2D<T>>& p, const vector<Vec2D<T>>& q) {
-    int N = (int)p.size();
-    int M = (int)q.size();
+    int N = int(p.size());
+    int M = int(q.size());
 
     if (isInside(p, q[0]) || isInside(q, p[0]))
         return false;

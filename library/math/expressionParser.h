@@ -5,7 +5,7 @@ struct ExpressionParserShuntingYard {
     static int eval(string s) {
         vector<int> st;
         string op;
-        for (int i = 0; i < (int)s.length(); i++) {
+        for (int i = 0; i < int(s.length()); i++) {
             char c = s[i];
             if (isDelim(c))
                 continue;
@@ -25,7 +25,7 @@ struct ExpressionParserShuntingYard {
                 op += c;
             } else {
                 string operand = "";
-                while (i < (int)s.length() && isdigit(s[i]))
+                while (i < int(s.length()) && isdigit(s[i]))
                     operand += s[i++];
 
                 --i;
@@ -133,7 +133,7 @@ private:
 
             if (isdigit(c) || c == '.') {
                 string operand(1, c);
-                while (pos < (int)s.length() && isDigitOrDot(s[pos]))
+                while (pos < int(s.length()) && isDigitOrDot(s[pos]))
                     operand += c = s[pos++];
                 tokval = stod(operand);
                 return token = 'n';

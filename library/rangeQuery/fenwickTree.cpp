@@ -24,12 +24,12 @@ static int sumSlow(vector<int>& v, int L, int R) {
 
 static int lowerBoundSlow(vector<int>& v, int k) {
     int res = 0;
-    for (int i = 0; i < (int)v.size(); i++) {
+    for (int i = 0; i < int(v.size()); i++) {
         res += v[i];
         if (res >= k)
             return i;
     }
-    return (int)v.size();
+    return int(v.size());
 }
 
 void testFenwickTree() {
@@ -38,7 +38,7 @@ void testFenwickTree() {
     cout << "-- FenwickTree (Binary Indexed Tree) -------------------" << endl;
     {
         vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
-        int N = (int)in.size();
+        int N = int(in.size());
 
         FenwickTree<int> fenwick(in);
 
@@ -59,7 +59,7 @@ void testFenwickTree() {
     }
     {
         vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
-        int N = (int)in.size();
+        int N = int(in.size());
 
         FenwickTree<int> fenwick(in);
 

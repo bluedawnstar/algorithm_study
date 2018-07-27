@@ -104,7 +104,7 @@ static int solve(int N, int M, const vector<int>& inCost, const vector<vector<in
     for (int i = 0; i < M; i++) {
         auto& v = inGroup[i];
 
-        int k = (int)v.size();
+        int k = int(v.size());
         total += inCost[i];
 
         if (k == 2)

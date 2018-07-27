@@ -32,9 +32,9 @@ struct PrimeFactorizerLongLong {
         }
         sort(temp.begin(), temp.end());
 
-        for (int i = 0; i < (int)temp.size(); ++i) {
+        for (int i = 0; i < int(temp.size()); ++i) {
             int j = i, e = 0;
-            while (j < (int)temp.size() && temp[j] == temp[i]) {
+            while (j < int(temp.size()) && temp[j] == temp[i]) {
                 e += 1;
                 j += 1;
             }

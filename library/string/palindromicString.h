@@ -2,7 +2,7 @@
 
 struct PalindromicNumberLongLong {
     static string makePalindromic(string s) {
-        for (int i = 0, j = (int)s.length() - 1; i < j; i++, j--)
+        for (int i = 0, j = int(s.length()) - 1; i < j; i++, j--)
             s[j] = s[i];
         return s;
     }
@@ -18,7 +18,7 @@ struct PalindromicNumberLongLong {
         long long resVal = stoll(res);
         long long diff = abs(resVal - orgVal);
 
-        long long scale = (long long)pow(10, (int)n.length() / 2);
+        long long scale = (long long)pow(10, int(n.length()) / 2);
 
         // candidate #2 (ex: 123xx -> 12221, 123xxx -> 122221, 100xx -> 9999)
         string smaller = makePalindromic(to_string((orgVal / scale) * scale - 1));
@@ -41,7 +41,7 @@ struct PalindromicNumberLongLong {
 
 struct PalindromicNumber {
     static string makePalindromic(string s) {
-        for (int i = 0, j = (int)s.length() - 1; i < j; i++, j--)
+        for (int i = 0, j = int(s.length()) - 1; i < j; i++, j--)
             s[j] = s[i];
         return s;
     }
@@ -52,7 +52,7 @@ struct PalindromicNumber {
         else if (s1.length() > s2.length())
             return 1;
 
-        for (int i = 0; i < (int)s1.length(); i++) {
+        for (int i = 0; i < int(s1.length()); i++) {
             if (s1[i] < s2[i])
                 return -1;
             else if (s1[i] > s2[i])
@@ -65,7 +65,7 @@ struct PalindromicNumber {
         string res;
 
         int carry = 0;
-        for (int i = (int)a.length() - 1, j = (int)b.length() - 1; i >= 0 || j >= 0; i--, j--) {
+        for (int i = int(a.length()) - 1, j = int(b.length()) - 1; i >= 0 || j >= 0; i--, j--) {
             carry += (i >= 0 ? a[i] - '0' : 0) + (j >= 0 ? b[j] - '0' : 0);
             res.push_back(carry % 10 + '0');
             carry /= 10;
@@ -90,7 +90,7 @@ struct PalindromicNumber {
         res.reserve(hi.length());
 
         int carry = 0;
-        for (int i = (int)hi.length() - 1, j = (int)lo.length() - 1; i >= 0 || j >= 0; i--, j--) {
+        for (int i = int(hi.length()) - 1, j = int(lo.length()) - 1; i >= 0 || j >= 0; i--, j--) {
             carry = (i >= 0 ? hi[i] - '0' : 0) - (j >= 0 ? lo[j] - '0' : 0) + carry;
             if (carry < 0) {
                 res.push_back(carry + 10 + '0');
@@ -100,7 +100,7 @@ struct PalindromicNumber {
                 carry = 0;
             }
         }
-        while (res.back() == '0' && (int)res.length() > 1)
+        while (res.back() == '0' && int(res.length()) > 1)
             res.pop_back();
         reverse(res.begin(), res.end());
 
@@ -115,7 +115,7 @@ struct PalindromicNumber {
         if (n > 0)
             return res.append(n, '0');
         else
-            return res.erase((int)s.length() + n);
+            return res.erase(int(s.length()) + n);
     }
 
     static string nearestPalindromic(const string& n) {
@@ -126,7 +126,7 @@ struct PalindromicNumber {
         string res = makePalindromic(n);
         string diff = subAbs(res, n);
 
-        int scaleN = (int)n.length() / 2;
+        int scaleN = int(n.length()) / 2;
         string scale = shift10("1", scaleN);
 
         // candidate #2 (ex: 123xx -> 12221, 123xxx -> 122221, 100xx -> 9999)
@@ -188,11 +188,11 @@ vector<int> getLongestPalindromes(T& s, int n) {
         s2.push_back(s[i]);
     }
 
-    vector<int> A = getPalindromes(s2, (int)s2.length());
+    vector<int> A = getPalindromes(s2, int(s2.length()));
 
     vector<int> res(n);
 
-    for (int i = (int)A.size() - 1; i >= 0; i--) {
+    for (int i = int(A.size()) - 1; i >= 0; i--) {
         int curr = i / 2;
         int R = A[i];
 
@@ -233,11 +233,11 @@ vector<int> getLongestPalindromesByEnd(T& s, int n) {
         s2.push_back(s[i]);
     }
 
-    vector<int> A = getPalindromes(s2, (int)s2.length());
+    vector<int> A = getPalindromes(s2, int(s2.length()));
 
     vector<int> res(n);
 
-    for (int i = 0; i < (int)A.size(); i++) {
+    for (int i = 0; i < int(A.size()); i++) {
         int curr = i / 2;
         int R = A[i];
 
@@ -368,7 +368,7 @@ string longestPalindromicSubstring(T& s, int N) {
         res.append(1, s[i]);
     }
 
-    int half = (int)res.length();
+    int half = int(res.length());
 
     if ((maxLen & 1) != 0)
         res.append(1, s[i]);

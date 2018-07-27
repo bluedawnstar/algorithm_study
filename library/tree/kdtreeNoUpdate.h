@@ -16,14 +16,14 @@ struct KDTreeNoUpdate {
         bound = vector<pair<T, T>>(KD, make_pair(numeric_limits<T>::max(), numeric_limits<T>::min()));
 
         iota(tree.begin(), tree.end(), 0);
-        for (int i = 0; i < (int)in.size(); i++) {
+        for (int i = 0; i < int(in.size()); i++) {
             for (int j = 0; j < KD; j++) {
                 bound[j].first = min(bound[j].first, in[i][j]);
                 bound[j].second = max(bound[j].second, in[i][j] + 1);
             }
         }
 
-        _build(0, (int)tree.size(), 0);
+        _build(0, int(tree.size()), 0);
     }
 
     // O(N logN)
@@ -41,7 +41,7 @@ struct KDTreeNoUpdate {
             }
         }
 
-        _build(0, (int)tree.size(), 0);
+        _build(0, int(tree.size()), 0);
     }
 
 
@@ -51,7 +51,7 @@ struct KDTreeNoUpdate {
         int res = -1;
         auto bnd = bound;
         double minDist = numeric_limits<double>::max();
-        _searchNearest(0, (int)tree.size(), qry, 0, res, minDist, bnd);
+        _searchNearest(0, int(tree.size()), qry, 0, res, minDist, bnd);
         return res;
     }
 
@@ -60,7 +60,7 @@ struct KDTreeNoUpdate {
     vector<int> searchRegion(const U& minPoint, const U& maxPoint) {
         vector<int> res;
         auto bnd = bound;
-        _searchRegion(0, (int)tree.size(), 0, res, bnd, minPoint, maxPoint);
+        _searchRegion(0, int(tree.size()), 0, res, bnd, minPoint, maxPoint);
         return res;
     }
 
@@ -74,7 +74,7 @@ struct KDTreeNoUpdate {
             bound[i].first = minPoint[i];
             bound[i].second = maxPoint[i] + 1;
         }
-        _searchRegionFast(0, (int)tree.size(), 0, res, bound);
+        _searchRegionFast(0, int(tree.size()), 0, res, bound);
         return res;
     }
 
@@ -82,7 +82,7 @@ struct KDTreeNoUpdate {
     template <typename U>
     int countRegion(const U& minPoint, const U& maxPoint) {
         auto bnd = bound;
-        return _countRegion(0, (int)tree.size(), 0, bnd, minPoint, maxPoint);
+        return _countRegion(0, int(tree.size()), 0, bnd, minPoint, maxPoint);
     }
 
     // O(logN), inclusive
@@ -94,7 +94,7 @@ struct KDTreeNoUpdate {
             bound[i].first = minPoint[i];
             bound[i].second = maxPoint[i] + 1;
         }
-        return _countRegionFast(0, (int)tree.size(), 0, bound);
+        return _countRegionFast(0, int(tree.size()), 0, bound);
     }
 
 protected:

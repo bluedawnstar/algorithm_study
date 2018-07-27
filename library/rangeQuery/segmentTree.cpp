@@ -126,14 +126,14 @@ void testSegmentTree() {
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {
             if (RandInt32::get() % 2) {
-                int L = RandInt32::get() % (int)in.size();
-                int R = RandInt32::get() % (int)in.size();
+                int L = RandInt32::get() % int(in.size());
+                int R = RandInt32::get() % int(in.size());
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(1, L, R, 0);
             } else {
-                int L = RandInt32::get() % (int)in.size();
-                int R = RandInt32::get() % (int)in.size();
+                int L = RandInt32::get() % int(in.size());
+                int R = RandInt32::get() % int(in.size());
                 int x = RandInt32::get() % 100;
                 if (L > R)
                     swap(L, R);

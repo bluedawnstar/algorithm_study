@@ -100,7 +100,7 @@ struct Tree {
             if (it.vi > 0)
                 treeSize[it.u] += treeSize[edges[it.u][it.vi - 1]];
 
-            if (it.vi >= (int)edges[it.u].size()) {
+            if (it.vi >= int(edges[it.u].size())) {
                 // leave ...
                 st.pop_back();
             } else if (edges[it.u][it.vi] != it.parent) {
@@ -287,9 +287,9 @@ struct Tree {
         vector<int> path;
         dfsPath(path, start, -1, farthest);
         if (path.size() % 2 == 0)
-            return vector<int>{ path[(int)path.size() / 2 - 1], path[(int)path.size() / 2] };
+            return vector<int>{ path[int(path.size()) / 2 - 1], path[int(path.size()) / 2] };
         else
-            return vector<int>{ path[(int)path.size() / 2] };
+            return vector<int>{ path[int(path.size()) / 2] };
     }
 
     vector<int> findCentersEx() {
@@ -298,12 +298,12 @@ struct Tree {
 
         vector<int> deg(N);
         for (int u = 0; u < N; u++) {
-            deg[u] = (int)edges[u].size();
+            deg[u] = int(edges[u].size());
             if (deg[u] <= 1)
                 leaves.push_back(u);
         }
 
-        int removedLeaves = (int)leaves.size();
+        int removedLeaves = int(leaves.size());
         while (removedLeaves < N) {
             vector<int> newLeaves;
             newLeaves.reserve(N);
@@ -314,7 +314,7 @@ struct Tree {
                 }
             }
             swap(leaves, newLeaves);
-            removedLeaves += (int)leaves.size();
+            removedLeaves += int(leaves.size());
         }
         return leaves;
     }

@@ -6,7 +6,7 @@
 vector<int> kmpLength(const string& s, const PrefixFunction& pref) {
     vector<int> res;
 
-    int n = (int)s.size(), m = (int)pref.p.length(), j = 0;
+    int n = int(s.size()), m = int(pref.p.length()), j = 0;
     for (int i = 0; i < n; i++) {
         while (j > 0 && s[i] != pref.p[j])
             j = pref.pi[j - 1];
@@ -30,7 +30,7 @@ vector<int> kmpLength(const string& s, const PrefixFunction& pref) {
 vector<int> kmp(const string& s, const PrefixFunction& pref) {
     vector<int> res;
 
-    int n = (int)s.length(), m = (int)pref.p.length(), j = 0;
+    int n = int(s.length()), m = int(pref.p.length()), j = 0;
     for (int i = 0; i < n; i++) {
         while (j > 0 && s[i] != pref.p[j])
             j = pref.pi[j - 1];

@@ -11,7 +11,7 @@ struct SegmentTreeBitFlip {
 
     template <typename T>
     SegmentTreeBitFlip(const vector<T>& v, T mask) {
-        init((int)v.size());
+        init(int(v.size()));
         build(v, mask);
     }
 

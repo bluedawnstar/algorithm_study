@@ -39,11 +39,11 @@ struct TreePathSqrtDecomposition : public Tree {
     void init(int N, int logN = 0) {
         Tree::init(N, logN);
 
-        sqrtN = (int)sqrt(N);
+        sqrtN = int(sqrt(N));
         nodeToBranch.assign(N, 0);
-        branchSize.reserve((int)sqrt(N) * 2);
-        branchHead.reserve((int)sqrt(N) * 2);
-        branchTail.reserve((int)sqrt(N) * 2);
+        branchSize.reserve(int(sqrt(N)) * 2);
+        branchHead.reserve(int(sqrt(N)) * 2);
+        branchTail.reserve(int(sqrt(N)) * 2);
     }
 
     void build(int root) {
@@ -57,7 +57,7 @@ struct TreePathSqrtDecomposition : public Tree {
         //dfsIter(root);
         makeLcaTable();
 
-        branchN = (int)branchSize.size();
+        branchN = int(branchSize.size());
         values.assign(N, defaultValue);
         branchValues.assign(branchN, defaultValue);
         branchLazy.assign(branchN, lzNone);
@@ -209,7 +209,7 @@ private:
                 ++branchSize.back();
                 first = false;
             }
-            nodeToBranch[v] = (int)branchSize.size() - 1;
+            nodeToBranch[v] = int(branchSize.size()) - 1;
 
             level[v] = level[u] + 1;
             dfs(v, u);
@@ -237,7 +237,7 @@ private:
 
                 P[0][it.u] = it.parent;
             }
-            if (it.vi >= (int)edges[it.u].size()) {
+            if (it.vi >= int(edges[it.u].size())) {
                 // leave ...
                 st.pop_back();
             } else if (edges[it.u][it.vi] != it.parent) {
@@ -252,7 +252,7 @@ private:
                     branchTail.back() = v;
                     it.first = false;
                 }
-                nodeToBranch[v] = (int)branchSize.size() - 1;
+                nodeToBranch[v] = int(branchSize.size()) - 1;
 
                 level[v] = level[it.u] + 1;
                 st.push_back(Item{ v, it.u, -1 });

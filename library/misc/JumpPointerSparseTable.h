@@ -13,7 +13,7 @@ struct JumpPointerSparseTable {
 
     void init(int n) {
         N = n;
-        logN = (int)log2(N) + 1;
+        logN = int(log2(N)) + 1;
         P.resize(logN);
         for (int i = 0; i < logN; i++)
             P[i].resize(N);

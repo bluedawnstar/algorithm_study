@@ -38,7 +38,7 @@ void testBit() {
 
     PROFILE_START(1);
     for (int i = 1; i < 10000000; i++) {
-        int n = log2Int((unsigned)i);
+        int n = log2Int(unsigned(i));
         if (n < 0)
             cerr << "What?" << endl;
     }

@@ -13,7 +13,7 @@ struct DynamicConvexHull {
 
         // point having minimum distance from the point p
         int idx = 0;
-        int N = (int)hull.size();
+        int N = int(hull.size());
         for (int i = 1; i < N; i++) {
             if (squareDistL2(p, hull[i]) < squareDistL2(p, hull[idx]))
                 idx = i;
@@ -57,7 +57,7 @@ private:
     static bool inside(vector<Vec2D<T>> poly, Vec2D<T> p) {
         Vec2D<T> mid{ 0, 0 };
 
-        int N = (int)poly.size();
+        int N = int(poly.size());
 
         p.x *= N;
         p.y *= N;

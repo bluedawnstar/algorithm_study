@@ -22,7 +22,7 @@ using namespace std;
 
 static vector<int> countNaive(const vector<int>& A, const vector<pair<int, int>>& rangeQuery) {
     vector<int> ans(rangeQuery.size());
-    for (int i = 0; i < (int)rangeQuery.size(); i++) {
+    for (int i = 0; i < int(rangeQuery.size()); i++) {
         int L = rangeQuery[i].first;
         int R = rangeQuery[i].second;
 

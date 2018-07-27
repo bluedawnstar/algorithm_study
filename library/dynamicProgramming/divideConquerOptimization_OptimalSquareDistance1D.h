@@ -31,7 +31,7 @@ struct OptimalSquareDistance1D {
     vector<long long> S, SS;
 
     // PRECONDITION: A must be sorted by ascending order
-    OptimalSquareDistance1D(const vector<int>& A) : N((int)A.size()), S(N + 1), SS(N + 1) {
+    OptimalSquareDistance1D(const vector<int>& A) : N(int(A.size())), S(N + 1), SS(N + 1) {
         for (int i = 1; i <= N; i++) {
             S[i] = S[i - 1] + A[i - 1];
             SS[i] = SS[i - 1] + 1ll * A[i - 1] * A[i - 1];

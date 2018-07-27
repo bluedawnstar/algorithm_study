@@ -24,12 +24,12 @@ struct SubstrHash {
             h[i + 1] = h[i] * P + s[i];
 
         D().reserve(n);
-        while ((int)D().size() <= n)
+        while (int(D().size()) <= n)
             D().push_back(D().back() * P);
     }
 
     void build(const string& s) {
-        build(&s[0], (int)s.length());
+        build(&s[0], int(s.length()));
     }
 
 
@@ -50,16 +50,16 @@ struct CountStringsToHavePattern {
     static vector<int> solve(const vector<string>& strs, const vector<tuple<int,int,string>>& queries) {
         //step1: hashing
         vector<SubstrHash> hasher(strs.size());
-        for (int i = 0; i < (int)strs.size(); i++)
+        for (int i = 0; i < int(strs.size()); i++)
             hasher[i].build(strs[i]);
 
         //step2: group queries by pattern length
         int maxLen = 0;
         for (auto& q : queries)
-            maxLen = max(maxLen, (int)get<2>(q).length());
+            maxLen = max(maxLen, int(get<2>(q).length()));
 
         vector<vector<int>> queryGroup(maxLen + 1);
-        for (int i = 0; i < (int)queries.size(); i++)
+        for (int i = 0; i < int(queries.size()); i++)
             queryGroup[get<2>(queries[i]).length()].push_back(i);
 
         // step3: process query groups
@@ -69,8 +69,8 @@ struct CountStringsToHavePattern {
                 continue;
 
             unordered_map<unsigned long long, vector<int>> M;
-            for (int i = 0; i < (int)strs.size(); i++) {
-                for (int j = 0; j + L <= (int)strs[i].length(); j++) {
+            for (int i = 0; i < int(strs.size()); i++) {
+                for (int j = 0; j + L <= int(strs[i].length()); j++) {
                     auto& v = M[hasher[i].substr(j, L)];
                     if (v.empty() || v.back() != i) // check if strs[i] has duplicate patterns
                         v.push_back(i);
@@ -81,7 +81,7 @@ struct CountStringsToHavePattern {
                 auto L = get<0>(queries[i]);
                 auto R = get<1>(queries[i]);
                 auto& s = get<2>(queries[i]);
-                auto& v = M[SubstrHash(s).substr(0, (int)s.length())];
+                auto& v = M[SubstrHash(s).substr(0, int(s.length()))];
                 res[i] = int(upper_bound(v.begin(), v.end(), R) - lower_bound(v.begin(), v.end(), L));
             }
         }

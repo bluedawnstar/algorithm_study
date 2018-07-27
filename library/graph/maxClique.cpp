@@ -19,7 +19,7 @@ using namespace std;
 
 static int maxCliqueSlow(const vector<unsigned long long>& g, const vector<int>& weights) {
     int res = 0;
-    int n = (int)g.size();
+    int n = int(g.size());
     for (int set = 0; set < (1 << n); set++) {
         bool ok = true;
         for (int i = 0; i < n; i++)

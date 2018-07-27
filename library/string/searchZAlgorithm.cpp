@@ -15,8 +15,8 @@ using namespace std;
 static vector<int> searchNaive(const string& text, const string& pattern) {
     vector<int> res;
 
-    int textLength = (int)text.length();
-    int patternLength = (int)pattern.length();
+    int textLength = int(text.length());
+    int patternLength = int(pattern.length());
 
     for (int i = 0; i <= textLength - patternLength; i++) {
         bool matched = true;

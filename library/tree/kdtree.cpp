@@ -22,7 +22,7 @@ static int findNearest(const vector<vector<int>>& vec3D, const vector<bool>& era
     int res = -1;
     double dist = numeric_limits<double>::max();
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         if (erased[i])
             continue;
 
@@ -45,7 +45,7 @@ static int findNearest(const vector<vector<int>>& vec3D, const vector<int>& poin
     int res = -1;
     double dist = numeric_limits<double>::max();
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         double d = 0.0;
         for (int j = 0; j < 3; j++) {
             d += double(vec3D[i][j] - point3D[j]) * double(vec3D[i][j] - point3D[j]);
@@ -66,7 +66,7 @@ static vector<int> findKNN(const vector<vector<int>>& vec3D, const vector<int>& 
 
     priority_queue<pair<double, int>> pq;
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         double d = 0.0;
         for (int j = 0; j < 3; j++) {
             d += double(vec3D[i][j] - point3D[j]) * double(vec3D[i][j] - point3D[j]);
@@ -74,12 +74,12 @@ static vector<int> findKNN(const vector<vector<int>>& vec3D, const vector<int>& 
         d = sqrt(d);
 
         pq.emplace(d, i);
-        if ((int)pq.size() > K)
+        if (int(pq.size()) > K)
             pq.pop();
     }
 
     vector<int> res(pq.size());
-    for (int i = (int)pq.size() - 1; i >= 0; i--) {
+    for (int i = int(pq.size()) - 1; i >= 0; i--) {
         res[i] = pq.top().second;
         pq.pop();
     }
@@ -90,7 +90,7 @@ static vector<int> findKNN(const vector<vector<int>>& vec3D, const vector<int>& 
 static vector<vector<int>> searchRegion(const vector<vector<int>>& vec3D, const vector<int>& pointMin, const vector<int>& pointMax) {
     vector<vector<int>> res;
 
-    for (int i = 0; i < (int)vec3D.size(); i++) {
+    for (int i = 0; i < int(vec3D.size()); i++) {
         bool isIn = true;
         for (int j = 0; j < 3; j++) {
             if (vec3D[i][j] < pointMin[j] || pointMax[j] < vec3D[i][j]) {
@@ -353,7 +353,7 @@ void testKDTree() {
                     break;
                 }
 
-                for (int j = 0; j < (int)out1[i].size(); j++) {
+                for (int j = 0; j < int(out1[i].size()); j++) {
                     if (out1[i][j]->point[0] != out2[i][j]->point[0] ||
                         out1[i][j]->point[1] != out2[i][j]->point[1] ||
                         out1[i][j]->point[2] != out2[i][j]->point[2]) {
@@ -422,11 +422,11 @@ void testKDTree() {
         vector<vector<vector<int>>> out22(QN);
         for (int i = 0; i < QN; i++) {
             out11[i].resize(out1[i].size());
-            for (int j = 0; j < (int)out1[i].size(); j++) {
+            for (int j = 0; j < int(out1[i].size()); j++) {
                 out11[i][j].assign(out1[i][j]->point, out1[i][j]->point + 3);
             }
             out22[i].resize(out2[i].size());
-            for (int j = 0; j < (int)out2[i].size(); j++) {
+            for (int j = 0; j < int(out2[i].size()); j++) {
                 out22[i][j] = in[out2[i][j]];
             }
             sort(out11[i].begin(), out11[i].end());

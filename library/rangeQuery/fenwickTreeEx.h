@@ -50,14 +50,14 @@ struct FenwickTreeEx {
     }
 
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
 
     void update(int pos, T val) {
         pos++;
 
-        while (pos < (int)tree.size()) {
+        while (pos < int(tree.size())) {
             tree[pos] = mergeOp(tree[pos], val);
             pos += pos & -pos;      // add lowest bit
         }

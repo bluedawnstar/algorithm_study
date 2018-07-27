@@ -37,12 +37,12 @@ struct BitSetRangeFlip {
 
     template <typename T>
     BitSetRangeFlip(const vector<T>& v, T bitMask) {
-        init((int)v.size());
+        init(int(v.size()));
         build(v, bitMask);
     }
 
     void init(int n) {
-        sqrtN = (int)sqrt(n);
+        sqrtN = int(sqrt(n));
         N = ((n + sqrtN - 1) / sqrtN) * sqrtN;
 
         values = vector<ValueT>((N + BIT_SIZE - 1) / BIT_SIZE);
@@ -55,14 +55,14 @@ struct BitSetRangeFlip {
     void build(const vector<T>& v, T bitMask) {
         for (int i = 0, idx = 0; i < N; i += BIT_SIZE) {
             ValueT x = 0;
-            for (int j = 0; j < BIT_SIZE && idx < (int)v.size(); j++, idx++) {
+            for (int j = 0; j < BIT_SIZE && idx < int(v.size()); j++, idx++) {
                 if (v[idx] & bitMask)
                     x |= BIT_ONE << j;
             }
             values[i >> INDEX_SHIFT] = x;
         }
 
-        for (int i = 0; i < (int)blockOne.size(); i++)
+        for (int i = 0; i < int(blockOne.size()); i++)
             blockOne[i] = doCountOne(i * sqrtN, (i + 1) * sqrtN - 1);
     }
 
@@ -186,7 +186,7 @@ protected:
 
     static int popcount(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
 #else
         return __builtin_popcount(x);
 #endif
@@ -194,11 +194,11 @@ protected:
 
     static int popcount(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)__popcnt64(x);
+        return int(__popcnt64(x));
 #elif defined(__GNUC__)
         return __builtin_popcountll(x);
 #else
-        return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
+        return int(__popcnt(unsigned(x))) + int(__popcnt(unsigned(x >> 32)));
 #endif
     }
 };

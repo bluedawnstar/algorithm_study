@@ -55,7 +55,7 @@ struct PersistentSegmentTreeLazy {
 
 
     int getHistorySize() const {
-        return (int)trees.size();
+        return int(trees.size());
     }
 
 
@@ -86,29 +86,29 @@ struct PersistentSegmentTreeLazy {
     }
 
     T build(const vector<T>& v) {
-        return build(&v[0], (int)v.size());
+        return build(&v[0], int(v.size()));
     }
 
 
     // inclusive
     T query(int left, int right) {
-        return querySub((int)treesLazy.size() - 1, trees.back(), left, right, 0, N - 1);
+        return querySub(int(treesLazy.size()) - 1, trees.back(), left, right, 0, N - 1);
     }
 
     // inclusive
     T update(int index, T newValue) {
-        return updateSub((int)treesLazy.size() - 1, trees.back(), index, newValue, 0, N - 1);
+        return updateSub(int(treesLazy.size()) - 1, trees.back(), index, newValue, 0, N - 1);
     }
 
     // inclusive
     T updateRange(int left, int right, T newValue) {
-        return updateRangeSub((int)treesLazy.size() - 1, trees.back(), left, right, newValue, 0, N - 1);
+        return updateRangeSub(int(treesLazy.size()) - 1, trees.back(), left, right, newValue, 0, N - 1);
     }
 
     // inclusive
     T upgrade(int index, T newValue) {
         treesLazy.push_back(treesLazy.back());
-        auto t = upgradeSub((int)treesLazy.size() - 1, trees.back(), index, newValue, 0, N - 1);
+        auto t = upgradeSub(int(treesLazy.size()) - 1, trees.back(), index, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
     }
@@ -116,7 +116,7 @@ struct PersistentSegmentTreeLazy {
     // inclusive
     T upgradeRange(int left, int right, T newValue) {
         treesLazy.push_back(treesLazy.back());
-        auto t = upgradeRangeSub((int)treesLazy.size() - 1, trees.back(), left, right, newValue, 0, N - 1);
+        auto t = upgradeRangeSub(int(treesLazy.size()) - 1, trees.back(), left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
     }
@@ -141,7 +141,7 @@ struct PersistentSegmentTreeLazy {
     // inclusive
     T upgrade(int historyIndex, int index, T newValue) {
         treesLazy.push_back(treesLazy[historyIndex]);
-        auto t = upgradeSub((int)treesLazy.size() - 1, trees[historyIndex], index, newValue, 0, N - 1);
+        auto t = upgradeSub(int(treesLazy.size()) - 1, trees[historyIndex], index, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
     }
@@ -149,7 +149,7 @@ struct PersistentSegmentTreeLazy {
     // inclusive
     T upgradeRange(int historyIndex, int left, int right, T newValue) {
         treesLazy.push_back(treesLazy[historyIndex]);
-        auto t = upgradeeRangeSub((int)treesLazy.size() - 1, trees[historyIndex], left, right, newValue, 0, N - 1);
+        auto t = upgradeeRangeSub(int(treesLazy.size()) - 1, trees[historyIndex], left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
     }

@@ -21,7 +21,7 @@ using namespace std;
 #include "../common/rand.h"
 
 static int findNext(const vector<int>& A, int start, int x) {
-    while (start < (int)A.size()) {
+    while (start < int(A.size())) {
         if (A[start] <= x)
             return start;
         start++;
@@ -224,14 +224,14 @@ void testSegmentTreeCompactLazy() {
         vector<tuple<int, int, int, int>> Q;
         for (int i = 0; i < T; i++) {
             if (RandInt32::get() % 2) {
-                int L = RandInt32::get() % (int)in.size();
-                int R = RandInt32::get() % (int)in.size();
+                int L = RandInt32::get() % int(in.size());
+                int R = RandInt32::get() % int(in.size());
                 if (L > R)
                     swap(L, R);
                 Q.emplace_back(1, L, R, 0);
             } else {
-                int L = RandInt32::get() % (int)in.size();
-                int R = RandInt32::get() % (int)in.size();
+                int L = RandInt32::get() % int(in.size());
+                int R = RandInt32::get() % int(in.size());
                 int x = RandInt32::get() % 100;
                 if (L > R)
                     swap(L, R);

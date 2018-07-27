@@ -7,7 +7,7 @@ int largestRectangle(vector<int>& heights) {
     heights.push_back(0);
 
     int res = 0;
-    for (int i = 0; i < (int)heights.size(); i++) {
+    for (int i = 0; i < int(heights.size()); i++) {
         auto R = i - 1;
         while (stk.top().first >= heights[i]) {
             int h = stk.top().first;
@@ -21,10 +21,10 @@ int largestRectangle(vector<int>& heights) {
 }
 
 int largestRectangle(const vector<vector<bool>>& matrix) {
-    int rows = (int)matrix.size();
+    int rows = int(matrix.size());
     if (rows == 0)
         return 0;
-    int cols = (int)matrix[0].size();
+    int cols = int(matrix[0].size());
 
     vector<int> height(cols + 1, 0);    // heights
 

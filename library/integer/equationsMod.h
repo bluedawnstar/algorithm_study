@@ -25,7 +25,7 @@ inline vector<T> solveModularEq(T a, T b, U M) {
 struct DiscreteLogarithm {
     // M is 64bit integer
     static long long solve64bit(long long a, long long b, long long M) {
-        int n = (int)ceil(sqrt(M)) + 1;
+        int n = int(ceil(sqrt(M))) + 1;
 
         long long an = 1;
         for (int i = 0; i < n; i++)
@@ -56,7 +56,7 @@ struct DiscreteLogarithm {
     static int solve32bit(long long a, long long b, int M) {
         int am = int(a % M);
         int bm = int(b % M);
-        int n = (int)ceil(sqrt(M)) + 1;
+        int n = int(ceil(sqrt(M))) + 1;
 
         long long an = 1;
         for (int i = 0; i < n; i++)

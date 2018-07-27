@@ -45,7 +45,7 @@ struct CompactSegmentTree {
         RealN = size;
         if (alignPowerOf2) {
 #ifndef __GNUC__
-            N = 1 << (32 - (int)_lzcnt_u32(size - 1));
+            N = 1 << (32 - int(_lzcnt_u32(size - 1)));
 #else
             N = 1 << (32 - __builtin_clz(size - 1));
 #endif
@@ -75,7 +75,7 @@ struct CompactSegmentTree {
     }
 
     void build(const vector<T>& v, bool alignPowerOf2 = false) {
-        build(&v[0], (int)v.size(), alignPowerOf2);
+        build(&v[0], int(v.size()), alignPowerOf2);
     }
 
     //--- query
@@ -178,7 +178,7 @@ inline int findNext(const CompactSegmentTree<T,MergeOp>& st, int start, const fu
                 break;
 
 #ifndef __GNUC__
-            cur >>= (int)_tzcnt_u32(cur);
+            cur >>= int(_tzcnt_u32(cur));
 #else
             cur >>= __builtin_ctz(cur);
 #endif
@@ -208,7 +208,7 @@ inline int findPrev(const CompactSegmentTree<T, MergeOp>& st, int start, const f
                 break;
 
 #ifndef __GNUC__
-            cur >>= (int)_tzcnt_u32(cur);
+            cur >>= int(_tzcnt_u32(cur));
 #else
             cur >>= __builtin_ctz(cur);
 #endif

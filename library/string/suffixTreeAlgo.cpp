@@ -23,8 +23,8 @@ void testSuffixTreeAlgo() {
         SuffixTree tree(100);
         //                   01234567
         const char* treeS = "abcabcab$";
-        int N = strlen(treeS);
-        tree.build(treeS, strlen(treeS));
+        int N = int(int(strlen(treeS)));
+        tree.build(treeS, int(strlen(treeS)));
 
         SuffixTreeAlgo stAlgo(tree);
         for (int i = 0; i < N; i++) {

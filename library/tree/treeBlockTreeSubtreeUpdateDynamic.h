@@ -43,7 +43,7 @@ struct DynamicBlockTreeSubtreeUpdate {
         N = _n;
         sqrtN = _sqrtN;
         if (sqrtN <= 0)
-            sqrtN = (int)sqrt(N);
+            sqrtN = int(sqrt(N));
 
         edges = vector<vector<int>>(N);
         parent.assign(N, -1);
@@ -181,7 +181,7 @@ struct DynamicBlockTreeSubtreeUpdate {
                 vector<int>& be = blockEdges[blockId];
 
                 int j = 0;
-                for (int i = 0; i < (int)be.size(); i++) {
+                for (int i = 0; i < int(be.size()); i++) {
                     int v = be[i];
                     if ((S[v >> 5] & (1u << (v & 0x1F))) == 0)
                         be[j++] = v;
@@ -393,11 +393,11 @@ protected:
         for (auto p : nodes.back()) {
             for (auto v : edges[p]) {
                 if (v != parent[p])
-                    dfsBuild(v, p, depth + (int)nodes.size());
+                    dfsBuild(v, p, depth + int(nodes.size()));
             }
         }
 
-        for (int i = (int)nodes.size() - 1; i > 0; i--) {
+        for (int i = int(nodes.size()) - 1; i > 0; i--) {
             for (auto v : nodes[i]) {
                 auto p = parent[v];
                 treeSizeInBlock[p] += treeSizeInBlock[v];

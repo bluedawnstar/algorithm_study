@@ -55,7 +55,7 @@ static int maxSlow(vector<int>& v, int L, int R) {
 
 
 static int findNext(const vector<int>& A, int start, int x) {
-    while (start < (int)A.size()) {
+    while (start < int(A.size())) {
         if (A[start] <= x)
             return start;
         start++;
@@ -73,7 +73,7 @@ static int findPrev(const vector<int>& A, int start, int x) {
 }
 
 static int lowerBound(const vector<int>& A, int start, int x) {
-    while (start < (int)A.size()) {
+    while (start < int(A.size())) {
         if (A[start] >= x)
             break;
         start++;
@@ -97,7 +97,7 @@ void testGeneralizedBIT() {
     {
                      // 0  1  2  3  4  5  6
         vector<int> in{ 1, 9, 2, 7, 5, 4, 6 };
-        int N = (int)in.size();
+        int N = int(in.size());
 
         auto bitSum = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
         auto bitMin = makeGeneralizedBIT(in, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());

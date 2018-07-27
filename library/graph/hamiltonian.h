@@ -7,7 +7,7 @@ struct Hamiltonian {
     // 'dist' is adjacent array
     // returns (distance, vertex order)
     static pair<T, vector<int>> getShortestCycle(const vector<vector<T>>& dist) {
-        int N = (int)dist.size();
+        int N = int(dist.size());
         vector<vector<T>> dp(1 << N, vector<T>(N, INF / 2));
 
         dp[1][0] = 0;
@@ -48,7 +48,7 @@ struct Hamiltonian {
     // 'dist' is adjacent array
     // returns (distance, vertex order)
     static pair<T, vector<int>> getShortestPath(const vector<vector<T>>& dist) {
-        int N = (int)dist.size();
+        int N = int(dist.size());
 
         vector<vector<T>> dp(1 << N, vector<T>(N, INF / 2));
 

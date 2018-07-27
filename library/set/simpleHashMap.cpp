@@ -91,7 +91,7 @@ void testSimpleHashMap() {
         }
         {
             PROFILE_START(2);
-            SimpleHashMap<long long, int> shm([](long long index) { return (int)index; });
+            SimpleHashMap<long long, int> shm([](long long index) { return int(index); });
             for (int i = 0; i < N; i++)
                 shm[in[i].first] = in[i].second;
                 //shm.set(in[i].first, in[i].second);

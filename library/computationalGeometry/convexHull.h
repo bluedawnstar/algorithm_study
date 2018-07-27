@@ -3,7 +3,7 @@
 // O(HN)
 template <typename T>
 vector<Vec2D<T>> doJarvis(vector<Vec2D<T>>& Q) {
-    int N = (int)Q.size();
+    int N = int(Q.size());
     if (N < 3)
         return Q;
 
@@ -38,7 +38,7 @@ template <typename T>
 vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
     vector<Vec2D<T>> S;
 
-    int N = (int)Q.size();
+    int N = int(Q.size());
     if (N == 0)
         return S;
 
@@ -76,7 +76,7 @@ vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
     S.push_back(Q[0]);
     S.push_back(Q[1]);
     S.push_back(Q[2]);
-    for (int i = 3; i < (int)Q.size(); i++) {
+    for (int i = 3; i < int(Q.size()); i++) {
         while (cross(S[S.size() - 2], S.back(), Q[i]) <= 0)
             S.pop_back();
         S.push_back(Q[i]);
@@ -90,7 +90,7 @@ template <typename T>
 vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryPoints = true) {
     vector<Vec2D<T>> S;
 
-    int N = (int)Q.size();
+    int N = int(Q.size());
     if (N == 0)
         return S;
 
@@ -117,18 +117,18 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryP
     S.push_back(Q[0]);
     S.push_back(Q[1]);
     if (excludeBoundaryPoints) {
-        for (int i = 2; i < (int)Q.size(); i++) {
+        for (int i = 2; i < int(Q.size()); i++) {
             while (S.size() >= 2 && cross(S[S.size() - 2], S.back(), Q[i]) <= 0)
                 S.pop_back();
             S.push_back(Q[i]);
         }
     } else {
-        for (int i = 2; i < (int)Q.size(); i++) {
+        for (int i = 2; i < int(Q.size()); i++) {
             while (S.size() >= 2 && cross(S[S.size() - 2], S.back(), Q[i]) < 0)
                 S.pop_back();
             S.push_back(Q[i]);
         }
-        for (int i = (int)Q.size() - 2; i >= 2; i--) {
+        for (int i = int(Q.size()) - 2; i >= 2; i--) {
             if (cross(S.back(), S[0], Q[i]) != 0)
                 break;
             S.push_back(Q[i]);
@@ -142,7 +142,7 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryP
 // O(NlogN)
 template <typename T>
 vector<Vec2D<T>> doGrahamAndrew(vector<Vec2D<T>>& Q) {
-    int N = (int)Q.size();
+    int N = int(Q.size());
     if (N <= 1)
         return Q;
 

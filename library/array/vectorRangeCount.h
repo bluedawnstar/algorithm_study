@@ -127,7 +127,7 @@ struct VectorRangeCount {
     }
 
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
     //--- update

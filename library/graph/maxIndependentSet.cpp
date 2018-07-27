@@ -20,7 +20,7 @@ using namespace std;
 
 static int maxWeightedIndependentSet(vector<unsigned long long>& g, const vector<int>& weights) {
     int res = 0;
-    int n = (int)g.size();
+    int n = int(g.size());
 
     for (int i = 0; i < n; i++)
         g[i] |= (1ull << i);

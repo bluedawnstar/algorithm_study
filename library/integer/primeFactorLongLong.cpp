@@ -47,7 +47,7 @@ void testPrimeFactorLongLong() {
         auto x = 34129034312412ll;
         auto ans = pfLL.factorize(x);
         cout << x << " = ";
-        for (int i = 0; i < (int)ans.size(); i++) {
+        for (int i = 0; i < int(ans.size()); i++) {
             cout << "(" << ans[i].first << ", " << ans[i].second << "), ";
         }
         cout << endl;

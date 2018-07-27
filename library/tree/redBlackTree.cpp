@@ -19,15 +19,15 @@ using namespace std;
 #include "../common/profile.h"
 
 static void checkSearch(RBTree<int>& rbt, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(rbt.find(x)->value == x);
     }
 }
 
 static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
-    assert(rbt.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(rbt.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(rbt[i]->value == in[i]);
         assert(rbt.indexOf(rbt[i]) == i);
     }
@@ -47,7 +47,7 @@ void testRedBlackTree() {
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p = rbt.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -91,7 +91,7 @@ void testRedBlackTree() {
                 if (!b)
                     cerr << "It'll never be shown!" << endl;
                 assert(b);
-                assert(rbt.size() == (int)t.size());
+                assert(rbt.size() == int(t.size()));
                 checkSearch(rbt, org);
                 checkIndex(rbt, org);
             }
@@ -118,7 +118,7 @@ void testRedBlackTree() {
             random_shuffle(t.begin(), t.end());
 
             PROFILE_START(0);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 auto p = bst.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -126,7 +126,7 @@ void testRedBlackTree() {
             PROFILE_STOP(0);
 
             PROFILE_START(1);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 auto p = rbt.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -134,7 +134,7 @@ void testRedBlackTree() {
             PROFILE_STOP(1);
 
             PROFILE_START(2);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 auto p = M.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -147,21 +147,21 @@ void testRedBlackTree() {
             random_shuffle(t.begin(), t.end());
 
             PROFILE_START(0);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (bst.find(t[i])->value != t[i])
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(0);
 
             PROFILE_START(1);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (rbt.find(t[i])->value != t[i])
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(1);
 
             PROFILE_START(2);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (M.find(t[i]) == M.end())
                     cerr << "It'll never be shown!" << endl;
             }
@@ -173,21 +173,21 @@ void testRedBlackTree() {
             random_shuffle(t.begin(), t.end());
 
             PROFILE_START(0);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (!bst.erase(t[i]))
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(0);
 
             PROFILE_START(1);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (!rbt.erase(t[i]))
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(1);
 
             PROFILE_START(2);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 M.erase(t[i]);
             }
             PROFILE_STOP(2);

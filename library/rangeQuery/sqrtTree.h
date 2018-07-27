@@ -44,7 +44,7 @@ struct SqrtTree {
 
         layers.clear();
         for (int i = H; i > 1; i = (i + 1) >> 1) {
-            onLayer[i] = (int)layers.size();
+            onLayer[i] = int(layers.size());
             layers.push_back(i);
         }
 
@@ -54,13 +54,13 @@ struct SqrtTree {
 
         prefix.assign(layers.size(), vector<T>(N));
         suffix.assign(layers.size(), vector<T>(N));
-        between.assign(layers.size(), vector<T>(1 << H));
+        between.assign(layers.size(), vector<T>(size_t(1) << H));
 
         buildSub(0, 0, N - 1);
     }
 
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
     //--- query
@@ -90,7 +90,7 @@ struct SqrtTree {
 
 private:
     void buildSub(int layer, int left, int right) {
-        if (layer >= (int)layers.size())
+        if (layer >= int(layers.size()))
             return;
 
         int sizeLog = (layers[layer] + 1) >> 1;
@@ -127,9 +127,9 @@ private:
 
     static int clz(int x) {
 #ifndef __GNUC__
-        return (int)__lzcnt((unsigned)x);
+        return int(__lzcnt(unsigned(x)));
 #else
-        return __builtin_clz((unsigned)x);
+        return __builtin_clz(unsigned(x));
 #endif
     }
 };

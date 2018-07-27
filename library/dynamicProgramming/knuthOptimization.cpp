@@ -19,7 +19,7 @@ using namespace std;
 
 // https://www.acmicpc.net/problem/11066
 static long long solve(const vector<long long>& A) {
-    int N = (int)A.size();
+    int N = int(A.size());
 
     vector<long long> S(N + 1);
     for (int i = 1; i <= N; i++)
@@ -32,7 +32,7 @@ static long long solve(const vector<long long>& A) {
 }
 
 static long long solveNaive(const vector<long long>& A) {
-    int N = (int)A.size();
+    int N = int(A.size());
 
     vector<long long> S(N + 1);
     for (int i = 1; i <= N; i++)

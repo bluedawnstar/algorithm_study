@@ -4,11 +4,11 @@
 // O(max(|s|, |t|))
 inline bool isSubsequence(const string& s, const string& t) {
     int i, j;
-    for (i = 0, j = 0; i < (int)s.length() && j < (int)t.length(); i++) {
+    for (i = 0, j = 0; i < int(s.length()) && j < int(t.length()); i++) {
         if (s[i] == t[j])
             j++;
     }
-    return j >= (int)t.length();
+    return j >= int(t.length());
 }
 
 struct NextPositionTable {
@@ -23,7 +23,7 @@ struct NextPositionTable {
     }
 
     void build(const string& s, char first = 'a', char last = 'z') {
-        N = (int)s.length();
+        N = int(s.length());
         next.resize(last - first + 1, vector<int>(N + 1));
 
         for (int i = 0; i <= last - first; i++)
@@ -62,7 +62,7 @@ struct CompactNextPositionTable {
     }
 
     void build(const string& s, char first = 'a', char last = 'z') {
-        N = (int)s.length();
+        N = int(s.length());
         next.resize(last - first + 1, vector<int>(N + 1));
 
         for (int i = 0; i < N; i++)

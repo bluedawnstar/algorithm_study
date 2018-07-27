@@ -55,7 +55,7 @@ struct DelaunayTriangulation {
         triangles.erase(triangles.begin() + tri);
 
         for (int i = 0; i < 3; i++)
-            doTriangulation(tr.p[i], tr.p[(i + 1) % 3], (int)points.size() - 1);
+            doTriangulation(tr.p[i], tr.p[(i + 1) % 3], int(points.size()) - 1);
     }
 
     vector<Triangle> getTriangles(bool excludeSuperTriangle = true) const {
@@ -105,7 +105,7 @@ private:
     }
 
     int searchCoverTriangle(const Vec2D<T>& pt) const {
-        for (int i = (int)triangles.size() - 1; i >= 0; i--) {
+        for (int i = int(triangles.size()) - 1; i >= 0; i--) {
             if (isIn(triangles[i], pt))
                 return i;
         }
@@ -115,7 +115,7 @@ private:
     // return (triangle index, edge order)
     // edge order: 0-1: 0, 1-2: 1, 2-0: 2
     pair<int,int> searchAdjacentTriangle(int p1, int p2) const {
-        for (int i = (int)triangles.size() - 1; i >= 0; i--) {
+        for (int i = int(triangles.size()) - 1; i >= 0; i--) {
             for (int j = 0; j < 3; j++) {
                 if (triangles[i].p[j] == p1 && triangles[i].p[(j + 1) % 3] == p2)
                     return make_pair(i, j);

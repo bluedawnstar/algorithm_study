@@ -12,7 +12,7 @@ inline vector<bool> eratosthenes(int n) {
             res[j] = false;
     }
 
-    int root = (int)sqrt(n);
+    int root = int(sqrt(n));
     for (int i = 3; i <= root; i += 2) {
         if (res[i]) {
             for (int j = i * i; j >= 0 && j <= n; j += i)
@@ -50,7 +50,7 @@ inline vector<bool> eratosthenes(int left, int right) {
     if (left <= 1 && 1 <= right)
         res[1 - left] = false;
 
-    int root = (int)sqrt(right);
+    int root = int(sqrt(right));
     vector<bool> p(root + 1, true);
 
     if (root >= 4) {

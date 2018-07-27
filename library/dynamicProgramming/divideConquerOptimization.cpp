@@ -25,7 +25,7 @@ void testDivideAndConquerOptimization() {
     // https://www.hackerrank.com/contests/101hack53/challenges/optimal-bus-stops/problem
     {
         vector<int> A{ 1, 2, 4 };
-        int N = (int)A.size();
+        int N = int(A.size());
 
         vector<long long> S(N + 1), SS(N + 1);
         for (int i = 1; i <= N; i++) {

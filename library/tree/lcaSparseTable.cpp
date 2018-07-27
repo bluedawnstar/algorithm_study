@@ -24,8 +24,8 @@ void testLcaSparseTable() {
     vector<int> parent(100), level(100);
     iota(parent.begin(), parent.end(), 1);
     parent[99] = -1;
-    for (int i = 0; i < (int)level.size(); i++)
-        level[i] = (int)level.size() - i - 1;
+    for (int i = 0; i < int(level.size()); i++)
+        level[i] = int(level.size()) - i - 1;
 
     LcaSparseTable spLCA(parent, level);
     spLCA.build();

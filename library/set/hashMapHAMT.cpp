@@ -29,7 +29,7 @@ static string makeRandomString(int len) {
 
 static unsigned int getHash(const string& s) {
     unsigned int h = 0;
-    for (int i = 0; i < (int)s.length(); i++)
+    for (int i = 0; i < int(s.length()); i++)
         h = h * 31 + (s[i] - 'a');
     return h;
 }

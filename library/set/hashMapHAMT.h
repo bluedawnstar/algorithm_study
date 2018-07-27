@@ -172,7 +172,7 @@ class HashMapHAMT {
 
     static int popcount(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
 #else
         return __builtin_popcount(x);
 #endif
@@ -180,11 +180,11 @@ class HashMapHAMT {
 
     static int popcount(unsigned long long x) {
 #if defined(_M_X64)
-        return (int)__popcnt64(x);
+        return int(__popcnt64(x));
 #elif defined(__GNUC__)
         return __builtin_popcountll(x);
 #else
-        return (int)__popcnt(unsigned(x)) + (int)__popcnt(unsigned(x >> 32));
+        return int(__popcnt(unsigned(x))) + int(__popcnt(unsigned(x >> 32)));
 #endif
     }
 

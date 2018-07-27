@@ -10,9 +10,9 @@
 inline vector<int> multPolyMod(const vector<int>& left, const vector<int>& right, int MOD) {
     vector<int> res(left.size() + right.size() - 1);
 
-    for (int i = 0; i < (int)right.size(); i++) {
-        for (int j = 0; j < (int)left.size(); j++) {
-            res[i + j] = (long long(res[i + j]) + long long(left[j]) * right[i]) % MOD;
+    for (int i = 0; i < int(right.size()); i++) {
+        for (int j = 0; j < int(left.size()); j++) {
+            res[i + j] = ((long long)(res[i + j]) + (long long)(left[j]) * right[i]) % MOD;
         }
     }
 
@@ -22,8 +22,8 @@ inline vector<int> multPolyMod(const vector<int>& left, const vector<int>& right
 // It's better performance than multPoly() when N >= 128
 // High order first
 inline vector<int> multPolyFFTMod(const vector<int>& left, const vector<int>& right, int MOD) {
-    int sizeL = (int)left.size();
-    int sizeR = (int)right.size();
+    int sizeL = int(left.size());
+    int sizeR = int(right.size());
     int sizeDst = sizeL + sizeR - 1;
 
     int size = 1;
@@ -87,11 +87,11 @@ inline vector<int> multPolyPolyMod(int left, int right, int MOD) {
     poly.push_back(vector<int>{ 1, left });
     for (int i = left + 1; i <= right; i++) {
         int j = 0;
-        while (j < (int)poly.size() && !(poly[j].size() & (poly[j].size() - 1)))
+        while (j < int(poly.size()) && !(poly[j].size() & (poly[j].size() - 1)))
             j++;
 
         // make the number of polynomial terms 2^n
-        if (j >= (int)poly.size())
+        if (j >= int(poly.size()))
             poly.push_back(vector<int>{ 1, i });
         else
             poly[j] = multPolyMod(poly[j], vector<int>{ 1, i }, MOD);
@@ -109,7 +109,7 @@ inline vector<int> multPolyPolyMod(int left, int right, int MOD) {
     }
 
     vector<int> res = poly.back();
-    for (int i = (int)poly.size() - 2; i >= 0; i--)
+    for (int i = int(poly.size()) - 2; i >= 0; i--)
         res = multPolyFFTMod(res, poly[i], MOD);
 
     return res;

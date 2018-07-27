@@ -24,14 +24,14 @@ struct LyndonFactorization {
     }
 
     static vector<string> factorize(const string& s) {
-        return factorize(&s[0], (int)s.length());
+        return factorize(&s[0], int(s.length()));
     }
 
 
     // min cyclic shift of a string
     static string minCyclicShift(string s) {
         s += s;
-        int n = (int)s.size();
+        int n = int(s.size());
 
         int i = 0, ans = 0;
         while (i < n / 2) {

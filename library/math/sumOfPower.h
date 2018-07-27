@@ -1,7 +1,7 @@
 #pragma once
 
 struct SumOfPowerMod {
-    static const int INF = (int)2e9;
+    static const int INF = int(2e9);
     static const int MOD = 1000000009;
     static const int MAXK = 1001;
 
@@ -38,7 +38,7 @@ struct SumOfPowerMod {
         }
         ans = ans * modInverse(k + 1) % MOD;
 
-        return (int)ans;
+        return int(ans);
     }
 
 private:

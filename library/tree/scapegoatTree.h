@@ -146,7 +146,7 @@ protected:
 
         Node* p = node->parent;
 
-        Node* subTree = buildBalanced(list, 0, (int)list.size() - 1);
+        Node* subTree = buildBalanced(list, 0, int(list.size()) - 1);
         if (!p || p == sentinel) {
             root = subTree;
             subTree->parent = sentinel;

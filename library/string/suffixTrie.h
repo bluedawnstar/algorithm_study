@@ -200,7 +200,7 @@ struct SuffixTrie {
     // prefix matching
     // return (prefix_matching_length, suffix_index)
     pair<int, int> search(const string& s) const {
-        return search(&s[0], (int)s.length());
+        return search(&s[0], int(s.length()));
     }
 
     // prefix matching

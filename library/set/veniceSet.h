@@ -24,6 +24,6 @@ struct VeniceSet {
     }
 
     int size() const {
-        return (int)S.size();
+        return int(S.size());
     }
 };

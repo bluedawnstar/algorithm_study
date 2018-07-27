@@ -18,11 +18,11 @@ using namespace std;
 
     vector<int> boundary = doGrahamScan(newP);
     map<int, int> revI;
-    for (int i = 0; i < (int)boundary.size(); i++) {
+    for (int i = 0; i < int(boundary.size()); i++) {
         revI[boundary[i]] = i;
     }
 
-    int boundaryN = (int)boundary.size();
+    int boundaryN = int(boundary.size());
 
     // ... (u, v) ...
 
@@ -72,7 +72,7 @@ using namespace std;
 #include "../common/rand.h"
 
 static void makeData(vector<Vec2D<int>>& points, int size) {
-    if ((int)points.size() < size)
+    if (int(points.size()) < size)
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
@@ -83,7 +83,7 @@ static void makeData(vector<Vec2D<int>>& points, int size) {
 }
 
 static void makeData(vector<Vec2D<int>>& points, int size, int R) {
-    if ((int)points.size() < size)
+    if (int(points.size()) < size)
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
@@ -97,7 +97,7 @@ static bool compare(vector<Vec2D<int>>& A, vector<Vec2D<int>>& B) {
     if (A.size() != B.size())
         return false;
 
-    for (int i = 0; i < (int)A.size(); i++) {
+    for (int i = 0; i < int(A.size()); i++) {
         if (!(A[i] == B[i]))
             return false;
     }

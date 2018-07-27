@@ -35,7 +35,7 @@ void testLcpArraySparseTable() {
             // if left == right, lcp() will return INT_MAX
             int lcp = lcpArrayST.lcp(left, right);
             if (lcp == INT_MAX)
-                lcp = (int)S.length() - a[left];
+                lcp = int(S.length()) - a[left];
 
             cout << "LCP(" << left << ", " << right << ") = " << lcp << endl;
             assert(lcp == SuffixArrayAlgo::commonPrefixNaive(S, a[left], a[right]));

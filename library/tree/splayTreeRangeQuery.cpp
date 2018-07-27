@@ -22,15 +22,15 @@ using namespace std;
 #include "../rangeQuery/segmentTreeLazy.h"
 
 static void checkSearch(RBTree<int>& rbt, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(rbt.find(x)->value == x);
     }
 }
 
 static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
-    assert(rbt.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(rbt.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(rbt[i]->value == in[i]);
         assert(rbt.indexOf(rbt[i]) == i);
     }
@@ -38,7 +38,7 @@ static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
 
 template <typename T, typename MergeOp, typename BlockOp>
 static void checkSearch(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(spt.find(x)->value == x);
     }
@@ -47,8 +47,8 @@ static void checkSearch(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<in
 template <typename T, typename MergeOp, typename BlockOp>
 static void checkIndex(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int>& in) {
     assert((spt.tree != nullptr ? spt.tree->cnt : 0) == spt.size());
-    assert(spt.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(spt.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(spt[i]->value == in[i]);
         assert(spt.indexOf(spt[i]) == i);
     }
@@ -69,7 +69,7 @@ void testSplayRangeQuery() {
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p1 = rbt.insert(t[i]);
                 if (!p1.second)
                     cerr << "It'll never be shown!" << endl;
@@ -98,7 +98,7 @@ void testSplayRangeQuery() {
                 if (!b1)
                     cerr << "It'll never be shown!" << endl;
                 assert(b1);
-                assert(rbt.size() == (int)t.size());
+                assert(rbt.size() == int(t.size()));
                 checkSearch(rbt, org);
                 checkIndex(rbt, org);
 
@@ -106,7 +106,7 @@ void testSplayRangeQuery() {
                 if (!b2)
                     cerr << "It'll never be shown!" << endl;
                 assert(b2);
-                assert(spt.size() == (int)t.size());
+                assert(spt.size() == int(t.size()));
                 checkSearch(spt, org);
                 checkIndex(spt, org);
             }
@@ -220,7 +220,7 @@ void testSplayRangeQuery() {
                 break;
             case 1: // erase
                 if (!vec.empty()) {
-                    int idx = RandInt32::get() % (int)vec.size();
+                    int idx = RandInt32::get() % int(vec.size());
                     int x = vec[idx];
                     possible.push_back(x);
                     vec.erase(vec.begin() + idx);
@@ -237,15 +237,15 @@ void testSplayRangeQuery() {
                 break;
             case 2: // query
                 if (!vec.empty()) {
-                    int idx = RandInt32::get() % (int)vec.size();
+                    int idx = RandInt32::get() % int(vec.size());
                     assert(vec[idx] == spt.query(idx));
                     assert(accumulate(vec.begin(), vec.end(), 0) == spt.query(0, spt.size() - 1));
                 }
                 break;
             case 3: // query
                 if (!vec.empty()) {
-                    int left = RandInt32::get() % (int)vec.size();
-                    int right = RandInt32::get() % (int)vec.size();;
+                    int left = RandInt32::get() % int(vec.size());
+                    int right = RandInt32::get() % int(vec.size());;
                     if (left > right)
                         swap(left, right);
 
@@ -297,7 +297,7 @@ void testSplayRangeQuery() {
         }
 
         PROFILE_START(0);
-        for (int i = 0; i < (int)in.size(); i++) {
+        for (int i = 0; i < int(in.size()); i++) {
             if (!get<0>(in[i])) {
                 segt.updateRange(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
                 if (segt.N <= 0)
@@ -310,7 +310,7 @@ void testSplayRangeQuery() {
         PROFILE_STOP(0);
 
         PROFILE_START(1);
-        for (int i = 0; i < (int)in.size(); i++) {
+        for (int i = 0; i < int(in.size()); i++) {
             if (!get<0>(in[i])) {
                 spt.update(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
                 if (spt.count <= 0)

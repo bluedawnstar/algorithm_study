@@ -5,7 +5,7 @@
 
 // including empty subsequence, O(N)
 inline int countDistinctSubsequence(const string& s) {
-    int n = (int)s.length();
+    int n = int(s.length());
     if (n == 0)
         return 0;
 
@@ -30,8 +30,8 @@ inline int countSubsequence(const string& s, const string& t) {
     if (s.empty() || t.empty())
         return 0;
 
-    int n = (int)s.length();
-    int m = (int)t.length();
+    int n = int(s.length());
+    int m = int(t.length());
 
     vector<vector<int>> dp(n + 1, vector<int>(m + 1));
 
@@ -55,8 +55,8 @@ inline int countSubsequence(const string& s, const string& t) {
 
 // not LCS
 inline int countOfCommonSubsequence(const string& s1, const string& s2) {
-    int n = (int)s1.length();
-    int m = (int)s2.length();
+    int n = int(s1.length());
+    int m = int(s2.length());
 
     vector<vector<int>> dp(n + 1, vector<int>(m + 1));
 

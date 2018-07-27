@@ -18,7 +18,7 @@ struct RTree {
     }
 
     void build(const vector<Rect>& rects) {
-        N = (int)rects.size();
+        N = int(rects.size());
         this->rects = rects;
         bounds.assign(N, Rect{ INF, INF, -INF, -INF });
         build(0, N, true, this->rects);

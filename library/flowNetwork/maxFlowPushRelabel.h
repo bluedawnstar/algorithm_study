@@ -37,8 +37,8 @@ struct MaxFlowPushRelabel {
 
     // add edges to a directed graph
     void addEdge(int u, int v, T capacity, T capacityRev) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, 0, capacity });
         edges[v].push_back(Edge{ u, uN, 0, capacityRev });
     }

@@ -1,7 +1,7 @@
 #pragma once
 
 inline int countPalindromicSubsequence(string s) {
-    int N = (int)s.length();
+    int N = int(s.length());
     vector<vector<int>> dp(N, vector<int>(N));
 
     for (int i = 0; i < N; i++)
@@ -23,7 +23,7 @@ inline int countPalindromicSubsequence(string s) {
 }
 
 inline int lengthOfLongestPalindromicSubsequence(string s) {
-    int N = (int)s.length();
+    int N = int(s.length());
     vector<vector<int>> dp(N, vector<int>(N));
 
     for (int i = 0; i < N; i++)
@@ -45,7 +45,7 @@ inline int lengthOfLongestPalindromicSubsequence(string s) {
 }
 
 inline string longestPalindromicSubsequence(string s) {
-    int N = (int)s.length();
+    int N = int(s.length());
     vector<vector<int>> dp(N, vector<int>(N));
 
     for (int i = 0; i < N; i++)
@@ -80,7 +80,7 @@ inline string longestPalindromicSubsequence(string s) {
             j--;
     }
 
-    int half = (int)res.length();
+    int half = int(res.length());
 
     if ((len & 1) != 0)
         res.append(1, s[i]);

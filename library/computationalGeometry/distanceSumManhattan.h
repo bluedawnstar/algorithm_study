@@ -2,7 +2,7 @@
 
 // Manhattan distance = |x2 - x1 + |y2 - y1|
 template <typename T = int, typename SumT = long long>
-struct HanhattanDistanceSum {
+struct ManhattanDistanceSum {
     int N;
     vector<T> X;
     vector<T> Y;
@@ -10,7 +10,7 @@ struct HanhattanDistanceSum {
     vector<SumT> sumY;
 
     void build(const vector<pair<T, T>>& points) {
-        N = (int)points.size();
+        N = int(points.size());
 
         X = vector<T>(N);
         Y = vector<T>(N);
@@ -30,8 +30,8 @@ struct HanhattanDistanceSum {
     }
 
     SumT query(T x, T y) const {
-        int cntDownX = lower_bound(X.begin(), X.end(), x) - X.begin();
-        int cntDownY = lower_bound(Y.begin(), Y.end(), y) - Y.begin();
+        int cntDownX = int(lower_bound(X.begin(), X.end(), x) - X.begin());
+        int cntDownY = int(lower_bound(Y.begin(), Y.end(), y) - Y.begin());
 
         SumT res = 0;
         res += SumT(cntDownX * 2 - N) * x + sumX[N] - sumX[cntDownX] * 2;

@@ -67,7 +67,7 @@ struct DisjointSparseTable {
     }
 
     void build(const vector<T>& a) {
-        build(&a[0], (int)a.size());
+        build(&a[0], int(a.size()));
     }
 
 

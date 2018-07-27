@@ -27,8 +27,8 @@ static vector<pair<long long, long long>> findClosestPairSlow(const vector<pair<
     long long minDist = 0x3f3f3f3f3f3f3f3fll;
 
     vector<pair<long long, long long>> res(2);
-    for (int i = 0; i < (int)points.size(); i++) {
-        for (int j = i + 1; j < (int)points.size(); j++) {
+    for (int i = 0; i < int(points.size()); i++) {
+        for (int j = i + 1; j < int(points.size()); j++) {
             auto d = distL2(points[i], points[j]);
             if (minDist > d) {
                 minDist = d;

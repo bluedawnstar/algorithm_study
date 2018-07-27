@@ -63,7 +63,7 @@ void testTreeMO() {
         treeMO.add(i);
 
     vector<int> ans(Q.size());
-    for (int i = 0; i < (int)Q.size(); i++) {
+    for (int i = 0; i < int(Q.size()); i++) {
         int nextL = get<0>(treeMO.MO[i]);
         int nextR = get<1>(treeMO.MO[i]);
         int qi = get<2>(treeMO.MO[i]);
@@ -89,7 +89,7 @@ void testTreeMO() {
         ans[qi] = curAns + addLca;
     }
 
-    for (int i = 0; i < (int)Q.size(); i++) {
+    for (int i = 0; i < int(Q.size()); i++) {
         cout << ans[i] << endl;
     }
 }

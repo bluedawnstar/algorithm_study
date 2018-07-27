@@ -37,7 +37,7 @@ struct GraphColoring {
         for (int i = 0; i < N; i++) {
             int u;
             while (true) {
-                u = -(int)Q.top();
+                u = -int(Q.top());
                 Q.pop();
 
                 if (colors[u] == -1)

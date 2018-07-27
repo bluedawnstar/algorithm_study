@@ -4,7 +4,7 @@
 struct BitSet {
     static int clz(unsigned x) {
 #ifndef __GNUC__
-        return (int)__lzcnt(x);
+        return int(__lzcnt(x));
 #else
         return __builtin_clz(x);
 #endif
@@ -12,7 +12,7 @@ struct BitSet {
 
     static int popCount(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
@@ -27,7 +27,7 @@ struct BitSet {
     }
 
     static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = (unsigned)-1;
+    static const unsigned BIT_ALL = unsigned(-1);
     static const unsigned BIT_ONE = 1u;
 
     static const int INDEX_MASK = 0x1F;
@@ -314,7 +314,7 @@ struct BitSet {
         int d = n >> INDEX_SHIFT;
         int r = n & INDEX_MASK;
 
-        int VN = (int)mV.size();
+        int VN = int(mV.size());
 
         if (r == 0) {
             int t = 0;
@@ -347,15 +347,15 @@ struct BitSet {
 
     int recalcCount() {
         mBitCnt = 0;
-        for (int i = 0; i < (int)mV.size(); i++)
+        for (int i = 0; i < int(mV.size()); i++)
             mBitCnt += popCount(mV[i]);
         return mBitCnt;
     }
 
     int firstClearBit() const {
-        for (int i = 0; i < (int)mV.size(); i++) {
+        for (int i = 0; i < int(mV.size()); i++) {
             if (mV[i] != BIT_ALL) {
-                int m = (int)~mV[i];
+                int m = int(~mV[i]);
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -363,9 +363,9 @@ struct BitSet {
     }
 
     int first() const {
-        for (int i = 0; i < (int)mV.size(); i++) {
+        for (int i = 0; i < int(mV.size()); i++) {
             if (mV[i]) {
-                int m = (int)mV[i];
+                int m = int(mV[i]);
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -373,7 +373,7 @@ struct BitSet {
     }
 
     int last() const {
-        for (int i = (int)mV.size() - 1; i >= 0; i--) {
+        for (int i = int(mV.size()) - 1; i >= 0; i--) {
             if (mV[i])
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(mV[i]) - 1;
         }
@@ -388,13 +388,13 @@ struct BitSet {
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)mV[index] & (BIT_ALL << offset);
+        int m = int(mV[index]) & (BIT_ALL << offset);
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
 
-        for (int i = index + 1; i < (int)mV.size(); i++) {
+        for (int i = index + 1; i < int(mV.size()); i++) {
             if (mV[i]) {
-                m = (int)mV[i];
+                m = int(mV[i]);
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -410,7 +410,7 @@ struct BitSet {
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)mV[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
+        int m = int(mV[index]) & (BIT_ALL >> (BIT_SIZE - 1 - offset));
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
 

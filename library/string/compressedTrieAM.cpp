@@ -57,73 +57,73 @@ void testCompressedTrieAM() {
 
         const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
         for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
-            compTrie.insert(keys[i], strlen(keys[i]));
+            compTrie.insert(keys[i], int(strlen(keys[i])));
 
-        auto* x = compTrie.find("the", strlen("the"));
-        assert(compTrie.find("the", strlen("the"))->leafCount == 1);
-        assert(compTrie.find("these", strlen("these")) == nullptr);
-        x = compTrie.find("their", strlen("their"));
-        assert(compTrie.find("their", strlen("their"))->leafCount == 1);
-        assert(compTrie.find("thaw", strlen("thaw")) == nullptr);
+        auto* x = compTrie.find("the", int(strlen("the")));
+        assert(compTrie.find("the", int(strlen("the")))->leafCount == 1);
+        assert(compTrie.find("these", int(strlen("these"))) == nullptr);
+        x = compTrie.find("their", int(strlen("their")));
+        assert(compTrie.find("their", int(strlen("their")))->leafCount == 1);
+        assert(compTrie.find("thaw", int(strlen("thaw"))) == nullptr);
 
-        compTrie.insert("the", strlen("the"));
-        compTrie.insert("these", strlen("these"));
-        compTrie.insert("their", strlen("their"));
-        compTrie.insert("thaw", strlen("thaw"));
+        compTrie.insert("the", int(strlen("the")));
+        compTrie.insert("these", int(strlen("these")));
+        compTrie.insert("their", int(strlen("their")));
+        compTrie.insert("thaw", int(strlen("thaw")));
 
-        assert(compTrie.find("th", strlen("th")) == nullptr);
-        assert(compTrie.find("the", strlen("the"))->leafCount == 2);
-        assert(compTrie.find("these", strlen("these"))->leafCount == 1);
-        assert(compTrie.find("their", strlen("their"))->leafCount == 2);
-        assert(compTrie.find("thaw", strlen("thaw"))->leafCount == 1);
+        assert(compTrie.find("th", int(strlen("th"))) == nullptr);
+        assert(compTrie.find("the", int(strlen("the")))->leafCount == 2);
+        assert(compTrie.find("these", int(strlen("these")))->leafCount == 1);
+        assert(compTrie.find("their", int(strlen("their")))->leafCount == 2);
+        assert(compTrie.find("thaw", int(strlen("thaw")))->leafCount == 1);
 
         //cout << "*** after insertion ***" << endl;
         //dump(&compTrie.mRoot, 0);
 
-        compTrie.remove("the", strlen("the"));
-        compTrie.remove("these", strlen("these"));
-        compTrie.remove("their", strlen("their"));
-        compTrie.remove("thaw", strlen("thaw"));
+        compTrie.remove("the", int(strlen("the")));
+        compTrie.remove("these", int(strlen("these")));
+        compTrie.remove("their", int(strlen("their")));
+        compTrie.remove("thaw", int(strlen("thaw")));
 
-        assert(compTrie.find("the", strlen("the"))->leafCount == 1);
-        assert(compTrie.find("these", strlen("these")) == nullptr);
-        assert(compTrie.find("their", strlen("their"))->leafCount == 1);
-        assert(compTrie.find("thaw", strlen("thaw")) == nullptr);
+        assert(compTrie.find("the", int(strlen("the")))->leafCount == 1);
+        assert(compTrie.find("these", int(strlen("these"))) == nullptr);
+        assert(compTrie.find("their", int(strlen("their")))->leafCount == 1);
+        assert(compTrie.find("thaw", int(strlen("thaw"))) == nullptr);
 
         //cout << "*** after removal ***" << endl;
         //dump(&compTrie.mRoot, 0);
 
-        compTrie.insert("the", strlen("the"));
-        compTrie.insert("these", strlen("these"));
-        compTrie.insert("their", strlen("their"));
-        compTrie.insert("thaw", strlen("thaw"));
+        compTrie.insert("the", int(strlen("the")));
+        compTrie.insert("these", int(strlen("these")));
+        compTrie.insert("their", int(strlen("their")));
+        compTrie.insert("thaw", int(strlen("thaw")));
 
-        assert(compTrie.find("the", strlen("the"))->leafCount == 2);
-        assert(compTrie.find("these", strlen("these"))->leafCount == 1);
-        assert(compTrie.find("their", strlen("their"))->leafCount == 2);
-        assert(compTrie.find("thaw", strlen("thaw"))->leafCount == 1);
+        assert(compTrie.find("the", int(strlen("the")))->leafCount == 2);
+        assert(compTrie.find("these", int(strlen("these")))->leafCount == 1);
+        assert(compTrie.find("their", int(strlen("their")))->leafCount == 2);
+        assert(compTrie.find("thaw", int(strlen("thaw")))->leafCount == 1);
 
         //cout << "*** after insertion ***" << endl;
         //dump(&compTrie.mRoot, 0);
 
-        compTrie.erase("the", strlen("the"));
-        compTrie.erase("these", strlen("these"));
-        compTrie.erase("their", strlen("their"));
-        compTrie.erase("thaw", strlen("thaw"));
+        compTrie.erase("the", int(strlen("the")));
+        compTrie.erase("these", int(strlen("these")));
+        compTrie.erase("their", int(strlen("their")));
+        compTrie.erase("thaw", int(strlen("thaw")));
 
-        compTrie.erase("any", strlen("any"));
+        compTrie.erase("any", int(strlen("any")));
 
-        assert(compTrie.find("the", strlen("the"))->leafCount == 1);
-        assert(compTrie.find("these", strlen("these")) == nullptr);
-        assert(compTrie.find("their", strlen("their"))->leafCount == 1);
-        assert(compTrie.find("thaw", strlen("thaw")) == nullptr);
-        assert(compTrie.find("any", strlen("any")) == nullptr);
+        assert(compTrie.find("the", int(strlen("the")))->leafCount == 1);
+        assert(compTrie.find("these", int(strlen("these"))) == nullptr);
+        assert(compTrie.find("their", int(strlen("their")))->leafCount == 1);
+        assert(compTrie.find("thaw", int(strlen("thaw"))) == nullptr);
+        assert(compTrie.find("any", int(strlen("any"))) == nullptr);
 
-        assert(compTrie.search("t", strlen("t")) == make_pair(1, false));
-        assert(compTrie.search("th", strlen("th")) == make_pair(2, false));
-        assert(compTrie.search("the", strlen("the")) == make_pair(3, true));
-        assert(compTrie.search("thei", strlen("thei")) == make_pair(4, false));
-        assert(compTrie.search("their", strlen("their")) == make_pair(5, true));
+        assert(compTrie.search("t", int(strlen("t"))) == make_pair(1, false));
+        assert(compTrie.search("th", int(strlen("th"))) == make_pair(2, false));
+        assert(compTrie.search("the", int(strlen("the"))) == make_pair(3, true));
+        assert(compTrie.search("thei", int(strlen("thei"))) == make_pair(4, false));
+        assert(compTrie.search("their", int(strlen("their"))) == make_pair(5, true));
 
         //cout << "*** after deletion ***" << endl;
         //dump(&compTrie.mRoot, 0);

@@ -41,7 +41,7 @@ struct BlockTreeSubtreeSum {
         N = _n;
         sqrtN = _sqrtN;
         if (sqrtN <= 0)
-            sqrtN = (int)sqrt(N);
+            sqrtN = int(sqrt(N));
 
         edges = vector<vector<int>>(N);
         parent.assign(N, -1);
@@ -322,11 +322,11 @@ protected:
         for (auto p : nodes.back()) {
             for (auto v : edges[p]) {
                 if (v != parent[p])
-                    dfsBuild(v, p, depth + (int)nodes.size());
+                    dfsBuild(v, p, depth + int(nodes.size()));
             }
         }
 
-        for (int i = (int)nodes.size() - 1; i > 0; i--) {
+        for (int i = int(nodes.size()) - 1; i > 0; i--) {
             for (auto v : nodes[i]) {
                 auto p = parent[v];
                 treeSizeInBlock[p] += treeSizeInBlock[v];

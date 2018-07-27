@@ -107,7 +107,7 @@ private:
                 visTime[it.u].first = currTime;
                 time2Node[currTime++] = it.u;
             }
-            if (it.vi >= (int)edges[it.u].size()) {
+            if (it.vi >= int(edges[it.u].size())) {
                 // leave ...
                 visTime[it.u].second = currTime;
                 time2Node[currTime++] = it.u;

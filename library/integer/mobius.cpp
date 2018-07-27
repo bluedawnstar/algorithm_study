@@ -43,7 +43,7 @@ void testMobius() {
             assert(sf[i] == (b != 0));
         }
 
-        int sfCnt = count(sf.begin(), sf.end(), true);
+        int sfCnt = int(count(sf.begin(), sf.end(), true));
         assert(sfCnt == countSquareFree(N));
     }
     {
@@ -62,7 +62,7 @@ void testMobius() {
             if (!sf[i])
                 continue;
 
-            int nth = (int)sfNumber.size();
+            int nth = int(sfNumber.size());
             sfNumber.push_back(i);
             assert(nthSquareFree(nth, mu) == i);
         }

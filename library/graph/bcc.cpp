@@ -41,10 +41,10 @@ void testBCC() {
     link(edges, 0, 3);
     link(edges, 0, 4);
     link(edges, 3, 4);
-    bcc.findBCC(edges, (int)edges.size());
+    bcc.findBCC(edges, int(edges.size()));
 
-    assert((int)bcc.comps.size() == 2);
-    for (int i = 0; i < (int)bcc.comps.size(); i++)
+    assert(int(bcc.comps.size()) == 2);
+    for (int i = 0; i < int(bcc.comps.size()); i++)
         sort(bcc.comps[i].begin(), bcc.comps[i].end());
     assert(bcc.comps[0] == vector<int>({0, 1, 2}));
     assert(bcc.comps[1] == vector<int>({0, 3, 4}));
@@ -54,10 +54,10 @@ void testBCC() {
     edges = vector<vector<int>>(3, vector<int>());
     link(edges, 0, 1);
     link(edges, 0, 2);
-    bcc.findBCC(edges, (int)edges.size());
+    bcc.findBCC(edges, int(edges.size()));
 
-    assert((int)bcc.comps.size() == 2);
-    for (int i = 0; i < (int)bcc.comps.size(); i++)
+    assert(int(bcc.comps.size()) == 2);
+    for (int i = 0; i < int(bcc.comps.size()); i++)
         sort(bcc.comps[i].begin(), bcc.comps[i].end());
     assert(bcc.comps[0] == vector<int>({ 0, 1 }));
     assert(bcc.comps[1] == vector<int>({ 0, 2 }));
@@ -71,10 +71,10 @@ void testBCC() {
     link(edges, 2, 3);
     link(edges, 2, 4);
     link(edges, 3, 5);
-    bcc.findBCC(edges, (int)edges.size());
+    bcc.findBCC(edges, int(edges.size()));
 
-    assert((int)bcc.comps.size() == 4);
-    for (int i = 0; i < (int)bcc.comps.size(); i++)
+    assert(int(bcc.comps.size()) == 4);
+    for (int i = 0; i < int(bcc.comps.size()); i++)
         sort(bcc.comps[i].begin(), bcc.comps[i].end());
     assert(bcc.comps[0] == vector<int>({ 3, 5 }));
     assert(bcc.comps[1] == vector<int>({ 2, 4 }));
@@ -92,10 +92,10 @@ void testBCC() {
     link(edges, 3, 5);
     link(edges, 4, 5);
     link(edges, 5, 6);
-    bcc.findBCC(edges, (int)edges.size());
+    bcc.findBCC(edges, int(edges.size()));
 
-    assert((int)bcc.comps.size() == 4);
-    for (int i = 0; i < (int)bcc.comps.size(); i++)
+    assert(int(bcc.comps.size()) == 4);
+    for (int i = 0; i < int(bcc.comps.size()); i++)
         sort(bcc.comps[i].begin(), bcc.comps[i].end());
     assert(bcc.comps[0] == vector<int>({ 5, 6 }));
     assert(bcc.comps[1] == vector<int>({ 3, 4, 5 }));

@@ -25,11 +25,11 @@ struct WaveletMatrixArray {
 
 
     void build(const vector<T>& in) {
-        build(&in[0], (int)in.size(), (in.empty()) ? 0 : *max_element(in.begin(), in.end()));
+        build(&in[0], int(in.size()), (in.empty()) ? 0 : *max_element(in.begin(), in.end()));
     }
 
     void build(const vector<T>& in, int maxVal) {
-        build(&in[0], (int)in.size(), maxVal);
+        build(&in[0], int(in.size()), maxVal);
     }
 
     void build(const T* first, int n) {

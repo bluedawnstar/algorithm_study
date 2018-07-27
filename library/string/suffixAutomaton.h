@@ -70,7 +70,7 @@ struct SuffixAutomaton {
     }
 
     void extend(const string& s) {
-        for (int i = 0; i < (int)s.length(); i++)
+        for (int i = 0; i < int(s.length()); i++)
             extend(s[i]);
     }
 

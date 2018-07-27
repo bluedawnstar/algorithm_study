@@ -26,7 +26,7 @@ struct MinFactors {
                 minFactors[j] = 2;
         }
 
-        int root = (int)sqrt(n);
+        int root = int(sqrt(n));
         for (int i = 3; i <= root; i += 2) {
             if (minFactors[i] == i) {
                 for (int j = i * i; j >= 0 && j <= n; j += i) {
@@ -54,7 +54,7 @@ struct MinFactors {
     // O(N) (the time complexity to get min prime factors is not included)
     // return : factorCount - the number of factors of each number from 0 to n
     vector<int> getAllFactorCount() const {
-        int n = (int)minFactors.size();
+        int n = int(minFactors.size());
 
         vector<int> minFactorPower(n);
         vector<int> factorCount(n);
@@ -192,8 +192,8 @@ struct PrimeFactors {
             res.push_back(xpow);
             xpow *= x;
         }
-        for (int i = 1; i < (int)primeFactors.size(); i++) {
-            int prevN = (int)res.size();
+        for (int i = 1; i < int(primeFactors.size()); i++) {
+            int prevN = int(res.size());
 
             x = primeFactors[i].first;
             n = primeFactors[i].second;

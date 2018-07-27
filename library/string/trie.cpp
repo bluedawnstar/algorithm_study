@@ -28,58 +28,58 @@ void testTrie() {
 
     const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
     for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
-        trie.insert(keys[i], strlen(keys[i]));
+        trie.insert(keys[i], int(strlen(keys[i])));
 
-    assert(trie.find("the", strlen("the"))->leafCount == 1);
-    assert(trie.find("these", strlen("these")) == nullptr);
-    assert(trie.find("their", strlen("their"))->leafCount == 1);
-    assert(trie.find("thaw", strlen("thaw")) == nullptr);
+    assert(trie.find("the", int(strlen("the")))->leafCount == 1);
+    assert(trie.find("these", int(strlen("these"))) == nullptr);
+    assert(trie.find("their", int(strlen("their")))->leafCount == 1);
+    assert(trie.find("thaw", int(strlen("thaw"))) == nullptr);
 
-    trie.insert("the", strlen("the"));
-    trie.insert("these", strlen("these"));
-    trie.insert("their", strlen("their"));
-    trie.insert("thaw", strlen("thaw"));
+    trie.insert("the", int(strlen("the")));
+    trie.insert("these", int(strlen("these")));
+    trie.insert("their", int(strlen("their")));
+    trie.insert("thaw", int(strlen("thaw")));
 
-    assert(trie.find("the", strlen("the"))->leafCount == 2);
-    assert(trie.find("these", strlen("these"))->leafCount == 1);
-    assert(trie.find("their", strlen("their"))->leafCount == 2);
-    assert(trie.find("thaw", strlen("thaw"))->leafCount == 1);
+    assert(trie.find("the", int(strlen("the")))->leafCount == 2);
+    assert(trie.find("these", int(strlen("these")))->leafCount == 1);
+    assert(trie.find("their", int(strlen("their")))->leafCount == 2);
+    assert(trie.find("thaw", int(strlen("thaw")))->leafCount == 1);
 
-    trie.remove("the", strlen("the"));
-    trie.remove("these", strlen("these"));
-    trie.remove("their", strlen("their"));
-    trie.remove("thaw", strlen("thaw"));
+    trie.remove("the", int(strlen("the")));
+    trie.remove("these", int(strlen("these")));
+    trie.remove("their", int(strlen("their")));
+    trie.remove("thaw", int(strlen("thaw")));
 
-    assert(trie.find("the", strlen("the"))->leafCount == 1);
-    assert(trie.find("these", strlen("these")) == nullptr);
-    assert(trie.find("their", strlen("their"))->leafCount == 1);
-    assert(trie.find("thaw", strlen("thaw")) == nullptr);
+    assert(trie.find("the", int(strlen("the")))->leafCount == 1);
+    assert(trie.find("these", int(strlen("these"))) == nullptr);
+    assert(trie.find("their", int(strlen("their")))->leafCount == 1);
+    assert(trie.find("thaw", int(strlen("thaw"))) == nullptr);
 
-    trie.insert("the", strlen("the"));
-    trie.insert("these", strlen("these"));
-    trie.insert("their", strlen("their"));
-    trie.insert("thaw", strlen("thaw"));
+    trie.insert("the", int(strlen("the")));
+    trie.insert("these", int(strlen("these")));
+    trie.insert("their", int(strlen("their")));
+    trie.insert("thaw", int(strlen("thaw")));
 
-    assert(trie.find("the", strlen("the"))->leafCount == 2);
-    assert(trie.find("these", strlen("these"))->leafCount == 1);
-    assert(trie.find("their", strlen("their"))->leafCount == 2);
-    assert(trie.find("thaw", strlen("thaw"))->leafCount == 1);
+    assert(trie.find("the", int(strlen("the")))->leafCount == 2);
+    assert(trie.find("these", int(strlen("these")))->leafCount == 1);
+    assert(trie.find("their", int(strlen("their")))->leafCount == 2);
+    assert(trie.find("thaw", int(strlen("thaw")))->leafCount == 1);
 
-    trie.erase("the", strlen("the"));
-    trie.erase("these", strlen("these"));
-    trie.erase("their", strlen("their"));
-    trie.erase("thaw", strlen("thaw"));
+    trie.erase("the", int(strlen("the")));
+    trie.erase("these", int(strlen("these")));
+    trie.erase("their", int(strlen("their")));
+    trie.erase("thaw", int(strlen("thaw")));
 
-    assert(trie.find("the", strlen("the"))->leafCount == 1);
-    assert(trie.find("these", strlen("these")) == nullptr);
-    assert(trie.find("their", strlen("their"))->leafCount == 1);
-    assert(trie.find("thaw", strlen("thaw")) == nullptr);
+    assert(trie.find("the", int(strlen("the")))->leafCount == 1);
+    assert(trie.find("these", int(strlen("these"))) == nullptr);
+    assert(trie.find("their", int(strlen("their")))->leafCount == 1);
+    assert(trie.find("thaw", int(strlen("thaw"))) == nullptr);
 
-    assert(trie.search("t", strlen("t")) == make_pair(1, false));
-    assert(trie.search("th", strlen("th")) == make_pair(2, false));
-    assert(trie.search("the", strlen("the")) == make_pair(3, true));
-    assert(trie.search("thei", strlen("thei")) == make_pair(4, false));
-    assert(trie.search("their", strlen("their")) == make_pair(5, true));
+    assert(trie.search("t", int(strlen("t"))) == make_pair(1, false));
+    assert(trie.search("th", int(strlen("th"))) == make_pair(2, false));
+    assert(trie.search("the", int(strlen("the"))) == make_pair(3, true));
+    assert(trie.search("thei", int(strlen("thei"))) == make_pair(4, false));
+    assert(trie.search("their", int(strlen("their"))) == make_pair(5, true));
 
     cout << "OK!" << endl;
 }

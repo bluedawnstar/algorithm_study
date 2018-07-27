@@ -51,7 +51,7 @@ struct SparseTableOnTree {
         // sparse table
         H.resize(N + 1);
         H[1] = 0;
-        for (int i = 2; i < (int)H.size(); i++)
+        for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
         value.resize(H.back() + 1, vector<T>(N, defaultValue));
@@ -88,7 +88,7 @@ struct SparseTableOnTree {
     }
 
     void build(const vector<T>& val, int root) {
-        build(&val[0], (int)val.size(), root);
+        build(&val[0], int(val.size()), root);
     }
 
     //--- query (LCA)
@@ -162,7 +162,7 @@ private:
         P[0][u] = parent;
 
         {
-            int i = (int)ancestors.size();
+            int i = int(ancestors.size());
             int level = H[i + 1];
             for (int j = 0; j < level; j++)
                 value[j + 1][u] = mergeOp(value[j][ancestors[i - (1 << j)]], value[j][u]);
@@ -216,7 +216,7 @@ private:
         int length = vLevel - uLevel + 1;
         while (length) {
 #ifndef __GNUC__
-            int i = (int)_tzcnt_u32(length);
+            int i = int(_tzcnt_u32(length));
 #else
             int i = __builtin_ctz(length);
 #endif

@@ -82,9 +82,9 @@ void testBipartiteMaching() {
 
         assert(mvc.first.size() == mis.first.size());
         assert(mvc.second.size() == mis.second.size());
-        for (int i = 0; i < (int)mvc.first.size(); i++)
+        for (int i = 0; i < int(mvc.first.size()); i++)
             assert(mvc.first[i] != mis.first[i]);
-        for (int i = 0; i < (int)mvc.second.size(); i++)
+        for (int i = 0; i < int(mvc.second.size()); i++)
             assert(mvc.second[i] != mis.second[i]);
 
         cout << "max independent set : " << endl

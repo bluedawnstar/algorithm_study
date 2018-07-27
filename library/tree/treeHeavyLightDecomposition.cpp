@@ -107,7 +107,7 @@ void testHeavyLightDecomposition() {
 
         vector<int> rightAns{ 15, 7 };
         for (int i = 0; i < T; i++) {
-            Tree tree((int)TR[i].size(), LOGN);
+            Tree tree(int(TR[i].size()), LOGN);
             HeavyLightDecomposition hld(tree);
             auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
             auto pathQueryLazy = makeHLDPathQueryLazy(hld, [](int a, int b) { return max(a, b); }, [](int a, int n) { return a; }, -1);
@@ -132,7 +132,7 @@ void testHeavyLightDecomposition() {
 
             int Q;
 
-            Q = (int)QV[i].size();
+            Q = int(QV[i].size());
             for (int j = 0; j < Q; j++) {
                 string type;
                 int u, v, cost;

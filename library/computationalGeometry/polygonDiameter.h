@@ -7,7 +7,7 @@
 // Rotating Calipers : O(N)
 template <typename T>
 inline double calcPolygonDiameter(const vector<Vec2D<T>>& polygon) {
-    int N = (int)polygon.size();
+    int N = int(polygon.size());
 
     int left = int(min_element(polygon.begin(), polygon.end()) - polygon.begin());
     int right = int(max_element(polygon.begin(), polygon.end()) - polygon.begin());

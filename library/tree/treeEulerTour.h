@@ -27,7 +27,7 @@ struct EulerTourTree : public Tree {
         makeLcaTable();
 
         vector<int> lvl(euler.size());
-        for (int i = 0; i < (int)euler.size(); i++)
+        for (int i = 0; i < int(euler.size()); i++)
             lvl[i] = level[euler[i]];
         rmq.build(lvl);
     }
@@ -36,7 +36,7 @@ struct EulerTourTree : public Tree {
 
     void dfs(int u, int parent) {
         if (firstVisTime[u] < 0)
-            firstVisTime[u] = (int)euler.size();
+            firstVisTime[u] = int(euler.size());
 
         euler.push_back(u);
 

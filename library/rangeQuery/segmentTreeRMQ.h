@@ -48,7 +48,7 @@ struct RMQ {
     }
 
     void build(const vector<int>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
 

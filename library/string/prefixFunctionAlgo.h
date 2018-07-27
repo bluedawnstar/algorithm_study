@@ -4,7 +4,7 @@
 
 // return max overlapping length between a's suffix and b's prefix
 int maxOverlapLength(const string& a, const string& b) {
-    int n = (int)a.length(), m = (int)b.length();
+    int n = int(a.length()), m = int(b.length());
     PrefixFunction bPref(b);
 
     int j = 0;
@@ -20,7 +20,7 @@ int maxOverlapLength(const string& a, const string& b) {
 }
 
 int maxOverlapLength(const string& a, const PrefixFunction& b) {
-    int n = (int)a.length(), m = (int)b.p.length();
+    int n = int(a.length()), m = int(b.p.length());
 
     int j = 0;
     for (int i = 0; i < n; i++) {

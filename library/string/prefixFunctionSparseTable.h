@@ -61,8 +61,8 @@ struct PrefixFunctionSparseTable {
 
 private:
     void build(const PrefixFunction& pf) {
-        N = (int)pf.p.length();
-        logN = (int)log2(N) + 1;
+        N = int(pf.p.length());
+        logN = int(log2(N)) + 1;
 
         P = vector<vector<int>>(logN, vector<int>(N));
 

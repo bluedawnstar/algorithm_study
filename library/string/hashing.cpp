@@ -25,11 +25,11 @@ static string makeRandomString(int n) {
 
 static int countUniqueSubstrings(const string& s) {
     unordered_set<string> hs;
-    for (int i = 0; i < (int)s.length(); i++) {
-        for (int j = i; j < (int)s.length(); j++)
+    for (int i = 0; i < int(s.length()); i++) {
+        for (int j = i; j < int(s.length()); j++)
             hs.insert(s.substr(i, j - i + 1));
     }
-    return (int)hs.size();
+    return int(hs.size());
 }
 
 void testHashing() {
@@ -49,7 +49,7 @@ void testHashing() {
         s.erase(unique(s.begin(), s.end()), s.end());
 
         vector<unsigned long long> hashValue(s.size());
-        for (int i = 0; i < (int)s.size(); i++)
+        for (int i = 0; i < int(s.size()); i++)
             hashValue[i] = StringHash::hash(s[i]);
 
         auto cnt = hashValue.size();

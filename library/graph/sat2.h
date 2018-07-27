@@ -11,7 +11,7 @@
 //  3) if edge(X -> not X) and edge(not X -> X) exist, it is impossible.
 struct SAT2 {
     static int nodeIndex(int variableIndex, bool notVar) {
-        return (variableIndex << 1) + (int)notVar;
+        return (variableIndex << 1) + int(notVar);
     }
 
     // even index: X, odd index: not X
@@ -19,7 +19,7 @@ struct SAT2 {
         int N = variableN * 2;
 
         vector<vector<int>> edges(N);
-        for (int i = 0; i < (int)A.size(); i++) {
+        for (int i = 0; i < int(A.size()); i++) {
             edges[A[i] ^ 1].push_back(B[i]);
             edges[B[i] ^ 1].push_back(A[i]);
         }

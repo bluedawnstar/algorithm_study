@@ -10,7 +10,7 @@ struct OptimalKMeans1D {
     vector<double> S, SS;
 
     // PRECONDITION: A must be sorted by ascending order
-    OptimalKMeans1D(const vector<double>& A) : N((int)A.size()), S(N + 1), SS(N + 1) {
+    OptimalKMeans1D(const vector<double>& A) : N(int(A.size())), S(N + 1), SS(N + 1) {
         for (int i = 1; i <= N; i++) {
             S[i] = S[i - 1] + A[i - 1];
             SS[i] = SS[i - 1] + 1.0 * A[i - 1] * A[i - 1];
@@ -32,7 +32,7 @@ struct OptimalKMeans1D {
         res.reserve(dp.size() - 1);
 
         int last = N;
-        int i = (int)dp.size() - 1;
+        int i = int(dp.size()) - 1;
         while (last > 0) {
             res.emplace_back(groupStart[i][last], last - 1);
             last = groupStart[i--][last];

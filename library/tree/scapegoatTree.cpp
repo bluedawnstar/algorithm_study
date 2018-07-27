@@ -22,15 +22,15 @@ using namespace std;
 #include "../common/rand.h"
 
 static void checkSearch(ScapegoatTree<int>& tree, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(tree.find(x)->value == x);
     }
 }
 
 static void checkIndex(ScapegoatTree<int>& tree, vector<int>& in) {
-    assert(tree.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(tree.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(tree[i]->value == in[i]);
         assert(tree.indexOf(tree[i]) == i);
     }
@@ -51,7 +51,7 @@ void testScapegoatTree() {
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p = tree.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -96,7 +96,7 @@ void testScapegoatTree() {
                     cerr << "It'll never be shown!" << endl;
 
                 assert(b);
-                assert(tree.size() == (int)t.size());
+                assert(tree.size() == int(t.size()));
                 checkSearch(tree, org);
                 checkIndex(tree, org);
             }

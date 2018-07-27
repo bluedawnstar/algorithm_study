@@ -40,7 +40,7 @@ private:
             if (!visited[v]) {
                 dfs(edges, v);
             } else if (inStack[v]) {
-                for (int i = (int)stack.size() - 1; i >= 0; i--) {
+                for (int i = int(stack.size()) - 1; i >= 0; i--) {
                     if (stack[i] == v) {
                         if (cycleParent[v] < 0)
                             cycleParent[v] = v;

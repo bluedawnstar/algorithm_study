@@ -10,7 +10,7 @@ struct AllPairMaxProductSumOfSubarray {
     vector<long long> prefixSquareSum;
 
     void build(const vector<int>& A) {
-        N = (int)A.size();
+        N = int(A.size());
         this->A = A;
 
         prefixSum.resize(N + 1);

@@ -26,7 +26,7 @@ struct LcaSparseTableSimple {
 
     void init(int N) {
         mN = N;
-        mLogN = (int)log2(N) + 1;
+        mLogN = int(log2(N)) + 1;
         mP.resize(mLogN);
         for (int i = 0; i < mLogN; i++)
             mP[i].resize(mN);
@@ -34,7 +34,7 @@ struct LcaSparseTableSimple {
 
     // O(NlogN)
     void build(const vector<int>& A) {
-        init((int)A.size());
+        init(int(A.size()));
         copy(A.begin(), A.end(), mP[0].begin());
         build();
     }

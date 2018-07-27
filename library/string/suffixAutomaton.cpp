@@ -50,7 +50,7 @@ void testSuffixAutomation() {
     assert(saA.totalLengthOfAllDistinctSubstrings() == 30);
 
     //--- kthSubstring() ---
-    int cnt = (int)saA.countSubstrings();
+    int cnt = int(saA.countSubstrings());
     for (int i = 0; i < cnt; i++)
         cout << "kthSubstring(" << s << ", " << i << ") : " << saA.kthSubstring(i) << endl;
 

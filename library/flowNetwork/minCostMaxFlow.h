@@ -32,8 +32,8 @@ struct MinCostMaxFlow {
 
     // add edges to a directed graph
     void addEdge(int u, int v, T capacity, T cost) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, 0, cost, capacity });
         edges[v].push_back(Edge{ u, uN, 0, -cost, 0 });
     }
@@ -90,7 +90,8 @@ private:
             visited[u] = false;
         }
 
-        return cost[t] < 0;
+        //return cost[t] < 0;
+        return cost[t] < INF;
     }
 
     // update flow and return (flow, cost)

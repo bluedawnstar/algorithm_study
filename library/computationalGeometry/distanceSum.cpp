@@ -53,7 +53,7 @@ void testDistanceSum() {
         }
 
         ChebyshevDistanceSum<> chebyshev;
-        HanhattanDistanceSum<> manhattan;
+        ManhattanDistanceSum<> manhattan;
 
         chebyshev.build(points);
         manhattan.build(points);

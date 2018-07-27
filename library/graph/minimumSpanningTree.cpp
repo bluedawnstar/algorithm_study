@@ -32,7 +32,7 @@ static bool isEqual(vector<pair<int, int>>& v1, vector<pair<int, int>>& v2) {
 
 static vector<pair<int, int>> makeEdgeList(vector<int>& parent) {
     vector<pair<int, int>> res;
-    for (int i = 0; i < (int)parent.size(); i++)
+    for (int i = 0; i < int(parent.size()); i++)
         if (parent[i] >= 0)
             res.emplace_back(i, parent[i]);
     return res;

@@ -48,7 +48,7 @@ inline int mobius(int n) {
             return 0;
     }
 
-    int root = (int)sqrt(n);
+    int root = int(sqrt(n));
     for (int i = 3; i <= root; i += 2) {
         if (n % i == 0) {
             n /= i;
@@ -91,7 +91,7 @@ inline vector<int> mobiusSeive(int n) {
 // PRECONDITION: 1 <= left <= right
 // mobius function in [0, n], inclusive
 inline vector<int> mobiusSeive(int left, int right) {
-    int root = (int)sqrt(right);
+    int root = int(sqrt(right));
     vector<bool> primes = eratosthenes(root);
 
     vector<int> mu(right - left + 1, 1);
@@ -141,7 +141,7 @@ inline vector<bool> squareFree(int n) {
             res[j] = false;
     }
 
-    int root = (int)sqrt(n);
+    int root = int(sqrt(n));
     for (int i = 3; i <= root; i += 2) {
         if (res[i]) {
             int delta = i * i;
@@ -158,7 +158,7 @@ inline vector<bool> squareFree(int n) {
 inline int countSquareFree(int n, const vector<int>& mu) {
     int res = 0;
 
-    int root = (int)sqrt(n);
+    int root = int(sqrt(n));
     for (int i = 1; i <= root; i++)
         res += mu[i] * (n / (i * i));
 
@@ -180,7 +180,7 @@ inline int countSquareFree(int n, const vector<int>& mu) {
 inline int countSquareFree(int n) {
     int res = 0;
 
-    int root = (int)sqrt(n);
+    int root = int(sqrt(n));
     vector<int> mu = mobiusSeive(root);
     for (int i = 1; i <= root; i++)
         res += mu[i] * (n / (i * i));

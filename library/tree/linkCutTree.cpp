@@ -26,7 +26,7 @@ void checkSearch(RBTree<int>& rbt, vector<int>& in);
 void checkIndex(RBTree<int>& rbt, vector<int>& in);
 
 void checkIndex(LinkCutTreeArray<int>& in) {
-    for (int i = 0; i < (int)in.nodes.size(); i++) {
+    for (int i = 0; i < int(in.nodes.size()); i++) {
         assert(in.depth(i) == i);
     }
 }
@@ -39,25 +39,25 @@ static LinkCutTreeArray<int> makeLcaTree() {
     lct.link(2, 0);
 
     int i, p = 1;
-    for (i = 3; i < (int)lct.nodes.size() / 4; i++) {
+    for (i = 3; i < int(lct.nodes.size()) / 4; i++) {
         lct.link(i, p);
         p = i;
     }
 
     p = 1;
-    for (; i < (int)lct.nodes.size() * 2 / 4; i++) {
+    for (; i < int(lct.nodes.size()) * 2 / 4; i++) {
         lct.link(i, p);
         p = i;
     }
 
     p = 2;
-    for (; i < (int)lct.nodes.size() * 3 / 4; i++) {
+    for (; i < int(lct.nodes.size()) * 3 / 4; i++) {
         lct.link(i, p);
         p = i;
     }
 
     p = 2;
-    for (; i < (int)lct.nodes.size(); i++) {
+    for (; i < int(lct.nodes.size()); i++) {
         lct.link(i, p);
         p = i;
     }
@@ -74,7 +74,7 @@ void testLinkCutTree() {
     {
         LinkCutTreeArray<int> lct = makeLcaTree();
 
-        int N = (int)lct.nodes.size();
+        int N = int(lct.nodes.size());
 
         PROFILE_START(0);
         int errCnt = 0;

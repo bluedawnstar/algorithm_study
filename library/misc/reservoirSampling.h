@@ -22,6 +22,6 @@ struct ReservoirSampling {
     }
 
     static vector<T> select(const vector<T>& in, int k) {
-        return select(&in[0], (int)in.size(), k);
+        return select(&in[0], int(in.size()), k);
     }
 };

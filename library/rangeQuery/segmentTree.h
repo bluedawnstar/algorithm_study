@@ -92,7 +92,7 @@ struct SegmentTree {
     }
 
     T build(const vector<T>& v) {
-        return build(&v[0], (int)v.size());
+        return build(&v[0], int(v.size()));
     }
 
 

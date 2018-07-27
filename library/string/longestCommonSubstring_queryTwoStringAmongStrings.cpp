@@ -36,25 +36,25 @@ struct LongestCommonStringLengthWithSuffixArray {
     // 3) how to use suffix array, LCP array, sparse table, etc
     //      
     vector<int> solve(const vector<string>& strs, const vector<pair<int,int>>& query) {
-        mN = (int)strs.size();
-        mQ = (int)query.size();
+        mN = int(strs.size());
+        mQ = int(query.size());
 
         int totLen = 0;
         for (const string& s : strs)
-            totLen += (int)s.length();
+            totLen += int(s.length());
         mSuffixToStrID.resize(mN + totLen + 1);
 
         mS.clear();
         mSS.clear();
         mS.reserve(mN);
         for (int i = 0; i < mN; i++) {
-            mS.emplace_back(mSS.length(), mSS.length() + strs[i].length());
+            mS.emplace_back(int(mSS.length()), int(mSS.length() + strs[i].length()));
 
-            int len = (int)mSS.length();
+            int len = int(mSS.length());
             mSS += strs[i];
             mSS += char('z' + 1);
 
-            for (int j = 0; j < (int)strs[i].length(); j++)
+            for (int j = 0; j < int(strs[i].length()); j++)
                 mSuffixToStrID[len + j] = i;
             mSuffixToStrID[len + strs[i].length()] = -1;
         }
@@ -76,7 +76,7 @@ struct LongestCommonStringLengthWithSuffixArray {
                 mQIndex[L][R] = i;
 
             if (L == R)
-                mAns[mQIndex[L][R]] = (int)mS[L].second - (int)mS[L].first;
+                mAns[mQIndex[L][R]] = int(mS[L].second) - int(mS[L].first);
             else
                 mQuery[R][L] = mQIndex[L][R];
         }
@@ -87,7 +87,7 @@ struct LongestCommonStringLengthWithSuffixArray {
         // check forward
         vector<int> lastSAIndex(mN, -1);
         int prevStrID = -1;
-        for (int i = 0; i < (int)mSA.size(); i++) {
+        for (int i = 0; i < int(mSA.size()); i++) {
             int rStrID = mSuffixToStrID[mSA[i]];
             if (rStrID < 0)
                 continue;
@@ -115,7 +115,7 @@ struct LongestCommonStringLengthWithSuffixArray {
         // check backward
         fill(lastSAIndex.begin(), lastSAIndex.end(), -1);
         prevStrID = -1;
-        for (int i = (int)mSA.size() - 1; i >= 0; i--) {
+        for (int i = int(mSA.size()) - 1; i >= 0; i--) {
             int rStrID = mSuffixToStrID[mSA[i]];
             if (rStrID < 0)
                 continue;
@@ -163,11 +163,11 @@ struct LongestCommonStringLengthWithSuffixAutomation {
     vector<SuffixAutomaton> mSA;
 
     vector<int> solve(const vector<string>& strs, const vector<pair<int, int>>& query) {
-        mN = (int)strs.size();
-        mQ = (int)query.size();
+        mN = int(strs.size());
+        mQ = int(query.size());
 
         for (int i = 0; i < mN; i++) {
-            SuffixAutomaton t(strs[i].length());
+            SuffixAutomaton t(int(strs[i].length()));
             t.extend(strs[i]);
             mSA.emplace_back(move(t));
         }
@@ -189,7 +189,7 @@ struct LongestCommonStringLengthWithSuffixAutomation {
                 mQIndex[L][R] = i;
 
             if (L == R)
-                mAns[mQIndex[L][R]] = (int)strs[L].length();
+                mAns[mQIndex[L][R]] = int(strs[L].length());
             else
                 mQuery[R][L] = mQIndex[L][R];
         }
@@ -217,7 +217,7 @@ struct LongestCommonStringLengthWithSuffixAutomation {
 private:
     int lcs(SuffixAutomaton& sa, const string& t) {
         int v = 0, l = 0, best = 0, bestpos = 0;
-        for (int i = 0; i < (int)t.length(); ++i) {
+        for (int i = 0; i < int(t.length()); ++i) {
             int ch = SuffixAutomaton::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;

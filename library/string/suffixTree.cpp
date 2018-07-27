@@ -47,39 +47,39 @@ void testSuffixTree() {
         const char* s;
 
         const char* treeS = "abdadafaaabdfaeef";
-        tree.build(treeS, strlen(treeS));
+        tree.build(treeS, int(strlen(treeS)));
 
         dump(tree, &tree.mRoot, -1, 0, true);
 
-        s = "afaabda"; assert(tree.search(s, strlen(s)) == make_pair(4, -1));
-        s = "abdadafaaabdfaeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), 0));
-        s = "aeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), (int)strlen(treeS) - (int)strlen(s)));
-        s = "abdfaeef"; assert(tree.search(s, strlen(s)) == make_pair((int)strlen(s), (int)strlen(treeS) - (int)strlen(s)));
+        s = "afaabda"; assert(tree.search(s, int(strlen(s))) == make_pair(4, -1));
+        s = "abdadafaaabdfaeef"; assert(tree.search(s, int(strlen(s))) == make_pair(int(strlen(s)), 0));
+        s = "aeef"; assert(tree.search(s, int(strlen(s))) == make_pair(int(strlen(s)), int(strlen(treeS)) - int(strlen(s))));
+        s = "abdfaeef"; assert(tree.search(s, int(strlen(s))) == make_pair(int(strlen(s)), int(strlen(treeS)) - int(strlen(s))));
     }
     {
         SuffixTree tree(100);
         const char* s;
 
-        s = "a"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "ab"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "b"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
+        s = "a"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
+        s = "ab"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
+        s = "b"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
+        s = "c"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
 
         tree.extend('a');
         cout << "*** after extend 'a'" << endl;
         dump(tree, &tree.mRoot, -1, 0);
-        s = "a"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "ab"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "b"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
-        s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
+        s = "a"; assert(tree.search(s, int(strlen(s))) == make_pair(1, -1));
+        s = "ab"; assert(tree.search(s, int(strlen(s))) == make_pair(1, -1));
+        s = "b"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
+        s = "c"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
 
         tree.extend('b');
         cout << "*** after extend 'b'" << endl;
         dump(tree, &tree.mRoot, -1, 0);
-        s = "a"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "ab"; assert(tree.search(s, strlen(s)) == make_pair(2, -1));
-        s = "b"; assert(tree.search(s, strlen(s)) == make_pair(1, -1));
-        s = "c"; assert(tree.search(s, strlen(s)) == make_pair(0, -1));
+        s = "a"; assert(tree.search(s, int(strlen(s))) == make_pair(1, -1));
+        s = "ab"; assert(tree.search(s, int(strlen(s))) == make_pair(2, -1));
+        s = "b"; assert(tree.search(s, int(strlen(s))) == make_pair(1, -1));
+        s = "c"; assert(tree.search(s, int(strlen(s))) == make_pair(0, -1));
 
         cout << "OK!" << endl;
     }

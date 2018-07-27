@@ -36,7 +36,7 @@ R sumFloorRange(T left, T right, U num, U denom) {
 
 template <typename T, typename R = T>
 vector<pair<R, R>> continuedFraction(const vector<T>& a) {
-    int N = (int)a.size();
+    int N = int(a.size());
     vector<pair<R, R>> res;
     res.reserve(N);
 

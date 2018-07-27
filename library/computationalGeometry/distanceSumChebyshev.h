@@ -10,7 +10,7 @@ struct ChebyshevDistanceSum {
     vector<SumT> sumY;
 
     void build(const vector<pair<T, T>>& points) {
-        N = (int)points.size();
+        N = int(points.size());
 
         X = vector<T>(N);
         Y = vector<T>(N);
@@ -33,8 +33,8 @@ struct ChebyshevDistanceSum {
         T rotX = y - x;
         T rotY = y + x;
 
-        int cntDownX = lower_bound(X.begin(), X.end(), rotX) - X.begin();
-        int cntDownY = lower_bound(Y.begin(), Y.end(), rotY) - Y.begin();
+        int cntDownX = int(lower_bound(X.begin(), X.end(), rotX) - X.begin());
+        int cntDownY = int(lower_bound(Y.begin(), Y.end(), rotY) - Y.begin());
 
         SumT res = 0;
         res += SumT(cntDownX * 2 - N) * rotX + sumX[N] - sumX[cntDownX] * 2;

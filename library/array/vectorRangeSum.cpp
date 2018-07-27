@@ -45,17 +45,17 @@ void testVectorRangeSum() {
         for (int i = 0; i < T; i++) {
             int cmd = RandInt32::get() % 3;
             if (cmd == 0) {
-                int j = RandInt32::get() % ((int)vec.size() + 1);
+                int j = RandInt32::get() % (int(vec.size()) + 1);
                 int val = RandInt32::get() % 100;
                 vec.insert(vec.begin() + j, val);
                 vrs.insert(j, val);
             } else if (cmd == 1) {
-                int j = RandInt32::get() % (int)vec.size();
+                int j = RandInt32::get() % int(vec.size());
                 vec.erase(vec.begin() + j);
                 vrs.erase(j);
             } else {
-                int L = RandInt32::get() % (int)vec.size();
-                int R = RandInt32::get() % (int)vec.size();
+                int L = RandInt32::get() % int(vec.size());
+                int R = RandInt32::get() % int(vec.size());
 
                 if (L > R)
                     swap(L, R);

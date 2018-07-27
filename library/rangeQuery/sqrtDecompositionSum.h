@@ -42,7 +42,7 @@ struct SqrtDecompositionLazySum {
 
     void init(int n) {
         N = n;
-        blockSize = (int)sqrt(n);
+        blockSize = int(sqrt(n));
         blockCount = (N + blockSize - 1) / blockSize;
 
         values.assign(blockCount * blockSize, 0);
@@ -68,7 +68,7 @@ struct SqrtDecompositionLazySum {
     }
 
     void build(const vector<T>& v) {
-        build(&v[0], (int)v.size());
+        build(&v[0], int(v.size()));
     }
 
 

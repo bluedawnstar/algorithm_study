@@ -96,7 +96,7 @@ static int lcaNaive(const vector<int>& parent, int u, int v) {
     }
 
     int res = ancestorU.back();
-    for (int i = (int)ancestorU.size() - 1, j = (int)ancestorV.size() - 1; i >= 0 && j >= 0; i--, j--) {
+    for (int i = int(ancestorU.size()) - 1, j = int(ancestorV.size()) - 1; i >= 0 && j >= 0; i--, j--) {
         if (ancestorU[i] != ancestorV[j])
             break;
         res = ancestorU[i];

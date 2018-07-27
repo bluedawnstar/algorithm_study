@@ -18,10 +18,10 @@ struct DigitDP {
         memset(dp, -1, N * 180 * 2 * sizeof(long long));
 
         vector<int> digitA = getDigits(a - 1);
-        long long ans1 = digitSum(digitA, (int)digitA.size() - 1, 0, true);
+        long long ans1 = digitSum(digitA, int(digitA.size()) - 1, 0, true);
 
         vector<int> digitB = getDigits(b);
-        long long ans2 = digitSum(digitB, (int)digitB.size() - 1, 0, true);
+        long long ans2 = digitSum(digitB, int(digitB.size()) - 1, 0, true);
 
         return ans2 - ans1;
     }

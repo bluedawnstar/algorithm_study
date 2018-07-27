@@ -29,12 +29,12 @@ struct GlobalMinCutNaive64 {
 
     // call this before solve()
     void mergeEdges() {
-        for (int i = 0; i < (int)edges.size(); i++) {
+        for (int i = 0; i < int(edges.size()); i++) {
             auto& vec = edges[i];
             sort(vec.begin(), vec.end());
 
             int j = 0;
-            for (int i = 1; i < (int)vec.size(); i++) {
+            for (int i = 1; i < int(vec.size()); i++) {
                 if (vec[j].first == vec[i].first)
                     vec[j].second += vec[i].second;
                 else if (j != i)
@@ -117,12 +117,12 @@ struct GlobalMinCutNaive {
 
     // call this before solve()
     void mergeEdges() {
-        for (int i = 0; i < (int)edges.size(); i++) {
+        for (int i = 0; i < int(edges.size()); i++) {
             auto& vec = edges[i];
             sort(vec.begin(), vec.end());
 
             int j = 0;
-            for (int i = 1; i < (int)vec.size(); i++) {
+            for (int i = 1; i < int(vec.size()); i++) {
                 if (vec[j].first == vec[i].first)
                     vec[j].second += vec[i].second;
                 else if (j != i)

@@ -3,7 +3,7 @@
 // BitSet class without mBitCnt member variable
 struct BitSetVariable {
     static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = (unsigned)-1;
+    static const unsigned BIT_ALL = unsigned(-1);
     static const unsigned BIT_ONE = 1u;
 
     static const int INDEX_MASK = 0x1F;
@@ -12,18 +12,18 @@ struct BitSetVariable {
     vector<unsigned> values;
 
     int size() const {
-        return (int)values.size() * BIT_SIZE;
+        return int(values.size()) * BIT_SIZE;
     }
 
     void resize(int size) {
         size = (size + BIT_SIZE - 1) >> INDEX_SHIFT;
-        if ((int)values.size() < size)
+        if (int(values.size()) < size)
             values.resize((size_t)size);
     }
 
     int count() const {
         int res = 0;
-        for (int i = 0; i < (int)values.size(); i++)
+        for (int i = 0; i < int(values.size()); i++)
             res += popCount(values[i]);
         return res;
     }
@@ -41,7 +41,7 @@ struct BitSetVariable {
         if (value) {
             resize(pos + 1);
             values[idx] |= BIT_ONE << off;
-        } else if (idx < (int)values.size()) {
+        } else if (idx < int(values.size())) {
             values[idx] &= ~(BIT_ONE << off);
         }
         return *this;
@@ -51,7 +51,7 @@ struct BitSetVariable {
         int idx = pos >> INDEX_SHIFT;
         int off = pos & INDEX_MASK;
 
-        if (idx < (int)values.size())
+        if (idx < int(values.size()))
             values[idx] &= ~(BIT_ONE << off);
 
         return *this;
@@ -71,14 +71,14 @@ struct BitSetVariable {
     }
 
     bool operator ==(const BitSetVariable& rhs) const {
-        int n = (int)min(values.size(), rhs.values.size());
+        int n = int(min(values.size(), rhs.values.size()));
         for (int i = 0; i < n; i++) {
             if (values[i] != rhs.values[i])
                 return false;
         }
 
         const vector<unsigned int>& maxV = (values.size() >= rhs.values.size()) ? values : rhs.values;
-        for (int i = n; i < (int)maxV.size(); i++)
+        for (int i = n; i < int(maxV.size()); i++)
             if (!maxV[i])
                 return false;
 
@@ -93,16 +93,16 @@ struct BitSetVariable {
         if (values.size() < rhs.values.size())
             values.resize(rhs.values.size());
 
-        for (int i = 0; i < (int)rhs.values.size(); i++)
+        for (int i = 0; i < int(rhs.values.size()); i++)
             values[i] |= rhs.values[i];
         return *this;
     }
 
     BitSetVariable& operator &=(const BitSetVariable& rhs) {
-        int n = (int)min(values.size(), rhs.values.size());
+        int n = int(min(values.size(), rhs.values.size()));
         for (int i = 0; i < n; i++)
             values[i] &= rhs.values[i];
-        for (int i = n; i < (int)values.size(); i++)
+        for (int i = n; i < int(values.size()); i++)
             values[i] = 0;
         return *this;
     }
@@ -111,7 +111,7 @@ struct BitSetVariable {
         if (values.size() < rhs.values.size())
             values.resize(rhs.values.size());
 
-        for (int i = 0; i < (int)rhs.values.size(); i++)
+        for (int i = 0; i < int(rhs.values.size()); i++)
             values[i] ^= rhs.values[i];
         return *this;
     }
@@ -120,15 +120,15 @@ struct BitSetVariable {
         BitSetVariable bs;
         bs.values.resize(max(values.size(), rhs.values.size()));
 
-        int n = (int)min(values.size(), rhs.values.size());
+        int n = int(min(values.size(), rhs.values.size()));
         for (int i = 0; i < n; i++)
             bs.values[i] = values[i] | rhs.values[i];
 
         if (values.size() < rhs.values.size()) {
-            for (int i = n; i < (int)rhs.values.size(); i++)
+            for (int i = n; i < int(rhs.values.size()); i++)
                 bs.values[i] = rhs.values[i];
         } else {
-            for (int i = n; i < (int)values.size(); i++)
+            for (int i = n; i < int(values.size()); i++)
                 bs.values[i] = values[i];
         }
 
@@ -139,7 +139,7 @@ struct BitSetVariable {
         BitSetVariable bs;
         bs.values.resize(min(values.size(), rhs.values.size()));
 
-        int n = (int)min(values.size(), rhs.values.size());
+        int n = int(min(values.size(), rhs.values.size()));
         for (int i = 0; i < n; i++)
             bs.values[i] = values[i] & rhs.values[i];
 
@@ -150,15 +150,15 @@ struct BitSetVariable {
         BitSetVariable bs;
         bs.values.resize(max(values.size(), rhs.values.size()));
 
-        int n = (int)min(values.size(), rhs.values.size());
+        int n = int(min(values.size(), rhs.values.size()));
         for (int i = 0; i < n; i++)
             bs.values[i] = values[i] ^ rhs.values[i];
 
         if (values.size() < rhs.values.size()) {
-            for (int i = n; i < (int)rhs.values.size(); i++)
+            for (int i = n; i < int(rhs.values.size()); i++)
                 bs.values[i] = rhs.values[i];
         } else {
-            for (int i = n; i < (int)values.size(); i++)
+            for (int i = n; i < int(values.size()); i++)
                 bs.values[i] = values[i];
         }
 
@@ -169,7 +169,7 @@ struct BitSetVariable {
         BitSetVariable bs;
         bs.values.resize(values.size());
 
-        for (int i = 0; i < (int)values.size(); i++)
+        for (int i = 0; i < int(values.size()); i++)
             bs.values[i] = ~values[i];
 
         return bs;
@@ -222,7 +222,7 @@ struct BitSetVariable {
         int d = n >> INDEX_SHIFT;
         int r = n & INDEX_MASK;
 
-        int VN = (int)values.size();
+        int VN = int(values.size());
 
         if (r == 0) {
             int t = 0;
@@ -251,9 +251,9 @@ struct BitSetVariable {
     //-----------------------------------------------------
 
     int firstClearBit() const {
-        for (int i = 0; i < (int)values.size(); i++) {
+        for (int i = 0; i < int(values.size()); i++) {
             if (values[i] != BIT_ALL) {
-                int m = (int)~values[i];
+                int m = int(~values[i]);
                 return i * BIT_SIZE + (BIT_SIZE - 1) - clz(unsigned(m & -m));
             }
         }
@@ -261,9 +261,9 @@ struct BitSetVariable {
     }
 
     int first() const {
-        for (int i = 0; i < (int)values.size(); i++) {
+        for (int i = 0; i < int(values.size()); i++) {
             if (values[i]) {
-                int m = (int)values[i];
+                int m = int(values[i]);
                 return i * BIT_SIZE + (BIT_SIZE - 1) - clz(unsigned(m & -m));
             }
         }
@@ -271,7 +271,7 @@ struct BitSetVariable {
     }
 
     int last() const {
-        for (int i = (int)values.size() - 1; i >= 0; i--) {
+        for (int i = int(values.size()) - 1; i >= 0; i--) {
             if (values[i])
                 return i * BIT_SIZE + (BIT_SIZE - 1) - clz(values[i]);
         }
@@ -280,19 +280,19 @@ struct BitSetVariable {
 
     // pos < next(pos) < N (or -1)
     int next(int pos) const {
-        if (++pos >= (int)values.size() * BIT_SIZE)
+        if (++pos >= int(values.size()) * BIT_SIZE)
             return -1;
 
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)values[index] & (BIT_ALL << offset);
+        int m = int(values[index]) & (BIT_ALL << offset);
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
 
-        for (int i = index + 1; i < (int)values.size(); i++) {
+        for (int i = index + 1; i < int(values.size()); i++) {
             if (values[i]) {
-                m = (int)values[i];
+                m = int(values[i]);
                 return (i << INDEX_SHIFT) + BIT_SIZE - clz(unsigned(m & -m)) - 1;
             }
         }
@@ -308,7 +308,7 @@ struct BitSetVariable {
         int index = pos >> INDEX_SHIFT;
         int offset = pos & INDEX_MASK;
 
-        int m = (int)values[index] & (BIT_ALL >> (BIT_SIZE - 1 - offset));
+        int m = int(values[index]) & (BIT_ALL >> (BIT_SIZE - 1 - offset));
         if (m)
             return (index << INDEX_SHIFT) + BIT_SIZE - clz(m) - 1;
 
@@ -322,7 +322,7 @@ struct BitSetVariable {
 
     static int clz(unsigned x) {
 #ifndef __GNUC__
-        return (int)__lzcnt(x);
+        return int(__lzcnt(x));
 #else
         return __builtin_clz(x);
 #endif
@@ -330,7 +330,7 @@ struct BitSetVariable {
 
     static int popCount(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
         /*
         x = x - ((x >> 1) & 0x55555555);
         x = (x & 0x33333333) + ((x >> 2) & 0x33333333);

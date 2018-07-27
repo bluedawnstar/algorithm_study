@@ -23,9 +23,9 @@ void testMultPolyMod() {
         vector<int> A(1000);
         vector<int> B(1000);
 
-        for (int i = 0; i < (int)A.size(); i++)
+        for (int i = 0; i < int(A.size()); i++)
             A[i] = RandInt32::get() % MOD;
-        for (int i = 0; i < (int)B.size(); i++)
+        for (int i = 0; i < int(B.size()); i++)
             B[i] = RandInt32::get() % MOD;
 
         vector<int> out1 = multPolyMod(A, B, MOD);

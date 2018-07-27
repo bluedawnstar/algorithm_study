@@ -29,8 +29,8 @@ void checkIndex(RBTree<int>& rbt, vector<int>& in);
 template <typename T, typename MergeOp, typename BlockOp>
 void checkIndex(TreapRangeQuery<T, MergeOp, BlockOp>& tr, vector<int>& in) {
     assert((tr.tree != nullptr ? tr.tree->cnt : 0) == tr.size());
-    assert(tr.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(tr.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(tr[i]->value == in[i]);
         assert(tr.indexOf(tr[i]) == i);
     }
@@ -41,7 +41,7 @@ void testTreapRangeQuery() {
 
     cout << "--- Treap with Range Query ----------------------------------" << endl;
 
-    srand((unsigned)time(nullptr));
+    srand(unsigned(time(nullptr)));
     {
         RBTree<int> rbt;
         auto tr = makeTreapRangeQuery([](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
@@ -51,7 +51,7 @@ void testTreapRangeQuery() {
 
         {
             vector<int> t(in);
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p = tr.insert(i, t[i]);
                 if (!p)
                     cerr << "It'll never be shown!" << endl;
@@ -62,15 +62,15 @@ void testTreapRangeQuery() {
         {
             vector<int> t(in);
 
-            for (int i = 0; i < (int)in.size(); i++) {
-                int idx = RandInt32::get() % (int)t.size();
+            for (int i = 0; i < int(in.size()); i++) {
+                int idx = RandInt32::get() % int(t.size());
                 t.erase(t.begin() + idx);
 
                 bool b = tr.erase(idx);
                 if (!b)
                     cerr << "It'll never be shown!" << endl;
                 assert(b);
-                assert(tr.size() == (int)t.size());
+                assert(tr.size() == int(t.size()));
                 checkIndex(tr, t);
             }
         }
@@ -191,7 +191,7 @@ void testTreapRangeQuery() {
                 if (!possible.empty()) {
                     int x = possible.front();
                     possible.erase(possible.begin());
-                    int idx = lower_bound(vec.begin(), vec.end(), x) - vec.begin();
+                    int idx = int(lower_bound(vec.begin(), vec.end(), x) - vec.begin());
                     vec.insert(vec.begin() + idx, x);
                     tr.insert(idx, x);
                     assert(accumulate(vec.begin(), vec.end(), 0) == tr.query(0, tr.size() - 1));
@@ -199,7 +199,7 @@ void testTreapRangeQuery() {
                 break;
             case 1: // erase
                 if (!vec.empty()) {
-                    int idx = RandInt32::get() % (int)vec.size();
+                    int idx = RandInt32::get() % int(vec.size());
                     int x = vec[idx];
                     possible.push_back(x);
                     vec.erase(vec.begin() + idx);
@@ -216,15 +216,15 @@ void testTreapRangeQuery() {
                 break;
             case 2: // query
                 if (!vec.empty()) {
-                    int idx = RandInt32::get() % (int)vec.size();
+                    int idx = RandInt32::get() % int(vec.size());
                     assert(vec[idx] == tr.query(idx));
                     assert(accumulate(vec.begin(), vec.end(), 0) == tr.query(0, tr.size() - 1));
                 }
                 break;
             case 3: // query
                 if (!vec.empty()) {
-                    int left = RandInt32::get() % (int)vec.size();
-                    int right = RandInt32::get() % (int)vec.size();;
+                    int left = RandInt32::get() % int(vec.size());
+                    int right = RandInt32::get() % int(vec.size());;
                     if (left > right)
                         swap(left, right);
 
@@ -280,7 +280,7 @@ void testTreapRangeQuery() {
         }
 
         PROFILE_START(0);
-        for (int i = 0; i < (int)in.size(); i++) {
+        for (int i = 0; i < int(in.size()); i++) {
             if (!get<0>(in[i])) {
                 segt.updateRange(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
                 if (segt.N <= 0)
@@ -293,7 +293,7 @@ void testTreapRangeQuery() {
         PROFILE_STOP(0);
 
         PROFILE_START(1);
-        for (int i = 0; i < (int)in.size(); i++) {
+        for (int i = 0; i < int(in.size()); i++) {
             if (!get<0>(in[i])) {
                 spt.update(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
                 if (spt.count <= 0)
@@ -306,7 +306,7 @@ void testTreapRangeQuery() {
         PROFILE_STOP(1);
 
         PROFILE_START(2);
-        for (int i = 0; i < (int)in.size(); i++) {
+        for (int i = 0; i < int(in.size()); i++) {
             if (!get<0>(in[i])) {
                 tr.update(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
                 if (tr.count <= 0)

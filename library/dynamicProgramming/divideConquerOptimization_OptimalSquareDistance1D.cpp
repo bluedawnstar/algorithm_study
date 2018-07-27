@@ -38,14 +38,14 @@ static vector<double> makeRandomData(int N, double maxValue) {
 
 static double calcDistanceL2(const vector<int>& vec, const vector<pair<int, int>>& groups) {
     vector<double> centroids(groups.size());
-    for (int i = 0; i < (int)groups.size(); i++) {
+    for (int i = 0; i < int(groups.size()); i++) {
         for (int j = groups[i].first; j <= groups[i].second; j++)
             centroids[i] += vec[j];
         centroids[i] /= (groups[i].second - groups[i].first + 1);
     }
 
     double res = 0.0;
-    for (int i = 0; i < (int)groups.size(); i++) {
+    for (int i = 0; i < int(groups.size()); i++) {
         for (int j = groups[i].first; j <= groups[i].second; j++)
             res += (vec[j] - centroids[i]) * (vec[j] - centroids[i]);
     }
@@ -55,14 +55,14 @@ static double calcDistanceL2(const vector<int>& vec, const vector<pair<int, int>
 
 static double calcDistanceL2(const vector<double>& vec, const vector<pair<int, int>>& groups) {
     vector<double> centroids(groups.size());
-    for (int i = 0; i < (int)groups.size(); i++) {
+    for (int i = 0; i < int(groups.size()); i++) {
         for (int j = groups[i].first; j <= groups[i].second; j++)
             centroids[i] += vec[j];
         centroids[i] /= (groups[i].second - groups[i].first + 1);
     }
 
     double res = 0.0;
-    for (int i = 0; i < (int)groups.size(); i++) {
+    for (int i = 0; i < int(groups.size()); i++) {
         for (int j = groups[i].first; j <= groups[i].second; j++)
             res += (vec[j] - centroids[i]) * (vec[j] - centroids[i]);
     }

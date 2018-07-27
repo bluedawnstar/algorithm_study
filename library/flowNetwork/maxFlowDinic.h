@@ -29,8 +29,8 @@ struct MaxFlowDinic {
 
     // add edges to a directed graph
     void addEdge(int u, int v, T capacity, T capacityRev) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, 0, capacity });
         edges[v].push_back(Edge{ u, uN, 0, capacityRev });
     }
@@ -74,7 +74,7 @@ private:
             int u = q.front();
             q.pop();
 
-            for (int i = 0; i < (int)edges[u].size(); i++) {
+            for (int i = 0; i < int(edges[u].size()); i++) {
                 auto& e = edges[u][i];
                 if (levels[e.to] < 0 && (e.capacity - e.flow) > 0) {
                     q.push(e.to);
@@ -90,7 +90,7 @@ private:
         if (u == t)
             return flow;
 
-        for (; start[u] < (int)edges[u].size(); start[u]++) {
+        for (; start[u] < int(edges[u].size()); start[u]++) {
             auto& e = edges[u][start[u]];
 
             if (levels[e.to] == levels[u] + 1 && (e.capacity - e.flow) > 0) {

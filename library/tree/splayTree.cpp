@@ -19,22 +19,22 @@ using namespace std;
 #include "redBlackTree.h"
 
 static void checkSearch(RBTree<int>& rbt, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(rbt.find(x)->value == x);
     }
 }
 
 static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
-    assert(rbt.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(rbt.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(rbt[i]->value == in[i]);
         assert(rbt.indexOf(rbt[i]) == i);
     }
 }
 
 static void checkSearch(SplayTree<int>& spt, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(spt.find(x)->value == x);
     }
@@ -42,8 +42,8 @@ static void checkSearch(SplayTree<int>& spt, vector<int>& in) {
 
 static void checkIndex(SplayTree<int>& spt, vector<int>& in) {
     assert((spt.tree != nullptr ? spt.tree->cnt : 0) == spt.size());
-    assert(spt.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(spt.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(spt[i]->value == in[i]);
         assert(spt.indexOf(spt[i]) == i);
     }
@@ -64,7 +64,7 @@ void testSplay() {
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p1 = rbt.insert(t[i]);
                 if (!p1.second)
                     cerr << "It'll never be shown!" << endl;
@@ -93,7 +93,7 @@ void testSplay() {
                 if (!b1)
                     cerr << "It'll never be shown!" << endl;
                 assert(b1);
-                assert(rbt.size() == (int)t.size());
+                assert(rbt.size() == int(t.size()));
                 checkSearch(rbt, org);
                 checkIndex(rbt, org);
 
@@ -101,7 +101,7 @@ void testSplay() {
                 if (!b2)
                     cerr << "It'll never be shown!" << endl;
                 assert(b2);
-                assert(spt.size() == (int)t.size());
+                assert(spt.size() == int(t.size()));
                 checkSearch(spt, org);
                 checkIndex(spt, org);
             }
@@ -127,7 +127,7 @@ void testSplay() {
             random_shuffle(t.begin(), t.end());
 
             PROFILE_START(0);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 auto p = rbt.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -135,7 +135,7 @@ void testSplay() {
             PROFILE_STOP(0);
 
             PROFILE_START(1);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 auto p = spt.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -148,14 +148,14 @@ void testSplay() {
             random_shuffle(t.begin(), t.end());
 
             PROFILE_START(0);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (rbt.find(t[i])->value != t[i])
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(0);
 
             PROFILE_START(1);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (spt.find(t[i])->value != t[i])
                     cerr << "It'll never be shown!" << endl;
             }
@@ -167,14 +167,14 @@ void testSplay() {
             random_shuffle(t.begin(), t.end());
 
             PROFILE_START(0);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (!rbt.erase(t[i]))
                     cerr << "It'll never be shown!" << endl;
             }
             PROFILE_STOP(0);
 
             PROFILE_START(1);
-            for (int i = 0; i < (int)t.size(); i++) {
+            for (int i = 0; i < int(t.size()); i++) {
                 if (!spt.erase(t[i]))
                     cerr << "It'll never be shown!" << endl;
             }

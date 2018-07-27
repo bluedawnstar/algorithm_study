@@ -33,7 +33,7 @@ void testDistinctSubstringCounter() {
         int suffixPos = dsc.currSuffixPos;
         do {
             suffixPos = dsc.extend();
-            for (int i = suffixPos; i < (int)S.length(); i++) {
+            for (int i = suffixPos; i < int(S.length()); i++) {
                 long long result = dsc.query(i);
                 //cout << "substring count (" << suffixPos << ", " << i << ") = " << result << endl;
                 M[make_pair(suffixPos, i)] = result;
@@ -43,10 +43,10 @@ void testDistinctSubstringCounter() {
 
     cout << "*** test with Suffix Automation" << endl;
     {
-        DistinctSubstringCounterWithSuffixAutomaton<long long> sa((int)S.length());
+        DistinctSubstringCounterWithSuffixAutomaton<long long> sa(int(S.length()));
 
         sa.init();
-        for (int i = 0; i < (int)S.length(); i++) {
+        for (int i = 0; i < int(S.length()); i++) {
             sa.extend(S[i]);
 
             for (int j = 0; j <= i; j++) {

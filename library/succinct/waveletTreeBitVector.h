@@ -122,7 +122,7 @@ struct WaveletTreeBitVector {
 
         // (0 <= pos < N - 1)
         void swap(int pos, T* first, T orgX1, T orgX2) {
-            if (pos + 1 >= (int)rank.size() || valLow == valHigh)
+            if (pos + 1 >= int(rank.size()) || valLow == valHigh)
                 return;
 
             int ltCount = rank.rank1(pos - 1);
@@ -174,7 +174,7 @@ struct WaveletTreeBitVector {
 
     // inclusive
     void build(const vector<T>& in, T valLow, T valHigh) {
-        build(&in[0], (int)in.size(), valLow, valHigh);
+        build(&in[0], int(in.size()), valLow, valHigh);
     }
 
     void build(const T* in, int size) {
@@ -191,7 +191,7 @@ struct WaveletTreeBitVector {
     }
 
     void build(const vector<T>& in) {
-        build(&in[0], (int)in.size());
+        build(&in[0], int(in.size()));
     }
 
 

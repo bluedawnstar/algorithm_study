@@ -4,7 +4,7 @@
 
 template <typename T = double>
 void dft(const vector<Complex<T>>& in, vector<Complex<T>>& out, bool inverse = false) {
-    int size = (int)in.size();
+    int size = int(in.size());
     T wk, wn = 2 * M_PI / size;
 
     if (inverse)
@@ -27,7 +27,7 @@ void dft(const vector<Complex<T>>& in, vector<Complex<T>>& out, bool inverse = f
 
 template <typename T = double>
 bool fft(const vector<Complex<T>>& in, vector<Complex<T>>& out, bool inverse = false) {
-    int size = (int)in.size();
+    int size = int(in.size());
     if ((size & (size - 1)) != 0)
         return false;
 
@@ -65,7 +65,7 @@ bool fft(const vector<Complex<T>>& in, vector<Complex<T>>& out, bool inverse = f
 
 template <typename T = double>
 bool fft(vector<Complex<T>>& data, bool inverse = false) {
-    int size = (int)data.size();
+    int size = int(data.size());
     if ((size & (size - 1)) != 0)
         return false;
 

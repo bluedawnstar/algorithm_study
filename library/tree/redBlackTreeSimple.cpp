@@ -16,15 +16,15 @@ using namespace std;
 #include "../common/rand.h"
 
 static void checkSearch(RBTreeSimple<int>& rbt, vector<int>& in) {
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         int x = in[i];
         assert(rbt.find(x)->value == x);
     }
 }
 
 static void checkIndex(RBTreeSimple<int>& rbt, vector<int>& in) {
-    assert(rbt.size() == (int)in.size());
-    for (int i = 0; i < (int)in.size(); i++) {
+    assert(rbt.size() == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
         assert(rbt[i]->value == in[i]);
         assert(rbt.indexOf(rbt[i]) == i);
     }
@@ -46,7 +46,7 @@ void testRBTreeSimple() {
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
-            for (int i = 0; i < (int)in.size(); i++) {
+            for (int i = 0; i < int(in.size()); i++) {
                 auto p = rbt.insert(t[i]);
                 if (!p.second)
                     cerr << "It'll never be shown!" << endl;
@@ -88,7 +88,7 @@ void testRBTreeSimple() {
                 if (!b)
                     cerr << "It'll never be shown!" << endl;
                 assert(b);
-                assert(rbt.size() == (int)t.size());
+                assert(rbt.size() == int(t.size()));
                 checkSearch(rbt, org);
                 checkIndex(rbt, org);
             }

@@ -30,14 +30,14 @@ struct SparseTableMinIndex {
 
         H.resize(n + 1);
         H[1] = 0;
-        for (int i = 2; i < (int)H.size(); i++)
+        for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
         value.resize(H.back() + 1, vector<int>(n));
         for (int i = 0; i < n; i++)
             value[0][i] = i;
 
-        for (int i = 1; i < (int)value.size(); i++) {
+        for (int i = 1; i < int(value.size()); i++) {
             vector<int>& prev = value[i - 1];
             vector<int>& curr = value[i];
             for (int v = 0; v < n; v++) {
@@ -51,7 +51,7 @@ struct SparseTableMinIndex {
     }
 
     void build(const vector<int>& a) {
-        build(&a[0], (int)a.size());
+        build(&a[0], int(a.size()));
     }
 
 

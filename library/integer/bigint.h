@@ -55,12 +55,12 @@ struct bigint {
         sign = 1;
         a.clear();
         int pos = 0;
-        while (pos < (int)s.size() && (s[pos] == '-' || s[pos] == '+')) {
+        while (pos < int(s.size()) && (s[pos] == '-' || s[pos] == '+')) {
             if (s[pos] == '-')
                 sign = -sign;
             ++pos;
         }
-        for (int i = (int)s.size() - 1; i >= pos; i -= baseDigitN) {
+        for (int i = int(s.size()) - 1; i >= pos; i -= baseDigitN) {
             int x = 0;
             for (int j = max(pos, i - baseDigitN + 1); j <= i; j++)
                 x = x * 10 + s[j] - '0';
@@ -89,7 +89,7 @@ struct bigint {
 
     long long longValue() const {
         long long res = 0;
-        for (int i = (int)a.size() - 1; i >= 0; i--)
+        for (int i = int(a.size()) - 1; i >= 0; i--)
             res = res * base + a[i];
         return res * sign;
     }
@@ -99,10 +99,10 @@ struct bigint {
         if (sign == v.sign) {
             bigint res = v;
 
-            for (int i = 0, carry = 0; i < (int)max(a.size(), v.a.size()) || carry; ++i) {
-                if (i == (int)res.a.size())
+            for (int i = 0, carry = 0; i < int(max(a.size(), v.a.size())) || carry; ++i) {
+                if (i == int(res.a.size()))
                     res.a.push_back(0);
-                res.a[i] += carry + (i < (int)a.size() ? a[i] : 0);
+                res.a[i] += carry + (i < int(a.size()) ? a[i] : 0);
                 carry = res.a[i] >= base;
                 if (carry)
                     res.a[i] -= base;
@@ -121,8 +121,8 @@ struct bigint {
         if (sign == v.sign) {
             if (abs() >= v.abs()) {
                 bigint res = *this;
-                for (int i = 0, carry = 0; i < (int)v.a.size() || carry; ++i) {
-                    res.a[i] -= carry + (i < (int)v.a.size() ? v.a[i] : 0);
+                for (int i = 0, carry = 0; i < int(v.a.size()) || carry; ++i) {
+                    res.a[i] -= carry + (i < int(v.a.size()) ? v.a[i] : 0);
                     carry = res.a[i] < 0;
                     if (carry)
                         res.a[i] += base;
@@ -183,12 +183,12 @@ struct bigint {
     bigint& operator *=(int v) {
         if (v < 0)
             sign = -sign, v = -v;
-        for (int i = 0, carry = 0; i < (int)a.size() || carry; ++i) {
-            if (i == (int)a.size())
+        for (int i = 0, carry = 0; i < int(a.size()) || carry; ++i) {
+            if (i == int(a.size()))
                 a.push_back(0);
             long long cur = a[i] * (long long)v + carry;
-            carry = (int)(cur / base);
-            a[i] = (int)(cur % base);
+            carry = int(cur / base);
+            a[i] = int(cur % base);
         }
         trim();
         return *this;
@@ -203,10 +203,10 @@ struct bigint {
     bigint& operator /=(int v) {
         if (v < 0)
             sign = -sign, v = -v;
-        for (int i = (int)a.size() - 1, rem = 0; i >= 0; --i) {
+        for (int i = int(a.size()) - 1, rem = 0; i >= 0; --i) {
             long long cur = a[i] + rem * (long long)base;
-            a[i] = (int)(cur / v);
-            rem = (int)(cur % v);
+            a[i] = int(cur / v);
+            rem = int(cur % v);
         }
         trim();
         return *this;
@@ -216,7 +216,7 @@ struct bigint {
         if (v < 0)
             v = -v;
         int m = 0;
-        for (int i = (int)a.size() - 1; i >= 0; --i)
+        for (int i = int(a.size()) - 1; i >= 0; --i)
             m = (a[i] + m * (long long)base) % v;
         return m * sign;
     }
@@ -232,7 +232,7 @@ struct bigint {
             return sign < v.sign;
         if (a.size() != v.a.size())
             return a.size() * sign < v.a.size() * v.sign;
-        for (int i = (int)a.size() - 1; i >= 0; i--)
+        for (int i = int(a.size()) - 1; i >= 0; i--)
             if (a[i] != v.a[i])
                 return a[i] * sign < v.a[i] * sign;
         return false;
@@ -270,12 +270,12 @@ struct bigint {
     static vector<int> convertBase(const vector<int> &a, int oldDigits, int newDigits) {
         vector<long long> p(max(oldDigits, newDigits) + 1);
         p[0] = 1;
-        for (int i = 1; i < (int)p.size(); i++)
+        for (int i = 1; i < int(p.size()); i++)
             p[i] = p[i - 1] * 10;
         vector<int> res;
         long long cur = 0;
         int cur_digits = 0;
-        for (int i = 0; i < (int)a.size(); i++) {
+        for (int i = 0; i < int(a.size()); i++) {
             cur += a[i] * p[cur_digits];
             cur_digits += oldDigits;
             while (cur_digits >= newDigits) {
@@ -284,7 +284,7 @@ struct bigint {
                 cur_digits -= newDigits;
             }
         }
-        res.push_back((int)cur);
+        res.push_back(int(cur));
         while (!res.empty() && res.back() == 0)
             res.pop_back();
         return res;
@@ -294,12 +294,12 @@ struct bigint {
         bigint res;
         res.sign = sign * v.sign;
         res.a.resize(a.size() + v.a.size());
-        for (int i = 0; i < (int)a.size(); ++i) {
+        for (int i = 0; i < int(a.size()); ++i) {
             if (a[i])
-                for (int j = 0, carry = 0; j < (int)v.a.size() || carry; ++j) {
-                    long long cur = res.a[i + j] + (long long)a[i] * (j < (int)v.a.size() ? v.a[j] : 0) + carry;
-                    carry = (int)(cur / base);
-                    res.a[i + j] = (int)(cur % base);
+                for (int j = 0, carry = 0; j < int(v.a.size()) || carry; ++j) {
+                    long long cur = res.a[i + j] + (long long)a[i] * (j < int(v.a.size()) ? v.a[j] : 0) + carry;
+                    carry = int(cur / base);
+                    res.a[i + j] = int(cur % base);
                 }
         }
         res.trim();
@@ -320,10 +320,10 @@ struct bigint {
         vector<long long> c = multiplyKaratsuba(a, b);
         bigint res;
         res.sign = sign * v.sign;
-        for (int i = 0, carry = 0; i < (int)c.size(); i++) {
+        for (int i = 0, carry = 0; i < int(c.size()); i++) {
             long long cur = c[i] + carry;
-            res.a.push_back((int)(cur % 1000000));
-            carry = (int)(cur / 1000000);
+            res.a.push_back(int(cur % 1000000));
+            carry = int(cur / 1000000);
         }
         res.a = convertBase(res.a, 6, baseDigitN);
         res.trim();
@@ -338,7 +338,7 @@ struct bigint {
         res.reserve(c.size() + 2);
 
         int carry = 0;
-        for (int i = 0; i < (int)c.size(); ++i) {
+        for (int i = 0; i < int(c.size()); ++i) {
             int t = c[i] + carry;
             carry = t / 1000;
             res.push_back(t % 1000);
@@ -352,7 +352,7 @@ struct bigint {
     }
 
     static vector<long long> multiplyKaratsuba(const vector<long long>& a, const vector<long long>& b) {
-        int n = (int)a.size();
+        int n = int(a.size());
         vector<long long> res(n + n);
         if (n <= 32) {
             for (int i = 0; i < n; i++)
@@ -376,16 +376,16 @@ struct bigint {
             b2[i] += b1[i];
 
         vector<long long> r = multiplyKaratsuba(a2, b2);
-        for (int i = 0; i < (int)a1b1.size(); i++)
+        for (int i = 0; i < int(a1b1.size()); i++)
             r[i] -= a1b1[i];
-        for (int i = 0; i < (int)a2b2.size(); i++)
+        for (int i = 0; i < int(a2b2.size()); i++)
             r[i] -= a2b2[i];
 
-        for (int i = 0; i < (int)r.size(); i++)
+        for (int i = 0; i < int(r.size()); i++)
             res[i + k] += r[i];
-        for (int i = 0; i < (int)a1b1.size(); i++)
+        for (int i = 0; i < int(a1b1.size()); i++)
             res[i] += a1b1[i];
-        for (int i = 0; i < (int)a2b2.size(); i++)
+        for (int i = 0; i < int(a2b2.size()); i++)
             res[i + n] += a2b2[i];
         return res;
     }
@@ -397,7 +397,7 @@ struct bigint {
         bigint q, r;
         q.a.resize(a.a.size());
 
-        for (int i = (int)a.a.size() - 1; i >= 0; i--) {
+        for (int i = int(a.a.size()) - 1; i >= 0; i--) {
             r *= base;
             r += bigint(a.a[i]);
             int s1 = r.a.size() <= b.a.size() ? 0 : r.a[b.a.size()];
@@ -435,7 +435,7 @@ inline ostream& operator <<(ostream& os, const bigint& v) {
     if (v.sign == -1)
         os << '-';
     os << (v.a.empty() ? 0 : v.a.back());
-    for (int i = (int)v.a.size() - 2; i >= 0; --i)
+    for (int i = int(v.a.size()) - 2; i >= 0; --i)
         os << setw(bigint::baseDigitN) << setfill('0') << v.a[i];
     return os;
 }

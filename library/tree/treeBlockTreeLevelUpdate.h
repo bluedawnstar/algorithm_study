@@ -86,7 +86,7 @@ struct BlockTreeLevelUpdate {
         fragId.assign(size, -1);
         valueInLevel.assign(size, defaultValue);
         treeSize.assign(size, 0);
-        sqrtN = max((int)sqrt(N), 2);
+        sqrtN = max(int(sqrt(N)), 2);
     }
 
     void addEdge(int u, int v) {
@@ -132,7 +132,7 @@ struct BlockTreeLevelUpdate {
             int node = createFragment(-1, vector<int>(1, 0));
 
             edges2 = vector<vector<int>>(frags.size());
-            for (int i = 0; i < (int)frags.size(); i++) {
+            for (int i = 0; i < int(frags.size()); i++) {
                 Fragment& f = frags[i];
                 if (parent[f.id] == -1)
                     continue;
@@ -217,7 +217,7 @@ private:
         parent.push_back(parentNode);
         level.push_back(parentNode <= 0 ? 0 : level[parentNode] + 1);
 
-        int node = (int)edges.size();
+        int node = int(edges.size());
         edges.push_back(children);
 
         return node;
@@ -234,7 +234,7 @@ private:
     void buildFragment(int u, Fragment& frag) {
         if (fragId[u] != -1)
             return;
-        fragId[u] = (int)frags.size() - 1;
+        fragId[u] = int(frags.size()) - 1;
 
         frag.addNode(u);
         for (int v : edges[u])

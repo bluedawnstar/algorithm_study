@@ -3,7 +3,7 @@
 struct SuffixTree {
     static int popcnt(unsigned x) {
 #ifndef __GNUC__
-        return (int)__popcnt(x);
+        return int(__popcnt(x));
 #else
         return __builtin_popcount(x);
 #endif
@@ -115,7 +115,7 @@ struct SuffixTree {
 
     // build a suffix trie from string 's'
     void build(const string& s, bool finalize = true) {
-        build(&s[0], (int)s.length(), finalize);
+        build(&s[0], int(s.length()), finalize);
     }
 
     // build a suffix trie from string 's'
@@ -145,7 +145,7 @@ struct SuffixTree {
     }
 
     void extend(char ch) {
-        int currPos = (int)mText.length();
+        int currPos = int(mText.length());
         mText += ch;
 
         *mLeafEnd = currPos + 1;
@@ -228,7 +228,7 @@ struct SuffixTree {
 
     // return (prefix_matching_length, suffix_index)
     pair<int, int> search(const string& s) const {
-        return search(&s[0], (int)s.length());
+        return search(&s[0], int(s.length()));
     }
 
     // return (prefix_matching_length, suffix_index)
@@ -258,7 +258,7 @@ struct SuffixTree {
             stk.push_back(p);
         
         string res;
-        for (int i = (int)stk.size() - 1; i >= 0; i--)
+        for (int i = int(stk.size()) - 1; i >= 0; i--)
             res += mText.substr(stk[i]->begin, stk[i]->getLength());
 
         return res;
@@ -294,7 +294,7 @@ private:
             return;
 
         if (node->isLeaf())
-            node->suffixIndex = (int)mText.length() - node->depth - node->getLength();
+            node->suffixIndex = int(mText.length()) - node->depth - node->getLength();
         else {
             node->suffixIndex = -1;
             for (int i = 0; i <= mCharMax - mCharMin; i++) {

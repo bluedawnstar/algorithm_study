@@ -15,7 +15,7 @@ using namespace std;
 #define EPSILON 1e-13
 
 bool check(const vector<Complex<double>>& l, const vector<Complex<double>>& r) {
-    for (int i = 0; i < (int)l.size(); i++) {
+    for (int i = 0; i < int(l.size()); i++) {
         if (fabs(l[i].first - r[i].first) >= EPSILON || fabs(l[i].second - r[i].second) >= EPSILON)
             return false;
     }

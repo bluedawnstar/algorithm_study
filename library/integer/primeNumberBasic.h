@@ -198,7 +198,7 @@ inline vector<pair<T,int>> getPrimeFactorsFast2(T x, const vector<int>& primes) 
             if (n > 0)
                 res.emplace_back(pf, n);
 
-            if (++idx >= (int)primes.size())
+            if (++idx >= int(primes.size()))
                 break;
             pf = primes[idx];
         }

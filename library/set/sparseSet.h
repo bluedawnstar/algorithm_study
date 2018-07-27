@@ -11,11 +11,11 @@ struct SparseSet {
     }
 
     bool exist(int x) const {
-        return (0 <= x) && (x <= maxValue) && (sparse[x] < (int)dense.size()) && (dense[sparse[x]] == x);
+        return (0 <= x) && (x <= maxValue) && (sparse[x] < int(dense.size())) && (dense[sparse[x]] == x);
     }
 
     pair<int,bool> find(int x) const {
-        if ((0 <= x) && (x <= maxValue) && (sparse[x] < (int)dense.size()) && (dense[sparse[x]] == x))
+        if ((0 <= x) && (x <= maxValue) && (sparse[x] < int(dense.size())) && (dense[sparse[x]] == x))
             return make_pair(sparse[x], true);
         return make_pair(-1, false);
     }
@@ -24,7 +24,7 @@ struct SparseSet {
         if (x < 0 || x > maxValue || exist(x))
             return false;
 
-        sparse[x] = (int)dense.size();
+        sparse[x] = int(dense.size());
         dense.push_back(x);
 
         return true;
@@ -49,7 +49,7 @@ struct SparseSet {
 
 
     SparseSet operator &(const SparseSet& rhs) const {
-        SparseSet res(max(maxValue, rhs.maxValue), (int)min(dense.capacity(), rhs.dense.capacity()));
+        SparseSet res(max(maxValue, rhs.maxValue), int(min(dense.capacity(), rhs.dense.capacity())));
         if (dense.size() < rhs.dense.size()) {
             for (auto x : dense) {
                 if (rhs.exist(x))
@@ -65,7 +65,7 @@ struct SparseSet {
     }
 
     SparseSet operator |(const SparseSet& rhs) const {
-        SparseSet res(max(maxValue, rhs.maxValue), (int)(dense.size() + rhs.dense.size()));
+        SparseSet res(max(maxValue, rhs.maxValue), int(dense.size() + rhs.dense.size()));
 
         for (auto x : dense)
             res.set(x);

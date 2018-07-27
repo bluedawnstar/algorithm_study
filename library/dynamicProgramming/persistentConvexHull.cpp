@@ -24,7 +24,7 @@ using namespace std;
 #define MOD     1000000007
 
 static int solveWoC36_P6(const vector<int>& X, const vector<int>& Y, const vector<int>& Z) {
-    int N = (int)X.size();
+    int N = int(X.size());
 
     PersistentLowerConvexHull<int> ch(N + 1);
 
@@ -53,7 +53,7 @@ static int solveWoC36_P6(const vector<int>& X, const vector<int>& Y, const vecto
 }
 
 static int solveWoC36_P6_2(const vector<int>& X, const vector<int>& Y, const vector<int>& Z) {
-    int N = (int)X.size();
+    int N = int(X.size());
 
     PersistentUpperConvexHull<int> ch(N + 1);
 

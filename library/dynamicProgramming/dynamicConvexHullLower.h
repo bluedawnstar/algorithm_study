@@ -18,7 +18,7 @@ struct DynamicLowerConvexHull {
 
         auto base = make_pair(x, y);
 
-        int lo = 0, hi = (int)points.size() - 1;
+        int lo = 0, hi = int(points.size()) - 1;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
             if (ccw(base, points[mid + 1], points[mid]))
@@ -50,7 +50,7 @@ struct DynamicLowerConvexHull {
     vector<int> queryWithSlope(T dx, T dy) const {
         vector<int> res;
 
-        int lo = 0, hi = (int)points.size() - 1;
+        int lo = 0, hi = int(points.size()) - 1;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
 
@@ -77,7 +77,7 @@ struct DynamicLowerConvexHull {
 
         auto base = make_pair(x, y);
 
-        int lo = 0, hi = (int)points.size() - 1;
+        int lo = 0, hi = int(points.size()) - 1;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
 

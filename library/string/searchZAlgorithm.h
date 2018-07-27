@@ -33,19 +33,19 @@ inline vector<int> makeZArray(const char* s, int len) {
 }
 
 inline vector<int> makeZArray(const string& s) {
-    return makeZArray(&s[0], (int)s.length());
+    return makeZArray(&s[0], int(s.length()));
 }
 
 inline vector<int> searchZ(const string& text, const string& pattern) {
     vector<int> res;
 
     string concat = pattern + "$" + text;
-    int len = (int)concat.length();
+    int len = int(concat.length());
 
     vector<int> Z = makeZArray(concat);
     for (int i = 0; i < len; i++) {
         if (Z[i] == pattern.length())
-            res.push_back(i - (int)pattern.length() - 1);
+            res.push_back(i - int(pattern.length()) - 1);
     }
 
     return res;

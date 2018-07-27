@@ -7,8 +7,8 @@ template <typename T = int>
 vector<T> multPoly(const vector<T>& left, const vector<T>& right) {
     vector<T> res(left.size() + right.size() - 1);
 
-    for (int i = 0; i < (int)right.size(); i++) {
-        for (int j = 0; j < (int)left.size(); j++) {
+    for (int i = 0; i < int(right.size()); i++) {
+        for (int j = 0; j < int(left.size()); j++) {
             res[i + j] += left[j] * right[i];
         }
     }
@@ -20,8 +20,8 @@ vector<T> multPoly(const vector<T>& left, const vector<T>& right) {
 // High order first
 template <typename T = int>
 vector<T> multPolyFFT(const vector<T>& left, const vector<T>& right) {
-    int sizeL = (int)left.size();
-    int sizeR = (int)right.size();
+    int sizeL = int(left.size());
+    int sizeR = int(right.size());
     int sizeDst = sizeL + sizeR - 1;
 
     int size = 1;

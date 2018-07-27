@@ -160,7 +160,7 @@ private:
             if (it.vi > 0)
                 treeSize[it.u] += treeSize[edges[it.u][it.vi - 1]];
 
-            if (it.vi >= (int)edges[it.u].size()) {
+            if (it.vi >= int(edges[it.u].size())) {
                 // leave ...
                 st.pop_back();
             } else if (edges[it.u][it.vi] != it.parent) {

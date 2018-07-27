@@ -20,7 +20,7 @@ struct PrimalityTest {
         T rndX = RAND_SEED; // seed
         T rndY = RAND_SEED; // seed
 
-        int t = min((int)sizeof(x) * 8, int(sqrt(x))) * k;
+        int t = min(int(sizeof(x)) * 8, int(sqrt(x))) * k;
 
         int i = 0, j = 2;
         while (j <= t) {

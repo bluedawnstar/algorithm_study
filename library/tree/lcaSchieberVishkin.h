@@ -24,7 +24,7 @@ struct LcaSchieberVishkin {
 
     // O(N)
     void build(vector<vector<int>>& edges, int root) {
-        init((int)edges.size());
+        init(int(edges.size()));
 
         time = 0;
         dfs1(edges, root, -1);
@@ -86,9 +86,9 @@ private:
 
     static int clz(int x) {
 #ifndef __GNUC__
-        return (int)__lzcnt((unsigned)x);
+        return int(__lzcnt(unsigned(x)));
 #else
-        return __builtin_clz((unsigned)x);
+        return __builtin_clz(unsigned(x));
 #endif
     }
 

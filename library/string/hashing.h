@@ -13,14 +13,14 @@ struct StringHash {
     }
 
     static unsigned long long hash(const string& s) {
-        return hash((const char*)&s[0], (int)s.length());
+        return hash((const char*)&s[0], int(s.length()));
     }
 };
 
 
 struct StringHashAlgo {
     static vector<vector<int>> groupIdenticalStrings(const vector<string>& s) {
-        int n = s.size();
+        int n = int(s.size());
         vector<pair<long long, int>> hashes(n);
         for (int i = 0; i < n; i++)
             hashes[i] = { StringHash::hash(s[i]), i };
@@ -54,13 +54,13 @@ struct StringHashAlgo {
             unordered_set<unsigned long long> hs;
             for (int i = 0; i <= n - l; i++)
                 hs.insert((h[i + l] - h[i]) * pow[n - i - 1]);
-            cnt += hs.size();
+            cnt += int(hs.size());
         }
 
         return cnt;
     }
 
     static int countUniqueSubstrings(const string& s) {
-        return countUniqueSubstrings(&s[0], (int)s.length());
+        return countUniqueSubstrings(&s[0], int(s.length()));
     }
 };

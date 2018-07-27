@@ -47,21 +47,21 @@ void testSubsequenceLCS() {
             auto lcs = LcsFinder::allLcs(s1, s2);
             cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
             cout << lcs << endl;
-            assert((int)lcs.size() == gt);
+            assert(int(lcs.size()) == gt);
 
             auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
             cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert((int)distinctLcs.size() == 1 && distinctLcs.begin()->second == gt);
+            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
 
             LcsDAG dag;
             dag.makeLcsDAG(s1, s2);
             lcs = dag.allLcs();
             cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
             cout << lcs << endl;
-            assert((int)lcs.size() == gt);
+            assert(int(lcs.size()) == gt);
             distinctLcs = dag.allDistinctLcs();
             cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert((int)distinctLcs.size() == 1 && distinctLcs.begin()->second == gt);
+            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
         }
         {
             string s1 = "aaaaaa";
@@ -74,21 +74,21 @@ void testSubsequenceLCS() {
             auto lcs = LcsFinder::allLcs(s1, s2);
             cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
             cout << lcs << endl;
-            assert((int)lcs.size() == gt);
+            assert(int(lcs.size()) == gt);
 
             auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
             cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert((int)distinctLcs.size() == 1 && distinctLcs.begin()->second == gt);
+            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
 
             LcsDAG dag;
             dag.makeLcsDAG(s1, s2);
             lcs = dag.allLcs();
             cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
             cout << lcs << endl;
-            assert((int)lcs.size() == gt);
+            assert(int(lcs.size()) == gt);
             distinctLcs = dag.allDistinctLcs();
             cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert((int)distinctLcs.size() == 1 && distinctLcs.begin()->second == gt);
+            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
         }
         {
             string s1 = "abcabc";
@@ -101,21 +101,21 @@ void testSubsequenceLCS() {
             auto lcs = LcsFinder::allLcs(s1, s2);
             cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
             cout << lcs << endl;
-            assert((int)lcs.size() == gt);
+            assert(int(lcs.size()) == gt);
 
             auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
             cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert((int)distinctLcs.size() == 1 && distinctLcs.begin()->second == gt);
+            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
 
             LcsDAG dag;
             dag.makeLcsDAG(s1, s2);
             lcs = dag.allLcs();
             cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
             cout << lcs << endl;
-            assert((int)lcs.size() == gt);
+            assert(int(lcs.size()) == gt);
             distinctLcs = dag.allDistinctLcs();
             cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert((int)distinctLcs.size() == 1 && distinctLcs.begin()->second == gt);
+            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
         }
     }
 

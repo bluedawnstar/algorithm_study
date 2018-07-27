@@ -25,7 +25,7 @@ static ostream& operator <<(ostream& os, vector<NodeT*>& rhs) {
     os << "{ ";
     if (!rhs.empty())
         os << rhs[0];
-    for (int i = 1; i < (int)rhs.size(); i++)
+    for (int i = 1; i < int(rhs.size()); i++)
         os << ", " << rhs[i];
     os << " }";
 
@@ -40,7 +40,7 @@ void testIntervalTree() {
     vector<pair<int,int>> in{ { 15, 20 }, { 10, 30 }, { 17, 19 }, { 5, 20 }, { 12, 15 }, { 30, 40 } };
 
     IntervalTree<int> tree;
-    for (int i = 0; i < (int)in.size(); i++) {
+    for (int i = 0; i < int(in.size()); i++) {
         auto* p = tree.insert(in[i].first, in[i].second);
         assert(p->interval.low == in[i].first);
         assert(p->interval.high == in[i].second);
@@ -51,7 +51,7 @@ void testIntervalTree() {
 
     vector<pair<int, int>> containedGT{ {10, 30}, {12, 15}, {15, 20}, {17, 19} };
     assert(contained.size() == containedGT.size());
-    for (int i = 0; i < (int)contained.size(); i++)
+    for (int i = 0; i < int(contained.size()); i++)
         assert(contained[i]->interval.low == containedGT[i].first && contained[i]->interval.high == containedGT[i].second);
 
     auto* p = tree.searchOverlap(6, 7);

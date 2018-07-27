@@ -28,8 +28,8 @@ struct MinCostMaxFlowSPFA {
 
     // add edges to a directed graph
     void addEdge(int u, int v, T capacity, T cost) {
-        int uN = (int)edges[u].size();
-        int vN = (int)edges[v].size();
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
         edges[u].push_back(Edge{ v, vN, 0, cost, capacity });
         edges[v].push_back(Edge{ u, uN, 0, -cost, 0 });
     }
@@ -62,7 +62,7 @@ struct MinCostMaxFlowSPFA {
                 Q.pop();
                 inQ[u] = false;
 
-                for (int i = 0; i < (int)edges[u].size(); i++) {
+                for (int i = 0; i < int(edges[u].size()); i++) {
                     Edge& e = edges[u][i];
                     if (e.flow >= e.capacity)
                         continue;

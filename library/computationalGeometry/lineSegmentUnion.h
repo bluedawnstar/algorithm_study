@@ -3,7 +3,7 @@
 // Klee's algorithm : O(nlogn)
 // (x1, x2)
 int lengthOfLineSegmentUnion(const vector<pair<int, int>>& lines) {
-    int n = (int)lines.size();
+    int n = int(lines.size());
     vector<pair<int, int>> x(n * 2);
     for (int i = 0; i < n; i++) {
         x[i * 2] = make_pair(lines[i].first, -1);

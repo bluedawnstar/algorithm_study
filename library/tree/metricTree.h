@@ -17,7 +17,7 @@ struct MetricTree {
     }
 
     void build(const vector<pair<T,T>>& points) {
-        N = (int)points.size();
+        N = int(points.size());
         this->points = points;
         build(0, N);
     }

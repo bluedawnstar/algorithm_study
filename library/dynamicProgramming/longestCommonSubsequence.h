@@ -5,8 +5,8 @@
 
 // O(N*M)
 inline int lengthOfLcs(const string& s1, const string& s2) {
-    int n = (int)s1.length();
-    int m = (int)s2.length();
+    int n = int(s1.length());
+    int m = int(s2.length());
 
     vector<vector<int>> dp(n + 1, vector<int>(m + 1));
 
@@ -24,8 +24,8 @@ inline int lengthOfLcs(const string& s1, const string& s2) {
 
 // O(N*M)
 inline string lcs(const string& s1, const string& s2) {
-    int n = (int)s1.length();
-    int m = (int)s2.length();
+    int n = int(s1.length());
+    int m = int(s2.length());
 
     vector<vector<int>> dp(n + 1, vector<int>(m + 1));
     for (int i = 1; i <= n; i++) {
@@ -57,8 +57,8 @@ inline string lcs(const string& s1, const string& s2) {
 
 // O(N*M)
 inline int countOfAllLcs(const string& s1, const string& s2) {
-    int n = (int)s1.length();
-    int m = (int)s2.length();
+    int n = int(s1.length());
+    int m = int(s2.length());
 
     vector<vector<int>> dp(n + 1, vector<int>(m + 1));
     vector<vector<int>> cnt(n + 1, vector<int>(m + 1));
@@ -94,8 +94,8 @@ inline int countOfAllLcs(const string& s1, const string& s2) {
 
 struct LcsFinder {
     static vector<string> allLcs(const string& s1, const string& s2) {
-        int n = (int)s1.length();
-        int m = (int)s2.length();
+        int n = int(s1.length());
+        int m = int(s2.length());
 
         vector<vector<int>> dp(n + 1, vector<int>(m + 1));
         vector<vector<pair<int, int>>> match(min(n, m) + 1);    // count -> (i, j)
@@ -121,8 +121,8 @@ struct LcsFinder {
     }
 
     static unordered_map<string, int> allDistinctLcs(const string& s1, const string& s2) {
-        int n = (int)s1.length();
-        int m = (int)s2.length();
+        int n = int(s1.length());
+        int m = int(s2.length());
 
         vector<vector<int>> dp(n + 1, vector<int>(m + 1));
         vector<vector<pair<int, int>>> match(min(n, m) + 1);    // count -> (i, j)
@@ -190,8 +190,8 @@ struct LcsDAG {
 
     // the start node is nodes[0]
     void makeLcsDAG(const string& s1, const string& s2) {
-        int n = (int)s1.length();
-        int m = (int)s2.length();
+        int n = int(s1.length());
+        int m = int(s2.length());
 
         nodes.clear();
         nodes.push_back(NodeT{ -1, -1, 0, vector<int>{} });
@@ -202,7 +202,7 @@ struct LcsDAG {
             for (int j = 1; j <= m; j++) {
                 if (s1[i - 1] == s2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
-                    match[dp[i][j]].push_back((int)nodes.size());
+                    match[dp[i][j]].push_back(int(nodes.size()));
                     nodes.push_back(NodeT{ i - 1, j - 1, s1[i - 1], vector<int>{} });
                 } else {
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);

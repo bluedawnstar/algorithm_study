@@ -4,15 +4,15 @@
 
 template <typename T = int>
 vector<T> convolution(const vector<T>& x, const vector<T>& h, bool reverseH = true) {
-    int xN = (int)x.size();
-    int hN = (int)h.size();
+    int xN = int(x.size());
+    int hN = int(h.size());
 
     vector<T> y(xN + hN - 1);
 
     int n = min(xN, hN);
     if (reverseH) {
         // y(n) = SUM x(t) * h(n - t)
-        for (int i = 0; i < (int)y.size(); i++) {
+        for (int i = 0; i < int(y.size()); i++) {
             for (int L = i - hN + 1, R = hN - 1; R >= 0; L++, R--) {
                 if (L >= 0 && L < xN)
                     y[i] += x[L] * h[R];
@@ -20,7 +20,7 @@ vector<T> convolution(const vector<T>& x, const vector<T>& h, bool reverseH = tr
         }
     } else {
         // y(n) = SUM x(t) * h(t)
-        for (int i = 0; i < (int)y.size(); i++) {
+        for (int i = 0; i < int(y.size()); i++) {
             for (int L = i - hN + 1, R = 0; R < hN; L++, R++) {
                 if (L >= 0 && L < xN)
                     y[i] += x[L] * h[R];
@@ -34,8 +34,8 @@ vector<T> convolution(const vector<T>& x, const vector<T>& h, bool reverseH = tr
 // It's better performance than multPoly() when N >= 128
 template <typename T = int>
 vector<T> convolutionFFT(const vector<T>& x, const vector<T>& h, bool reverseH = true) {
-    int sizeL = (int)x.size();
-    int sizeR = (int)h.size();
+    int sizeL = int(x.size());
+    int sizeR = int(h.size());
     int sizeDst = sizeL + sizeR - 1;
 
     int size = 1;
@@ -78,15 +78,15 @@ vector<T> convolutionFFT(const vector<T>& x, const vector<T>& h, bool reverseH =
 #endif
 
 vector<int> convolutionMod(const vector<int>& x, const vector<int>& h, int MOD, bool reverseH = true) {
-    int xN = (int)x.size();
-    int hN = (int)h.size();
+    int xN = int(x.size());
+    int hN = int(h.size());
 
     vector<int> y(xN + hN - 1);
 
     int n = min(xN, hN);
     if (reverseH) {
         // y(n) = SUM x(t) * h(n - t)
-        for (int i = 0; i < (int)y.size(); i++) {
+        for (int i = 0; i < int(y.size()); i++) {
             for (int L = i - hN + 1, R = hN - 1; R >= 0; L++, R--) {
                 if (L >= 0 && L < xN)
                     y[i] = ((long long)y[i] + (long long)x[L] * h[R]) % MOD;
@@ -94,7 +94,7 @@ vector<int> convolutionMod(const vector<int>& x, const vector<int>& h, int MOD, 
         }
     } else {
         // y(n) = SUM x(t) * h(t)
-        for (int i = 0; i < (int)y.size(); i++) {
+        for (int i = 0; i < int(y.size()); i++) {
             for (int L = i - hN + 1, R = 0; R < hN; L++, R++) {
                 if (L >= 0 && L < xN)
                     y[i] = ((long long)y[i] + (long long)x[L] * h[R]) % MOD;
@@ -107,8 +107,8 @@ vector<int> convolutionMod(const vector<int>& x, const vector<int>& h, int MOD, 
 
 // It's better performance than multPoly() when N >= 64
 vector<int> convolutionFFTMod(const vector<int>& x, const vector<int>& h, int MOD, bool reverseH = true) {
-    int sizeL = (int)x.size();
-    int sizeR = (int)h.size();
+    int sizeL = int(x.size());
+    int sizeR = int(h.size());
     int sizeDst = sizeL + sizeR - 1;
 
     int size = 1;

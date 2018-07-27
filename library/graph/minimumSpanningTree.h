@@ -33,7 +33,7 @@ struct MinimumSpanningTree {
 
         vector<pair<T, pair<int, int>>> E;  // (weight, (u, v))
         for (int u = 0; u < N; u++) {
-            for (int i = 0; i < (int)edges[u].size(); i++) {
+            for (int i = 0; i < int(edges[u].size()); i++) {
                 int v = edges[u][i].first;
                 int cost = edges[u][i].second;
                 E.push_back(make_pair(cost, make_pair(u, v)));
@@ -42,7 +42,7 @@ struct MinimumSpanningTree {
         sort(E.begin(), E.end());
 
         UnionFind sets(N);
-        for (int i = 0; i < (int)E.size(); i++) {
+        for (int i = 0; i < int(E.size()); i++) {
             T cost = E[i].first;
             int u = E[i].second.first;
             int v = E[i].second.second;

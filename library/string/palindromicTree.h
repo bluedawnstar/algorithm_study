@@ -41,7 +41,7 @@ struct PalindromicTree {
 
     // return (the number of added palindrom strings, if new palindromic substring)
     pair<int,bool> extend(char ch) {
-        int pos = (int)s.length();
+        int pos = int(s.length());
         int cur = lastSuffix, curlen = 0;
         int let = ch2i(ch);
 

@@ -215,12 +215,12 @@ void testBitSet() {
         for (int i : index)
             bs.set(i);
 
-        for (int i = 0, j = -1; i < (int)index.size(); i++) {
+        for (int i = 0, j = -1; i < int(index.size()); i++) {
             j = bs.next(j);
             assert(j == index[i]);
         }
 
-        for (int i = (int)index.size() - 1, j = N; i >= 0; i--) {
+        for (int i = int(index.size()) - 1, j = N; i >= 0; i--) {
             j = bs.prev(j);
             assert(j == index[i]);
         }
@@ -372,12 +372,12 @@ void testBitSet() {
         for (int i : index)
             bs.set(i);
 
-        for (int i = 0, j = -1; i < (int)index.size(); i++) {
+        for (int i = 0, j = -1; i < int(index.size()); i++) {
             j = bs.next(j);
             assert(j == index[i]);
         }
 
-        for (int i = (int)index.size() - 1, j = N; i >= 0; i--) {
+        for (int i = int(index.size()) - 1, j = N; i >= 0; i--) {
             j = bs.prev(j);
             assert(j == index[i]);
         }

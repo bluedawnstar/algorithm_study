@@ -80,7 +80,7 @@ string longestPalindromicSubsequence(T s, int N) {
             j--;
     }
 
-    int half = (int)res.length();
+    int half = int(res.length());
 
     if ((len & 1) != 0)
         res.append(1, s[i]);

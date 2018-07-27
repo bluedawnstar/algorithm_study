@@ -82,7 +82,7 @@ struct SuffixAutomatonAlgo {
     // 4. Smallest Cyclic Shift to obtain lexicographical smallest of All possible  
     static int minShift(const string& s) {
         string ss = s + s;
-        SuffixAutomaton sa((int)ss.length());
+        SuffixAutomaton sa(int(ss.length()));
         sa.init();
         sa.extend(ss);
 
@@ -92,8 +92,8 @@ struct SuffixAutomatonAlgo {
         do {
             for (int j = 0; j < SuffixAutomaton::MaxCharN; j++) {
                 if (sa.state[cur].next[j]) {
-                    if (++len == (int)s.length())
-                        res = sa.state[cur].rightEnd - (int)s.length() + 2;
+                    if (++len == int(s.length()))
+                        res = sa.state[cur].rightEnd - int(s.length()) + 2;
                     else
                         cur = sa.state[cur].next[j];
                     break;
@@ -101,19 +101,19 @@ struct SuffixAutomatonAlgo {
             }
         } while (res < 0);
 
-        return min(res, (int)s.length() - res);
+        return min(res, int(s.length()) - res);
     }
 
 
     // 5. position of first occurrence
     int findFirst(const string& pattern) {
         int u = 0;
-        for (int i = 0; i < (int)pattern.length(); i++) {
+        for (int i = 0; i < int(pattern.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
             if (u <= 0)
                 return -1;
         }
-        return sa.state[u].rightEnd - (int)pattern.length() + 1;
+        return sa.state[u].rightEnd - int(pattern.length()) + 1;
     }
 
 
@@ -134,14 +134,14 @@ struct SuffixAutomatonAlgo {
         }
 
         int u = 0;
-        for (int i = 0; i < (int)pattern.length(); i++) {
+        for (int i = 0; i < int(pattern.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
             if (u <= 0)
                 return{};
         }
 
         vector<int> res;
-        dfsFind(children, (int)pattern.length(), res, u);
+        dfsFind(children, int(pattern.length()), res, u);
         res.erase(unique(res.begin(), res.end()), res.end());
 
         return res;
@@ -158,14 +158,14 @@ struct SuffixAutomatonAlgo {
 
     vector<int> findAll(vector<vector<int>>& children, const string& pattern) {
         int u = 0;
-        for (int i = 0; i < (int)pattern.length(); i++) {
+        for (int i = 0; i < int(pattern.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
             if (u <= 0)
                 return{};
         }
 
         vector<int> res;
-        dfsFind(children, (int)pattern.length(), res, u);
+        dfsFind(children, int(pattern.length()), res, u);
         res.erase(unique(res.begin(), res.end()), res.end());
 
         return res;
@@ -183,7 +183,7 @@ struct SuffixAutomatonAlgo {
         }
         sort(base.begin(), base.end());
 
-        for (int i = (int)base.size() - 1; i >= 0; i--)
+        for (int i = int(base.size()) - 1; i >= 0; i--)
             cnt[sa.state[base[i].second].suffixLink] += cnt[base[i].second];
 
         return cnt;
@@ -191,7 +191,7 @@ struct SuffixAutomatonAlgo {
 
     int countPattern(const vector<int>& countTable, const string& pattern) {
         int u = 0;
-        for (int i = 0; i < (int)pattern.length(); i++) {
+        for (int i = 0; i < int(pattern.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
             if (u <= 0)
                 return 0;
@@ -205,7 +205,7 @@ struct SuffixAutomatonAlgo {
     // It's better that t's length is shorter than SuffixAutomation's length
     int lengthOfLcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
-        for (int i = 0; i < (int)t.length(); ++i) {
+        for (int i = 0; i < int(t.length()); ++i) {
             int ch = SuffixAutomaton::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
@@ -225,7 +225,7 @@ struct SuffixAutomatonAlgo {
 
     string lcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
-        for (int i = 0; i < (int)t.length(); ++i) {
+        for (int i = 0; i < int(t.length()); ++i) {
             int ch = SuffixAutomaton::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
@@ -253,7 +253,7 @@ struct SuffixAutomatonAlgo {
         vector<int> term = sa.getTerminals();
 
         int u = 0;
-        for (int i = 0; i < (int)s.length(); i++) {
+        for (int i = 0; i < int(s.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
             if (u <= 0)
                 return false;
@@ -263,7 +263,7 @@ struct SuffixAutomatonAlgo {
 
     bool isSuffix(vector<int>& term, const string& s) {
         int u = 0;
-        for (int i = 0; i < (int)s.length(); i++) {
+        for (int i = 0; i < int(s.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
             if (u <= 0)
                 return false;
@@ -273,7 +273,7 @@ struct SuffixAutomatonAlgo {
 
     bool isSuffixWithSortedTerm(vector<int>& term, const string& s) {
         int u = 0;
-        for (int i = 0; i < (int)s.length(); i++) {
+        for (int i = 0; i < int(s.length()); i++) {
             u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
             if (u <= 0)
                 return false;

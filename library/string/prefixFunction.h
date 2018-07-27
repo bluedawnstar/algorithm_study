@@ -16,7 +16,7 @@ struct PrefixFunction {
     }
 
     PrefixFunction(const string& s, int start) {
-        build(&s[start], (int)s.length() - start);
+        build(&s[start], int(s.length()) - start);
     }
 
 
@@ -36,11 +36,11 @@ struct PrefixFunction {
     }
 
     void build(const string& s) {
-        build(&s[0], (int)s.length());
+        build(&s[0], int(s.length()));
     }
 
     void build(const string& s, int start) {
-        build(&s[start], (int)s.length() - start);
+        build(&s[start], int(s.length()) - start);
     }
 
     //---
@@ -50,7 +50,7 @@ struct PrefixFunction {
         if (pi.empty())
             return make_pair(-1, -1);
 
-        int len = (int)pi.size();
+        int len = int(pi.size());
         int n = len - pi[len - 1];
         if (pi[len - 1] && pi[len - 1] % n == 0)
             return make_pair(n, len / n);
@@ -62,7 +62,7 @@ struct PrefixFunction {
     // (pattern length, pattern count)
     pair<int, int> getMaxRepeatedPrefixString() const {
         if (!pi.empty()) {
-            for (int i = (int)pi.size() - 1; i >= 0; i--) {
+            for (int i = int(pi.size()) - 1; i >= 0; i--) {
                 int n = i + 1 - pi[i];
                 if (pi[i] && pi[i] % n == 0)
                     return make_pair(n, (i + 1) / n);
@@ -77,8 +77,8 @@ struct PrefixFunction {
     static tuple<int, int, int> getMaxRepeatedSubstring(const string& s) {
         int repLen = 0;
         tuple<int, int, int> res(-1, -1, -1);
-        for (int i = 0; i < (int)s.length(); i++) {
-            int len = (int)s.length() - i;
+        for (int i = 0; i < int(s.length()); i++) {
+            int len = int(s.length()) - i;
             if (len <= repLen)
                 break;
 
@@ -98,7 +98,7 @@ struct PrefixFunction {
     vector<int> getPrefixSuffix() const {
         vector<int> res;
 
-        int n = (int)p.length();
+        int n = int(p.length());
         while (n > 0) {
             res.push_back(n);
             n = pi[n - 1];

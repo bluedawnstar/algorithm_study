@@ -5,7 +5,7 @@
 
 // returns the maximum value that can be put in a knapsack of capacity maxWeight, O(n*W)
 inline int knapsackNaive(const vector<int>& weight, const vector<int>& value, int maxWeight) {
-    int N = (int)weight.size();
+    int N = int(weight.size());
 
     vector<vector<int>> dp(N + 1, vector<int>(maxWeight + 1));
     for (int i = 1; i <= N; i++) {
@@ -26,7 +26,7 @@ inline int knapsack(const vector<int>& weight, const vector<int>& value, int max
     if (maxWeight <= 0)
         return 0;
 
-    int N = (int)weight.size();
+    int N = int(weight.size());
 
     vector<int> dp(maxWeight + 1);
     for (int i = 0; i < N; i++) {
@@ -47,7 +47,7 @@ inline int knapsack(const vector<int>& weight, const vector<int>& value, int max
         return 0;
 
     const int INF = 0x3f3f3f3f;
-    int N = (int)weight.size();
+    int N = int(weight.size());
 
     vector<int> dp(N * maxValue + 1, INF);
     dp[0] = 0;
@@ -75,7 +75,7 @@ inline int unboundedKnapsack(const vector<int>& weight, const vector<int>& value
     if (maxWeight <= 0)
         return 0;
 
-    int N = (int)weight.size();
+    int N = int(weight.size());
 
     vector<int> dp(maxWeight + 1);
     for (int i = 0; i < N; i++) {

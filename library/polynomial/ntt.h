@@ -11,7 +11,7 @@ struct NTT {
     }
 
     void ntt(vector<int>& a, bool inverse = false) {
-        int n = (int)a.size();
+        int n = int(a.size());
 
         int base = modPow(root, (M - 1) / n);
         if (inverse)
@@ -47,7 +47,7 @@ struct NTT {
     }
 
     vector<int> multiply(const vector<int>& a, const vector<int>& b, bool reverseB = false) {
-        int n = (int)a.size() + (int)b.size() - 1;
+        int n = int(a.size()) + int(b.size()) - 1;
 
         int size = 1;
         while (size < n)

@@ -1,7 +1,7 @@
 #pragma once
 
 inline int countPalindromicSubstring(string s) {
-    int N = (int)s.length();
+    int N = int(s.length());
     vector<vector<int>> dp(N, vector<int>(N));  // length
 
     int res = 0;                                // count
@@ -31,7 +31,7 @@ inline int countPalindromicSubstring(string s) {
 }
 
 inline int lengthOfLongestPalindromicSubstring(string s) {
-    int N = (int)s.length();
+    int N = int(s.length());
     vector<vector<int>> dp(N, vector<int>(N));
 
     int res = 1;
@@ -59,7 +59,7 @@ inline int lengthOfLongestPalindromicSubstring(string s) {
 }
 
 inline string longestPalindromicSubstring(string s) {
-    int N = (int)s.length();
+    int N = int(s.length());
     vector<vector<int>> dp(N, vector<int>(N));
 
     int maxLen = 1;
@@ -99,7 +99,7 @@ inline string longestPalindromicSubstring(string s) {
         res.append(1, s[i]);
     }
 
-    int half = (int)res.length();
+    int half = int(res.length());
 
     if ((maxLen & 1) != 0)
         res.append(1, s[i]);
