@@ -19,52 +19,116 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+static int sumSlow(vector<int>& v, int L, int R) {
+    int res = 0;
+    while (L <= R)
+        res += v[L++];
+    return res;
+}
+
+static int lowerBoundSlow(vector<int>& v, int k) {
+    int res = 0;
+    for (int i = 0; i < int(v.size()); i++) {
+        res += v[i];
+        if (res >= k)
+            return i;
+    }
+    return int(v.size());
+}
+
 void testSegmentTree() {
     return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Segment Tree ----------------------------------------" << endl;
+    {
+        auto segTree = makeSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
+        auto segTree2 = makeSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
+        RMQ rmq(vector<int>{6, 5, 4, 3, 2, 1});
 
-    auto segTree = makeSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
-    auto segTree2 = makeSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
-    RMQ rmq(vector<int>{6, 5, 4, 3, 2, 1});
+        int ans, ansRMQ;
 
-    int ans, ansRMQ;
+        ans = segTree.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 12);
 
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 12);
+        segTree.update(2, 10);
+        ans = segTree.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 18);
 
-    segTree.update(2, 10);
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 18);
+        ans = segTree2.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 3);
 
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 3);
+        ansRMQ = rmq.query(1, 3);
+        assert(ans == ansRMQ);
 
-    ansRMQ = rmq.query(1, 3);
-    assert(ans == ansRMQ);
+        segTree2.update(2, -10);
+        ans = segTree2.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == -10);
 
-    segTree2.update(2, -10);
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == -10);
+        rmq.update(2, -10);
+        ansRMQ = rmq.query(1, 3);
+        assert(ans == ansRMQ);
 
-    rmq.update(2, -10);
-    ansRMQ = rmq.query(1, 3);
-    assert(ans == ansRMQ);
+        segTree.updateRange(0, 2, 3);
+        ans = segTree.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 9);
 
-    segTree.updateRange(0, 2, 3);
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 9);
+        segTree2.updateRange(0, 2, 2);
+        ans = segTree2.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 2);
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 1000;
+        vector<int> in(N);
 
-    segTree2.updateRange(0, 2, 2);
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 2);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
 
+        SegmentTree<int> tree(in, [](int a, int b) { return a + b; }, 0);
+
+        for (int i = 0; i < N; i++) {
+            int R = RandInt32::get() % N;
+            int sum = sumSlow(in, 0, R);
+
+            auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            int gt = lowerBoundSlow(in, sum);
+            if (ans.second != gt) {
+                cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            }
+            assert(ans.second == gt);
+        }
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 1000;
+        vector<int> in(N);
+
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
+
+        SegmentTreeLazy<int> tree(in, [](int a, int b) { return a + b; }, 0);
+
+        for (int i = 0; i < N; i++) {
+            int R = RandInt32::get() % N;
+            int sum = sumSlow(in, 0, R);
+
+            auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            int gt = lowerBoundSlow(in, sum);
+            if (ans.second != gt) {
+                cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            }
+            assert(ans.second == gt);
+        }
+    }
+    cout << "OK!" << endl;
     cout << "-- Segment Tree Performance Test -----------------------" << endl;
     cout << "*** Segment tree vs RMQ" << endl;
     {

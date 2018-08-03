@@ -22,87 +22,229 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeRMQ.h"
 
+static int sumSlow(vector<int>& v, int L, int R) {
+    int res = 0;
+    while (L <= R)
+        res += v[L++];
+    return res;
+}
+
+static int lowerBoundSlow(vector<int>& v, int k) {
+    int res = 0;
+    for (int i = 0; i < int(v.size()); i++) {
+        res += v[i];
+        if (res >= k)
+            return i;
+    }
+    return int(v.size());
+}
+
 void testSegmentTreePersistent() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Persistent Segment Tree ----------------------------------------" << endl;
+    {
+        auto segTree = makePersistentSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
+        auto segTree2 = makePersistentSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
+        RMQ rmq(vector<int>{6, 5, 4, 3, 2, 1});
 
-    auto segTree = makePersistentSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
-    auto segTree2 = makePersistentSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
-    RMQ rmq(vector<int>{6, 5, 4, 3, 2, 1});
+        int ans, ansRMQ;
 
-    int ans, ansRMQ;
+        ans = segTree.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 12);
 
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 12);
+        segTree.update(2, 10);
+        ans = segTree.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 18);
 
-    segTree.update(2, 10);
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 18);
+        ans = segTree2.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 3);
 
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 3);
+        ansRMQ = rmq.query(1, 3);
+        assert(ans == ansRMQ);
 
-    ansRMQ = rmq.query(1, 3);
-    assert(ans == ansRMQ);
+        segTree2.update(2, -10);
+        ans = segTree2.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == -10);
 
-    segTree2.update(2, -10);
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == -10);
+        rmq.update(2, -10);
+        ansRMQ = rmq.query(1, 3);
+        assert(ans == ansRMQ);
 
-    rmq.update(2, -10);
-    ansRMQ = rmq.query(1, 3);
-    assert(ans == ansRMQ);
+        segTree.updateRange(0, 2, 3);
+        ans = segTree.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 9);
 
-    segTree.updateRange(0, 2, 3);
-    ans = segTree.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 9);
+        segTree2.updateRange(0, 2, 2);
+        ans = segTree2.query(1, 3);
+        //cout << ans << endl;
+        assert(ans == 2);
 
-    segTree2.updateRange(0, 2, 2);
-    ans = segTree2.query(1, 3);
-    cout << ans << endl;
-    assert(ans == 2);
+        cout << "*** with history" << endl;
 
-    cout << "*** with history" << endl;
+        int history = 0;
 
-    int history = 0;
+        segTree.upgrade(3, 7);
+        segTree2.upgradeRange(3, 4, 7);
 
-    segTree.upgrade(3, 7);
-    segTree2.upgradeRange(3, 4, 7);
+        ans = segTree.query(history, 1, 3);
+        //cout << ans << endl;
+        assert(ans == 9);
 
-    ans = segTree.query(history, 1, 3);
-    cout << ans << endl;
-    assert(ans == 9);
+        segTree.upgrade(2, 10);
+        ans = segTree.query(history, 1, 3);
+        //cout << ans << endl;
+        assert(ans == 9);
 
-    segTree.upgrade(2, 10);
-    ans = segTree.query(history, 1, 3);
-    cout << ans << endl;
-    assert(ans == 9);
+        ans = segTree2.query(history, 1, 3);
+        //cout << ans << endl;
+        assert(ans == 2);
 
-    ans = segTree2.query(history, 1, 3);
-    cout << ans << endl;
-    assert(ans == 2);
+        segTree2.upgrade(2, -10);
+        ans = segTree2.query(history, 1, 3);
+        //cout << ans << endl;
+        assert(ans == 2);
 
-    segTree2.upgrade(2, -10);
-    ans = segTree2.query(history, 1, 3);
-    cout << ans << endl;
-    assert(ans == 2);
+        segTree.upgradeRange(0, 2, 3);
+        ans = segTree.query(history, 1, 3);
+        //cout << ans << endl;
+        assert(ans == 9);
 
-    segTree.upgradeRange(0, 2, 3);
-    ans = segTree.query(history, 1, 3);
-    cout << ans << endl;
-    assert(ans == 9);
+        segTree2.upgradeRange(0, 2, 2);
+        ans = segTree2.query(history, 1, 3);
+        //cout << ans << endl;
+        assert(ans == 2);
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 1000;
+        vector<int> in(N);
 
-    segTree2.upgradeRange(0, 2, 2);
-    ans = segTree2.query(history, 1, 3);
-    cout << ans << endl;
-    assert(ans == 2);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
 
+        PersistentSegmentTree<int> tree(in, [](int a, int b) { return a + b; }, 0);
+
+        for (int i = 0; i < N; i++) {
+            int R = RandInt32::get() % N;
+            int sum = sumSlow(in, 0, R);
+
+            auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            int gt = lowerBoundSlow(in, sum);
+            if (ans.second != gt) {
+                cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            }
+            assert(ans.second == gt);
+        }
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 100;
+        int T = 100;
+        vector<int> in(N);
+
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
+
+        PersistentSegmentTree<int> tree(in, [](int a, int b) { return a + b; }, 0);
+
+        vector<vector<pair<int, int>>> gt(T, vector<pair<int, int>>(N));    // (sum, index)
+        for (int j = 0; j < T; j++) {
+            for (int i = 0; i < N; i++) {
+                int R = RandInt32::get() % N;
+                int sum = sumSlow(in, 0, R);
+                gt[j][i].first = sum;
+                gt[j][i].second = lowerBoundSlow(in, sum);
+            }
+
+            int R = RandInt32::get() % N;
+            int newVal = RandInt32::get() % 1000;
+            tree.upgrade(R, newVal);
+            in[R] = newVal;
+        }
+
+        for (int j = 0; j < T; j++) {
+            for (int i = 0; i < N; i++) {
+                int sum = gt[j][i].first;
+
+                auto ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
+                if (ans.second != gt[j][i].second) {
+                    cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                    ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
+                }
+                assert(ans.second == gt[j][i].second);
+            }
+        }
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 1000;
+        vector<int> in(N);
+
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
+
+        PersistentSegmentTreeLazy<int> tree(in, [](int a, int b) { return a + b; }, 0);
+
+        for (int i = 0; i < N; i++) {
+            int R = RandInt32::get() % N;
+            int sum = sumSlow(in, 0, R);
+
+            auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            int gt = lowerBoundSlow(in, sum);
+            if (ans.second != gt) {
+                cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                ans = tree.lowerBound([sum](int val) { return val >= sum; });
+            }
+            assert(ans.second == gt);
+        }
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 100;
+        int T = 100;
+        vector<int> in(N);
+
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
+
+        PersistentSegmentTreeLazy<int> tree(in, [](int a, int b) { return a + b; }, 0);
+
+        vector<vector<pair<int, int>>> gt(T, vector<pair<int, int>>(N));    // (sum, index)
+        for (int j = 0; j < T; j++) {
+            for (int i = 0; i < N; i++) {
+                int R = RandInt32::get() % N;
+                int sum = sumSlow(in, 0, R);
+                gt[j][i].first = sum;
+                gt[j][i].second = lowerBoundSlow(in, sum);
+            }
+
+            int R = RandInt32::get() % N;
+            int newVal = RandInt32::get() % 1000;
+            tree.upgrade(R, newVal);
+            in[R] = newVal;
+        }
+
+        for (int j = 0; j < T; j++) {
+            for (int i = 0; i < N; i++) {
+                int sum = gt[j][i].first;
+
+                auto ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
+                if (ans.second != gt[j][i].second) {
+                    cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
+                    ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
+                }
+                assert(ans.second == gt[j][i].second);
+            }
+        }
+    }
+    cout << "OK!" << endl;
     cout << "-- Persistent Segment Tree Performance Test -----------------------" << endl;
     cout << "*** Persistent segment tree vs RMQ" << endl;
     {

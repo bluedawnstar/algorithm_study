@@ -76,39 +76,52 @@ struct SegmentTree {
     }
 
 
+    // O(N)
     void init(int size) {
         N = size;
         tree.assign(size * 4, defaultValue);
     }
 
+    // O(NlogN)
     T build(T value, int n) {
         init(n);
         return buildSub(value, 0, n - 1, 1);
     }
 
+    // O(NlogN)
     T build(const T arr[], int n) {
         init(n);
         return buildSub(arr, 0, n - 1, 1);
     }
 
+    // O(NlogN)
     T build(const vector<T>& v) {
         return build(&v[0], int(v.size()));
     }
 
 
-    // inclusive
+    // inclusive, O(logK*logN)
     T query(int left, int right) const {
         return querySub(left, right, 1, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(logN)
     T update(int index, T newValue) {
         return updateSub(index, newValue, 1, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(KlogN)
     T updateRange(int left, int right, T newValue) {
         return updateRangeSub(left, right, newValue, 1, 0, N - 1);
+    }
+
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    pair<T, int> lowerBound(const function<bool(T)>& f) const {
+        return lowerBoundSub(f, T(0), 1, 0, N - 1);
     }
 
 private:
@@ -176,6 +189,19 @@ private:
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         return tree[node] = mergeOp(updateRangeSub(left, right, newValue, node * 2, nodeLeft, mid),
                                     updateRangeSub(left, right, newValue, node * 2 + 1, mid + 1, nodeRight));
+    }
+
+
+    pair<T, int> lowerBoundSub(const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) const {
+        if (nodeLeft >= nodeRight)
+            return make_pair(tree[node], nodeLeft);
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        auto val = mergeOp(delta, tree[node * 2]);
+        if (f(val))
+            return lowerBoundSub(f, delta, node * 2, nodeLeft, mid);
+        else
+            return lowerBoundSub(f, val, node * 2 + 1, mid + 1, nodeRight);
     }
 };
 

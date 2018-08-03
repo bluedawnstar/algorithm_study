@@ -113,6 +113,14 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    pair<T, int> lowerBound(const function<bool(T)>& f) const {
+        return lowerBoundSub(f, T(0), trees.back(), 0, N - 1);
+    }
+
     //--- with history ---
 
     // inclusive
@@ -142,6 +150,14 @@ struct PersistentSegmentTree {
         auto t = upgradeRangeSub(trees[historyIndex], left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
+    }
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    pair<T, int> lowerBound(int historyIndex, const function<bool(T)>& f) const {
+        return lowerBoundSub(f, T(0), trees[historyIndex], 0, N - 1);
     }
 
 private:
@@ -250,6 +266,18 @@ private:
         auto R = upgradeRangeSub(node->right, left, right, newValue, mid + 1, nodeRight);
         T value = mergeOp(L.first, R.first);
         return make_pair(value, createNode(value, L.second, R.second));
+    }
+
+    pair<T, int> lowerBoundSub(const function<bool(T)>& f, T delta, Node* node, int nodeLeft, int nodeRight) const {
+        if (nodeLeft >= nodeRight)
+            return make_pair(node->value, nodeLeft);
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        auto val = mergeOp(delta, node->left->value);
+        if (f(val))
+            return lowerBoundSub(f, delta, node->left, nodeLeft, mid);
+        else
+            return lowerBoundSub(f, val, node->right, mid + 1, nodeRight);
     }
 };
 

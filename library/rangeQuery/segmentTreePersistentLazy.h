@@ -121,6 +121,14 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    pair<T, int> lowerBound(const function<bool(T)>& f) {
+        return lowerBoundSub(int(treesLazy.size()) - 1, f, T(0), trees.back(), 0, N - 1);
+    }
+
     //--- with history ---
 
     // inclusive
@@ -152,6 +160,14 @@ struct PersistentSegmentTreeLazy {
         auto t = upgradeeRangeSub(int(treesLazy.size()) - 1, trees[historyIndex], left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
+    }
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    pair<T, int> lowerBound(int historyIndex, const function<bool(T)>& f) {
+        return lowerBoundSub(historyIndex, f, T(0), trees[historyIndex], 0, N - 1);
     }
 
 private:
@@ -261,7 +277,7 @@ private:
                                      updateRangeSub(historyIndex, node->right, left, right, newValue, mid + 1, nodeRight));
     }
 
-    pair<T,Node*> upgradeSub(int historyIndex, Node* node, int index, T newValue, int nodeLeft, int nodeRight) {
+    pair<T, Node*> upgradeSub(int historyIndex, Node* node, int index, T newValue, int nodeLeft, int nodeRight) {
         if (index < nodeLeft || nodeRight < index)
             return make_pair(node ? node->value : defaultValue, node);
 
@@ -281,7 +297,7 @@ private:
         auto L = upgradeSub(historyIndex, node->left, index, newValue, nodeLeft, mid);
         auto R = upgradeSub(historyIndex, node->right, index, newValue, mid + 1, nodeRight);
         T value = mergeOp(L.first, R.first);
-        return make_pair(value, createNode(p->id, value, p->left, p->right));
+        return make_pair(value, createNode(node->id, value, L.second, R.second));
     }
 
     pair<T, Node*> upgradeRangeSub(int historyIndex, Node* node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
@@ -328,6 +344,27 @@ private:
         treesLazy[historyIndex][p->id] = newValue;
         T value = blockOp(newValue, nodeRight - nodeLeft + 1);
         return make_pair(value, createNode(p->id, value, p->left, p->right));
+    }
+
+
+    pair<T, int> lowerBoundSub(int historyIndex, const function<bool(T)>& f, T delta, Node* node, int nodeLeft, int nodeRight) {
+        if (nodeLeft >= nodeRight)
+            return make_pair(node->value, nodeLeft);
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+
+        auto it = treesLazy[historyIndex].find(node->id);
+        if (it != treesLazy[historyIndex].end()) {
+            pushDown(historyIndex, node->left, it->second, nodeLeft, mid);
+            pushDown(historyIndex, node->right, it->second, mid + 1, nodeRight);
+            treesLazy[historyIndex].erase(it);
+        }
+
+        auto val = mergeOp(delta, node->left->value);
+        if (f(val))
+            return lowerBoundSub(historyIndex, f, delta, node->left, nodeLeft, mid);
+        else
+            return lowerBoundSub(historyIndex, f, val, node->right, mid + 1, nodeRight);
     }
 };
 

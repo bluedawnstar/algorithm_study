@@ -75,6 +75,15 @@ struct SegmentTreeLazy {
         return updateRangeSub(left, right, newValue, 1, 0, N - 1);
     }
 
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    pair<T, int> lowerBound(const function<bool(T)>& f) {
+        return lowerBoundSub(f, T(0), 1, 0, N - 1);
+    }
+
 private:
     // inclusive
     T buildSub(const T arr[], int left, int right, int node) {
@@ -174,6 +183,26 @@ private:
         lazyExist[node] = true;
         treeLazy[node] = newValue;
         return tree[node] = blockOp(newValue, nodeRight - nodeLeft + 1);
+    }
+
+
+    pair<T, int> lowerBoundSub(const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) {
+        if (nodeLeft >= nodeRight)
+            return make_pair(tree[node], nodeLeft);
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        if (lazyExist[node]) {
+            lazyExist[node] = false;
+            pushDown(treeLazy[node], node * 2, nodeLeft, mid);
+            pushDown(treeLazy[node], node * 2 + 1, mid + 1, nodeRight);
+            //treeLazy[node] = defaultValue;
+        }
+
+        auto val = mergeOp(delta, tree[node * 2]);
+        if (f(val))
+            return lowerBoundSub(f, delta, node * 2, nodeLeft, mid);
+        else
+            return lowerBoundSub(f, val, node * 2 + 1, mid + 1, nodeRight);
     }
 };
 
