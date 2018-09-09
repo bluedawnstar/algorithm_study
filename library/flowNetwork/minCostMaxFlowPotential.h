@@ -67,7 +67,7 @@ struct MinCostMaxFlowPotential {
                 auto uPriority = -Q.top().first;
                 auto u = Q.top().second;
                 Q.pop();
-                
+
                 if (uPriority != priority[u])
                     continue;
 

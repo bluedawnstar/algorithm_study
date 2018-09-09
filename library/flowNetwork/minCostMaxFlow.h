@@ -61,6 +61,22 @@ struct MinCostMaxFlow {
         return res;
     }
 
+    // time complexity: O((VE + V^2) * flow)
+    // (flow, cost)
+    pair<T, T> calcMinCostMaxFlow(int s, int t, T maxFlow) {
+        //clearFlow();
+
+        pair<T, T> res;
+
+        while (res.first < maxFlow && bfsUpdateCost(s, t)) {
+            auto r = dfsUpdateFlow(s, t, maxFlow - res.first);
+            res.first += r.first;
+            res.second += r.second;
+        }
+
+        return res;
+    }
+
 private:
     // update cost
     bool bfsUpdateCost(int s, int t) {
@@ -90,7 +106,6 @@ private:
             visited[u] = false;
         }
 
-        //return cost[t] < 0;
         return cost[t] < INF;
     }
 
