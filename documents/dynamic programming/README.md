@@ -1,6 +1,3 @@
-- ...
-  - ...
-  
 - Optimization
   - Convex Hull Trick
     - https://www.hackerrank.com/contests/w30/challenges/poles
