@@ -9,25 +9,21 @@ T countNumberWithDigit(T n, int digit) {
     else if (n < 10)
         return 1;
 
-    // get scale
     T scale = 1;
     for (T t = n / 10; t > 0; t /= 10)
         scale *= 10;
 
-    // calculate the number of numbers with the digit
-    T cnt = 0;
-    for (T t = 1; t < scale; t *= 10)
-        cnt = cnt * 9 + t;
-
-    T res = 0;
-
     int msd = n / scale;
-    if (msd < digit)
-        res += msd * cnt + countNumberWithDigit(n % scale, digit);
+
+    int res = 0;
+
+    res += msd * countNumberWithDigit(scale - 1, digit);    // ex) count(0 ~ 2345, 2) --> 2 * count(0 ~ 999, 2)
+    res += countNumberWithDigit(n % scale, digit);          // ex) count(0 ~ 2345, 2) --> count(0 ~ 345, 2)
+
+    if (msd > digit)
+        res += scale;                                       // ex) count(0 ~ 2345, 1) --> 1000 (2xxx)
     else if (msd == digit)
-        res += msd * cnt + (n % scale + 1);
-    else
-        res += (msd - 1) * cnt + scale + countNumberWithDigit(n % scale, digit);
+        res += n % scale + 1;                               // ex) count(0 ~ 2345, 2) --> 345 + 1 (2xxx)
 
     return res;
 }
