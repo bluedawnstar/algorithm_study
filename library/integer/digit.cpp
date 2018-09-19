@@ -21,23 +21,23 @@ void testDigit() {
 
     int ans = 0;
 
-    ans = countNumberWithDigit(9, 1);
+    ans = countDigit(9, 1);
     cout << ans << endl;
     assert(ans == 1);
 
-    ans = countNumberWithDigit(10, 1);
+    ans = countDigit(10, 1);
     cout << ans << endl;
     assert(ans == 2);
 
-    ans = countNumberWithDigit(11, 1);
+    ans = countDigit(11, 1);
     cout << ans << endl;
     assert(ans == 4);
 
-    ans = countNumberWithDigit(100, 1);
+    ans = countDigit(100, 1);
     cout << ans << endl;
     assert(ans == 21);
 
-    ans = countNumberWithDigit(111, 1);
+    ans = countDigit(111, 1);
     cout << ans << endl;
     assert(ans == 36);
 
