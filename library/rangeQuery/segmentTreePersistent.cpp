@@ -40,7 +40,7 @@ static int lowerBoundSlow(vector<int>& v, int k) {
 }
 
 void testSegmentTreePersistent() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Persistent Segment Tree ----------------------------------------" << endl;
     {

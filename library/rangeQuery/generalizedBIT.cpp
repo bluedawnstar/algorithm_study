@@ -91,7 +91,7 @@ static int lowerBoundBackward(const vector<int>& A, int start, int x) {
 }
 
 void testGeneralizedBIT() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Generalized Binary Indexed Tree (Generalized FenwickTree) -------------------" << endl;
     {
