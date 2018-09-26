@@ -16,6 +16,7 @@ int main(void) {
     TEST(TreeMO);
     TEST(LcaSparseTable);
     TEST(LcaShieberVishkin);
+    TEST(LcaTarjan);
     TEST(BST);
     TEST(RedBlackTree);
     TEST(RBTreeSimple);
