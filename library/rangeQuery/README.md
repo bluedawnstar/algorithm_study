@@ -90,9 +90,11 @@
 
  - Misc
    - [Sqrt Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtTree.h "Sqrt Tree")
+   - [Sqrt Tree - Lazy Update](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtTreeLazy.h "Sqrt Tree - Lazy Update")
    - [Merge Sort Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/mergeSortTree.h "Merge Sort Tree")
 
-    |     Name        | Build       | Add  | Add Range | Update | Update Range | kth - Range        | Count Range | Query  | Query Range |
-    |:---------------:|:-----------:|:----:|:---------:|:------:|:------------:|:------------------:|:-----------:|:------:|:-----------:|
-    | Sqrt Tree       | O(nloglogn) |  -   |     -     |    -   |       -      |       -            |      -      |  O(1)  |    O(1)     |
-    | Merge Sort Tree | O(nlogn)    |  -   |     -     |    -   |       -      | O((logn)^2 * logX) | O((logn)^2) |    -   |     -       |
+    |     Name      | Build       | Add  | Add Range | Update      | Update Range       | kth - Range        | Count Range | Query  | Query Range |
+    |:-------------:|:-----------:|:----:|:---------:|:-----------:|:------------------:|:------------------:|:-----------:|:------:|:-----------:|
+    | SqrtTree      | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O(nloglogn)        |       -            |      -      |  O(1)  |    O(1)     |
+    | SqrtTreeLazy  | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O(sqrt(n)*loglogn) |       -            |      -      |  O(1)  |    O(1)     |
+    | MergeSortTree | O(nlogn)    |  -   |     -     |     -       |       -            | O((logn)^2 * logX) | O((logn)^2) |    -   |     -       |
