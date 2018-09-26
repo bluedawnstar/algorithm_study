@@ -11,12 +11,12 @@ struct SqrtTree {
     vector<int> layers;             // layer -> log
     vector<int> onLayer;            // log -> layer
 
-    vector<vector<T>> prefix;       // startright side, A[L..i]
+    vector<vector<T>> prefix;       // right side, A[L..i]
     vector<vector<T>> suffix;       // left side, A[i..R]
     vector<vector<T>> between;      // left and right side, A[i..j] (L <= i <= j <= R)
 
-    T       defaultValue;
     MergeOp mergeOp;
+    T       defaultValue;
 
     explicit SqrtTree(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
@@ -31,6 +31,7 @@ struct SqrtTree {
         : mergeOp(op), defaultValue(dfltValue) {
         build(a);
     }
+
 
     // O(N*loglogN)
     void build(const T arr[], int n) {
@@ -63,6 +64,21 @@ struct SqrtTree {
         build(&v[0], int(v.size()));
     }
 
+    //--- update
+
+    // O(sqrt(N)), inclusive
+    void update(int index, const T& val) {
+        value[index] = val;
+        updateSub(0, 0, N - 1, index);
+    }
+
+    // O(N*loglogN), inclusive
+    void update(int left, int right, const T& val) {
+        for (int i = left; i <= right; i++)
+            value[i] = val;
+        updateSub(0, 0, N - 1, left, right);
+    }
+
     //--- query
 
     // O(1), inclusive
@@ -89,6 +105,59 @@ struct SqrtTree {
     }
 
 private:
+    void buildPrefixSuffix(int layer, int left, int right) {
+        prefix[layer][left] = value[left];
+        for (int i = left + 1; i <= right; i++) {
+            prefix[layer][i] = mergeOp(prefix[layer][i - 1], value[i]);
+        }
+
+        suffix[layer][right] = value[right];
+        for (int i = right - 1; i >= left; i--) {
+            suffix[layer][i] = mergeOp(value[i], suffix[layer][i + 1]);
+        }
+    }
+
+    void buildBetween(int layer, int left, int right, int sizeLog, int countLog) {
+        int count = (right - left) / (1 << sizeLog) + 1;
+
+        for (int i = 0; i < count; i++) {
+            T ans = defaultValue;
+            for (int j = i; j < count; j++) {
+                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
+                between[layer][left + (i << countLog) + j] = ans;
+            }
+        }
+    }
+
+    void updateBetween(int layer, int left, int right, int blockIndex, int sizeLog, int countLog) {
+        int rightIndex = (right - left) / (1 << sizeLog);
+
+        for (int i = 0; i <= blockIndex; i++) {
+            T ans = defaultValue;
+            if (i < blockIndex)
+                ans = between[layer][left + (i << countLog) + blockIndex - 1];
+            for (int j = blockIndex; j <= rightIndex; j++) {
+                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
+                between[layer][left + (i << countLog) + j] = ans;
+            }
+        }
+    }
+
+    void updateBetween(int layer, int left, int right, int blockIndexL, int blockIndexR, int sizeLog, int countLog) {
+        int rightIndex = (right - left) / (1 << sizeLog);
+
+        for (int i = 0; i <= blockIndexR; i++) {
+            T ans = defaultValue;
+            if (i < blockIndexL)
+                ans = between[layer][left + (i << countLog) + blockIndexL - 1];
+            for (int j = max(i, blockIndexL); j <= rightIndex; j++) {
+                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
+                between[layer][left + (i << countLog) + j] = ans;
+            }
+        }
+    }
+
+
     void buildSub(int layer, int left, int right) {
         if (layer >= int(layers.size()))
             return;
@@ -96,33 +165,50 @@ private:
         int sizeLog = (layers[layer] + 1) >> 1;
         int countLog = layers[layer] >> 1;
         int size = 1 << sizeLog;
-        int count = 0;
 
         for (int L = left; L <= right; L += size) {
-            count++;
             int R = min(L + size - 1, right);
-
-            prefix[layer][L] = value[L];
-            for (int i = L + 1; i <= R; i++) {
-                prefix[layer][i] = mergeOp(prefix[layer][i - 1], value[i]);
-            }
-            
-            suffix[layer][R] = value[R];
-            for (int i = R - 1; i >= L; i--) {
-                suffix[layer][i] = mergeOp(value[i], suffix[layer][i + 1]);
-            }
-            
+            buildPrefixSuffix(layer, L, R);
             buildSub(layer + 1, L, R);
         }
 
-        for (int i = 0; i < count; i++) {
-            T ans = defaultValue;
-            for (int j = i; j < count; j++) {
-                T add = suffix[layer][left + (j << sizeLog)];
-                ans = (i == j) ? add : mergeOp(ans, add);
-                between[layer][left + (i << countLog) + j] = ans;
-            }
+        buildBetween(layer, left, right, sizeLog, countLog);
+    }
+
+    void updateSub(int layer, int left, int right, int index) {
+        if (layer >= int(layers.size()))
+            return;
+
+        int sizeLog = (layers[layer] + 1) >> 1;
+        int countLog = layers[layer] >> 1;
+        int size = 1 << sizeLog;
+        
+        int blockIndex = (index - left) / size;
+
+        int L = left + blockIndex * size;
+        int R = min(L + size - 1, right);
+        buildPrefixSuffix(layer, L, R);
+        updateBetween(layer, left, right, blockIndex, sizeLog, countLog);
+        updateSub(layer + 1, L, R, index);
+    }
+
+    void updateSub(int layer, int left, int right, int indexLeft, int indexRight) {
+        if (layer >= int(layers.size()))
+            return;
+
+        int sizeLog = (layers[layer] + 1) >> 1;
+        int countLog = layers[layer] >> 1;
+        int size = 1 << sizeLog;
+
+        int blockIndexL = (max(left, indexLeft) - left) / size;
+        int blockIndexR = (min(right, indexRight) - left) / size;
+        for (int L = left + blockIndexL * size, maxL = left + blockIndexR * size; L <= maxL; L += size) {
+            int R = min(L + size - 1, right);
+            buildPrefixSuffix(layer, L, R);
+            updateSub(layer + 1, L, R, indexLeft, indexRight);
         }
+
+        updateBetween(layer, left, right, blockIndexL, blockIndexR, sizeLog, countLog);
     }
 
     static int clz(int x) {
