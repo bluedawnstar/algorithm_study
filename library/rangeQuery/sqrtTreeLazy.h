@@ -27,6 +27,11 @@ struct SqrtTreeLazy {
         : lazyBlockSize(0), mergeOp(mop), blockOp(bop), defaultValue(dfltValue) {
     }
 
+    SqrtTreeLazy(int n, const T& val, MergeOp op, T dfltValue = T())
+        : mergeOp(op), blockOp(bop), defaultValue(dfltValue) {
+        build(n, val);
+    }
+
     SqrtTreeLazy(const T a[], int n, MergeOp mop, BlockOp bop, T dfltValue = T())
         : mergeOp(mop), blockOp(bop), defaultValue(dfltValue) {
         build(a, n);
@@ -39,36 +44,19 @@ struct SqrtTreeLazy {
 
 
     // O(N*loglogN)
+    void build(int n, const T& val) {
+        N = n;
+        value.assign(n, val);
+        buildTree(n);
+        initSqrt(n);
+    }
+
+    // O(N*loglogN)
     void build(const T arr[], int n) {
         N = n;
-        H = 0;
-        while ((1 << H) < n)
-            H++;
-
         value.assign(arr, arr + n);
-        onLayer.assign(H + 1, 0);
-
-        layers.clear();
-        for (int i = H; i > 1; i = (i + 1) >> 1) {
-            onLayer[i] = int(layers.size());
-            layers.push_back(i);
-        }
-
-        for (int i = H - 1; i >= 0; i--) {
-            onLayer[i] = max(onLayer[i], onLayer[i + 1]);
-        }
-
-        prefix.assign(layers.size(), vector<T>(N));
-        suffix.assign(layers.size(), vector<T>(N));
-        between.assign(layers.size(), vector<T>(size_t(1) << H));
-
-        lazyBlockSize = 1 << ((layers[0] + 1) >> 1);
-        int count = (n + lazyBlockSize - 1) / lazyBlockSize;
-
-        lazy.assign(count, defaultValue);
-        lazyExist.assign(count, false);
-
-        buildSub(0, 0, N - 1);
+        buildTree(n);
+        initSqrt(n);
     }
 
     void build(const vector<T>& v) {
@@ -84,7 +72,7 @@ struct SqrtTreeLazy {
         updateSub(0, 0, N - 1, index);
     }
 
-    // O(sqrt(N)*loglogN), inclusive
+    // O(N*loglogN), inclusive
     void update(int left, int right, const T& val) {
         updateBlock(left, right, val);
         updateSub(0, 0, N - 1, left, right);
@@ -125,6 +113,38 @@ struct SqrtTreeLazy {
     }
 
 private:
+    void initSqrt(int n) {
+        lazyBlockSize = 1 << ((layers[0] + 1) >> 1);
+        int count = (n + lazyBlockSize - 1) / lazyBlockSize;
+
+        lazy.assign(count, defaultValue);
+        lazyExist.assign(count, false);
+    }
+
+    void buildTree(int n) {
+        H = 0;
+        while ((1 << H) < n)
+            H++;
+
+        onLayer.assign(H + 1, 0);
+
+        layers.clear();
+        for (int i = H; i > 1; i = (i + 1) >> 1) {
+            onLayer[i] = int(layers.size());
+            layers.push_back(i);
+        }
+
+        for (int i = H - 1; i >= 0; i--) {
+            onLayer[i] = max(onLayer[i], onLayer[i + 1]);
+        }
+
+        prefix.assign(layers.size(), vector<T>(n));
+        suffix.assign(layers.size(), vector<T>(n));
+        between.assign(layers.size(), vector<T>(size_t(1) << H));
+
+        buildSub(0, 0, n - 1);
+    }
+
     void applyBlock(int blockIndex) {
         if (!lazyExist[blockIndex])
             return;

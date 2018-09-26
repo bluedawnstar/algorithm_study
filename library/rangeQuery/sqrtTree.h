@@ -22,6 +22,11 @@ struct SqrtTree {
         : mergeOp(op), defaultValue(dfltValue) {
     }
 
+    SqrtTree(int n, const T& val, MergeOp op, T dfltValue = T())
+        : mergeOp(op), defaultValue(dfltValue) {
+        build(n, val);
+    }
+
     SqrtTree(const T a[], int n, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a, n);
@@ -34,30 +39,17 @@ struct SqrtTree {
 
 
     // O(N*loglogN)
+    void build(int n, const T& val) {
+        N = n;
+        value.assign(n, val);
+        buildTree(n);
+    }
+
+    // O(N*loglogN)
     void build(const T arr[], int n) {
         N = n;
-        H = 0;
-        while ((1 << H) < n)
-            H++;
-
         value.assign(arr, arr + n);
-        onLayer.assign(H + 1, 0);
-
-        layers.clear();
-        for (int i = H; i > 1; i = (i + 1) >> 1) {
-            onLayer[i] = int(layers.size());
-            layers.push_back(i);
-        }
-
-        for (int i = H - 1; i >= 0; i--) {
-            onLayer[i] = max(onLayer[i], onLayer[i + 1]);
-        }
-
-        prefix.assign(layers.size(), vector<T>(N));
-        suffix.assign(layers.size(), vector<T>(N));
-        between.assign(layers.size(), vector<T>(size_t(1) << H));
-
-        buildSub(0, 0, N - 1);
+        buildTree(n);
     }
 
     void build(const vector<T>& v) {
@@ -105,6 +97,30 @@ struct SqrtTree {
     }
 
 private:
+    void buildTree(int n) {
+        H = 0;
+        while ((1 << H) < n)
+            H++;
+
+        onLayer.assign(H + 1, 0);
+
+        layers.clear();
+        for (int i = H; i > 1; i = (i + 1) >> 1) {
+            onLayer[i] = int(layers.size());
+            layers.push_back(i);
+        }
+
+        for (int i = H - 1; i >= 0; i--) {
+            onLayer[i] = max(onLayer[i], onLayer[i + 1]);
+        }
+
+        prefix.assign(layers.size(), vector<T>(n));
+        suffix.assign(layers.size(), vector<T>(n));
+        between.assign(layers.size(), vector<T>(size_t(1) << H));
+
+        buildSub(0, 0, n - 1);
+    }
+
     void buildPrefixSuffix(int layer, int left, int right) {
         prefix[layer][left] = value[left];
         for (int i = left + 1; i <= right; i++) {
