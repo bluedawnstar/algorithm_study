@@ -3,7 +3,7 @@
 // https://e-maxx-eng.appspot.com/data_structures/sqrt-tree.html
 
 template <typename T, typename MergeOp = function<T(T, T)>>
-struct SqrtTree {
+struct CompactSqrtTree {
     int N;
     int H;
     vector<T> value;                // 
@@ -13,26 +13,25 @@ struct SqrtTree {
 
     vector<vector<T>> prefix;       // right side, A[L..i]
     vector<vector<T>> suffix;       // left side, A[i..R]
-    vector<vector<T>> between;      // left and right side, A[i..j] (L <= i <= j <= R)
 
     MergeOp mergeOp;
     T       defaultValue;
 
-    explicit SqrtTree(MergeOp op, T dfltValue = T())
+    explicit CompactSqrtTree(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
     }
 
-    SqrtTree(int n, const T& val, MergeOp op, T dfltValue = T())
+    CompactSqrtTree(int n, const T& val, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(n, val);
     }
 
-    SqrtTree(const T a[], int n, MergeOp op, T dfltValue = T())
+    CompactSqrtTree(const T a[], int n, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a, n);
     }
 
-    SqrtTree(const vector<T>& a, MergeOp op, T dfltValue = T())
+    CompactSqrtTree(const vector<T>& a, MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
         build(a);
     }
@@ -64,7 +63,7 @@ struct SqrtTree {
         updateSub(0, 0, N - 1, index);
     }
 
-    // O(N*loglogN), inclusive
+    // O(K*loglogN), inclusive
     void update(int left, int right, const T& val) {
         for (int i = left; i <= right; i++)
             value[i] = val;
@@ -73,7 +72,7 @@ struct SqrtTree {
 
     //--- query
 
-    // O(1), inclusive
+    // O(sqrt(K)), inclusive
     T query(int left, int right) const {
         if (left == right)
             return value[left];
@@ -83,15 +82,14 @@ struct SqrtTree {
 
         int layer = onLayer[sizeof(int) * 8 - clz(left ^ right)];
         int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
 
         int lBound = (left >> layers[layer]) << layers[layer];
         int lBlock = ((left - lBound) >> sizeLog) + 1;
         int rBlock = ((right - lBound) >> sizeLog) - 1;
 
         T ans = suffix[layer][left];
-        if (lBlock <= rBlock)
-            ans = mergeOp(ans, between[layer][lBound + (lBlock << countLog) + rBlock]);
+        while (lBlock <= rBlock)
+            ans = mergeOp(ans, suffix[layer][lBound + (lBlock++ << sizeLog)]);
 
         return mergeOp(ans, prefix[layer][right]);
     }
@@ -116,7 +114,6 @@ private:
 
         prefix.assign(layers.size(), vector<T>(n));
         suffix.assign(layers.size(), vector<T>(n));
-        between.assign(layers.size(), vector<T>(size_t(1) << H));
 
         buildSub(0, 0, n - 1);
     }
@@ -133,53 +130,12 @@ private:
         }
     }
 
-    void buildBetween(int layer, int left, int right, int sizeLog, int countLog) {
-        int count = (right - left) / (1 << sizeLog) + 1;
-
-        for (int i = 0; i < count; i++) {
-            T ans = defaultValue;
-            for (int j = i; j < count; j++) {
-                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
-                between[layer][left + (i << countLog) + j] = ans;
-            }
-        }
-    }
-
-    void updateBetween(int layer, int left, int right, int blockIndex, int sizeLog, int countLog) {
-        int rightIndex = (right - left) / (1 << sizeLog);
-
-        for (int i = 0; i <= blockIndex; i++) {
-            T ans = defaultValue;
-            if (i < blockIndex)
-                ans = between[layer][left + (i << countLog) + blockIndex - 1];
-            for (int j = blockIndex; j <= rightIndex; j++) {
-                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
-                between[layer][left + (i << countLog) + j] = ans;
-            }
-        }
-    }
-
-    void updateBetween(int layer, int left, int right, int blockIndexL, int blockIndexR, int sizeLog, int countLog) {
-        int rightIndex = (right - left) / (1 << sizeLog);
-
-        for (int i = 0; i <= blockIndexR; i++) {
-            T ans = defaultValue;
-            if (i < blockIndexL)
-                ans = between[layer][left + (i << countLog) + blockIndexL - 1];
-            for (int j = max(i, blockIndexL); j <= rightIndex; j++) {
-                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
-                between[layer][left + (i << countLog) + j] = ans;
-            }
-        }
-    }
-
 
     void buildSub(int layer, int left, int right) {
         if (layer >= int(layers.size()))
             return;
 
         int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
         int size = 1 << sizeLog;
 
         for (int L = left; L <= right; L += size) {
@@ -187,8 +143,6 @@ private:
             buildPrefixSuffix(layer, L, R);
             buildSub(layer + 1, L, R);
         }
-
-        buildBetween(layer, left, right, sizeLog, countLog);
     }
 
     void updateSub(int layer, int left, int right, int index) {
@@ -196,15 +150,13 @@ private:
             return;
 
         int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
         int size = 1 << sizeLog;
-        
+
         int blockIndex = (index - left) / size;
 
         int L = left + blockIndex * size;
         int R = min(L + size - 1, right);
         buildPrefixSuffix(layer, L, R);
-        updateBetween(layer, left, right, blockIndex, sizeLog, countLog);
         updateSub(layer + 1, L, R, index);
     }
 
@@ -213,7 +165,6 @@ private:
             return;
 
         int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
         int size = 1 << sizeLog;
 
         int blockIndexL = (max(left, indexLeft) - left) / size;
@@ -223,8 +174,6 @@ private:
             buildPrefixSuffix(layer, L, R);
             updateSub(layer + 1, L, R, indexLeft, indexRight);
         }
-
-        updateBetween(layer, left, right, blockIndexL, blockIndexR, sizeLog, countLog);
     }
 
     static int clz(int x) {
@@ -237,16 +186,16 @@ private:
 };
 
 template <typename T, typename MergeOp>
-SqrtTree<T, MergeOp> makeSqrtTree(int n, const T& val, MergeOp op, T dfltValue = T()) {
-    return SqrtTree<T, MergeOp>(n, val, op, dfltValue);
+CompactSqrtTree<T, MergeOp> makeCompactSqrtTree(int n, const T& val, MergeOp op, T dfltValue = T()) {
+    return CompactSqrtTree<T, MergeOp>(n, val, op, dfltValue);
 }
 
 template <typename T, typename MergeOp>
-SqrtTree<T, MergeOp> makeSqrtTree(const vector<T>& arr, MergeOp op, T dfltValue = T()) {
-    return SqrtTree<T, MergeOp>(arr, op, dfltValue);
+CompactSqrtTree<T, MergeOp> makeCompactSqrtTree(const vector<T>& arr, MergeOp op, T dfltValue = T()) {
+    return CompactSqrtTree<T, MergeOp>(arr, op, dfltValue);
 }
 
 template <typename T, typename MergeOp>
-SqrtTree<T, MergeOp> makeSqrtTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
-    return SqrtTree<T, MergeOp>(arr, size, op, dfltValue);
+CompactSqrtTree<T, MergeOp> makeCompactSqrtTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return CompactSqrtTree<T, MergeOp>(arr, size, op, dfltValue);
 }

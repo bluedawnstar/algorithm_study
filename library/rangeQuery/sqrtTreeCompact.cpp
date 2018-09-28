@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#include "sqrtTreeLazy.h"
+#include "sqrtTreeCompact.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -40,15 +40,8 @@ static int mult(const vector<int>& A, int L, int R, int mod) {
     return int(res);
 }
 
-void testSqrtTreeLazy() {
-    //return; //TODO: if you want to test, make this line a comment.
-
-    auto powMod = [](int x, int n) {
-        int res = 1;
-        while (n-- > 0)
-            res = 1ll * res * x % MOD;
-        return int(res);
-    };
+void testCompactSqrtTree() {
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Lazy Sqrt-Tree -----------------------------" << endl;
     // Sum
@@ -60,7 +53,7 @@ void testSqrtTreeLazy() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % 100;
 
-        auto tree = makeSqrtTreeLazy<int>(in, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -94,7 +87,7 @@ void testSqrtTreeLazy() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % MOD;
 
-        auto tree = makeSqrtTreeLazy<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, powMod, 1);
+        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -128,7 +121,7 @@ void testSqrtTreeLazy() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % 100;
 
-        auto tree = makeSqrtTreeLazy<int>(in, [](int a, int b) { return a + b; }, [](int x, int n) { return x * n; }, 0);
+        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -161,7 +154,7 @@ void testSqrtTreeLazy() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % MOD;
 
-        auto tree = makeSqrtTreeLazy<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, powMod, 1);
+        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -267,7 +260,7 @@ void testSqrtTreeLazy() {
         PROFILE_START(4);
         {
             int res = 0;
-            auto seg = makeSqrtTreeLazy(in, [](int a, int b) { return min(a, b); }, [](int x, int n) { return x; }, INT_MAX);
+            auto seg = makeCompactSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);

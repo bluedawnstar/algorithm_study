@@ -105,7 +105,7 @@
     <ClCompile Include="sqrtDecompositionSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="sqrtTreeLazy.cpp">
+    <ClCompile Include="sqrtTreeCompact.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,7 +227,7 @@
     <ClInclude Include="sqrtDecompositionSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="sqrtTreeLazy.h">
+    <ClInclude Include="sqrtTreeCompact.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

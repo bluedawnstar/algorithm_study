@@ -30,7 +30,7 @@ int main(void) {
     TEST(SegmentTreeLineSegment2D);
     TEST(SegmentTreeLineSegment2DSum);
     TEST(SqrtTree);
-    TEST(SqrtTreeLazy);
+    TEST(CompactSqrtTree);
     TEST(MergeSortTree);
     TEST(MergeSortTreeIndex);
     TEST(GeneralizedBIT);
