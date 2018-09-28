@@ -58,7 +58,7 @@ struct SqrtTree {
 
     //--- update
 
-    // O(sqrt(N)), inclusive
+    // O(N), inclusive
     void update(int index, const T& val) {
         value[index] = val;
         updateSub(0, 0, N - 1, index);

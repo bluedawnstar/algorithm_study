@@ -95,6 +95,6 @@
 
     |     Name        | Build       | Add  | Add Range | Update      | Update Range       | kth - Range        | Count Range | Query  | Query Range |
     |:---------------:|:-----------:|:----:|:---------:|:-----------:|:------------------:|:------------------:|:-----------:|:------:|:-----------:|
-    | SqrtTree        | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O(kloglogn)        |       -            |      -      |  O(1)  | O(1)        |
-    | CompactSqrtTree | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O(sqrt(n)*loglogn) |       -            |      -      |  O(1)  | O(sqrt(k))  |
+    | SqrtTree        | O(nloglogn) |  -   |     -     | O(n)        | O(nloglogn)        |       -            |      -      |  O(1)  | O(1)        |
+    | CompactSqrtTree | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O(k*loglogn)       |       -            |      -      |  O(1)  | O(sqrt(k))  |
     | MergeSortTree   | O(nlogn)    |  -   |     -     |     -       |       -            | O((logn)^2 * logX) | O((logn)^2) |    -   |    -        |
