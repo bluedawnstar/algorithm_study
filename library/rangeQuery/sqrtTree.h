@@ -56,6 +56,15 @@ struct SqrtTree {
         build(&v[0], int(v.size()));
     }
 
+
+    void rebuild() {
+        buildSub(0, 0, N - 1);
+    }
+
+    void rebuild(int left, int right) {
+        updateSub(0, 0, N - 1, left, right);
+    }
+
     //--- update
 
     // O(N), inclusive

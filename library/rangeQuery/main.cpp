@@ -31,6 +31,7 @@ int main(void) {
     TEST(SegmentTreeLineSegment2DSum);
     TEST(SqrtTree);
     TEST(CompactSqrtTree);
+    TEST(FastSqrtTree);
     TEST(MergeSortTree);
     TEST(MergeSortTreeIndex);
     TEST(GeneralizedBIT);

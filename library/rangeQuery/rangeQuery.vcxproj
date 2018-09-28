@@ -177,6 +177,7 @@
     <ClCompile Include="sqrtDecompositionSum.cpp" />
     <ClCompile Include="sqrtTree.cpp" />
     <ClCompile Include="sqrtTreeCompact.cpp" />
+    <ClCompile Include="sqrtTreeFast.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="disjointSparseTable.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="sqrtDecompositionSum.h" />
     <ClInclude Include="sqrtTree.h" />
     <ClInclude Include="sqrtTreeCompact.h" />
+    <ClInclude Include="sqrtTreeFast.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

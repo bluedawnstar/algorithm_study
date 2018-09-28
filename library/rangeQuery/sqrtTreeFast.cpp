@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#include "sqrtTreeCompact.h"
+#include "sqrtTreeFast.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -40,10 +40,10 @@ static int mult(const vector<int>& A, int L, int R, int mod) {
     return int(res);
 }
 
-void testCompactSqrtTree() {
-    return; //TODO: if you want to test, make this line a comment.
+void testFastSqrtTree() {
+    //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Compact Sqrt-Tree -----------------------------" << endl;
+    cout << "--- Fast Sqrt-Tree (Sqrt-Tree with Sqrt-Tree) ------------------------" << endl;
     // Sum
     {
         int N = 10000;
@@ -53,7 +53,7 @@ void testCompactSqrtTree() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % 100;
 
-        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
+        auto tree = makeFastSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -87,7 +87,7 @@ void testCompactSqrtTree() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % MOD;
 
-        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
+        auto tree = makeFastSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -121,7 +121,7 @@ void testCompactSqrtTree() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % 100;
 
-        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
+        auto tree = makeFastSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -154,7 +154,7 @@ void testCompactSqrtTree() {
         for (int i = 0; i < N; i++)
             in[i] = RandInt32::get() % MOD;
 
-        auto tree = makeCompactSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
+        auto tree = makeFastSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
 
         for (int i = 0; i < T; i++) {
             int left = RandInt32::get() % N;
@@ -178,7 +178,7 @@ void testCompactSqrtTree() {
             }
         }
     }
-    cout << "*** Speed Test ***" << endl;
+    cout << "*** Speed Test for Query ***" << endl;
     // Sparse Table ~ Disjoint Sparse Table > Sqrt Tree >> Compact Segment Tree (x3) >>> Segment Tree (x15)
     {
         int N = 1000000;
@@ -256,11 +256,11 @@ void testCompactSqrtTree() {
         PROFILE_STOP(3);
 
 
-        cout << "--- Sqrt-Tree ---" << endl;
+        cout << "--- Fast Sqrt-Tree ---" << endl;
         PROFILE_START(4);
         {
             int res = 0;
-            auto seg = makeCompactSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto seg = makeFastSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += seg.query(it.first, it.second);
@@ -269,6 +269,68 @@ void testCompactSqrtTree() {
             cout << "result = " << res << endl;
         }
         PROFILE_STOP(4);
+    }
+    cout << "*** Speed Test for Update & Query ***" << endl;
+    {
+        int N = 100000;
+        int T = 100000;
+#ifdef _DEBUG
+        N = 1000;
+        T = 1000;
+#endif
+
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get();
+
+        vector<pair<int, int>> Q;
+        for (int i = 0; i < T; i++) {
+            int a = RandInt32::get() % N;
+            int b = RandInt32::get() % N;
+            Q.emplace_back(a, b);
+        }
+
+        cout << "--- Segment Tree ---" << endl;
+        PROFILE_START(0);
+        {
+            int res = 0;
+            auto seg = makeSegmentTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
+            for (int i = 0; i < 10; i++) {
+                for (auto& it : Q) {
+                    seg.update(it.first, it.second);
+                }
+            }
+            cout << "result = " << seg.query(0, N - 1) << endl;
+        }
+        PROFILE_STOP(0);
+
+        cout << "--- Compact Segment Tree ---" << endl;
+        PROFILE_START(1);
+        {
+            int res = 0;
+            auto seg = makeCompactSegmentTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
+            for (int i = 0; i < 10; i++) {
+                for (auto& it : Q) {
+                    seg.update(it.first, it.second);
+                }
+            }
+            cout << "result = " << seg.query(0, N - 1) << endl;
+        }
+        PROFILE_STOP(1);
+
+        cout << "--- Fast Sqrt-Tree ---" << endl;
+        PROFILE_START(2);
+        {
+            int res = 0;
+            auto seg = makeFastSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
+            for (int i = 0; i < 10; i++) {
+                for (auto& it : Q) {
+                    seg.update(it.first, it.second);
+                }
+            }
+            cout << "result = " << seg.query(0, N - 1) << endl;
+        }
+        PROFILE_STOP(2);
     }
 
     cout << "OK!" << endl;

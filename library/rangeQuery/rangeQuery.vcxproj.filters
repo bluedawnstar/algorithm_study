@@ -108,6 +108,9 @@
     <ClCompile Include="sqrtTreeCompact.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sqrtTreeFast.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -228,6 +231,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sqrtTreeCompact.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sqrtTreeFast.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
