@@ -111,6 +111,12 @@
     <ClCompile Include="sqrtTreeFast.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="offlineRMQ.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="schieberVishkinRMQ.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -234,6 +240,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sqrtTreeFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="offlineRMQ.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="schieberVishkinRMQ.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

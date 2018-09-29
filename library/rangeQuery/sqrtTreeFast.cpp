@@ -41,7 +41,7 @@ static int mult(const vector<int>& A, int L, int R, int mod) {
 }
 
 void testFastSqrtTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Fast Sqrt-Tree (Sqrt-Tree with Sqrt-Tree) ------------------------" << endl;
     // Sum

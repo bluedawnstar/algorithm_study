@@ -37,4 +37,6 @@ int main(void) {
     TEST(GeneralizedBIT);
     TEST(ReverseSparseTable);
     TEST(SegmentTreeBitFlip);
+    TEST(OfflineRMQ);
+    TEST(SchieberVishkinRMQ);
 }
