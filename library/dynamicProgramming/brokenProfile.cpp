@@ -14,7 +14,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-long long dfsTiling2x1(vector<vector<bool>>& board, int index) {
+static long long dfsTiling2x1(vector<vector<bool>>& board, int index) {
     int H = (int)board.size();
     int W = (int)board[0].size();
     while (index < H * W) {
@@ -48,7 +48,7 @@ static long long countTiling2x1(int W, int H) {
 }
 
 
-long long dfsTiling3x1(vector<vector<bool>>& board, int index) {
+static long long dfsTiling3x1(vector<vector<bool>>& board, int index) {
     int H = (int)board.size();
     int W = (int)board[0].size();
     while (index < H * W) {
