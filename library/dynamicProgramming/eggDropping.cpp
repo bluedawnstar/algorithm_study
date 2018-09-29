@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testEggDropping() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Egg Dropping ------------------------------------" << endl;
     {

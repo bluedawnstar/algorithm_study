@@ -145,7 +145,6 @@
     <ClCompile Include="ahoCorasickAM.cpp" />
     <ClCompile Include="compressedTrie.cpp" />
     <ClCompile Include="compressedTrieAM.cpp" />
-    <ClCompile Include="decimal.cpp" />
     <ClCompile Include="distinctSubstringCounter.cpp" />
     <ClCompile Include="hashing.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />

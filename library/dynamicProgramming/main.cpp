@@ -24,4 +24,5 @@ int main(void) {
     TEST(KnuthOptimization);
     TEST(BitonicTour);
     TEST(EggDropping);
+    TEST(BrokenProfile);
 }

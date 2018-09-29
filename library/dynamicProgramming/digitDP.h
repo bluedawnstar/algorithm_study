@@ -1,6 +1,7 @@
 #pragma once
 
 // https://www.geeksforgeeks.org/digit-dp-introduction/
+
 struct DigitDP {
     static const int N = 20;
     long long (*dp)[180][2];

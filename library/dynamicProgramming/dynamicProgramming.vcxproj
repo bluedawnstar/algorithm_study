@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
+    <ClCompile Include="brokenProfile.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="digitDP.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="knapsack.cpp" />
     <ClCompile Include="knuthOptimization.cpp" />
     <ClCompile Include="longestCommonSubsequence.cpp" />
+    <ClCompile Include="longestIncreasingSubsequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxProductSumOfSubarray.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
@@ -171,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="bitDP.h" />
     <ClInclude Include="bitonicTour.h" />
+    <ClInclude Include="brokenProfile.h" />
     <ClInclude Include="convexHullTrickMin.h" />
     <ClInclude Include="convexHullTrickMax.h" />
     <ClInclude Include="digitDP.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="knapsack.h" />
     <ClInclude Include="knuthOptimization.h" />
     <ClInclude Include="longestCommonSubsequence.h" />
+    <ClInclude Include="longestIncreasingSubsequence.h" />
     <ClInclude Include="maxProductSumOfSubarray.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />
