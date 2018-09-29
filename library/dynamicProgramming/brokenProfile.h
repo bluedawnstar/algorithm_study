@@ -1,6 +1,6 @@
 #pragma once
 
-// Given a grid of size N¡¿M.Find number of ways to fill the grid with figures of size 2¡¿1
+// Given a grid of size NxM.Find number of ways to fill the grid with figures of size 2x1
 // (no cell should be left unfilled, and figures should not overlap each other).
 
 // https://cp-algorithms.com/dynamic_programming/profile-dynamics.html
