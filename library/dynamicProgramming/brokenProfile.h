@@ -24,7 +24,7 @@
      // https://math.stackexchange.com/questions/1317885/dominos-2-times-1-on-2-times-n-and-on-3-times-2n
   5. row == 4
      f(4, col) = f(n - 1) + 5*f(n - 2) + f(n - 3) - f(n - 4)
-         f(4, 0) = 0
+         f(4, 0) = 1
          f(4, 1) = 1
          f(4, 2) = 5
          f(4, 3) = 11

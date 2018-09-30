@@ -63,7 +63,7 @@ static long long countTilingL(int W, int H) {
 }
 
 void testBrokenProfileEx() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Broken Profile - Extended Algorithms -----------------------------" << endl;
     {
