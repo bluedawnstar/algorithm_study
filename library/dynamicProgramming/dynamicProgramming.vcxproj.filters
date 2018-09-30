@@ -84,6 +84,9 @@
     <ClCompile Include="brokenProfile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="brokenProfileEx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -162,6 +165,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="brokenProfile.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="brokenProfileEx.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

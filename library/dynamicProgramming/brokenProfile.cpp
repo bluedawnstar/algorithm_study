@@ -82,7 +82,7 @@ static long long countTiling3x1(int W, int H) {
 }
 
 void testBrokenProfile() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Broken Profile -----------------------------" << endl;
     {

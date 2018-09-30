@@ -25,4 +25,5 @@ int main(void) {
     TEST(BitonicTour);
     TEST(EggDropping);
     TEST(BrokenProfile);
+    TEST(BrokenProfileEx);
 }

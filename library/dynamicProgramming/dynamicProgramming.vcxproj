@@ -149,6 +149,7 @@
     <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
     <ClCompile Include="brokenProfile.cpp" />
+    <ClCompile Include="brokenProfileEx.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="digitDP.cpp" />
     <ClCompile Include="divideConquerOptimization.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="bitDP.h" />
     <ClInclude Include="bitonicTour.h" />
     <ClInclude Include="brokenProfile.h" />
+    <ClInclude Include="brokenProfileEx.h" />
     <ClInclude Include="convexHullTrickMin.h" />
     <ClInclude Include="convexHullTrickMax.h" />
     <ClInclude Include="digitDP.h" />
