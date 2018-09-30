@@ -114,6 +114,9 @@
     <ClCompile Include="palindromicFactorization.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="eerTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -225,6 +228,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicFactorization.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="eerTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

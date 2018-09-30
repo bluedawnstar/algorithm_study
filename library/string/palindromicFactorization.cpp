@@ -24,7 +24,7 @@ static string makeRandomString(int n) {
 }
 
 void testPalindromicFactorization() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Palindromic Factorization --------------------------------" << endl;
     {            // 01234567890123 

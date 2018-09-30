@@ -37,4 +37,5 @@ int main(void) {
     TEST(SubstrHashing);
     TEST(LexicographicallyMinimalStringRotation);
     TEST(PalindromicFactorization);
+    TEST(EerTree);
 }

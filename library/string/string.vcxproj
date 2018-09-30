@@ -146,6 +146,7 @@
     <ClCompile Include="compressedTrie.cpp" />
     <ClCompile Include="compressedTrieAM.cpp" />
     <ClCompile Include="distinctSubstringCounter.cpp" />
+    <ClCompile Include="eerTree.cpp" />
     <ClCompile Include="hashing.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
     <ClCompile Include="lexicographicallyMinimalStringRotation.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="compressedTrie.h" />
     <ClInclude Include="compressedTrieAM.h" />
     <ClInclude Include="distinctSubstringCounter.h" />
+    <ClInclude Include="eerTree.h" />
     <ClInclude Include="hashing.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
     <ClInclude Include="lexicographicallyMinimalStringRotation.h" />

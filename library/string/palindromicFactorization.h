@@ -1,6 +1,8 @@
 #pragma once
 
 /*
+  https://arxiv.org/abs/1403.2431
+
   A Subquadratic Algorithm for Minimum Palindromic Factorization
 
     pl[i].first = the number of minimal even factorization in S[0, i-1]
@@ -8,7 +10,7 @@
     1 <= i <= n
 */
 struct PalindromicFactorization {
-    const int INF = 1000000000;
+    static const int INF = 1000000000;
 
     vector<pair<int, int>> pl;
     vector<pair<int, int>> gpl;
@@ -168,7 +170,7 @@ private:
 
 
 struct PalindromicFactorizationDP {
-    const int INF = 1000000000;
+    static const int INF = 1000000000;
 
     string S;
     vector<int> C;              // C[i] = Minimum number of cuts needed for palindrome partitioning of substring str[0..i]
@@ -265,7 +267,7 @@ struct PalindromicFactorizationDP {
 
 // Handling All Minimum Palindromic Factorization
 struct PalindromicFactorizationDPEx {
-    const int INF = 1000000000;
+    static const int INF = 1000000000;
 
     string S;
     vector<int> C;              // C[i] = Minimum number of cuts needed for palindrome partitioning of substring str[0..i]
