@@ -90,6 +90,12 @@
     <ClCompile Include="partitionProblem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="longestCommonSubsequenceBit.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="longestCommonSubsequenceCyclic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -174,6 +180,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="partitionProblem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestCommonSubsequenceCyclic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestCommonSubsequenceBit.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

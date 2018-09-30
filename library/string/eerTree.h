@@ -9,28 +9,34 @@
  Properties:
    1) Nodes and edges of an eerTree form two weakly connected components:
       the tree of odd (resp., of even) nodes rooted at rte (resp., at rto).
+
    2) The tree of even (resp., odd) nodes is precisely the trie of right
       halves of even-length palindromes (resp., the trie of right halves,
       ncluding the central symbol, of odd-length palindromes).
+
    3) Nodes and inverted suffix links of an eerTree form a tree with a
       loop at its root rto.
+
    4) After each add(c), the last NodeT corresponds to the longest suffix of the current string.
 
  Applications:
    1. for a given string S find a subpalindrome P maximizing the value
       |P|*occ(S, P), where occ(S, P) is the number of occurrences of P in S.
-      After building the eerTree, use nodes[p].link->occ += nodes[p].occ to enumerate each NodeT from the back to the front and calculate
+      After building the eertree, use nodes[p].link->occ += nodes[p].occ to enumerate each NodeT from the back to the front and calculate
       occ(S, P), then the normal traversal tree calculation is fine.
+
    2. for a string S, find the number of triples i, j, k such that
       1 ≤ i ≤ j < k ≤ |S| and the strings S[i..j], S[j+1..k] are palindromes.
       Construct two eertrees in reverse, and save the number of palindromes starting/ending at j, which is nodes[last].count.
-   3. Multiple strings of eerTree: Each time you build a string, clear the last NodeT and start adding a new string.
+
+   3. Multiple strings of eertree: Each time you build a string, clear the last NodeT and start adding a new string.
       3.1 Find the number of subpalindromes, common to all k given strings.
       3.2 Find the longest subpalindrome contained in all k given strings.
       3.3 For strings S and T find the number of palindromes P having more
           occurrences in S than in T .
       3.4 For strings S and T find the number of equal palindromes, i.e., of
           triples (i, j, k) such that S[i..i+k] = T [j..j+k] is a palindrome.
+
    4. Minimum palindrome division: Add a serial link, detailed reference paper
 */
 

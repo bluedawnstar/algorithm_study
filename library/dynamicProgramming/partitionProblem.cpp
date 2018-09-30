@@ -14,7 +14,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testPartitionProblem() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Partition Problem -----------------------------" << endl;
     {
