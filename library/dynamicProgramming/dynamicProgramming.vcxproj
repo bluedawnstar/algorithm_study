@@ -167,6 +167,7 @@
     <ClCompile Include="maxProductSumOfSubarray.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="palindromicSubstring.cpp" />
+    <ClCompile Include="partitionProblem.cpp" />
     <ClCompile Include="persistentConvexHull.cpp" />
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="maxProductSumOfSubarray.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />
+    <ClInclude Include="partitionProblem.h" />
     <ClInclude Include="persistentLowerConvexHull.h" />
     <ClInclude Include="persistentUpperConvexHull.h" />
     <ClInclude Include="steinerTree.h" />

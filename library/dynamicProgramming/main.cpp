@@ -26,4 +26,5 @@ int main(void) {
     TEST(EggDropping);
     TEST(BrokenProfile);
     TEST(BrokenProfileEx);
+    TEST(PartitionProblem);
 }

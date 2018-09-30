@@ -88,7 +88,7 @@ private:
                 if (y + 1 < H && (currMask & (myMask << 1)) == 0) {
                     if ((nextMask & myMask) == 0)
                         dfs(x, y + 2, currMask, nextMask | myMask);     // case #3-1
-                    dfs(x, y + 2, currMask, nextMask | (myMask << 1));  // case #3
+                    dfs(x, y + 2, currMask, nextMask | (myMask << 1));  // case #3-2
                 }
             }
         }
