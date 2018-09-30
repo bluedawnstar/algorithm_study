@@ -36,7 +36,7 @@ static int countStringToHavePatternNaive(const vector<string>& strs, int L, int 
 }
 
 void testSubstrHashing() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Substring Hashing ---------------------------------------------" << endl;
     {

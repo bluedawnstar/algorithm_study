@@ -108,6 +108,12 @@
     <ClCompile Include="substrHashing.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lexicographicallyMinimalStringRotation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="palindromicFactorization.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -213,6 +219,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="substrHashing.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lexicographicallyMinimalStringRotation.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicFactorization.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -49,7 +49,7 @@ static int lowerBoundBackwardSlow(const vector<int>& sa, int right, int length, 
 }
 
 void testSuffixArray() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Suffix Array --------------------" << endl;
     {

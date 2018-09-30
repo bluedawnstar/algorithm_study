@@ -35,4 +35,6 @@ int main(void) {
     TEST(SubsequenceLCS);
     TEST(LyndonFactorization);
     TEST(SubstrHashing);
+    TEST(LexicographicallyMinimalStringRotation);
+    TEST(PalindromicFactorization);
 }
