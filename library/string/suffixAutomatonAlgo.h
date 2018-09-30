@@ -26,7 +26,7 @@ struct SuffixAutomatonAlgo {
 
     long long countSubstrings() {
         fill(D.begin(), D.end(), 0);
-        return countSubstrings(0) - 1;
+        return countSubstrings(0) - 1;  // exclude empty string
     }
 
     // 2. Total length of all distinct substrings.
@@ -53,7 +53,7 @@ struct SuffixAutomatonAlgo {
         return totalLengthOfAllDistinctSubstrings(0);
     }
 
-    // 3. Lexographically kth substring.
+    // 3. Lexicographically kth substring.
     // kth >= 1
     bool kthSubstring(string& res, int kth, int u, int& path) {
         for (int i = 0; i < SuffixAutomaton::MaxCharN; i++) {

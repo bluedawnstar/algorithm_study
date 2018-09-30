@@ -152,6 +152,7 @@
     <ClCompile Include="lexicographicallyMinimalStringRotation.cpp" />
     <ClCompile Include="lyndonFactorization.cpp" />
     <ClCompile Include="palindromicFactorization.cpp" />
+    <ClCompile Include="subsequenceDAG.cpp" />
     <ClCompile Include="subsequenceLCS.cpp" />
     <ClCompile Include="longestCommonSubstring_queryTwoStringAmongStrings.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,6 +190,8 @@
     <ClInclude Include="lyndonFactorization.h" />
     <ClInclude Include="palindromicFactorization.h" />
     <ClInclude Include="subsequenceCheck.h" />
+    <ClInclude Include="subsequenceDAG.h" />
+    <ClInclude Include="subsequenceDAG_Algo.h" />
     <ClInclude Include="subsequenceLCS.h" />
     <ClInclude Include="palindromicString.h" />
     <ClInclude Include="palindromicSubsequence.h" />

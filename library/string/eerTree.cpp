@@ -26,7 +26,7 @@ static string makeRandomString(int n) {
 }
 
 void testEerTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- eerTree --------------------------------" << endl;
     {            // 01234567890123 

@@ -38,4 +38,5 @@ int main(void) {
     TEST(LexicographicallyMinimalStringRotation);
     TEST(PalindromicFactorization);
     TEST(EerTree);
+    TEST(SubsequenceDAG);
 }
