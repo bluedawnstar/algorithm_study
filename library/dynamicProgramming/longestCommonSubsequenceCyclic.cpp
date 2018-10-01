@@ -28,7 +28,7 @@ static string makeRandomString(int n) {
 }
 
 void testCyclicLCS() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Cyclic Longest Common Subsequence ------------------------" << endl;
     {

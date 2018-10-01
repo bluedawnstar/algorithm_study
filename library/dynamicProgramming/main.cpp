@@ -29,4 +29,5 @@ int main(void) {
     TEST(PartitionProblem);
     TEST(BitLCS);
     TEST(CyclicLCS);
+    TEST(LongestIncreasingSubsequence);
 }

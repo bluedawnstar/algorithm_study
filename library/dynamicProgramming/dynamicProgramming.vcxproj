@@ -197,6 +197,7 @@
     <ClInclude Include="longestCommonSubsequence.h" />
     <ClInclude Include="longestCommonSubsequenceCyclic.h" />
     <ClInclude Include="longestIncreasingSubsequence.h" />
+    <ClInclude Include="longestIncreasingSubsequenceTree.h" />
     <ClInclude Include="maxProductSumOfSubarray.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />

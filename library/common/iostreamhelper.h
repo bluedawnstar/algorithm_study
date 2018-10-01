@@ -11,23 +11,23 @@ static ostream& operator <<(ostream& os, const pair<int, pair<int, int>>& rhs) {
 
 template <typename T>
 static ostream& operator <<(ostream& os, vector<T>& rhs) {
-    os << "(";
+    os << "{ ";
     if (!rhs.empty())
         os << rhs[0];
     for (int i = 1; i < (int)rhs.size(); i++)
         os << ", " << rhs[i];
-    os << ")";
+    os << " }";
 
     return os;
 }
 
 static ostream& operator <<(ostream& os, vector<pair<int, int>>& rhs) {
-    os << "(";
+    os << "{ ";
     if (!rhs.empty())
         os << rhs[0];
     for (int i = 1; i < (int)rhs.size(); i++)
         os << ", " << rhs[i];
-    os << ")";
+    os << " }";
 
     return os;
 }
@@ -39,12 +39,12 @@ static ostream& operator <<(ostream& os, vector<vector<pair<int, int>>>& rhs) {
 }
 
 static ostream& operator <<(ostream& os, vector<string>& rhs) {
-    os << "(";
+    os << "{ ";
     if (!rhs.empty())
         os << "\"" << rhs[0] << "\"";
     for (int i = 1; i < (int)rhs.size(); i++)
         os << ", " << "\"" << rhs[i] << "\"";
-    os << ")";
+    os << " }";
 
     return os;
 }
