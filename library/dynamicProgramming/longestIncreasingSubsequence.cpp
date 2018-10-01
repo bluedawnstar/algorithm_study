@@ -4,7 +4,7 @@
 using namespace std;
 
 #include "longestIncreasingSubsequence.h"
-#include "longestIncreasingSubsequenceTree.h"
+#include "longestIncreasingSubsequenceDAG.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -33,7 +33,7 @@ void testLongestIncreasingSubsequence() {
     {
         vector<int> v{ 1, 3, 2, 7, 4, 11, 4, 12, 4, 2, 1, 9, 10 };
 
-        LisTree<int> tr(v);
+        LisDAG<int> tr(v);
 
         assert(tr.getTotalCount() == 12);
 

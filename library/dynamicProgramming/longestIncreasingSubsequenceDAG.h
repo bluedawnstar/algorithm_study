@@ -1,7 +1,7 @@
 #pragma once
 
 template <typename T>
-struct LisTree {
+struct LisDAG {
     struct NodeT {
         vector<int> next;
         int index;          // index in original data
@@ -15,14 +15,14 @@ struct LisTree {
     int length;
     vector<NodeT> tree;
 
-    LisTree() {
+    LisDAG() {
     }
 
-    LisTree(const T v[], int n) {
+    LisDAG(const T v[], int n) {
         build(v, n);
     }
 
-    explicit LisTree(const vector<T>& v) {
+    explicit LisDAG(const vector<T>& v) {
         build(v);
     }
 
