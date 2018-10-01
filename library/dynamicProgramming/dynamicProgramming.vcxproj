@@ -196,6 +196,7 @@
     <ClInclude Include="knuthOptimization.h" />
     <ClInclude Include="longestCommonSubsequence.h" />
     <ClInclude Include="longestCommonSubsequenceCyclic.h" />
+    <ClInclude Include="longestCommonSubsequenceDAG.h" />
     <ClInclude Include="longestIncreasingSubsequence.h" />
     <ClInclude Include="longestIncreasingSubsequenceTree.h" />
     <ClInclude Include="maxProductSumOfSubarray.h" />

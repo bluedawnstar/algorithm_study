@@ -10,6 +10,7 @@
 using namespace std;
 
 #include "longestCommonSubsequence.h"
+#include "longestCommonSubsequenceDAG.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
