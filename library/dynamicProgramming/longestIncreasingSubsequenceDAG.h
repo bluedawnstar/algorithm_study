@@ -5,15 +5,14 @@ struct LisDAG {
     struct NodeT {
         vector<int> next;
         int index;          // index in original data
-        long long count;    // the number of LIS in sub tree
+        long long count;    // the number of LIS in sub dag
     };
 
     int N;
     vector<T> value;
 
-    int root;
-    int length;
-    vector<NodeT> tree;
+    int lisLength;
+    vector<NodeT> dag;      // root is 0
 
     LisDAG() {
     }
@@ -52,26 +51,25 @@ struct LisDAG {
             }
         }
 
-        // build tree
+        // build dag
 
-        root = 0;
-        length = int(lis.size());
-        tree = vector<NodeT>(n + 1);
+        lisLength = int(lis.size());
+        dag = vector<NodeT>(n + 1);
         for (int i = 0; i <= n; i++) {
-            tree[i].index = i - 1;
-            tree[i].count = 0;
+            dag[i].index = i - 1;
+            dag[i].count = 0;
         }
 
         for (auto& it : dp.back())
-            tree[it.first + 1].count = 1;
+            dag[it.first + 1].count = 1;
 
         for (int i = int(lis.size()) - 1; i >= 0; i--) {
             for (int j = int(dp[i].size()) - 1; j >= 0; j--) {
                 if (i == 0) {
                     int b = dp[i][j].first;
-                    if (tree[b + 1].count > 0) {
-                        tree[0].count += tree[b + 1].count;
-                        tree[0].next.push_back(b + 1);
+                    if (dag[b + 1].count > 0) {
+                        dag[0].count += dag[b + 1].count;
+                        dag[0].next.push_back(b + 1);
                     }
                 } else {
                     for (int k = dp[i][j].second; k >= 0; k--) {
@@ -79,9 +77,9 @@ struct LisDAG {
                         int b = dp[i][j].first;
                         if (v[a] >= v[b])
                             break;
-                        if (tree[b + 1].count > 0) {
-                            tree[a + 1].count += tree[b + 1].count;
-                            tree[a + 1].next.push_back(b + 1);
+                        if (dag[b + 1].count > 0) {
+                            dag[a + 1].count += dag[b + 1].count;
+                            dag[a + 1].next.push_back(b + 1);
                         }
                     }
                 }
@@ -96,17 +94,17 @@ struct LisDAG {
     //---
 
     int getLength() const {
-        return length;
+        return lisLength;
     }
 
     long long getTotalCount() const {
-        return tree[0].count;
+        return dag[0].count;
     }
 
     // kth >= 0, O(N)
     vector<T> getKth(long long kth) const {
         vector<T> res;
-        if (0 <= kth && kth < tree[0].count) {
+        if (0 <= kth && kth < dag[0].count) {
             getKth(res, kth + 1, 0);
             reverse(res.begin(), res.end());
         }
@@ -130,9 +128,9 @@ struct LisDAG {
 private:
     // kth >= 1
     bool getKth(vector<T>& res, long long kth, int u) const {
-        for (int v : tree[u].next) {
-            if (tree[v].count < kth) {
-                kth -= tree[v].count;
+        for (int v : dag[u].next) {
+            if (dag[v].count < kth) {
+                kth -= dag[v].count;
                 continue;
             }
 
@@ -146,11 +144,11 @@ private:
 
     template <typename FuncT = function<void(int, const vector<T>&)>>
     void dfsIterate(int u, vector<T>& vec, const FuncT& f) const {
-        if (tree[u].next.empty()) {
+        if (dag[u].next.empty()) {
             f(u, vec);
             return;
         }
-        for (auto v : tree[u].next) {
+        for (auto v : dag[u].next) {
             vec.push_back(value[v - 1]);
             dfsIterate(v, vec, f);
             vec.pop_back();
