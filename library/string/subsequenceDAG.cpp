@@ -19,7 +19,7 @@ using namespace std;
 #include "subsequenceCount.h"
 
 void testSubsequenceDAG() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Subsequence DAG ------------------------" << endl;
     {
@@ -83,7 +83,7 @@ void testSubsequenceDAG() {
             assert(algo.kthSubsequence(i - 1) == allSubsequences[i]);
 
         // 4. fast finding lexicographically kth subsequence
-        algo.makeCounTable();
+        algo.makeCountTable();
         for (int i = 1; i < int(allSubsequences.size()); i++)
             assert(algo.kthSubsequenceFast(i - 1) == allSubsequences[i]);
     }

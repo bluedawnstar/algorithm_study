@@ -72,7 +72,7 @@ struct SubsequenceDAG {
     }
 
 
-    template <typename FuncT = function<void(int,string)>>
+    template <typename FuncT = function<void(int, const string&)>>
     void iterateAll(const FuncT& f) {
         string s;
         dfsIterate(0, s, f);

@@ -82,8 +82,8 @@ struct SubsequenceDAGAlgo {
     }
 
 
-    // 4. Number of different subsequences of a given string .
-    long long makeCounTable() {
+    // 4. Fast lexicographically kth subsequence.
+    long long makeCountTable() {
         fill(D.begin(), D.end(), 0);
         return countSubsequences(0); // include empty string
     }
