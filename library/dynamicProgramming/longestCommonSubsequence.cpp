@@ -46,6 +46,7 @@ static void test(const string& s1, const string& s2) {
     lcs = dag.findAll();
     cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
     cout << lcs << endl;
+    assert(dag.getTotalCount() == cnt);
     assert(int(lcs.size()) == cnt);
 
     distinctLcs = dag.findAllDistinct();
@@ -54,7 +55,7 @@ static void test(const string& s1, const string& s2) {
 }
 
 void testLongestCommonSubsequence() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Longest Common Subsequence ------------------------" << endl;
     {

@@ -165,8 +165,10 @@
     <ClCompile Include="longestCommonSubsequence.cpp" />
     <ClCompile Include="longestCommonSubsequenceCyclic.cpp" />
     <ClCompile Include="longestIncreasingSubsequence.cpp" />
+    <ClCompile Include="longestRepeatedSubsequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxProductSumOfSubarray.cpp" />
+    <ClCompile Include="maxSubarraySum.cpp" />
     <ClCompile Include="palindromicSubsequence.cpp" />
     <ClCompile Include="palindromicSubstring.cpp" />
     <ClCompile Include="partitionProblem.cpp" />
@@ -200,7 +202,9 @@
     <ClInclude Include="longestCommonSubsequenceDAG_Algo.h" />
     <ClInclude Include="longestIncreasingSubsequence.h" />
     <ClInclude Include="longestIncreasingSubsequenceDAG.h" />
+    <ClInclude Include="longestRepeatedSubsequence.h" />
     <ClInclude Include="maxProductSumOfSubarray.h" />
+    <ClInclude Include="maxSubarraySum.h" />
     <ClInclude Include="palindromicSubsequence.h" />
     <ClInclude Include="palindromicSubstring.h" />
     <ClInclude Include="partitionProblem.h" />

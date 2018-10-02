@@ -96,6 +96,12 @@
     <ClCompile Include="longestCommonSubsequenceCyclic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="longestRepeatedSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="maxSubarraySum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -195,6 +201,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="longestCommonSubsequenceDAG_Algo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestRepeatedSubsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxSubarraySum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

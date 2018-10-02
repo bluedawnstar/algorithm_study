@@ -30,4 +30,6 @@ int main(void) {
     TEST(BitLCS);
     TEST(CyclicLCS);
     TEST(LongestIncreasingSubsequence);
+    TEST(LongestRepeatedSubsequence);
+    TEST(MaxSubarraySum);
 }
