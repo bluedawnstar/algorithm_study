@@ -120,6 +120,9 @@
     <ClCompile Include="subsequenceDAG.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="palindromicNumber.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -240,6 +243,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="subsequenceDAG_Algo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicNumber.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

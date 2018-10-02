@@ -23,6 +23,7 @@ int main(void) {
     TEST(DistinctSubstringCounter);
     TEST(PalindromicSubsequence);
     TEST(PalindromicString);
+    TEST(PalindromicNumber);
     TEST(PalindromicTree);
     TEST(Split);
     TEST(LongestCommonSubstring_queryTwoStringAmongStrings);

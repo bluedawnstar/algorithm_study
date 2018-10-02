@@ -6,9 +6,6 @@ using namespace std;
 
 #include "palindromicString.h"
 
-// https://leetcode.com/problems/find-the-closest-palindrome/#/description
-
-
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <cassert>
@@ -64,8 +61,4 @@ void testPalindromicString() {
     cout << fastLongestPalindromicSubstring(SS("abacdfgdcaba")) << endl;
     cout << fastLongestPalindromicSubstring(SS("abacdfgdcabba")) << endl;
     cout << fastLongestPalindromicSubstring(SS("abacdedcaba")) << endl;
-
-    cout << "-- PalindromicNumber ---" << endl;
-    cout << PalindromicNumber::nearestPalindromic("10") << endl;
-    cout << PalindromicNumber::nearestPalindromic("100") << endl;
 }
