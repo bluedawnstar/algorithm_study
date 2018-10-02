@@ -42,14 +42,14 @@ struct BitLCS {
             return s;
         }
 
-        // a = bit_sub(b, a)
-        void gao(const Bitset& r) {
+        // a = bit_sub(b, bit_and(a, b))
+        void replace(const Bitset& r) {
             for (int i = 0; i < valueN; i++) {
                 bits[i] = (bits[i] ^ r.bits[i]) & r.bits[i];
             }
         }
 
-        void shl() {
+        void shiftL() {
             ValueT c = 1;
             for (int i = 0; i < valueN; i++) {
                 bits[i] <<= 1;
@@ -60,7 +60,7 @@ struct BitLCS {
             }
         }
 
-        void sub(const Bitset& r) {
+        void subtract(const Bitset& r) {
             for (int i = 0; i < valueN; i++)
                 bits[i] = r.bits[i] - bits[i];
 
@@ -116,9 +116,9 @@ struct BitLCS {
             for (int j = 0; j < valueN; j++)
                 x.bits[j] = row.bits[j] | alphaS[ch].bits[j];
 
-            row.shl();
-            row.sub(x);
-            row.gao(x);
+            row.shiftL();
+            row.subtract(x);
+            row.replace(x);
 
             res = max(res, row.bitCount());
         }

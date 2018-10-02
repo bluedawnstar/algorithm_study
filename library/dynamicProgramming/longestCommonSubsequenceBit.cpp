@@ -30,9 +30,17 @@ static string makeRandomString(int n) {
 }
 
 void testBitLCS() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bit-String Longest Common Subsequence ------------------------" << endl;
+    {
+        string s1 = "gtcttacatccgttcg";
+        string s2 = "tgttctagaattcgat";
+
+        int ans = BitLCS::solve(s1, s2);
+        int gt = 10;
+        assert(ans == gt);
+    }
     {
         int ans = BitLCS::solve("aggtab", "gxtxayb");
         assert(ans == 4);
