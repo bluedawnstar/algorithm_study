@@ -2,109 +2,141 @@
 
 struct LcsDAG {
     struct NodeT {
-        int i, j;
-        char ch;
         vector<int> next;
+        int i, j;               // s1[i], s2[j]
+        char ch;
+        long long count;
     };
 
-    vector<NodeT> nodes;
 
-    // the start node is nodes[0]
-    void makeLcsDAG(const string& s1, const string& s2) {
-        int n = int(s1.length());
-        int m = int(s2.length());
+    int lcsLength;
+    vector<NodeT> nodes;    // root is 0
 
+    LcsDAG() {
+    }
+
+    LcsDAG(const string& s1, const string& s2) {
+        build(s1, s2);
+    }
+
+    // O(N^2)
+    void build(const char s1[], int n, const char s2[], int m) {
         nodes.clear();
-        nodes.push_back(NodeT{ -1, -1, 0, vector<int>{} });
+        nodes.reserve(min(n, m) + 1);
+        nodes.push_back(NodeT{ vector<int>{}, -1, -1, 0, 0ll });
 
         vector<vector<int>> dp(n + 1, vector<int>(m + 1));
-        vector<vector<int>> match(min(n, m) + 1);    // count -> (i, j)
+        vector<vector<pair<int, int>>> match(min(n, m) + 1);    // match[i][j] = (index in nodes, previous index in match[i - 1])
+        match[0].emplace_back(0, -1);
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
                 if (s1[i - 1] == s2[j - 1]) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                    match[dp[i][j]].push_back(int(nodes.size()));
-                    nodes.push_back(NodeT{ i - 1, j - 1, s1[i - 1], vector<int>{} });
+                    int k = dp[i - 1][j - 1] + 1;
+                    dp[i][j] = k;
+                    match[k].emplace_back(int(nodes.size()), int(match[k - 1].size()) - 1);
+                    nodes.push_back(NodeT{ vector<int>{}, i - 1, j - 1, s1[i - 1], 0ll });
                 } else {
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
                 }
             }
         }
 
-        int len = dp[n][m];
-        if (len > 0) {
-            vector<bool> visited(nodes.size());
-            dfsLcsDAG(match, visited, len, n, m, -1);
-        }
-    }
-
-    vector<string> allLcs() {
-        vector<string> res;
-        string lcs;
-        dfsAllLcs(0, lcs, res);
-        return res;
-    }
-
-    unordered_map<string, int> allDistinctLcs() {
-        unordered_map<string, int> res;
-        string lcs;
-        dfsAllDistinctLcs(0, lcs, res);
-        return res;
-    }
-
-private:
-    void dfsLcsDAG(vector<vector<int>>& match, vector<bool>& visited, int pos, int n, int m, int parent) {
-        if (pos <= 0) {
-            nodes[0].next.push_back(parent);
+        lcsLength = dp[n][m];
+        if (lcsLength <= 0)
             return;
-        }
 
-        for (auto it : match[pos]) {
-            NodeT& node = nodes[it];
-            if (node.i >= n || node.j >= m)
-                continue;
+        // build DAG
 
-            if (parent >= 0)
-                nodes[it].next.push_back(parent);
+        for (auto& it : match[lcsLength])
+            nodes[it.first].count = 1;
 
-            if (!visited[it]) {
-                visited[it] = true;
-                dfsLcsDAG(match, visited, pos - 1, node.i, node.j, it);
+        for (int i = lcsLength; i > 0; i--) {
+            for (int j = int(match[i].size()) - 1; j >= 0; j--) {
+                int b = match[i][j].first;
+                if (nodes[b].count <= 0)
+                    continue;
+
+                for (int k = match[i][j].second; k >= 0; k--) {
+                    int a = match[i - 1][k].first;
+                    if (nodes[a].i >= nodes[b].i || nodes[a].j >= nodes[b].j)
+                        continue;
+                    nodes[a].count += nodes[b].count;
+                    nodes[a].next.push_back(b);
+                }
             }
         }
     }
 
-    void dfsAllLcs(int idx, string& lcs, vector<string>& res) {
-        NodeT& curr = nodes[idx];
-        if (curr.next.empty()) {
-            res.push_back(lcs);
-            return;
-        }
+    void build(const string& s1, const string& s2) {
+        int n = int(s1.length());
+        int m = int(s2.length());
+        build(s1.data(), n, s2.data(), m);
+    }
 
-        for (auto it : curr.next) {
-            NodeT& next = nodes[it];
-            if (next.i <= curr.i || next.j <= curr.j)
-                continue;
-            lcs.push_back(next.ch);
-            dfsAllLcs(it, lcs, res);
-            lcs.pop_back();
+    //---
+
+    int getLength() const {
+        return lcsLength;
+    }
+
+    long long getTotalCount() const {
+        return nodes[0].count;
+    }
+
+    // kth >= 0, O(N)
+    string getKth(long long kth) const {
+        string res;
+        if (0 <= kth && kth < nodes[0].count)
+            getKth(res, kth + 1, 0);
+        return res;
+    }
+
+    template <typename FuncT = function<void(int, const string&)>>
+    void iterateAll(const FuncT& f) const {
+        string s;
+        dfsIterate(0, s, f);
+    }
+
+    vector<string> findAll() const {
+        vector<string> res;
+        iterateAll([&res](int u, const string& s) {
+            res.push_back(s);
+        });
+        return res;
+    }
+
+    unordered_map<string, int> findAllDistinct() const {
+        unordered_map<string, int> res;
+        iterateAll([&res](int u, const string& s) {
+            ++res[s];
+        });
+        return res;
+    }
+
+private:
+    // kth >= 1
+    void getKth(string& res, long long kth, int u) const {
+        for (int v : nodes[u].next) {
+            if (nodes[v].count < kth) {
+                kth -= nodes[v].count;
+            } else {
+                res.push_back(nodes[v].ch);
+                getKth(res, kth, v);
+                break;
+            }
         }
     }
 
-    void dfsAllDistinctLcs(int idx, string& lcs, unordered_map<string, int>& res) {
-        NodeT& curr = nodes[idx];
-        if (curr.next.empty()) {
-            ++res[lcs];
+    template <typename FuncT = function<void(int, const string&)>>
+    void dfsIterate(int u, string& s, const FuncT& f) const {
+        if (nodes[u].next.empty()) {
+            f(u, s);
             return;
         }
-
-        for (auto it : curr.next) {
-            NodeT& next = nodes[it];
-            if (next.i <= curr.i || next.j <= curr.j)
-                continue;
-            lcs.push_back(next.ch);
-            dfsAllDistinctLcs(it, lcs, res);
-            lcs.pop_back();
+        for (auto v : nodes[u].next) {
+            s.push_back(nodes[v].ch);
+            dfsIterate(v, s, f);
+            s.pop_back();
         }
     }
 };

@@ -51,9 +51,10 @@ struct LisDAG {
             }
         }
 
-        // build dag
-
         lisLength = int(lis.size());
+
+        // build DAG
+
         dag = vector<NodeT>(n + 1);
         for (int i = 0; i <= n; i++) {
             dag[i].index = i - 1;
@@ -63,24 +64,22 @@ struct LisDAG {
         for (auto& it : dp.back())
             dag[it.first + 1].count = 1;
 
-        for (int i = int(lis.size()) - 1; i >= 0; i--) {
+        for (int i = lisLength - 1; i >= 0; i--) {
             for (int j = int(dp[i].size()) - 1; j >= 0; j--) {
+                int b = dp[i][j].first;
+                if (dag[b + 1].count <= 0)
+                    continue;
+
                 if (i == 0) {
-                    int b = dp[i][j].first;
-                    if (dag[b + 1].count > 0) {
-                        dag[0].count += dag[b + 1].count;
-                        dag[0].next.push_back(b + 1);
-                    }
+                    dag[0].count += dag[b + 1].count;
+                    dag[0].next.push_back(b + 1);
                 } else {
                     for (int k = dp[i][j].second; k >= 0; k--) {
                         int a = dp[i - 1][k].first;
-                        int b = dp[i][j].first;
                         if (v[a] >= v[b])
                             break;
-                        if (dag[b + 1].count > 0) {
-                            dag[a + 1].count += dag[b + 1].count;
-                            dag[a + 1].next.push_back(b + 1);
-                        }
+                        dag[a + 1].count += dag[b + 1].count;
+                        dag[a + 1].next.push_back(b + 1);
                     }
                 }
             }
@@ -104,10 +103,8 @@ struct LisDAG {
     // kth >= 0, O(N)
     vector<T> getKth(long long kth) const {
         vector<T> res;
-        if (0 <= kth && kth < dag[0].count) {
+        if (0 <= kth && kth < dag[0].count)
             getKth(res, kth + 1, 0);
-            reverse(res.begin(), res.end());
-        }
         return res;
     }
 
@@ -127,19 +124,16 @@ struct LisDAG {
 
 private:
     // kth >= 1
-    bool getKth(vector<T>& res, long long kth, int u) const {
+    void getKth(vector<T>& res, long long kth, int u) const {
         for (int v : dag[u].next) {
-            if (dag[v].count < kth) {
+            if (dag[v].count < kth)
                 kth -= dag[v].count;
-                continue;
-            }
-
-            if (getKth(res, kth, v)) {
+            else {
                 res.push_back(value[v - 1]);
+                getKth(res, kth, v);
                 break;
             }
         }
-        return true;
     }
 
     template <typename FuncT = function<void(int, const vector<T>&)>>

@@ -28,96 +28,42 @@ static ostream& operator <<(ostream& os, const unordered_set<string>& rhs) {
     return os;
 }
 
+static void test(const string& s1, const string& s2) {
+    auto cnt = countOfAllLcs(s1, s2);
+    cout << "countOfLcs(\"" << s1 << "\", \"" << s2 << "\") : " << cnt << endl;
+
+    auto lcs = LcsFinder::allLcs(s1, s2);
+    cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
+    cout << lcs << endl;
+    assert(int(lcs.size()) == cnt);
+
+    auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
+    cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
+    assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == cnt);
+
+    LcsDAG dag;
+    dag.build(s1, s2);
+    lcs = dag.findAll();
+    cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
+    cout << lcs << endl;
+    assert(int(lcs.size()) == cnt);
+
+    distinctLcs = dag.findAllDistinct();
+    cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
+    assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == cnt);
+}
+
 void testLongestCommonSubsequence() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Longest Common Subsequence ------------------------" << endl;
     {
         assert(lengthOfLcs("aggtab", "gxtxayb") == 4);
         assert(lcs("aggtab", "gxtxayb") == "gtab");
 
-
-        {
-            string s1 = "aggtab";
-            string s2 = "gxtxayb";
-            auto cnt = countOfAllLcs(s1, s2);
-            int gt = 2;
-            cout << "countOfLcs(\"" << s1 << "\", \"" << s2 << "\") : " << cnt << endl;
-            assert(cnt == gt);
-
-            auto lcs = LcsFinder::allLcs(s1, s2);
-            cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
-            cout << lcs << endl;
-            assert(int(lcs.size()) == gt);
-
-            auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
-            cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
-
-            LcsDAG dag;
-            dag.makeLcsDAG(s1, s2);
-            lcs = dag.allLcs();
-            cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
-            cout << lcs << endl;
-            assert(int(lcs.size()) == gt);
-            distinctLcs = dag.allDistinctLcs();
-            cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
-        }
-        {
-            string s1 = "aaaaaa";
-            string s2 = "aaa";
-            int cnt = countOfAllLcs(s1, s2);
-            int gt = 20;
-            cout << "countOfLcs(\"" << s1 << "\", \"" << s2 << "\") : " << cnt << endl;
-            assert(cnt == gt);
-
-            auto lcs = LcsFinder::allLcs(s1, s2);
-            cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
-            cout << lcs << endl;
-            assert(int(lcs.size()) == gt);
-
-            auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
-            cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
-
-            LcsDAG dag;
-            dag.makeLcsDAG(s1, s2);
-            lcs = dag.allLcs();
-            cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
-            cout << lcs << endl;
-            assert(int(lcs.size()) == gt);
-            distinctLcs = dag.allDistinctLcs();
-            cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
-        }
-        {
-            string s1 = "abcabc";
-            string s2 = "abc";
-            auto cnt = countOfAllLcs(s1, s2);
-            int gt = 4;
-            cout << "countOfLcs(\"" << s1 << "\", \"" << s2 << "\") : " << cnt << endl;
-            assert(cnt == gt);
-
-            auto lcs = LcsFinder::allLcs(s1, s2);
-            cout << "allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
-            cout << lcs << endl;
-            assert(int(lcs.size()) == gt);
-
-            auto distinctLcs = LcsFinder::allDistinctLcs(s1, s2);
-            cout << "allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
-
-            LcsDAG dag;
-            dag.makeLcsDAG(s1, s2);
-            lcs = dag.allLcs();
-            cout << "LcsDAG::allLcs(\"" << s1 << "\", \"" << s2 << "\") : " << lcs.size() << endl;
-            cout << lcs << endl;
-            assert(int(lcs.size()) == gt);
-            distinctLcs = dag.allDistinctLcs();
-            cout << "LcsDAG::allDistinctLcs(\"" << s1 << "\", \"" << s2 << "\") : " << distinctLcs.size() << endl;
-            assert(int(distinctLcs.size()) == 1 && distinctLcs.begin()->second == gt);
-        }
+        test("aggtab", "gxtxayb");
+        test("aaaaaa", "aaa");
+        test("abcabc", "abc");
     }
 
     cout << "OK!" << endl;
