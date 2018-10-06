@@ -47,6 +47,18 @@ struct MinFactors {
             res.push_back(minFactors[x]);
             x /= minFactors[x];
         }
+        return res;
+    }
+
+    vector<pair<int,int>> getPrimeFactorsEx(int x) const {
+        vector<pair<int,int>> res;
+        while (x > 1) {
+            if (!res.empty() && minFactors[x] == res.back().first)
+                res.back().second++;
+            else
+                res.emplace_back(minFactors[x], 1);
+            x /= minFactors[x];
+        }
 
         return res;
     }
