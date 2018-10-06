@@ -5,7 +5,7 @@ public:
     UnionFind() {
     }
 
-    UnionFind(int N) : parent(N, 0), rank(N, 0) {
+    explicit UnionFind(int N) : parent(N, 0), rank(N, 0) {
         for (int i = 0; i < N; i++)
             parent[i] = i;
     }
