@@ -110,7 +110,7 @@ inline vector<int> modInvPrimeRange(int n, int M) {
     res[0] = 0;
     res[1] = 1;
     for (int i = 2; i <= n; i++) {
-        res[i] = (M - (M / i) * res[M % i] % M) % M;
+        res[i] = int((M - 1ll * (M / i) * res[M % i] % M) % M);
     }
 
     return res;
