@@ -150,7 +150,7 @@ struct PrimeFactors {
         }
     }
 
-    // return all prime numbers and prime factors from 1 to n
+    // find all prime numbers and prime factors from 1 to n
     static void buildAll(int n, vector<int>& primes, vector<PrimeFactors>& primeFactors) {
         primes.clear();
         primeFactors = vector<PrimeFactors>(n + 1);
@@ -183,8 +183,7 @@ struct PrimeFactors {
         }
     }
 
-    // input : pairs of (a prime number, a prime number's power)
-    // return : all factors
+    // return all factors
     vector<int> getFactors() const {
         if (primeFactors.empty())
             return vector<int>(1, 1);
@@ -222,7 +221,6 @@ struct PrimeFactors {
     }
 
     // a^メ * b^モ * c^ャ  ==>  (メ + 1) * (モ + 1) * (ャ + 1)
-    // input : pairs of (a prime number, a prime number's power)
     int getFactorCount() const {
         int res = 1;
         for (auto& it : primeFactors)
@@ -231,12 +229,26 @@ struct PrimeFactors {
     }
 
     //see the eulerTheorem.h
-    int phi(int n) {
+    int phi(int n) const {
         int res = n;
 
         for (auto& p : primeFactors)
             res -= res / p.first;
 
         return res;
+    }
+
+    bool isCoprime(const PrimeFactors& rhs) const {
+        int N = int(primeFactors.size());
+        int M = int(rhs.primeFactors.size());
+        for (int i = 0, j = 0; i < N && j < M; ) {
+            if (primeFactors[i].first == rhs.primeFactors[j].first)
+                return false;
+            else if (primeFactors[i].first < rhs.primeFactors[j].first)
+                i++;
+            else
+                j++;
+        }
+        return true;
     }
 };

@@ -109,11 +109,11 @@ struct BasicUndirectedGraph {
         for (int u = 0; u < N; u++) {
             for (int v : edges[u]) {
                 if (u < v) {
-                    int x = uf.findSet(u);
-                    int y = uf.findSet(v);
+                    int x = uf.find(u);
+                    int y = uf.find(v);
                     if (x == y)
                         return true;
-                    uf.unionSet(u, v);
+                    uf.merge(u, v);
                 }
             }
         }

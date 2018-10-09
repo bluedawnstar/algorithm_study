@@ -39,14 +39,14 @@ private:
         for (int v : edges[u]) {
             if (!visited[v]) {
                 dfs(edges, v, queries);
-                dsu.unionSet(u, v);
-                ancestor[dsu.findSet(u)] = u;
+                dsu.merge(u, v);
+                ancestor[dsu.find(u)] = u;
             }
         }
 
         for (auto& v : queries[u]) {
             if (visited[v.first])
-                v.second = ancestor[dsu.findSet(v.first)];
+                v.second = ancestor[dsu.find(v.first)];
         }
     }
 };

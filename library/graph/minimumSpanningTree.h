@@ -46,9 +46,9 @@ struct MinimumSpanningTree {
             T cost = E[i].first;
             int u = E[i].second.first;
             int v = E[i].second.second;
-            if (sets.findSet(u) == sets.findSet(v))
+            if (sets.find(u) == sets.find(v))
                 continue;
-            sets.unionSet(u, v);
+            sets.merge(u, v);
             selected.emplace_back(u, v);
             res += cost;
         }

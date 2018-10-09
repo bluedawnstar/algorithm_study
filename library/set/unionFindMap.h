@@ -1,7 +1,9 @@
 #pragma once
 
-class UnionFindMap {
-public:
+struct UnionFindMap {
+    // first is 'parent', second is 'rank'
+    unordered_map<int, pair<int, int>> elemMap;
+
     UnionFindMap() : elemMap() {
     }
 
@@ -17,7 +19,7 @@ public:
         return elemMap.find(x) != elemMap.end();
     }
 
-    int findSet(int x) {
+    int find(int x) {
         if (!exist(x)) {
             add(x);
             return x;
@@ -25,12 +27,12 @@ public:
 
         if (elemMap[x].first == x)
             return x;
-        return elemMap[x].first = findSet(elemMap[x].first);
+        return elemMap[x].first = find(elemMap[x].first);
     }
 
-    int unionSet(int x, int y) {
-        int xset = findSet(x);
-        int yset = findSet(y);
+    int merge(int x, int y) {
+        int xset = find(x);
+        int yset = find(y);
         if (xset == yset)
             return xset;
 
@@ -44,8 +46,44 @@ public:
             return xset;
         }
     }
+};
 
-private:
+// Simplified Union-Find for Disjoint-Set
+struct DSUMap {
     // first is 'parent', second is 'rank'
-    unordered_map<int, pair<int, int>> elemMap;
+    unordered_map<int, int> M;
+
+    DSUMap() : M() {
+    }
+
+    void init() {
+        M.clear();
+    }
+
+    void add(int x) {
+        M[x] = x;
+    }
+
+    bool exist(int x) const {
+        return M.find(x) != M.end();
+    }
+
+    int find(int x) {
+        if (!exist(x)) {
+            add(x);
+            return x;
+        }
+
+        if (M[x] == x)
+            return x;
+        return M[x] = find(M[x]);
+    }
+
+    int merge(int x, int y) {
+        int xset = find(x);
+        int yset = find(y);
+        if (xset != yset)
+            M[yset] = xset;
+        return xset;
+    }
 };
