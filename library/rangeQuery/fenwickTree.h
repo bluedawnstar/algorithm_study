@@ -78,7 +78,7 @@ struct FenwickTree {
     void add(int pos, T val) {
         pos++;
 
-        while (pos < int(tree.size())) {
+        while (pos <= int(tree.size())) {
             tree[pos] += val;
             pos += pos & -pos;      // add lowest bit
         }

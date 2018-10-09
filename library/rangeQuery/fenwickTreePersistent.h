@@ -134,7 +134,7 @@ struct PartiallyPersistentFenwickTree {
     void addSub(int pos, T val) {
         pos++;
 
-        while (pos < int(tree.size())) {
+        while (pos <= int(tree.size())) {
             setAt(pos, getLastAt(pos) + val);
             pos += pos & -pos;      // add lowest bit
         }

@@ -37,7 +37,7 @@ void testFenwickTree() {
 
     cout << "-- FenwickTree (Binary Indexed Tree) -------------------" << endl;
     {
-        vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
+        vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9, 7, 8, 6, 11 };
         int N = int(in.size());
 
         FenwickTree<int> fenwick(in);
@@ -47,6 +47,7 @@ void testFenwickTree() {
         assert(ans == 12);
 
         fenwick.add(3, 6);
+        in[3] += 6;
         cout << "after fenwick.add(3, 6)" << endl;
 
         ans = fenwick.sum(5);
@@ -56,6 +57,14 @@ void testFenwickTree() {
         ans = fenwick.sumRange(1, 5);
         cout << "fenwick.rangeSum(1, 5) = " << ans << endl;
         assert(ans == 16);
+
+        fenwick.add(0, 1);
+        in[0] += 1;
+        assert(fenwick.sum(15) == sumSlow(in, 0, 15));
+
+        fenwick.add(15, 1);
+        in[15] += 1;
+        assert(fenwick.sumRange(0, 15) == sumSlow(in, 0, 15));
     }
     {
         vector<int> in{ 2, 1, 1, 3, 2, 3, 4, 5, 6, 7, 8, 9 };
