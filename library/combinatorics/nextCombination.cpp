@@ -43,11 +43,11 @@ void testNextCombination() {
         vector<int> c;
         vector<vector<int>> ans;
 
-        init_combination(c, N, R);
+        initCombination(c, N, R);
         do {
             //cout << c << endl;
             ans.push_back(c);
-        } while (next_combination(c, N));
+        } while (nextCombination(c, N));
 
         auto gt = getCombinationsSlow(N, R);
         assert(ans == gt);

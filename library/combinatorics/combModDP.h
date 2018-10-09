@@ -33,6 +33,8 @@ struct CombAllModDP {
     }
 };
 
+//---
+
 // nCr % M  (n is fixed)
 struct CombCompactModDP {
     vector<long long> C;
@@ -60,6 +62,41 @@ struct CombCompactModDP {
         return C[r];
     }
 };
+
+// nCr % M  (n is fixed)
+struct FastCombCompactModDP {
+    vector<long long> C;
+
+    FastCombCompactModDP() {
+    }
+
+    FastCombCompactModDP(int n, int M) {
+        build(n, M);
+    }
+
+    void build(int n, int M) {
+        C.assign(n + 1, 0);
+
+        C[0] = 1;
+
+        if (n > 0) {
+            C[1] = n % M;
+
+            vector<int> inv(n + 1);
+            inv[1] = 1;
+            for (int i = 2; i <= n; i++) {
+                inv[i] = int((M - 1ll * (M / i) * inv[M % i] % M) % M);
+                C[i] = C[i - 1] * (n - i + 1) % M * inv[i] % M;
+            }
+        }
+    }
+
+    long long comb(int r) {
+        return C[r];
+    }
+};
+
+//---
 
 // nCr % M
 // M is a prime number

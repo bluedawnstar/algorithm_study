@@ -13,6 +13,7 @@ struct CombAllDP {
         build(n);
     }
 
+    // find all nCr (0 <= n <= N, 0 <= r <= n)
     void build(int n) {
         C.assign(n + 1, vector<long long>(n + 1));
 
@@ -42,6 +43,7 @@ struct CombCompactDP {
         build(n);
     }
 
+    // find all nCr (0 <= r <= n)
     void build(int n) {
         C.assign(n + 1, 0);
 
@@ -56,5 +58,43 @@ struct CombCompactDP {
 
     long long comb(int r) const {
         return C[r];
+    }
+};
+
+// PRECONDITION: 0 <= n <= 66
+struct FastCombCompactDP {
+    vector<long long> C;
+    vector<long long> S;
+
+    FastCombCompactDP() {
+    }
+
+    FastCombCompactDP(int n) {
+        build(n);
+    }
+
+    void build(int n) {
+        C.assign(n + 1, 0);
+        S.assign(n + 1, 0);
+
+        C[0] = 1;
+        S[0] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            C[i] = C[i - 1] * (n - i + 1) / i;
+            S[i] = S[i - 1] + C[i];
+        }
+    }
+
+    // nCr
+    long long comb(int r) const {
+        return C[r];
+    }
+
+    //  r
+    // SUM nCk
+    // k=0
+    long long sum(int r) const {
+        return S[r];
     }
 };

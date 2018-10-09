@@ -1,12 +1,12 @@
 #pragma once
 
-inline void init_combination(vector<int>& comb, int n, int r) {
+inline void initCombination(vector<int>& comb, int n, int r) {
     comb.resize(r);
     for (int i = 0; i < r; i++)
         comb[i] = i;
 }
 
-inline bool next_combination(vector<int>& comb, int n) {
+inline bool nextCombination(vector<int>& comb, int n) {
     int k = int(comb.size());
     int p = k - 1;
 
