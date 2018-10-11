@@ -15,9 +15,9 @@ struct CompactSegmentTreeLazyUpdate {
     vector<T>   treeLazy;   // 
     vector<bool> lazyExist; // 
 
-    T           defaultValue;
     MergeOp     mergeOp;
     BlockOp     blockOp;
+    T           defaultValue;
 
     CompactSegmentTreeLazyUpdate(MergeOp op, BlockOp bop, T dflt = T())
         : mergeOp(op), blockOp(bop), defaultValue(dflt) {

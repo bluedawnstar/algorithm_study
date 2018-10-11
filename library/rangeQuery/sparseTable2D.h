@@ -11,8 +11,8 @@ struct SparseTable2D {
 
     vector<vector<vector<vector<T>>>> values; // [logR][R][logC][C]
     vector<int> H;
-    T           defaultValue;
     MergeOp     mergeOp;
+    T           defaultValue;
 
     explicit SparseTable2D(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {

@@ -10,8 +10,8 @@ struct ReverseSparseTable {
     int                 N;
     vector<vector<T>>   value;
     vector<int>         H;
-    T                   defaultValue;
     MergeOp             mergeOp;
+    T                   defaultValue;
 
     explicit ReverseSparseTable(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {

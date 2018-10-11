@@ -10,8 +10,8 @@ struct SparseTableIndex {
     int                 N;
     vector<vector<int>> value;          // index to 'in'
     vector<int>         H;
-    T                   defaultValue;
     MergeOp             mergeOp;
+    T                   defaultValue;
 
     vector<T>           in;
 

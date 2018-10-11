@@ -10,10 +10,10 @@ struct PersistentSegmentTreeLazy {
         Node*   left;
         Node*   right;
     };
+    int             N;              // the size of array
     vector<Node*>   trees;
     vector<unordered_map<int,T>> treesLazy;
 
-    int             N;              // the size of array
     T               defaultValue;
     MergeOp         mergeOp;
     BlockOp         blockOp;

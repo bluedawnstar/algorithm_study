@@ -6,8 +6,8 @@ template <typename T, typename MergeOp = function<T(T, T)>>
 struct FenwickTreeEx {
     vector<T> tree;
 
-    T         defaultValue;
     MergeOp   mergeOp;
+    T         defaultValue;
 
     explicit FenwickTreeEx(MergeOp op, T dflt = T())
         : mergeOp(op), defaultValue(dflt) {

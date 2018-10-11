@@ -9,8 +9,8 @@ struct GeneralizedBIT {
     vector<T> tree;         // forward BIT
     vector<T> treeR;        // backward BIT
 
-    T       defaultValue;
     MergeOp mergeOp;
+    T       defaultValue;
 
     explicit GeneralizedBIT(MergeOp op, T dflt = T())
         : N(0), mergeOp(op), defaultValue(dflt) {

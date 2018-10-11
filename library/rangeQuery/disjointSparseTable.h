@@ -11,8 +11,8 @@ struct DisjointSparseTable {
     int                 N;
     vector<vector<T>>   value;
     vector<int>         H;
-    T                   defaultValue;
     MergeOp             mergeOp;
+    T                   defaultValue;
 
     explicit DisjointSparseTable(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {

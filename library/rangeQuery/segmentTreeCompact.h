@@ -13,9 +13,9 @@ struct CompactSegmentTree {
     int       N;            // the size of array
     vector<T> tree;         //
     
-    T         defaultValue;
     MergeOp   mergeOp;
-    
+    T         defaultValue;
+
     explicit CompactSegmentTree(MergeOp op, T dflt = T())
         : RealN(0), N(0), tree(), mergeOp(op), defaultValue(dflt) {
     }

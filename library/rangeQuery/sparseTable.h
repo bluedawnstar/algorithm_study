@@ -10,8 +10,8 @@ struct SparseTable {
     int                 N;
     vector<vector<T>>   value;
     vector<int>         H;
-    T                   defaultValue;
     MergeOp             mergeOp;
+    T                   defaultValue;
 
     explicit SparseTable(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {

@@ -14,8 +14,8 @@ struct PersistentSegmentTree {
     };
     vector<Node*>   trees;
     int             N;              // the size of array
-    T               defaultValue;
     MergeOp         mergeOp;
+    T               defaultValue;
 
     explicit PersistentSegmentTree(MergeOp op, T dflt = T())
         : N(0), trees(), mergeOp(op), defaultValue(dflt) {

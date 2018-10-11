@@ -49,8 +49,8 @@ struct SegmentTree {
     int       N;            // the size of array
     vector<T> tree;         // 
 
-    T         defaultValue;
     MergeOp   mergeOp;
+    T         defaultValue;
 
     explicit SegmentTree(MergeOp op, T dflt = T())
         : N(0), tree(), mergeOp(op), defaultValue(dflt) {
@@ -120,6 +120,7 @@ struct SegmentTree {
     // lower bound where f(x) is true in [0, N)
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
+    // O(logN)
     pair<T, int> lowerBound(const function<bool(T)>& f) const {
         return lowerBoundSub(f, T(0), 1, 0, N - 1);
     }

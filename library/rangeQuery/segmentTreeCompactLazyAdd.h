@@ -16,8 +16,8 @@ struct CompactSegmentTreeLazyAdd {
     vector<T> tree;         //
     vector<T> treeLazy;     // 0 means "not lazy value"
 
-    T         defaultValue;
     MergeOp   mergeOp;
+    T         defaultValue;
 
     explicit CompactSegmentTreeLazyAdd(MergeOp op, T dflt = T())
         : mergeOp(), defaultValue(dflt) {
