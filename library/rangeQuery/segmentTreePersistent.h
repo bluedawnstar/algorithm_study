@@ -3,27 +3,25 @@
 #include <vector>
 #include <functional>
 
-//--------- Persistent Segment Tree ----------------------------------------------
+//--------- Simple Persistent Segment Tree ------------------------------------
 
 template <typename T, typename MergeOp = function<T(T, T)>>
 struct PersistentSegmentTree {
     struct Node {
         T       value;
-        Node*   left;
-        Node*   right;
+        int     left;
+        int     right;
     };
-    vector<Node*>   trees;
-    int             N;              // the size of array
-    MergeOp         mergeOp;
-    T               defaultValue;
+
+    int         N;              // the size of array
+    vector<Node> nodes;         // 
+    vector<int> trees;          // roots
+
+    MergeOp     mergeOp;        // 
+    T           defaultValue;   // 
 
     explicit PersistentSegmentTree(MergeOp op, T dflt = T())
-        : N(0), trees(), mergeOp(op), defaultValue(dflt) {
-    }
-
-    PersistentSegmentTree(int n, MergeOp op, T dflt = T())
-        : mergeOp(op), defaultValue(dflt) {
-        init(n);
+        : N(0), nodeN(0), mergeOp(op), defaultValue(dflt) {
     }
 
     PersistentSegmentTree(T value, int n, MergeOp op, T dflt = T())
@@ -41,27 +39,13 @@ struct PersistentSegmentTree {
         build(v);
     }
 
-    PersistentSegmentTree(PersistentSegmentTree&& rhs)
-        : N(rhs.N), trees(move(rhs.trees)), mergeOp(rhs.mergeOp), defaultValue(rhs.defaultValue),
-          nodes(move(rhs.nodes)) {
-    }
-
-    ~PersistentSegmentTree() {
-        for (auto* p : nodes)
-            delete p;
-    }
-
 
     int getHistorySize() const {
         return int(trees.size());
     }
 
 
-    void init(int n) {
-        N = n;
-        trees.clear();
-    }
-
+    // O(NlogN)
     T build(T value, int n) {
         init(n);
 
@@ -71,42 +55,44 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
+    // O(NlogN)
     T build(const T arr[], int n) {
         init(n);
 
-        auto t = buildSub(arr, 0, n -1);
+        auto t = buildSub(arr, 0, n - 1);
         trees.push_back(t.second);
         return t.first;
     }
 
+    // O(NlogN)
     T build(const vector<T>& v) {
         return build(&v[0], int(v.size()));
     }
 
 
-    // inclusive
+    // inclusive, O(logN)
     T query(int left, int right) const {
         return querySub(trees.back(), left, right, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(logN)
     T update(int index, T newValue) {
         return updateSub(trees.back(), index, newValue, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(klogN)
     T updateRange(int left, int right, T newValue) {
         return updateRangeSub(trees.back(), left, right, newValue, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(logN)
     T upgrade(int index, T newValue) {
         auto t = upgradeSub(trees.back(), index, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
     }
 
-    // inclusive
+    // inclusive, O(klogN)
     T upgradeRange(int left, int right, T newValue) {
         auto t = upgradeRangeSub(trees.back(), left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
@@ -117,35 +103,36 @@ struct PersistentSegmentTree {
     // lower bound where f(x) is true in [0, N)
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
-    pair<T, int> lowerBound(const function<bool(T)>& f) const {
+    // O(logN)
+    int lowerBound(const function<bool(T)>& f) const {
         return lowerBoundSub(f, T(0), trees.back(), 0, N - 1);
     }
 
     //--- with history ---
 
-    // inclusive
+    // inclusive, O(logN)
     T query(int historyIndex, int left, int right) const {
         return querySub(trees[historyIndex], left, right, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(logN)
     T update(int historyIndex, int index, T newValue) {
         return updateSub(trees[historyIndex], index, newValue, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(klogN)
     T updateRange(int historyIndex, int left, int right, T newValue) {
         return updateRangeSub(trees[historyIndex], left, right, newValue, 0, N - 1);
     }
 
-    // inclusive
+    // inclusive, O(logN)
     T upgrade(int historyIndex, int index, T newValue) {
         auto t = upgradeSub(trees[historyIndex], index, newValue, 0, N - 1);
         trees.push_back(t.second);
         return t.first;
     }
 
-    // inclusive
+    // inclusive, O(klogN)
     T upgradeRange(int historyIndex, int left, int right, T newValue) {
         auto t = upgradeRangeSub(trees[historyIndex], left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
@@ -156,128 +143,138 @@ struct PersistentSegmentTree {
     // lower bound where f(x) is true in [0, N)
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
-    pair<T, int> lowerBound(int historyIndex, const function<bool(T)>& f) const {
+    // O(logN)
+    int lowerBound(int historyIndex, const function<bool(T)>& f) const {
         return lowerBoundSub(f, T(0), trees[historyIndex], 0, N - 1);
     }
 
 private:
-    vector<Node*>   nodes;          // allocated nodes
+    void init(int n) {
+        N = n;
+        trees.clear();
+        trees.reserve(N);
 
-    Node* createNode(T value) {
-        auto* p = new Node{ value, nullptr, nullptr };
-        nodes.push_back(p);
-        return p;
+        nodes.clear();
+        nodes.reserve(N * 4);
     }
-    Node* createNode(T value, Node* left, Node* right) {
-        auto* p = new Node{ value, left, right };
-        nodes.push_back(p);
-        return p;
+
+    int addNode(T value) {
+        int i = int(nodes.size());
+        nodes.push_back({ value, -1, -1 });
+        return i;
     }
+
+    int addNode(T value, int left, int right) {
+        int i = int(nodes.size());
+        nodes.push_back({ value, left, right });
+        return i;
+    }
+
 
     // inclusive
-    pair<T, Node*> buildSub(T initValue, int left, int right) {
+    pair<T, int> buildSub(T initValue, int left, int right) {
         if (left > right)
-            return make_pair(defaultValue, nullptr);
+            return make_pair(defaultValue, -1);
 
         if (left == right)
-            return make_pair(initValue, createNode(initValue));
+            return make_pair(initValue, addNode(initValue));
 
         int mid = left + (right - left) / 2;
         auto L = buildSub(initValue, left, mid);
         auto R = buildSub(initValue, mid + 1, right);
         auto value = mergeOp(L.first, R.first);
-        return make_pair(value, createNode(value, L.second, R.second));
+        return make_pair(value, addNode(value, L.second, R.second));
     }
 
     // inclusive
-    pair<T, Node*> buildSub(const T arr[], int left, int right) {
+    pair<T, int> buildSub(const T arr[], int left, int right) {
         if (left > right)
-            return make_pair(defaultValue, nullptr);
+            return make_pair(defaultValue, -1);
 
         if (left == right)
-            return make_pair(arr[left], createNode(arr[left]));
+            return make_pair(arr[left], addNode(arr[left]));
 
         int mid = left + (right - left) / 2;
         auto L = buildSub(arr, left, mid);
         auto R = buildSub(arr, mid + 1, right);
         auto value = mergeOp(L.first, R.first);
-        return make_pair(value, createNode(value, L.second, R.second));
+        return make_pair(value, addNode(value, L.second, R.second));
     }
 
-    T querySub(Node* node, int left, int right, int nodeLeft, int nodeRight) const {
+    T querySub(int node, int left, int right, int nodeLeft, int nodeRight) const {
         if (right < nodeLeft || nodeRight < left)
             return defaultValue;
 
         if (left <= nodeLeft && nodeRight <= right)
-            return node->value;
+            return nodes[node].value;
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        return mergeOp(querySub(node->left, left, right, nodeLeft, mid),
-                       querySub(node->right, left, right, mid + 1, nodeRight));
+        return mergeOp(querySub(nodes[node].left, left, right, nodeLeft, mid),
+                       querySub(nodes[node].right, left, right, mid + 1, nodeRight));
     }
 
-    T updateSub(Node* node, int index, T newValue, int nodeLeft, int nodeRight) {
+    T updateSub(int node, int index, T newValue, int nodeLeft, int nodeRight) {
         if (index < nodeLeft || nodeRight < index)
-            return node ? node->value : defaultValue;
+            return node >= 0 ? nodes[node].value : defaultValue;
 
         if (nodeLeft == nodeRight)
-            return node->value = newValue;
+            return nodes[node].value = newValue;
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        return node->value = mergeOp(updateSub(node->left, index, newValue, nodeLeft, mid),
-                                     updateSub(node->right, index, newValue, mid + 1, nodeRight));
+        return nodes[node].value = mergeOp(updateSub(nodes[node].left, index, newValue, nodeLeft, mid),
+                                           updateSub(nodes[node].right, index, newValue, mid + 1, nodeRight));
     }
 
-    T updateRangeSub(Node* node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
+    T updateRangeSub(int node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
         if (right < nodeLeft || nodeRight < left)
-            return node ? node->value : defaultValue;
+            return node >= 0 ? nodes[node].value : defaultValue;
 
         if (nodeLeft == nodeRight)
-            return node->value = newValue;
+            return nodes[node].value = newValue;
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        return node->value = mergeOp(updateRangeSub(node->left, left, right, newValue, nodeLeft, mid),
-                                     updateRangeSub(node->right, left, right, newValue, mid + 1, nodeRight));
+        return nodes[node].value = mergeOp(updateRangeSub(nodes[node].left, left, right, newValue, nodeLeft, mid),
+                                           updateRangeSub(nodes[node].right, left, right, newValue, mid + 1, nodeRight));
     }
 
-    pair<T, Node*> upgradeSub(Node* node, int index, T newValue, int nodeLeft, int nodeRight) {
+    pair<T, int> upgradeSub(int node, int index, T newValue, int nodeLeft, int nodeRight) {
         if (index < nodeLeft || nodeRight < index)
-            return make_pair(node ? node->value : defaultValue, node);
+            return make_pair(node >= 0 ? nodes[node].value : defaultValue, node);
 
         if (nodeLeft == nodeRight)
-            return make_pair(newValue, createNode(newValue, node->left, node->right));
+            return make_pair(newValue, addNode(newValue, nodes[node].left, nodes[node].right));
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        auto L = upgradeSub(node->left, index, newValue, nodeLeft, mid);
-        auto R = upgradeSub(node->right, index, newValue, mid + 1, nodeRight);
+        auto L = upgradeSub(nodes[node].left, index, newValue, nodeLeft, mid);
+        auto R = upgradeSub(nodes[node].right, index, newValue, mid + 1, nodeRight);
         T value = mergeOp(L.first, R.first);
-        return make_pair(value, createNode(value, L.second, R.second));
+        return make_pair(value, addNode(value, L.second, R.second));
     }
 
-    pair<T, Node*> upgradeRangeSub(Node* node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
+    pair<T, int> upgradeRangeSub(int node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
         if (right < nodeLeft || nodeRight < left)
-            return make_pair(node ? node->value : defaultValue, node);
+            return make_pair(node >= 0 ? nodes[node].value : defaultValue, node);
 
         if (nodeLeft == nodeRight)
-            return make_pair(newValue, createNode(newValue, node->left, node->right));
+            return make_pair(newValue, addNode(newValue, nodes[node].left, nodes[node].right));
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        auto L = upgradeRangeSub(node->left, left, right, newValue, nodeLeft, mid);
-        auto R = upgradeRangeSub(node->right, left, right, newValue, mid + 1, nodeRight);
+        auto L = upgradeRangeSub(nodes[node].left, left, right, newValue, nodeLeft, mid);
+        auto R = upgradeRangeSub(nodes[node].right, left, right, newValue, mid + 1, nodeRight);
         T value = mergeOp(L.first, R.first);
-        return make_pair(value, createNode(value, L.second, R.second));
+        return make_pair(value, addNode(value, L.second, R.second));
     }
 
-    pair<T, int> lowerBoundSub(const function<bool(T)>& f, T delta, Node* node, int nodeLeft, int nodeRight) const {
+    int lowerBoundSub(const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) const {
         if (nodeLeft >= nodeRight)
-            return make_pair(node->value, nodeLeft);
+            return nodeLeft;
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        auto val = mergeOp(delta, node->left->value);
+        auto val = mergeOp(delta, nodes[nodes[node].left].value);
         if (f(val))
-            return lowerBoundSub(f, delta, node->left, nodeLeft, mid);
+            return lowerBoundSub(f, delta, nodes[node].left, nodeLeft, mid);
         else
-            return lowerBoundSub(f, val, node->right, mid + 1, nodeRight);
+            return lowerBoundSub(f, val, nodes[node].right, mid + 1, nodeRight);
     }
 };
 

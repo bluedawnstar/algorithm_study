@@ -42,9 +42,6 @@
     <ClCompile Include="segmentTreeCompactLazyAdd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="segmentTreePersistent.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="sparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -117,6 +114,12 @@
     <ClCompile Include="schieberVishkinRMQ.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreePersistent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="segmentTreePartiallyPersistentLazy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -138,12 +141,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeLazy.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="segmentTreePersistent.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="segmentTreePersistentLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeRMQ.h">
@@ -246,6 +243,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="schieberVishkinRMQ.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePersistent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePersistentLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePartiallyPersistentLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

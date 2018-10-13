@@ -136,11 +136,11 @@ void testSegmentTreePersistent() {
 
             auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
             int gt = lowerBoundSlow(in, sum);
-            if (ans.second != gt) {
+            if (ans != gt) {
                 cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
                 ans = tree.lowerBound([sum](int val) { return val >= sum; });
             }
-            assert(ans.second == gt);
+            assert(ans == gt);
         }
     }
     cout << "OK!" << endl;
@@ -174,11 +174,11 @@ void testSegmentTreePersistent() {
                 int sum = gt[j][i].first;
 
                 auto ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
-                if (ans.second != gt[j][i].second) {
+                if (ans != gt[j][i].second) {
                     cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
                     ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
                 }
-                assert(ans.second == gt[j][i].second);
+                assert(ans == gt[j][i].second);
             }
         }
     }
@@ -198,11 +198,11 @@ void testSegmentTreePersistent() {
 
             auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
             int gt = lowerBoundSlow(in, sum);
-            if (ans.second != gt) {
+            if (ans != gt) {
                 cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
                 ans = tree.lowerBound([sum](int val) { return val >= sum; });
             }
-            assert(ans.second == gt);
+            assert(ans == gt);
         }
     }
     cout << "OK!" << endl;
@@ -236,11 +236,11 @@ void testSegmentTreePersistent() {
                 int sum = gt[j][i].first;
 
                 auto ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
-                if (ans.second != gt[j][i].second) {
+                if (ans != gt[j][i].second) {
                     cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
                     ans = tree.lowerBound(j, [sum](int val) { return val >= sum; });
                 }
-                assert(ans.second == gt[j][i].second);
+                assert(ans == gt[j][i].second);
             }
         }
     }
@@ -299,6 +299,9 @@ void testSegmentTreePersistent() {
         N = 10000;
 #endif
         vector<int> in(N);
+
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
 
         auto segTree = makePersistentSegmentTree(in, [](int a, int b) { return a + b; });
         auto segTreeLazy = makePersistentSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
@@ -388,11 +391,14 @@ void testSegmentTreePersistent() {
 #endif
         vector<int> in(N);
 
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % 1000;
+
         auto segTree = makePersistentSegmentTree(in, [](int a, int b) { return a + b; });
         auto segTreeLazy = makePersistentSegmentTreeLazy(in, [](int a, int b) { return a + b; }, [](int a, int n) { return a * n; });
 
         int history = 0;
-        segTree.upgrade(3, 7);
+        segTree.upgradeRange(3, 4, 7);
         segTreeLazy.upgradeRange(3, 4, 7);
 
         vector<tuple<int, int, int, int>> Q;

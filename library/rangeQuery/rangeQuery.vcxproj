@@ -171,6 +171,7 @@
     <ClCompile Include="segmentTreeLineSegment2D.cpp" />
     <ClCompile Include="segmentTreeLineSegment2DSum.cpp" />
     <ClCompile Include="segmentTreeMaxSubarray.cpp" />
+    <ClCompile Include="segmentTreePartiallyPersistentLazy.cpp" />
     <ClCompile Include="segmentTreePersistent.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTable2D.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="segmentTreeMaxSubarray.h" />
     <ClInclude Include="segmentTreePersistent.h" />
     <ClInclude Include="segmentTreePersistentLazy.h" />
+    <ClInclude Include="segmentTreePartiallyPersistentLazy.h" />
     <ClInclude Include="segmentTreeRMQ.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTable2D.h" />

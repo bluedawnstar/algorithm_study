@@ -14,9 +14,11 @@ int main(void) {
     TEST(FenwickTree2D);
     TEST(FenwickTreeMultAdd);
     TEST(FenwickTreeEx);
+    TEST(GeneralizedBIT);
     TEST(PersistentFenwickTree);
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
+    TEST(SegmentTreePartiallyPersistent);
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);
@@ -34,7 +36,6 @@ int main(void) {
     TEST(FastSqrtTree);
     TEST(MergeSortTree);
     TEST(MergeSortTreeIndex);
-    TEST(GeneralizedBIT);
     TEST(ReverseSparseTable);
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
