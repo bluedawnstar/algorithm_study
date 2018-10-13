@@ -30,7 +30,7 @@ static string makeRandomString(int n) {
 }
 
 void testBitLCS() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bit-String Longest Common Subsequence ------------------------" << endl;
     {

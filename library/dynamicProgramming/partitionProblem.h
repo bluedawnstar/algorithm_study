@@ -2,6 +2,9 @@
 
 // https://en.wikipedia.org/wiki/Partition_problem
 
+// the task of deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2
+//   such that the sum of the numbers in S1 equals the sum of the numbers in S
+
 struct PartitionProblem {
     // O(sum * n)
     static bool existPartition(const int value[], int n) {

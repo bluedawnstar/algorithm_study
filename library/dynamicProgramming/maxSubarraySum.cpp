@@ -18,7 +18,7 @@ using namespace std;
 #pragma warning(disable: 4334)
 
 void testMaxSubarraySum() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Max Subarray Sum -----------------------------------" << endl;
     {
