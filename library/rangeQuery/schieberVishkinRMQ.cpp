@@ -30,7 +30,7 @@ static int getMin(const vector<int>& v, int L, int R) {
 }
 
 void testSchieberVishkinRMQ() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Schieber-Vishkin RMQ ------------------------" << endl;
     {

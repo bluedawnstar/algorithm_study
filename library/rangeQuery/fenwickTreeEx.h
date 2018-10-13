@@ -75,6 +75,37 @@ struct FenwickTreeEx {
 
         return res;
     }
+
+    //--- lower bound
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    // O(logN)
+    int lowerBound(const function<bool(T)>& f) const {
+        int N = int(tree.size()) - 1;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        T delta = defaultValue;
+
+        int lo = 0;
+        for (; blockSize > 0; blockSize >>= 1) {
+            int next = lo + blockSize;
+            if (next <= N) {
+                int val = mergeOp(delta, tree[next]);
+                if (!f(val)) {
+                    delta = val;
+                    lo = next;
+                }
+            }
+        }
+
+        return lo;
+    }
 };
 
 template <typename T, typename MergeOp>

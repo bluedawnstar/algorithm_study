@@ -68,6 +68,7 @@ struct GeneralizedBIT {
         fill(treeR.begin(), treeR.end(), defaultValue);
     }
 
+    //--- update
 
     // inclusive (0 <= pos < N), O(logN)
     void add(int pos, T val) {
@@ -116,6 +117,7 @@ struct GeneralizedBIT {
         rebuild(left, right);
     }
 
+    //--- query
 
     // inclusive (0 <= pos < N), O(logN)
     T query(int pos) const {
@@ -137,6 +139,66 @@ struct GeneralizedBIT {
                 res = mergeOp(res, treeR[L]);
         }
         return res;
+    }
+
+    //--- lower bound
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    // O(logN)
+    int lowerBound(const function<bool(T)>& f) const {
+        int N = int(tree.size()) - 1;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        T delta = defaultValue;
+
+        int lo = 0;
+        for (; blockSize > 0; blockSize >>= 1) {
+            int next = lo + blockSize;
+            if (next <= N) {
+                int val = mergeOp(delta, tree[next]);
+                if (!f(val)) {
+                    delta = val;
+                    lo = next;
+                }
+            }
+        }
+
+        return lo;
+    }
+
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //    oooooooOOOOOOxxxxxx
+    //    L           ^     R
+    // O(logN)
+    int lowerBoundBackward(const function<bool(T)>& f) const {
+        int N = int(tree.size()) - 1;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        T delta = defaultValue;
+
+        int lo = 0;
+        for (; blockSize > 0; blockSize >>= 1) {
+            int next = lo + blockSize;
+            if (next <= N) {
+                int val = mergeOp(delta, tree[next]);
+                if (!f(val)) {
+                    delta = val;
+                    lo = next;
+                }
+            }
+        }
+
+        return lo;
     }
 
 private:
@@ -191,6 +253,57 @@ inline GeneralizedBIT<T, MergeOp> makeGeneralizedBIT(const vector<T>& v, MergeOp
 }
 
 //-----------------------------------------------------------------------------
+
+// PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// find next position where f(x) is true in [start, N)
+//   f(x): xxxxxxxxxxxOOOOOOOO
+//         S          ^
+// O(logN)
+template <typename T, typename MergeOp>
+inline int findNext(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
+    int pos = start;
+    while (pos <= gbit.N) {
+        if ((pos & 1) == 0) {
+            pos++;
+            if (f(gbit.tree[pos]))
+                return pos - 1;
+        }
+        if (pos <= gbit.N && f(gbit.treeR[pos])) {
+            return pos;
+            pos += pos & -pos;
+        }
+
+        while (pos <= gbit.N && !f(gbit.treeR[pos]))
+            pos += pos & -pos;
+    }
+
+    return -1;
+}
+
+// PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+// find previous position where f(x) is true in [0, start]
+//   f(x): OOOOOOOOxxxxxxxxxxx
+//                ^          S
+// O(logN)
+template <typename T, typename MergeOp>
+inline int findPrev(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
+    int pos = start + 1;
+    while (pos > 0) {
+        if ((pos & 1) == 0) {
+            pos--;
+            if (f(gbit.treeR[pos]))
+                return pos;
+        }
+        if (pos > 0 && f(gbit.tree[pos]))
+            return pos - 1;
+
+        while (pos > 0 && !f(gbit.tree[pos]))
+            pos &= pos - 1;
+    }
+
+    return -1;
+}
+
 
 // PRECONDITION: tree's range operation is monotonically increasing
 // return min(x | query(left, i) >= value, left <= i <= right)
@@ -270,55 +383,4 @@ inline int upperBoundBackward(const GeneralizedBIT<T, MergeOp>& st, int left, in
     }
 
     return hi;
-}
-
-
-// PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// find next position where f(x) is true in [start, N)
-//   f(x): xxxxxxxxxxxOOOOOOOO
-//         S          ^
-// O(logN)
-template <typename T, typename MergeOp>
-inline int findNext(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
-    int pos = start;
-    while (pos < gbit.N) {
-        if ((pos & 1) == 0) {
-            pos++;
-            if (f(gbit.tree[pos]))
-                return pos - 1;
-        }
-        if (pos < gbit.N && f(gbit.treeR[pos])) {
-            return pos;
-            pos += pos & -pos;
-        }
-
-        while (pos < gbit.N && !f(gbit.treeR[pos]))
-            pos += pos & -pos;
-    }
-
-    return -1;
-}
-
-// PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// find previous position where f(x) is true in [0, start]
-//   f(x): OOOOOOOOxxxxxxxxxxx
-//                ^          S
-// O(logN)
-template <typename T, typename MergeOp>
-inline int findPrev(const GeneralizedBIT<T, MergeOp>& gbit, int start, const function<bool(T)>& f) {
-    int pos = start + 1;
-    while (pos > 0) {
-        if ((pos & 1) == 0) {
-            pos--;
-            if (f(gbit.treeR[pos]))
-                return pos;
-        }
-        if (pos > 0 && f(gbit.tree[pos]))
-            return pos - 1;
-
-        while (pos > 0 && !f(gbit.tree[pos]))
-            pos &= pos - 1;
-    }
-
-    return -1;
 }

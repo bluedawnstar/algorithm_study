@@ -107,32 +107,34 @@ struct FenwickTree {
     void set(int pos, T val) {
         add(pos, val - get(pos));
     }
+
+    //--- lower bound
+
+    // PRECONDITION: tree's values are monotonically increasing
+    // returns min(i | sum[0, i] >= sum)
+    // O(logN)
+    int lowerBound(T sum) {
+        --sum;
+
+        int N = int(tree.size()) - 1;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        int lo = 0;
+        for (; blockSize > 0; blockSize >>= 1) {
+            int next = lo + blockSize;
+            if (next <= N && sum >= tree[next]) {
+                sum -= tree[next];
+                lo = next;
+            }
+        }
+
+        return lo;
+    }
 };
 
-// PRECONDITION: tree's values are monotonically increasing
-// returns min(i | sum[0, i] >= sum)
-// O(logN)
-template <typename T>
-inline int lowerBound(const FenwickTree<T>& ft, T sum) {
-    --sum;
-
-    int N = int(ft.tree.size()) - 1;
-    int pos = 0;
-
-    int blockSize = N;
-    while (blockSize & (blockSize - 1))
-        blockSize &= blockSize - 1;
-
-    for (; blockSize > 0; blockSize >>= 1) {
-        int nextPos = pos + blockSize;
-        if (nextPos < N && sum >= ft.tree[nextPos]) {
-            sum -= ft.tree[nextPos];
-            pos = nextPos;
-        }
-    }
-
-    return pos;
-}
 
 // PRECONDITION: tree's values are monotonically increasing
 // returns min(i | sum[left, i] >= sum)

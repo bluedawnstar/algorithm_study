@@ -162,6 +162,7 @@ inline CompactSegmentTree<T, MergeOp> makeCompactSegmentTree(const T arr[], int 
 // find next position where f(x) is true in [start, N)
 //   f(x): xxxxxxxxxxxOOOOOOOO
 //         S          ^
+// O(logN)
 template <typename T, typename MergeOp>
 inline int findNext(const CompactSegmentTree<T,MergeOp>& st, int start, const function<bool(T)>& f) {
     int cur = start + st.N;
@@ -193,6 +194,7 @@ inline int findNext(const CompactSegmentTree<T,MergeOp>& st, int start, const fu
 // find previous position where f(x) is true in [0, start]
 //   f(x): OOOOOOOOxxxxxxxxxxx
 //                ^          S
+// O(logN)
 template <typename T, typename MergeOp>
 inline int findPrev(const CompactSegmentTree<T, MergeOp>& st, int start, const function<bool(T)>& f) {
     int cur = start + st.N;

@@ -59,26 +59,6 @@ struct PartiallyPersistentFenwickTree {
         return res;
     }
 
-    //--- update
-
-    // return current time
-    // O(logN)
-    int add(int pos, T val) {
-        addSub(pos, val);
-        return currTime++;
-    }
-
-    // return current time
-    // inclusive, O(logN)
-    int addRange(int left, int right, T val) {
-        addSub(left, val);
-        if (right + 1 < int(tree.size()) - 1)
-            addSub(right + 1, -val);
-        return currTime++;
-    }
-
-    //--- point operations
-
     // O(logN)
     T get(int pos) const {
         T res = getLastAt(pos + 1);
@@ -103,11 +83,79 @@ struct PartiallyPersistentFenwickTree {
         return res;
     }
 
+    //--- update
+
+    // return current time
+    // O(logN)
+    int add(int pos, T val) {
+        addSub(pos, val);
+        return currTime++;
+    }
+
+    // return current time
+    // inclusive, O(logN)
+    int addRange(int left, int right, T val) {
+        addSub(left, val);
+        if (right + 1 < int(tree.size()) - 1)
+            addSub(right + 1, -val);
+        return currTime++;
+    }
+
     // return current time
     // O(logN)
     int set(int pos, T val) {
         addSub(pos, val - get(pos));
         return currTime++;
+    }
+
+    //--- lower bound of sum
+
+    // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // returns min(i | sum[0,i] >= sum)
+    // O(logN)
+    int lowerBound(T sum) {
+        --sum;
+
+        int N = int(tree.size()) - 1;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        int lo = 0;
+        for (; blockSize > 0; blockSize >>= 1) {
+            int next = lo + blockSize;
+            if (next <= N && sum >= getLastAt(next)) {
+                sum -= getLastAt(next);
+                lo = next;
+            }
+        }
+
+        return lo;
+    }
+
+    // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // returns min(i | sum[0,i] >= sum)
+    // O((logN)^2)
+    int lowerBound(int time, T sum) {
+        --sum;
+
+        int N = int(tree.size()) - 1;
+
+        int blockSize = N;
+        while (blockSize & (blockSize - 1))
+            blockSize &= blockSize - 1;
+
+        int lo = 0;
+        for (; blockSize > 0; blockSize >>= 1) {
+            int next = lo + blockSize;
+            if (next <= N && sum >= getAt(time, next)) {
+                sum -= getAt(time, next);
+                lo = next;
+            }
+        }
+
+        return lo;
     }
 
 //private:
@@ -140,57 +188,6 @@ struct PartiallyPersistentFenwickTree {
         }
     }
 };
-
-
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// returns min(i | sum[0,i] >= sum)
-// O(logN)
-template <typename T>
-int lowerBound(const PartiallyPersistentFenwickTree<T>& ft, T sum) {
-    --sum;
-
-    int N = int(ft.tree.size()) - 1;
-    int pos = 0;
-
-    int blockSize = N;
-    while (blockSize & (blockSize - 1))
-        blockSize &= blockSize - 1;
-
-    for (; blockSize > 0; blockSize >>= 1) {
-        int nextPos = pos + blockSize;
-        if (nextPos < N && sum >= ft.getLastAt(nextPos)) {
-            sum -= ft.getLastAt(nextPos);
-            pos = nextPos;
-        }
-    }
-
-    return pos;
-}
-
-// PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-// returns min(i | sum[0,i] >= sum)
-// O((logN)^2)
-template <typename T>
-int lowerBound(const PartiallyPersistentFenwickTree<T>& ft, int time, T sum) {
-    --sum;
-
-    int N = int(ft.tree.size()) - 1;
-    int pos = 0;
-
-    int blockSize = N;
-    while (blockSize & (blockSize - 1))
-        blockSize &= blockSize - 1;
-
-    for (; blockSize > 0; blockSize >>= 1) {
-        int nextPos = pos + blockSize;
-        if (nextPos < N && sum >= ft.getAt(time, nextPos)) {
-            sum -= ft.getAt(time, nextPos);
-            pos = nextPos;
-        }
-    }
-
-    return pos;
-}
 
 
 // PRECONDITION: tree's values are monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)

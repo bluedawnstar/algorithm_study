@@ -98,11 +98,11 @@ void testSegmentTree() {
 
             auto ans = tree.lowerBound([sum](int val) { return val >= sum; });
             int gt = lowerBoundSlow(in, sum);
-            if (ans.second != gt) {
+            if (ans != gt) {
                 cerr << "[" << sum << "] ans = " << ans << ", gt = " << gt << endl;
                 ans = tree.lowerBound([sum](int val) { return val >= sum; });
             }
-            assert(ans.second == gt);
+            assert(ans == gt);
         }
     }
     cout << "OK!" << endl;

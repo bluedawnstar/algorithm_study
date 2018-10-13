@@ -121,7 +121,7 @@ struct SegmentTree {
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
     // O(logN)
-    pair<T, int> lowerBound(const function<bool(T)>& f) const {
+    int lowerBound(const function<bool(T)>& f) const {
         return lowerBoundSub(f, T(0), 1, 0, N - 1);
     }
 
@@ -193,9 +193,9 @@ private:
     }
 
 
-    pair<T, int> lowerBoundSub(const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) const {
+    int lowerBoundSub(const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) const {
         if (nodeLeft >= nodeRight)
-            return make_pair(tree[node], nodeLeft);
+            return nodeLeft;
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         auto val = mergeOp(delta, tree[node * 2]);

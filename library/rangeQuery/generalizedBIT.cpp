@@ -90,6 +90,17 @@ static int lowerBoundBackward(const vector<int>& A, int start, int x) {
     return start;
 }
 
+static int lowerBoundSum(const vector<int>& A, int start, int x) {
+    int sum = 0;
+    while (start < int(A.size())) {
+        sum += A[start];
+        if (sum >= x)
+            break;
+        start++;
+    }
+    return start;
+}
+
 void testGeneralizedBIT() {
     return; //TODO: if you want to test, make this line a comment.
 
@@ -326,13 +337,59 @@ void testGeneralizedBIT() {
             bit.update(idx, t);
             in[idx] = t;
 
-            int ans1 = lowerBound<int>(bit, i, N - 1, T);
-            int gt1 = lowerBound(in, i, T);
+            int ans1 = lowerBound<int>(bit, i, N - 1, t);
+            int gt1 = lowerBound(in, i, t);
             assert(gt1 == ans1);
 
-            int ans2 = lowerBoundBackward(bit, 0, i, T);
-            int gt2 = lowerBoundBackward(in, i, T);
+            int ans2 = lowerBoundBackward(bit, 0, i, t);
+            int gt2 = lowerBoundBackward(in, i, t);
             assert(gt2 == ans2);
+        }
+    }
+    {
+        static const int T = 1000;
+        int N = 10000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % (T * 10);
+
+        auto bit = makeGeneralizedBIT(in, [](int a, int b) { return max(a, b); }, numeric_limits<int>::min());
+        for (int i = N - 1; i >= 0; i--) {
+            int idx = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
+
+            bit.update(idx, t);
+            in[idx] = t;
+
+            int ans1 = lowerBound<int>(bit, 0, N - 1, t);
+            int ans2 = bit.lowerBound([t](int x) { return t <= x; });
+            int gt1 = lowerBound(in, 0, t);
+            assert(gt1 == ans1);
+            assert(gt1 == ans2);
+        }
+    }
+    {
+        static const int T = 1000;
+        int N = 10000;
+        vector<int> in(N);
+        for (int i = 0; i < N; i++)
+            in[i] = RandInt32::get() % (T * 10);
+
+        auto bit = makeGeneralizedBIT(in, [](int a, int b) { return a + b; }, 0);
+        for (int i = N - 1; i >= 0; i--) {
+            int idx = RandInt32::get() % N;
+            int t = RandInt32::get() % (T * 10);
+
+            bit.update(idx, t);
+            in[idx] = t;
+
+            int sum = bit.query(0, idx) + RandInt32::get() % (T * 10);
+
+            int ans1 = lowerBound<int>(bit, 0, N - 1, sum);
+            int ans2 = bit.lowerBound([sum](int x) { return sum <= x; });
+            int gt1 = lowerBoundSum(in, 0, sum);
+            assert(gt1 == ans1);
+            assert(gt1 == ans2);
         }
     }
     cout << "--- findNext() & findPrev()" << endl;
