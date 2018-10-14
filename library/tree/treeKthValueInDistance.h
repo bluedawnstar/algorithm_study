@@ -137,6 +137,7 @@ struct KthValueInDistance {
         edges[v].push_back(u);
     }
 
+    // O(N*(logN)^2)
     void build() {
         prepareSearch();
     }
@@ -144,6 +145,7 @@ struct KthValueInDistance {
     //--- query
 
     // 0 <= node < N, 0 <= d < N, 1 <= kth < N
+    // O((logN)^2)
     T query(int u, int maxDist, int kth) {
         vector<pair<int, int>> roots = findSegmentTreeRoots(u, maxDist);
         auto ans = findKthValue(roots, kth);

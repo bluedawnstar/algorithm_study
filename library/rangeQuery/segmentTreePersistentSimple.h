@@ -36,20 +36,21 @@ struct SimplePersistentSegmentTree {
         return roots.front();
     }
 
-    // return root node index
+    // return root node index, O(logN)
     int update(int root, int index, T val) {
         int r = dfsUpdate(root, 0, N - 1, index, val);
         roots.push_back(r);
         return r;
     }
 
-    // return root node index
+    // return root node index, O(logN)
     int set(int root, int index, T val) {
         int r = dfsSet(root, 0, N - 1, index, val);
         roots.push_back(r);
         return r;
     }
 
+    // O(logN)
     T query(int root, int left, int right) const {
         return dfsQuery(root, 0, N - 1, left, right);
     }
