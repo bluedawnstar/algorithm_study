@@ -120,6 +120,9 @@
     <ClCompile Include="segmentTreePartiallyPersistentLazy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreePersistentSimple.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -252,6 +255,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreePartiallyPersistentLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePersistentSimple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

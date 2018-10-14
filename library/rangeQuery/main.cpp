@@ -19,6 +19,7 @@ int main(void) {
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
     TEST(SegmentTreePartiallyPersistent);
+    TEST(SegmentTreePersistentSimple);
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);
