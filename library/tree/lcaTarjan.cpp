@@ -20,7 +20,7 @@ using namespace std;
 #include "treeBasic.h"
 
 void testLcaTarjan() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Lca - Tarjan ----------------------------------" << endl;
     {

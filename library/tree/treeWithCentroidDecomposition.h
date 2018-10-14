@@ -1,5 +1,15 @@
 #pragma once
 
+/*
+ <DFS property>
+    currDist[i] = parentDist[i - 1] - currDist[i - 2] + currDist[i],  (parent is in original tree, not centroid tree)
+
+    ==> implementation
+
+    currDist = get_current_distance(u);
+    for (int i = N - 1; i > 0; i--)
+        currDist[i] += parentDist[i - 1] - (i > 1 ? currDist[i - 2] : 0);
+*/
 struct TreeWithCentroidDecomposition {
     int                 N;          // the number of vertex
     int                 logN;       // log2(N - 1) + 2

@@ -47,6 +47,7 @@ int main(void) {
     TEST(BlockTreeSubtreeUpdateDynamic);
     TEST(BlockTreeSubtreeSumDynamic);
     TEST(TreePathSqrtDecomposition);
+    TEST(KthValueInDistance);
 
     TEST(BenchmarkBST);
 }

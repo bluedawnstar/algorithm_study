@@ -153,6 +153,9 @@
     <ClCompile Include="lcaTarjan.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeKthValueInDistance.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -303,6 +306,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lcaTarjan.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeKthValueInDistance.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

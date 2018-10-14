@@ -19,7 +19,7 @@ using namespace std;
 #define LOGN    11
 
 void testTreeWithCentroidDecomposition() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Tree With Centroid Decomposition ---------------------------" << endl;
 

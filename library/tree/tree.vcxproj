@@ -180,6 +180,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="treeBasic.cpp" />
     <ClCompile Include="linkCutTree.cpp" />
+    <ClCompile Include="treeKthValueInDistance.cpp" />
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="splayTree.cpp" />
     <ClCompile Include="treePathSqrtDecomposition.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="treeHeavyLightDecompositionPathQuery.h" />
     <ClInclude Include="treeHeavyLightDecompositionPathQueryBIT.h" />
     <ClInclude Include="treeHeavyLightDecompositionPathQueryLazy.h" />
+    <ClInclude Include="treeKthValueInDistance.h" />
     <ClInclude Include="treeMO.h" />
     <ClInclude Include="treePathSqrtDecomposition.h" />
     <ClInclude Include="treePathSqrtDecompositionSum.h" />
