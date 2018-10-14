@@ -146,7 +146,7 @@ struct PartiallyPersistentSegmentTreeLazy {
     //         S          ^
     // O(logN)
     int lowerBound(const function<bool(T)>& f) {
-        return lowerBoundSub(int(trees.size()) - 1, f, T(0), trees.back(), 0, N - 1);
+        return lowerBoundSub(int(trees.size()) - 1, f, defaultValue, trees.back(), 0, N - 1);
     }
 
     // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
@@ -155,7 +155,7 @@ struct PartiallyPersistentSegmentTreeLazy {
     //         S          ^
     // O(logN)
     int lowerBound(int historyIndex, const function<bool(T)>& f) {
-        return lowerBoundSub(historyIndex, f, T(0), trees[historyIndex], 0, N - 1);
+        return lowerBoundSub(historyIndex, f, defaultValue, trees[historyIndex], 0, N - 1);
     }
 
 private:
@@ -175,7 +175,6 @@ private:
         }
 
         treesLazy.init(lazyN, defaultValue);
-        //treesLazy.init(N * 4, defaultValue);
     }
 
     int addNode(int id, T value) {
@@ -304,8 +303,11 @@ private:
     }
 
     int lowerBoundSub(int historyIndex, const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) {
-        if (nodeLeft >= nodeRight)
+        if (nodeLeft > nodeRight)
             return nodeLeft;
+
+        if (nodeLeft == nodeRight)
+            return nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1);
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
 

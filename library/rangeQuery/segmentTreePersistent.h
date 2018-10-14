@@ -105,7 +105,7 @@ struct PersistentSegmentTree {
     //         S          ^
     // O(logN)
     int lowerBound(const function<bool(T)>& f) const {
-        return lowerBoundSub(f, T(0), trees.back(), 0, N - 1);
+        return lowerBoundSub(f, defaultValue, trees.back(), 0, N - 1);
     }
 
     //--- with history ---
@@ -145,7 +145,7 @@ struct PersistentSegmentTree {
     //         S          ^
     // O(logN)
     int lowerBound(int historyIndex, const function<bool(T)>& f) const {
-        return lowerBoundSub(f, T(0), trees[historyIndex], 0, N - 1);
+        return lowerBoundSub(f, defaultValue, trees[historyIndex], 0, N - 1);
     }
 
 private:
@@ -266,8 +266,11 @@ private:
     }
 
     int lowerBoundSub(const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) const {
-        if (nodeLeft >= nodeRight)
+        if (nodeLeft > nodeRight)
             return nodeLeft;
+
+        if (nodeLeft == nodeRight)
+            return nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1);
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         auto val = mergeOp(delta, nodes[nodes[node].left].value);

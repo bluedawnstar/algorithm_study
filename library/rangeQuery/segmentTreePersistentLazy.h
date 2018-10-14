@@ -116,7 +116,7 @@ struct PersistentSegmentTreeLazy {
     //         S          ^
     // O(logN)
     int lowerBound(const function<bool(T)>& f) {
-        return lowerBoundSub(int(treesLazy.size()) - 1, f, T(0), trees.back(), 0, N - 1);
+        return lowerBoundSub(int(treesLazy.size()) - 1, f, defaultValue, trees.back(), 0, N - 1);
     }
 
     //--- with history ---
@@ -158,7 +158,7 @@ struct PersistentSegmentTreeLazy {
     //         S          ^
     // O(logN)
     int lowerBound(int historyIndex, const function<bool(T)>& f) {
-        return lowerBoundSub(historyIndex, f, T(0), trees[historyIndex], 0, N - 1);
+        return lowerBoundSub(historyIndex, f, defaultValue, trees[historyIndex], 0, N - 1);
     }
 
 private:
@@ -348,8 +348,11 @@ private:
 
 
     int lowerBoundSub(int historyIndex, const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) {
-        if (nodeLeft >= nodeRight)
+        if (nodeLeft > nodeRight)
             return nodeLeft;
+
+        if (nodeLeft == nodeRight)
+            return nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1);
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
 

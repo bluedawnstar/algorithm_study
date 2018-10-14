@@ -41,7 +41,7 @@ static int lowerBoundSlow(vector<int>& v, int k) {
 }
 
 void testSegmentTreePartiallyPersistent() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Partially Persistent Segment Tree ----------------------------------------" << endl;
     {
