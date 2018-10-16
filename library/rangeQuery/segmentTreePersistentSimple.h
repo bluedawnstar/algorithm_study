@@ -159,3 +159,41 @@ template <typename T, typename MergeOp>
 inline SimplePersistentSegmentTree<T, MergeOp> makeSimplePersistentSegmentTree(int n, MergeOp op, T dfltValue = T()) {
     return SimplePersistentSegmentTree<T, MergeOp>(n, op, dfltValue);
 }
+
+//-----------------------------------------------------------------------------
+
+// find kth value from Persistent Segment Tree
+// 
+// PRECONDITION: tree.value[x] is the number of value 'x',  0 <= x < N
+// Parameters:
+//      segTreeRoots[i] = (the index of a root node, delta), delta is +1 or -1
+//      1 <= kth <= N
+// 
+// O(klogN)
+template <typename T = int, typename MergeOp = function<T(T, T)>>
+T findKthValue(SimplePersistentSegmentTree<T, MergeOp>& segTree, T maxValue, vector<pair<int, int>>& segTreeRoots, T kth) {
+    T lo = 0, hi = maxValue;
+    while (lo < hi) {
+        T qt = 0;
+        for (auto& r : segTreeRoots)
+            qt += r.second * segTree.value[segTree.L[r.first]];
+
+        T mid = (lo + hi) >> 1;
+        if (kth <= qt) {
+            for (auto& r : segTreeRoots)
+                r.first = segTree.L[r.first];
+            hi = mid;
+        } else {
+            kth -= qt;
+            for (auto& r : segTreeRoots)
+                r.first = segTree.R[r.first];
+            lo = mid + 1;
+        }
+    }
+
+    T qt = 0;
+    for (auto& r : segTreeRoots)
+        qt += r.second * segTree.value[r.first];
+
+    return kth <= qt ? lo : T(-1);
+}
