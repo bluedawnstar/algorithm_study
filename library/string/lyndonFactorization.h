@@ -28,7 +28,7 @@ struct LyndonFactorization {
     }
 
 
-    // min cyclic shift of a string
+    // min cyclic shift of a string, O(n)
     static string minCyclicShift(string s) {
         s += s;
         int n = int(s.size());

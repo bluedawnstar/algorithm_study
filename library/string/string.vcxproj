@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ahoCorasickAM.cpp" />
+    <ClCompile Include="burrowsWheelerTransform.cpp" />
     <ClCompile Include="compressedTrie.cpp" />
     <ClCompile Include="compressedTrieAM.cpp" />
     <ClCompile Include="distinctSubstringCounter.cpp" />
@@ -181,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ahoCorasickAM.h" />
+    <ClInclude Include="burrowsWheelerTransform.h" />
     <ClInclude Include="compressedTrie.h" />
     <ClInclude Include="compressedTrieAM.h" />
     <ClInclude Include="distinctSubstringCounter.h" />
