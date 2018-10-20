@@ -7,7 +7,7 @@ struct BasicDigraph {
     BasicDigraph() : N(0) {
     }
 
-    BasicDigraph(int n) : N(n), edges(N) {
+    explicit BasicDigraph(int n) : N(n), edges(N) {
     }
 
     void init(int n) {
@@ -213,7 +213,6 @@ struct BasicDigraph {
     }
 
 
-    //--- Eulerian path & circuit
     // return (indegree, edge count)
     pair<vector<int>, int> calcInDegree() const {
         pair<vector<int>, int> res;
@@ -227,121 +226,6 @@ struct BasicDigraph {
         }
 
         return res;
-    }
-
-    // precondition: all vertices are connected
-    bool existEulerPathNaive() const {
-        auto indeg = calcInDegree();
-
-        int in = 0;
-        int out = 0;
-        for (int i = 0; i < N; i++) {
-            int deg = int(edges[i].size()) - indeg.first[i];    // out_deg - in_deg
-            if (deg == 1)
-                out++;
-            else if (deg == -1)
-                in++;
-            else if (deg != 0)
-                return false;
-        }
-        return in == out && (in <= 1);  // (in == 0 && out == 0) || (in == 1 && out == 1)
-    }
-
-    // precondition: all vertices are connected
-    bool existEulerCircuitNaive() {
-        auto indeg = calcInDegree();
-
-        for (int i = 0; i < N; i++) {
-            if (int(edges[i].size()) != indeg.first[i])
-                return false;
-        }
-        return true;
-    }
-
-    bool existEulerPath() {
-        auto indeg = calcInDegree();
-
-        int in = 0, out = 0;
-        int start = 0, finish = 0;
-        for (int i = 0; i < N; i++) {
-            int deg = int(edges[i].size()) - indeg.first[i];
-            if (deg == 1) {
-                out++;
-                start = i;
-            } else if (deg == -1) {
-                in++;
-                finish = i;
-            } else if (deg != 0)
-                return false;
-        }
-        if (in != out || (in > 1))
-            return false;
-
-        return isSC(indeg.first, start, finish);
-    }
-
-    bool existEulerCircuit() {
-        auto indeg = calcInDegree();
-
-        for (int i = 0; i < N; i++) {
-            if (edges[i].size() != indeg.first[i])
-                return false;
-        }
-        return isSC(indeg.first, 0, 0);
-    }
-
-    int findEulerPathStart(const vector<int>& indeg) const {
-        int in = 0;
-        int out = 0;
-        int start = 0;
-        for (int i = 0; i < N; i++) {
-            int deg = int(edges[i].size()) - indeg[i];
-            if (deg == 1) {
-                out++;
-                start = i;
-            } else if (deg == -1)
-                in++;
-            else if (deg != 0)
-                return -1;
-        }
-        if (in != out || (in > 1))
-            return -1;
-
-        return start;
-    }
-
-    vector<int> getEulerPath() {
-        vector<int> path;
-        auto indeg = calcInDegree();
-
-        int u = findEulerPathStart(indeg.first);
-        if (u < 0)
-            return path;
-
-        path.reserve(indeg.second + 1);
-
-        vector<vector<int>> residualEdges(edges);
-        {
-            stack<int> st;
-            st.push(u);
-            while (!st.empty()) {
-                int v = st.top();
-                if (!residualEdges[v].empty()) {
-                    u = residualEdges[v][0];
-                    st.push(u);
-                    residualEdges[v].erase(residualEdges[v].begin());
-                } else {
-                    path.push_back(v);
-                    st.pop();
-                }
-            }
-        }
-        if (path.size() != indeg.second + 1)
-            return vector<int>{};
-
-        reverse(path.begin(), path.end());
-
-        return path;
     }
 
 protected:

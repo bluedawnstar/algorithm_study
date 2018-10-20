@@ -23,4 +23,5 @@ int main(void) {
     TEST(MaxIndependentSet);
     TEST(Hamiltonian);
     TEST(GlobalMinCut);
+    TEST(EulerianDigraph);
 }

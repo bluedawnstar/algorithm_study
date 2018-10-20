@@ -9,7 +9,7 @@ struct BasicUndirectedGraph {
     BasicUndirectedGraph() : N(0) {
     }
 
-    BasicUndirectedGraph(int n) : N(n), edges(N) {
+    explicit BasicUndirectedGraph(int n) : N(n), edges(N) {
     }
 
     void init(int n) {

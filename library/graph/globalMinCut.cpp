@@ -122,7 +122,7 @@ static int solve(int N, int M, const vector<int>& inCost, const vector<vector<in
 }
 
 void testGlobalMinCut() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Global Minimum Cut -----------------------" << endl;
 
