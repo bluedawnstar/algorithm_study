@@ -9,4 +9,5 @@ int main(void) {
     TEST(Comb);
     TEST(CombModExt);
     TEST(NextCombination);
+    TEST(DeBruijnSequence);
 }

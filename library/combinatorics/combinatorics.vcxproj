@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="comb.cpp" />
     <ClCompile Include="combModExt.cpp" />
+    <ClCompile Include="deBruijnSequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nextCombination.cpp" />
   </ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="combMod.h" />
     <ClInclude Include="combModExt.h" />
     <ClInclude Include="combModDP.h" />
+    <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="nextCombination.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

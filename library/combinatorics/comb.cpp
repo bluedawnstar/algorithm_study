@@ -19,7 +19,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testComb() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Combination --------------------------------------" << endl;
     {

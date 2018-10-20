@@ -27,6 +27,9 @@
     <ClCompile Include="nextCombination.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="deBruijnSequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -45,6 +48,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="nextCombination.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="deBruijnSequence.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
