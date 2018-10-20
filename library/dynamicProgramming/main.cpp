@@ -32,4 +32,6 @@ int main(void) {
     TEST(LongestIncreasingSubsequence);
     TEST(LongestRepeatedSubsequence);
     TEST(MaxSubarraySum);
+    TEST(SelectBlock2xN);
+    TEST(IntegerPartition);
 }
