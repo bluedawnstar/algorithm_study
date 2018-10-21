@@ -1,6 +1,6 @@
 #pragma once
 
-// Chebyshev distance = max(|x2 - x1, |y2 - y1|)
+// Chebyshev distance = max(|x2 - x1|, |y2 - y1|)
 template <typename T = int, typename SumT = long long>
 struct ChebyshevDistanceSum {
     int N;

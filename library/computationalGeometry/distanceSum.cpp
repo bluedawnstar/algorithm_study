@@ -38,7 +38,7 @@ static long long calcChebyshevDistance(const vector<pair<int, int>>& points, int
 }
 
 void testDistanceSum() {
-    //return; //TODO: if you want to test functions of this file, make this line a comment.
+    return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Distance Sum ---------------------------------" << endl;
     {

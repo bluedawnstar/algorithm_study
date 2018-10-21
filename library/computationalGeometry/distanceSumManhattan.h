@@ -1,6 +1,6 @@
 #pragma once
 
-// Manhattan distance = |x2 - x1 + |y2 - y1|
+// Manhattan distance = |x2 - x1| + |y2 - y1|
 template <typename T = int, typename SumT = long long>
 struct ManhattanDistanceSum {
     int N;

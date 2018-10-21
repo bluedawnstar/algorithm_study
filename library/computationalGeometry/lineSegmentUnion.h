@@ -1,7 +1,7 @@
 #pragma once
 
 // Klee's algorithm : O(nlogn)
-// (x1, x2)
+// [x1, x2)
 int lengthOfLineSegmentUnion(const vector<pair<int, int>>& lines) {
     int n = int(lines.size());
     vector<pair<int, int>> x(n * 2);

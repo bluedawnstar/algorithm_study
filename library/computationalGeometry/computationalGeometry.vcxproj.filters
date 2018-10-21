@@ -54,6 +54,12 @@
     <ClCompile Include="distanceSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lineSegmentSet1D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="lineSegmentTree1D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="line.h">
@@ -93,6 +99,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="distanceSumChebyshev.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lineSegmentSet1D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lineSegmentTree1D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

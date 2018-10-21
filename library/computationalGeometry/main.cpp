@@ -13,6 +13,8 @@ int main(void) {
     TEST(ConvexHull);
     TEST(DynamicConvexHull);
     TEST(LineSegmentUnion);
+    TEST(LineSegmentSet1D);
+    TEST(LineSegmentTree1D);
     TEST(LineSegmentIntersection);
     TEST(LineSegmentAllIntersections);
     TEST(DelaunayTriangulation);

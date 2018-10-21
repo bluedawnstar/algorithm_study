@@ -154,6 +154,8 @@
     <ClCompile Include="line.cpp" />
     <ClCompile Include="lineSegmentAllIntersections.cpp" />
     <ClCompile Include="lineSegmentIntersection.cpp" />
+    <ClCompile Include="lineSegmentTree1D.cpp" />
+    <ClCompile Include="lineSegmentSet1D.cpp" />
     <ClCompile Include="lineSegmentUnion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polygon.cpp" />
@@ -169,6 +171,8 @@
     <ClInclude Include="line.h" />
     <ClInclude Include="lineSegmentAllIntersections.h" />
     <ClInclude Include="lineSegmentIntersection.h" />
+    <ClInclude Include="lineSegmentTree1D.h" />
+    <ClInclude Include="lineSegmentSet1D.h" />
     <ClInclude Include="lineSegmentUnion.h" />
     <ClInclude Include="distanceSumManhattan.h" />
     <ClInclude Include="polygon.h" />
