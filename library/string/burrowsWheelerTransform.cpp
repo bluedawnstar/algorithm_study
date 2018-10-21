@@ -24,7 +24,7 @@ static string makeRandomString(int n) {
 }
 
 void testBurrowsWheelerTransform() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Burrows - Wheeler Transform --------------------------------" << endl;
     {
@@ -35,15 +35,14 @@ void testBurrowsWheelerTransform() {
         assert(ans == gt);
 
         auto ivt = BurrowsWheelerTransform::ibwt(ans);
-        assert(ivt == "{banana|");
+        assert(ivt == in);
     }
     {
         int N = 100;
         int T = 1000;
         for (int i = 0; i < T; i++) {
             auto s = makeRandomString(N);
-            auto gt = string("{") + s + "|";
-            assert(BurrowsWheelerTransform::ibwt(BurrowsWheelerTransform::bwt(s)) == gt);
+            assert(BurrowsWheelerTransform::ibwt(BurrowsWheelerTransform::bwt(s)) == s);
         }
     }
 

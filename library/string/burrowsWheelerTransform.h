@@ -56,9 +56,13 @@ struct BurrowsWheelerTransform {
 
         string res;
         res.reserve(N);
-        for (int i = 0, x = N - 2; i < N; i++) {
+
+        // N - 2 : {banana|
+        // N - 1 : |{banana
+        for (int i = 0, x = N - 1; i < N; i++) {
             x = l_shift[x];
-            res.push_back(s[x]);
+            if (i >= 2) // skip start & end mark
+                res.push_back(s[x]);
         }
 
         return res;
