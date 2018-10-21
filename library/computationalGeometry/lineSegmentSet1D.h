@@ -2,7 +2,7 @@
 
 // covered range : x1 <= x < x2  (exclude x2)
 struct LineSegmentSet1D {
-    set<tuple<int, int, int>> vlines;   // (x2, x1, delta), no overlap
+    set<tuple<int, int, int>> lines;    // (x2, x1, delta), no overlap
     int covered;                        // covered length
 
     LineSegmentSet1D() : covered(0) {
@@ -23,8 +23,8 @@ struct LineSegmentSet1D {
     // x1 <= x < x2, d is -1 or 1
     // worst case O(NlogN), but normally O(logN)
     int add(int x1, int x2, int d) {
-        auto it = vlines.lower_bound(make_tuple(x1, x1, 0));
-        while (it != vlines.end()) {
+        auto it = lines.lower_bound(make_tuple(x1, x1, 0));
+        while (it != lines.end()) {
             int y2, y1, yd;
             tie(y2, y1, yd) = *it;
 
@@ -32,7 +32,7 @@ struct LineSegmentSet1D {
                 break;
 
             auto curr = it++;
-            vlines.erase(curr);
+            lines.erase(curr);
             covered -= y2 - y1;
 
             // ****----+
@@ -40,7 +40,7 @@ struct LineSegmentSet1D {
             if (x1 != y1) {
                 int l = min(x1, y1);
                 int r = max(x1, y1);
-                vlines.emplace(r, l, x1 < y1 ? d : yd);
+                lines.emplace(r, l, x1 < y1 ? d : yd);
                 covered += r - l;
                 x1 = y1 = r;
             }
@@ -48,7 +48,7 @@ struct LineSegmentSet1D {
             // +---*****
             //     *****---+
             if (yd + d > 0) {
-                vlines.emplace(min(x2, y2), x1, yd + d);
+                lines.emplace(min(x2, y2), x1, yd + d);
                 covered += min(x2, y2) - x1;
             }
             x1 = y1 = min(x2, y2);
@@ -56,7 +56,7 @@ struct LineSegmentSet1D {
             // +-------+
             //     +----****
             if (y1 < y2) {
-                vlines.emplace(y2, y1, yd);
+                lines.emplace(y2, y1, yd);
                 covered += y2 - y1;
                 break;
             }
@@ -64,7 +64,7 @@ struct LineSegmentSet1D {
         // +-------+
         //     +----****
         if (x1 < x2) {
-            vlines.emplace(x2, x1, d);
+            lines.emplace(x2, x1, d);
             covered += x2 - x1;
         }
 
