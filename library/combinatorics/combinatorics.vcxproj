@@ -151,6 +151,7 @@
     <ClCompile Include="deBruijnSequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nextCombination.cpp" />
+    <ClCompile Include="nextPermutation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="combModDP.h" />
     <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="nextCombination.h" />
+    <ClInclude Include="nextPermutation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

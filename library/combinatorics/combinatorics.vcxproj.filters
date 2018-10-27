@@ -30,6 +30,9 @@
     <ClCompile Include="deBruijnSequence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="nextPermutation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -51,6 +54,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="deBruijnSequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="nextPermutation.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
