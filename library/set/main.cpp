@@ -10,6 +10,7 @@ int main(void) {
     TEST(BitSet);
     TEST(BitSetRangeUpdate);
     TEST(RangeSet);
+    TEST(LineSegmentSet1D);
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);
     TEST(SparseSet);

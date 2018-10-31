@@ -48,6 +48,9 @@
     <ClCompile Include="vanEmdeBoasTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lineSegmentSet1D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -96,6 +99,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="vanEmdeBoasTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lineSegmentSet1D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
