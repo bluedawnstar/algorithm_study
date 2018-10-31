@@ -41,4 +41,5 @@ int main(void) {
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
     TEST(SchieberVishkinRMQ);
+    TEST(SegmentTree2DPoint);
 }
