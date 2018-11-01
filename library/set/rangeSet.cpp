@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testRangeSet() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Range Set ------------------------" << endl;
     {
