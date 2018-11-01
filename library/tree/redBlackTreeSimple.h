@@ -160,7 +160,7 @@ struct RBTreeSimple {
     }
 
     const Node* begin() const {
-        return minimum(root);
+        return root ? root->minimum() : nullptr;
     }
 
     Node* begin() {
@@ -174,7 +174,7 @@ struct RBTreeSimple {
 
     // inclusive
     Node* end() {
-        return maximum(root);
+        return root ? root->maximum() : nullptr;
     }
 
     bool exist(const T& key) const {
