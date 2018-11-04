@@ -61,8 +61,8 @@ struct FenwickTree2D {
         row++;
         col++;
 
-        for (int r = row; r <= int(tree.size()); r += r & -r) {
-            for (int c = col; c <= int(tree[row].size()); c += c & -c) {
+        for (int r = row; r < int(tree.size()); r += r & -r) {
+            for (int c = col; c < int(tree[row].size()); c += c & -c) {
                 tree[r][c] += val;
             }
         }

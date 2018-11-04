@@ -78,7 +78,7 @@ struct FenwickTree {
     void add(int pos, T val) {
         pos++;
 
-        while (pos <= int(tree.size())) {
+        while (pos < int(tree.size())) {
             tree[pos] += val;
             pos += pos & -pos;      // add lowest bit
         }
@@ -110,7 +110,7 @@ struct FenwickTree {
 
     //--- lower bound
 
-    // PRECONDITION: tree's values are monotonically increasing
+    // PRECONDITION: tree's values are monotonically increasing (ex: positive values)
     // returns min(i | sum[0, i] >= sum)
     // O(logN)
     int lowerBound(T sum) {
@@ -136,7 +136,7 @@ struct FenwickTree {
 };
 
 
-// PRECONDITION: tree's values are monotonically increasing
+// PRECONDITION: tree's values are monotonically increasing (ex: positive values)
 // returns min(i | sum[left, i] >= sum)
 // O((logN)^2)
 template <typename T>
@@ -154,7 +154,7 @@ inline int findFirst(const FenwickTree<T>& ft, int left, int right, T sum) {
     return lo;
 }
 
-// PRECONDITION: tree's values are monotonically increasing
+// PRECONDITION: tree's values are monotonically increasing (ex: positive values)
 // returns min(i | sum[i, right] < sum)
 // O((logN)^2)
 template <typename T>
