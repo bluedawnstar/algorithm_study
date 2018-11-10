@@ -78,8 +78,8 @@ inline vector<int> eratosthenes2(int left, int right) {
 
     vector<int> res;
     for (int i = left; i <= right; i++)
-        if (p[i])
-            res.push_back(i + left);
+        if (p[i - left])
+            res.push_back(i);
 
     return res;
 }
