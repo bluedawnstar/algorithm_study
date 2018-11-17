@@ -60,6 +60,9 @@
     <ClCompile Include="lineSegmentTree1D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="gridConvexHull.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="line.h">
@@ -105,6 +108,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lineSegmentTree1D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="gridConvexHull.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

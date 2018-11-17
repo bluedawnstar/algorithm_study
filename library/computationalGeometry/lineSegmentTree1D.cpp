@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testLineSegmentTree1D() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Segment Tree for 1D Line -----------------------------" << endl;
     {
