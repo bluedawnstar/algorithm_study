@@ -1,24 +1,26 @@
 #pragma once
 
-struct SegmentTree2DPoint {
+// tree[i] = merge(tree[i * 2], tree[i * 2 + 1])
+template <typename T>
+struct MergeSortTree2DPoint {
     int       N;                // the size of array
-    vector<vector<int>> tree;   // x -> { y0, y1, ... }
-    vector<int> X;
+    vector<vector<T>> tree;     // x -> { y0, y1, ... }
+    vector<T> X;
 
-    SegmentTree2DPoint() : N(0), tree(), X() {
+    MergeSortTree2DPoint() : N(0), tree(), X() {
     }
 
-    SegmentTree2DPoint(const pair<int, int> v[], int n) {
+    MergeSortTree2DPoint(const pair<int, int> v[], int n) {
         build(v, n);
     }
 
-    explicit SegmentTree2DPoint(const vector<pair<int, int>>& v) {
+    explicit MergeSortTree2DPoint(const vector<pair<int, int>>& v) {
         build(v);
     }
 
 
     // O(NlogN)
-    void build(const pair<int, int> v[], int n) {
+    void build(const pair<T, T> v[], int n) {
         N = n;
 
         vector<int> idx(n);
@@ -27,8 +29,8 @@ struct SegmentTree2DPoint {
             return v[a].first < v[b].first;
         });
 
-        tree = vector<vector<int>>(n * 2);
-        X = vector<int>(n);
+        tree = vector<vector<T>>(n * 2);
+        X = vector<T>(n);
 
         for (int i = 0; i < n; i++) {
             tree[n + i].resize(1);
@@ -44,13 +46,14 @@ struct SegmentTree2DPoint {
         }
     }
 
-    void build(const vector<pair<int,int>>& v) {
+    // O(NlogN)
+    void build(const vector<pair<T, T>>& v) {
         build(v.data(), int(v.size()));
     }
 
 
     // inclusive, O((logN)^2)
-    int query(int x1, int y1, int x2, int y2) const {
+    int count(T x1, T y1, T x2, T y2) const {
         int res = 0;
 
         int L = int(lower_bound(X.begin(), X.end(), x1) - X.begin());

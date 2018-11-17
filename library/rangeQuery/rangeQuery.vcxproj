@@ -158,8 +158,10 @@
     <ClCompile Include="mergeSortTreeIndex.cpp" />
     <ClCompile Include="offlineRMQ.cpp" />
     <ClCompile Include="schieberVishkinRMQ.cpp" />
-    <ClCompile Include="segmentTree2DPoint.cpp" />
+    <ClCompile Include="mergeSortTree2DPoint.cpp" />
     <ClCompile Include="segmentTreeBitFlip.cpp" />
+    <ClCompile Include="mergeSortTree2DPoint_Dynamic.cpp" />
+    <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp" />
     <ClCompile Include="segmentTreeLine1D.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MOAlgorithm.cpp" />
@@ -197,8 +199,10 @@
     <ClInclude Include="mergeSortTreeIndex.h" />
     <ClInclude Include="offlineRMQ.h" />
     <ClInclude Include="schieberVishkinRMQ.h" />
-    <ClInclude Include="segmentTree2DPoint.h" />
+    <ClInclude Include="mergeSortTree2DPoint.h" />
     <ClInclude Include="segmentTreeBitFlip.h" />
+    <ClInclude Include="mergeSortTree2DPoint_Dynamic.h" />
+    <ClInclude Include="mergeSortTree2DPoint_DynamicFast.h" />
     <ClInclude Include="segmentTreeLine1D.h" />
     <ClInclude Include="MOAlgorithm.h" />
     <ClInclude Include="segmentTree.h" />

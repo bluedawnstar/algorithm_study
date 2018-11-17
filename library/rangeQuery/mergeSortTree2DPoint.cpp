@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "segmentTree2DPoint.h"
+#include "mergeSortTree2DPoint.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -25,10 +25,10 @@ static int countSlow(const vector<pair<int, int>>& v, int x1, int y1, int x2, in
     return res;
 }
 
-void testSegmentTree2DPoint() {
-    //return; //TODO: if you want to test, make this line a comment.
+void testMergeSortTree2DPoint() {
+    return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Segment Tree of 2D Point ---------------------------------------" << endl;
+    cout << "--- Merge Sort Tree of 2D Point ---------------------------------------" << endl;
     {
         int W = 1000000;
         int H = 1000000;
@@ -40,7 +40,7 @@ void testSegmentTree2DPoint() {
         for (int i = 0; i < N; i++)
             points.emplace_back(RandInt32::get() % W, RandInt32::get() % H);
 
-        SegmentTree2DPoint tree(points);
+        MergeSortTree2DPoint<int> tree(points);
 
         for (int i = 0; i < T; i++) {
             int x1 = RandInt32::get() % W;
@@ -53,7 +53,7 @@ void testSegmentTree2DPoint() {
                 swap(y1, y2);
 
             int gt = countSlow(points, x1, y1, x2, y2);
-            int ans = tree.query(x1, y1, x2, y2);
+            int ans = tree.count(x1, y1, x2, y2);
             assert(ans == gt);
         }
     }

@@ -37,9 +37,11 @@ int main(void) {
     TEST(FastSqrtTree);
     TEST(MergeSortTree);
     TEST(MergeSortTreeIndex);
+    TEST(MergeSortTree2DPoint);
+    TEST(MergeSortTree2DPoint_Dynamic);
+    TEST(MergeSortTree2DPoint_DynamicFast);
     TEST(ReverseSparseTable);
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
     TEST(SchieberVishkinRMQ);
-    TEST(SegmentTree2DPoint);
 }
