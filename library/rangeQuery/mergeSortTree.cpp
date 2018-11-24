@@ -1,4 +1,4 @@
-#include <memory.h>
+#include <limits>
 #include <functional>
 #include <iterator>
 #include <vector>
@@ -70,6 +70,15 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
     }
     // kth number
     {
+        int K = RandInt32::get() % N;
+        int gt = kth(in, 0, N - 1, K);
+        int ans = tree.kth(K);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    {
         int K = RandInt32::get() % (R - L + 1);
         int gt = kth(in, L, R, K);
         int ans = tree.kth(L, R, K, 0, numeric_limits<int>::max());
@@ -79,6 +88,16 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
         assert(ans == gt);
     }
     // count
+    {
+        int K = in[N / 2];
+
+        int gt = countK(in, 0, N - 1, K);
+        int ans = tree.count(K);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
     {
         int K = in[L + (R - L) / 2];
 
@@ -90,6 +109,20 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
         assert(ans == gt);
     }
     // count
+    {
+        int Klow = in[N / 3];
+        int Khigh = in[N * 2 / 3];
+
+        if (Klow > Khigh)
+            swap(Klow, Khigh);
+
+        int gt = countK(in, 0, N - 1, Klow, Khigh);
+        int ans = tree.count(Klow, Khigh);
+        if (ans != gt) {
+            cout << "GT = " << gt << ", " << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
     {
         int Klow = in[L + (R - L) / 3];
         int Khigh = in[L + (R - L) * 2 / 3];
@@ -107,9 +140,9 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
 }
 
 void testMergeSortTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- Merge Sort Tree ----------------------------------------------" << endl;
+    cout << "--- Merge Sort Tree ----------------------------------------------" << endl;
 
     int N = 100;
     int T = 100;
@@ -121,15 +154,16 @@ void testMergeSortTree() {
         //    in[j] = j;
 
         MergeSortTree<int> tree(in);
+        for (int j = 0; j < T; j++) {
+            int K = RandInt32::get() % N;
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
 
-        int K = RandInt32::get() % N;
-        int L = RandInt32::get() % N;
-        int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
 
-        if (L > R)
-            swap(L, R);
-
-        test(in, tree, N, L, R, K);
+            test(in, tree, N, L, R, K);
+        }
     }
 
     cout << "OK!" << endl;

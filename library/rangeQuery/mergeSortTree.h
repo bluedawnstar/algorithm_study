@@ -1,5 +1,6 @@
 #pragma once
 
+// space : O(NlogN)
 template <typename T>
 struct MergeSortTree {
     int               N;        // the size of array
@@ -34,8 +35,9 @@ struct MergeSortTree {
         return countLessThanOrEqualSub(left, right, val, 0, 0, N - 1);
     }
 
+    // O(logN)
     int countLessThanOrEqual(T val) const {
-        return countLessThanOrEqualSub(0, N - 1, val, 0, 0, N - 1);
+        return countLessThanOrEqualSub(tree[0], val);
     }
 
     // count a value k, O((logN)^2), inclusive (0 <= left <= right < N)
@@ -43,6 +45,7 @@ struct MergeSortTree {
         return countLessThanOrEqual(left, right, val) - countLessThanOrEqual(left, right, val - 1);
     }
 
+    // O(logN)
     int count(T val) const {
         return countLessThanOrEqual(val) - countLessThanOrEqual(val - 1);
     }
@@ -52,6 +55,7 @@ struct MergeSortTree {
         return countLessThanOrEqual(left, right, valHigh) - countLessThanOrEqual(left, right, valLow - 1);
     }
 
+    // O(logN)
     int count(T valLow, T valHigh) const {
         return countLessThanOrEqual(valHigh) - countLessThanOrEqual(valLow - 1);
     }
@@ -70,7 +74,7 @@ struct MergeSortTree {
         return lo; // lower bound
     }
 
-    // O((logN)^2 * logA), inclusive (0 <= k < N)
+    // O(1), inclusive (0 <= k < N)
     T kth(int k) const {
         return tree[0][k];
     }
@@ -102,5 +106,9 @@ private:
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         return countLessThanOrEqualSub(left, right, k, 2 * node + 1, nodeLeft, mid)
              + countLessThanOrEqualSub(left, right, k, 2 * node + 2, mid + 1, nodeRight);
+    }
+
+    int countLessThanOrEqualSub(const vector<int>& v, T k) const {
+        return int(upper_bound(v.begin(), v.end(), k) - v.begin());
     }
 };
