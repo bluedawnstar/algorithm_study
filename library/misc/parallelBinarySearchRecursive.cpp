@@ -50,7 +50,7 @@ static vector<int> solve(int N, int M, const vector<vector<int>>& group, const v
                 tree.addRange(l, M - 1, -a);
             }
         },
-        [&tree, &group, req](int index, int midValue) -> bool {
+        [&tree, &group, &req](int index, int midValue) -> bool {
             long long sum = 0;
             for (int v : group[index]) {
                 sum += tree.sum(v);
@@ -71,11 +71,11 @@ void testParallelBinarySearchRecursive() {
     {
         int N = 3;
         int M = 5;
-        vector<vector<int>> group{ { 0, 3 },{ 2 },{ 2, 4 } };
+        vector<vector<int>> group{ { 0, 3 },{ 2 },{ 1, 4 } };
         vector<int> req{ 10, 5, 7 };
         vector<tuple<int, int, int>> qry{ { 3, 1, 4 },{ 0, 2, 1 },{ 2, 4, 2 } };
 
-        vector<int> gt{ 3, -1, 1 };
+        vector<int> gt{ 2, -1, 0 };
         assert(solve(N, M, group, req, qry) == gt);
     }
     cout << "OK!" << endl;
