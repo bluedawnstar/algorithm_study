@@ -58,13 +58,6 @@ struct FenwickTreeXor {
         }
     }
 
-    // inclusive
-    void addRange(int left, int right, T val) {
-        add(left, val);
-        if (right + 1 < int(tree.size()) - 1)
-            add(right + 1, ~val);
-    }
-
     // xor from 0 to pos
     T query(int pos) const {
         pos++;

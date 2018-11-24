@@ -4,6 +4,33 @@
 
 //--------- Fenwick Tree (Binary Indexed Tree) --------------------------------
 
+/*
+  1. use case #1 : point update, point/range query
+    1) point update
+       add(pos1, x1);
+       add(pos2, x2);
+       ...
+
+    2) point query
+       get(pos) -> return the value of index pos
+
+    3) range query
+       sum(pos)              -> return sum of [0, pos]
+       sumRange(left, right) -> return sum of [left, right]
+
+  2. use case #2 : range update, point query
+    1) range update
+       addRange(left1, right1, x1);
+       addRange(left2, right2, x2);
+       ...
+
+    2) point query
+       sum(pos) -> return the value of index pos (not range)
+
+    3) range query
+       Not working!!!
+ */
+
 // for sum from 0 to pos
 template <typename T>
 struct FenwickTree {
@@ -85,6 +112,7 @@ struct FenwickTree {
     }
 
     // inclusive, O(logN)
+    // [CAUTION] This is not a general range update.
     void addRange(int left, int right, T val) {
         add(left, val);
         if (right + 1 < int(tree.size()) - 1)
