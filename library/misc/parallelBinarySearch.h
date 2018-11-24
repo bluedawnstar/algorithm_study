@@ -78,7 +78,7 @@ struct ParallelBinarySearch {
         }
     }
 
-    int get(int index) const {
+    T get(int index) const {
         return L[index];
     }
 };
