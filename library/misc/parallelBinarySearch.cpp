@@ -21,8 +21,6 @@ using namespace std;
 
 #include "../rangeQuery/fenwickTree.h"
 
-// https://www.acmicpc.net/problem/8217
-
 // https://codeforces.com/blog/entry/45578
 static vector<int> solve(int N, int M, const vector<vector<int>>& group, const vector<int>& req, const vector<tuple<int, int, int>>& qry) {
     int K = int(qry.size());
@@ -168,10 +166,99 @@ namespace TravelInHackerLand {
     }
 }
 
+// https://www.acmicpc.net/problem/1396
+namespace BOJ1396 {
+    int N, M, Q;
+    vector<tuple<int, int, int>> gE;
+    vector<pair<int, int>> gQry;
+
+    struct UnionFindWithCount {
+        vector<int> parent;
+        vector<int> rank;
+        vector<int> count;
+
+        UnionFindWithCount() {
+        }
+
+        explicit UnionFindWithCount(int N) {
+            init(N);
+        }
+
+        void init(int N) {
+            parent.resize(N);
+            rank.assign(N, 0);
+            count.assign(N, 1);
+            for (int i = 0; i < N; i++)
+                parent[i] = i;
+        }
+
+        int find(int x) {
+            if (parent[x] == x)
+                return x;
+            return parent[x] = find(parent[x]);
+        }
+
+        int merge(int x, int y) {
+            int xset = find(x);
+            int yset = find(y);
+            if (xset == yset)
+                return xset;
+
+            if (rank[xset] < rank[yset]) {
+                parent[xset] = yset;
+                count[yset] += count[xset];
+                return yset;
+            } else {
+                parent[yset] = xset;
+                if (rank[xset] == rank[yset])
+                    rank[xset]++;
+                count[xset] += count[yset];
+                return xset;
+            }
+        }
+
+        int getCount(int x) {
+            return count[find(x)];
+        }
+    };
+
+    vector<pair<int, int>> solve() {
+        sort(gE.begin(), gE.end(), [](const tuple<int, int, int>& e1, const tuple<int, int, int>& e2) {
+            return get<2>(e1) < get<2>(e2);
+        });
+
+        vector<pair<int, int>> ans(Q, make_pair(-1, -1));
+
+        ParallelBinarySearch solver(Q, M - 1);
+
+        while (true) {
+            UnionFindWithCount uf(N);
+
+            if (!solver.updateRange())
+                break;
+
+            solver.updateValue(
+                [&uf](int midValue) {
+                    uf.merge(get<0>(gE[midValue]), get<1>(gE[midValue]));
+                },
+                [&uf, &ans](int index, int midValue) {
+                    if (uf.find(gQry[index].first) != uf.find(gQry[index].second))
+                        return false;
+                    ans[index] = make_pair(get<2>(gE[midValue]), uf.getCount(gQry[index].first));
+                    return true;
+                }
+            );
+        }
+
+        return ans;
+    }
+}
+
 void testParallelBinarySearch() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Parallel Binary Search ------------------------" << endl;
+    // https://codeforces.com/blog/entry/45578
     {
         int N = 3;
         int M = 5;
@@ -182,6 +269,7 @@ void testParallelBinarySearch() {
         vector<int> gt{ 2, -1, 0 };
         assert(solve(N, M, group, req, qry) == gt);
     }
+    // https://www.hackerrank.com/contests/may-world-codesprint/challenges/travel-in-hackerland/problem
     {
         TravelInHackerLand::N = 7;
         TravelInHackerLand::M = 6;
@@ -201,6 +289,28 @@ void testParallelBinarySearch() {
 
         vector<int> gt{ 4 };
         assert(TravelInHackerLand::solve() == gt);
+    }
+    // https://www.acmicpc.net/problem/1396
+    {
+        BOJ1396::N = 5;
+        BOJ1396::M = 4;
+        BOJ1396::Q = 2;
+        BOJ1396::gE = vector<tuple<int, int, int>>{
+            { 0, 1, 1 },
+            { 1, 2, 2 },
+            { 2, 3, 4 },
+            { 3, 4, 3 }
+        };
+        BOJ1396::gQry = vector<pair<int,int>>{
+            { 0, 4 },
+            { 1, 2 }
+        };
+
+        vector<pair<int, int>> gt{
+            { 4, 5 },
+            { 2, 3 }
+        };
+        assert(BOJ1396::solve() == gt);
     }
     cout << "OK!" << endl;
 }

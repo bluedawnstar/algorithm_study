@@ -28,6 +28,7 @@
     int ans = solver.get(index);
 */
 
+// https://www.acmicpc.net/problem/8217
 // 0-based index
 struct ParallelBinarySearch {
     typedef int T;

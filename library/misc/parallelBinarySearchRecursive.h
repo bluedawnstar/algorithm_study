@@ -21,6 +21,7 @@
     auto ans = solver.solve(N, maxValue);
 */
 
+// https://www.acmicpc.net/problem/8217
 // 0-based index
 template <typename T = int, typename AddOp = function<void(T)>, typename DelOp = function<void(T)>, typename PossibleOp = function<bool(int, T)>>
 struct RecursiveParallelBinarySearch {

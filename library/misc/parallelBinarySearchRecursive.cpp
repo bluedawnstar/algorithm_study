@@ -20,9 +20,7 @@ using namespace std;
 
 #include "../rangeQuery/fenwickTree.h"
 
-// https://www.acmicpc.net/problem/8217
 // https://codeforces.com/blog/entry/45578
-
 static vector<int> solve(int N, int M, const vector<vector<int>>& group, const vector<int>& req, const vector<tuple<int, int, int>>& qry) {
     int K = int(qry.size());
 
@@ -68,6 +66,7 @@ void testParallelBinarySearchRecursive() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Recursive Parallel Binary Search ------------------------" << endl;
+    // https://codeforces.com/blog/entry/45578
     {
         int N = 3;
         int M = 5;
