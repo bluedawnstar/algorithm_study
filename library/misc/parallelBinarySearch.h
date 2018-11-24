@@ -52,7 +52,7 @@ struct ParallelBinarySearch {
 
         for (int i = 0; i < N; i++) {
             if (L[i] <= R[i]) {
-                int mid = L[i] + (R[i] - L[i]) / 2;
+                T mid = L[i] + (R[i] - L[i]) / 2;
                 M[mid].push_back(i);
 
                 lastValue = max(lastValue, mid);
