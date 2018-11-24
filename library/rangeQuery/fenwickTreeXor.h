@@ -29,7 +29,7 @@ struct FenwickTreeXor {
 
 
     void init(int n) {
-        tree = vector<int>(n + 1);
+        tree = vector<T>(n + 1);
     }
 
     void build(T value, int n) {
