@@ -21,6 +21,7 @@ using namespace std;
 #include "../rangeQuery/fenwickTree.h"
 
 // https://www.acmicpc.net/problem/8217
+// https://codeforces.com/blog/entry/45578
 
 static vector<int> solve(int N, int M, const vector<vector<int>>& group, const vector<int>& req, const vector<tuple<int, int, int>>& qry) {
     int K = int(qry.size());

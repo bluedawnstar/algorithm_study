@@ -15,4 +15,5 @@ int main(void) {
     TEST(MinQueue);
     TEST(ReservoirSampling);
     TEST(ParallelBinarySearch);
+    TEST(ParallelBinarySearchRecursive);
 }

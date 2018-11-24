@@ -13,18 +13,20 @@
 
         solver.updateValue(
             [](int midValue) {
-                //... update operations
+                //... operations to update
             },
             [](int index, int midValue) {
-                //... possible operations
+                //... operations to check possibility
                 return true; // or false
             }
         );
     }
 
+    // ...
+
     // get an answer value
     int ans = solver.get(index);
- */
+*/
 
 // 0-based index
 struct ParallelBinarySearch {

@@ -155,6 +155,7 @@
     <ClCompile Include="minQueue.cpp" />
     <ClCompile Include="minStack.cpp" />
     <ClCompile Include="parallelBinarySearch.cpp" />
+    <ClCompile Include="parallelBinarySearchRecursive.cpp" />
     <ClCompile Include="reservoirSampling.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="minQueue.h" />
     <ClInclude Include="minStack.h" />
     <ClInclude Include="parallelBinarySearch.h" />
+    <ClInclude Include="parallelBinarySearchRecursive.h" />
     <ClInclude Include="reservoirSampling.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
