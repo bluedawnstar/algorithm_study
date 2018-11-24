@@ -129,6 +129,9 @@
     <ClCompile Include="mergeSortTree2DPoint_Dynamic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mergeSortTreeCompact.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -273,6 +276,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeSortTree2DPoint_Dynamic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mergeSortTreeCompact.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeSortTree2DPoint_DynamicFast.h">

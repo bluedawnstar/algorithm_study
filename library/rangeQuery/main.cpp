@@ -40,6 +40,7 @@ int main(void) {
     TEST(MergeSortTree2DPoint);
     TEST(MergeSortTree2DPoint_Dynamic);
     TEST(MergeSortTree2DPoint_DynamicFast);
+    TEST(MergeSortTreeCompact);
     TEST(ReverseSparseTable);
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
