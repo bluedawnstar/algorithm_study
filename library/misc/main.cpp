@@ -14,4 +14,5 @@ int main(void) {
     TEST(MinStack);
     TEST(MinQueue);
     TEST(ReservoirSampling);
+    TEST(ParallelBinarySearch);
 }
