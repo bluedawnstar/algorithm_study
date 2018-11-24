@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void) {
     TEST(UnionFind);
+    TEST(UnionFindWithCount);
     TEST(BitSet);
     TEST(BitSetRangeUpdate);
     TEST(RangeSet);
