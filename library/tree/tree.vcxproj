@@ -162,6 +162,8 @@
     <ClCompile Include="treeBlockTreeSubtreeSumDynamic.cpp" />
     <ClCompile Include="treeBlockTreeSubtreeUpdate.cpp" />
     <ClCompile Include="treeBlockTreeSubtreeUpdateDynamic.cpp" />
+    <ClCompile Include="treeCentroidDecompositionSolver.cpp" />
+    <ClCompile Include="treeCentroidDecompositionSolverDivideAndConquer.cpp" />
     <ClCompile Include="treeDfsTour.cpp" />
     <ClCompile Include="treeDfsTourPathSum.cpp" />
     <ClCompile Include="treeDfsTourSubtreeSum.cpp" />
@@ -214,6 +216,8 @@
     <ClInclude Include="treeBlockTreeSubtreeSumDynamic.h" />
     <ClInclude Include="treeBlockTreeSubtreeUpdate.h" />
     <ClInclude Include="treeBlockTreeSubtreeUpdateDynamic.h" />
+    <ClInclude Include="treeCentroidDecompositionSolver.h" />
+    <ClInclude Include="treeCentroidDecompositionSolverDivideAndConquer.h" />
     <ClInclude Include="treeDfsTour.h" />
     <ClInclude Include="treeDfsTourPathSum.h" />
     <ClInclude Include="treeDfsTourSubtreeSum.h" />
