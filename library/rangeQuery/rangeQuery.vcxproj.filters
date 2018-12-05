@@ -135,6 +135,12 @@
     <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mergeSortTreeWithSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mergeSortTreeCompactWithSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -282,6 +288,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeSortTree2DPoint_DynamicFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mergeSortTreeWithSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mergeSortTreeCompactWithSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

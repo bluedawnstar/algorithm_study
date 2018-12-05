@@ -36,11 +36,13 @@ int main(void) {
     TEST(CompactSqrtTree);
     TEST(FastSqrtTree);
     TEST(MergeSortTree);
+    TEST(MergeSortTreeWithSum);
     TEST(MergeSortTreeIndex);
     TEST(MergeSortTree2DPoint);
     TEST(MergeSortTree2DPoint_Dynamic);
     TEST(MergeSortTree2DPoint_DynamicFast);
     TEST(MergeSortTreeCompact);
+    TEST(MergeSortTreeCompactWithSum);
     TEST(ReverseSparseTable);
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
