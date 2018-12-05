@@ -119,7 +119,7 @@ struct CompactMergeSortTree {
     }
 
 private:
-    int countLessThanOrEqual(const vector<T>& v, int x) const {
+    int countLessThanOrEqual(const vector<T>& v, T x) const {
         return int(upper_bound(v.begin(), v.end(), x) - v.begin());
     }
 };

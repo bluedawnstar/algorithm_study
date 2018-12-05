@@ -25,7 +25,7 @@ using namespace std;
 static vector<int> solve(int N, int M, const vector<vector<int>>& group, const vector<int>& req, const vector<tuple<int, int, int>>& qry) {
     int K = int(qry.size());
 
-    ParallelBinarySearch solver(N, K - 1);
+    ParallelBinarySearch<int> solver(N, K - 1);
 
     while (true) {
         FenwickTree<int> tree(M);
@@ -133,7 +133,7 @@ namespace TravelInHackerLand {
             return get<2>(e1) < get<2>(e2);
         });
 
-        ParallelBinarySearch solver(Q, M - 1);
+        ParallelBinarySearch<int> solver(Q, M - 1);
 
         while (true) {
             UnionFindWithCount uf(N);
@@ -229,7 +229,7 @@ namespace BOJ1396 {
 
         vector<pair<int, int>> ans(Q, make_pair(-1, -1));
 
-        ParallelBinarySearch solver(Q, M - 1);
+        ParallelBinarySearch<int> solver(Q, M - 1);
 
         while (true) {
             UnionFindWithCount uf(N);

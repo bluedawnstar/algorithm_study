@@ -30,9 +30,8 @@
 
 // https://www.acmicpc.net/problem/8217
 // 0-based index
+template <typename T>
 struct ParallelBinarySearch {
-    typedef int T;
-
     int N;
     T maxValue;             // [0, maxValue]
 

@@ -140,7 +140,7 @@ static void test(vector<int>& in, CompactMergeSortTree<int>& tree, int N, int L,
 }
 
 void testMergeSortTreeCompact() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Compact Merge Sort Tree ---------------------------------------" << endl;
 
