@@ -157,6 +157,7 @@
     <ClCompile Include="sparseSet.cpp" />
     <ClCompile Include="unionFind.cpp" />
     <ClCompile Include="unionFindWithCount.cpp" />
+    <ClCompile Include="unionFindSegment.cpp" />
     <ClCompile Include="vanEmdeBoasTree.cpp" />
     <ClCompile Include="veniceSet.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="unionFindMap.h" />
     <ClInclude Include="unionFindWithCount.h" />
+    <ClInclude Include="unionFindSegment.h" />
     <ClInclude Include="vanEmdeBoasTree.h" />
     <ClInclude Include="veniceSet.h" />
   </ItemGroup>

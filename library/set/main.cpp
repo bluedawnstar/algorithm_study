@@ -8,6 +8,7 @@ using namespace std;
 int main(void) {
     TEST(UnionFind);
     TEST(UnionFindWithCount);
+    TEST(UnionFindSegment);
     TEST(BitSet);
     TEST(BitSetRangeUpdate);
     TEST(RangeSet);

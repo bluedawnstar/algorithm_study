@@ -1,8 +1,9 @@
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-#include "unionFindWithCount.h"
+#include "unionFindSegment.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -14,10 +15,10 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void testUnionFindWithCount() {
+void testUnionFindSegment() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Union Find with Count ------------------------" << endl;
+    cout << "--- Union-Find of 1D Segments ------------------------" << endl;
 
     // ...
 
