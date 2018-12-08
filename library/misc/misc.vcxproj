@@ -157,6 +157,7 @@
     <ClCompile Include="parallelBinarySearch.cpp" />
     <ClCompile Include="parallelBinarySearchRecursive.cpp" />
     <ClCompile Include="reservoirSampling.cpp" />
+    <ClCompile Include="segmentMinValueFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="countUniqueNumbers.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="parallelBinarySearch.h" />
     <ClInclude Include="parallelBinarySearchRecursive.h" />
     <ClInclude Include="reservoirSampling.h" />
+    <ClInclude Include="segmentMinValueFinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
