@@ -108,6 +108,9 @@
     <ClCompile Include="integerPartition.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="twoSameSumSubset.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -219,6 +222,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="integerPartition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="twoSameSumSubset.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

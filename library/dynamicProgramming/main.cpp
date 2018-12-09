@@ -34,4 +34,5 @@ int main(void) {
     TEST(MaxSubarraySum);
     TEST(SelectBlock2xN);
     TEST(IntegerPartition);
+    TEST(TwoSameSumSubset);
 }
