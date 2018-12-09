@@ -113,11 +113,11 @@ struct TwoSameSumSubset {
 
         int j = -1, mask = 0;
         for (int i = 0; i < N; i++) {
-            mask = 1 << i;
-            for (int j = (mask << 1) - 1; j >= mask; j--) {
-                dp[j] = dp[j & ~mask] + values[i];
+            mask = (1 << i) - 1;
+            for (int j = (mask << 1) + 1; j > mask; j--) {
+                dp[j] = dp[j & mask] + values[i];
 
-                int msk = ~j & (mask - 1);
+                int msk = ~j & mask;
                 if (dp[msk] < dp[j] || dp[j] <= res)
                     continue;
 
