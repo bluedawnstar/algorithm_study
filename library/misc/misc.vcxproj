@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="countUniqueNumbers.cpp" />
+    <ClCompile Include="coverTime.cpp" />
     <ClCompile Include="cycleDetection.cpp" />
     <ClCompile Include="largestRectangle.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="countUniqueNumbers.h" />
+    <ClInclude Include="coverTime.h" />
     <ClInclude Include="cycleDetection.h" />
     <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />

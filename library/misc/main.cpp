@@ -17,4 +17,5 @@ int main(void) {
     TEST(ParallelBinarySearch);
     TEST(ParallelBinarySearchRecursive);
     TEST(SegmentMinValueFinder);
+    TEST(CoverTime);
 }
