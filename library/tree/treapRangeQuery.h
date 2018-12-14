@@ -55,12 +55,12 @@ struct TreapRangeQuery {
         return count;
     }
 
-    void update(int index, int value) {
+    void update(int index, T value) {
         update(index, index, value);
     }
 
     // inclusive
-    void update(int left, int right, int value) {
+    void update(int left, int right, T value) {
         if (count <= 0 || left > right || right < 0 || left >= count)
             return;
 

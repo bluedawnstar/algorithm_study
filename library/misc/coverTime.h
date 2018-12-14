@@ -3,9 +3,9 @@
 // https://www.hackerrank.com/contests/hourrank-31/challenges/save-the-queen/problem
 
 // N : cover range
-// A[i] : i's cover time
+// A[i] : i's cover time, (0 <= i < K)
 struct CoverTime {
-    // O(K * logX)
+    // O(K * logX), binary search
     static double solve(int N, const vector<int>& A) {
         int K = int(A.size());
         if (N > K)
