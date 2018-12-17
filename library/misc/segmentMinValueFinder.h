@@ -1,5 +1,6 @@
 #pragma once
 
+// https://www.hackerrank.com/contests/hourrank-31/challenges/basketball-tournament-1
 /*
                    R
     { x | x = min{max(value[i]), f(L, R) >= threshold}, [L, R] is any subarray in [left, right] }
