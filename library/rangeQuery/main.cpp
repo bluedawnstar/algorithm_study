@@ -47,4 +47,8 @@ int main(void) {
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
     TEST(SchieberVishkinRMQ);
+    TEST(KeyRangeCommandDecomposerSimple);
+    TEST(RedBlackTreeRangeSum);
+    TEST(BinarySearchTreeRangeSum);
+    TEST(PersistentBinarySearchTreeRangeSum);
 }

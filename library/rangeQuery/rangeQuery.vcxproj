@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="binarySearchTreeRangeSum.cpp" />
     <ClCompile Include="disjointSparseTable.cpp" />
     <ClCompile Include="fenwickTree.cpp" />
     <ClCompile Include="fenwickTree2D.cpp" />
@@ -161,6 +162,9 @@
     <ClCompile Include="mergeSortTreeIndex.cpp" />
     <ClCompile Include="mergeSortTreeWithSum.cpp" />
     <ClCompile Include="offlineRMQ.cpp" />
+    <ClCompile Include="keyRangeCommandDecomposerSimple.cpp" />
+    <ClCompile Include="persistentBinarySearchTreeRangeSum.cpp" />
+    <ClCompile Include="redBlackTreeRangeSum.cpp" />
     <ClCompile Include="schieberVishkinRMQ.cpp" />
     <ClCompile Include="mergeSortTree2DPoint.cpp" />
     <ClCompile Include="segmentTreeBitFlip.cpp" />
@@ -190,6 +194,7 @@
     <ClCompile Include="sqrtTreeFast.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="binarySearchTreeRangeSum.h" />
     <ClInclude Include="disjointSparseTable.h" />
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
@@ -205,6 +210,9 @@
     <ClInclude Include="mergeSortTreeIndex.h" />
     <ClInclude Include="mergeSortTreeWithSum.h" />
     <ClInclude Include="offlineRMQ.h" />
+    <ClInclude Include="keyRangeCommandDecomposerSimple.h" />
+    <ClInclude Include="persistentBinarySearchTreeRangeSum.h" />
+    <ClInclude Include="redBlackTreeRangeSum.h" />
     <ClInclude Include="schieberVishkinRMQ.h" />
     <ClInclude Include="mergeSortTree2DPoint.h" />
     <ClInclude Include="segmentTreeBitFlip.h" />
