@@ -153,6 +153,9 @@
     <ClCompile Include="persistentBinarySearchTreeRangeSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -318,6 +321,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="persistentBinarySearchTreeRangeSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicSegmentTreeMaxSubarray.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="binarySearchTreeRangeSum.cpp" />
     <ClCompile Include="disjointSparseTable.cpp" />
+    <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
     <ClCompile Include="fenwickTree.cpp" />
     <ClCompile Include="fenwickTree2D.cpp" />
     <ClCompile Include="fenwickTreeEx.cpp" />
@@ -196,6 +197,7 @@
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
     <ClInclude Include="disjointSparseTable.h" />
+    <ClInclude Include="dynamicSegmentTreeMaxSubarray.h" />
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
     <ClInclude Include="fenwickTreeEx.h" />
