@@ -1,6 +1,7 @@
 #pragma once
 
 // https://www.codechef.com/problems/CBFEAST
+template <typename T = int>
 struct DynamicSegmentTreeMaxSubarray {
     enum FieldT {
         fInner,
@@ -9,12 +10,12 @@ struct DynamicSegmentTreeMaxSubarray {
     };
 
     struct Node {
-        int totalSum;       // total sum of a range
-        int maxPrefixSum;   // max prefix sum of a range
-        int maxSuffixSum;   // max suffix sum of a range
-        int maxSum;         // max sum of a range
+        T totalSum;         // total sum of a range
+        T maxPrefixSum;     // max prefix sum of a range
+        T maxSuffixSum;     // max suffix sum of a range
+        T maxSum;           // max sum of a range
 
-        bool marked;
+        bool hasData;
         Node* left;
         Node* right;
 
@@ -32,39 +33,54 @@ struct DynamicSegmentTreeMaxSubarray {
         }
 
         void clear() {
-            marked = false;
-            totalSum = maxPrefixSum = maxSuffixSum = maxSum = 0;
+            hasData = false;
+            totalSum = 0;
+            maxPrefixSum = 0;
+            maxSuffixSum = 0;
+            maxSum = 0;
         }
     };
 
     Node* rootL;
     Node* rootR;
+    vector<Node*> nodes;
 
     int rangeMin;
     int rangeMax;
 
     DynamicSegmentTreeMaxSubarray(int rangeMin, int rangeMax)
         : rangeMin(rangeMin), rangeMax(rangeMax) {
-        rootL = new Node();
-        rootR = new Node();
+        rootL = createNode();
+        rootR = createNode();
     }
 
-    void updateLeft(int left, int right, int value) {
-        update(rootL, rangeMin, rangeMax, left, right, value);
+    ~DynamicSegmentTreeMaxSubarray() {
+        for (auto it : nodes)
+            delete it;
     }
 
-    void updateRight(int left, int right, int value) {
-        update(rootR, rangeMin, rangeMax, left, right, value);
+
+    void addLeft(int left, int right, T value) {
+        add(left, right, value, rootL, rangeMin, rangeMax);
     }
 
-    int query(int index) {
-        int ans1 = max(query(rootL, rangeMin, rangeMax, index, fInner), query(rootR, rangeMin, rangeMax, index, fInner));
-        int ans2 = max(0, query(rootL, rangeMin, rangeMax, index, fSuffix) + query(rootR, rangeMin, rangeMax, index, fSuffix));
+    void addRight(int left, int right, T value) {
+        add(left, right, value, rootR, rangeMin, rangeMax);
+    }
+
+    T query(int index, T minResult = 0) {
+        T ans1 = max(query(index, fInner, rootL, rangeMin, rangeMax), query(index, fInner, rootR, rangeMin, rangeMax));
+        T ans2 = max(minResult, query(index, fSuffix, rootL, rangeMin, rangeMax) + query(index, fSuffix, rootR, rangeMin, rangeMax));
         return max(ans1, ans2);
     }
 
 private:
-    void update(Node* node, int nodeLeft, int nodeRight, int left, int right, int value) {
+    Node* createNode() {
+        nodes.push_back(new Node());
+        return nodes.back();
+    }
+
+    void add(int left, int right, T value, Node* node, int nodeLeft, int nodeRight) {
         if (right < nodeLeft || nodeRight < left)
             return;
 
@@ -73,18 +89,18 @@ private:
         } else {
             push(node);
 
-            int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+            T mid = nodeLeft + (nodeRight - nodeLeft) / 2;
             if (!node->left)
-                node->left = new Node();
-            update(node->left, nodeLeft, mid, left, right, value);
+                node->left = createNode();
+            add(left, right, value, node->left, nodeLeft, mid);
 
             if (!node->right)
-                node->right = new Node();
-            update(node->right, mid + 1, nodeRight, left, right, value);
+                node->right = createNode();
+            add(left, right, value, node->right, mid + 1, nodeRight);
         }
     }
 
-    int query(Node* node, int nodeLeft, int nodeRight, int index, FieldT type) {
+    T query(int index, FieldT type, Node* node, int nodeLeft, int nodeRight) {
         if (!node)
             return 0;
 
@@ -93,16 +109,16 @@ private:
 
         push(node);
 
-        int mid = (nodeLeft + nodeRight) / 2;
+        T mid = (nodeLeft + nodeRight) / 2;
         if (index <= mid)
-            return query(node->left, nodeLeft, mid, index, type);
+            return query(index, type, node->left, nodeLeft, mid);
         else
-            return query(node->right, mid + 1, nodeRight, index, type);
+            return query(index, type, node->right, mid + 1, nodeRight);
     }
 
     // aux is a prefix of the target
     void modify(Node* target, Node* aux) {
-        target->marked = true;
+        target->hasData = true;
 
         target->maxSum = max(max(target->maxSum, aux->maxSum), aux->maxSuffixSum + target->maxPrefixSum);
         target->maxPrefixSum = max(aux->maxPrefixSum, aux->totalSum + target->maxPrefixSum);
@@ -111,8 +127,8 @@ private:
     }
 
     // value is a prefix of the target
-    void modify(Node* target, int value) {
-        target->marked = true;
+    void modify(Node* target, T value) {
+        target->hasData = true;
 
         target->maxSum = max(max(target->maxSum, value), value + target->maxPrefixSum);
         target->maxPrefixSum = max(value, value + target->maxPrefixSum);
@@ -121,15 +137,15 @@ private:
     }
 
     void push(Node *node) {
-        if (!node->marked)
+        if (!node->hasData)
             return;
 
         if (!node->left)
-            node->left = new Node();
+            node->left = createNode();
         modify(node->left, node);
 
         if (!node->right)
-            node->right = new Node();
+            node->right = createNode();
         modify(node->right, node);
 
         node->clear();

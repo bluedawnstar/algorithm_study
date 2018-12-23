@@ -39,19 +39,19 @@ void testDynamicSegmentTreeMaxSubarray() {
             { 1, 3, 1 },
             { 0, 1, 2 },
         };
-        DynamicSegmentTreeMaxSubarray tree(0, 3);
+        DynamicSegmentTreeMaxSubarray<int> tree(0, 3);
 
-        tree.updateLeft(get<0>(cmd[0]), get<1>(cmd[0]), get<2>(cmd[0]));
+        tree.addLeft(get<0>(cmd[0]), get<1>(cmd[0]), get<2>(cmd[0]));
         assert(tree.query(0) == 1);
         assert(tree.query(1) == 1);
         assert(tree.query(2) == 0);
 
-        tree.updateRight(get<0>(cmd[1]), get<1>(cmd[1]), get<2>(cmd[1]));
+        tree.addRight(get<0>(cmd[1]), get<1>(cmd[1]), get<2>(cmd[1]));
         assert(tree.query(0) == 1);
         assert(tree.query(1) == 2);
         assert(tree.query(2) == 1);
 
-        tree.updateLeft(get<0>(cmd[2]), get<1>(cmd[2]), get<2>(cmd[2]));
+        tree.addLeft(get<0>(cmd[2]), get<1>(cmd[2]), get<2>(cmd[2]));
         assert(tree.query(0) == 3);
         assert(tree.query(1) == 4);
         assert(tree.query(2) == 1);

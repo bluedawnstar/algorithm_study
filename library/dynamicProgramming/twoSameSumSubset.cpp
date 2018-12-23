@@ -20,7 +20,7 @@ using namespace std;
 // https://leetcode.com/problems/tallest-billboard/
 
 void testTwoSameSumSubset() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Two Same Sum Subset -----------------------------------" << endl;
     {
