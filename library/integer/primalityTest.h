@@ -1,5 +1,6 @@
 #pragma once
 
+// 0 < x < 2^62 (~ 4.6 * 10^18)
 template <typename T>
 struct PrimalityTest {
     static const T RAND_SEED = 3;
@@ -21,8 +22,10 @@ struct PrimalityTest {
         T rndY = RAND_SEED; // seed
 
         int t = min(int(sizeof(x)) * 8, int(sqrt(x))) * k;
+        //T t = min(T(sizeof(x)) * 8, T(sqrt(x))) * k;
 
         int i = 0, j = 2;
+        //T i = 0, j = 2;
         while (j <= t) {
             i++;
             rndX = nextRand(rndX, x);
@@ -92,6 +95,7 @@ private:
     }
 
     static T mulMod(T a, T b, T M) {
+#ifndef __GNUC__
         T x = 0, y = a % M;
         while (b > 0) {
             if (b & 1)
@@ -101,6 +105,9 @@ private:
             b >>= 1;
         }
         return x % M;
+#else
+        return static_cast<T>(__int128_t(a) * b % M);
+#endif
     }
 
     static T nextRand(T x, T M) {

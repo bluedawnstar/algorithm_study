@@ -26,7 +26,7 @@ static bool check(const vector<bool>& L, int offsetL, vector<bool>& R, int offse
 }
 
 void testPrimeNumberEratosthenes() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- test eratosthenes() ---" << endl;
     {

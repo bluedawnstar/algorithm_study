@@ -47,7 +47,7 @@ ostream& operator <<(ostream& os, const Fraction<T>& f) {
 
 void testFraction() {
     return; //TODO: if you want to test, make this line a comment.
-
+    
     cout << "--------- testFraction() -----------------" << endl;
 
     Fraction<int> f1(6, 21);
