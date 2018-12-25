@@ -157,6 +157,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mobius.cpp" />
     <ClCompile Include="primalityTest.cpp" />
+    <ClCompile Include="primalityTestFast.cpp" />
+    <ClCompile Include="primalityTestInt32.cpp" />
+    <ClCompile Include="primalityTestInt64.cpp" />
     <ClCompile Include="primeFactor.cpp" />
     <ClCompile Include="primeFactorLongLong.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
@@ -181,6 +184,9 @@
     <ClInclude Include="intModExt.h" />
     <ClInclude Include="mobius.h" />
     <ClInclude Include="primalityTest.h" />
+    <ClInclude Include="primalityTestFast.h" />
+    <ClInclude Include="primalityTestInt32.h" />
+    <ClInclude Include="primalityTestInt64.h" />
     <ClInclude Include="primeFactor.h" />
     <ClInclude Include="primeFactorLongLong.h" />
     <ClInclude Include="primeNumberBasic.h" />

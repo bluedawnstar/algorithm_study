@@ -75,6 +75,15 @@
     <ClCompile Include="garnerAlgorithm.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="primalityTestFast.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="primalityTestInt32.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="primalityTestInt64.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="factor.h">
@@ -141,6 +150,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="garnerAlgorithm.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primalityTestFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primalityTestInt32.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primalityTestInt64.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

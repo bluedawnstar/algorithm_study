@@ -22,6 +22,9 @@ int main(void) {
     TEST(BigInt);
     TEST(Bit);
     TEST(PrimalityTest);
+    TEST(PrimalityTestFast);
+    TEST(PrimalityTestInt32);
+    TEST(PrimalityTestInt64);
     TEST(PrimeFactorLongLong);
     TEST(ModularEquations);
     TEST(GarnerAlgorithm);
