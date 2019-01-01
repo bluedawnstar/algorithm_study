@@ -17,29 +17,6 @@ struct SparseTableOnGomoryHuTree {
         build(edges, root);
     }
 
-    void init(int _n, int _logN = 0) {
-        N = _n;
-        logN = _logN;
-        if (logN <= 0) {
-#ifndef __GNUC__
-            logN = _lzcnt_u32(1u) - _lzcnt_u32((unsigned int)(N - 1)) + 2;
-#else
-            logN = __builtin_clz(1u) - __builtin_clz((unsigned int)(N - 1)) + 2;
-#endif
-        }
-
-        P = vector<vector<int>>(logN, vector<int>(N));
-        level.assign(N, 0);
-
-        // sparse table
-        H.resize(N + 1);
-        H[1] = 0;
-        for (int i = 2; i < int(H.size()); i++)
-            H[i] = H[i >> 1] + 1;
-
-        value.resize(H.back() + 1, vector<T>(N, INF));
-    }
-
     void build(vector<vector<pair<int, T>>>& edges, int root) {
         init(int(edges.size()));
 
@@ -106,6 +83,29 @@ struct SparseTableOnGomoryHuTree {
     }
 
 private:
+    void init(int _n, int _logN = 0) {
+        N = _n;
+        logN = _logN;
+        if (logN <= 0) {
+#ifndef __GNUC__
+            logN = _lzcnt_u32(1u) - _lzcnt_u32((unsigned int)(N - 1)) + 2;
+#else
+            logN = __builtin_clz(1u) - __builtin_clz((unsigned int)(N - 1)) + 2;
+#endif
+        }
+
+        P = vector<vector<int>>(logN, vector<int>(N));
+        level.assign(N, 0);
+
+        // sparse table
+        H.resize(N + 1);
+        H[1] = 0;
+        for (int i = 2; i < int(H.size()); i++)
+            H[i] = H[i >> 1] + 1;
+
+        value.resize(H.back() + 1, vector<T>(N, INF));
+    }
+
     void dfsAssignValue(vector<vector<pair<int, T>>>& edges, int u, int parent) {
         for (auto& it : edges[u]) {
             if (it.first == parent)
