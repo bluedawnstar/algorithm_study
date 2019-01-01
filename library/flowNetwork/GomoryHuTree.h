@@ -1,6 +1,168 @@
 #pragma once
 
 template <typename T, const T INF = 0x3f3f3f3f>
+struct SparseTableOnGomoryHuTree {
+    int                 N;          // the number of vertex
+    int                 logN;       // log2(N - 1) + 2
+
+    vector<vector<int>> P;          // P[0][n] points to the parent
+                                    // parent & acestors
+    vector<int>         level;      // depth (root is 0)
+
+    // sparse table
+    vector<vector<T>>   value;
+    vector<int>         H;
+
+    SparseTableOnGomoryHuTree(vector<vector<pair<int, T>>>& edges, int root) {
+        build(edges, root);
+    }
+
+    void init(int _n, int _logN = 0) {
+        N = _n;
+        logN = _logN;
+        if (logN <= 0) {
+#ifndef __GNUC__
+            logN = _lzcnt_u32(1u) - _lzcnt_u32((unsigned int)(N - 1)) + 2;
+#else
+            logN = __builtin_clz(1u) - __builtin_clz((unsigned int)(N - 1)) + 2;
+#endif
+        }
+
+        P = vector<vector<int>>(logN, vector<int>(N));
+        level.assign(N, 0);
+
+        // sparse table
+        H.resize(N + 1);
+        H[1] = 0;
+        for (int i = 2; i < int(H.size()); i++)
+            H[i] = H[i >> 1] + 1;
+
+        value.resize(H.back() + 1, vector<T>(N, INF));
+    }
+
+    void build(vector<vector<pair<int, T>>>& edges, int root) {
+        init(int(edges.size()));
+
+        dfsAssignValue(edges, root, -1);
+
+        vector<int> ancestors;
+        dfsBuild(edges, root, ancestors);
+        buildLcaTable();
+    }
+
+    //--- query (LCA)
+
+    int climbTree(int node, int dist) const {
+        if (dist <= 0)
+            return node;
+
+        for (int i = 0; dist > 0; i++) {
+            if (dist & 1)
+                node = P[i][node];
+            dist >>= 1;
+        }
+
+        return node;
+    }
+
+    int findLCA(int A, int B) const {
+        if (level[A] < level[B])
+            swap(A, B);
+
+        A = climbTree(A, level[A] - level[B]);
+
+        if (A == B)
+            return A;
+
+        int bitCnt = 0;
+        for (int x = level[A]; x; x >>= 1)
+            bitCnt++;
+
+        for (int i = bitCnt - 1; i >= 0; i--) {
+            if (P[i][A] > 0 && P[i][A] != P[i][B]) {
+                A = P[i][A];
+                B = P[i][B];
+            }
+        }
+
+        return P[0][A];
+    }
+
+    //--- query (sparse table)
+
+    // O(log(H)), inclusive
+    T query(int u, int v) const {
+        //assert(u != v);
+
+        if (level[u] > level[v])
+            swap(u, v);
+
+        int lca = findLCA(u, v);
+        if (lca == u)
+            return querySub(climbTree(v, level[v] - level[lca] - 1), v);
+        else
+            return min(querySub(climbTree(u, level[u] - level[lca] - 1), u),
+                       querySub(climbTree(v, level[v] - level[lca] - 1), v));
+    }
+
+private:
+    void dfsAssignValue(vector<vector<pair<int, T>>>& edges, int u, int parent) {
+        for (auto& it : edges[u]) {
+            if (it.first == parent)
+                continue;
+            dfsAssignValue(edges, it.first, u);
+            value[0][it.first] = it.second;
+        }
+    }
+
+    void dfsBuild(vector<vector<pair<int, T>>>& edges, int u, vector<int>& ancestors) {
+        int parent = ancestors.empty() ? -1 : ancestors.back();
+        P[0][u] = parent;
+
+        {
+            int i = int(ancestors.size());
+            int level = H[i + 1];
+            for (int j = 0; j < level; j++)
+                value[j + 1][u] = min(value[j][ancestors[i - (1 << j)]], value[j][u]);
+        }
+
+        ancestors.push_back(u);
+        for (auto& it : edges[u]) {
+            int v = it.first;
+            if (v == parent)
+                continue;
+
+            level[v] = level[u] + 1;
+            dfsBuild(edges, v, ancestors);
+        }
+        ancestors.pop_back();
+    }
+
+    void buildLcaTable() {
+        for (int i = 1; i < logN; i++) {
+            for (int j = 0; j < N; j++) {
+                int pp = P[i - 1][j];
+                P[i][j] = pp < 0 ? pp : P[i - 1][pp];
+            }
+        }
+    }
+
+    // PRECONDITION: u is an ancestor of v
+    // O(log(H)), inclusive
+    T querySub(int u, int v) const {
+        int uLevel = level[u];
+        int vLevel = level[v];
+        if (vLevel < uLevel)
+            return INF;
+
+        int length = vLevel - uLevel + 1;
+        int k = H[vLevel - uLevel + 1];
+        const vector<T>& mink = value[k];
+        return min(mink[climbTree(v, length - (1 << k))], mink[v]);
+    }
+};
+
+template <typename T, const T INF = 0x3f3f3f3f>
 struct GomoryHuTree {
     int N;
     vector<vector<pair<int, T>>> tree; // (v, flow)
@@ -8,9 +170,13 @@ struct GomoryHuTree {
     explicit GomoryHuTree(int n) : N(n), tree(N) {
     }
 
-    // O(N) --> O(logN) if RMQ on tree is used
+    // O(N)
     T calcMaxFlow(int s, int t, T maxFlow = INF) {
         return dfs(s, t, -1, maxFlow);
+    }
+
+    SparseTableOnGomoryHuTree<T, INF> buildSparseTable() {
+        return SparseTableOnGomoryHuTree<T, INF>(tree, 0);
     }
 
 private:

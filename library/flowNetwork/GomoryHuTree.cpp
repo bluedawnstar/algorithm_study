@@ -83,6 +83,7 @@ void testGomoryHuTree() {
         }
 
         auto tree = gomory.build();
+        auto spt = tree.buildSparseTable();
 
         for (int i = 0; i < T; i++) {
             int s = RandInt32::get() % N;
@@ -94,16 +95,19 @@ void testGomoryHuTree() {
             auto gt = dinic.calcMaxFlow(s, t);
 
             auto flow = tree.calcMaxFlow(s, t);
-            if (gt != flow)
-                cout << "gt = " << gt << ", ans = " << flow << endl;
+            if (flow != gt)
+                cout << "[GomoryHuTree] ans = " << flow << ", gt = " << gt << endl;
+            auto flow2 = spt.query(s, t);
+            if (flow2 != gt)
+                cout << "[SparseTableOnGomoryHuTree] ans = " << flow2 << ", gt = " << gt << endl;
             assert(flow == gt);
         }
     }
     cout << "*** Speed Test ***" << endl;
     {
-        int N = 10;
-        int E = 100;
-        int T = 100;
+        int N = 100;
+        int E = 10000;
+        int T = 10000;
         GomoryHuTreeBuilder<int> gomory(N);
         MaxFlowDinic<int> dinic(N);
 
@@ -118,7 +122,14 @@ void testGomoryHuTree() {
             gomory.addEdge(u, v, flow);
             dinic.addEdge(u, v, flow, flow);
         }
+
+        PROFILE_START(100);
         auto tree = gomory.build();
+        PROFILE_STOP(100);
+
+        PROFILE_START(101);
+        auto spt = tree.buildSparseTable();
+        PROFILE_STOP(101);
 
         vector<pair<int, int>> qry;
         for (int i = 0; i < T; i++) {
@@ -133,7 +144,8 @@ void testGomoryHuTree() {
             dinic.clearFlow();
             auto ans0 = dinic.calcMaxFlow(q.first, q.second);
             auto ans1 = tree.calcMaxFlow(q.first, q.second);
-            if (ans0 != ans1)
+            auto ans2 = spt.query(q.first, q.second);
+            if (ans0 != ans1 || ans0 != ans2)
                 cout << "It'll never be shown" << endl;
         }
 
@@ -153,6 +165,14 @@ void testGomoryHuTree() {
                 cout << "It'll never be shown" << endl;
         }
         PROFILE_STOP(1);
+
+        PROFILE_START(2);
+        for (auto& q : qry) {
+            auto ans = spt.query(q.first, q.second);
+            if (ans < 0)
+                cout << "It'll never be shown" << endl;
+        }
+        PROFILE_STOP(2);
     }
 
     cout << "OK!" << endl;
