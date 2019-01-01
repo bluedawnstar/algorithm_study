@@ -72,6 +72,12 @@
     <ClCompile Include="eulerianDigraph.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="dominatorTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="blockCutTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -135,6 +141,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="eulerianDigraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dominatorTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="blockCutTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

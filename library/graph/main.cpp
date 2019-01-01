@@ -12,6 +12,7 @@ int main(void) {
     TEST(ShortestPathAllPairs);
     TEST(ReachableAllPairs);
     TEST(BCC);
+    TEST(BlockCutTree);
     TEST(DAG);
     TEST(BipartiteMaching);
     TEST(GeneralGraphMaxMatching);
@@ -24,4 +25,5 @@ int main(void) {
     TEST(Hamiltonian);
     TEST(GlobalMinCut);
     TEST(EulerianDigraph);
+    TEST(DominatorTree);
 }

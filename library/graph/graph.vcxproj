@@ -150,6 +150,8 @@
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartiteGraph.cpp" />
+    <ClCompile Include="blockCutTree.cpp" />
+    <ClCompile Include="dominatorTree.cpp" />
     <ClCompile Include="eulerianDigraph.cpp" />
     <ClCompile Include="globalMinCut.cpp" />
     <ClCompile Include="hamiltonian.cpp" />
@@ -172,6 +174,8 @@
     <ClInclude Include="bcc.h" />
     <ClInclude Include="bipartiteGraph.h" />
     <ClInclude Include="bipartiteGraphArray.h" />
+    <ClInclude Include="blockCutTree.h" />
+    <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />
     <ClInclude Include="globalMinCut.h" />
     <ClInclude Include="globalMinCutNaive.h" />
