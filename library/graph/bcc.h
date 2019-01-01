@@ -9,7 +9,7 @@ struct BiconnectedComponents {
     vector<bool>        cutV;
     vector<vector<int>> comps;
 
-    void findBCC(vector<vector<int>>& edges, int N) {
+    void findBCC(const vector<vector<int>>& edges, int N) {
         this->N = N;
         visited = vector<bool>(N);
         graphID = vector<int>(N);
@@ -42,7 +42,7 @@ private:
     vector<int>  low;
     vector<int>  stk;
 
-    void dfsConn(vector<vector<int>>& edges, int u, int parent) {
+    void dfsConn(const vector<vector<int>>& edges, int u, int parent) {
         discover[u] = low[u] = ++discoverCount;
         stk.push_back(u);
 
@@ -69,39 +69,6 @@ private:
                 }
             } else {
                 low[u] = min(low[u], discover[v]);
-            }
-        }
-    }
-};
-
-// Construct block-cut tree from biconnected components
-struct BlockCutTree {
-    int                 N;
-    vector<vector<int>> edges;
-    vector<bool>        cutV;
-    vector<int>         graphToTreeID;
-
-    void makeFromBCC(const BiconnectedComponents& bcc) {
-        edges = vector<vector<int>>(bcc.N * 2);
-        cutV = vector<bool>(bcc.N * 2);
-        graphToTreeID = vector<int>(bcc.N * 2);
-
-        N = 0;
-        for (int u = 0; u < bcc.N; ++u) {
-            if (bcc.cutV[u]) {
-                graphToTreeID[u] = N++;
-                cutV[graphToTreeID[u]] = true;
-            }
-        }
-        for (auto& comp : bcc.comps) {
-            int node = N++;
-            for (int u : comp) {
-                if (!bcc.cutV[u])
-                    graphToTreeID[u] = node;
-                else {
-                    edges[node].push_back(graphToTreeID[u]);
-                    edges[graphToTreeID[u]].push_back(node);
-                }
             }
         }
     }
