@@ -78,6 +78,9 @@
     <ClCompile Include="blockCutTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="graphRealization.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -147,6 +150,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="blockCutTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="graphRealization.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

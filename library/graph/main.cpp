@@ -26,4 +26,5 @@ int main(void) {
     TEST(GlobalMinCut);
     TEST(EulerianDigraph);
     TEST(DominatorTree);
+    TEST(GraphRealization);
 }
