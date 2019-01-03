@@ -22,6 +22,7 @@ void testGraphRealization() {
 
     cout << "--- Graph Realization ----------------" << endl;
     {
+        // possible
         vector<int> d{ 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 };
         int ans1 = GraphRealization::possibleSlow(d);
         int ans2 = GraphRealization::possible(d);
@@ -30,6 +31,7 @@ void testGraphRealization() {
         assert(ans1 == ans3);
     }
     {
+        // impossible
         vector<int> d{ 1, 2, 3, 4, 4, 6, 6, 7, 8, 9 };
         int ans1 = GraphRealization::possibleSlow(d);
         int ans2 = GraphRealization::possible(d);
@@ -57,9 +59,12 @@ void testGraphRealization() {
                 d[u]++;
                 d[v]++;
             }
-            if (d[0] > 2)
-                d[0]--;
-            d[1]++;
+            if (d[0] & 1) {
+                // make it impossible
+                if (d[0] > 2)
+                    d[0]--;
+                d[1]++;
+            }
 
             bool ans1 = GraphRealization::possibleSlow(d);
             bool ans2 = GraphRealization::possible(d);
@@ -80,6 +85,7 @@ void testGraphRealization() {
         int E = N * 100;
 
         vector<int> d(N);
+        // make a valid degree sequence
         for (int i = 0; i < E; i++) {
             int u = i % N;
             int v;
@@ -115,6 +121,7 @@ void testGraphRealization() {
         N = 1000;
 #endif
 
+        // circular graph
         vector<int> d(N, 2);
 
         PROFILE_START(0);
