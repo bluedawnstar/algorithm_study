@@ -11,6 +11,8 @@ int main(void) {
     TEST(Polygon);
     TEST(PolygonDiameter);
     TEST(ConvexHull);
+    TEST(GridConvexHull);
+    TEST(ConvexHullEx);
     TEST(DynamicConvexHull);
     TEST(LineSegmentUnion);
     TEST(LineSegmentSet1D);
@@ -20,5 +22,4 @@ int main(void) {
     TEST(DelaunayTriangulation);
     TEST(ClosestPair);
     TEST(DistanceSum);
-    TEST(GridConvexHull);
 }

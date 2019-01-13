@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="closestPair.cpp" />
     <ClCompile Include="convexHull.cpp" />
+    <ClCompile Include="convexHullEx.cpp" />
     <ClCompile Include="delaunayTriangulation.cpp" />
     <ClCompile Include="distanceSum.cpp" />
     <ClCompile Include="dynamicConvexHull.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="closestPair.h" />
     <ClInclude Include="convexHull.h" />
+    <ClInclude Include="convexHullEx.h" />
     <ClInclude Include="delaunayTriangulation.h" />
     <ClInclude Include="distanceSumChebyshev.h" />
     <ClInclude Include="dynamicConvexHull.h" />
