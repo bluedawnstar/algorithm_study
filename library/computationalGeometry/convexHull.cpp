@@ -10,7 +10,7 @@ using namespace std;
 #include "convexHull.h"
 
 #if 0
-    //### find farest points from a line of convex hull's boundary
+    //### find farthest points from a line of convex hull's boundary
     // input : gP -> points, (u, v) -> two points of a line
 
     vector<Vec2D<int>> newP(gP);
@@ -75,8 +75,8 @@ static void makeData(vector<Vec2D<int>>& points, int size) {
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
-        points[i].x = RandInt32::get() % 65536;
-        points[i].y = RandInt32::get() % 65536;
+        points[i].x = RandInt32::get() % 32767;
+        points[i].y = RandInt32::get() % 32767;
     }
     random_shuffle(points.begin(), points.end());
 }
@@ -116,11 +116,13 @@ static bool testConvexHull(vector<Vec2D<int>>& in) {
     vector<Vec2D<int>> out3 = doGrahamScanNoRemove(vector<Vec2D<int>>(in));
     vector<Vec2D<int>> out4 = doGrahamAndrew(vector<Vec2D<int>>(in));
 
-    sort(out1.begin(), out1.end());
-    sort(out2.begin(), out2.end());
-    sort(out3.begin(), out3.end());
-    sort(out4.begin(), out4.end());
-    if (out1 != out2 || out1 != out3 || out1 != out4) {
+    auto it2 = min_element(out2.begin(), out2.end());
+    rotate(out2.begin(), it2, out2.end());
+
+    auto it3 = min_element(out3.begin(), out3.end());
+    rotate(out3.begin(), it3, out3.end());
+
+    if (out1 != out2 || out2 != out3 || out3 != out4) {
         cout << "---Jarvis----------" << endl;
         dump(out1);
         cout << "---Graham Scan----------" << endl;
@@ -135,7 +137,7 @@ static bool testConvexHull(vector<Vec2D<int>>& in) {
 }
 
 void testConvexHull() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Convex Hull ------------------------" << endl;
 

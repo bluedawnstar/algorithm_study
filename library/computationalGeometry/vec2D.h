@@ -165,8 +165,8 @@ inline double normalizeAngle(double angle) {
 }
 
 template <typename T>
-inline T cross(Vec2D<T> base, Vec2D<T> a, Vec2D<T> b) {
-    return (a.x - base.x) * (b.y - base.y) - (a.y - base.y) * (b.x - base.x);
+inline long long cross(Vec2D<T> base, Vec2D<T> a, Vec2D<T> b) {
+    return 1ll * (a.x - base.x) * (b.y - base.y) - 1ll * (a.y - base.y) * (b.x - base.x);
 }
 
 template <typename T>

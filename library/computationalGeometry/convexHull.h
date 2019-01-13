@@ -1,11 +1,15 @@
 #pragma once
 
-// O(HN)
+// The result is counter-clockwise, O(HN)
+// The starting point of the result is the bottom of the leftmost
 template <typename T>
 vector<Vec2D<T>> doJarvis(vector<Vec2D<T>>& Q) {
     int N = int(Q.size());
-    if (N < 3)
+    if (N < 3) {
+        if (N == 2 && Q[0] > Q[1])
+            swap(Q[0], Q[1]);
         return Q;
+    }
 
     vector<Vec2D<T>> S;
 
@@ -22,7 +26,7 @@ vector<Vec2D<T>> doJarvis(vector<Vec2D<T>>& Q) {
 
         q = (p + 1) % N;
         for (int i = 0; i < N; i++) {
-            T cr = cross(Q[p], Q[i], Q[q]);
+            auto cr = cross(Q[p], Q[i], Q[q]);
             if ((isZero(cr) && Q[i].norm2(Q[p]) > Q[q].norm2(Q[p])) || cr > 0)
                 q = i;
         }
@@ -33,7 +37,8 @@ vector<Vec2D<T>> doJarvis(vector<Vec2D<T>>& Q) {
     return S;
 }
 
-// O(NlogN)
+// The result is counter-clockwise, O(NlogN)
+// The starting point of the result is the leftmost of the bottom
 template <typename T>
 vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
     vector<Vec2D<T>> S;
@@ -53,7 +58,7 @@ vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
     // sort points by angle from Q[0]
     Vec2D<T> p0 = Q[0];
     sort(Q.begin() + 1, Q.end(), [&p0](const Vec2D<T>& l, const Vec2D<T>& r) {
-        T cr = cross(p0, l, r);
+        auto cr = cross(p0, l, r);
         if (isZero(cr))
             return p0.norm2(l) < p0.norm2(r);
         return cr > 0;
@@ -85,7 +90,8 @@ vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
     return S;
 }
 
-// O(NlogN)
+// The result is counter-clockwise, O(NlogN)
+// The starting point of the result is the leftmost of the bottom
 template <typename T>
 vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryPoints = true) {
     vector<Vec2D<T>> S;
@@ -105,7 +111,7 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryP
     // sort points by angle from Q[0]
     Vec2D<T> p0 = Q[0];
     sort(Q.begin() + 1, Q.end(), [&p0](const Vec2D<T>& l, const Vec2D<T>& r) {
-        T cr = cross(p0, l, r);
+        auto cr = cross(p0, l, r);
         if (isZero(cr))
             return p0.norm2(l) < p0.norm2(r);
         return cr > 0;
@@ -139,7 +145,8 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryP
 }
 
 
-// O(NlogN)
+// The result is counter-clockwise, O(NlogN)
+// The starting point of the result is the bottom of the leftmost
 template <typename T>
 vector<Vec2D<T>> doGrahamAndrew(vector<Vec2D<T>>& Q) {
     int N = int(Q.size());
@@ -148,16 +155,73 @@ vector<Vec2D<T>> doGrahamAndrew(vector<Vec2D<T>>& Q) {
 
     sort(Q.begin(), Q.end());
 
-    int k = 0;
     vector<Vec2D<T>> res(N * 2);
-    for (int i = 0; i < N; res[k++] = Q[i++])
-        for (; k >= 2 && !cw(res[k - 2], res[k - 1], Q[i]); --k)
-            ;
 
-    for (int i = N - 2, t = k; i >= 0; res[k++] = Q[i--])
-        for (; k > t && !cw(res[k - 2], res[k - 1], Q[i]); --k)
-            ;
+    int k = 0;
+    for (int i = 0; i < N; i++) {
+        while (k >= 2 && !ccw(res[k - 2], res[k - 1], Q[i]))
+            k--;
+        res[k++] = Q[i];
+    }
+    for (int i = N - 2, t = k; i >= 0; i--) {
+        while (k > t && !ccw(res[k - 2], res[k - 1], Q[i]))
+            k--;
+        res[k++] = Q[i];
+    }
 
     res.resize(k - 1 - (res[0] == res[1]));
     return res;
 }
+
+// The results is sorted by X, O(NlogN)
+struct GrahamAndrew {
+    static void convexHull(vector<pair<int, int>>& inP, vector<pair<int, int>>& outLower, vector<pair<int, int>>& outUpper) {
+        int j = 0, k = 0, n = int(inP.size());
+        sort(inP.begin(), inP.end());
+        outUpper.resize(n);
+        outLower.resize(n);
+        for (int i = 0; i < n; i++) {
+            while (j >= 2 && cross(outLower[j - 2], outLower[j - 1], inP[i]) <= 0)
+                j--;
+            while (k >= 2 && cross(outUpper[k - 2], outUpper[k - 1], inP[i]) >= 0)
+                k--;
+            outLower[j++] = inP[i];
+            outUpper[k++] = inP[i];
+        }
+        outUpper.resize(k);
+        outLower.resize(j);
+    }
+
+    static long long calcMaxDiameter(const vector<pair<int, int>>& inLower, const vector<pair<int, int>>& inUpper) {
+        int j = 0, k, m;
+        k = int(inLower.size()) - 1;
+        m = int(inUpper.size()) - 1;
+        long long dist = 0;
+        while (j < m || k > 0) {
+            dist = max(dist, squareDist(inUpper[j], inLower[k]));
+            if (j == m)
+                k--;
+            else if (k == 0)
+                j++;
+            else {
+                if (1ll * (inUpper[j + 1].second - inUpper[j].second) * (inLower[k].first - inLower[k - 1].first) >
+                    1ll * (inLower[k].second - inLower[k - 1].second) * (inUpper[j + 1].first - inUpper[j].first))
+                    j++;
+                else
+                    k--;
+            }
+        }
+        return dist;
+    }
+
+private:
+    static long long cross(const pair<int, int>& P, const pair<int, int>& Q, const pair<int, int>& R) {
+        return 1ll * (Q.first - P.first) * (R.second - P.second) - 1ll * (R.first - P.first) * (Q.second - P.second);
+    }
+
+    static long long squareDist(const pair<int, int>& L, const pair<int, int>& R) {
+        long long x = L.first - R.first;
+        long long y = L.second - R.second;
+        return x * x + y * y;
+    }
+};

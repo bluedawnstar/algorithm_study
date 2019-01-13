@@ -16,10 +16,10 @@ struct LineSegmentIntersection {
 
         bool operator <(const LineSegment& rhs) const {
             if (a.x < rhs.a.x) {
-                T s = cross(a, b, rhs.a);
+                auto s = cross(a, b, rhs.a);
                 return (s > 0 || s == 0 && a.y < rhs.a.y);
             } else {
-                T s = cross(rhs.a, rhs.b, a);
+                auto s = cross(rhs.a, rhs.b, a);
                 return (s < 0 || s == 0 && a.y < rhs.a.y);
             }
             return a.y < rhs.a.y;
