@@ -10,8 +10,8 @@ bool lineIntersection(Vec2D<T> a, Vec2D<T> b, Vec2D<T> c, Vec2D<T> d, Vec2D<doub
     if (isZero(det))
         return false;
     double det2 = (c - a).cross(d - c) / (double)det;
-    out.x = a.x + (b.x - a.x) * det2;
-    out.y = a.y + (b.y - a.y) * det2;
+    out.first = a.first + (b.first - a.first) * det2;
+    out.second = a.second + (b.second - a.second) * det2;
     return true;
 }
 
@@ -26,11 +26,11 @@ static bool parallelSegments(Vec2D<T> a, Vec2D<T> b, Vec2D<T> c, Vec2D<T> d, Vec
         return false;
 
     if (a < c) {
-        out.x = c.x;
-        out.y = c.y;
+        out.first = c.first;
+        out.second = c.second;
     } else {
-        out.x = a.x;
-        out.y = a.y;
+        out.first = a.first;
+        out.second = a.second;
     }
 
     return true;
@@ -76,13 +76,13 @@ bool isSegmentIntersect(Vec2D<T> a, Vec2D<T> b, Vec2D<T> c, Vec2D<T> d) {
 template <typename T>
 Vec2D<double> perpendicularFoot(Vec2D<T> p, Vec2D<T> a, Vec2D<T> b) {
     Vec2D<double> r = (p - a).project(b - a);
-    r.x += a.x;
-    r.y += a.y;
+    r.first += a.first;
+    r.second += a.second;
     return r;
 }
 
 template <typename T>
 double distancePointToLine(Vec2D<T> p, Vec2D<T> a, Vec2D<T> b) {
     Vec2D<double> foot = perpendicularFoot(p, a, b);
-    return hypot(p.x - foot.x, p.y - foot.y);
+    return hypot(p.first - foot.first, p.second - foot.second);
 }

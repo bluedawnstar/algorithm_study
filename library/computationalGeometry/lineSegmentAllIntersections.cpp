@@ -56,7 +56,7 @@ static bool compare(const vector<tuple<int, int, Vec2D<double>>>& L, const vecto
         if (get<0>(L[i]) != get<0>(R[i]) || get<1>(L[i]) != get<1>(R[i]))
             return false;
 
-        if (fabs(get<2>(R[i]).x - get<2>(L[i]).x) >= EPSILON || fabs(get<2>(R[i]).y - get<2>(L[i]).y) >= EPSILON)
+        if (fabs(get<2>(R[i]).first - get<2>(L[i]).first) >= EPSILON || fabs(get<2>(R[i]).second - get<2>(L[i]).second) >= EPSILON)
             return false;
     }
 
@@ -64,12 +64,12 @@ static bool compare(const vector<tuple<int, int, Vec2D<double>>>& L, const vecto
 }
 
 static ostream& operator <<(ostream& os, const LineSegmentAllIntersections::LineSegment& t) {
-    os << "((" << t.a.x << ", " << t.a.y << "), (" << t.b.x << ", " << t.b.y << "), " << t.id << ")";
+    os << "((" << t.a.first << ", " << t.a.second << "), (" << t.b.first << ", " << t.b.second << "), " << t.id << ")";
     return os;
 }
 
 static ostream& operator <<(ostream& os, const tuple<int, int, Vec2D<double>>& t) {
-    os << "(" << get<0>(t) << ", " << get<1>(t) << ", (" << get<2>(t).x << "," << get<2>(t).y << ")" << ")";
+    os << "(" << get<0>(t) << ", " << get<1>(t) << ", (" << get<2>(t).first << "," << get<2>(t).second << ")" << ")";
     return os;
 }
 

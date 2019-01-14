@@ -1,11 +1,10 @@
-#include <cmath>
 #include <vector>
 #include <cmath>
-#include "vec2D.h"
 #include <algorithm>
 
 using namespace std;
 
+#include "vec2D.h"
 #include "lineSegmentUnion.h"
 
 

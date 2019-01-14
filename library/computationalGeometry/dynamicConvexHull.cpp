@@ -20,12 +20,12 @@ using namespace std;
 
 template <typename T>
 static ostream& operator <<(ostream& os, const Vec2D<T>& x) {
-    os << "(" << x.x << "," << x.y << ")";
+    os << "(" << x.first << "," << x.second << ")";
     return os;
 }
 
 void testDynamicConvexHull() {
-    return; //TODO: if you want to test functions of this file, make this line a comment.
+    //return; //TODO: if you want to test functions of this file, make this line a comment.
 
     cout << "--- Dynamic Convex Hull ------------------------" << endl;
     vector<Vec2D<int>> hull{ { 0, 0  }, { 3, -1 }, { 4, 5 }, { -1, 4 } };

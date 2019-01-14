@@ -50,7 +50,7 @@ vector<Vec2D<T>> doGrahamScan(vector<Vec2D<T>>& Q) {
     // find staring point
     int start = 0;
     for (int i = 1; i < N; i++) {
-        if (Q[i].y < Q[start].y || (Q[i].y == Q[start].y && Q[i].x < Q[start].x))
+        if (Q[i].second < Q[start].second || (Q[i].second == Q[start].second && Q[i].first < Q[start].first))
             start = i;
     }
     swap(Q[0], Q[start]);
@@ -103,7 +103,7 @@ vector<Vec2D<T>> doGrahamScanNoRemove(vector<Vec2D<T>>& Q, bool excludeBoundaryP
     // find staring point
     int start = 0;
     for (int i = 1; i < N; i++) {
-        if (Q[i].y < Q[start].y || (Q[i].y == Q[start].y && Q[i].x < Q[start].x))
+        if (Q[i].second < Q[start].second || (Q[i].second == Q[start].second && Q[i].first < Q[start].first))
             start = i;
     }
     swap(Q[0], Q[start]);

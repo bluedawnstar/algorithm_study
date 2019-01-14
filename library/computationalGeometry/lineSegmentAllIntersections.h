@@ -9,8 +9,8 @@ namespace LineSegmentAllIntersections {
         if (isZero(det))
             return false;
         double det2 = (c - a).cross(d - c) / (double)det;
-        out.x = a.x + (b.x - a.x) * det2;
-        out.y = a.y + (b.y - a.y) * det2;
+        out.first = a.first + (b.first - a.first) * det2;
+        out.second = a.second + (b.second - a.second) * det2;
         return true;
     }
 
@@ -24,11 +24,11 @@ namespace LineSegmentAllIntersections {
             return false;
 
         if (a < c) {
-            out.x = c.x;
-            out.y = c.y;
+            out.first = c.first;
+            out.second = c.second;
         } else {
-            out.x = a.x;
-            out.y = a.y;
+            out.first = a.first;
+            out.second = a.second;
         }
 
         return true;
@@ -79,11 +79,11 @@ namespace LineSegmentAllIntersections {
             //if (y0 != y1)
                 return y0 < y1;
             else
-                return (b.y - a.y) * (rhs.b.x - rhs.a.x) < (rhs.b.y - rhs.a.y) * (b.x - a.x);
+                return (b.second - a.second) * (rhs.b.first - rhs.a.first) < (rhs.b.second - rhs.a.second) * (b.first - a.first);
         }
 
         double getY(double x) const {
-            return (b.y - a.y) * (x - a.x) / (b.x - a.x) + a.y;
+            return (b.second - a.second) * (x - a.first) / (b.first - a.first) + a.second;
         }
     };
 
@@ -361,12 +361,12 @@ namespace LineSegmentAllIntersections {
         }
 
         bool operator <(const Event& rhs) const {
-            if (p.x != rhs.p.x)
-                return p.x < rhs.p.x;
+            if (p.first != rhs.p.first)
+                return p.first < rhs.p.first;
             else if (type != rhs.type)
                 return type < rhs.type;
             else
-                return p.y < rhs.p.y;
+                return p.second < rhs.p.second;
         }
 
         bool operator >(const Event& rhs) const {
@@ -410,7 +410,7 @@ namespace LineSegmentAllIntersections {
             auto e = Q.top();
             Q.pop();
 
-            tree.currX = e.p.x;
+            tree.currX = e.p.first;
             if (e.type == 0) {
                 auto it = tree.insert(v[e.id]);
                 nodes[e.id] = it;

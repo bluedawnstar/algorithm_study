@@ -75,8 +75,8 @@ static void makeData(vector<Vec2D<int>>& points, int size) {
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
-        points[i].x = RandInt32::get() % 32767;
-        points[i].y = RandInt32::get() % 32767;
+        points[i].first = RandInt32::get() % 32767;
+        points[i].second = RandInt32::get() % 32767;
     }
     random_shuffle(points.begin(), points.end());
 }
@@ -86,8 +86,8 @@ static void makeData(vector<Vec2D<int>>& points, int size, int R) {
         points.assign(vector<Vec2D<int>>::size_type(size) - points.size(), Vec2D<int>());
 
     for (int i = 0; i < size; i++) {
-        points[i].x = RandInt32::get() % (2 * R + 1) % R;
-        points[i].y = ((RandInt32::get() & 1) ? 1 : -1) * int(sqrt(1.0 * R * R - 1.0 * points[i].x * points[i].x));
+        points[i].first = RandInt32::get() % (2 * R + 1) % R;
+        points[i].second = ((RandInt32::get() & 1) ? 1 : -1) * int(sqrt(1.0 * R * R - 1.0 * points[i].first * points[i].first));
     }
     random_shuffle(points.begin(), points.end());
 }
@@ -105,7 +105,7 @@ static bool compare(vector<Vec2D<int>>& A, vector<Vec2D<int>>& B) {
 
 static void dump(vector<Vec2D<int>>& in) {
     for (auto it : in) {
-        cout << " (" << it.x << ", " << it.y << ")";
+        cout << " (" << it.first << ", " << it.second << ")";
     }
     cout << endl;
 }
@@ -145,8 +145,8 @@ void testConvexHull() {
         vector<Vec2D<int>> P(16);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                P[i * 4 + j].y = i;
-                P[i * 4 + j].x = j;
+                P[i * 4 + j].second = i;
+                P[i * 4 + j].first = j;
             }
         }
         vector<Vec2D<int>> out1 = doGrahamScanNoRemove(vector<Vec2D<int>>(P), true);

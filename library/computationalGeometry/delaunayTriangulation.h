@@ -137,25 +137,25 @@ private:
 
     //  > 0 : ccw, == 0 : line, < 0 : cw
     static double calcArea2(const Vec2D<T>& p1, const Vec2D<T>& p2, const Vec2D<T>& p3) {
-        return (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x);
+        return (p2.first - p1.first) * (p3.second - p1.second) - (p2.second - p1.second) * (p3.first - p1.first);
     }
 
     // return (center, radius^2)
     static pair<Vec2D<double>, double> getCircumcircleCenter(const Vec2D<T>& p0, const Vec2D<T>& p1, const Vec2D<T>& p2) {
         pair<Vec2D<double>, double> res;
 
-        double ax = p1.x - p0.x, ay = p1.y - p0.y;
-        double bx = p2.x - p0.x, by = p2.y - p0.y;
-        double t = (1.0 * p1.x * p1.x - 1.0 * p0.x * p0.x + 1.0 * p1.y * p1.y - 1.0 * p0.y * p0.y);
-        double u = (1.0 * p2.x * p2.x - 1.0 * p0.x * p0.x + 1.0 * p2.y * p2.y - 1.0 * p0.y * p0.y);
+        double ax = p1.first - p0.first, ay = p1.second - p0.second;
+        double bx = p2.first - p0.first, by = p2.second - p0.second;
+        double t = (1.0 * p1.first * p1.first - 1.0 * p0.first * p0.first + 1.0 * p1.second * p1.second - 1.0 * p0.second * p0.second);
+        double u = (1.0 * p2.first * p2.first - 1.0 * p0.first * p0.first + 1.0 * p2.second * p2.second - 1.0 * p0.second * p0.second);
 
         double s = 1.0 / (2.0 * (ax * by - ay * bx));
 
-        res.first.x = ((p2.y - p0.y) * t + (p0.y - p1.y) * u) * s;
-        res.first.y = ((p0.x - p2.x) * t + (p1.x - p0.x) * u) * s;
+        res.first.first = ((p2.second - p0.second) * t + (p0.second - p1.second) * u) * s;
+        res.first.second = ((p0.first - p2.first) * t + (p1.first - p0.first) * u) * s;
 
-        double dx = p0.x - res.first.x;
-        double dy = p0.y - res.first.y;
+        double dx = p0.first - res.first.first;
+        double dy = p0.second - res.first.second;
         
         res.second = dx * dx + dy * dy;
 

@@ -19,7 +19,7 @@ using namespace std;
 
 template <typename T>
 static ostream& operator <<(ostream& os, const Vec2D<T>& v) {
-    os << "(" << v.x << "," << v.y << ")";
+    os << "(" << v.first << "," << v.second << ")";
     return os;
 }
 

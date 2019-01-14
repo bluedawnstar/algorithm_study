@@ -15,19 +15,19 @@ struct LineSegmentIntersection {
         }
 
         bool operator <(const LineSegment& rhs) const {
-            if (a.x < rhs.a.x) {
+            if (a.first < rhs.a.first) {
                 auto s = cross(a, b, rhs.a);
-                return (s > 0 || s == 0 && a.y < rhs.a.y);
+                return (s > 0 || s == 0 && a.second < rhs.a.second);
             } else {
                 auto s = cross(rhs.a, rhs.b, a);
-                return (s < 0 || s == 0 && a.y < rhs.a.y);
+                return (s < 0 || s == 0 && a.second < rhs.a.second);
             }
-            return a.y < rhs.a.y;
+            return a.second < rhs.a.second;
         }
 
         bool isIntersected(const LineSegment& rhs) const {
-            T x1 = a.x, y1 = a.y, x2 = b.x, y2 = b.y;
-            T x3 = rhs.a.x, y3 = rhs.a.y, x4 = rhs.b.x, y4 = rhs.b.y;
+            T x1 = a.first, y1 = a.second, x2 = b.first, y2 = b.second;
+            T x3 = rhs.a.first, y3 = rhs.a.second, x4 = rhs.b.first, y4 = rhs.b.second;
             if (max(x1, x2) < min(x3, x4) || max(x3, x4) < min(x1, x2) || max(y1, y2) < min(y3, y4) || max(y3, y4) < min(y1, y2))
                 return false;
 
@@ -55,12 +55,12 @@ struct LineSegmentIntersection {
         }
 
         bool operator <(const Event& rhs) const {
-            if (p.x != rhs.p.x)
-                return p.x < rhs.p.x;
+            if (p.first != rhs.p.first)
+                return p.first < rhs.p.first;
             else if (type != rhs.type)
                 return type < rhs.type;
             else
-                return p.y < rhs.p.y;
+                return p.second < rhs.p.second;
         }
     };
 
