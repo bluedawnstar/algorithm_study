@@ -1,8 +1,8 @@
 #pragma once
 
-template <typename T, typename Compare = less<T>>
+template <typename T, typename CompareT = less<T>>
 struct SchieberVishkinRMQ {
-    Compare compare;
+    CompareT compare;
 
     vector<unsigned int> indices;
     vector<unsigned int> inlabel;
@@ -49,7 +49,7 @@ struct SchieberVishkinRMQ {
         for (int top = 1; top > 0; ) {
             int u = stk[--top];
             order.push_back(u);
-            indices[u] = inlabel[u] = order.size();
+            indices[u] = inlabel[u] = int(order.size());
 
             if (left[u] != -1) {
                 stk[top++] = left[u];

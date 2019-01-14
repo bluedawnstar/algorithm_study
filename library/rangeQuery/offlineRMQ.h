@@ -6,12 +6,12 @@
        head[end_position] = the last of the queries with the same end position
        next[query_index] = the previous of the queries with the same end position
 
-    2. it
- */
+    2. ...
+*/
 
-template <typename T, typename Compare = less<T>>
+template <typename T, typename CompareT = less<T>>
 struct OfflineRMQ {
-    Compare compare;
+    CompareT compare;
 
     vector<int> next;   // the previous of the queries with the same end position
     vector<int> head;   // the last of the queries with the same end position
@@ -19,6 +19,7 @@ struct OfflineRMQ {
 
     // O(N + Q)
     // query[i] = { left, right }, inclusive
+    // return results
     vector<T> solve(const vector<T>& value, const vector<pair<int,int>>& query) {
         int N = int(value.size());
         int Q = int(query.size());
