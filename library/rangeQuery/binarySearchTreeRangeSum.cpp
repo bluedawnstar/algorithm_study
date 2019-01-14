@@ -23,7 +23,7 @@ static int sumSlow(vector<int>& v, int L, int R) {
 }
 
 void testBinarySearchTreeRangeSum() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Binary Search Tree for Range Sum -------------------" << endl;
     {

@@ -30,7 +30,7 @@ static int getMaxSubarray(const vector<int>& v, int L, int R) {
 // https://www.codechef.com/problems/CBFEAST
 
 void testDynamicSegmentTreeMaxSubarray() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Dynamic Segment Tree for Max Subarray Sum ----------------------------------------" << endl;
     {

@@ -70,7 +70,7 @@ struct RMQ {
         }
     }
 
-    // inclusive
+    // O(log(right - left)), inclusive
     int query(int left, int right) const {
         left += N;
         right += N;

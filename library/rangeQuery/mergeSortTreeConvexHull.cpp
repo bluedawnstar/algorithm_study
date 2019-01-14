@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testMergeSortTreeConvexHull() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Merge Sort Tree for Convex Hull -----------------------------------" << endl;
     // https://www.codechef.com/JAN19A/problems/MXDIST/

@@ -37,7 +37,7 @@ static void updateSlow(vector<int>& v, int L, int R, int value) {
 }
 
 void testDynamicSegmentTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Dynamic Segment Tree -------------------------------------" << endl;
     {

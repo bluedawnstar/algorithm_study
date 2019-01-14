@@ -20,7 +20,7 @@ using namespace std;
 #include "segmentTreeRMQ.h"
 
 void testKeyRangeCommandDecomposerSimple() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simple Key-Range Command Decomposer ------------------------" << endl;
 

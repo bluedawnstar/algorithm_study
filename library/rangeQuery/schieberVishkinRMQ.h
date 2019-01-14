@@ -20,7 +20,7 @@ struct SchieberVishkinRMQ {
         build(value);
     }
 
-
+    // O(N)
     void build(const T value[], int N) {
         vector<int> left(N, -1);
         vector<int> right(N, -1);
