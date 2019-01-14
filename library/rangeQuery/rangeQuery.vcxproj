@@ -161,6 +161,7 @@
     <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp" />
     <ClCompile Include="mergeSortTreeCompact.cpp" />
     <ClCompile Include="mergeSortTreeCompactWithSum.cpp" />
+    <ClCompile Include="mergeSortTreeConvexHull.cpp" />
     <ClCompile Include="mergeSortTreeIndex.cpp" />
     <ClCompile Include="mergeSortTreeWithSum.cpp" />
     <ClCompile Include="offlineRMQ.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="mergeSortTree2DPoint_DynamicFast.h" />
     <ClInclude Include="mergeSortTreeCompact.h" />
     <ClInclude Include="mergeSortTreeCompactWithSum.h" />
+    <ClInclude Include="mergeSortTreeConvexHull.h" />
     <ClInclude Include="mergeSortTreeIndex.h" />
     <ClInclude Include="mergeSortTreeWithSum.h" />
     <ClInclude Include="offlineRMQ.h" />

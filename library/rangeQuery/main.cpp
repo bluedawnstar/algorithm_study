@@ -45,6 +45,7 @@ int main(void) {
     TEST(MergeSortTree2DPoint_DynamicFast);
     TEST(MergeSortTreeCompact);
     TEST(MergeSortTreeCompactWithSum);
+    TEST(MergeSortTreeConvexHull);
     TEST(ReverseSparseTable);
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
