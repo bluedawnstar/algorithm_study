@@ -29,6 +29,7 @@ int main(void) {
     TEST(SparseTable);
     TEST(SparseTable2D);
     TEST(DisjointSparseTable);
+    TEST(SparseTableSimpleRMQ);
     TEST(SegmentTreeLine1D);
     TEST(SegmentTreeLine2D);
     TEST(SegmentTreeLine2DArray);

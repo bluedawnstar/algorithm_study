@@ -168,6 +168,7 @@
     <ClCompile Include="keyRangeCommandDecomposerSimple.cpp" />
     <ClCompile Include="persistentBinarySearchTreeRangeSum.cpp" />
     <ClCompile Include="redBlackTreeRangeSum.cpp" />
+    <ClCompile Include="sparseTableSimpleRMQ.cpp" />
     <ClCompile Include="schieberVishkinRMQ.cpp" />
     <ClCompile Include="mergeSortTree2DPoint.cpp" />
     <ClCompile Include="segmentTreeBitFlip.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="keyRangeCommandDecomposerSimple.h" />
     <ClInclude Include="persistentBinarySearchTreeRangeSum.h" />
     <ClInclude Include="redBlackTreeRangeSum.h" />
+    <ClInclude Include="sparseTableSimpleRMQ.h" />
     <ClInclude Include="schieberVishkinRMQ.h" />
     <ClInclude Include="mergeSortTree2DPoint.h" />
     <ClInclude Include="segmentTreeBitFlip.h" />

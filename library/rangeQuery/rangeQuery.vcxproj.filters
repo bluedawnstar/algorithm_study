@@ -162,6 +162,9 @@
     <ClCompile Include="mergeSortTreeConvexHull.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sparseTableSimpleRMQ.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -336,6 +339,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeSortTreeConvexHull.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableSimpleRMQ.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
