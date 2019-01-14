@@ -23,7 +23,7 @@ static int sumSlow(vector<int>& v, int L, int R) {
 }
 
 void testRedBlackTreeRangeSum() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Red-Black Tree for Range Sum -------------------" << endl;
     {
