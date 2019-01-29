@@ -1,7 +1,6 @@
 #pragma once
 
 // Simple, but slow
-template <typename T, const T INF = 0x3f3f3f3f>
 struct BipartiteGraphArray {
     int srcN;
     int dstN;

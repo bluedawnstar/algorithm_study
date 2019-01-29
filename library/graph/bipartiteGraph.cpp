@@ -18,8 +18,8 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-static BipartiteGraphArray<int> buildGraphArray() {
-    BipartiteGraphArray<int> graph(6, 6);
+static BipartiteGraphArray buildGraphArray() {
+    BipartiteGraphArray graph(6, 6);
     graph.addEdge(0, 1);
     graph.addEdge(0, 2);
     graph.addEdge(1, 0);
@@ -31,8 +31,8 @@ static BipartiteGraphArray<int> buildGraphArray() {
     return graph;
 }
 
-static BipartiteGraph<int> buildGraph() {
-    BipartiteGraph<int> graph(6, 6);
+static BipartiteGraph buildGraph() {
+    BipartiteGraph graph(6, 6);
     graph.addEdge(0, 1);
     graph.addEdge(0, 2);
     graph.addEdge(1, 0);
@@ -115,7 +115,7 @@ void testBipartiteMaching() {
             qry.emplace_back(u, v);
         }
 
-        BipartiteGraph<int> graph(N, N);
+        BipartiteGraph graph(N, N);
         for (auto& q : qry) {
             auto ans0 = graph.calcMaxMatching();
             auto ans1 = graph.calcMaxMatchingHopcroftKarp();

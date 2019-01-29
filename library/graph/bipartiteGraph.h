@@ -1,6 +1,5 @@
 #pragma once
 
-template <typename T, const T INF = 0x3f3f3f3f>
 struct BipartiteGraph {
     int srcN;
     int dstN;
