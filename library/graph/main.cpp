@@ -15,6 +15,7 @@ int main(void) {
     TEST(BlockCutTree);
     TEST(DAG);
     TEST(BipartiteMaching);
+    TEST(BipartiteGraphCheck);
     TEST(GeneralGraphMaxMatching);
     TEST(MinimumSpanningTree);
     TEST(Hungarian);
