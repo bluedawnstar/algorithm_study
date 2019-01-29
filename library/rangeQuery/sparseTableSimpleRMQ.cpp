@@ -36,6 +36,41 @@ void testSparseTableSimpleRMQ() {
     {
         int N = 10000;
         int T = 10000;
+#ifdef _DEBUG
+        N = 1000;
+        T = 1000;
+#endif
+
+        vector<int> value(N);
+        for (int i = 0; i < N; i++)
+            value[i] = RandInt32::get();
+
+        vector<pair<int, int>> query(T);
+        for (int i = 0; i < T; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
+            query[i].first = L;
+            query[i].second = R;
+        }
+
+        SimpleSparseTableRMQ<int> rmq(value);
+        for (int i = 0; i < T; i++) {
+            int gt = getMin(value, query[i].first, query[i].second);
+            int ans = rmq.query(query[i].first, query[i].second);
+            if (ans != gt)
+                cout << "Mismatch at " << i << ": " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+    }
+    {
+        int N = 1024 * 1024;
+        int T = 10000;
+#ifdef _DEBUG
+        N = 8 * 1024;
+        T = 1000;
+#endif
 
         vector<int> value(N);
         for (int i = 0; i < N; i++)
