@@ -145,6 +145,38 @@ struct BasicDigraph {
         return ctx.scc;
     }
 
+    // input  : edges = edges of original graph, scc = the result of findSCC()
+    // output : the graph of SCC (it's a DAG)
+    static vector<vector<int>> makeSCCGraph(const vector<vector<int>>& edges, const vector<vector<int>>& scc, int N) {
+        int sccN = int(scc.size());
+
+        vector<int> nodeToSCC(N);                   // nodeToSCC[node index] = SCC index
+        for (int g = 0; g < sccN; g++) {
+            for (int v : scc[g])
+                nodeToSCC[v] = g;
+        }
+
+        vector<vector<int>> sccEdges(sccN);
+        for (int g = 0; g < sccN; g++) {
+            sccEdges[g].reserve(scc[g].size());
+            for (int u : scc[g]) {
+                for (int v : edges[u]) {
+                    if (g != nodeToSCC[v])
+                        sccEdges[g].push_back(nodeToSCC[v]);
+                }
+            }
+            sort(sccEdges[g].begin(), sccEdges[g].end());
+            sccEdges[g].erase(unique(sccEdges[g].begin(), sccEdges[g].end()), sccEdges[g].end());
+        }
+
+        return sccEdges;
+    }
+
+    vector<vector<int>> makeSCCGraph(const vector<vector<int>>& edges, int N) {
+        vector<vector<int>> scc = findSCC();
+        return makeSCCGraph(edges, scc, N);
+    }
+
     //--- Strongly connected graph test (Kosaraju's algorithm), O(E + V) ---
     static void dfsSCGraph(const vector<vector<int>>& edges, vector<bool>& visited, int u) {
         visited[u] = true;
