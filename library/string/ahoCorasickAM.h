@@ -161,6 +161,7 @@ struct AhoCorasickAM {
     //--- Aho-Corasick --------------------------------------------------------
 
     // compute failure function
+    // O(M), M = the sum of all pattern lengths
     void build() {
         queue<Node*> Q;
 
@@ -198,6 +199,7 @@ struct AhoCorasickAM {
 
     // search all patterns in s
     // return (last_character_in_s, pattern_id)s
+    // O(M + N + K), M = the sum of all pattern lengths, N = text length, K = the number of patterns in the text
     vector<pair<int, int>> doAhoCorasick(const string& s) const {
         return doAhoCorasick(&s[0], int(s.length()));
     }

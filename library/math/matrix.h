@@ -256,3 +256,8 @@ struct Matrix {
         return t * t;
     }
 };
+
+// https://github.com/yosupo06/Algorithm/tree/54cd52339c4bb8be8719ef04dbb4486e355f03fb/src/math
+//TODO: inverse
+//TODO: matrix determinant
+//TODO: QR decomposition

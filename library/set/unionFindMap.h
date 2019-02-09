@@ -50,8 +50,7 @@ struct UnionFindMap {
 
 // Simplified Union-Find for Disjoint-Set
 struct DSUMap {
-    // first is 'parent', second is 'rank'
-    unordered_map<int, int> M;
+    unordered_map<int, int> M;  // parent
 
     DSUMap() : M() {
     }
