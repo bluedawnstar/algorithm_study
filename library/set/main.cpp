@@ -15,6 +15,7 @@ int main(void) {
     TEST(LineSegmentSet1D);
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);
+    TEST(HashMapOAHT);
     TEST(SparseSet);
     TEST(BitSubsets);
     TEST(VanEmdeBoasTree);
