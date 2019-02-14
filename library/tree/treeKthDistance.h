@@ -1,19 +1,12 @@
 #pragma once
 
-/*
-<How to use>
-1. initialize : init()
-2. add edges : addEdge()
-3. prepare searching : build()
-*/
-template <typename T>
-struct KthValueInDistance {
+struct KthDistance {
     struct SimplePersistentSegmentTree {
         int N;
-        vector<T> value;
+        vector<int> value;  // count
         vector<int> L;
         vector<int> R;
-        int root;       // first root;
+        int root;           // first root;
 
         SimplePersistentSegmentTree() {
         }
@@ -32,7 +25,7 @@ struct KthValueInDistance {
         }
 
         // return root node index
-        int add(int root, int index, T val) {
+        int add(int root, int index, int val) {
             return dfsAdd(root, 0, N - 1, index, val);
         }
 
@@ -50,17 +43,19 @@ struct KthValueInDistance {
             return int(value.size()) - 1;
         }
 
-        int dfsAdd(int node, int left, int right, int index, T val) {
-            T newValue;
+        int dfsAdd(int node, int left, int right, int index, int val) {
+            int newValue;
             int l = -1, r = -1;
             if (left == right) {
                 newValue = value[node] + val;           //TODO: merge operation
-            } else {
+            }
+            else {
                 int mid = (left + right) >> 1;
                 if (index <= mid) {
                     l = dfsAdd(L[node], left, mid, index, val);
                     r = R[node];
-                } else {
+                }
+                else {
                     l = L[node];
                     r = dfsAdd(R[node], mid + 1, right, index, val);
                 }
@@ -74,11 +69,8 @@ struct KthValueInDistance {
     };
 
     int N;
-    vector<vector<int>> edges;
-    vector<T> values;               // compressed values (0 <= values[i] < M)
 
-    int M;                          // sizeof uniqueValues
-    vector<T> uniqueValues;         // unique & sorted values of values's original values
+    vector<vector<int>> edges;      // edges (vertex number)
 
     vector<int> treeSize;
     vector<int> bigChild;
@@ -90,17 +82,17 @@ struct KthValueInDistance {
 
                                     //---
 
-    vector<vector<pair<int, T>>> addNodes; // addNodes[i] = all descendants of i to add, addNodes[i][j] = { distance, value }
-    vector<vector<pair<int, T>>> subNodes; // subNodes[i] = all descendants of i to subtract, subNodes[i][j] = { distance, value }
+    vector<vector<pair<int, int>>> addNodes; // addNodes[i] = all descendants of i to add, addNodes[i][j] = { distance, value }
+    vector<vector<pair<int, int>>> subNodes; // subNodes[i] = all descendants of i to subtract, subNodes[i][j] = { distance, value }
 
     SimplePersistentSegmentTree distSegTree;
     vector<vector<pair<int, int>>> addRootByDist; // roots of persistent segment tree, addRootByDist[i][j] = { distance, root }
     vector<vector<pair<int, int>>> subRootByDist; // roots of persistent segment tree, subRootByDist[i][j] = { distance, root }
 
-    void init(const T v[], int N) {
+    void init(int N) {
         this->N = N;
         edges.resize(N);
-        values.assign(v, v + N);
+
         treeSize.resize(N);
         bigChild.resize(N);
 
@@ -113,23 +105,6 @@ struct KthValueInDistance {
 
         addRootByDist.resize(N);
         subRootByDist.resize(N);
-
-        //---
-
-        // must compress values
-        uniqueValues.resize(N);
-        for (int i = 0; i < N; i++)
-            uniqueValues[i] = values[i];
-        sort(uniqueValues.begin(), uniqueValues.end());
-        uniqueValues.erase(unique(uniqueValues.begin(), uniqueValues.end()), uniqueValues.end());
-        M = int(uniqueValues.size());
-
-        for (int i = 0; i < N; i++)
-            values[i] = int(lower_bound(uniqueValues.begin(), uniqueValues.end(), values[i]) - uniqueValues.begin());
-    }
-
-    void init(const vector<T>& v) {
-        init(v.data(), int(v.size()));
     }
 
     void addEdge(int u, int v) {
@@ -156,12 +131,18 @@ struct KthValueInDistance {
         return res;
     }
 
-    // 0 <= node < N, 0 <= d < N, 1 <= kth < N
-    // O((logN)^2)
-    T findKthValue(int u, int maxDist, int kth) {
-        vector<pair<int, int>> roots = findSegmentTreeRoots(u, maxDist);
-        auto ans = findKthValue(roots, kth);
-        return (ans >= 0) ? uniqueValues[ans] : -1;  // uncompress
+    // O((logN)^3), 1 <= kth <= N
+    int findKthDistance(int u, int kth) {
+        int lo = 0, hi = N - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) >> 1;
+            int cnt = count(u, mid);
+            if (cnt > kth)
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
+        return lo;
     }
 
 private:
@@ -222,9 +203,9 @@ private:
         for (int i = 0; i < N; i++) {
             int v = i, last = -1, at = 0;
             while (v >= 0) {
-                addNodes[v].emplace_back(ctDist[i][at], values[i]);
+                addNodes[v].emplace_back(ctDist[i][at], i);
                 if (last >= 0)
-                    subNodes[last].emplace_back(ctDist[i][at], values[i]);
+                    subNodes[last].emplace_back(ctDist[i][at], i);
 
                 last = v;
                 v = ctParent[v];
@@ -232,7 +213,7 @@ private:
             }
         }
 
-        distSegTree.build(M);
+        distSegTree.build(N);
 
         for (int v = 0; v < N; v++) {
             sort(begin(addNodes[v]), end(addNodes[v]));   // sort all descendant nodes by distance in a centroid tree
@@ -240,21 +221,21 @@ private:
 
             if (!addNodes[v].empty()) {
                 auto& nodes = addNodes[v];
-                int root = distSegTree.add(distSegTree.root, nodes[0].second, 1);
+                int root = distSegTree.add(distSegTree.root, nodes[0].first, 1);
                 for (int i = 1; i < int(nodes.size()); i++) {
                     if (nodes[i - 1].first != nodes[i].first)
                         addRootByDist[v].emplace_back(nodes[i - 1].first, root);
-                    root = distSegTree.add(root, nodes[i].second, 1);
+                    root = distSegTree.add(root, nodes[i].first, 1);
                 }
                 addRootByDist[v].emplace_back(nodes.back().first, root);
             }
             if (!subNodes[v].empty()) {
                 auto& nodes = subNodes[v];
-                int root = distSegTree.add(distSegTree.root, nodes[0].second, 1);
+                int root = distSegTree.add(distSegTree.root, nodes[0].first, 1);
                 for (int i = 1; i < int(nodes.size()); i++) {
                     if (nodes[i - 1].first != nodes[i].first)
                         subRootByDist[v].emplace_back(nodes[i - 1].first, root);
-                    root = distSegTree.add(root, nodes[i].second, 1);
+                    root = distSegTree.add(root, nodes[i].first, 1);
                 }
                 subRootByDist[v].emplace_back(nodes.back().first, root);
             }
@@ -289,33 +270,5 @@ private:
         }
 
         return segTrees;
-    }
-
-    // 1 <= kth
-    int findKthValue(vector<pair<int, int>>& segTreeRoots, int kth) {
-        int lo = 0, hi = M - 1;
-        while (lo < hi) {
-            int qt = 0;
-            for (auto& r : segTreeRoots)
-                qt += r.second * distSegTree.value[distSegTree.L[r.first]];
-
-            int mid = (lo + hi) >> 1;
-            if (kth <= qt) {
-                for (auto& r : segTreeRoots)
-                    r.first = distSegTree.L[r.first];
-                hi = mid;
-            } else {
-                kth -= qt;
-                for (auto& r : segTreeRoots)
-                    r.first = distSegTree.R[r.first];
-                lo = mid + 1;
-            }
-        }
-
-        int qt = 0;
-        for (auto& r : segTreeRoots)
-            qt += r.second * distSegTree.value[r.first];
-
-        return kth <= qt ? lo : -1;
     }
 };

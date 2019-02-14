@@ -48,6 +48,7 @@ int main(void) {
     TEST(BlockTreeSubtreeSumDynamic);
     TEST(TreePathSqrtDecomposition);
     TEST(KthValueInDistance);
+    TEST(KthDistance);
     TEST(CentroidDecompositionSolver);
     TEST(CentroidDecompositionSolverDiviceAndConquer);
 

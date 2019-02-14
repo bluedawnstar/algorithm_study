@@ -36,7 +36,7 @@ static vector<int> solve(const vector<int>& A, const vector<pair<int,int>>& edge
     for (auto& it : query) {
         int u, d, k;
         tie(u, d, k) = it;
-        res.push_back(solver.query(u, d, k));
+        res.push_back(solver.findKthValue(u, d, k));
     }
 
     return res;
