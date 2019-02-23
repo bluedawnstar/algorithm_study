@@ -37,7 +37,7 @@ void checkIndex(TreapRangeQuery<T, MergeOp, BlockOp>& tr, vector<int>& in) {
 }
 
 void testTreapRangeQuery() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Treap with Range Query ----------------------------------" << endl;
 

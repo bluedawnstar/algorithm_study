@@ -110,9 +110,9 @@ struct TreapRangeQuery {
     //-------------------------------------------------------------------------
 
     Node* insert(int index, const T& value) {
-        Node* p = createNode(value);
-
         index = max(0, min(count, index));
+
+        Node* p = createNode(value);
 
         auto t = split(tree, index);
         tree = merge(merge(t.first, p), t.second);
@@ -276,6 +276,10 @@ protected:
     void pushDown(Node* x) {
         if (!x || !x->lazyExist)
             return;
+
+        //TODO:
+        // Customize this push down operation
+        // This implementation is indtended to set a value (no 'add' operation)
 
         if (x->left) {
             x->left->lazyExist = true;
