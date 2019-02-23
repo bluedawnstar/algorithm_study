@@ -9,7 +9,7 @@ struct MinFactors {
     MinFactors() {
     }
 
-    MinFactors(int n) {
+    explicit MinFactors(int n) {
         build(n);
     }
 
@@ -102,7 +102,7 @@ struct PrimeFactors {
     PrimeFactors() {
     }
 
-    PrimeFactors(int x) {
+    explicit PrimeFactors(int x) {
         build(x);
     }
 

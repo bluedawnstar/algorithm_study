@@ -176,7 +176,7 @@ struct Matrix {
     }
 
 
-    Matrix pow(int n) const {
+    Matrix pow(T n) const {
         return Matrix<T>::pow(*this, n);
     }
 
@@ -243,7 +243,7 @@ struct Matrix {
     }
 
     //PRECONDITION: n >= 0
-    static Matrix pow(const Matrix& m, int n) {
+    static Matrix pow(const Matrix& m, T n) {
         if (n == 1)
             return m;
         else if (n == 0)

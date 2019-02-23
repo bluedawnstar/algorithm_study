@@ -21,11 +21,11 @@ struct Complex : public pair<T, T> {
     }
 
     operator std::complex<T>() const {
-        return complex<T>(first, second);
+        return complex<T>(this->first, this->second);
     }
 
     Complex operator -() const {
-        return Complex(-first, -second);
+        return Complex(-this->first, -this->second);
     }
 
     template <typename U>
@@ -73,7 +73,7 @@ struct Complex : public pair<T, T> {
     }
 
     double abs() const {
-        return hypot(first, second);
+        return hypot(this->first, this->second);
     }
 
     template <typename U>

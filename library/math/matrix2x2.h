@@ -94,7 +94,7 @@ struct Matrix2x2 {
     }
 
     //PRECONDITION: n >= 0
-    static Matrix2x2 pow(const Matrix2x2& m, int n) {
+    static Matrix2x2 pow(const Matrix2x2& m, T n) {
         if (n == 1)
             return m;
         else if (n == 0)
@@ -189,7 +189,7 @@ struct Matrix2x2Mod {
     }
 
     //PRECONDITION: n >= 0
-    static Matrix2x2Mod pow(const Matrix2x2Mod& m, int n) {
+    static Matrix2x2Mod pow(const Matrix2x2Mod& m, T n) {
         if (n == 1)
             return m;
         else if (n == 0)

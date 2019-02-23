@@ -391,6 +391,10 @@ protected:
         if (!x || !x->lazyExist)
             return;
 
+        //TODO:
+        // Customize this push down operation
+        // This implementation is indtended to set a value (no 'add' operation)
+
         if (x->left) {
             x->left->lazyExist = true;
             x->left->value = x->left->lazy = x->lazy;
