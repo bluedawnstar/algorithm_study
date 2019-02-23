@@ -2,6 +2,11 @@
 
 // Number Theoretic Transforms
 // M = 998244353 (119 * 2^23 + 1), primitive root = 3
+//
+// [CAUTION]
+// It's not working for below M's
+//    - 10^9 + 7
+//    - 10^9 + 9
 struct NTT {
     int M, root;
 
@@ -22,13 +27,13 @@ struct NTT {
             for (int i = 0; i < mh; i++) {
                 for (int j = i; j < n; j += m) {
                     int k = j + mh;
-                    int x = int((a[j] - a[k] + M) % M);
-                    a[j] = (a[j] + a[k]) % M;
-                    a[k] = int((long long)w * x % M);
+                    int x = int((0ll + a[j] - a[k] + M) % M);
+                    a[j] = (0ll + a[j] + a[k]) % M;
+                    a[k] = int(1ll * w * x % M);
                 }
-                w = int((long long)w * base % M);
+                w = int(1ll * w * base % M);
             }
-            base = int((long long)base * base % M);
+            base = int(1ll * base * base % M);
         }
 
         int i = 0;
@@ -42,7 +47,7 @@ struct NTT {
         if (inverse) {
             int inv = modInv(n);
             for (int j = 0; j < n; j++)
-                a[j] = int((long long)a[j] * inv % M);
+                a[j] = int(1ll * a[j] * inv % M);
         }
     }
 
@@ -66,7 +71,7 @@ struct NTT {
 
         vector<int> C(size);
         for (int i = 0; i < size; i++)
-            C[i] = int((long long)A[i] * B[i] % M);
+            C[i] = int(1ll * A[i] * B[i] % M);
         ntt(C, true);
         
         C.resize(n);
@@ -84,9 +89,9 @@ private:
             return 1;
 
         int p = modPow(x, n / 2) % M;
-        p = int((long long)p * p % M);
+        p = int(1ll * p * p % M);
 
-        return ((n & 1) == 0) ? p : int((long long)p * x % M);
+        return ((n & 1) == 0) ? p : int(1ll * p * x % M);
     }
 
     int modInv(int a) {

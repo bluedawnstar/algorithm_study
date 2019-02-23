@@ -155,6 +155,7 @@
     <ClCompile Include="rootFindingLaguerre.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="multPolyNTT.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
     <ClInclude Include="fft.h" />

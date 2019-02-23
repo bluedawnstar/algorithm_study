@@ -12,7 +12,7 @@ inline vector<int> multPolyMod(const vector<int>& left, const vector<int>& right
 
     for (int i = 0; i < int(right.size()); i++) {
         for (int j = 0; j < int(left.size()); j++) {
-            res[i + j] = ((long long)(res[i + j]) + (long long)(left[j]) * right[i]) % MOD;
+            res[i + j] = int((res[i + j] + 1ll * left[j] * right[i]) % MOD);
         }
     }
 
@@ -51,19 +51,19 @@ inline vector<int> multPolyFFTMod(const vector<int>& left, const vector<int>& ri
         C[i] = A1[i] * B1[i];
     fft(C, true);
     for (int i = 0; i < sizeDst; i++)
-        res[i] = ((long long)fmod(C[i].first + 0.5, MOD) * SCALE * SCALE) % MOD;
+        res[i] = int(((long long)fmod(C[i].first + 0.5, MOD) * SCALE * SCALE) % MOD);
 
     for (int i = 0; i < size; i++)
         C[i] = A1[i] * B2[i] + A2[i] * B1[i];
     fft(C, true);
     for (int i = 0; i < sizeDst; i++)
-        res[i] = (res[i] + (long long)fmod(C[i].first + 0.5, MOD) * SCALE) % MOD;
+        res[i] = int((res[i] + (long long)fmod(C[i].first + 0.5, MOD) * SCALE) % MOD);
 
     for (int i = 0; i < size; i++)
         C[i] = A2[i] * B2[i];
     fft(C, true);
     for (int i = 0; i < sizeDst; i++)
-        res[i] = (res[i] + (long long)fmod(C[i].first + 0.5, MOD)) % MOD;
+        res[i] = int((res[i] + (long long)fmod(C[i].first + 0.5, MOD)) % MOD);
 
     return res;
 }

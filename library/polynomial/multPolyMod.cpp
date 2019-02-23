@@ -1,6 +1,7 @@
 using namespace std;
 
 #include "multPolyMod.h"
+#include "multPolyNTT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
