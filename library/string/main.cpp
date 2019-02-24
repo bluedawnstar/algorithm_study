@@ -41,4 +41,7 @@ int main(void) {
     TEST(PalindromicFactorization);
     TEST(EerTree);
     TEST(SubsequenceDAG);
+    TEST(DynamicStringHashWithTreap);
+    TEST(DynamicStringHashWithSplayTree);
+    TEST(RleString);
 }

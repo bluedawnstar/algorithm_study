@@ -126,6 +126,15 @@
     <ClCompile Include="burrowsWheelerTransform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="dynamicStringHashWithTreap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dynamicStringHashWithSplayTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="rleString.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -252,6 +261,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="burrowsWheelerTransform.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicStringHashWithTreap.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicStringHashWithSplayTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rleString.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
