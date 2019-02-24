@@ -1,6 +1,7 @@
 using namespace std;
 
 #include "fft.h"
+#include "fftSimple.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
