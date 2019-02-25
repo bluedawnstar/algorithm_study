@@ -11,5 +11,6 @@ int main(void) {
     TEST(MultPolyMod);
     TEST(Convolution);
     TEST(NTT);
+    TEST(FactorialMod);
     TEST(RootFindingLaguerre);
 }

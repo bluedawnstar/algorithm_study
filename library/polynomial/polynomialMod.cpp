@@ -1,6 +1,8 @@
 using namespace std;
 
-#include "multPoly.h"
+#include "polynomialMod.h"
+#include "polynomialSimpleMod.h"
+#include "polynomialNTT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -12,17 +14,26 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testMultPoly() {
+#define MOD     1000000007
+
+void testMultPolyMod() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Polynomial Multiplication ----------------" << endl;
+    cout << "--- Modular Polynomial Multiplication ----------------" << endl;
 
-    vector<int> outMult1 = multPoly(vector<int>{1, 2, 1}, vector<int>{1, 2, 1});
-    vector<int> outMult2 = multPolyFFT(vector<int>{1, 2, 1}, vector<int>{1, 2, 1});
-    assert(outMult1 == outMult2);
+    for (int i = 0; i < 10; i++) {
+        vector<int> A(1000);
+        vector<int> B(1000);
 
-    vector<int> outMult3 = multPolyFFT(vector<int>{1, 2}, vector<int>{1, 2});
-    cout << "(x + 2) * (x + 2) = " << outMult3 << endl;
+        for (int i = 0; i < int(A.size()); i++)
+            A[i] = RandInt32::get() % MOD;
+        for (int i = 0; i < int(B.size()); i++)
+            B[i] = RandInt32::get() % MOD;
+
+        vector<int> out1 = multPolyMod(A, B, MOD);
+        vector<int> out2 = multPolyFFTMod(A, B, MOD);
+        assert(out1 == out2);
+    }
 
     cout << "*** Speed test ***" << endl;
     for (int n = 32; n <= 2048; n <<= 1) {
@@ -35,19 +46,19 @@ void testMultPoly() {
         }
 
         cout << "N = " << n << endl;
-        cout << "  multPoly() : ";
+        cout << "  multPolyMod() : ";
         PROFILE_START(0);
         for (int i = 0; i < 1000; i++) {
-            out = multPoly(in1, in2);
+            out = multPolyMod(in1, in2, MOD);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
         PROFILE_STOP(0);
 
-        cout << "  multPolyFFT() : ";
+        cout << "  multPolyFFTMod() : ";
         PROFILE_START(1);
         for (int i = 0; i < 1000; i++) {
-            out = multPolyFFT(in1, in2);
+            out = multPolyFFTMod(in1, in2, MOD);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }

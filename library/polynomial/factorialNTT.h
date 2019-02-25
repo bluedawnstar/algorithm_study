@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ntt.h"
+#include "polynomialNTT.h"
 
-struct PolyPolyNTT {
+struct FactorialNTT {
     // High order first
     static vector<int> multiplySlow(const vector<int>& left, const vector<int>& right, int MOD) {
         vector<int> res(left.size() + right.size() - 1);

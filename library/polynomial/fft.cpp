@@ -1,5 +1,6 @@
 using namespace std;
 
+#include "dft.h"
 #include "fft.h"
 #include "fftSimple.h"
 

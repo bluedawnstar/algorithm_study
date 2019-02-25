@@ -147,22 +147,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="convolution.cpp" />
+    <ClCompile Include="factorialMod.cpp" />
     <ClCompile Include="fft.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="multPoly.cpp" />
-    <ClCompile Include="multPolyMod.cpp" />
+    <ClCompile Include="polynomial.cpp" />
+    <ClCompile Include="polynomialMod.cpp" />
     <ClCompile Include="ntt.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dft.h" />
+    <ClInclude Include="factorialMod.h" />
     <ClInclude Include="fftSimple.h" />
-    <ClInclude Include="multPolyNTT.h" />
+    <ClInclude Include="factorialNTT.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
     <ClInclude Include="fft.h" />
-    <ClInclude Include="multPoly.h" />
-    <ClInclude Include="multPolyMod.h" />
+    <ClInclude Include="polynomial.h" />
+    <ClInclude Include="polynomialMod.h" />
     <ClInclude Include="ntt.h" />
+    <ClInclude Include="polynomialNTT.h" />
+    <ClInclude Include="polynomialSimple.h" />
+    <ClInclude Include="polynomialSimpleMod.h" />
     <ClInclude Include="rootFindingLaguerre.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

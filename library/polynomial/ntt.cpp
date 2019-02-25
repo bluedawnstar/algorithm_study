@@ -3,7 +3,8 @@
 using namespace std;
 
 #include "ntt.h"
-#include "multPolyNTT.h"
+#include "polynomialNTT.h"
+#include "factorialNTT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -15,7 +16,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-#include "multPolyMod.h"
+#include "polynomialMod.h"
 
 #define MOD     998244353
 
