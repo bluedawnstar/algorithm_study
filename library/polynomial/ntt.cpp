@@ -36,7 +36,7 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % MOD;
 
-            vector<int> out1 = multPolyFFTMod(A, B, MOD);
+            vector<int> out1 = PolyFFTMod::multiply(A, B, MOD);
             vector<int> out2 = ntt.multiply(A, B);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
@@ -58,7 +58,7 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % MOD;
 
-            vector<int> out1 = multPolyFFTMod(A, B, MOD);
+            vector<int> out1 = PolyFFTMod::multiply(A, B, MOD);
             vector<int> out2 = ntt.multiply(A, B);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
@@ -80,7 +80,7 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % M;
 
-            vector<int> out1 = multPolyFFTMod(A, B, M);
+            vector<int> out1 = PolyFFTMod::multiply(A, B, M);
             vector<int> out2 = PolyNTT::multiply(A, B, M);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
@@ -102,7 +102,7 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % M;
 
-            vector<int> out1 = multPolyFFTMod(A, B, M);
+            vector<int> out1 = PolyFFTMod::multiply(A, B, M);
             vector<int> out2 = PolyNTT::multiplyFast(A, B, M);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
@@ -127,19 +127,19 @@ void testNTT() {
             }
 
             cout << "N = " << n << endl;
-            cout << "  multPolyMod() : ";
+            cout << "  PolyFFTMod::multiplySlow() : ";
             PROFILE_START(0);
             for (int i = 0; i < 1000; i++) {
-                out = multPolyMod(in1, in2, M);
+                out = PolyFFTMod::multiplySlow(in1, in2, M);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }
             PROFILE_STOP(0);
 
-            cout << "  multPolyFFTMod() : ";
+            cout << "  PolyFFTMod::multiply() : ";
             PROFILE_START(1);
             for (int i = 0; i < 1000; i++) {
-                out = multPolyFFTMod(in1, in2, M);
+                out = PolyFFTMod::multiply(in1, in2, M);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }

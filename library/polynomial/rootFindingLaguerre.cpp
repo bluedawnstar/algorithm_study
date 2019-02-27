@@ -1,3 +1,7 @@
+#include <complex>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
 #include "rootFindingLaguerre.h"
@@ -11,7 +15,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-static ostream& operator <<(ostream& os, const Complex<double>& c) {
+static ostream& operator <<(ostream& os, const Complex& c) {
     os << "(" << c.first << "," << c.second <<")";
     return os;
 }
@@ -20,7 +24,7 @@ void testRootFindingLaguerre() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Polynomial Root Finding - Laguerre -------------------" << endl;
-    vector<Complex<double>> poly;
+    vector<Complex> poly;
     poly.emplace_back(140, 0);
     poly.emplace_back(-13, 0);
     poly.emplace_back(-8, 0);

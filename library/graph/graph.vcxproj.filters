@@ -162,4 +162,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md">
+      <Filter>소스 파일</Filter>
+    </None>
+  </ItemGroup>
 </Project>

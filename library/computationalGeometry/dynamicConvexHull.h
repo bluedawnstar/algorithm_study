@@ -1,17 +1,17 @@
 #pragma once
 
-#if 0
+#if 1
 //template <typename T>
 typedef int T;
 struct DynamicConvexHull {
     vector<pair<int, int>> upper;   // ordered by x coordinate (clockwise)
-    vector<pair<int, int>> lower;   // ordered by x coordinate (counter-clockwise
+    vector<pair<int, int>> lower;   // ordered by x coordinate (counter-clockwise)
 
     void buildWithMutablePoints(vector<pair<int, int>>& points) {
         int j = 0, k = 0, n = int(points.size());
         sort(points.begin(), points.end());
-        upper.resize(2 * n);
-        lower.resize(2 * n);
+        upper.resize(n);
+        lower.resize(n);
         for (int i = 0; i < n; i++) {
             while (j >= 2 && cross(lower[j - 2], lower[j - 1], points[i]) <= 0) // cw?
                 j--;
@@ -30,40 +30,67 @@ struct DynamicConvexHull {
 
 
     /*
-        |  D   |   
-        + +--+ +    
-      B |/ A  \| C 
-        |\    /|
-        +-+--+-+    
-        |  E   |
+       :   D    :
+       +  +--+  +
+       : /    \ :
+       :/      \:
+     B |   A    +
+       +        | C
+       :\      /:
+       : \    / :
+       +  +--+  +
+       :   E    :
     */
     enum AreaT {
         aNone = -1, // empty
-        aIn,        // A
         aLeft,      // B
         aRight,     // C
         aUpper,     // D
         aLower,     // E
+        aInner,     // A
+        aBoundary,  // A
     };
     AreaT hitTest(int x, int y) const {
         if (lower.empty())
             return aNone;
 
         if (x < lower.front().first)
-            return aLeft;
+            return aLeft;   // B
         else if (x > lower.back().first)
-            return aRight;
+            return aRight;  // C
 
         if (lower.size() == 1) {
-            if (y > lower.front().second)
-                return aUpper;
-            else if (y <= lower.front().second)
+            if (y < lower.front().second)
                 return aLower;
+            else if (y > lower.front().second)
+                return aUpper;
             else
-                return aIn;
+                return aBoundary;
         }
 
-        //TODO: implement!!!!!!!!!!!!
+        if (x == lower.front().first) {
+            if (y < lower.front().second)
+                return aLower;
+
+            int y2 = (upper[0].first != upper[1].first) ? upper[0].second : upper[1].second;
+            if (y > y2)
+                return aUpper;
+            else
+                return aBoundary;
+        } else if (x == lower.back().first) {
+            if (y > upper.back().second)
+                return aUpper;
+
+            int n = int(lower.size());
+            int y1 = (lower[n - 2].first != lower[n - 1].first) ? lower[n - 1].second : lower[n - 2].second;
+            if (y < y1)
+                return aLower;
+            else
+                return aBoundary;
+        } else {
+            //TODO: ...
+
+        }
     }
 
 

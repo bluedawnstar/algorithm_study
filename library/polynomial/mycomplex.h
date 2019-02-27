@@ -9,19 +9,18 @@
 #define M_PI       3.14159265358979323846   // pi
 #endif
 
-template <typename T>
-struct Complex : public pair<T, T> {
-    Complex() : pair<T, T>() {
+struct Complex : public pair<double, double> {
+    Complex() : pair<double, double>() {
     }
 
-    Complex(T r, T i) : pair<T, T>(r, i) {
+    Complex(double r, double i) : pair<double, double>(r, i) {
     }
 
-    Complex(std::complex<T> c) : pair<T, T>(c.real(), c.imag()) {
+    Complex(const std::complex<double>& c) : pair<double, double>(c.real(), c.imag()) {
     }
 
-    operator std::complex<T>() const {
-        return complex<T>(this->first, this->second);
+    operator std::complex<double>() const {
+        return complex<double>(this->first, this->second);
     }
 
     Complex operator -() const {
@@ -62,12 +61,12 @@ struct Complex : public pair<T, T> {
     }
 
     Complex operator /(const Complex& rhs) const {
-        T divisor = rhs.first * rhs.first + rhs.second * rhs.second;
+        double divisor = rhs.first * rhs.first + rhs.second * rhs.second;
         return Complex((this->first * rhs.first + this->second * rhs.second) / divisor,
                        (this->second * rhs.first - this->first * rhs.second) / divisor);
     }
 
-    void set(T r, T i) {
+    void set(double r, double i) {
         this->first = r;
         this->second = i;
     }
@@ -113,15 +112,15 @@ struct Complex : public pair<T, T> {
     }
 
     Complex& operator *=(const Complex& rhs) {
-        T t = this->first * rhs.first - this->second * rhs.second;
+        double t = this->first * rhs.first - this->second * rhs.second;
         this->second = this->first * rhs.second + this->second * rhs.first;
         this->first = t;
         return *this;
     }
 
     Complex& operator /=(const Complex& rhs) {
-        T divisor = rhs.first * rhs.first + rhs.second * rhs.second;
-        T t = (this->first * rhs.first + this->second * rhs.second) / divisor;
+        double divisor = rhs.first * rhs.first + rhs.second * rhs.second;
+        double t = (this->first * rhs.first + this->second * rhs.second) / divisor;
         this->second = (this->second * rhs.first - this->first * rhs.second) / divisor;
         this->first = t;
         return *this;

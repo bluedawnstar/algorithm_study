@@ -1,3 +1,6 @@
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
 #include "convolution.h"
@@ -15,49 +18,49 @@ using namespace std;
 #define MOD     1000000007
 
 void testConvolution() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Convolution ------------------------------" << endl;
 
     vector<int> x{ 1, 2, 3 };
     vector<int> h{ 1, 2 };
 
-    vector<int> v = convolution(x, h);
+    vector<int> v = Convolution::multiply(x, h);
     cout << x << " * " << h << " : ";
     cout << v << endl;
     assert(operator ==(v, vector<int>{ 1, 4, 7, 6 }));
 
-    vector<int> v2 = convolutionFFT(x, h);
+    vector<int> v2 = Convolution::multiplyFFT(x, h);
     cout << x << " * " << h << " : ";
     cout << v2 << endl;
     assert(v == v2);
 
-    v = convolution(x, h, false);
+    v = Convolution::multiply(x, h, false);
     cout << x << " * " << h << " : ";
     cout << v << endl;
     assert(operator ==(v, vector<int>{ 2, 5, 8, 3 }));
 
-    v2 = convolutionFFT(x, h, false);
+    v2 = Convolution::multiplyFFT(x, h, false);
     cout << x << " * " << h << " : ";
     cout << v2 << endl;
     assert(v == v2);
 
-    v = convolutionMod(x, h, MOD);
+    v = Convolution::multiplyMod(x, h, MOD);
     cout << x << " * " << h << " : ";
     cout << v << endl;
     assert(operator ==(v, vector<int>{ 1, 4, 7, 6 }));
 
-    v2 = convolutionFFTMod(x, h, MOD);
+    v2 = Convolution::multiplyFFTMod(x, h, MOD);
     cout << x << " * " << h << " : ";
     cout << v2 << endl;
     assert(v == v2);
 
-    v = convolutionMod(x, h, MOD, false);
+    v = Convolution::multiplyMod(x, h, MOD, false);
     cout << x << " * " << h << " : ";
     cout << v << endl;
     assert(operator ==(v, vector<int>{ 2, 5, 8, 3 }));
 
-    v2 = convolutionFFTMod(x, h, MOD, false);
+    v2 = Convolution::multiplyFFTMod(x, h, MOD, false);
     cout << x << " * " << h << " : ";
     cout << v2 << endl;
     assert(v == v2);
@@ -76,7 +79,7 @@ void testConvolution() {
         cout << "  convolution() : ";
         PROFILE_START(0);
         for (int i = 0; i < 1000; i++) {
-            out = convolution(in1, in2);
+            out = Convolution::multiply(in1, in2);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
@@ -84,7 +87,7 @@ void testConvolution() {
         cout << "  convolutionFFT() : ";
         PROFILE_START(1);
         for (int i = 0; i < 1000; i++) {
-            out = convolutionFFT(in1, in2);
+            out = Convolution::multiplyFFT(in1, in2);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
@@ -93,7 +96,7 @@ void testConvolution() {
         cout << "  convolutionMod() : ";
         PROFILE_START(2);
         for (int i = 0; i < 1000; i++) {
-            out = convolutionMod(in1, in2, MOD);
+            out = Convolution::multiplyMod(in1, in2, MOD);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
@@ -102,7 +105,7 @@ void testConvolution() {
         cout << "  convolutionFFTMod() : ";
         PROFILE_START(3);
         for (int i = 0; i < 1000; i++) {
-            out = convolutionFFTMod(in1, in2, MOD);
+            out = Convolution::multiplyFFTMod(in1, in2, MOD);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }

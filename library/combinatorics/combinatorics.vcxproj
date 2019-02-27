@@ -152,8 +152,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nextCombination.cpp" />
     <ClCompile Include="nextPermutation.cpp" />
+    <ClCompile Include="stirlingNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bellNumber.h" />
     <ClInclude Include="comb.h" />
     <ClInclude Include="combDP.h" />
     <ClInclude Include="combMod.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="nextCombination.h" />
     <ClInclude Include="nextPermutation.h" />
+    <ClInclude Include="stirlingNumber.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

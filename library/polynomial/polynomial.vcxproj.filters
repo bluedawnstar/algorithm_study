@@ -30,20 +30,17 @@
     <ClCompile Include="rootFindingLaguerre.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="polynomial.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="polynomialMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="factorialMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="polynomial.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fft.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="convolution.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -56,31 +53,25 @@
     <ClInclude Include="rootFindingLaguerre.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="fftSimple.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="factorialNTT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="polynomialNTT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="polynomial.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="polynomialSimple.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="polynomialSimpleMod.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="factorialMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="polynomialMod.h">
+    <ClInclude Include="dft.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="dft.h">
+    <ClInclude Include="fft.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polynomial.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polynomialMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

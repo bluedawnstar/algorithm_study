@@ -1,7 +1,9 @@
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
 #include "polynomialMod.h"
-#include "polynomialSimpleMod.h"
 #include "polynomialNTT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -16,8 +18,8 @@ using namespace std;
 
 #define MOD     1000000007
 
-void testMultPolyMod() {
-    return; //TODO: if you want to test, make this line a comment.
+void testPolynomialMod() {
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Modular Polynomial Multiplication ----------------" << endl;
 
@@ -30,9 +32,11 @@ void testMultPolyMod() {
         for (int i = 0; i < int(B.size()); i++)
             B[i] = RandInt32::get() % MOD;
 
-        vector<int> out1 = multPolyMod(A, B, MOD);
-        vector<int> out2 = multPolyFFTMod(A, B, MOD);
+        vector<int> out1 = PolyFFTMod::multiplySlow(A, B, MOD);
+        vector<int> out2 = PolyFFTMod::multiply(A, B, MOD);
+        vector<int> out3 = PolyNTT::multiply(A, B, MOD);
         assert(out1 == out2);
+        assert(out1 == out3);
     }
 
     cout << "*** Speed test ***" << endl;
@@ -46,23 +50,32 @@ void testMultPolyMod() {
         }
 
         cout << "N = " << n << endl;
-        cout << "  multPolyMod() : ";
+        cout << "  PolyFFTMod::multiplySlow() : ";
         PROFILE_START(0);
         for (int i = 0; i < 1000; i++) {
-            out = multPolyMod(in1, in2, MOD);
+            out = PolyFFTMod::multiplySlow(in1, in2, MOD);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
         PROFILE_STOP(0);
 
-        cout << "  multPolyFFTMod() : ";
+        cout << "  PolyFFTMod::multiply() : ";
         PROFILE_START(1);
         for (int i = 0; i < 1000; i++) {
-            out = multPolyFFTMod(in1, in2, MOD);
+            out = PolyFFTMod::multiply(in1, in2, MOD);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
         PROFILE_STOP(1);
+
+        cout << "  PolyNTT::multiply() : ";
+        PROFILE_START(2);
+        for (int i = 0; i < 1000; i++) {
+            out = PolyNTT::multiply(in1, in2, MOD);
+            if (out.empty())
+                cerr << "It'll never be shwon!" << endl;
+        }
+        PROFILE_STOP(2);
     }
 
     cout << "OK!" << endl;
