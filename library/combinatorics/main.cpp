@@ -11,4 +11,5 @@ int main(void) {
     TEST(NextCombination);
     TEST(NextPermutation);
     TEST(DeBruijnSequence);
+    TEST(StirlingNumber);
 }
