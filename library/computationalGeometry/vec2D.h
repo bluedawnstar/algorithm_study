@@ -18,9 +18,21 @@ inline bool isZero<double>(double x) {
     return fabs(x) < EPSILON;
 }
 
+template <typename T>
+struct DblType {
+    using DblT = typename T;
+};
+
+template <>
+struct DblType<int> {
+    using DblT = long long;
+};
+
 // x = first, y = second
 template <typename T>
 struct Vec2D : public pair<T, T> {
+    using DblT = typename DblType<T>::DblT;
+
     Vec2D() : pair() {
     }
 
@@ -77,12 +89,12 @@ struct Vec2D : public pair<T, T> {
         return hypot(rhs.first - first, rhs.second - second);
     }
 
-    T norm2() const {
-        return first * first + second * second;
+    DblT norm2() const {
+        return DblT(first) * first + DblT(second) * second;
     }
 
-    T norm2(const Vec2D<T>& rhs) const {
-        return (rhs.first - first) * (rhs.first - first) + (rhs.second - second) * (rhs.second - second);
+    DblT norm2(const Vec2D<T>& rhs) const {
+        return DblT(rhs.first - first) * (rhs.first - first) + DblT(rhs.second - second) * (rhs.second - second);
     }
 
     //--- Dot Product ----------------------------------
@@ -90,8 +102,8 @@ struct Vec2D : public pair<T, T> {
     // 1) return value > 0  : < 90 degree
     // 2) return value == 0 : == 90 degree
     // 3) return value < 0  : > 90 degree
-    T dot(const Vec2D<T>& to) const {
-        return first * to.first + second * to.second;
+    DblT dot(const Vec2D<T>& to) const {
+        return DblT(first) * to.first + DblT(second) * to.second;
     }
 
     double angle(const Vec2D<T>& to) const {
@@ -102,8 +114,8 @@ struct Vec2D : public pair<T, T> {
     // 1) return value > 0  : < 180 degree
     // 2) return value == 0 : == 180 degree
     // 3) return value < 0  : > 180 degree
-    T cross(const Vec2D<T>& to) const {
-        return first * to.second - second * to.first;
+    DblT cross(const Vec2D<T>& to) const {
+        return DblT(first) * to.second - DblT(second) * to.first;
     }
 
     bool isCCW(const Vec2D<T>& target) const {
@@ -115,7 +127,7 @@ struct Vec2D : public pair<T, T> {
     }
 
     bool isCollinear(const Vec2D<T>& target) const {
-        return isZero<T>(cross(target));
+        return isZero<DblType<T>::DblT>(cross(target));
     }
 
     Vec2D<double> normalize() const {
@@ -136,8 +148,8 @@ inline double normalizeAngle(double angle) {
 }
 
 template <typename T>
-inline T cross(const Vec2D<T>& base, const Vec2D<T>& a, const Vec2D<T>& b) {
-    return (a.first - base.first) * (b.second - base.second) - (a.second - base.second) * (b.first - base.first);
+inline typename DblType<T>::DblT cross(const Vec2D<T>& base, const Vec2D<T>& a, const Vec2D<T>& b) {
+    return TypeConv<T>::DblT(a.first - base.first) * (b.second - base.second) - TypeConv<T>::DblT(a.second - base.second) * (b.first - base.first);
 }
 
 template <typename T>
@@ -150,6 +162,7 @@ inline bool cw(const Vec2D<T>& base, const Vec2D<T>& a, const Vec2D<T>& b) {
     return cross(base, a, b) < 0;
 }
 
+//---
 
 inline long long cross(const Vec2D<int>& base, const Vec2D<int>& a, const Vec2D<int>& b) {
     return 1ll * (a.first - base.first) * (b.second - base.second) - 1ll * (a.second - base.second) * (b.first - base.first);

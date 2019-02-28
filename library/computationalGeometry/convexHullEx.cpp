@@ -73,7 +73,11 @@ void testConvexHullEx() {
     }
     cout << "... random test" << endl;
     {
-        for (int i = 0; i < 1000; i++) {
+        int T = 1000;
+#ifdef _DEBUG
+        T = 100;
+#endif
+        for (int i = 0; i < T; i++) {
             cout << "Case #" << i << "\r";
             int N = RandInt32::get() % 1000 + 1;
             vector<pair<int,int>> points(N);

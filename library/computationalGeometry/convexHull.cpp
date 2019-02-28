@@ -166,33 +166,43 @@ void testConvexHull() {
         vector<Vec2D<int>> out4 = doGrahamScanNoRemove(vector<Vec2D<int>>(P2), false);
         dump(out4);
     }
-
-    assert(testConvexHull(vector<Vec2D<int>>{ { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },
-                                              { 0, 1 }, { 1, 1 }, { 2, 1 },
-                                              { 0, 2 }, { 1, 2 },
-                                              { 0, 3 } }) == true);
-    assert(testConvexHull(vector<Vec2D<int>>{ { 0, 3 }, { 1, 1 }, { 2, 2 }, { 4, 4 },
-                                              { 0, 0 }, { 1, 2 }, { 3, 1 }, { 3, 3 } }) == true);
-
-    cout << "random test ..." << endl;
-
-    bool success = true;
-    for (int i = 0; i < 1000; i++) {
-        cout << "Case #" << i << "\r";
-        int N = RandInt32::get() % 1000 + 1;
-        vector<Vec2D<int>> points(N);
-        makeData(points, N);
-        if (!testConvexHull(points)) {
-            success = false;
-            break;
-        }
+    {
+        assert(testConvexHull(vector<Vec2D<int>>{ { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 },
+        { 0, 1 }, { 1, 1 }, { 2, 1 },
+        { 0, 2 }, { 1, 2 },
+        { 0, 3 } }) == true);
+        assert(testConvexHull(vector<Vec2D<int>>{ { 0, 3 }, { 1, 1 }, { 2, 2 }, { 4, 4 },
+        { 0, 0 }, { 1, 2 }, { 3, 1 }, { 3, 3 } }) == true);
     }
-    assert(success);
+    {
+        int T = 1000;
+#ifdef _DEBUG
+        T = 100;
+#endif
 
+        cout << "random test ..." << endl;
+
+        bool success = true;
+        for (int i = 0; i < T; i++) {
+            cout << "Case #" << i << "\r";
+            int N = RandInt32::get() % 1000 + 1;
+            vector<Vec2D<int>> points(N);
+            makeData(points, N);
+            if (!testConvexHull(points)) {
+                success = false;
+                break;
+            }
+        }
+        assert(success);
+    }
     cout << "speed test (x 1000) ..." << endl;
     {
         int T = 1000;
         int N = 10000;
+#ifdef _DEBUG
+        T = 10;
+        N = 1000;
+#endif
         vector<Vec2D<int>> points(N);
         //makeData(points, N);
         makeData(points, N, 10000);
