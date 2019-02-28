@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <istream>
 #include <algorithm>
 
 using namespace std;

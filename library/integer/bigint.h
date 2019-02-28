@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../polynomial/multPoly.h"
+#include "../polynomial/polynomial.h"
 
 // LSB first
 struct bigint {
@@ -332,7 +332,7 @@ struct bigint {
 
 
     static vector<int> multiplyFFT(const vector<int>& a, const vector<int>& b) {
-        auto c = multPolyFFT(a, b);
+        auto c = PolyFFT::multiply(a, b);
 
         vector<int> res;
         res.reserve(c.size() + 2);
