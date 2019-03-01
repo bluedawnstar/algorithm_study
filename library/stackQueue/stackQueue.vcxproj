@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0EC84CE1-C53E-4AB0-9825-98FA9834FF2D}</ProjectGuid>
+    <ProjectGuid>{C7395240-D812-48A6-8AA8-AD95D2F12F9B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>misc</RootNamespace>
+    <RootNamespace>stackQueue</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -146,15 +146,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cycleDetection.cpp" />
+    <ClCompile Include="largestRectangle.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="jumpPointerSparseTable.cpp" />
-    <ClCompile Include="reservoirSampling.cpp" />
+    <ClCompile Include="mergeableHeap.cpp" />
+    <ClCompile Include="minQueue.cpp" />
+    <ClCompile Include="minStack.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cycleDetection.h" />
-    <ClInclude Include="jumpPointerSparseTable.h" />
-    <ClInclude Include="reservoirSampling.h" />
+    <ClInclude Include="largestRectangle.h" />
+    <ClInclude Include="mergeableHeap.h" />
+    <ClInclude Include="minQueue.h" />
+    <ClInclude Include="minStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

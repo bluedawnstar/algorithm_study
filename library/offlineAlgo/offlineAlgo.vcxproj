@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0EC84CE1-C53E-4AB0-9825-98FA9834FF2D}</ProjectGuid>
+    <ProjectGuid>{0A572372-187F-4B0E-8951-47F51CE93F8A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>misc</RootNamespace>
+    <RootNamespace>offlineAlgo</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -146,15 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cycleDetection.cpp" />
+    <ClCompile Include="countUniqueNumbers.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="jumpPointerSparseTable.cpp" />
-    <ClCompile Include="reservoirSampling.cpp" />
+    <ClCompile Include="segmentMinValueFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cycleDetection.h" />
-    <ClInclude Include="jumpPointerSparseTable.h" />
-    <ClInclude Include="reservoirSampling.h" />
+    <ClInclude Include="countUniqueNumbers.h" />
+    <ClInclude Include="segmentMinValueFinder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

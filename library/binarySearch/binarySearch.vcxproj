@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0EC84CE1-C53E-4AB0-9825-98FA9834FF2D}</ProjectGuid>
+    <ProjectGuid>{2BE24D40-B3D3-486A-A02F-1AA15189BA1C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>misc</RootNamespace>
+    <RootNamespace>binarySearch</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -146,15 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cycleDetection.cpp" />
+    <ClCompile Include="coverTime.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="jumpPointerSparseTable.cpp" />
-    <ClCompile Include="reservoirSampling.cpp" />
+    <ClCompile Include="parallelBinarySearch.cpp" />
+    <ClCompile Include="parallelBinarySearchRecursive.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cycleDetection.h" />
-    <ClInclude Include="jumpPointerSparseTable.h" />
-    <ClInclude Include="reservoirSampling.h" />
+    <ClInclude Include="coverTime.h" />
+    <ClInclude Include="parallelBinarySearch.h" />
+    <ClInclude Include="parallelBinarySearchRecursive.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

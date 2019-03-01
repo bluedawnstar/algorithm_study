@@ -34,7 +34,7 @@ static void checkIndex(RBTree<int>& rbt, vector<int>& in) {
 }
 
 void testRedBlackTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Red-Black Tree --------------------------------------" << endl;
 
@@ -125,6 +125,7 @@ void testRedBlackTree() {
             }
             PROFILE_STOP(0);
 
+
             PROFILE_START(1);
             for (int i = 0; i < int(t.size()); i++) {
                 auto p = rbt.insert(t[i]);
@@ -167,7 +168,39 @@ void testRedBlackTree() {
             }
             PROFILE_STOP(2);
         }
-        cout << "3) Erase test" << endl;
+        cout << "3) Iteration test" << endl;
+        {
+            int sum1 = 0;
+            PROFILE_START(0);
+            for (auto it = bst.leftmost(); it != bst.nullNode(); it = bst.next(it)) {
+                sum1 += it->value;
+            }
+            PROFILE_STOP(0);
+            if (!sum1)
+                cerr << "dummy message" << endl;
+
+            int sum2 = 0;
+            PROFILE_START(1);
+            for (auto it = rbt.leftmost(); it != rbt.nullNode(); it = rbt.next(it)) {
+                sum2 += it->value;
+            }
+            PROFILE_STOP(1);
+            if (!sum2)
+                cerr << "dummy message" << endl;
+
+            int sum3 = 0;
+            PROFILE_START(2);
+            for (auto it = M.begin(); it != M.end(); ++it) {
+                sum3 += *it;
+            }
+            PROFILE_STOP(2);
+            if (!sum3)
+                cerr << "dummy message" << endl;
+
+            if (sum1 != sum2 || sum1 != sum3)
+                cerr << "Mismatched!" << endl;
+        }
+        cout << "4) Erase test" << endl;
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());

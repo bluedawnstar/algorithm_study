@@ -15,27 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cycleDetection.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="reservoirSampling.cpp">
+    <ClCompile Include="countUniqueNumbers.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="jumpPointerSparseTable.cpp">
+    <ClCompile Include="segmentMinValueFinder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cycleDetection.h">
+    <ClInclude Include="countUniqueNumbers.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="reservoirSampling.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="jumpPointerSparseTable.h">
+    <ClInclude Include="segmentMinValueFinder.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,7 @@
 #pragma once
 
+// https://cp-algorithms.com/data_structures/randomized_heap.html
+
 // <PRECONDITION>
 //  - T must support 'operator <'.
 // 

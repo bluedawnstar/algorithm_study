@@ -5,7 +5,6 @@ struct JumpPointerSparseTable {
     int                 N;         // the number of vertex
     int                 logN;      // 
     vector<vector<int>> P;         // P[0][n] points to the parent
-                                    // parent & acestors
 
     JumpPointerSparseTable(int N) {
         init(N);
@@ -68,7 +67,7 @@ struct JumpPointerSparseTable {
 
     //--- find
 
-    // get last value from start in range [leftLimit, N)
+    // get first value from start in range [leftLimit, N)
     int findFirst(int start, int leftLimit) const {
         if (start >= leftLimit)
             return start;
@@ -98,7 +97,7 @@ struct JumpPointerSparseTable {
         return f(P[0][res]) ? P[0][res] : res;
     }
 
-    // get last value from start in range [start, rightLimit]
+    // get the last value from start in range [start, rightLimit]
     int findLast(int start, int rightLimit) const {
         int res = start;
         for (int i = logN - 1; i >= 0; i--) {

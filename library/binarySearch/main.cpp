@@ -6,9 +6,6 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(CycleDetection);
-    TEST(JumpPointerSparseTable);
-    TEST(ReservoirSampling);
     TEST(ParallelBinarySearch);
     TEST(ParallelBinarySearchRecursive);
     TEST(CoverTime);

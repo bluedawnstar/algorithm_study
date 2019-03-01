@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0EC84CE1-C53E-4AB0-9825-98FA9834FF2D}</ProjectGuid>
+    <ProjectGuid>{6C5DF13A-BFD4-4C6D-80A8-87155017EDB7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>misc</RootNamespace>
+    <RootNamespace>list</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -148,13 +148,9 @@
   <ItemGroup>
     <ClCompile Include="cycleDetection.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="jumpPointerSparseTable.cpp" />
-    <ClCompile Include="reservoirSampling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h" />
-    <ClInclude Include="jumpPointerSparseTable.h" />
-    <ClInclude Include="reservoirSampling.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

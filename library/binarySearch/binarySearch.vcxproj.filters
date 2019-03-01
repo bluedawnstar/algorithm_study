@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cycleDetection.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="reservoirSampling.cpp">
+    <ClCompile Include="coverTime.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="jumpPointerSparseTable.cpp">
+    <ClCompile Include="parallelBinarySearch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="parallelBinarySearchRecursive.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cycleDetection.h">
+    <ClInclude Include="coverTime.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="reservoirSampling.h">
+    <ClInclude Include="parallelBinarySearch.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="jumpPointerSparseTable.h">
+    <ClInclude Include="parallelBinarySearchRecursive.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
