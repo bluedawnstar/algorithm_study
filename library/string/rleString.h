@@ -116,9 +116,7 @@ struct RleString {
 
     bool isPalindrom() const {
         auto it = S.begin();
-        auto itR = S.end();
-
-        --itR;
+        auto itR = S.rbegin();
 
         int L = 0, R = N - 1;
         while (L < R) {
@@ -127,7 +125,7 @@ struct RleString {
             L += it->second;
             R -= itR->second;
             ++it;
-            --itR;
+            ++itR;
         }
 
         return true;

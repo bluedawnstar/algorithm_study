@@ -40,7 +40,7 @@ void testRleString() {
 
         rs.insert(1, 'b');           // "abaa"
         cout << rs << endl;
-        assert(!tr.isPalindrom());
+        assert(!rs.isPalindrom());
 
         rs.insert(3, 'b');           // "ababa"
         cout << rs << endl;
