@@ -147,10 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cycleDetection.cpp" />
+    <ClCompile Include="indexableSkipList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="skipList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h" />
+    <ClInclude Include="indexableSkipList.h" />
+    <ClInclude Include="skipList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
