@@ -1,3 +1,7 @@
+#include <cassert>
+#include <functional>
+#include <algorithm>
+
 using namespace std;
 
 #include "redBlackTreeSimple.h"

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <cassert>
-#include <functional>
-#include <algorithm>
-
 // T has to have below functions
 //    1) operator ==()
 //    2) operator <()
