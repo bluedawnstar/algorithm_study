@@ -243,13 +243,13 @@ private:
         if (h > currHeight) {
             h = ++currHeight;
             fix[h - 1].first = head;
-            fix[h - 1].first->next[h - 1].second = N; //+
+            fix[h - 1].first->next[h - 1].second = N;
         }
 #else
         if (h > currHeight) {
             do {
                 fix[currHeight].first = head;
-                fix[currHeight].first->next[currHeight].second = N; //+
+                fix[currHeight].first->next[currHeight].second = N;
             } while (++currHeight < h);
         }
 #endif
