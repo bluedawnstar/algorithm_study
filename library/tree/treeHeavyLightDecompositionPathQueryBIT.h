@@ -19,7 +19,7 @@ struct HLDPathQueryBIT {
         // make segment trees on all heavy path
         for (const auto& path : hld.heavyPaths) {
             int m = int(path.size()) - 1;
-            BIT.push_back(FenwickTreeMultAdd<T>(m));
+            BIT.push_back(FenwickTreeMultAdd<T>(m + 1));
         }
     }
 

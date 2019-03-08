@@ -30,7 +30,7 @@ struct HLDPathQueryLazy {
         // make segment trees on all heavy path
         for (const auto& path : hld.heavyPaths) {
             int m = int(path.size()) - 1;
-            segTrees.push_back(SegTreeT(m, mergeOp, defaultValue));
+            segTrees.push_back(SegTreeT(m + 1, mergeOp, defaultValue));
         }
     }
 
@@ -41,7 +41,7 @@ struct HLDPathQueryLazy {
         // make segment trees on all heavy path
         for (const auto& path : hld.heavyPaths) {
             int m = int(path.size()) - 1;
-            segTrees.push_back(SegTreeT(m, mergeOp, blockOp, defaultValue));
+            segTrees.push_back(SegTreeT(m + 1, mergeOp, blockOp, defaultValue));
             segTrees.back().updateRange(0, m, initValue);
         }
     }

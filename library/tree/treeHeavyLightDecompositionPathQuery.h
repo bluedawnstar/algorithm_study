@@ -27,7 +27,7 @@ struct HLDPathQuery {
         // make segment trees on all heavy path
         for (const auto& path : hld.heavyPaths) {
             int m = int(path.size()) - 1;
-            segTrees.push_back(SegTreeT(m, mergeOp, defaultValue));
+            segTrees.push_back(SegTreeT(m + 1, mergeOp, defaultValue));
         }
     }
 
@@ -38,7 +38,7 @@ struct HLDPathQuery {
         // make segment trees on all heavy path
         for (const auto& path : hld.heavyPaths) {
             int m = int(path.size()) - 1;
-            segTrees.push_back(SegTreeT(m, mergeOp, defaultValue));
+            segTrees.push_back(SegTreeT(m + 1, mergeOp, defaultValue));
             for (int i = 0; i < m; ++i)
                 segTrees.back().update(i, initValue);
         }

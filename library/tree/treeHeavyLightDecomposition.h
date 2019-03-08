@@ -13,7 +13,7 @@ struct HeavyLightDecomposition {
     }
 
     void doHLD(int root) {
-        root = root;
+        this->root = root;
         heavyPaths.clear();
         heavyPathIndex.resize(tree.N, -1);
 

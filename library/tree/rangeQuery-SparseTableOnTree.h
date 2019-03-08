@@ -72,12 +72,14 @@ struct SparseTableOnTree {
     }
 
 
+    // O(NlogN)
     void build(int root) {
         vector<int> ancestors;
         dfsBuild(root, ancestors);
         buildLcaTable();
     }
 
+    // O(NlogN)
     void build(const T val[], int n, int root) {
         for (int i = 0; i < n; i++)
             value[0][i] = val[i];
@@ -87,12 +89,14 @@ struct SparseTableOnTree {
         buildLcaTable();
     }
 
+    // O(NlogN)
     void build(const vector<T>& val, int root) {
         build(&val[0], int(val.size()), root);
     }
 
     //--- query (LCA)
 
+    // O(logH)
     int climbTree(int node, int dist) const {
         if (dist <= 0)
             return node;
@@ -106,6 +110,7 @@ struct SparseTableOnTree {
         return node;
     }
 
+    // O(logH)
     int findLCA(int A, int B) const {
         if (level[A] < level[B])
             swap(A, B);
@@ -131,7 +136,7 @@ struct SparseTableOnTree {
 
     //--- query (sparse table)
 
-    // O(log(H)), inclusive
+    // O(logH), inclusive
     T query(int u, int v) const {
         if (level[u] > level[v])
             swap(u, v);
@@ -143,7 +148,7 @@ struct SparseTableOnTree {
             return mergeOp(querySub(lca, u), querySub(lca, v));
     }
 
-    // O(log(H)^2), inclusive
+    // O((logH)^2), inclusive
     T queryNoOverlap(int u, int v) const {
         if (level[u] > level[v])
             swap(u, v);
@@ -190,7 +195,7 @@ private:
 
 
     // PRECONDITION: u is an ancestor of v
-    // O(log(H)), inclusive
+    // O(logH), inclusive
     T querySub(int u, int v) const {
         int uLevel = level[u];
         int vLevel = level[v];
@@ -204,7 +209,7 @@ private:
     }
 
     // PRECONDITION: u is an ancestor of v
-    // O(log(H)^2), inclusive
+    // O((logH)^2), inclusive
     T queryNoOverlapSub(int u, int v) const {
         int uLevel = level[u];
         int vLevel = level[v];
