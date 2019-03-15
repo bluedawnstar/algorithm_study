@@ -17,13 +17,17 @@ using namespace std;
 #include "../common/profile.h"
 
 void testBit() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bit -------------------------" << endl;
 
     assert(clz(1u) == 31);
     assert(clz(0u) == 32);
     assert(clz(3u) == 30);
+    assert(ctz(1u) == 0);
+    assert(ctz(0u) == 32);
+    assert(ctz(12u) == 2);
+    assert(ctz(256u) == 8);
     assert(popcount(0x10101010u) == 4);
     assert(popcount(0xA5A5A5A5u) == 16);
     assert(popcount(0xFFFFFFFFu) == 32);
