@@ -21,6 +21,9 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+// related questions
+// https://www.codechef.com/MARCH19A/problems/TREASURE/
+
 void testGaussianEliminationBool() {
     //return; //TODO: if you want to test, make this line a comment.
 
