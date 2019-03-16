@@ -151,7 +151,7 @@ struct BooleanXorExpression {
     X[i][j] : variable ID (0 <= X[i][j] < variableCount)
     Y[i]    : 0 or 1
     */
-    // O(N^2*M*logN), N = expression count, M = variable count
+    // O(N^2*M), N = expression count, M = variable count
     static long long countSolutionMod(const vector<vector<int>>& X, const vector<int>& Y, int variableCount, int mod) {
         int N = int(Y.size());
 
@@ -181,7 +181,7 @@ struct BooleanXorExpression {
             }
         }
 
-        //step3: solve with gaussian elimination, O(N^2*M*logN)
+        //step3: solve with gaussian elimination, O(N^2*M)
         int cnt = 0;
         {
             int H = int(mat.size());
