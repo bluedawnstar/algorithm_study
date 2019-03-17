@@ -146,6 +146,7 @@
     <ClCompile Include="benchmarkBST.cpp" />
     <ClCompile Include="binarySearchTree.cpp" />
     <ClCompile Include="lcaTarjan.cpp" />
+    <ClCompile Include="perfectTreeLevelSize.cpp" />
     <ClCompile Include="treeBlockTreeLevelUpdate.cpp" />
     <ClCompile Include="centroidDecomposition.cpp" />
     <ClCompile Include="lcaSchieberVishkin.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="avlTree.h" />
     <ClInclude Include="binarySearchTree.h" />
     <ClInclude Include="lcaTarjan.h" />
+    <ClInclude Include="perfectTreeLevelSize.h" />
     <ClInclude Include="treeBlockTreeLevelUpdate.h" />
     <ClInclude Include="centroidDecomposition.h" />
     <ClInclude Include="lcaSchieberVishkin.h" />
