@@ -95,7 +95,7 @@ struct PatternSubsequence {
     }
 };
 
-// + Meet in the middle
+// KMP + Meet in the middle
 // O(N*M + SUM(P) C(M, M/2) * (N + (M / 2)! * M))
 inline long long countPatternSubsequenceInString(string& S, vector<string>& patterns) {
     PatternSubsequence forward, backward;
