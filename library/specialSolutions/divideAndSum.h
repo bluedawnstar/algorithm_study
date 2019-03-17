@@ -1,8 +1,7 @@
 #pragma once
 
-/*
-https://www.codechef.com/problems/CHONQ
-*/
+// https://www.codechef.com/problems/CHONQ
+// Tags: Math, sqrt-decomposition
 struct DivideAndSumSolver {
     int N;
     vector<long long> values;

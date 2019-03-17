@@ -21,7 +21,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-// related questions
+// related problems
 // https://www.codechef.com/MARCH19A/problems/TREASURE/
 
 void testGaussianEliminationBool() {
@@ -120,9 +120,9 @@ void testGaussianEliminationBool() {
             B[i].buildFrom(A[i], N);
         }
 
-        PROFILE_START(0);
+        PROFILE_START(2);
         auto ans = BooleanXorExpression::countSolutionMod(B, Y, N, 1000000007);
-        PROFILE_STOP(0);
+        PROFILE_STOP(2);
 
         if (ans == -2)
             cout << "ERROR!" << endl;
