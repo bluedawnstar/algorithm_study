@@ -44,4 +44,5 @@ int main(void) {
     TEST(DynamicStringHashWithTreap);
     TEST(DynamicStringHashWithSplayTree);
     TEST(RleString);
+    TEST(PatternSubsequence);
 }

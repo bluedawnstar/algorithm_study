@@ -156,6 +156,7 @@
     <ClCompile Include="lyndonFactorization.cpp" />
     <ClCompile Include="palindromicFactorization.cpp" />
     <ClCompile Include="palindromicNumber.cpp" />
+    <ClCompile Include="patternSubsequence.cpp" />
     <ClCompile Include="rleString.cpp" />
     <ClCompile Include="subsequenceDAG.cpp" />
     <ClCompile Include="subsequenceLCS.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="lyndonFactorization.h" />
     <ClInclude Include="palindromicFactorization.h" />
     <ClInclude Include="palindromicNumber.h" />
+    <ClInclude Include="patternSubsequence.h" />
     <ClInclude Include="rleString.h" />
     <ClInclude Include="subsequenceCheck.h" />
     <ClInclude Include="subsequenceDAG.h" />
