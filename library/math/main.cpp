@@ -10,7 +10,7 @@ int main(void) {
     TEST(Fibonacci);
     TEST(TernarySearch);
     TEST(GaussianElimination);
-    TEST(GaussianEliminationBool);
+    TEST(BooleanXorExpression);
     TEST(SimpsonIntegration);
     TEST(Shuntingyard);
     TEST(FactorialZeroes);

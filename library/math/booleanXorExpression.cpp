@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#include "gaussianEliminationBool.h"
+#include "booleanXorExpression.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -24,7 +24,7 @@ using namespace std;
 // related problems
 // https://www.codechef.com/MARCH19A/problems/TREASURE/
 
-void testGaussianEliminationBool() {
+void testBooleanXorExpression() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Boolean Gaussian Elimination --------------------" << endl;
