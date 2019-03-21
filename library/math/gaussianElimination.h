@@ -9,7 +9,7 @@ struct SLAE {
         const double EPS = 1e-9;
 
         int N = a.N;
-        for (int row = 0, col = 0; col < N; col++) {
+        for (int row = 0, col = 0; col < N && row < N; col++) {
             int best = row;
             for (int i = row + 1; i < N; i++) {
                 if (abs(a[best][col]) < abs(a[i][col]))
@@ -100,10 +100,60 @@ struct SLAE {
                 return 0;
         }
 
-        for (int i = 0; i < M; i++)
+        for (int i = 0; i < M; i++) {
             if (where[i] == -1)
                 return INF;
+        }
 
         return 1;
+    }
+
+    //---
+
+    template <size_t SZ>
+    static long long gaussMod2(vector<bitset<SZ>> a, bitset<SZ> b, int N, int M, bitset<SZ>& ans) {
+        vector<int> where(M, -1);
+        for (int col = 0, row = 0; col < M && row < N; col++) {
+            for (int i = row; i < N; i++) {
+                if (a[i][col]) {
+                    swap(a[i], a[row]);
+                    break;
+                }
+            }
+            if (!a[row][col])
+                continue;
+
+            where[col] = row;
+            for (int i = 0; i < N; i++) {
+                if (i != row && a[i][col]) {
+                    a[i] ^= a[row];
+                    b[i] = b[i] ^ b[row];
+                }
+            }
+
+            row++;
+        }
+
+        ans.reset();
+        for (int i = 0; i < M; i++) {
+            if (where[i] >= 0)
+                ans[i] = b[where[i]];
+        }
+
+        for (int i = 0; i < N; i++) {
+            int sum = 0;
+            for (int j = 0; j < M; j++)
+                sum ^= int(ans[j]) & int(a[i][j]);
+            if (sum != int(b[i]))
+                return 0ll;
+        }
+
+        long long res = 1ll;
+        for (int i = 0; i < M; i++) {
+            if (where[i] == -1)
+                res <<= 1;
+        }
+
+        return res;
     }
 };

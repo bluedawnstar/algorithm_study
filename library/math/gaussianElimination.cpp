@@ -1,5 +1,6 @@
 #include <cmath>
 #include <functional>
+#include <bitset>
 #include <vector>
 #include <algorithm>
 
@@ -62,6 +63,36 @@ void testGaussianElimination() {
         int cnt = SLAE::gaussGeneral(vector<vector<double>>{ { 4, 2, -1 }, { 2, 4, 3 } }, vector<double>{ 5, 19 }, ans);
         cout << "cnt = " << cnt << ", ans = " << ans << endl;
         assert(cnt == SLAE::INF);
+    }
+    {
+        bitset<3ull> ans;
+        vector<bitset<3ull>> a(3);
+        a[0][0] = 1; a[0][1] = 1; a[0][2] = 0;
+        a[1][0] = 0; a[1][1] = 1; a[1][2] = 0;
+        a[2][0] = 0; a[2][1] = 0; a[2][2] = 1;
+        bitset<3ull> b;
+        b[0] = 1; b[1] = 0; b[2] = 1;
+
+        auto cnt = SLAE::gaussMod2(a, b, 3, 3, ans);
+        cout << "cnt = " << cnt << ", ans = " << ans[0] << ans[1] << ans[2] << endl;
+        assert(cnt == 1);
+        assert(int(ans[0]) == 1);
+        assert(int(ans[1]) == 0);
+        assert(int(ans[2]) == 1);
+    }
+    {
+        bitset<3ull> ans;
+        vector<bitset<3ull>> a(3);
+        a[0][0] = 1; a[0][1] = 1; a[0][2] = 0;
+        a[1][0] = 0; a[1][1] = 1; a[1][2] = 0;
+        bitset<3ull> b;
+        b[0] = 1; b[1] = 0;;
+
+        auto cnt = SLAE::gaussMod2(a, b, 2, 3, ans);
+        cout << "cnt = " << cnt << ", ans = " << ans[0] << ans[1] << ans[2] << endl;
+        assert(cnt == 2);
+        assert(int(ans[0]) == 1);
+        assert(int(ans[1]) == 0);
     }
     cout << "OK!" << endl;
 }
