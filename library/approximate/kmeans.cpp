@@ -10,6 +10,7 @@
 using namespace std;
 
 #include "kmeans.h"
+#include "simpleClustering.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
