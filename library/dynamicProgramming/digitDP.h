@@ -2,6 +2,7 @@
 
 // https://www.geeksforgeeks.org/digit-dp-introduction/
 
+// with memoization
 struct DigitDP {
     static const int N = 20;
     long long (*dp)[180][2];
@@ -15,7 +16,7 @@ struct DigitDP {
     }
 
     // returns sum of digits in numbers in range [a, b]
-    long long rangeDigitSum(int a, int b) {
+    long long rangeDigitSum(long long a, long long b) {
         memset(dp, -1, N * 180 * 2 * sizeof(long long));
 
         vector<int> digitA = getDigits(a - 1);

@@ -181,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitDP.h" />
+    <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
