@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 namespace FastIO {
-    char gInBuff[1 << 24]; // sizeof in varied in problem
+    char gInBuff[1 << 24];
     const char* gInPtr;
 
     void init() {

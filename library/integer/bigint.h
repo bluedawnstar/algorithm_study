@@ -222,7 +222,7 @@ struct bigint {
     }
 
     bigint& operator %=(int v) {
-        *this = long long(*this % v);
+        *this = (long long)(*this % v);
         return *this;
     }
 
