@@ -183,6 +183,7 @@
     <ClInclude Include="bitDP.h" />
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="integerPartition.h" />
+    <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />
