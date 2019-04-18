@@ -27,7 +27,7 @@ struct SparseTableMin {
         for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
-        value.resize(H.back() + 1, vector<int>(n));
+        value.assign(H.back() + 1, vector<int>(n));
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 

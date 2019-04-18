@@ -103,7 +103,7 @@ private:
         for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
-        value.resize(H.back() + 1, vector<T>(N, INF));
+        value.assign(H.back() + 1, vector<T>(N, INF));
     }
 
     void dfsAssignValue(vector<vector<pair<int, T>>>& edges, int u, int parent) {

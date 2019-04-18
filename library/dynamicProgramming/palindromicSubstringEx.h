@@ -4,6 +4,7 @@
 // the number of ways to choose an unordered pair of non-overlapping non-empty substrings
 // of this string (let's denote them by s1 and s2 in such a way that s2 starts after s1 ends)
 // such that their concatenation s1 + s2 is a palindrome
+// O(N^2)
 inline long long countConcatenatedPalindromicSubstring(string s) {
     int N = int(s.length());
 

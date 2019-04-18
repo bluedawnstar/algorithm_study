@@ -15,7 +15,7 @@ struct HeavyLightDecomposition {
     void doHLD(int root) {
         this->root = root;
         heavyPaths.clear();
-        heavyPathIndex.resize(tree.N, -1);
+        heavyPathIndex.assign(tree.N, -1);
 
         vector<bool> visited(tree.N);
 

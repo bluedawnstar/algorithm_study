@@ -67,7 +67,7 @@ struct BrokenProfile2x1 {
         this->W = W;
         this->H = H;
 
-        dp.resize(W + 1, vector<long long>(1 << H));
+        dp.assign(W + 1, vector<long long>(1 << H));
 
         dp[0][0] = 1;
         for (int x = 0; x < W; ++x)
@@ -134,7 +134,7 @@ struct BrokenProfile3x1 {
         this->W = W;
         this->H = H;
 
-        dp.resize(W + 1, vector<vector<long long>>(1 << H, vector<long long>(1 << H)));
+        dp.assign(W + 1, vector<vector<long long>>(1 << H, vector<long long>(1 << H)));
 
         dp[0][0][0] = 1;
         for (int x = 0; x < W; ++x) {

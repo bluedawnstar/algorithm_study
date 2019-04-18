@@ -54,7 +54,7 @@ struct SparseTableOnTree {
         for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
-        value.resize(H.back() + 1, vector<T>(N, defaultValue));
+        value.assign(H.back() + 1, vector<T>(N, defaultValue));
     }
 
 

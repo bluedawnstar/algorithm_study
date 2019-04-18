@@ -40,7 +40,7 @@ struct SparseTable2D {
         logRowN = H[rowN] + 1;
         logColN = H[colN] + 1;
 
-        values.resize(logRowN, vector<vector<vector<T>>>(rowN, vector<vector<T>>(logColN, vector<T>(colN, defaultValue))));
+        values.assign(logRowN, vector<vector<vector<T>>>(rowN, vector<vector<T>>(logColN, vector<T>(colN, defaultValue))));
         for (int i = 0; i < rowN; i++) {
             vector<vector<T>>& currRow = values[0][i];
 

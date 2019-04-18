@@ -24,7 +24,7 @@ struct NextPositionTable {
 
     void build(const string& s, char first = 'a', char last = 'z') {
         N = int(s.length());
-        next.resize(last - first + 1, vector<int>(N + 1));
+        next.assign(last - first + 1, vector<int>(N + 1));
 
         for (int i = 0; i <= last - first; i++)
             next[i][N] = N + 1;
@@ -63,7 +63,7 @@ struct CompactNextPositionTable {
 
     void build(const string& s, char first = 'a', char last = 'z') {
         N = int(s.length());
-        next.resize(last - first + 1, vector<int>(N + 1));
+        next.assign(last - first + 1, vector<int>(N + 1));
 
         for (int i = 0; i < N; i++)
             next[s[i] - first].push_back(i + 1);
