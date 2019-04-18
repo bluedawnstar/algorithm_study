@@ -8,6 +8,9 @@ using namespace std;
 
 #include "waveletMatrixArrayIndirect.h"
 
+// https://www.codechef.com/APRIL19A/problems/XORMIN
+//   It can be solved by WaveletMatrixArrayIndirect<T>.
+
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <time.h>
