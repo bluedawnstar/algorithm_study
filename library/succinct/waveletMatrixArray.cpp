@@ -70,7 +70,7 @@ static void testSpeed() {
 
     vector<int> in(N);
     for (int j = 0; j < N; j++)
-        in[j] = RandInt32::get() % 65536;
+        in[j] = RandInt32::get() & 0xffffff;
 
     vector<tuple<int, int, int>> qryKth(T);
     for (int i = 0; i < T; i++) {
@@ -181,12 +181,15 @@ void testWaveletMatrixArray() {
 
     cout << "-- Wavelet Matrix Array --------------------------------------" << endl;
 
-    int N = 100;
+    int N = 10000;
     int T = 1000;
+#ifdef _DEBUG
+    N = 100;
+#endif
     for (int i = 0; i < T; i++) {
         vector<int> in(N);
         for (int j = 0; j < N; j++)
-            in[j] = RandInt32::get() % 65536;
+            in[j] = RandInt32::get() & 0xffffff;
 
         WaveletMatrixArray<int> matrix;
         matrix.build(in);

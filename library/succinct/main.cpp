@@ -11,4 +11,5 @@ int main(void) {
     TEST(WaveletTreeBitVector);
     TEST(WaveletMatrix);
     TEST(WaveletMatrixArray);
+    TEST(WaveletMatrixArrayIndirect);
 }

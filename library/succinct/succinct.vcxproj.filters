@@ -33,6 +33,9 @@
     <ClCompile Include="bitVectorRank.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="waveletMatrixArrayIndirect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="waveletMatrix.h">
@@ -48,6 +51,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitVectorRank.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="waveletMatrixArrayIndirect.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
