@@ -2,7 +2,6 @@
 
 #include "gcd.h"
 
-
 //--- int version -------------------------------
 
 inline int modAdd(int a, int b, int M) {
