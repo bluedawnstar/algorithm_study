@@ -55,4 +55,5 @@ int main(void) {
     TEST(RedBlackTreeRangeSum);
     TEST(BinarySearchTreeRangeSum);
     TEST(PersistentBinarySearchTreeRangeSum);
+    TEST(IntTrie);
 }
