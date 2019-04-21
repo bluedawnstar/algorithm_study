@@ -1,5 +1,6 @@
 #pragma once
 
+// Trie Forest
 template <typename T, typename IntT = int, typename GetOp = function<IntT(T)>, typename MergeOp = function<T(T,T)>>
 struct IntTrie {
     struct Node {
@@ -38,6 +39,7 @@ struct IntTrie {
 
     //--- add
 
+    // if there is no node, then set root as -1
     int add(int root, const T& value) {
         bool inserted = false;
 

@@ -158,6 +158,7 @@
     <ClCompile Include="fenwickTreeXor.cpp" />
     <ClCompile Include="generalizedBIT.cpp" />
     <ClCompile Include="intTrie.cpp" />
+    <ClCompile Include="intTriePersistent.cpp" />
     <ClCompile Include="mergeSortTree.cpp" />
     <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp" />
     <ClCompile Include="mergeSortTreeCompact.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="fenwickTreeXor.h" />
     <ClInclude Include="generalizedBIT.h" />
     <ClInclude Include="intTrie.h" />
+    <ClInclude Include="intTriePersistent.h" />
     <ClInclude Include="mergeSortTree.h" />
     <ClInclude Include="mergeSortTree2DPoint_DynamicFast.h" />
     <ClInclude Include="mergeSortTreeCompact.h" />

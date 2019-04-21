@@ -18,9 +18,9 @@ using namespace std;
 #include "../common/rand.h"
 
 void testIntTrie() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- Integer Trie (Binary Trie) -------------------" << endl;
+    cout << "--- Integer Trie (Binary Trie) -------------------" << endl;
     {
         int N = 10000;
         int T = 100;
