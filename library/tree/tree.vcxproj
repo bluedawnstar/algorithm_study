@@ -200,6 +200,7 @@
     <ClInclude Include="binarySearchTree.h" />
     <ClInclude Include="lcaTarjan.h" />
     <ClInclude Include="perfectTreeLevelSize.h" />
+    <ClInclude Include="subtreeQueryWithPersistentDataStructure.h" />
     <ClInclude Include="treeBlockTreeLevelUpdate.h" />
     <ClInclude Include="centroidDecomposition.h" />
     <ClInclude Include="lcaSchieberVishkin.h" />
