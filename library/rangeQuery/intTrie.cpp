@@ -17,8 +17,6 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-// ...
-
 void testIntTrie() {
     //return; //TODO: if you want to test, make this line a comment.
 

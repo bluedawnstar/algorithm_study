@@ -43,8 +43,6 @@ struct IntTrie {
 
         if (root < 0) {
             root = alloc();
-            nodes[root].L = -1;
-            nodes[root].R = -1;
             inserted = true;
         }
 
@@ -55,8 +53,6 @@ struct IntTrie {
                 x2 = nodes[x].R;
                 if (x2 < 0) {
                     x2 = alloc();
-                    nodes[x2].L = -1;
-                    nodes[x2].R = -1;
                     nodes[x].R = x2;
                     inserted = true;
                 }
@@ -64,8 +60,6 @@ struct IntTrie {
                 x2 = nodes[x].L;
                 if (x2 < 0) {
                     x2 = alloc();
-                    nodes[x2].L = -1;
-                    nodes[x2].R = -1;
                     nodes[x].L = x2;
                     inserted = true;
                 }
@@ -120,6 +114,10 @@ private:
     int alloc() {
         if (nodeN >= int(nodes.size()))
             nodes.resize(nodeN == 0 ? 1024 : nodeN * 2);
+
+        nodes[nodeN].L = -1;
+        nodes[nodeN].R = -1;
+
         return nodeN++;
     }
 
@@ -127,19 +125,13 @@ private:
         int x = alloc();
 
         if (bit == 0) {
-            nodes[x].L = -1;
-            nodes[x].R = -1;
             nodes[x].value = v[L];
-        } else if ((getOp(v[L]) & bit) == (getOp(v[R]) & bit)) {
-            if (getOp(v[L]) & bit) {
-                auto nodeR = dfsBuild(v, L, R, bit >> 1);
-                nodes[x].L = -1;
-                nodes[x].R = nodeR;
-            } else {
-                auto nodeL = dfsBuild(v, L, R, bit >> 1);
-                nodes[x].L = nodeL;
-                nodes[x].R = -1;
-            }
+            return x;
+        }
+
+        int mid;
+        if ((getOp(v[L]) & bit) == (getOp(v[R]) & bit)) {
+            mid = (getOp(v[L]) & bit) ? L : R + 1;
         } else {
             int i = L, j = R;
             while (i <= j) {
@@ -149,11 +141,15 @@ private:
                 else
                     i = mid + 1;
             }
+            mid = i;
+        }
 
-            auto nodeL = dfsBuild(v, L, i - 1, bit >> 1);
-            auto nodeR = dfsBuild(v, i, R, bit >> 1);
-
+        if (L < mid) {
+            auto nodeL = dfsBuild(v, L, mid - 1, bit >> 1);
             nodes[x].L = nodeL;
+        }
+        if (mid <= R) {
+            auto nodeR = dfsBuild(v, mid, R, bit >> 1);
             nodes[x].R = nodeR;
         }
 
