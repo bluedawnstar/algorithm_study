@@ -7,6 +7,8 @@
        vector<int> roots(N + 1);
        PersistentIntTrie<int> trie(BIT_SIZE, ...);
 
+       trie.clear();
+
        roots[0] = -1;
        for (int i = 0; i < N; i++)
            roots[i + 1] = trie.add(roots[i], values[i]);
@@ -15,6 +17,8 @@
        bool exists = trie.exist(roots[L], roots[R + 1], x);
        auto result = trie.findMaxXor(roots[L], roots[R + 1], k);
 */
+// Related problems
+// https://www.codechef.com/problems/XORMIN
 
 template <typename T, typename IntT = int, typename GetOp = function<IntT(T)>, typename MergeOp = function<T(T,T)>>
 struct PersistentIntTrie {
