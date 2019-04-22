@@ -14,4 +14,5 @@ int main(void) {
     TEST(SimpsonIntegration);
     TEST(Shuntingyard);
     TEST(FactorialZeroes);
+    TEST(WeightedMedian);
 }

@@ -48,6 +48,9 @@
     <ClCompile Include="booleanXorExpression.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="weightedMedian.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -81,6 +84,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="booleanXorExpression.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="weightedMedian.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

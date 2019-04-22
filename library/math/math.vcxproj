@@ -157,6 +157,7 @@
     <ClCompile Include="sumOfPower.cpp" />
     <ClCompile Include="ternarySearch.cpp" />
     <ClCompile Include="triangle.cpp" />
+    <ClCompile Include="weightedMedian.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="expressionParser.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="sumOfPower.h" />
     <ClInclude Include="ternarySearch.h" />
     <ClInclude Include="triangle.h" />
+    <ClInclude Include="weightedMedian.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
