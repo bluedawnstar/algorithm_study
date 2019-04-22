@@ -14,7 +14,7 @@
         int timeToNode[MAXN];
 
         void dfs1(int u, int parent) {
-            timeToNode[gCurrTime] = u;
+            timeToNode[currTime] = u;
             visitTime[u].first = currTime++;
             for (auto v : edges[u]) {
                 if (v == parent)
@@ -23,8 +23,9 @@
             }
             visitTime[u].second = currTime;
         }
-
+    
     2. second DFS iteration to build persistent data structures - O(NlogN)
+        // smaller-to-larger optimization
 
         int nodeToRoot[MAXN];
 
