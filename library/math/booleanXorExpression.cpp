@@ -25,7 +25,7 @@ using namespace std;
 // https://www.codechef.com/MARCH19A/problems/TREASURE/
 
 void testBooleanXorExpression() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Boolean Gaussian Elimination --------------------" << endl;
     {
