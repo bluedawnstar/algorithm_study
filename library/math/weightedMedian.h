@@ -1,10 +1,9 @@
 #pragma once
 
 struct WeightedMedian {
-    typedef int T;
-
     // 0 < W[i]
     // return (median, min weighted-distance-sum), O(NlogN)
+    template <typename T>
     static pair<T, T> findWeightedMedian(const vector<T>& X, const vector<T>& W) {
         int N = int(X.size());
         T x0 = *min_element(X.begin(), X.end());
