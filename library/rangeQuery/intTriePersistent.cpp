@@ -228,7 +228,7 @@ void testIntTriePersistent() {
                 auto gt = maxXor ^ K;
                 if (gt != ans.first)
                     cout << "Mismatched at " << K << " : " << ans.first << ", " << gt << endl;
-                assert(gt == ans);
+                assert(gt == ans.first);
             }
         }
     }
