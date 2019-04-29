@@ -27,9 +27,6 @@
     <ClCompile Include="factor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="fraction.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="gcd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -93,12 +90,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bit.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="fraction.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="fractionAlgo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="primeNumberBasic.h">

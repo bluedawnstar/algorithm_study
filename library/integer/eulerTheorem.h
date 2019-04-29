@@ -108,3 +108,20 @@ T phiFastest(T n, const vector<T>& primeFactors) {
 
     return res;
 }
+
+// all phi of [0, n]
+template <typename T>
+vector<T> phiAll(T n) {
+    vector<T> res(n + 1);
+    iota(res.begin(), res.end(), 0);
+
+    for (int p = 2; p <= n; p++) {
+        if (res[p] == p) {
+            res[p] = p - 1;
+            for (int i = 2 * p; i <= n; i += p)
+                res[i] = (res[i] / p) * (p - 1);
+        }
+    }
+
+    return res;
+}

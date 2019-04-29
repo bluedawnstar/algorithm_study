@@ -14,7 +14,6 @@ int main(void) {
     TEST(PrimeFactor);
     TEST(EulerTheorem);
     TEST(Mobius);
-    TEST(Fraction);
     TEST(Digit);
     TEST(ChineseRemainderTheorem);
     TEST(Equations);
