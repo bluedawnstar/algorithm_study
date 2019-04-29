@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="integerPartition.cpp" />
+    <ClCompile Include="partitionProblemMultiple.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="palindromicSubstringEx.h" />
+    <ClInclude Include="partitionProblemMultiple.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />

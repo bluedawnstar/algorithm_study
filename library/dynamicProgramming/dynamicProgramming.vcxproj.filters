@@ -111,6 +111,9 @@
     <ClCompile Include="twoSameSumSubset.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="partitionProblemMultiple.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -231,6 +234,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicSubstringEx.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="partitionProblemMultiple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

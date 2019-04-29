@@ -59,7 +59,3 @@ void testPartitionProblem() {
 
     cout << "OK!" << endl;
 }
-
-
-
-

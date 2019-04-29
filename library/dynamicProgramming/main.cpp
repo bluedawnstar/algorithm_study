@@ -27,6 +27,7 @@ int main(void) {
     TEST(BrokenProfile);
     TEST(BrokenProfileEx);
     TEST(PartitionProblem);
+    TEST(PartitionProblemMultiple);
     TEST(BitLCS);
     TEST(CyclicLCS);
     TEST(LongestIncreasingSubsequence);
