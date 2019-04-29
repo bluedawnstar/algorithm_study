@@ -51,6 +51,15 @@
     <ClCompile Include="weightedMedian.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="fraction.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="fareySequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sternBrocot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -87,6 +96,18 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="weightedMedian.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fraction.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fractionAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fareySequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sternBrocot.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

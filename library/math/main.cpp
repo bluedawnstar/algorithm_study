@@ -15,4 +15,7 @@ int main(void) {
     TEST(Shuntingyard);
     TEST(FactorialZeroes);
     TEST(WeightedMedian);
+    TEST(Fraction);
+    TEST(FareySequence);
+    TEST(SternBrocot);
 }

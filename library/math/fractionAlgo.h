@@ -1,34 +1,30 @@
 #pragma once
 
-
 //--------- General Functions -------------------------------------------------
 
-//TODO: fix return type 'R' to right type according to required precision of a/b (ex: __int128_t)
-
+//CAUTION: use right type according to required precision (ex: long long, __int128_t)
 // sum(floor(a/b * i)), i=0..n
-template <typename T, typename U = T, typename R = T>
-R sumFloor(T n, U a, U b) {
+inline long long sumFloor(long long n, long long a, long long b) {
     //assert(gcd(a, b) == 1);
 
-    R res = 0;
+    long long res = 0;
     if (a >= b) {
-        res += R(a / b) * n * (n + 1) / 2;
+        res += (a / b) * n * (n + 1) / 2;
         a %= b;
     }
     if (a == 0 || n == 0) {
         return res;
     }
 
-    T m = T(R(a) * n / b);
-    res += R(n) * m + (n / b) - sumFloor<T, U, R>(m, b, a);
+    long long m = a * n / b;
+    res += n * m + (n / b) - sumFloor(m, b, a);
 
     return res;
 }
 
 // sum(floor(a/b * i)), i=left..right
-template <typename T, typename U = T, typename R = T>
-R sumFloorRange(T left, T right, U num, U denom) {
-    return sumFloor<T, U, R>(right, num, denom) - (left > 1 ? sumFloor<T, U, R>(left - 1, num, denom) : 0);
+inline long long sumFloorRange(long long left, long long right, long long num, long long denom) {
+    return sumFloor(right, num, denom) - (left > 1 ? sumFloor(left - 1, num, denom) : 0);
 }
 
 
@@ -46,7 +42,7 @@ vector<pair<R, R>> continuedFraction(const vector<T>& a) {
 
     for (int i = 2; i < N; i++) {
         res.emplace_back(res[i - 2].first + res[i - 1].first * a[i],
-            res[i - 2].second + res[i - 1].second * a[i]);
+                         res[i - 2].second + res[i - 1].second * a[i]);
     }
 
     return res;
@@ -89,7 +85,6 @@ struct FractionFinder {
 
     void init() {
         mAns.num = mAns.denom = numeric_limits<T>::max();
-        // TODO: if RealT's numeric_limits<> is not supported, fix this value with real maximum value
         mDiff = numeric_limits<RealT>::max();
     }
 
@@ -176,31 +171,3 @@ private:
         return x < 0 ? -x : x;
     }
 };
-
-
-//--------- Stern-Brocot Tree -------------------------------------------------
-
-// inclusive range
-template <typename T, typename U = T>
-pair<T, T> findKthSternBrocot(T denomRangeMin, T denomRangeMax, pair<T, T> left, pair<T, T> right, T rateL, T rateR, U cnt) {
-    pair<T, T> mid = { rateL * left.first + rateR * right.first, rateL * left.second + rateR * right.second };
-    U count = sumFloorRange<T, T, U>(denomRangeMin, denomRangeMax, mid.first, mid.second);
-    T cntEq = denomRangeMax / mid.second - (denomRangeMin - 1) / mid.second;
-
-    if (count - cntEq < cnt && cnt <= count)
-        return mid;
-
-    if (count >= cnt) {
-        return (rateR == 1) ? findKthSternBrocot(denomRangeMin, denomRangeMax, left, mid, 2 * rateL, T(1), cnt)
-            : findKthSternBrocot(denomRangeMin, denomRangeMax, left, right, T(1), rateR / 2, cnt);
-    } else {
-        return (rateL == 1) ? findKthSternBrocot(denomRangeMin, denomRangeMax, mid, right, T(1), 2 * rateR, cnt)
-            : findKthSternBrocot(denomRangeMin, denomRangeMax, left, right, rateL / 2, T(1), cnt);
-    }
-}
-
-// inclusive range
-template <typename T, typename U = T>
-pair<T, T> findKthSternBrocot(T denomRangeMin, T denomRangeMax, U cnt) {
-    return findKthSternBrocot(denomRangeMin, denomRangeMax, make_pair<T, T>(0, 1), make_pair<T, T>(1, 0), T(1), T(1), cnt);
-}

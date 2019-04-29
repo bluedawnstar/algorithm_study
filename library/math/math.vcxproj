@@ -148,12 +148,15 @@
   <ItemGroup>
     <ClCompile Include="expressionParser.cpp" />
     <ClCompile Include="factorialZeroes.cpp" />
+    <ClCompile Include="fareySequence.cpp" />
     <ClCompile Include="fibonacci.cpp" />
+    <ClCompile Include="fraction.cpp" />
     <ClCompile Include="gaussianElimination.cpp" />
     <ClCompile Include="booleanXorExpression.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="simpsonIntegration.cpp" />
+    <ClCompile Include="sternBrocot.cpp" />
     <ClCompile Include="sumOfPower.cpp" />
     <ClCompile Include="ternarySearch.cpp" />
     <ClCompile Include="triangle.cpp" />
@@ -162,12 +165,16 @@
   <ItemGroup>
     <ClInclude Include="expressionParser.h" />
     <ClInclude Include="factorialZeroes.h" />
+    <ClInclude Include="fareySequence.h" />
     <ClInclude Include="fibonacci.h" />
+    <ClInclude Include="fraction.h" />
+    <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gaussianElimination.h" />
     <ClInclude Include="booleanXorExpression.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="matrix2x2.h" />
     <ClInclude Include="simpsonIntegration.h" />
+    <ClInclude Include="sternBrocot.h" />
     <ClInclude Include="sumOfPower.h" />
     <ClInclude Include="ternarySearch.h" />
     <ClInclude Include="triangle.h" />
