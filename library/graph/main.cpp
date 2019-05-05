@@ -28,4 +28,5 @@ int main(void) {
     TEST(EulerianDigraph);
     TEST(DominatorTree);
     TEST(GraphRealization);
+    TEST(PathCount);
 }

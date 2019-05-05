@@ -165,6 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxIndependentSet.cpp" />
     <ClCompile Include="minimumSpanningTree.cpp" />
+    <ClCompile Include="pathCount.cpp" />
     <ClCompile Include="reachableAllPair.cpp" />
     <ClCompile Include="sat2.cpp" />
     <ClCompile Include="shortestPathAllPair.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="graphColoring.h" />
     <ClInclude Include="maxIndependentSet.h" />
     <ClInclude Include="minimumSpanningTree.h" />
+    <ClInclude Include="pathCount.h" />
     <ClInclude Include="reachableAllPair.h" />
     <ClInclude Include="sat2.h" />
     <ClInclude Include="shortestPathAllPair.h" />
