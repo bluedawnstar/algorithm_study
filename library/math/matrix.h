@@ -231,7 +231,7 @@ struct Matrix {
     static const Matrix& getIdentity(int N) {
         static unordered_map<int, shared_ptr<Matrix<T>>> M;
 
-        auto& it = M.find(N);
+        auto it = M.find(N);
         if (it != M.end())
             return *it->second;
         
