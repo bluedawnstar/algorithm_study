@@ -49,7 +49,6 @@ struct SimpleClustering {
         }
     }
 
-    //BEST: 0.4 < 0.3988 < 0.3986
 #define ALPHA       0.3986          //TODO: tuning point
 #define ALPHA_INV   (1.0 / ALPHA)   //TODO: tuning point
 
@@ -58,10 +57,10 @@ struct SimpleClustering {
         g1.clear();
         g2.clear();
 
-        double d = 0.0;         //TODO: tuning point
-        double M = ALPHA;       //TODO: tuning point
-                                //double d = RandFloat::get(0.0, 4.0) - 2.0;
-                                //double M = ALPHA + RandFloat::get(0.0, 1.0) - 0.5; 
+        //double d = RandFloat::get(0.0, 4.0) - 2.0;
+        //double M = ALPHA + RandFloat::get(0.0, 1.0) - 0.5; 
+        double d = 0.0;     //TODO: tuning point
+        double M = ALPHA;   //TODO: tuning point
 
         if (splitY) {
             for (auto i : group) {
@@ -184,7 +183,7 @@ struct SimpleClustering {
         return minCost;
     }
 
-    //private:
+//private:
     static pair<T, T> calcCentroid(const vector<pair<T, T>>& points, const vector<int>& group) {
         if (group.size() == 1)
             return points[group[0]];
