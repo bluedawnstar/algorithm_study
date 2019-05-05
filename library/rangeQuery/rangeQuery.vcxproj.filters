@@ -171,6 +171,9 @@
     <ClCompile Include="intTriePersistent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -354,6 +357,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="intTriePersistent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

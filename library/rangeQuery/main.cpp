@@ -57,4 +57,5 @@ int main(void) {
     TEST(PersistentBinarySearchTreeRangeSum);
     TEST(IntTrie);
     TEST(IntTriePersistent);
+    TEST(KTimesValueCounter);
 }
