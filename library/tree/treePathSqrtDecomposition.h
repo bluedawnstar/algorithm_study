@@ -18,10 +18,13 @@ struct TreePathSqrtDecomposition : public Tree {
         lzAdd
     };
 
-    vector<T>       values;             // 
+    vector<T>       values;             // all values of nodes
     vector<T>       branchValues;       // 
+    vector<vector<int>> branchNodes;    // 
     vector<LazyT>   branchLazy;         // 
     vector<T>       branchLazyValues;   // 
+
+    vector<bool>    dirty;              // rebuild required
 
     T               defaultValue;       // 
     MergeOp         mergeOp;            // 
@@ -62,6 +65,15 @@ struct TreePathSqrtDecomposition : public Tree {
         branchValues.assign(branchN, defaultValue);
         branchLazy.assign(branchN, lzNone);
         branchLazyValues.assign(branchN, defaultValue);
+        dirty.assign(N, false);
+
+        branchNodes.resize(branchN);
+        for (int i = 0; i < branchN; i++)
+            branchNodes[i].resize(branchSize[i]);
+        for (int u = 0; u < N; u++) {
+            int b = nodeToBranch[u];
+            branchNodes[b][level[u] - level[branchHead[b]]] = u;
+        }
     }
 
     // call after build()
@@ -178,10 +190,15 @@ struct TreePathSqrtDecomposition : public Tree {
                 swap(u, v);
 
             int b = nodeToBranch[v];
-            if (v == branchTail[b])
+            if (v == branchTail[b]) {
+                if (dirty[b]) {
+                    recalcBranchValue(b);
+                    dirty[b] = false;
+                }
                 res = mergeOp(res, branchValues[b]);
-            else
+            } else {
                 res = mergeOp(res, queryInBranch(v, branchHead[b]));
+            }
             v = branchHead[b];
             v = P[0][v];
         }
@@ -324,7 +341,8 @@ private:
             v = P[0][v];
             values[v] = val;
         }
-        recalcBranchValue(b);
+        //recalcBranchValue(b);
+        dirty[b] = true;
     }
 
     void addInBranch(int v, int u, T val) {
@@ -339,7 +357,8 @@ private:
             v = P[0][v];
             values[v] += val;
         }
-        recalcBranchValue(b);
+        //recalcBranchValue(b);
+        dirty[b] = true;
     }
 
     T queryInBranch(int v, int u) {

@@ -96,7 +96,7 @@ static int climbKthNaive(Tree& tree, int u, int kth, vector<int>& values) {
 }
 
 void testTreePathSqrtDecomposition() {
-    return; //TODO: if you want to test a split function, make this line to a comment.
+    //return; //TODO: if you want to test a split function, make this line to a comment.
 
     cout << "--- Tree Path Sqrt Decomposition ---------------------" << endl;
     {

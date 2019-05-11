@@ -20,6 +20,7 @@ struct TreePathSqrtDecompositionSum : public Tree {
 
     vector<T>       values;             // 
     vector<T>       branchValues;       // 
+    vector<vector<int>> branchNodes;    // 
     vector<LazyT>   branchLazy;         // 
     vector<T>       branchLazyValues;   // 
 
@@ -56,6 +57,14 @@ struct TreePathSqrtDecompositionSum : public Tree {
         branchValues.assign(branchN, 0);
         branchLazy.assign(branchN, lzNone);
         branchLazyValues.assign(branchN, 0);
+
+        branchNodes.resize(branchN);
+        for (int i = 0; i < branchN; i++)
+            branchNodes[i].resize(branchSize[i]);
+        for (int u = 0; u < N; u++) {
+            int b = nodeToBranch[u];
+            branchNodes[b][level[u] - level[branchHead[b]]] = u;
+        }
     }
 
     // call after build()
@@ -280,17 +289,6 @@ private:
         branchLazyValues[branch] = 0;
     }
 
-    void recalcBranchValue(int branch) {
-        int u = branchHead[branch];
-        int v = branchTail[branch];
-
-        T val = values[v];
-        while (v != u) {
-            v = P[0][v];
-            val += values[v];
-        }
-        branchValues[branch] = val;
-    }
 
     void updateBranch(int branch, T val) {
         branchValues[branch] = val * branchSize[branch];
