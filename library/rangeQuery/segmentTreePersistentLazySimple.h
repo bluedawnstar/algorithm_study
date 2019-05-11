@@ -58,6 +58,15 @@ struct SimplePersistentSegmentTreeLazy {
         return dfsQuery(root, 0, N - 1, left, right);
     }
 
+    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
+    // lower bound where f(x) is true in [0, N)
+    //   f(x): xxxxxxxxxxxOOOOOOOO
+    //         S          ^
+    // O(logN)
+    int lowerBound(int root, const function<bool(T)>& f) {
+        return dfsLowerBound(root, f, defaultValue, 0, N - 1);
+    }
+
 private:
     int add(T value, int L, int R, T lazy) {
         nodes.push_back({ value, L, R, lazy });
@@ -146,6 +155,34 @@ private:
 
         return mergeOp(dfsQuery(l, nodeLeft, mid, indexL, indexR),
                        dfsQuery(r, mid + 1, nodeRight, indexL, indexR));
+    }
+
+    int dfsLowerBound(int node, const function<bool(T)>& f, T delta, int nodeLeft, int nodeRight) {
+        if (nodeLeft > nodeRight)
+            return nodeLeft;
+
+        if (nodeLeft == nodeRight)
+            return nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1);
+
+        int mid = (nodeLeft + nodeRight) >> 1;
+        int l = nodes[node].L;
+        int r = nodes[node].R;
+        T lazy = nodes[node].lazy;
+        if (lazy != defaultValue) {
+            l = pushDown(l, nodeLeft, mid, lazy);
+            r = pushDown(r, mid + 1, nodeRight, lazy);
+
+            nodes[node].value = mergeOp(nodes[l].value, nodes[r].value);
+            nodes[node].L = l;
+            nodes[node].R = r;
+            nodes[node].lazy = defaultValue;
+        }
+
+        auto val = mergeOp(delta, nodes[l].value);
+        if (f(val))
+            return dfsLowerBound(l, f, delta, nodeLeft, mid);
+        else
+            return dfsLowerBound(r, f, val, mid + 1, nodeRight);
     }
 };
 
