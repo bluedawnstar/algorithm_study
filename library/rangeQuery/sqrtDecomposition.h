@@ -115,15 +115,15 @@ struct SqrtDecompositionLazy {
         int blockL = l / blockSize;
         int blockR = r / blockSize;
 
-        T res = 0;
+        T res = defaultValue;
 
         if (blockL == blockR)
-            res += queryInBlock(l, r);
+            res = mergeOp(res, queryInBlock(l, r));
         else {
-            res += queryInBlock(l, (blockL + 1) * blockSize - 1);
+            res = mergeOp(res, queryInBlock(l, (blockL + 1) * blockSize - 1));
             for (int i = blockL + 1; i < blockR; i++)
-                res += blockValues[i];
-            res += queryInBlock(blockR * blockSize, r);
+                res = mergeOp(res, blockValues[i]);
+            res = mergeOp(res, queryInBlock(blockR * blockSize, r));
         }
 
         return res;
@@ -147,7 +147,7 @@ private:
         }
 
         blockLazy[block] = lzNone;
-        blockLazyValues[block] = 0;
+        blockLazyValues[block] = defaultValue;
     }
 
     void recalcBlockValue(int block) {
@@ -168,7 +168,7 @@ private:
     }
 
     void addBlock(int block, T val) {
-        blockValues[block] += val * blockSize;      //TODO: fix it
+        blockValues[block] += blockOp(val, blockSize);  //TODO: fix it
         if (blockLazy[block] != lzSet)
             blockLazy[block] = lzAdd;
         blockLazyValues[block] += val;
