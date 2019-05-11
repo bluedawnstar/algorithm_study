@@ -16,10 +16,12 @@ int main(void) {
     TEST(FenwickTreeEx);
     TEST(GeneralizedBIT);
     TEST(PersistentFenwickTree);
+    TEST(PersistentFenwickTreeMultAdd);
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
     TEST(SegmentTreePartiallyPersistent);
     TEST(SegmentTreePersistentSimple);
+    TEST(SegmentTreePersistentLazySimple);
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);

@@ -154,6 +154,7 @@
     <ClCompile Include="fenwickTree2D.cpp" />
     <ClCompile Include="fenwickTreeEx.cpp" />
     <ClCompile Include="fenwickTreeMultAdd.cpp" />
+    <ClCompile Include="fenwickTreeMultAddPersistent.cpp" />
     <ClCompile Include="fenwickTreePersistent.cpp" />
     <ClCompile Include="fenwickTreeXor.cpp" />
     <ClCompile Include="generalizedBIT.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="persistentBinarySearchTreeRangeSum.cpp" />
     <ClCompile Include="redBlackTreeRangeSum.cpp" />
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp" />
+    <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
     <ClCompile Include="sparseTableSimpleRMQ.cpp" />
     <ClCompile Include="schieberVishkinRMQ.cpp" />
     <ClCompile Include="mergeSortTree2DPoint.cpp" />
@@ -209,6 +211,7 @@
     <ClInclude Include="fenwickTree2D.h" />
     <ClInclude Include="fenwickTreeEx.h" />
     <ClInclude Include="fenwickTreeMultAdd.h" />
+    <ClInclude Include="fenwickTreeMultAddPersistent.h" />
     <ClInclude Include="fenwickTreePersistent.h" />
     <ClInclude Include="fenwickTreeXor.h" />
     <ClInclude Include="generalizedBIT.h" />
@@ -226,6 +229,7 @@
     <ClInclude Include="persistentBinarySearchTreeRangeSum.h" />
     <ClInclude Include="redBlackTreeRangeSum.h" />
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h" />
+    <ClInclude Include="segmentTreePersistentLazySimple.h" />
     <ClInclude Include="sparseTableSimpleRMQ.h" />
     <ClInclude Include="schieberVishkinRMQ.h" />
     <ClInclude Include="mergeSortTree2DPoint.h" />
