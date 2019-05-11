@@ -10,7 +10,16 @@ struct PartiallyPersistentFenwickTree {
     vector<vector<T>> tree;
     int currTime;
 
-    explicit PartiallyPersistentFenwickTree(int n) : times(n + 1, vector<T>(1)), tree(n + 1, vector<T>(1)) {
+    PartiallyPersistentFenwickTree() {
+    }
+
+    explicit PartiallyPersistentFenwickTree(int n) : times(n + 1, vector<int>(1)), tree(n + 1, vector<T>(1)) {
+        currTime = 1;
+    }
+
+    void init(int n) {
+        times.assign(n + 1, vector<int>(1));
+        tree.assign(n + 1, vector<T>(1));
         currTime = 1;
     }
 
