@@ -2,6 +2,8 @@
 
 #include "treeBasic.h"
 
+#define USE_LAZY_REBUILDING
+
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct TreePathSqrtDecomposition : public Tree {
     int         root;                   // 
@@ -23,9 +25,9 @@ struct TreePathSqrtDecomposition : public Tree {
     vector<vector<int>> branchNodes;    // 
     vector<LazyT>   branchLazy;         // 
     vector<T>       branchLazyValues;   // 
-
+#ifdef USE_LAZY_REBUILDING
     vector<bool>    dirty;              // rebuild required
-
+#endif
     T               defaultValue;       // 
     MergeOp         mergeOp;            // 
     BlockOp         blockOp;            // 
@@ -65,8 +67,9 @@ struct TreePathSqrtDecomposition : public Tree {
         branchValues.assign(branchN, defaultValue);
         branchLazy.assign(branchN, lzNone);
         branchLazyValues.assign(branchN, defaultValue);
+#ifdef USE_LAZY_REBUILDING
         dirty.assign(branchN, false);
-
+#endif
         branchNodes.resize(branchN);
         for (int i = 0; i < branchN; i++)
             branchNodes[i].resize(branchSize[i]);
@@ -191,10 +194,12 @@ struct TreePathSqrtDecomposition : public Tree {
 
             int b = nodeToBranch[v];
             if (v == branchTail[b]) {
+#ifdef USE_LAZY_REBUILDING
                 if (dirty[b]) {
                     recalcBranchValue(b);
                     dirty[b] = false;
                 }
+#endif
                 res = mergeOp(res, branchValues[b]);
             } else {
                 res = mergeOp(res, queryInBranch(v, branchHead[b]));
@@ -341,8 +346,11 @@ private:
             v = P[0][v];
             values[v] = val;
         }
-        //recalcBranchValue(b);
+#ifdef USE_LAZY_REBUILDING
         dirty[b] = true;
+#else
+        recalcBranchValue(b);
+#endif
     }
 
     void addInBranch(int v, int u, T val) {
@@ -357,8 +365,11 @@ private:
             v = P[0][v];
             values[v] += val;
         }
-        //recalcBranchValue(b);
+#ifdef USE_LAZY_REBUILDING
         dirty[b] = true;
+#else
+        recalcBranchValue(b);
+#endif
     }
 
     T queryInBranch(int v, int u) {
