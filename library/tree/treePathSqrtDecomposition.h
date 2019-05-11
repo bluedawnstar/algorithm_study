@@ -65,7 +65,7 @@ struct TreePathSqrtDecomposition : public Tree {
         branchValues.assign(branchN, defaultValue);
         branchLazy.assign(branchN, lzNone);
         branchLazyValues.assign(branchN, defaultValue);
-        dirty.assign(N, false);
+        dirty.assign(branchN, false);
 
         branchNodes.resize(branchN);
         for (int i = 0; i < branchN; i++)
