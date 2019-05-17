@@ -79,7 +79,7 @@ struct BipartiteMatchingHopcroftKarp {
 
     //--- Min Vertex Cover ----------------------------------------------------
 
-    // Must call this function after calcMaxMatchingXXX()
+    // Must call this function after calcMaxMatching()
     // return (chosen A, chosen B), O(V*E)
     pair<vector<bool>, vector<bool>> minVertexCover() {
         pair<vector<bool>, vector<bool>> res;
@@ -128,7 +128,7 @@ struct BipartiteMatchingHopcroftKarp {
 
     //--- Max Independent Set -------------------------------------------------
 
-    // Must call this function after calcMaxMatchingXXX()
+    // Must call this function after calcMaxMatching()
     // return (chosen A, chosen B), O(V*E)
     pair<vector<bool>, vector<bool>> maxIndependentSet() {
         pair<vector<bool>, vector<bool>> res;

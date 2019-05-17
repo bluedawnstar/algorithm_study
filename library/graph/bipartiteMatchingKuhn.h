@@ -1,5 +1,12 @@
 #pragma once
 
+/*
+    |V| = [MVC] + |MIS|
+
+       |V| = the number of vertex
+       MVC = Min Vertex Cover
+       MIS = Maximum 
+*/
 struct BipartiteMatchingKuhn {
     int srcN;
     int dstN;
@@ -43,7 +50,7 @@ struct BipartiteMatchingKuhn {
 
     //--- Min Vertex Cover ----------------------------------------------------
 
-    // Must call this function after calcMaxMatchingXXX()
+    // Must call this function after calcMaxMatching()
     // return (chosen A, chosen B), O(V*E)
     pair<vector<bool>, vector<bool>> minVertexCover() {
         pair<vector<bool>, vector<bool>> res;
@@ -92,7 +99,7 @@ struct BipartiteMatchingKuhn {
 
     //--- Max Independent Set -------------------------------------------------
 
-    // Must call this function after calcMaxMatchingXXX()
+    // Must call this function after calcMaxMatching()
     // return (chosen A, chosen B), O(V*E)
     pair<vector<bool>, vector<bool>> maxIndependentSet() {
         pair<vector<bool>, vector<bool>> res;

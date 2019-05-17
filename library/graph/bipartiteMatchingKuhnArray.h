@@ -45,7 +45,7 @@ struct BipartiteMatchingKuhnArray {
     //--- Min Vertex Cover ----------------------------------------------------
 
     // Must call this function after calcMaxMatching()
-    // return (chosen A, chosen B), O(V*E)
+    // return (chosen A, chosen B), O(V^3)
     pair<vector<bool>, vector<bool>> minVertexCover() {
         pair<vector<bool>, vector<bool>> res;
         res.first.assign(srcN, false);
@@ -60,8 +60,8 @@ struct BipartiteMatchingKuhnArray {
             for (int u = 0; u < srcN; u++) {
                 if (res.first[u])
                     continue;
-                for (int v : edges[u]) {
-                    if (!res.second[v]) {
+                for (int v = 0; v < dstN; v++) {
+                    if (!res.second[v] && edges[u][v]) {
                         res.first[u] = true;
                         res.second[match[u]] = false;
                         changed = true;
