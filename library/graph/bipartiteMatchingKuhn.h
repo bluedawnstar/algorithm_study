@@ -2,10 +2,12 @@
 
 /*
     |V| = [MVC] + |MIS|
+    |MVC| = |MC|
 
-       |V| = the number of vertex
-       MVC = Min Vertex Cover
-       MIS = Maximum 
+        |V| : the number of vertex
+        MC  : Maximum Matching
+        MVC : Minimum Vertex Cover
+        MIS : Maximum Independent Set 
 */
 struct BipartiteMatchingKuhn {
     int srcN;

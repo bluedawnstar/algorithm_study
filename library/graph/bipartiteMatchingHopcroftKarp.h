@@ -1,5 +1,14 @@
 #pragma once
 
+/*
+    |V| = [MVC] + |MIS|
+    |MVC| = |MC|
+
+        |V| : the number of vertex
+        MC  : Maximum Matching
+        MVC : Minimum Vertex Cover
+        MIS : Maximum Independent Set 
+*/
 struct BipartiteMatchingHopcroftKarp {
     int srcN;
     int dstN;
