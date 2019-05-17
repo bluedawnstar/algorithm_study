@@ -1,14 +1,19 @@
 #pragma once
 
-struct BipartiteGraph {
+struct BipartiteMatchingHopcroftKarp {
     int srcN;
     int dstN;
     vector<vector<int>> edges;
 
-    BipartiteGraph() : srcN(0), dstN(0) {
+    vector<int> match;              // left to right
+    vector<int> matchRev;           // right to left
+
+    BipartiteMatchingHopcroftKarp()
+        : srcN(0), dstN(0) {
     }
 
-    BipartiteGraph(int _srcN, int _dstN) : srcN(_srcN), dstN(_dstN), edges(srcN) {
+    BipartiteMatchingHopcroftKarp(int _srcN, int _dstN)
+        : srcN(_srcN), dstN(_dstN), edges(srcN) {
     }
 
     void init(int _srcN, int _dstN) {
@@ -22,36 +27,21 @@ struct BipartiteGraph {
     }
 
     // maximum number of matching from srcN to dstN
-    // Kuhn's algorithm : O(V * E)
+    // It's faster than Kuhn's algorithm about 3x
+    // Hopcroft-Karp : O(E * sqrt(V))
     int calcMaxMatching() {
         match.assign(srcN, -1);
         matchRev.assign(dstN, -1);
 
         int res = 0;
-        for (int u = 0; u < srcN; u++) {
-            vector<bool> visited(srcN);
-            if (dfsKuhn(u, visited))
-                res++;
-        }
-        return res;
-    }
-
-    // maximum number of matching from srcN to dstN
-    // It's faster than Kuhn's algorithm about 3x
-    // Hopcroft-Karp : O(E * sqrt(V))
-    int calcMaxMatchingHopcroftKarp() {
-        match.assign(srcN, -1);
-        matchRev.assign(dstN, -1);
-
-        int res = 0;
         while (true) {
-            bfsHopcroftKarp();
+            bfs();
 
             vector<bool> visited(srcN);
 
             int cnt = 0;
             for (int u = 0; u < srcN; u++) {
-                if (match[u] < 0 && dfsHopcroftKarp(u, visited))
+                if (match[u] < 0 && dfs(u, visited))
                     ++cnt;
             }
             if (!cnt)
@@ -63,8 +53,28 @@ struct BipartiteGraph {
         return res;
     }
 
-    vector<int>& getLastMaxMatchingEdges() {
-        return match;
+    int calcMaxMatchingFast() {
+        match.assign(srcN, -1);
+        matchRev.assign(dstN, -1);
+
+        int res = 0;
+        while (true) {
+            bfs();
+
+            vector<int> start(srcN, -1);
+
+            int cnt = 0;
+            for (int u = 0; u < srcN; u++) {
+                if (match[u] < 0 && dfsFast(u, start))
+                    ++cnt;
+            }
+            if (!cnt)
+                break;
+
+            res += cnt;
+        }
+
+        return res;
     }
 
     //--- Min Vertex Cover ----------------------------------------------------
@@ -95,6 +105,22 @@ struct BipartiteGraph {
             }
             if (!changed)
                 break;
+        }
+
+        return res;
+    }
+
+    pair<vector<int>, vector<int>> minVertexCoverIndexes() {
+        pair<vector<int>, vector<int>> res;
+
+        auto r = minVertexCover();
+        for (int i = 0; i < int(r.first.size()); i++) {
+            if (r.first[i])
+                res.first.push_back(i);
+        }
+        for (int i = 0; i < int(r.second.size()); i++) {
+            if (r.second[i])
+                res.second.push_back(i);
         }
 
         return res;
@@ -133,30 +159,26 @@ struct BipartiteGraph {
         return res;
     }
 
-private:
-    vector<int> match;
-    vector<int> matchRev;
-    vector<int> dist;
+    pair<vector<int>, vector<int>> maxIndependentSetIndexes() {
+        pair<vector<int>, vector<int>> res;
 
-    // return true if a matching for vertex u is possible
-    bool dfsKuhn(int u, vector<bool>& visited) {
-        if (visited[u])
-            return false;
-        visited[u] = true;
-
-        for (int v : edges[u]) {
-            if (matchRev[v] < 0 || dfsKuhn(matchRev[v], visited)) {
-                matchRev[v] = u;
-                match[u] = v;
-                return true;
-            }
+        auto r = maxIndependentSet();
+        for (int i = 0; i < int(r.first.size()); i++) {
+            if (r.first[i])
+                res.first.push_back(i);
         }
-        return false;
+        for (int i = 0; i < int(r.second.size()); i++) {
+            if (r.second[i])
+                res.second.push_back(i);
+        }
+
+        return res;
     }
 
-    //-------------------------------------------
+private:
+    vector<int> dist;
 
-    void bfsHopcroftKarp() {
+    void bfs() {
         dist.assign(srcN, -1);
 
         queue<int> Q;
@@ -181,12 +203,25 @@ private:
         }
     }
 
-    bool dfsHopcroftKarp(int u, vector<bool>& visited) {
+    bool dfs(int u, vector<bool>& visited) {
         visited[u] = true;
 
         for (int v : edges[u]) {
             int u2 = matchRev[v];
-            if (u2 < 0 || !visited[u2] && dist[u2] == dist[u] + 1 && dfsHopcroftKarp(u2, visited)) {
+            if (u2 < 0 || !visited[u2] && dist[u2] == dist[u] + 1 && dfs(u2, visited)) {
+                matchRev[v] = u;
+                match[u] = v;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool dfsFast(int u, vector<int>& start) {
+        for (start[u] = 0; start[u] < int(edges[u].size()); ++start[u]) {
+            int v = edges[u][start[u]];
+            int u2 = matchRev[v];
+            if (u2 < 0 || (start[u2] < 0 && dist[u2] == dist[u] + 1 && dfsFast(u2, start))) {
                 matchRev[v] = u;
                 match[u] = v;
                 return true;

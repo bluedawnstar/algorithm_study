@@ -63,9 +63,6 @@
     <ClCompile Include="hamiltonian.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="bipartiteGraph.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="globalMinCut.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     <ClCompile Include="pathCount.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bipartiteMatching.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -99,9 +99,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="dag.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="bipartiteGraph.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="generalMaxMatching.h">
@@ -140,9 +137,6 @@
     <ClInclude Include="hamiltonian.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bipartiteGraphArray.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="globalMinCut.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -165,6 +159,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="pathCount.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bipartiteMatchingHopcroftKarp.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bipartiteMatchingKuhn.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bipartiteMatchingKuhnArray.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

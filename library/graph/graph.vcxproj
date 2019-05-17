@@ -149,8 +149,8 @@
     <ClCompile Include="basicDigraph.cpp" />
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
-    <ClCompile Include="bipartiteGraph.cpp" />
     <ClCompile Include="bipartiteGraphCheck.cpp" />
+    <ClCompile Include="bipartiteMatching.cpp" />
     <ClCompile Include="blockCutTree.cpp" />
     <ClCompile Include="dominatorTree.cpp" />
     <ClCompile Include="eulerianDigraph.cpp" />
@@ -175,9 +175,10 @@
     <ClInclude Include="basicDigraph.h" />
     <ClInclude Include="basicUndirectedGraph.h" />
     <ClInclude Include="bcc.h" />
-    <ClInclude Include="bipartiteGraph.h" />
-    <ClInclude Include="bipartiteGraphArray.h" />
+    <ClInclude Include="bipartiteMatchingKuhnArray.h" />
     <ClInclude Include="bipartiteGraphCheck.h" />
+    <ClInclude Include="bipartiteMatchingKuhn.h" />
+    <ClInclude Include="bipartiteMatchingHopcroftKarp.h" />
     <ClInclude Include="blockCutTree.h" />
     <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />
