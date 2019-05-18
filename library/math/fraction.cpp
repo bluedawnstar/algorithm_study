@@ -133,17 +133,5 @@ void testFraction() {
             cout << it.first << "/" << it.second << endl;
         }
     }
-
-    //--- test FractionFinder class -------------------------------------------
-    cout << "*** Fraction finding " << endl;
-    {
-        FractionFinder<long long, double> ff;
-
-        for (int i = 0; i < sizeof(sIn) / sizeof(sIn[0]); i++) {
-            ff.setDenomRange(sIn[i].from, sIn[i].to);
-            auto f = ff.solve(M_PI);
-            assert(f.num == sIn[i].num && f.denom == sIn[i].denom);
-        }
-    }
     cout << "OK!" << endl;
 }

@@ -43,9 +43,6 @@ struct FareySequenceRank {
             cnt[i] = d[maxDenom / i];
     }
 
-
-    //--- kth Farey sequence - fast solutions
-
     // the number of fractions to less than a/b (Frey sequences < a/b)
     // O(N)
     long long rank(int a, int b) {
@@ -113,7 +110,7 @@ struct FareySequence {
         if (kth == 1)
             return make_pair(0, 1);
 
-        int lo = 0, hi = (maxDenom + 1) / 2;
+        int lo = 0, hi = maxDenom;
 
         while (lo <= hi) {
             int mid = (lo + hi) / 2;
@@ -146,7 +143,7 @@ struct FareySequence {
         if (kth == 1)
             return make_pair(0, 1);
 
-        int lo = 0, hi = (maxDenom + 1) / 2;
+        int lo = 0, hi = maxDenom;
 
         while (lo <= hi) {
             int mid = (lo + hi) / 2;
@@ -175,7 +172,7 @@ struct FareySequence {
     }
 
     //--- sequence length
-
+    // return |f(n)|
     static long long getSequenceLength(int n) {
         vector<int> phi(n + 1);
         iota(phi.begin(), phi.end(), 0);
@@ -193,7 +190,7 @@ struct FareySequence {
         return accumulate(phi.begin(), phi.end(), 0ll);
     }
 
-//private:
+private:
     template <typename T>
     static T gcd(T p, T q) {
         if (p < q)

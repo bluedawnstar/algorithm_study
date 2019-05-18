@@ -38,10 +38,10 @@ void testFareySequence() {
         FareySequenceRank rank(8);
 
         assert(FareySequence::getSequenceLength(8) == F8.size());
-        for (int i = 0; i < 8; i++) {
-            assert(FareySequence::kthNaive(8, i + 1) == F8[i]);
-            assert(FareySequence::kthFast(8, i + 1) == F8[i]);
-            assert(FareySequence::kthFast(rank, 8, i + 1) == F8[i]);
+        for (int i = 1; i < int(F8.size()); i++) {
+            assert(FareySequence::kthNaive(8, i) == F8[i - 1]);
+            assert(FareySequence::kthFast(8, i) == F8[i - 1]);
+            assert(FareySequence::kthFast(rank, 8, i) == F8[i - 1]);
         }
     }
 
