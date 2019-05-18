@@ -1,13 +1,14 @@
 #include <cmath>
 #include <vector>
 #include <limits>
-#include <string>
+#include <numeric>
 #include <queue>
 #include <algorithm>
 
 using namespace std;
 
-#include "sternBrocot.h"
+#include "sternBrocot-fractionFinder.h"
+#include "sternBrocot-fractionFinder2.h"
 
 // 
 // <Related Links>
@@ -58,28 +59,26 @@ static struct TestData {
     { 16706, 61598, 104348, 33215 }
 };
 
-void testSternBrocot() {
+void testSternBrocotFractionFinder() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Stern Brocot Tree -------------------------" << endl;
+    cout << "--- Fraction Finder with Stern Brocot Tree -------------------------" << endl;
+    // fraction finder
+    {
+        FractionFinder<long long, double> ff;
+
+        for (int i = 0; i < sizeof(sIn) / sizeof(sIn[0]); i++) {
+            ff.setDenomRange(sIn[i].from, sIn[i].to);
+            auto f = ff.solve(M_PI);
+            assert(f.num == sIn[i].num && f.denom == sIn[i].denom);
+        }
+    }
+    // fraction finder2
     {
         for (int i = 0; i < sizeof(sIn) / sizeof(sIn[0]); i++) {
-            long long lo = sIn[i].from, hi = sIn[i].to;
-
-            auto cnt = sumFloorRange(lo, hi, 899125804609ll, 286200632530ll);
-            auto c1 = findKthSternBrocot(lo, hi, cnt);
-            auto c2 = findKthSternBrocot(lo, hi, cnt + 1);
-
-            long long scale1 = (lo + c1.second - 1) / c1.second;
-            c1.first *= scale1;
-            c1.second *= scale1;
-
-            long long scale2 = (lo + c2.second - 1) / c2.second;
-            c2.first *= scale2;
-            c2.second *= scale2;
-
-            assert((c1.first == sIn[i].num || c2.first == sIn[i].num) &&
-                (c1.second == sIn[i].denom || c2.second == sIn[i].denom));
+            auto f = FractionFinder2<long long>::solve(sIn[i].from, sIn[i].to, 899125804609ll, 286200632530ll);
+            assert((f.first.first == sIn[i].num && f.first.second == sIn[i].denom) ||
+                   (f.second.first == sIn[i].num && f.second.second == sIn[i].denom));
         }
     }
     cout << "OK!" << endl;

@@ -17,5 +17,7 @@ int main(void) {
     TEST(WeightedMedian);
     TEST(Fraction);
     TEST(FareySequence);
-    TEST(SternBrocot);
+    TEST(SternBrocotSequence);
+    TEST(SternBrocotFractionFinder);
+    TEST(SternBrocotTree);
 }

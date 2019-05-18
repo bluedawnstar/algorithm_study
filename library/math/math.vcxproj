@@ -156,7 +156,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="simpsonIntegration.cpp" />
-    <ClCompile Include="sternBrocot.cpp" />
+    <ClCompile Include="sternBrocot-fractionFinder.cpp" />
+    <ClCompile Include="sternBrocotSequence.cpp" />
+    <ClCompile Include="sternBrocotTree.cpp" />
     <ClCompile Include="sumOfPower.cpp" />
     <ClCompile Include="ternarySearch.cpp" />
     <ClCompile Include="triangle.cpp" />
@@ -174,7 +176,10 @@
     <ClInclude Include="matrix.h" />
     <ClInclude Include="matrix2x2.h" />
     <ClInclude Include="simpsonIntegration.h" />
-    <ClInclude Include="sternBrocot.h" />
+    <ClInclude Include="sternBrocot-fractionFinder.h" />
+    <ClInclude Include="sternBrocot-fractionFinder2.h" />
+    <ClInclude Include="sternBrocotSequence.h" />
+    <ClInclude Include="sternBrocotTree.h" />
     <ClInclude Include="sumOfPower.h" />
     <ClInclude Include="ternarySearch.h" />
     <ClInclude Include="triangle.h" />
