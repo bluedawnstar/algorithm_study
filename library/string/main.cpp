@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void) {
     TEST(SuffixArray);
+    TEST(SimpleSuffixArray);
     TEST(LcpArraySparseTable);
     TEST(SuffixArraySparseTable);
     TEST(SuffixAutomation);

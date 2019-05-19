@@ -138,6 +138,9 @@
     <ClCompile Include="patternSubsequence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixArraySimple.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -276,6 +279,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="patternSubsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArraySimple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
