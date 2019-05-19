@@ -239,5 +239,8 @@
     <ClInclude Include="partitionProblemMultiple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="knapsack2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

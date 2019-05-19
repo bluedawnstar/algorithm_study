@@ -184,6 +184,7 @@
     <ClInclude Include="bitDP.h" />
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="integerPartition.h" />
+    <ClInclude Include="knapsack2.h" />
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
     <ClInclude Include="selectBlock2xN.h" />
