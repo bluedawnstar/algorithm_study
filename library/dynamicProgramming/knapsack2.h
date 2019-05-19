@@ -96,3 +96,42 @@ struct MinLastValue {
         return 0;
     }
 };
+
+/*
+    <maximum last value>
+
+    0. constraints
+       - All values are positive.
+
+    1. operations
+       1) A[i] == A[j] : remove both
+       2) A[i] < A[j]  : remove A[i] and replace A[j] with A[j] - A[i]
+
+    2. result
+       1) A is empty     : 0
+       2) A is not empty : last value
+*/
+struct MaxLastValue {
+    // meet-in-the-middle
+    // O(2^(N/2) * logN)
+    static long long solveWithMeetInTheMiddle(vector<int> A) {
+        int i = int(max_element(A.begin(), A.end()) - A.begin());
+        swap(A[i], A.back());
+
+        int biggest = A.back();
+        A.pop_back();
+
+        return biggest - MinLastValue::solveWithMeetInTheMiddle(A);
+    }
+
+    // knapsack, O(N * maxValue)
+    static int solveWithKnapsack(vector<int> A, int maxValue) {
+        int i = int(max_element(A.begin(), A.end()) - A.begin());
+        swap(A[i], A.back());
+
+        int biggest = A.back();
+        A.pop_back();
+
+        return biggest - MinLastValue::solveWithKnapsack(A, maxValue);
+    }
+};
