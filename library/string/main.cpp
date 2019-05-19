@@ -46,4 +46,5 @@ int main(void) {
     TEST(DynamicStringHashWithSplayTree);
     TEST(RleString);
     TEST(PatternSubsequence);
+    TEST(LongestDuplicatedSubstring);
 }

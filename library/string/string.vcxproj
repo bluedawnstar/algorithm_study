@@ -153,6 +153,7 @@
     <ClCompile Include="hashing.cpp" />
     <ClCompile Include="lcpArraySparseTable.cpp" />
     <ClCompile Include="lexicographicallyMinimalStringRotation.cpp" />
+    <ClCompile Include="longestDuplicatedSubstring.cpp" />
     <ClCompile Include="lyndonFactorization.cpp" />
     <ClCompile Include="palindromicFactorization.cpp" />
     <ClCompile Include="palindromicNumber.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="hashing.h" />
     <ClInclude Include="lcpArraySparseTable.h" />
     <ClInclude Include="lexicographicallyMinimalStringRotation.h" />
+    <ClInclude Include="longestDuplicatedSubstring.h" />
     <ClInclude Include="lyndonFactorization.h" />
     <ClInclude Include="palindromicFactorization.h" />
     <ClInclude Include="palindromicNumber.h" />
