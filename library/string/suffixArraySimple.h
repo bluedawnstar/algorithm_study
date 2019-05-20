@@ -38,8 +38,11 @@
              1  | 0.155       | 0.008     | 0.073       | 0.004
     ------------+-------------+-----------+-------------+-----------
 
+    <Worst case>
+      - "ababababab..."
+      - "abcabcabcabc..."
+      - ...
 */
-// This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2019/5)
 // It is easy enough to use in a coding interview.
 struct SimpleSuffixArray {
     string S;

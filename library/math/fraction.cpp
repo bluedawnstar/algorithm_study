@@ -127,6 +127,7 @@ void testFraction() {
     //--- test continued fraction ---------------------------------------------
     cout << "*** PI's fractions" << endl;
     {
+        // [3; 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2, 1, 84, 2]
         vector<long long> piA = vector<long long>{ 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2, 1, 84, 2, };
         auto v = continuedFraction(piA);
         for (auto it : v) {
