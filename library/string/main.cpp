@@ -9,7 +9,7 @@ int main(void) {
     TEST(SuffixArray);
     TEST(SimpleSuffixArray);
     TEST(LcpArraySparseTable);
-    TEST(SuffixArraySparseTable);
+    TEST(SuffixSparseTable);
     TEST(SuffixAutomation);
     TEST(SuffixAutomationAM);
     TEST(SuffixTrie);
