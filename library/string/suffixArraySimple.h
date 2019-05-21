@@ -55,7 +55,7 @@ struct SimpleSuffixArray {
         build(s);
     }
 
-    // O(N^2), but fast enough in normal situation
+    // O(N^2*logN), but fast enough in normal situation
     void build(const string& s) {
         S = s;
         int N = int(s.length());
@@ -98,22 +98,22 @@ struct SimpleSuffixArray {
         });
     }
 
-    int lcp(int sa1, int sa2) const {
+    int lcp(int x, int y) const {
         int N = int(S.length());
 
         int res = 0;
 
-        int ga = saToGroup[sa1];
-        int gb = saToGroup[sa2];
+        int ga = saToGroup[x];
+        int gb = saToGroup[y];
         if (ga == gb) {
-            int d = repGroup[ga].first + repGroup[ga].second - max(sa1, sa2);
-            sa1 += d;
-            sa2 += d;
+            int d = repGroup[ga].first + repGroup[ga].second - max(x, y);
+            x += d;
+            y += d;
             res += d;
         }
 
-        for (; sa1 < N && sa2 < N; sa1++, sa2++) {
-            if (S[sa1] != S[sa2])
+        for (; x < N && y < N; x++, y++) {
+            if (S[x] != S[y])
                 break;
             res++;
         }

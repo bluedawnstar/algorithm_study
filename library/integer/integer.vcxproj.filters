@@ -24,9 +24,6 @@
     <ClCompile Include="primeNumberEratosthenes.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="factor.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="gcd.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -81,11 +78,11 @@
     <ClCompile Include="primalityTestInt64.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="factor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="factor.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="gcd.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -150,6 +147,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="primalityTestInt64.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="factor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,8 +12,8 @@ struct LongestDuplicatedSubstring {
 
         // power table
         vector<unsigned long long> pow1(N), pow2(N);
-        pow1[0] = P1;
-        pow2[0] = P2;
+        pow1[0] = 1;
+        pow2[0] = 1;
         for (int i = 1; i < N; i++) {
             pow1[i] = pow1[i - 1] * P1;
             pow2[i] = pow2[i - 1] * P2;
@@ -32,9 +32,9 @@ struct LongestDuplicatedSubstring {
                 int j = i - length;
                 auto h1 = (hash1[i] - hash1[j]) * pow1[N - 1 - j];
                 auto h2 = (hash2[i] - hash2[j]) * pow2[N - 1 - j];
-                if (S.find((h1 << 1) ^ h2) != S.end())
+                if (S.find(h1 ^ h2) != S.end())
                     return make_pair(j, length);
-                S.insert((h1 << 1) ^ h2);
+                S.insert(h1 ^ h2);
             }
             return make_pair(-1, 0);
         };
@@ -64,6 +64,7 @@ struct LongestDuplicatedSubstring {
 
     //--- with Suffix Array
 
+    // It's not fast but easy solution. Use SuffixArray to solve this problem faster.
     struct SimpleSuffixArray {
         string S;
 
@@ -75,6 +76,7 @@ struct LongestDuplicatedSubstring {
             build(s);
         }
 
+        // O(N^2*logN)
         void build(const string& s) {
             S = s;
             int N = int(s.length());
@@ -144,7 +146,7 @@ struct LongestDuplicatedSubstring {
         }
     };
 
-    // O(N^2) or O(NlogN)
+    // O(N^2*logN) or O(NlogN)
     static string solveWithSA(const string& S) {
         SimpleSuffixArray sa(S);
 
