@@ -144,6 +144,9 @@
     <ClCompile Include="suffixSparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixRollingHash.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -288,6 +291,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixSparseTable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixRollingHash.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

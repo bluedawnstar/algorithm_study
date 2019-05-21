@@ -174,6 +174,7 @@
     <ClCompile Include="substrHashing.cpp" />
     <ClCompile Include="suffixArray.cpp" />
     <ClCompile Include="suffixArraySimple.cpp" />
+    <ClCompile Include="suffixRollingHash.cpp" />
     <ClCompile Include="suffixSparseTable.cpp" />
     <ClCompile Include="suffixArray_notUsed.cpp" />
     <ClCompile Include="suffixAutomaton.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="suffixArray.h" />
     <ClInclude Include="suffixArrayAlgo.h" />
     <ClInclude Include="suffixArraySimple.h" />
+    <ClInclude Include="suffixRollingHash.h" />
     <ClInclude Include="suffixSparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />
     <ClInclude Include="suffixAutomatonAlgo.h" />

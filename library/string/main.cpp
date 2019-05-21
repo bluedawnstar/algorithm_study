@@ -47,4 +47,5 @@ int main(void) {
     TEST(RleString);
     TEST(PatternSubsequence);
     TEST(LongestDuplicatedSubstring);
+    TEST(SuffixRollingHash);
 }
