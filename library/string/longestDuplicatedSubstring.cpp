@@ -25,7 +25,7 @@ static string makeRandomString(int n) {
 }
 
 void testLongestDuplicatedSubstring() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Longest Duplicated Substring --------------------------------" << endl;
     {
