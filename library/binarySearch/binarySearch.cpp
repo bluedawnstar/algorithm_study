@@ -42,12 +42,16 @@ void testBinarySearch() {
             int ans2 = lowerBound2<int>(0, N - 1, [x, &v](int mid) {
                 return x <= v[mid];
             });
+            int ans3 = lowerBound3<int>(0, N - 1, [x, &v](int mid) {
+                return x <= v[mid];
+            });
 
-            if (gt != ans1 || gt != ans2)
-                cout << "Mismatched : " << gt << ", " << ans1 << ", " << ans2 << endl;
+            if (gt != ans1 || gt != ans2 || gt != ans3)
+                cout << "Mismatched : " << gt << ", " << ans1 << ", " << ans2 << ", " << ans3 << endl;
 
             assert(gt == ans1);
             assert(gt == ans2);
+            assert(gt == ans3);
         }
     }
     {
@@ -69,12 +73,16 @@ void testBinarySearch() {
             int ans2 = lowerBound2<int>(0, N - 1, [x, &v](int mid) {
                 return x <= v[mid];
             });
+            int ans3 = lowerBound3<int>(0, N - 1, [x, &v](int mid) {
+                return x <= v[mid];
+            });
 
-            if (gt != ans1 || gt != ans2)
-                cout << "Mismatched : " << gt << ", " << ans1 << ", " << ans2 << endl;
+            if (gt != ans1 || gt != ans2 || gt != ans3)
+                cout << "Mismatched : " << gt << ", " << ans1 << ", " << ans2 << ", " << ans3 << endl;
 
             assert(gt == ans1);
             assert(gt == ans2);
+            assert(gt == ans3);
         }
     }
 

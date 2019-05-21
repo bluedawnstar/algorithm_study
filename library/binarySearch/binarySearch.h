@@ -29,3 +29,20 @@ T lowerBound2(T lo, T hi, const function<bool(T)>& possible) {
     }
     return lo;
 }
+
+//    xxxxxxxOOOOOOOOO
+//    |      ^       |
+//   lo              hi
+// O(N), inclusive
+template <typename T>
+T lowerBound3(T lo, T hi, const function<bool(T)>& possible) {
+    while (lo <= hi && !possible(lo)) {
+        ++lo;
+
+        T step;
+        for (step = 1; lo + step <= hi && !possible(lo + step); step <<= 1)
+            ;
+        lo += step >> 1;
+    }
+    return lo;
+}
