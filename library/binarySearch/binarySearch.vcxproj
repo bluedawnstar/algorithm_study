@@ -146,12 +146,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="binarySearch.cpp" />
     <ClCompile Include="coverTime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parallelBinarySearch.cpp" />
     <ClCompile Include="parallelBinarySearchRecursive.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="binarySearch.h" />
     <ClInclude Include="coverTime.h" />
     <ClInclude Include="parallelBinarySearch.h" />
     <ClInclude Include="parallelBinarySearchRecursive.h" />

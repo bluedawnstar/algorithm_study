@@ -27,6 +27,9 @@
     <ClCompile Include="parallelBinarySearchRecursive.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="binarySearch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="coverTime.h">
@@ -36,6 +39,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="parallelBinarySearchRecursive.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="binarySearch.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

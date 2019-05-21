@@ -6,6 +6,7 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
+    TEST(BinarySearch);
     TEST(ParallelBinarySearch);
     TEST(ParallelBinarySearchRecursive);
     TEST(CoverTime);
