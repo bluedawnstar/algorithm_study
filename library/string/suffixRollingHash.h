@@ -103,23 +103,36 @@ struct SuffixRollingHash {
 #else
         int lo = 0, hi = n - 1;
 
-        while (lo <= hi && S[x + lo] == S[y + lo]) {
-            ++lo;
-
-            int step;
-            for (step = 1; lo + step <= hi; step <<= 1) {
+        int step;
+        for (step = 1; lo + step <= hi; step <<= 1) {
 #ifdef USE_DOUBLE_HASH
-                auto h1 = (hash1[x + lo + step] - hash1[x]) * P1;
-                auto h2 = (hash2[x + lo + step] - hash2[x]) * P2;
-                if (h1 != (hash1[y + lo + step] - hash1[y]) || h2 != (hash2[y + lo + step] - hash2[y]))
-                    break;
+            auto h1 = (hash1[x + lo + step] - hash1[x]) * P1;
+            auto h2 = (hash2[x + lo + step] - hash2[x]) * P2;
+            if (h1 != (hash1[y + lo + step] - hash1[y]) || h2 != (hash2[y + lo + step] - hash2[y]))
+                break;
 #else
-                auto h1 = (hash1[x + lo + step] - hash1[x]) * P1;
-                if (h1 != (hash1[y + lo + step] - hash1[y]))
-                    break;
+            auto h1 = (hash1[x + lo + step] - hash1[x]) * P1;
+            if (h1 != (hash1[y + lo + step] - hash1[y]))
+                break;
 #endif
-            }
-            lo += step >> 1;
+        }
+
+        hi = min(hi, lo + step);
+        lo += step >> 1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+#ifdef USE_DOUBLE_HASH
+            auto h1 = (hash1[x + mid + 1] - hash1[x]) * P1;
+            auto h2 = (hash2[x + mid + 1] - hash2[x]) * P2;
+            if (h1 == (hash1[y + mid + 1] - hash1[y]) && h2 == (hash2[y + mid + 1] - hash2[y]))
+#else
+            auto h1 = (hash1[x + mid + 1] - hash1[x]) * P1;
+            if (h1 == (hash1[y + mid + 1] - hash1[y]))
+#endif
+                lo = mid + 1;
+            else
+                hi = mid - 1;
         }
 
         return lo;
