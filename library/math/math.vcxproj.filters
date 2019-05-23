@@ -125,5 +125,8 @@
     <ClInclude Include="sternBrocotTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="multinomialTheorem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
