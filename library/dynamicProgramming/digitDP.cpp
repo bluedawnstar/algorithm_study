@@ -6,7 +6,7 @@ using namespace std;
 
 #include "digitDP.h"
 #include "digitDPFast.h"
-
+#include "digitCounter.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -23,6 +23,19 @@ static int sumDigits(int a, int b) {
     for (int i = a; i <= b; i++) {
         for (int t = i; t; t /= 10)
             res += t % 10;
+    }
+    return res;
+}
+
+static int countDigit(int a, int b, int d) {
+    int res = 0;
+
+    if (d == 0 && a == 0)
+        res++;
+
+    for (int i = a; i <= b; i++) {
+        for (int t = i; t; t /= 10)
+            res += ((t % 10) == d);
     }
     return res;
 }
@@ -62,6 +75,32 @@ void testDigitDP() {
             auto gt = sumDigits(a, b);
             if (ans != gt)
                 cout << "Mismatched : digitSum(" << a << ", " << b << ") = " << ans << ", " << gt << endl;
+        }
+    }
+    {
+        for (int i = 0; i < 1000; i++) {
+            for (int d = 0; d < 10; d++) {
+                auto ans1 = DigitDPFast::rangeDigitCount(0, i, d);
+                auto ans2 = DigitCounter::count(0, i, d);
+                auto gt = countDigit(0, i, d);
+                if (ans1 != gt || ans2 != gt)
+                    cout << "Mismatched : digitSum(1, " << i << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                assert(ans1 == gt && ans2 == gt);
+            }
+        }
+
+        for (int i = 0; i < 100; i++) {
+            int a = RandInt32::get() % 10000;
+            int b = RandInt32::get() % 10000;
+            if (a > b)
+                swap(a, b);
+            int d = RandInt32::get() % 10;
+            auto ans1 = DigitDPFast::rangeDigitCount(a, b, d);
+            auto ans2 = DigitCounter::count(a, b, d);
+            auto gt = countDigit(a, b, d);
+            if (ans1 != gt || ans2 != gt)
+                cout << "Mismatched : digitCount(" << a << ", " << b << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+            assert(ans1 == gt && ans2 == gt);
         }
     }
     {
