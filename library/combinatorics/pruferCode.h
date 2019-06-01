@@ -15,7 +15,7 @@
 //   2. Leaves never appear in Prufer Code.
 
 struct PruferCode {
-    // convert a tree to Prufer Code, O(N*logN)
+    // convert a tree to a Prufer Code, O(N*logN)
     static vector<int> convertTreeToPruferCode(const vector<vector<int>>& edges) {
         int N = int(edges.size());
 
@@ -53,6 +53,7 @@ struct PruferCode {
 
     //---
 
+    // convert a Prufer code to a tree, O(N*logN)
     static void convertPruferCodeToTree(const vector<int>& pruferCode, vector<vector<int>>& edges) {
         int N = int(pruferCode.size()) + 2;
 

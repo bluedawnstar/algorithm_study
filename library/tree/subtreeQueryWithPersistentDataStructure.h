@@ -2,7 +2,7 @@
 
 /*
  
- <How to make persistent data structure for subtree query on a tree>
+ <How to make persistent data structure for subtree query on a rooted tree>
 
     1. first DFS iteration to make basic information - O(N)
 

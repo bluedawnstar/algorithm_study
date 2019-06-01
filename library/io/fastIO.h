@@ -8,7 +8,7 @@ namespace FastIO {
 
     void init() {
         gInPtr = gInBuff;
-        auto size = fread(gInBuff, 1, sizeof(gInBuff) - 4, stdin);
+        auto size = fread(gInBuff, 1, sizeof(gInBuff) - 1, stdin);
         gInBuff[size] = 0;
     }
 
