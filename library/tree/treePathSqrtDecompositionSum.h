@@ -1,9 +1,19 @@
 #pragma once
 
-#include "treeBasic.h"
-
 template <typename T>
-struct TreePathSqrtDecompositionSum : public Tree {
+struct TreePathSqrtDecompositionSum {
+    int                 N;          // the number of vertex
+    int                 logN;       // log2(N - 1) + 2
+
+    vector<vector<int>> edges;      // edges (vertex number)
+    vector<vector<int>> P;          // P[0][n] points to the parent
+                                    // parent & acestors
+
+    vector<int>         level;      // depth (root is 0)
+    vector<int>         treeSize;   // call dfsSize() to calculate tree size
+
+    //---
+
     int         root;                   // 
     int         sqrtN;                  // 
     int         branchN;                // 
@@ -24,21 +34,45 @@ struct TreePathSqrtDecompositionSum : public Tree {
     vector<LazyT>   branchLazy;         // 
     vector<T>       branchLazyValues;   // 
 
-    TreePathSqrtDecompositionSum() : Tree() {
+    TreePathSqrtDecompositionSum() : N(0), logN(0) {
     }
 
-    explicit TreePathSqrtDecompositionSum(int N, int logN = 0) : Tree(N, logN) {
+    explicit TreePathSqrtDecompositionSum(int N, int logN = 0) {
         init(N, logN);
     }
 
     void init(int N, int logN = 0) {
-        Tree::init(N, logN);
+        if (logN <= 0) {
+#ifndef __GNUC__
+            logN = _lzcnt_u32(1u) - _lzcnt_u32((unsigned int)(N - 1)) + 2;
+#else
+            logN = __builtin_clz(1u) - __builtin_clz((unsigned int)(N - 1)) + 2;
+#endif
+        }
+
+        this->N = N;
+        this->logN = logN;
+
+        edges = vector<vector<int>>(N);
+        P = vector<vector<int>>(logN, vector<int>(N));
+        level.assign(N, 0);
+        treeSize.assign(N, 0);
 
         sqrtN = int(sqrt(N));
         nodeToBranch.assign(N, 0);
         branchSize.reserve(int(sqrt(N)) * 2);
         branchHead.reserve(int(sqrt(N)) * 2);
         branchTail.reserve(int(sqrt(N)) * 2);
+    }
+
+
+    void addEdge(int u, int v) {
+        edges[u].push_back(v);
+        edges[v].push_back(u);
+    }
+
+    void addEdgeDirected(int u, int v) {
+        edges[u].push_back(v);
     }
 
     void build(int root) {
@@ -135,6 +169,62 @@ struct TreePathSqrtDecompositionSum : public Tree {
         return level[v] - level[branchHead[branch]];
     }
 
+    //--- LCA
+
+    int climbTree(int node, int dist) const {
+        if (dist <= 0)
+            return node;
+
+        for (int i = 0; dist > 0; i++) {
+            if (dist & 1)
+                node = P[i][node];
+            dist >>= 1;
+        }
+
+        return node;
+    }
+
+    int findLCA(int A, int B) const {
+        if (level[A] < level[B])
+            swap(A, B);
+
+        A = climbTree(A, level[A] - level[B]);
+
+        if (A == B)
+            return A;
+
+        int bitCnt = 0;
+        for (int x = level[A]; x; x >>= 1)
+            bitCnt++;
+
+        for (int i = bitCnt - 1; i >= 0; i--) {
+            if (P[i][A] > 0 && P[i][A] != P[i][B]) {
+                A = P[i][A];
+                B = P[i][B];
+            }
+        }
+
+        return P[0][A];
+    }
+
+    // find LCA when the root is changed
+    int findLCA(int root, int A, int B) const {
+        int lca = findLCA(A, B);
+
+        int temp = findLCA(A, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        temp = findLCA(B, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        return lca;
+    }
+
+    int distance(int u, int v) const {
+        return level[u] + level[v] - level[findLCA(u, v)] * 2;
+    }
 
     //--- update
 
@@ -192,7 +282,8 @@ struct TreePathSqrtDecompositionSum : public Tree {
     }
 
 private:
-    //--------- DFS -----------------------------------------------------------
+    //--- DFS
+
     void dfs(int u, int parent) {
         bool first = true;
         if (branchSize.back() >= sqrtN)
@@ -262,6 +353,16 @@ private:
             }
         }
     }
+
+    void makeLcaTable() {
+        for (int i = 1; i < logN; i++) {
+            for (int j = 0; j < N; j++) {
+                int pp = P[i - 1][j];
+                P[i][j] = pp < 0 ? pp : P[i - 1][pp];
+            }
+        }
+    }
+
 
     void applyBranch(int branch) {
         if (branchLazy[branch] == lzNone)

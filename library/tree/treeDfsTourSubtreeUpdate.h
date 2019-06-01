@@ -1,12 +1,22 @@
 #pragma once
 
-#include "treeBasic.h"
-
 #include "../rangeQuery/segmentTreeCompactLazy.h"
 
 // It is based on DFS tour tree
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct DfsTourTreeSubtreeUpdate : public Tree {
+struct DfsTourTreeSubtreeUpdate {
+    int                 N;          // the number of vertex
+    int                 logN;       // log2(N - 1) + 2
+
+    vector<vector<int>> edges;      // edges (vertex number)
+    vector<vector<int>> P;          // P[0][n] points to the parent
+                                    // parent & acestors
+
+    vector<int>         level;      // depth (root is 0)
+    vector<int>         treeSize;   // call dfsSize() to calculate tree size
+
+    //---
+
     vector<pair<int, int>> visTime;     // node index to (visit time, leave time)
     vector<int>            time2Node;   // time to node index (0 <= time < 2 * N)
     int                    currTime;    //
@@ -14,23 +24,47 @@ struct DfsTourTreeSubtreeUpdate : public Tree {
     CompactSegmentTreeLazyUpdate<T, MergeOp, BlockOp> seg;
 
     DfsTourTreeSubtreeUpdate(const MergeOp& mop, const BlockOp& bop, T dflt = T())
-        : Tree(), seg(mop, bop, dflt) {
+        : N(0), logN(0), seg(mop, bop, dflt) {
         currTime = 0;
     }
 
     DfsTourTreeSubtreeUpdate(int N, const MergeOp& mop, const BlockOp& bop, T dflt = T())
-        : Tree(), seg(mop, bop, dflt) {
+        : N(0), logN(0), seg(mop, bop, dflt) {
         init(N, false, 0);
     }
 
     void init(int N, bool alignPowerOf2 = false, int logN = 0) {
-        Tree::init(N, logN);
+        if (logN <= 0) {
+#ifndef __GNUC__
+            logN = _lzcnt_u32(1u) - _lzcnt_u32((unsigned int)(N - 1)) + 2;
+#else
+            logN = __builtin_clz(1u) - __builtin_clz((unsigned int)(N - 1)) + 2;
+#endif
+        }
+
+        this->N = N;
+        this->logN = logN;
+
+        edges = vector<vector<int>>(N);
+        P = vector<vector<int>>(logN, vector<int>(N));
+        level.assign(N, 0);
+        treeSize.assign(N, 0);
 
         visTime.assign(N, make_pair(0, 0));
         time2Node.assign(N, 0);
         currTime = 0;
 
         seg.init(N, alignPowerOf2);
+    }
+
+
+    void addEdge(int u, int v) {
+        edges[u].push_back(v);
+        edges[v].push_back(u);
+    }
+
+    void addEdgeDirected(int u, int v) {
+        edges[u].push_back(v);
     }
 
     void build(int root) {
@@ -56,8 +90,66 @@ struct DfsTourTreeSubtreeUpdate : public Tree {
         return visTime[u].first <= visTime[v].first && visTime[v].second <= visTime[u].second;
     }
 
+    //--- LCA
+
+    int climbTree(int node, int dist) const {
+        if (dist <= 0)
+            return node;
+
+        for (int i = 0; dist > 0; i++) {
+            if (dist & 1)
+                node = P[i][node];
+            dist >>= 1;
+        }
+
+        return node;
+    }
+
+    int findLCA(int A, int B) const {
+        if (level[A] < level[B])
+            swap(A, B);
+
+        A = climbTree(A, level[A] - level[B]);
+
+        if (A == B)
+            return A;
+
+        int bitCnt = 0;
+        for (int x = level[A]; x; x >>= 1)
+            bitCnt++;
+
+        for (int i = bitCnt - 1; i >= 0; i--) {
+            if (P[i][A] > 0 && P[i][A] != P[i][B]) {
+                A = P[i][A];
+                B = P[i][B];
+            }
+        }
+
+        return P[0][A];
+    }
+
+    // find LCA when the root is changed
+    int findLCA(int root, int A, int B) const {
+        int lca = findLCA(A, B);
+
+        int temp = findLCA(A, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        temp = findLCA(B, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        return lca;
+    }
+
+    int distance(int u, int v) const {
+        return level[u] + level[v] - level[findLCA(u, v)] * 2;
+    }
+
 private:
-    //--------- DFS -----------------------------------------------------------
+    //--- DFS
+
     void dfs(int u, int parent) {
         visTime[u].first = currTime;
         time2Node[currTime++] = u;
@@ -101,6 +193,15 @@ private:
                 int v = edges[it.u][it.vi];
                 level[v] = level[it.u] + 1;
                 st.push_back(Item{ v, it.u, -1 });
+            }
+        }
+    }
+
+    void makeLcaTable() {
+        for (int i = 1; i < logN; i++) {
+            for (int j = 0; j < N; j++) {
+                int pp = P[i - 1][j];
+                P[i][j] = pp < 0 ? pp : P[i - 1][pp];
             }
         }
     }

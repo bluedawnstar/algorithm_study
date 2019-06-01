@@ -6,7 +6,6 @@
 
 using namespace std;
 
-#include "treeBasic.h"
 #include "treePathSqrtDecompositionSum.h"
 
 // <Practice Problems>
@@ -24,7 +23,8 @@ using namespace std;
 
 #include "treeBlockTreePathQuery.h"
 
-static void pathUpdateNaive(Tree& tree, int u, int v, int val, vector<int>& values) {
+template <typename TreeT>
+static void pathUpdateNaive(TreeT& tree, int u, int v, int val, vector<int>& values) {
     if (tree.level[u] > tree.level[v])
         swap(u, v);
 
@@ -43,7 +43,8 @@ static void pathUpdateNaive(Tree& tree, int u, int v, int val, vector<int>& valu
     values[u] = val;
 }
 
-static void pathAddNaive(Tree& tree, int u, int v, int val, vector<int>& values) {
+template <typename TreeT>
+static void pathAddNaive(TreeT& tree, int u, int v, int val, vector<int>& values) {
     if (tree.level[u] > tree.level[v])
         swap(u, v);
 
@@ -62,7 +63,8 @@ static void pathAddNaive(Tree& tree, int u, int v, int val, vector<int>& values)
     values[u] += val;
 }
 
-static int pathQueryNaive(Tree& tree, int u, int v, vector<int>& values) {
+template <typename TreeT>
+static int pathQueryNaive(TreeT& tree, int u, int v, vector<int>& values) {
     if (u == v)
         return values[u];
 
@@ -84,7 +86,8 @@ static int pathQueryNaive(Tree& tree, int u, int v, vector<int>& values) {
     return res + values[u];
 }
 
-static int climbKthNaive(Tree& tree, int u, int kth, vector<int>& values) {
+template <typename TreeT>
+static int climbKthNaive(TreeT& tree, int u, int kth, vector<int>& values) {
     while (u >= 0 && kth > 0) {
         if (values[u]) {
             if (--kth == 0)

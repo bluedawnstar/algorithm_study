@@ -1,4 +1,6 @@
 #include <cmath>
+#include <cassert>
+#include <functional>
 #include <vector>
 #include <algorithm>
 
