@@ -12,7 +12,7 @@ struct DigitCounter {
             for (long long scale = 1; scale <= n; scale *= 10) {
                 long long count = (n / scale) / 10;
                 for (int j = 0; j < 10; j++)
-                    res[j] += count * scale;    // xxx j yyy : count = xxx, scale = yyy
+                    res[j] += count * scale;    // "xxx" + j + "yyy" : 0 <= xxx < n / (scale * 10), 0 <= yyy < scale
                 res[0] -= scale;                // subtract the number of leading 0
 
                 // tight(or fit) case
