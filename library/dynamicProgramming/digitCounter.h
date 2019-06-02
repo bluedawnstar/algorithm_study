@@ -50,4 +50,59 @@ struct DigitCounter {
         auto res = countAll(n);
         return res[d];
     }
+
+    //---
+
+    // sum of all digits in range [0, n]
+    static vector<long long> sumAll(long long n) { 
+        auto cnt = countAll(n);
+        for (int i = 0; i < 10; i++)
+            cnt[i] *= i;
+        return cnt;
+    }
+
+    // sum of all digits in numbers in range [low, high]
+    static vector<long long> sumAll(long long low, long long high) { 
+        auto right = countAll(high);
+        auto left = countAll(low - 1);
+
+        for (int i = 0; i < 10; i++)
+            right[i] = (right[i] - left[i]) * i;
+
+        return right;
+    }
+
+
+    // sum of all digits in range [0, n]
+    static long long sumAllDigits(long long n) { 
+        long long res = 0;
+        auto cnt = countAll(n);
+        for (int i = 0; i < 10; i++)
+            res += cnt[i] * i;
+        return res;
+    }
+
+    // sum of all digits in numbers in range [low, high]
+    static long long sumAllDigits(long long low, long long high) { 
+        long long res = 0;
+        auto right = countAll(high);
+        auto left = countAll(low - 1);
+        for (int i = 0; i < 10; i++)
+            res += (right[i] - left[i]) * i;
+        return res;
+    }
+
+
+    // sum of a digit in range [low, high]
+    static long long sum(long long low, long long high, int d) {
+        auto right = countAll(high);
+        auto left = countAll(low - 1);
+        return (right[d] - left[d]) * d;
+    }
+
+    // the number of a digit in range [0, n]
+    static long long sum(long long n, int d) {
+        auto res = countAll(n);
+        return res[d] * d;
+    }
 };
