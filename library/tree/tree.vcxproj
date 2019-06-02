@@ -183,6 +183,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="treeBasic.cpp" />
     <ClCompile Include="linkCutTree.cpp" />
+    <ClCompile Include="treeHLD.cpp" />
     <ClCompile Include="treeKthDistance.cpp" />
     <ClCompile Include="treeKthValueInDistance.cpp" />
     <ClCompile Include="treeMO.cpp" />
@@ -241,6 +242,10 @@
     <ClInclude Include="treeHeavyLightDecompositionPathQuery.h" />
     <ClInclude Include="treeHeavyLightDecompositionPathQueryBIT.h" />
     <ClInclude Include="treeHeavyLightDecompositionPathQueryLazy.h" />
+    <ClInclude Include="treeHLD.h" />
+    <ClInclude Include="treeHLDPathQuery.h" />
+    <ClInclude Include="treeHLDPathQueryBIT.h" />
+    <ClInclude Include="treeHLDPathQueryLazy.h" />
     <ClInclude Include="treeKthDistance.h" />
     <ClInclude Include="treeKthValueInDistance.h" />
     <ClInclude Include="treeMO.h" />

@@ -8,6 +8,7 @@ using namespace std;
 int main(void) {
     TEST(TreeBasic);
     TEST(HeavyLightDecomposition);
+    TEST(HLD);
     TEST(DfsTour);
     TEST(DfsTourTreePathSum);
     TEST(DfsTourTreeSubtreeSum);
