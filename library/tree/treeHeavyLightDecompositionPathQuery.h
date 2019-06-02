@@ -47,7 +47,7 @@ struct HLDPathQuery {
 
     // update a value of an edge(u-v)
     void update(int u, int v, T cost) {
-        if (u >= 0 && hld.tree.P[0][u] == v)
+        if (u >= 0 && hld.P[0][u] == v)
             swap(u, v);
         //assert(gP[0][v] == u);
 
@@ -57,7 +57,7 @@ struct HLDPathQuery {
     }
 
     T query(int u, int v) const {
-        int lca = hld.tree.findLCA(u, v);
+        int lca = hld.findLCA(u, v);
         return mergeOp(queryTopdown(lca, u), queryTopdown(lca, v));
     }
 

@@ -36,9 +36,8 @@ void testHeavyLightDecomposition_org() {
     cin >> T;
 
     while (T-- > 0) {
-        Tree tree(MAXN, LOGN);
-        HeavyLightDecomposition hld(tree);
-        auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
+        HeavyLightDecomposition tree(MAXN, LOGN);
+        auto pathQuery = makeHLDPathQuery(tree, [](int a, int b) { return max(a, b); }, -1);
 
         cin >> tree.N;
         for (int v = 0; v < tree.N; v++) {
@@ -50,10 +49,7 @@ void testHeavyLightDecomposition_org() {
             tree.addEdge(u, v);
         }
 
-        tree.dfs(0, -1);
-        tree.makeLcaTable();
-
-        hld.doHLD(0);
+        tree.build(0);
         pathQuery.build(1);
 
         int ans = 0;
@@ -107,10 +103,9 @@ void testHeavyLightDecomposition() {
 
         vector<int> rightAns{ 15, 7 };
         for (int i = 0; i < T; i++) {
-            Tree tree(int(TR[i].size()), LOGN);
-            HeavyLightDecomposition hld(tree);
-            auto pathQuery = makeHLDPathQuery(hld, [](int a, int b) { return max(a, b); }, -1);
-            auto pathQueryLazy = makeHLDPathQueryLazy(hld, [](int a, int b) { return max(a, b); }, [](int a, int n) { return a; }, -1);
+            HeavyLightDecomposition tree(int(TR[i].size()), LOGN);
+            auto pathQuery = makeHLDPathQuery(tree, [](int a, int b) { return max(a, b); }, -1);
+            auto pathQueryLazy = makeHLDPathQueryLazy(tree, [](int a, int b) { return max(a, b); }, [](int a, int n) { return a; }, -1);
 
             for (int v = 0; v < tree.N; v++) {
                 int u = TR[i][v];
@@ -120,10 +115,7 @@ void testHeavyLightDecomposition() {
                 tree.addEdge(u, v);
             }
 
-            tree.dfs(0, -1);
-            tree.makeLcaTable();
-
-            hld.doHLD(0);
+            tree.build(0);
             pathQuery.build(1);
             pathQueryLazy.build(1);
 

@@ -49,7 +49,7 @@ struct HLDPathQueryLazy {
 
     // update a value of an edge(u-v)
     void update(int u, int v, T cost) {
-        if (u >= 0 && hld.tree.P[0][u] == v)
+        if (u >= 0 && hld.P[0][u] == v)
             swap(u, v);
         //assert(gP[0][v] == u);
 
@@ -59,13 +59,13 @@ struct HLDPathQueryLazy {
     }
 
     void updateRange(int u, int v, T cost) {
-        int lca = hld.tree.findLCA(u, v);
+        int lca = hld.findLCA(u, v);
         updateRangeTopdown(lca, u, cost);
         updateRangeTopdown(lca, v, cost);
     }
 
     T query(int u, int v) {
-        int lca = hld.tree.findLCA(u, v);
+        int lca = hld.findLCA(u, v);
         return mergeOp(queryTopdown(lca, u), queryTopdown(lca, v));
     }
 
@@ -86,23 +86,23 @@ struct HLDPathQueryLazy {
     }
 
     void updateRangeVertex(int u, int v, T cost) {
-        int lca = hld.tree.findLCA(u, v);
+        int lca = hld.findLCA(u, v);
         if (lca == hld.mRoot) {
             updateRangeTopdown(lca, u, cost);
             updateRangeTopdown(lca, v, cost);
             rootValue += cost;
         } else {
-            updateRangeTopdown(hld.tree.P[0][lca], u, cost);
+            updateRangeTopdown(hld.P[0][lca], u, cost);
             updateRangeTopdown(lca, v, cost);
         }
     }
 
     T queryVertex(int u, int v) {
-        int lca = hld.tree.findLCA(u, v);
+        int lca = hld.findLCA(u, v);
         if (lca == hld.mRoot)
             return mergeOp(mergeOp(queryTopdown(lca, u), queryTopdown(lca, v)), rootValue);
         else
-            return mergeOp(queryTopdown(hld.tree.P[0][lca], u), queryTopdown(lca, v));
+            return mergeOp(queryTopdown(hld.P[0][lca], u), queryTopdown(lca, v));
     }
 
 protected:
