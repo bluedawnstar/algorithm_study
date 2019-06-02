@@ -23,6 +23,8 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/profile.h"
+#include "../common/rand.h"
 
 #define MAXN    50000
 #define LOGN    17              // log2(MAXN)
@@ -146,6 +148,106 @@ void testHLD() {
             assert(rightAns[i] == ans);
             assert(rightAns[i] == ansLazy);
         }
+    }
+    {
+        int N = 10000;
+        int CASE = 100;
+        int T = 10000;
+#if _DEBUG
+        N = 1000;
+        CASE = 10;
+        T = 1000;
+#endif
+        while (CASE-- > 0) {
+            HLD tree(N);
+            for (int v = 1; v < N; v++) {
+                int u = RandInt32::get() % v;
+                tree.addEdge(u, v);
+            }
+            tree.build(0);
+
+            for (int i = 0; i < T; i++) {
+                int u = RandInt32::get() % N;
+                int v = RandInt32::get() % N;
+                int lca1 = tree.findLCA(u, v);
+                int lca2 = tree.findLCA2(u, v);
+                if (lca1 != lca2)
+                    cout << "Mismatched LCA : " << lca1 << ", " << lca2 << endl;
+                assert(lca1 == lca2);
+
+                int d = RandInt32::get() % (tree.level[u] + 1);
+                int ua1 = tree.climbTree(u, d);
+                int ua2 = tree.climbTree2(u, d);
+                if (ua1 != ua2)
+                    cout << "Mismatched value : " << ua1 << ", " << ua2 << endl;
+                assert(ua1 == ua2);
+            }
+        }
+    }
+    {
+        int N = 100000;
+        int T = 1000000;
+#if _DEBUG
+        N = 1000;
+        T = 1000;
+#endif
+        HLD tree(N);
+        for (int v = 1; v < N; v++) {
+            int u = RandInt32::get() % v;
+            tree.addEdge(u, v);
+        }
+        tree.build(0);
+
+        vector<pair<int, int>> query(T);
+        for (int i = 0; i < T; i++) {
+            query[i].first = RandInt32::get() % N;
+            query[i].second = RandInt32::get() % N;
+        }
+
+        PROFILE_START(0);
+        long long sum1 = 0;
+        {
+            auto Q = query;
+            for (auto it : Q)
+                sum1 += tree.findLCA(it.first, it.second);
+        }
+        PROFILE_STOP(0);
+
+        PROFILE_START(1);
+        long long sum2 = 0;
+        {
+            auto Q = query;
+            for (auto it : Q)
+                sum2 += tree.findLCA2(it.first, it.second);
+        }
+        PROFILE_STOP(1);
+
+        if (sum1 != sum2)
+            cout << "Mismatched : " << sum1 << ", " << sum2 << endl;
+        assert(sum1 == sum2);
+
+
+        PROFILE_START(2);
+        long long sum3 = 0;
+        {
+            auto Q = query;
+            for (auto it : Q)
+                sum3 += tree.climbTree(it.first, tree.level[it.first] - 1);
+        }
+        PROFILE_STOP(2);
+
+        PROFILE_START(3);
+        long long sum4 = 0;
+        {
+            auto Q = query;
+            for (auto it : Q)
+                sum4 += tree.climbTree2(it.first, tree.level[it.first] - 1);
+        }
+        PROFILE_STOP(3);
+
+        if (sum3 != sum4)
+            cout << "Mismatched : " << sum3 << ", " << sum4 << endl;
+        assert(sum3 == sum4);
     }
     cout << "OK!" << endl;
 }

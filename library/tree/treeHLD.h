@@ -65,8 +65,9 @@ struct HLD {
         doHLD();
     }
 
-    //--- LCA
+    //--- LCA with sparse table (it's faster than methods to use HLD paths)
 
+    // O(logN)
     int climbTree(int node, int dist) const {
         if (dist <= 0)
             return node;
@@ -80,6 +81,7 @@ struct HLD {
         return node;
     }
 
+    // O(logN)
     int findLCA(int A, int B) const {
         if (level[A] < level[B])
             swap(A, B);
@@ -104,6 +106,7 @@ struct HLD {
     }
 
     // find LCA when the root is changed
+    // O(logN)
     int findLCA(int root, int A, int B) const {
         int lca = findLCA(A, B);
 
@@ -118,8 +121,67 @@ struct HLD {
         return lca;
     }
 
+    // O(1)
+    int distance(int u, int v, int lca) const {
+        return level[u] + level[v] - level[lca] * 2;
+    }
+
+    // O(logN)
     int distance(int u, int v) const {
-        return level[u] + level[v] - level[findLCA(u, v)] * 2;
+        return distance(u, v, findLCA(u, v));
+    }
+
+    //--- LCA with HLD paths
+
+    // O(logN)
+    int climbTree2(int node, int dist) const {
+        while (dist > 0) {
+            int path = nodeToPath[node];
+            int len = int(paths[path].size()) - 1;
+            int i = level[paths[path].front()] - level[node];
+            int d = min(dist, len - i);
+            dist -= d;
+            node = paths[path][i + d];
+        }
+        return node;
+    }
+
+    // O(logN)
+    int findLCA2(int u, int v) const {
+        while (nodeToPath[u] != nodeToPath[v]) {
+            int up = paths[nodeToPath[u]].back();
+            int vp = paths[nodeToPath[v]].back();
+            if (vp < 0 || (up >= 0 && level[up] > level[vp]))
+                swap(u, v);
+            v = paths[nodeToPath[v]].back();
+        }
+        return (level[u] <= level[v]) ? u : v;
+    }
+
+    // find LCA when the root is changed
+    // O(logN)
+    int findLCA2(int root, int A, int B) const {
+        int lca = findLCA2(A, B);
+
+        int temp = findLCA2(A, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        temp = findLCA2(B, root);
+        if (level[temp] > level[lca])
+            lca = temp;
+
+        return lca;
+    }
+
+    // O(1)
+    int distance2(int u, int v, int lca) const {
+        return level[u] + level[v] - level[lca] * 2;
+    }
+
+    // O(logN)
+    int distance2(int u, int v) const {
+        return distance2(u, v, findLCA2(u, v));
     }
 
     //--- HLD
