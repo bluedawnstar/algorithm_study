@@ -51,7 +51,7 @@ struct HLDPathQueryLazy {
     void update(int u, int v, T cost) {
         if (u >= 0 && hld.P[0][u] == v)
             swap(u, v);
-        //assert(gP[0][v] == u);
+        //assert(hld.P[0][v] == u);
 
         int path = hld.heavyPathIndex[v];
         int index = hld.indexInPath(path, v);
@@ -90,7 +90,7 @@ struct HLDPathQueryLazy {
         if (lca == hld.mRoot) {
             updateRangeTopdown(lca, u, cost);
             updateRangeTopdown(lca, v, cost);
-            rootValue += cost;
+            rootValue = mergeOp(rootValue, cost);
         } else {
             updateRangeTopdown(hld.P[0][lca], u, cost);
             updateRangeTopdown(lca, v, cost);
@@ -129,7 +129,7 @@ protected:
         updateRangeTopdown(u, topOfPath, value);
     }
 
-    // return max value a path from u to v (u is an ancestor of v)
+    // PRECONDITION: u is an ancestor of v
     T queryTopdown(int u, int v) {
         if (u == v)
             return defaultValue;

@@ -15,7 +15,7 @@ struct HeavyLightDecomposition {
     //---
 
     int root;
-    vector<vector<int>> heavyPaths;         // heavy paths
+    vector<vector<int>> heavyPaths;         // heavy paths (top to bottom)
     vector<int>         heavyPathIndex;     // convert node number(0 ~ N - 1) to index of heavy paths (heavyPaths)
 
     HeavyLightDecomposition() : N(0), logN(0), root(0) {

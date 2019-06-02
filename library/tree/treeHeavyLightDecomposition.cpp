@@ -8,7 +8,6 @@
 
 using namespace std;
 
-#include "treeBasic.h"
 #include "../rangeQuery/segmentTreeCompact.h"
 #include "../rangeQuery/segmentTreeCompactLazy.h"
 #include "../rangeQuery/fenwickTreeMultAdd.h"

@@ -49,7 +49,7 @@ struct HLDPathQuery {
     void update(int u, int v, T cost) {
         if (u >= 0 && hld.P[0][u] == v)
             swap(u, v);
-        //assert(gP[0][v] == u);
+        //assert(hld.P[0][v] == u);
 
         int path = hld.heavyPathIndex[v];
         int index = hld.indexInPath(path, v);
@@ -86,7 +86,7 @@ struct HLDPathQuery {
     }
 
 protected:
-    // return max value a path from u to v (u is an ancestor of v)
+    // PRECONDITION: u is an ancestor of v
     T queryTopdown(int u, int v) const {
         if (u == v)
             return defaultValue;
