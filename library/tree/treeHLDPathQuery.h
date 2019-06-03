@@ -54,7 +54,7 @@ struct SimpleHLDPathQuery {
     }
 
     T query(int u, int v, int lca) const {
-        return mergeOp(queryBottomup(lca, u), queryBottomup(lca, v));
+        return mergeOp(querySub(lca, u), querySub(lca, v));
     }
 
     T query(int u, int v) const {
@@ -77,9 +77,9 @@ struct SimpleHLDPathQuery {
 
     T queryVertex(int u, int v, int lca) const {
         if (lca == hld.root)
-            return mergeOp(mergeOp(queryBottomup(lca, u), queryBottomup(lca, v)), rootValue);
+            return mergeOp(mergeOp(querySub(lca, u), querySub(lca, v)), rootValue);
         else
-            return mergeOp(queryBottomup(hld.tree.P[0][lca], u), queryTopdown(lca, v));
+            return mergeOp(querySub(hld.tree.P[0][lca], u), querySub(lca, v));
     }
 
     T queryVertex(int u, int v) const {
@@ -89,7 +89,7 @@ struct SimpleHLDPathQuery {
 protected:
     // PRECONDITION: u is an ancestor of v
     // query in range (u, v]
-    T queryBottomup(int u, int v) const {
+    T querySub(int u, int v) const {
         if (u == v)
             return defaultValue;
 
@@ -105,7 +105,7 @@ protected:
         int topOfPath = hld.paths[path].back();
 
         int first = hld.indexInPath(path, v);
-        return mergeOp(queryBottomup(u, topOfPath), segTrees[path].query(first, int(hld.paths[path].size()) - 2));
+        return mergeOp(querySub(u, topOfPath), segTrees[path].query(first, int(hld.paths[path].size()) - 2));
     }
 };
 

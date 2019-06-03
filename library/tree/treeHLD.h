@@ -55,14 +55,24 @@ struct HLD {
         edges[u].push_back(v);
     }
 
-    void build(int root) {
+    void buildWithSize(int root) {
         this->root = root;
         dfs(root, -1);
         //dfsIter(root);
         //bfs(root);
         makeLcaTable();
 
-        doHLD();
+        doHLDWithSize();
+    }
+
+    void buildWithHeight(int root) {
+        this->root = root;
+        dfs(root, -1);
+        //dfsIter(root);
+        //bfs(root);
+        makeLcaTable();
+
+        doHLDWithHeight();
     }
 
     //--- LCA with sparse table (it's faster than methods to use HLD paths)
@@ -294,7 +304,56 @@ private:
 
     //--- HLD
 
-    void doHLD() {
+    void doHLDWithSize() {
+        paths.clear();
+        nodeToPath.assign(N, -1);
+
+        vector<bool> visited(N);
+
+        queue<int> Q;
+        Q.push(root);
+        visited[root] = true;
+        nodeToPath[root] = int(paths.size());
+        paths.emplace_back(vector<int>{ -1, root });
+        while (!Q.empty()) {
+            int u = Q.front();
+            Q.pop();
+
+
+            int bigChild = -1;
+            int bigSize = 0;
+            for (int v : edges[u]) {
+                if (visited[v])
+                    continue;
+                if (bigSize < treeSize[v]) {
+                    bigChild = v;
+                    bigSize = treeSize[v];
+                }
+            }
+            for (int v : edges[u]) {
+                if (visited[v])
+                    continue;
+                Q.push(v);
+                visited[v] = true;
+                if (v == bigChild) {
+                    nodeToPath[v] = nodeToPath[u];
+                    paths[nodeToPath[u]].emplace_back(v);
+                } else {
+                    nodeToPath[v] = int(paths.size());
+                    paths.emplace_back(vector<int>{ u, v });
+                }
+            }
+        }
+
+        leaves.clear();
+        for (int i = 0; i < int(paths.size()); i++) {
+            reverse(paths[i].begin(), paths[i].end());
+            int u = paths[i].front();
+            leaves.emplace_back(level[u], u);
+        }
+    }
+
+    void doHLDWithHeight() {
         leaves.clear();
         leaves.reserve(N);
         for (int u = 0; u < N; u++) {

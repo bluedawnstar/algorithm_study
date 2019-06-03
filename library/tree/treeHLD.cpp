@@ -50,7 +50,7 @@ void testHLD_org() {
             tree.addEdge(u, v);
         }
 
-        tree.build(0);
+        tree.buildWithSize(0);
         pathQuery.build(1);
 
         int ans = 0;
@@ -116,7 +116,7 @@ void testHLD() {
                 tree.addEdge(u, v);
             }
 
-            tree.build(0);
+            tree.buildWithSize(0);
             pathQuery.build(1);
             pathQueryLazy.build(1);
 
@@ -164,7 +164,7 @@ void testHLD() {
                 int u = RandInt32::get() % v;
                 tree.addEdge(u, v);
             }
-            tree.build(0);
+            tree.buildWithSize(0);
 
             for (int i = 0; i < T; i++) {
                 int u = RandInt32::get() % N;
@@ -196,7 +196,7 @@ void testHLD() {
             int u = RandInt32::get() % v;
             tree.addEdge(u, v);
         }
-        tree.build(0);
+        tree.buildWithSize(0);
 
         vector<pair<int, int>> query(T);
         for (int i = 0; i < T; i++) {

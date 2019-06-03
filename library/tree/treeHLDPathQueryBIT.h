@@ -35,8 +35,8 @@ struct SimpleHLDPathQueryBIT {
     }
 
     void addRange(int u, int v, int lca, T cost) {
-        addRangeBottomup(lca, u, cost);
-        addRangeBottomup(lca, v, cost);
+        addRangeSub(lca, u, cost);
+        addRangeSub(lca, v, cost);
     }
 
     void addRange(int u, int v, T cost) {
@@ -44,7 +44,7 @@ struct SimpleHLDPathQueryBIT {
     }
 
     T query(int u, int v, int lca) const {
-        return queryBottomup(lca, u) + queryBottom(lca, v);
+        return querySub(lca, u) + queryBottom(lca, v);
     }
 
     T query(int u, int v) const {
@@ -67,12 +67,12 @@ struct SimpleHLDPathQueryBIT {
 
     void addRangeVertex(int u, int v, int lca, T cost) {
         if (lca == hld.root) {
-            addRangeBottomup(lca, u, cost);
-            addRangeBottomup(lca, v, cost);
+            addRangeSub(lca, u, cost);
+            addRangeSub(lca, v, cost);
             rootValue += cost;
         } else {
-            addRangeBottomup(hld.tree.P[0][lca], u, cost);
-            addRangeBottomup(lca, v, cost);
+            addRangeSub(hld.tree.P[0][lca], u, cost);
+            addRangeSub(lca, v, cost);
         }
     }
 
@@ -82,9 +82,9 @@ struct SimpleHLDPathQueryBIT {
 
     T queryVertex(int u, int v, int lca) const {
         if (lca == hld.root)
-            return queryBottomup(lca, u) + queryBottomup(lca, v) + rootValue;
+            return querySub(lca, u) + querySub(lca, v) + rootValue;
         else
-            return queryBottomup(hld.tree.P[0][lca], u) + queryBottomup(lca, v);
+            return querySub(hld.tree.P[0][lca], u) + querySub(lca, v);
     }
 
     T queryVertex(int u, int v) const {
@@ -92,7 +92,7 @@ struct SimpleHLDPathQueryBIT {
     }
 
 protected:
-    void addRangeBottomup(int u, int v, T delta) {
+    void addRangeSub(int u, int v, T delta) {
         if (u == v)
             return;
 
@@ -110,12 +110,12 @@ protected:
         int first = hld.indexInPath(path, v);
         BIT[path].addRange(first, int(hld.paths[path].size()) - 2, delta);
 
-        addRangeBottomup(u, topOfPath, delta);
+        addRangeSub(u, topOfPath, delta);
     }
 
     // PRECONDITION: u is an ancestor of v
     // query in range (u, v]
-    T queryBottomup(int u, int v) const {
+    T querySub(int u, int v) const {
         if (u == v)
             return 0;
 
@@ -131,6 +131,6 @@ protected:
         int topOfPath = hld.paths[path].back();
 
         int first = hld.indexInPath(path, v);
-        return queryBottomup(u, topOfPath) + BIT[path].sumRange(first, int(hld.paths[path].size()) - 2);
+        return querySub(u, topOfPath) + BIT[path].sumRange(first, int(hld.paths[path].size()) - 2);
     }
 };
