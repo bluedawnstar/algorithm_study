@@ -58,7 +58,6 @@ struct HeavyLightDecomposition {
         this->root = root;
         dfs(root, -1);
         //dfsIter(root);
-        //bfs(root);
         makeLcaTable();
 
         doHLD();
@@ -185,42 +184,6 @@ private:
                 int v = edges[it.u][it.vi];
                 level[v] = level[it.u] + 1;
                 st.push_back(Item{ v, it.u, -1 });
-            }
-        }
-    }
-
-    //--- BFS
-
-    void dfsSize(int u, int parent) {
-        treeSize[u] = 1;
-        for (int v : edges[u]) {
-            if (v != parent) {
-                dfsSize(v, u);
-                treeSize[u] += treeSize[v];
-            }
-        }
-    }
-
-    void bfs(int root) {
-        vector<bool> visited(N);
-
-        queue<int> Q;
-        Q.push(root);
-        P[0][root] = -1;
-        visited[root] = true;
-        while (!Q.empty()) {
-            int u = Q.front();
-            Q.pop();
-
-            for (int v : edges[u]) {
-                if (visited[v])
-                    continue;
-
-                visited[v] = true;
-
-                P[0][v] = u;
-                level[v] = level[u] + 1;
-                Q.push(v);
             }
         }
     }
