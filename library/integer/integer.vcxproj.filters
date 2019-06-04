@@ -60,9 +60,6 @@
     <ClCompile Include="mobius.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="primeFactorLongLong.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="equationsMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -79,6 +76,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="factor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="primeFactorInt64.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +128,6 @@
     <ClInclude Include="mobius.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="primeFactorLongLong.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="equationsMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -150,6 +147,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="factor.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeFactorInt64.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 #include "primeFactor.h"
 
-struct PrimeFactorizerLongLong {
+struct PrimeFactorizerInt64 {
     int N;
     MinFactors minFactors;
 

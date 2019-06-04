@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "primeFactorLongLong.h"
+#include "primeFactorInt64.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ static bool isPrimeNumber(long long x, const vector<long long>& primes) {
     return true;
 }
 
-void testPrimeFactorLongLong() {
+void testPrimeFactorInt64() {
     return; //TODO: if you want to test, make this line a comment.
 
     srand((unsigned int)time(nullptr));
@@ -41,7 +41,7 @@ void testPrimeFactorLongLong() {
     cout << "--- Prime Factorization of 64bit Integer -------------------" << endl;
     {
         int N = 1000000;
-        PrimeFactorizerLongLong pfLL;
+        PrimeFactorizerInt64 pfLL;
         pfLL.init(N);
 
         auto x = 34129034312412ll;
@@ -54,7 +54,7 @@ void testPrimeFactorLongLong() {
     }
     {
         int N = 1000000;
-        PrimeFactorizerLongLong pfLL;
+        PrimeFactorizerInt64 pfLL;
         pfLL.init(N);
 
         cout << "-- GT | Rho | Fermat | Miller ---" << endl;
@@ -76,7 +76,7 @@ void testPrimeFactorLongLong() {
     }
     {
         int N = 1000000;
-        PrimeFactorizerLongLong pfLL;
+        PrimeFactorizerInt64 pfLL;
         pfLL.init(N);
 
         cout << "-- GT | Rho | Fermat | Miller ---" << endl;
@@ -98,7 +98,7 @@ void testPrimeFactorLongLong() {
         cout << "-- Speed Test ---" << endl;
 
         int N = 1000000;
-        PrimeFactorizerLongLong pfLL;
+        PrimeFactorizerInt64 pfLL;
         pfLL.init(N);
 
         int T = 1000;
