@@ -59,17 +59,16 @@ struct HLD {
         this->root = root;
         dfs(root, -1);
         //dfsIter(root);
-        //bfs(root);
         makeLcaTable();
 
-        doHLDWithSize();
+        //doHLDWithBfsSize();
+        doHLDWithDfsSize();
     }
 
     void buildWithHeight(int root) {
         this->root = root;
         dfs(root, -1);
         //dfsIter(root);
-        //bfs(root);
         makeLcaTable();
 
         doHLDWithHeight();
@@ -255,42 +254,6 @@ private:
         }
     }
 
-    //--- BFS
-
-    void dfsSize(int u, int parent) {
-        treeSize[u] = 1;
-        for (int v : edges[u]) {
-            if (v != parent) {
-                dfsSize(v, u);
-                treeSize[u] += treeSize[v];
-            }
-        }
-    }
-
-    void bfs(int root) {
-        vector<bool> visited(N);
-
-        queue<int> Q;
-        Q.push(root);
-        P[0][root] = -1;
-        visited[root] = true;
-        while (!Q.empty()) {
-            int u = Q.front();
-            Q.pop();
-
-            for (int v : edges[u]) {
-                if (visited[v])
-                    continue;
-
-                visited[v] = true;
-
-                P[0][v] = u;
-                level[v] = level[u] + 1;
-                Q.push(v);
-            }
-        }
-    }
-
     //--- LCA
 
     void makeLcaTable() {
@@ -304,7 +267,53 @@ private:
 
     //--- HLD
 
-    void doHLDWithSize() {
+    void dfsHLD(int u, int parent) {
+        int bigChild = -1;
+        int bigSize = 0;
+        for (int v : edges[u]) {
+            if (v == parent)
+                continue;
+            if (bigSize < treeSize[v]) {
+                bigChild = v;
+                bigSize = treeSize[v];
+            }
+        }
+
+        // heavy path
+        if (bigChild >= 0) {
+            nodeToPath[bigChild] = nodeToPath[u];
+            paths[nodeToPath[u]].emplace_back(bigChild);
+            dfsHLD(bigChild, u);
+        }
+        // light path
+        for (int v : edges[u]) {
+            if (v == parent || v == bigChild)
+                continue;
+            nodeToPath[v] = int(paths.size());
+            paths.emplace_back(vector<int>{ u, v });
+            dfsHLD(v, u);
+        }
+    }
+
+    void doHLDWithDfsSize() {
+        paths.clear();
+        nodeToPath.assign(N, -1);
+
+        nodeToPath[root] = int(paths.size());
+        paths.emplace_back(vector<int>{ -1, root });
+        dfsHLD(root, -1);
+
+        leaves.clear();
+        for (int i = 0; i < int(paths.size()); i++) {
+            reverse(paths[i].begin(), paths[i].end());
+            int u = paths[i].front();
+            leaves.emplace_back(level[u], u);
+        }
+    }
+
+    //---
+
+    void doHLDWithBfsSize() {
         paths.clear();
         nodeToPath.assign(N, -1);
 
@@ -318,7 +327,6 @@ private:
         while (!Q.empty()) {
             int u = Q.front();
             Q.pop();
-
 
             int bigChild = -1;
             int bigSize = 0;
@@ -352,6 +360,8 @@ private:
             leaves.emplace_back(level[u], u);
         }
     }
+
+    //---
 
     void doHLDWithHeight() {
         leaves.clear();
