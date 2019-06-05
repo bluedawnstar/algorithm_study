@@ -61,8 +61,8 @@ struct HLD {
         //dfsIter(root);
         makeLcaTable();
 
-        //doHLDWithBfsSize();
-        doHLDWithDfsSize();
+        //decomposeWithBfsSize();
+        decomposeWithDfsSize();
     }
 
     void buildWithHeight(int root) {
@@ -71,7 +71,7 @@ struct HLD {
         //dfsIter(root);
         makeLcaTable();
 
-        doHLDWithHeight();
+        decomposeWithHeight();
     }
 
     //--- LCA with sparse table (it's faster than methods to use HLD paths)
@@ -295,7 +295,7 @@ private:
         }
     }
 
-    void doHLDWithDfsSize() {
+    void decomposeWithDfsSize() {
         paths.clear();
         nodeToPath.assign(N, -1);
 
@@ -313,7 +313,7 @@ private:
 
     //---
 
-    void doHLDWithBfsSize() {
+    void decomposeWithBfsSize() {
         paths.clear();
         nodeToPath.assign(N, -1);
 
@@ -363,7 +363,7 @@ private:
 
     //---
 
-    void doHLDWithHeight() {
+    void decomposeWithHeight() {
         leaves.clear();
         leaves.reserve(N);
         for (int u = 0; u < N; u++) {
