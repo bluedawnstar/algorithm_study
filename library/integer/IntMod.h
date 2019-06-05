@@ -131,21 +131,21 @@ inline long long modMul(long long a, long long b, long long M) {
 #ifdef __GNUC__
     return (long long)((__int128_t)(a % M) * (b % M) % M);
 #else
-        int base = int(1e9);
-        long long aLow = a % base, aHigh = a / base;
-        long long bLow = b % base, bHigh = b / base;
+    int base = int(1e9);
+    long long aLow = a % base, aHigh = a / base;
+    long long bLow = b % base, bHigh = b / base;
 
-        long long result = (aHigh * bHigh) % M;
-        for (int i = 0; i < 9; i++)
-            result = (result * 10) % M;
+    long long result = (aHigh * bHigh) % M;
+    for (int i = 0; i < 9; i++)
+        result = (result * 10) % M;
 
-        result = (result + aLow * bHigh % M + bLow * aHigh % M) % M;
-        for (int i = 0; i < 9; i++)
-            result = (result * 10) % M;
+    result = (result + aLow * bHigh % M + bLow * aHigh % M) % M;
+    for (int i = 0; i < 9; i++)
+        result = (result * 10) % M;
 
-        result = (result + aLow * bLow % M) % M;
+    result = (result + aLow * bLow % M) % M;
 
-        return result;
+    return result;
 #endif
 }
 

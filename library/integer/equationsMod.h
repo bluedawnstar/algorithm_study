@@ -23,7 +23,7 @@ inline vector<T> solveModularEq(T a, T b, U M) {
 
 // find x satisfying  a^x = b (mod M), a and M are coprime
 struct DiscreteLogarithm {
-    // M is 64bit integer
+    // M is 64bit integer, O(sqrt(M))
     static long long solve64bit(long long a, long long b, long long M) {
         int n = int(ceil(sqrt(M))) + 1;
 
@@ -52,7 +52,7 @@ struct DiscreteLogarithm {
         return -1;
     }
 
-    // M is 32bit integer
+    // M is 32bit integer, O(sqrt(M))
     static int solve32bit(long long a, long long b, int M) {
         int am = int(a % M);
         int bm = int(b % M);
@@ -83,4 +83,3 @@ struct DiscreteLogarithm {
         return -1;
     }
 };
-

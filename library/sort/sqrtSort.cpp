@@ -37,7 +37,7 @@ void sortSqrt(vector<pair<pair<T, T>, U>>& vec, int blockSize) {
 void testSortSqrt() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- sort SQRT (Query Square Root Decomposition) ---------" << endl;
+    cout << "--- sort SQRT (Query Square Root Decomposition) ---------" << endl;
     vector<pair<int, int>> v;
     vector<pair<pair<int, int>,int>> v2;
     int MAXN = 100;
