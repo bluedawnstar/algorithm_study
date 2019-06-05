@@ -147,7 +147,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="sort.cpp" />
     <ClCompile Include="sqrtSort.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sortHeap.h" />
+    <ClInclude Include="sortMerge.h" />
+    <ClInclude Include="sortQuick.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

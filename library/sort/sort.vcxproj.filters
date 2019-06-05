@@ -21,5 +21,19 @@
     <ClCompile Include="sqrtSort.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sort.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sortHeap.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMerge.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortQuick.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
