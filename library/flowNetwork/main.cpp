@@ -15,4 +15,6 @@ int main(void) {
     TEST(MinCostMaxFlowBellmanFord);
     TEST(MinCostMaxFlowPotential);
     TEST(MinCostMaxFlowSPFA);
+    TEST(CirculationProblemWithVertexDemand);
+    TEST(CirculationProblemWithEdgeDemand);
 }

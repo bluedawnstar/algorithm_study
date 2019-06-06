@@ -45,6 +45,12 @@
     <ClCompile Include="GomoryHuTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="circulationProblemWithEdgeDemand.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="circulationProblemWithVertexDemand.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="minCostMaxFlow.h">
@@ -72,6 +78,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="GomoryHuTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="circulationProblemWithVertexDemand.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="circulationProblemWithEdgeDemand.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
