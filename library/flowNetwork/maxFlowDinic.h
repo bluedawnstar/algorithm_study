@@ -9,6 +9,8 @@ struct MaxFlowDinic {
 
         T   flow;
         T   capacity;
+
+        T   edgeIndex;              // 
     };
 
     int N;                          // the number of vertices
@@ -31,8 +33,15 @@ struct MaxFlowDinic {
     void addEdge(int u, int v, T capacity, T capacityRev) {
         int uN = int(edges[u].size());
         int vN = int(edges[v].size());
-        edges[u].push_back(Edge{ v, vN, 0, capacity });
-        edges[v].push_back(Edge{ u, uN, 0, capacityRev });
+        edges[u].push_back(Edge{ v, vN, 0, capacity, -1 });
+        edges[v].push_back(Edge{ u, uN, 0, capacityRev, -1 });
+    }
+
+    void addEdge(int u, int v, T capacity, T capacityRev, int edgeIndex) {
+        int uN = int(edges[u].size());
+        int vN = int(edges[v].size());
+        edges[u].push_back(Edge{ v, vN, 0, capacity, edgeIndex });
+        edges[v].push_back(Edge{ u, uN, 0, capacityRev, -1 });
     }
 
     void clearFlow() {

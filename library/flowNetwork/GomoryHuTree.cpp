@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testGomoryHuTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- GomoryHu Tree ---------" << endl;
 
