@@ -1,5 +1,6 @@
 #pragma once
 
+// Line-based dynamic convex hull trick
 // Upper envelope for maximum - it looks like lower convex hull 
 struct DynamicUpperEnvelope {
     static const long long INF = 0x3f3f3f3f3f3f3f3fll;

@@ -22,4 +22,6 @@ int main(void) {
     TEST(DelaunayTriangulation);
     TEST(ClosestPair);
     TEST(DistanceSum);
+    TEST(DynamicLowerEnvelope);
+    TEST(DynamicUpperEnvelope);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-// upper convex hull for minimum - lower envelope
+// Lower envelope for minimum - it looks like upper convex hull 
 struct DynamicLowerEnvelope {
     static const long long INF = 0x3f3f3f3f3f3f3f3fll;
 

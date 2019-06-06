@@ -1,7 +1,8 @@
 #pragma once
 
-// Upper envelope for maximum - it looks like lower convex hull 
-struct DynamicUpperEnvelope {
+// Line-based dynamic convex hull trick
+// Lower envelope for minimum - it looks like upper convex hull 
+struct DynamicLowerEnvelope {
     static const long long INF = 0x3f3f3f3f3f3f3f3fll;
 
     struct Line {
@@ -9,7 +10,7 @@ struct DynamicUpperEnvelope {
         mutable function<const Line*()> succ;
 
         bool operator <(const Line& rhs) const {
-            return m < rhs.m;
+            return m > rhs.m;
         }
 
         long long get(long long x) const {
@@ -18,7 +19,7 @@ struct DynamicUpperEnvelope {
     };
 
     multiset<Line> lines;
-    
+
     void add(long long m, long long b) {
         auto y = lines.insert({ m, b });
         y->succ = [=] {
@@ -45,8 +46,9 @@ struct DynamicUpperEnvelope {
                 return false;
 
             long long x = r.m;
-            return l.b - s->b < (s->m - l.m) * x;
+            return l.b - s->b > (s->m - l.m) * x;
         });
+
         return l.get(x);
     }
 
@@ -56,12 +58,12 @@ private:
         if (y == lines.begin()) {
             if (z == lines.end())
                 return false;
-            return y->m == z->m && y->b <= z->b;
+            return y->m == z->m && y->b >= z->b;
         }
-        
+
         auto x = prev(y);
         if (z == lines.end())
-            return y->m == x->m && y->b <= x->b;
+            return y->m == x->m && y->b >= x->b;
 
         // if X of intersection point between (x, y) >= X of intersection point between (x, z), then y is bad
         return (x->b - y->b) * (z->m - y->m) >= (y->b - z->b) * (y->m - x->m);

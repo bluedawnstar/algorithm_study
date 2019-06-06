@@ -13,6 +13,8 @@
 */
 
 // It is practically fast enough.
+
+// Point-based dynamic convex hull
 template <typename T>
 struct DynamicConvexHull {
     set<pair<int, int>> upper;  // ordered by x coordinate (clockwise)
@@ -53,7 +55,7 @@ struct DynamicConvexHull {
 
     //--- add
 
-    // O(1) ~ O(N)
+    // amortized O(1) 
     bool addLeft(int x, int y) {
         if (int(lower.size()) <= 1) {
             upper.emplace(x, y);
@@ -86,7 +88,7 @@ struct DynamicConvexHull {
         return true;
     }
 
-    // O(1) ~ O(N)
+    // amortized O(1) 
     bool addRight(int x, int y) {
         if (int(lower.size()) <= 1) {
             upper.emplace(x, y);
@@ -123,7 +125,7 @@ struct DynamicConvexHull {
         return true;
     }
 
-    // O(logN) ~ O(NlogN)
+    // amortized O(logN)
     bool add(int x, int y) {
         if (int(lower.size()) < 2 || x < lower.begin()->first)
             return addLeft(x, y);
@@ -196,6 +198,7 @@ struct DynamicConvexHull {
 
     //--- get 
 
+    // O(N)
     vector<pair<int, int>> getUpper() const {
         vector<pair<int, int>> res;
         res.reserve(upper.size());
@@ -204,6 +207,7 @@ struct DynamicConvexHull {
         return res;
     }
 
+    // O(N)
     vector<pair<int, int>> getLower() const {
         vector<pair<int, int>> res;
         res.reserve(lower.size());
@@ -212,6 +216,7 @@ struct DynamicConvexHull {
         return res;
     }
 
+    // O(N)
     vector<pair<int, int>> getAllSorted() const {
         vector<pair<int, int>> res;
         if (int(upper.size()) < 2) {

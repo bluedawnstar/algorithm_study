@@ -152,6 +152,8 @@
     <ClCompile Include="delaunayTriangulation.cpp" />
     <ClCompile Include="distanceSum.cpp" />
     <ClCompile Include="dynamicConvexHull.cpp" />
+    <ClCompile Include="dynamicLowerEnvelope.cpp" />
+    <ClCompile Include="dynamicUpperEnvelope.cpp" />
     <ClCompile Include="gridConvexHull.cpp" />
     <ClCompile Include="line.cpp" />
     <ClCompile Include="lineSegmentAllIntersections.cpp" />
@@ -171,6 +173,8 @@
     <ClInclude Include="delaunayTriangulation.h" />
     <ClInclude Include="distanceSumChebyshev.h" />
     <ClInclude Include="dynamicConvexHull.h" />
+    <ClInclude Include="dynamicLowerEnvelope.h" />
+    <ClInclude Include="dynamicUpperEnvelope.h" />
     <ClInclude Include="gridConvexHull.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="lineSegmentAllIntersections.h" />
