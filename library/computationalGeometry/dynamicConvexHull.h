@@ -17,8 +17,8 @@
 // Point-based dynamic convex hull
 template <typename T>
 struct DynamicConvexHull {
-    set<pair<int, int>> upper;  // ordered by x coordinate (clockwise)
-    set<pair<int, int>> lower;  // ordered by x coordinate (counter-clockwise)
+    set<pair<T, T>> upper;  // ordered by x coordinate (clockwise)
+    set<pair<T, T>> lower;  // ordered by x coordinate (counter-clockwise)
 
     DynamicConvexHull() {
     }
@@ -26,7 +26,7 @@ struct DynamicConvexHull {
     //--- build
 
     // O(N)
-    void buildWithMutablePoints(vector<pair<int, int>>& points) {
+    void buildWithMutablePoints(vector<pair<T, T>>& points) {
         int j = 0, k = 0, n = int(points.size());
         sort(points.begin(), points.end());
 
@@ -49,14 +49,14 @@ struct DynamicConvexHull {
             lower.insert(p);
     }
 
-    void build(vector<pair<int, int>> points) {
+    void build(vector<pair<T, T>> points) {
         buildWithMutablePoints(points);
     }
 
     //--- add
 
     // amortized O(1) 
-    bool addLeft(int x, int y) {
+    bool addLeft(T x, T y) {
         if (int(lower.size()) <= 1) {
             upper.emplace(x, y);
             lower.emplace(x, y);
@@ -89,7 +89,7 @@ struct DynamicConvexHull {
     }
 
     // amortized O(1) 
-    bool addRight(int x, int y) {
+    bool addRight(T x, T y) {
         if (int(lower.size()) <= 1) {
             upper.emplace(x, y);
             lower.emplace(x, y);
@@ -126,7 +126,7 @@ struct DynamicConvexHull {
     }
 
     // amortized O(logN)
-    bool add(int x, int y) {
+    bool add(T x, T y) {
         if (int(lower.size()) < 2 || x < lower.begin()->first)
             return addLeft(x, y);
         else if (lower.rbegin()->first < x)
@@ -199,8 +199,8 @@ struct DynamicConvexHull {
     //--- get 
 
     // O(N)
-    vector<pair<int, int>> getUpper() const {
-        vector<pair<int, int>> res;
+    vector<pair<T, T>> getUpper() const {
+        vector<pair<T, T>> res;
         res.reserve(upper.size());
         for (auto it : upper)
             res.push_back(it);
@@ -208,8 +208,8 @@ struct DynamicConvexHull {
     }
 
     // O(N)
-    vector<pair<int, int>> getLower() const {
-        vector<pair<int, int>> res;
+    vector<pair<T, T>> getLower() const {
+        vector<pair<T, T>> res;
         res.reserve(lower.size());
         for (auto it : lower)
             res.push_back(it);
@@ -217,8 +217,8 @@ struct DynamicConvexHull {
     }
 
     // O(N)
-    vector<pair<int, int>> getAllSorted() const {
-        vector<pair<int, int>> res;
+    vector<pair<T, T>> getAllSorted() const {
+        vector<pair<T, T>> res;
         if (int(upper.size()) < 2) {
             if (!upper.empty())
                 res.push_back(*upper.begin());
@@ -278,11 +278,11 @@ struct DynamicConvexHull {
     }
 
 private:
-    static long long cross(const pair<int, int>& P, const pair<int, int>& Q, const pair<int, int>& R) {
+    static long long cross(const pair<T, T>& P, const pair<T, T>& Q, const pair<T, T>& R) {
         return 1ll * (Q.first - P.first) * (R.second - P.second) - 1ll * (R.first - P.first) * (Q.second - P.second);
     }
 
-    static long long squareDist(const pair<int, int>& L, const pair<int, int>& R) {
+    static long long squareDist(const pair<T, T>& L, const pair<T, T>& R) {
         long long x = L.first - R.first;
         long long y = L.second - R.second;
         return x * x + y * y;
