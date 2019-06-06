@@ -5,7 +5,6 @@
 
 using namespace std;
 
-#include "circulationProblemWithVertexDemand.h"
 #include "circulationProblemWithEdgeDemand.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////

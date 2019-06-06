@@ -28,13 +28,15 @@ struct CirculationProblemWithEdgeDemand {
         lowerBoundSum += lowerBound;
         mf.addEdge(u + 2, v + 2, capacity - lowerBound, 0);
         mf.addEdge(0, v + 2, lowerBound, 0);
-        mf.addEdge(u + 2, 1, lowerBound, 0);    }
+        mf.addEdge(u + 2, 1, lowerBound, 0);
+    }
 
     void addEdge(int u, int v, T lowerBound, T capacity, int edgeIndex) {
         lowerBoundSum += lowerBound;
         mf.addEdge(u + 2, v + 2, capacity - lowerBound, 0, edgeIndex);
         mf.addEdge(0, v + 2, lowerBound, 0);
-        mf.addEdge(u + 2, 1, lowerBound, 0);    }
+        mf.addEdge(u + 2, 1, lowerBound, 0);
+    }
 
     //--- solve
 
