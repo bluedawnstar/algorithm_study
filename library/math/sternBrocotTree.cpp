@@ -60,7 +60,7 @@ static struct TestData {
 };
 
 void testSternBrocotTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Stern Brocot Tree -------------------------" << endl;
     // tree iteration

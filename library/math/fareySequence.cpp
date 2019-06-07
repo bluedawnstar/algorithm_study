@@ -16,7 +16,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testFareySequence() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Farey Sequence -----------------" << endl;
     {

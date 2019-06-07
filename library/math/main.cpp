@@ -20,4 +20,5 @@ int main(void) {
     TEST(SternBrocotSequence);
     TEST(SternBrocotFractionFinder);
     TEST(SternBrocotTree);
+    TEST(LinearRecurrence);
 }

@@ -66,6 +66,9 @@
     <ClCompile Include="sternBrocotTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="linearRecurrence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -126,6 +129,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="multinomialTheorem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="linearRecurrence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="detMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

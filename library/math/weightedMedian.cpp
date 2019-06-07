@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testWeightedMedian() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Weighted Median -----------------------" << endl;
     {

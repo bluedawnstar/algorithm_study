@@ -60,7 +60,7 @@ static struct TestData {
 };
 
 void testSternBrocotFractionFinder() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Fraction Finder with Stern Brocot Tree -------------------------" << endl;
     // fraction finder

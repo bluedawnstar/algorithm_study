@@ -79,7 +79,7 @@ static T gcd(T p, T q) {
 }
 
 void testFraction() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
     
     cout << "--------- testFraction() -----------------" << endl;
     {
