@@ -18,6 +18,7 @@
        => a polynomial with degree n+1 in k
           (https://math.stackexchange.com/questions/18983/why-is-sum-limits-k-1n-km-a-polynomial-with-degree-m1-in-n)
 */
+// https://codeforces.com/problemset/problem/622/F
 struct FastSumOfPowerMod {
     int maxK;
     int mod;                    // prime number
@@ -61,7 +62,7 @@ struct FastSumOfPowerMod {
 
 
     // faulhaberMode(n, k) = 1^k + 2^k + 3^k + ... + n^k
-    // O(k*logMOD), solve with Lagrange polynomial with degree n + 1 in k
+    // O(k*logMOD), solve with Lagrange polynomial with degree k + 1 in n
     int faulhaberMod(long long n, int k) {
         // degree is n + 1
 
