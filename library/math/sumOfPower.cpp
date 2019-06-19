@@ -88,7 +88,7 @@ void testSumOfPower() {
     cout << "*** speed test ..." << endl;
     {
         const int MOD = 1000000007;
-        int N = 100000000 - 1;
+        int N = 1000000000 - 1;
         int K = 10000 - 1;
 
 #ifdef _DEBUG
@@ -98,21 +98,17 @@ void testSumOfPower() {
 
         PROFILE_START(0);
         SumOfPowerMod sop(K, MOD);
-        long long sum1 = 0;
-        for (int i = 0; i <= K; i++)
-            sum1 += sop.faulhaberMod(N, i);
+        auto ans1 = sop.faulhaberMod(N, K);
         PROFILE_STOP(0);
 
         PROFILE_START(1);
         FastSumOfPowerMod fsop(K, MOD);
-        long long sum2 = 0;
-        for (int i = 0; i <= K; i++)
-            sum2 += fsop.faulhaberMod(N, i);
+        auto ans2 = fsop.faulhaberMod(N, K);
         PROFILE_STOP(1);
 
-        if (sum1 != sum2)
+        if (ans1 != ans2)
             cout << "ERROR!" << endl;
-        assert(sum1 == sum2);
+        assert(ans1 == ans2);
     }
 
     cout << "OK!" << endl;

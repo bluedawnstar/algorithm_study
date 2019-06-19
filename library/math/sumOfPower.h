@@ -26,6 +26,7 @@ struct SumOfPowerMod {
     }
 
     // faulhaberMode(n, k) = 1^k + 2^k + 3^k + ... + n^k
+    // O(k^2)
     int faulhaberMod(long long n, int k) {
         long long ans = powMod(n, k + 1, mod);
         if (k >= 1)
