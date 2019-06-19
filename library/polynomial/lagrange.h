@@ -34,7 +34,7 @@ struct LagrangePolynomial {
     // O(n^2)
     // samples = { ..., (Xi, Yi), ... }
     template <typename T, typename U>
-    static double interpolate(const vector<pair<T, U>>& xy, T x) {
-        return interpolate(xy.data(), int(xy.size()), x);
+    static double interpolate(const vector<pair<T, U>>& samples, T x) {
+        return interpolate(samples.data(), int(samples.size()), x);
     }
 };

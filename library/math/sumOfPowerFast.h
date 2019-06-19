@@ -32,7 +32,7 @@ struct FastSumOfPowerMod {
         build(maxK, mod);
     }
 
-    // O(N)
+    // O(maxK)
     void build(int maxK, int mod) {
         maxK += 2;
         this->maxK = max(1, maxK);
