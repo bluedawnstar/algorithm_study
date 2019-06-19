@@ -149,6 +149,7 @@
     <ClCompile Include="convolution.cpp" />
     <ClCompile Include="factorialMod.cpp" />
     <ClCompile Include="fft.cpp" />
+    <ClCompile Include="lagrange.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polynomial.cpp" />
     <ClCompile Include="polynomialMod.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="factorialMod.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="factorialNTT.h" />
+    <ClInclude Include="lagrange.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
     <ClInclude Include="ntt.h" />

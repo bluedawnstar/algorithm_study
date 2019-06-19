@@ -39,6 +39,9 @@
     <ClCompile Include="polynomial.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lagrange.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -72,6 +75,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="polynomialMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lagrange.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

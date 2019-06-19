@@ -19,7 +19,7 @@ using namespace std;
 #define MOD     1000000007
 
 void testPolynomialMod() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Modular Polynomial Multiplication ----------------" << endl;
 

@@ -13,4 +13,5 @@ int main(void) {
     TEST(NTT);
     TEST(FactorialMod);
     TEST(RootFindingLaguerre);
+    TEST(Lagrange);
 }
