@@ -1,22 +1,22 @@
 #pragma once
 
 // Berlekamp-Massey
-// https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm
-// https://codeforces.com/blog/entry/61306
-// https://koosaga.com/231
-// https://brilliant.org/wiki/linear-recurrence-relations/
+//  https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm
+//  https://codeforces.com/blog/entry/61306
+//  https://koosaga.com/231
+//  https://brilliant.org/wiki/linear-recurrence-relations/
 
 // Kitamasa
-// https://cubelover.tistory.com/21
-// https://casterian.net/archives/254
+//  https://cubelover.tistory.com/21
+//  https://casterian.net/archives/254
 
 // Minimal polynomial
-// https://en.wikipedia.org/wiki/Minimal_polynomial_(linear_algebra)
+//  https://en.wikipedia.org/wiki/Minimal_polynomial_(linear_algebra)
 // 
 
 // Reference:
-//   https://github.com/zimpha/algorithmic-library/blob/master/mathematics/linear-recurrence.cc
-//   https://gist.github.com/koosaga/d4afc4434dbaa348d5bef0d60ac36aa4
+//  https://github.com/zimpha/algorithmic-library/blob/master/mathematics/linear-recurrence.cc
+//  https://gist.github.com/koosaga/d4afc4434dbaa348d5bef0d60ac36aa4
 
 // Linear recurrence relation : x(n) = c(0)*x(n - 1) + c(1)*x(n - 2) + ... + c(k - 1)*x(n - k), k < n
 // - MOD must be a prime number.
@@ -107,7 +107,7 @@ struct LinearRecurrence {
     }
 
     static T guessNthTerm(const vector<T>& x, T mod, long long n) {
-        if (n < x.size())
+        if (n < (long long)x.size())
             return x[n];
 
         LinearRecurrence<T> rec(mod, x);

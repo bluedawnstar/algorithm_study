@@ -41,7 +41,7 @@ inline bool isPrimeNumberSlow(T x) {
 }
 
 void testPrimalityTestInt64() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Fast Primality Test for Int64 -------------------" << endl;
     {

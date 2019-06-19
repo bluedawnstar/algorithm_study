@@ -81,6 +81,9 @@
     <ClCompile Include="primeFactorInt64.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="fastModOp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gcd.h">
@@ -150,6 +153,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="primeFactorInt64.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fastModOp.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,10 @@
 #pragma once
 
+// More efficient and general algorithms can be found below:
+//   ../dynamicProgramming/digitDP.h
+//   ../dynamicProgramming/digitDPFast.h
+//   ../dynamicProgramming/digitCounter.h
+
 // return the number of numbers with a digit in [0, n]
 // 0 < digit <= 9
 template <typename T>

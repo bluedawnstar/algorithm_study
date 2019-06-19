@@ -185,6 +185,7 @@
     <ClInclude Include="sternBrocotSequence.h" />
     <ClInclude Include="sternBrocotTree.h" />
     <ClInclude Include="sumOfPower.h" />
+    <ClInclude Include="sumOfPowerFast.h" />
     <ClInclude Include="ternarySearch.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="weightedMedian.h" />

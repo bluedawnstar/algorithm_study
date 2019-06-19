@@ -27,4 +27,5 @@ int main(void) {
     TEST(PrimeFactorInt64);
     TEST(ModularEquations);
     TEST(GarnerAlgorithm);
+    TEST(FastModOp);
 }

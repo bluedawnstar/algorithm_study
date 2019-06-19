@@ -21,4 +21,5 @@ int main(void) {
     TEST(SternBrocotFractionFinder);
     TEST(SternBrocotTree);
     TEST(LinearRecurrence);
+    TEST(SumOfPower);
 }
