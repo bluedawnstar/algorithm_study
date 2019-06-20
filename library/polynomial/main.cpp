@@ -14,4 +14,5 @@ int main(void) {
     TEST(FactorialMod);
     TEST(RootFindingLaguerre);
     TEST(Lagrange);
+    TEST(PowerSumPolyMod);
 }

@@ -154,6 +154,7 @@
     <ClCompile Include="polynomial.cpp" />
     <ClCompile Include="polynomialMod.cpp" />
     <ClCompile Include="ntt.cpp" />
+    <ClCompile Include="powerSumPolyMod.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,8 @@
     <ClInclude Include="fft.h" />
     <ClInclude Include="factorialNTT.h" />
     <ClInclude Include="lagrange.h" />
+    <ClInclude Include="lagrangeMod.h" />
+    <ClInclude Include="powerSumPolyMod.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
     <ClInclude Include="ntt.h" />

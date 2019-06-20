@@ -42,6 +42,9 @@
     <ClCompile Include="lagrange.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="powerSumPolyMod.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -78,6 +81,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lagrange.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lagrangeMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="powerSumPolyMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

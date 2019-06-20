@@ -1,36 +1,27 @@
 #pragma once
 
+// https://www.codechef.com/JUNE19A/problems/COUNTIT
+// https://discuss.codechef.com/t/countit-editorial/27153
+
 /*
-  <Important Properties>
-
-    1) f(p - 1, k) = 1^k + 2^k + 3^k + ... + (p - 1)^k (mod p)
-       - f(p - 1, 0) = p - 1 = -1 (mod p)
-       - f(p - 1, k) = 0 (mod p), 0 < k < p - 1
-
-    2) primitive root
-       { 1, 2, 3, ..., p - 1 } = { g^0, g^1, g^2, ..., g^(p - 2) }, g is a primitive root of prime number p
-
-    3)
        k
-      SUM i^n = a_(n+1) * k^(n+1) + a_n * k^n + ... + a_1 * k + a_0
+      SUM c_i * i^n = a_(n+1) * k^(n+1) + a_n * k^n + ... + a_1 * k + a_0
       i=1
 
        => a polynomial with degree n+1 in k
           (https://math.stackexchange.com/questions/18983/why-is-sum-limits-k-1n-km-a-polynomial-with-degree-m1-in-n)
 */
-// https://codeforces.com/problemset/problem/622/F
-
-struct FastSumOfPowerMod {
+struct PowerSumPolyMod {
     int maxK;
     int mod;                    // prime number
     vector<int> factorial;      // factorial
     vector<int> factInverse;    // inverse factorial
     vector<int> inverse;
 
-    FastSumOfPowerMod() {
+    PowerSumPolyMod() {
     }
 
-    FastSumOfPowerMod(int maxK, int mod) {
+    PowerSumPolyMod(int maxK, int mod) { 
         build(maxK, mod);
     }
 
@@ -61,23 +52,22 @@ struct FastSumOfPowerMod {
         }
     }
 
+    /*
+                n
+        f(x) = SUM { c_i * i^k } = a_(k+1) * n^(k+1) + a_k * n^k + ... + a_1 * n + a_0
+               i=1
+           => a polynomial with degree k+1 in n
 
-    // faulhaberMode(n, k) = 1^k + 2^k + 3^k + ... + n^k
+        Y = { f(1), f(2), ..., f(k + 2) }
+    */
     // O(k*logMOD), solve with Lagrange polynomial with degree k + 1 in n
-    int faulhaberMod(long long n, int k) {
-        // degree is n + 1
-
-        vector<long long> Y(k + 3);
-        Y[0] = 0;
-        for (int i = 1; i <= k + 2; i++)
-            Y[i] = (Y[i - 1] + modPow(i, k, mod)) % mod;    // Y[i] = SUM_(1..i) { i^k }
-
+    int solve(const vector<int>& Y, long long n, int k) {
         if (n <= k + 2)
-            return int(Y[n]);
+            return int(Y[n - 1]);
 
         long long q = 1;
         for (int i = 1; i <= k + 2; i++)
-            q = 1ll * q * (n - i) % mod;                    // q = (n - 1)(n - 2)...(n - k - 2)
+            q = 1ll * q * (n - i) % mod;    // q = (n - 1)(n - 2)...(n - k - 2)
 
         long long ans = 0;
         for (int i = 1; i <= k + 2; i++) {
@@ -85,8 +75,8 @@ struct FastSumOfPowerMod {
             auto suf = factInverse[k + 2 - i];
             if ((k + 2 - i) & 1)
                 suf = mod - suf;
-            // ans += q * Y[i] / { (n - i) * (i - 1)! * (k + 2 - i)! * (-1)^(k + 2 - i) }
-            ans = (ans + q * modInv(n - i, mod) % mod * pre % mod * suf % mod * Y[i] % mod) % mod;
+            // ans += q * Y[i - 1] / { (n - i) * (i - 1)! * (k + 2 - i)! * (-1)^(k + 2 - i) }
+            ans = (ans + q * modInv(n - i, mod) % mod * pre % mod * suf % mod * Y[i - 1] % mod) % mod;
         }
 
         return int(ans);
