@@ -9,14 +9,14 @@
 
             n
     f(X) = SUM { Yj * PRODUCT (X - Xm) / (Xj - Xm) }
-           j=0        0<=m=<k
+           j=0        0<=m<=n
                         m!=j
 */
 struct LagrangePolynomial {
     // O(n^2)
     // samples = { ..., (Xi, Yi), ... }
     template <typename T, typename U>
-    static double interpolate(const pair<T, U>* samples, int n, T x) {
+    static double interpolate(const pair<T, U> samples[], int n, T x) {
         double res = 0;
 
         for (int i = 0; i < n; i++) { 
