@@ -19,7 +19,7 @@ struct StringMatchingWithFFT {
         vector<int> res;
 
         for (int i = M - 1; i < N; i++) {
-            if (int(c[i].first + 1e-6) == M && abs(c[i].second) < 1e-9)
+            if (int(c[i].first + 1e-6) == M)
                 res.push_back(i - M + 1);
         }
 
@@ -41,7 +41,7 @@ struct StringMatchingWithFFT {
 
         int req = M - wildcardCount;
         for (int i = M - 1; i < N; i++) {
-            if (int(c[i].first + 1e-6) == req && abs(c[i].second) < 1e-9)
+            if (int(c[i].first + 1e-6) == req)
                 res.push_back(i - M + 1);
         }
 
