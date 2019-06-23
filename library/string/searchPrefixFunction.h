@@ -43,7 +43,7 @@ inline pair<int, int> checkRepeatedString(const vector<int>& prefix, int len) {
     return make_pair(-1, -1);
 }
 
-pair<int, int> checkRepeatedString(string s) {
+inline pair<int, int> checkRepeatedString(string s) {
     return checkRepeatedString(prefixFunction(s), int(s.length()));
 }
 
@@ -183,7 +183,7 @@ inline vector<int> getAllPartialMatch(const string& s) {
     return res;
 }
 
-vector<int> getPrefixSuffix(const string& s) {
+inline vector<int> getPrefixSuffix(const string& s) {
     vector<int> res, pi = getAllPartialMatch(s);
 
     int n = int(s.length());
@@ -194,7 +194,7 @@ vector<int> getPrefixSuffix(const string& s) {
     return res;
 }
 
-int maxOverlap(const string& a, const string& b) {
+inline int maxOverlap(const string& a, const string& b) {
     int n = int(a.length()), m = int(b.length());
     vector<int> pi = getAllPartialMatch(b);
 

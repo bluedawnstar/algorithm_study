@@ -159,6 +159,7 @@
     <ClCompile Include="palindromicNumber.cpp" />
     <ClCompile Include="patternSubsequence.cpp" />
     <ClCompile Include="rleString.cpp" />
+    <ClCompile Include="stringMatchingWithFFT.cpp" />
     <ClCompile Include="subsequenceDAG.cpp" />
     <ClCompile Include="subsequenceLCS.cpp" />
     <ClCompile Include="longestCommonSubstring_queryTwoStringAmongStrings.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="palindromicNumber.h" />
     <ClInclude Include="patternSubsequence.h" />
     <ClInclude Include="rleString.h" />
+    <ClInclude Include="stringMatchingWithFFT.h" />
     <ClInclude Include="subsequenceCheck.h" />
     <ClInclude Include="subsequenceDAG.h" />
     <ClInclude Include="subsequenceDAG_Algo.h" />

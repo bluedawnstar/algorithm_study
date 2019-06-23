@@ -147,6 +147,9 @@
     <ClCompile Include="suffixRollingHash.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="stringMatchingWithFFT.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -294,6 +297,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixRollingHash.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stringMatchingWithFFT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

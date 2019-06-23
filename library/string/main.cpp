@@ -48,4 +48,5 @@ int main(void) {
     TEST(PatternSubsequence);
     TEST(LongestDuplicatedSubstring);
     TEST(SuffixRollingHash);
+    TEST(StringMatchingWithFFT);
 }

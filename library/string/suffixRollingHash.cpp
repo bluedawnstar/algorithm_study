@@ -37,7 +37,7 @@ static string makeRandomString(int n, int charCnt) {
 }
 
 void testSuffixRollingHash() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Suffix Rolling Hash -------------------" << endl;
     {
