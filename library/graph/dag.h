@@ -178,6 +178,7 @@ struct DAG {
         return makeAncestorTable(sorted);
     }
 
+    // any one LCA
     int findLCA(const vector<BitSetSimple>& ancestorTable, int u, int v) const {
         for (int idx = (N - 1) >> BitSetSimple::INDEX_SHIFT; idx >= 0; idx--) {
             auto t = (ancestorTable[u].mV[idx] & ancestorTable[v].mV[idx]);
