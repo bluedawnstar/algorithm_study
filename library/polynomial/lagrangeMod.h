@@ -61,18 +61,3 @@ private:
         return modPow(a, mod - 2, mod);
     }
 };
-
-/*
-    TODO:
-        1) implement modular Lagrange polynomial
-
-        2) implement solution of below formula
-
-             n
-            SUM { a_i * i^k }
-            i=1
-
-           (see sumOfPowerFast.h)
-*/
-// https://www.codechef.com/JUNE19A/problems/COUNTIT
-// https://discuss.codechef.com/t/countit-editorial/27153
