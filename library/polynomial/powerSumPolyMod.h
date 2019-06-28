@@ -54,7 +54,7 @@ struct PowerSumPolyMod {
 
     /*
                 n
-        f(x) = SUM { c_i * i^k } = a_(k+1) * n^(k+1) + a_k * n^k + ... + a_1 * n + a_0
+        f(n) = SUM { c_i * i^k } = a_(k+1) * n^(k+1) + a_k * n^k + ... + a_1 * n + a_0
                i=1
            => a polynomial with degree k+1 in n
 
@@ -71,12 +71,12 @@ struct PowerSumPolyMod {
 
         long long ans = 0;
         for (int i = 1; i <= k + 2; i++) {
-            auto pre = factInverse[i - 1];
-            auto suf = factInverse[k + 2 - i];
+            auto prefix = factInverse[i - 1];
+            auto suffix = factInverse[k + 2 - i];
             if ((k + 2 - i) & 1)
-                suf = mod - suf;
+                suffix = mod - suffix;
             // ans += q * Y[i - 1] / { (n - i) * (i - 1)! * (k + 2 - i)! * (-1)^(k + 2 - i) }
-            ans = (ans + q * modInv(n - i, mod) % mod * pre % mod * suf % mod * Y[i - 1] % mod) % mod;
+            ans = (ans + q * modInv(n - i, mod) % mod * prefix % mod * suffix % mod * Y[i - 1] % mod) % mod;
         }
 
         return int(ans);

@@ -164,6 +164,7 @@
     <ClInclude Include="factorialNTT.h" />
     <ClInclude Include="lagrange.h" />
     <ClInclude Include="lagrangeMod.h" />
+    <ClInclude Include="lagrangeModFast.h" />
     <ClInclude Include="powerSumPolyMod.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />

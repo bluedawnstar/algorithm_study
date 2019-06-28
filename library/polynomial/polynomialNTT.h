@@ -3,7 +3,7 @@
 #include "ntt.h"
 
 struct PolyNTT {
-    static vector<int> multiply(const vector<int>& a, const vector<int>& b, int MOD) {
+    static vector<int> multiply(const vector<int>& a, const vector<int>& b, int mod) {
         static NTT ntt1(167772161, 3);
         static NTT ntt2(469762049, 3);
         static NTT ntt3(998244353, 3);
@@ -24,13 +24,13 @@ struct PolyNTT {
             p[2].first = ntt3.M;
             p[2].second = z[i];
 
-            res[i] = garner(p, MOD);
+            res[i] = garner(p, mod);
         }
 
         return res;
     }
 
-    static vector<int> multiplyFast(const vector<int>& a, const vector<int>& b, int MOD) {
+    static vector<int> multiplyFast(const vector<int>& a, const vector<int>& b, int mod) {
         static NTT ntt1(167772161, 3);
         static NTT ntt2(469762049, 3);
         static NTT ntt3(998244353, 3);
@@ -45,7 +45,7 @@ struct PolyNTT {
 
         const int m1InvM2 = modInvIter(m1, m2);
         const int m12InvM3 = modInvIter(1ll * m1 * m2 % m3, m3);
-        const int m12Mod = 1ll * m1 * m2 % MOD;
+        const int m12Mod = 1ll * m1 * m2 % mod;
 
         vector<int> res(x.size());
         for (int i = 0; i < int(x.size()); i++) {
@@ -57,9 +57,9 @@ struct PolyNTT {
             if (v2 < 0)
                 v2 += m3;
 
-            int b3 = (x[i] + 1ll * m1 * v1 + 1ll * m12Mod * v2) % MOD;
+            int b3 = (x[i] + 1ll * m1 * v1 + 1ll * m12Mod * v2) % mod;
             if (b3 < 0)
-                b3 += MOD;
+                b3 += mod;
 
             res[i] = b3;
         }
@@ -68,13 +68,13 @@ struct PolyNTT {
     }
 
 
-    static vector<int> multiply(const vector<int>& a, const vector<int>& b, int MOD, bool reverseB) {
+    static vector<int> multiply(const vector<int>& a, const vector<int>& b, int mod, bool reverseB) {
         if (!reverseB)
-            return multiply(a, b, MOD);
+            return multiply(a, b, mod);
 
         vector<int> revB = b;
         reverse(revB.begin(), revB.end());
-        return multiply(a, revB, MOD);
+        return multiply(a, revB, mod);
     }
 
     static vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
@@ -82,10 +82,10 @@ struct PolyNTT {
     }
 
 private:
-    static int garner(vector<pair<int, int>> p, int MOD) {
+    static int garner(vector<pair<int, int>> p, int mod) {
         int n = int(p.size());
 
-        p.emplace_back(MOD, 0);
+        p.emplace_back(mod, 0);
 
         // a * x + b == p[i].second (mod p[i].first)
 
@@ -110,13 +110,13 @@ private:
             return 1;
 
         long long t = x % M;
-        int res = 1;
+        long long res = 1;
         for (; n > 0; n >>= 1) {
             if (n & 1)
-                res = int(res * t % M);
+                res = res * t % M;
             t = t * t % M;
         }
-        return res;
+        return int(res);
     }
 
     // M is a prime number.
