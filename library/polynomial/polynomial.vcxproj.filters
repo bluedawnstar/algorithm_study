@@ -45,6 +45,9 @@
     <ClCompile Include="powerSumPolyMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="walshHadamard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -90,6 +93,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lagrangeModFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="walshHadamard.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

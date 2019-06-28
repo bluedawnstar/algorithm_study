@@ -156,6 +156,7 @@
     <ClCompile Include="ntt.cpp" />
     <ClCompile Include="powerSumPolyMod.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
+    <ClCompile Include="walshHadamard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dft.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="polynomial.h" />
     <ClInclude Include="polynomialMod.h" />
     <ClInclude Include="rootFindingLaguerre.h" />
+    <ClInclude Include="walshHadamard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

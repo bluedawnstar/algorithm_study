@@ -15,4 +15,5 @@ int main(void) {
     TEST(RootFindingLaguerre);
     TEST(Lagrange);
     TEST(PowerSumPolyMod);
+    TEST(WalshHadamard);
 }
