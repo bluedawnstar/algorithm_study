@@ -7,6 +7,7 @@ using namespace std;
 
 #include "factor.h"
 #include "gcd.h"
+#include "gcdAlgo.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -17,8 +18,35 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+#define MOD     1000000007
+
+// https://www.hackerearth.com/challenges/competitive/june-circuits-19/algorithm/calculate-gcd-june-circuit-e5e41856/
+struct GcdCombSolver {
+    Gcd1CombCounter gcd1;
+
+    void build(int maxN) {
+        gcd1.build(maxN, 4, MOD);
+    }
+
+    // SUM  SUM   SUM   SUM  gcd(i,j,k,l)^4
+    // i=1 j=i+1 k=j+1 l=k+1
+    // O(N)
+    int solve(int N) const {
+        long long res = 0;
+        for (int i = 1; i <= N - 3; i++) {
+            long long xx = 1ll * i * i % MOD;
+            long long xxxx = 1ll * xx * xx % MOD;
+            res = (res + (xxxx - 1) * gcd1.get(N / i) % MOD) % MOD; // subtract the number of gcd(a,b,c,d) != 1
+        }
+        res = (res + gcd1.comb(N, 4)) % MOD;    // all gcd(a,b,c,d) = 1
+
+        return int(res);
+    }
+};
+
+
 void testGcd() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- gcd() / lcm() / extGcd() -------------------------" << endl;
     {
@@ -78,6 +106,40 @@ void testGcd() {
                 cout << "Dummy" << endl;
         }
         PROFILE_STOP(2);
+    }
+    {
+        GcdCombSolver solver;
+        solver.build(20);
+
+        vector<int> gt{
+            0,
+            0,
+            0,
+            1,
+            5,
+            15,
+            35,
+            85,
+            141,
+            285,
+            405,
+            800,
+            1020,
+            1606,
+            2290,
+            3510,
+            4070,
+            6390,
+            7206,
+            11019
+        };
+
+        for (int i = 1; i <= 20; i++) {
+            int ans = solver.solve(i);
+            if (ans != gt[i - 1])
+                cout << "Mismatched at " << i << ": " << ans << ", " << gt[i] << endl;
+            assert(solver.solve(i) == gt[i - 1]);
+        }
     }
 
     cout << "OK!" << endl;

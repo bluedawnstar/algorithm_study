@@ -178,6 +178,7 @@
     <ClInclude Include="fastModOp.h" />
     <ClInclude Include="garnerAlgorithm.h" />
     <ClInclude Include="gcd.h" />
+    <ClInclude Include="gcdAlgo.h" />
     <ClInclude Include="grayCode.h" />
     <ClInclude Include="intMod.h" />
     <ClInclude Include="intModExt.h" />

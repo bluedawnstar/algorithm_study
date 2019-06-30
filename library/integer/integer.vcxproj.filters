@@ -158,5 +158,8 @@
     <ClInclude Include="fastModOp.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="gcdAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
