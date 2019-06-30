@@ -14,6 +14,48 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+/*
+  <related problem>
+    https://www.hackerearth.com/challenges/competitive/june-circuits-19/algorithm/xor-paths-dd39904a/
+
+    1) make a tree
+
+        dfsInit(0, -1);
+
+    2) calculate XOR values from the root to each node except the root (paths from root to each node)
+
+        vector<ll> A(POW2Z);    // POW2Z is power of 2 greater than max Z
+        dfsXor(0, -1, A, 0);
+
+    3) calculate XOR values of all paths
+
+        auto C = FWHT<long long>::fastXor(A, A);// C[k] = SUM_{k=i^j} A[i]*A[j]
+        for (int i = 0; i < int(C.size()); i++)
+            pathXor[i] += C[i];                 
+
+        for (int i = 0; i < POW2Z; i++)
+            pathXor[i] += 2ll * A[i];           // add each A[i]
+
+        pathXor[0] += N - (N - 1);              // + |nodes| - |edges|
+
+    4) calculate combinations that XOR values of two paths have hamming distance 0 or 1
+
+        long long res = 0;
+        for (int i = 0; i < POW2Z; i++) {
+            if (!pathXor[i])
+                continue;
+            pathXor[i] %= MOD;
+
+            res = (res + 1ll * pathXor[i] * pathXor[i] % MOD) % MOD;    // hamming distance 0
+            for (auto t = i; t; t &= t - 1) {
+                int mask = t & -t;
+                if (pathXor[i & ~mask])                                 // hamming distance 1
+                    res = (res + 2ll * pathXor[i] * pathXor[i & ~mask] % MOD) % MOD;
+            }
+        }
+*/
+
+
 template <typename T>
 static vector<T> slowXor(const vector<T>& A, const vector<T>& B) {
     int size = 1;
