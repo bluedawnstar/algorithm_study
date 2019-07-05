@@ -1,6 +1,6 @@
 #pragma once
 
-#include "polynomialMod.h"
+#include "polyFFTMod.h"
 
 struct FactorialFFTMod {
     // rising factorial, Pochhammer function, Pochhammer polynomial, ascending factorial, rising sequential product, or upper factorial

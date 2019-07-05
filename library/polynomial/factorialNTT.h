@@ -1,6 +1,6 @@
 #pragma once
 
-#include "polynomialNTT.h"
+#include "polyNTT.h"
 
 struct FactorialNTT {
     // High order first

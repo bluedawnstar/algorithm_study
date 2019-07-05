@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "polynomial.h"
+#include "polyFFT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testPolynomial() {
+void testPolyFFT() {
     return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Polynomial Multiplication ----------------" << endl;

@@ -15,13 +15,13 @@ struct PolyNTT {
         vector<int> res(x.size());
         vector<pair<int, int>> p(3);
         for (int i = 0; i < int(x.size()); i++) {
-            p[0].first = ntt1.M;
+            p[0].first = ntt1.mod;
             p[0].second = x[i];
 
-            p[1].first = ntt2.M;
+            p[1].first = ntt2.mod;
             p[1].second = y[i];
 
-            p[2].first = ntt3.M;
+            p[2].first = ntt3.mod;
             p[2].second = z[i];
 
             res[i] = garner(p, mod);
@@ -39,9 +39,9 @@ struct PolyNTT {
         auto y = ntt2.multiply(a, b);
         auto z = ntt3.multiply(a, b);
 
-        const int m1 = ntt1.M;
-        const int m2 = ntt2.M;
-        const int m3 = ntt3.M;
+        const int m1 = ntt1.mod;
+        const int m2 = ntt2.mod;
+        const int m3 = ntt3.mod;
 
         const int m1InvM2 = modInvIter(m1, m2);
         const int m12InvM3 = modInvIter(1ll * m1 * m2 % m3, m3);

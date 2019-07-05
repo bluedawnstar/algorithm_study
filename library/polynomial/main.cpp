@@ -7,8 +7,8 @@ using namespace std;
 
 int main(void) {
     TEST(FFT);
-    TEST(Polynomial);
-    TEST(PolynomialMod);
+    TEST(PolyFFT);
+    TEST(PolyFFTMod);
     TEST(Convolution);
     TEST(NTT);
     TEST(FactorialMod);

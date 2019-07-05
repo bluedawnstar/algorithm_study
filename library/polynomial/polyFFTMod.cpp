@@ -3,8 +3,8 @@
 
 using namespace std;
 
-#include "polynomialMod.h"
-#include "polynomialNTT.h"
+#include "polyFFTMod.h"
+#include "polyNTT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -18,7 +18,7 @@ using namespace std;
 
 #define MOD     1000000007
 
-void testPolynomialMod() {
+void testPolyFFTMod() {
     return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Modular Polynomial Multiplication ----------------" << endl;

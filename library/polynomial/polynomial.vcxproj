@@ -151,8 +151,8 @@
     <ClCompile Include="fft.cpp" />
     <ClCompile Include="lagrange.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="polynomial.cpp" />
-    <ClCompile Include="polynomialMod.cpp" />
+    <ClCompile Include="polyFFT.cpp" />
+    <ClCompile Include="polyFFTMod.cpp" />
     <ClCompile Include="ntt.cpp" />
     <ClCompile Include="powerSumPolyMod.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
@@ -170,9 +170,9 @@
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
     <ClInclude Include="ntt.h" />
-    <ClInclude Include="polynomialNTT.h" />
-    <ClInclude Include="polynomial.h" />
-    <ClInclude Include="polynomialMod.h" />
+    <ClInclude Include="polyNTT.h" />
+    <ClInclude Include="polyFFT.h" />
+    <ClInclude Include="polyFFTMod.h" />
     <ClInclude Include="rootFindingLaguerre.h" />
     <ClInclude Include="walshHadamard.h" />
   </ItemGroup>

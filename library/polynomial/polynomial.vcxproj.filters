@@ -30,13 +30,7 @@
     <ClCompile Include="rootFindingLaguerre.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="polynomialMod.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="factorialMod.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="polynomial.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="lagrange.cpp">
@@ -46,6 +40,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="walshHadamard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="polyFFT.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="polyFFTMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,9 +65,6 @@
     <ClInclude Include="factorialNTT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="polynomialNTT.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="factorialMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -75,12 +72,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fft.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="polynomial.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="polynomialMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="lagrange.h">
@@ -96,6 +87,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="walshHadamard.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polyFFT.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polyFFTMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polyNTT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
