@@ -180,7 +180,7 @@
     <ClInclude Include="gcd.h" />
     <ClInclude Include="gcdAlgo.h" />
     <ClInclude Include="grayCode.h" />
-    <ClInclude Include="intMod.h" />
+    <ClInclude Include="intMod_.h" />
     <ClInclude Include="intModExt.h" />
     <ClInclude Include="mobius.h" />
     <ClInclude Include="primalityTest.h" />

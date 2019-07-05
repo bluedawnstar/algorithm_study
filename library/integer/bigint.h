@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../polynomial/polynomial.h"
+#include "../polynomial/polyFFT.h"
 
 // LSB first
 struct bigint {

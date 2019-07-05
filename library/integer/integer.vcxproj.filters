@@ -98,9 +98,6 @@
     <ClInclude Include="primeNumberEratosthenes.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="intMod.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="primeFactor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -159,6 +156,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="gcdAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="intMod_.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
