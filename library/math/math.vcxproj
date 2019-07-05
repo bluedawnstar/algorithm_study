@@ -175,6 +175,7 @@
     <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gaussianElimination.h" />
     <ClInclude Include="booleanXorExpression.h" />
+    <ClInclude Include="generatingFunction.h" />
     <ClInclude Include="linearRecurrence.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="matrix2x2.h" />
