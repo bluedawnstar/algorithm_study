@@ -54,6 +54,8 @@ struct NTT {
 
     vector<int> multiply(const vector<int>& a, const vector<int>& b, bool reverseB = false) {
         int n = int(a.size()) + int(b.size()) - 1;
+        if (n < 128)
+            return multiplySlow(a, b);
 
         int size = 1;
         while (size < n)
@@ -86,8 +88,22 @@ struct NTT {
 
     //--- extended operations
 
+    vector<int> multiplySlow(const vector<int>& left, const vector<int>& right) {
+        vector<int> res(left.size() + right.size() - 1);
+
+        for (int i = 0; i < int(right.size()); i++) {
+            for (int j = 0; j < int(left.size()); j++) {
+                res[i + j] = int((res[i + j] + 1ll * left[j] * right[i]) % mod);
+            }
+        }
+
+        return res;
+    }
+
     vector<int> square(const vector<int>& a) {
         int n = int(a.size()) * 2 - 1;
+        if (n < 128)
+            return multiplySlow(a, a);
 
         int size = 1;
         while (size < n)
@@ -109,7 +125,7 @@ struct NTT {
     }
 
     // low order first
-    vector<int> modInv(vector<int> a) {
+    vector<int> inv(vector<int> a) {
         int size = 1;
         while (size < int(a.size()))
             size <<= 1;
@@ -121,7 +137,7 @@ struct NTT {
             return{ modPow(a[0], mod - 2) }; // 1/a[0]
 
         vector<int> b(a.begin(), a.begin() + (size >> 1));
-        b = modInv(b);
+        b = inv(b);
 
         a.resize(size << 1);
         b.resize(size << 1);
@@ -137,16 +153,16 @@ struct NTT {
         return b;
     }
 
-    // differentiation, low order first
-    vector<int> modDiff(vector<int> a) {
+    // low order first
+    vector<int> differentiate(vector<int> a) {
         a.back() = 0;
         for(int i = 1; i < int(a.size()); i++)
             a[i - 1] = int(1ll * a[i] * i % mod);  
         return a;
     }
 
-    // integration, low order first
-    vector<int> modInt(vector<int> a){
+    // low order first
+    vector<int> integrate(vector<int> a){
         for(int i = int(a.size()) - 1; i > 0; i--)
             //a[i] = int(1ll * a[i - 1] * gInv[i] % mod);
             a[i] = int(1ll * a[i - 1] * modPow(i, mod - 2) % mod);
@@ -155,16 +171,16 @@ struct NTT {
     }
 
     // low order first
-    vector<int> modLn(vector<int> a) {
-        auto A = modInv(a);
-        auto B = modDiff(a);
+    vector<int> ln(vector<int> a) {
+        auto A = inv(a);
+        auto B = differentiate(a);
         A = multiply(A, B);
         A.resize(a.size());
-        return modInt(A);  
+        return integrate(A);  
     }
 
     // low order first
-    vector<int> modExp(vector<int> a) {
+    vector<int> exp(vector<int> a) {
         int size = 1;
         while (size < int(a.size()))
             size <<= 1;
@@ -176,10 +192,10 @@ struct NTT {
 
         vector<int> dd(a.begin(), a.begin() + (size >> 1));
 
-        vector<int> b = modExp(dd);
+        vector<int> b = exp(dd);
         b.resize(size);
 
-        vector<int> c = modLn(b);
+        vector<int> c = ln(b);
         for (int i = 0; i < size; i++)
             c[i] = int((a[i] - c[i] + mod) % mod);
         c[0]++;
@@ -191,24 +207,24 @@ struct NTT {
     }
 
     // a[0] != 0
-    vector<int> powFast(const vector<int>& a, int n) { // m >= 0
-        auto b = modLn(a);
+    vector<int> powFast(const vector<int>& a, int n) { // n >= 0
+        auto b = ln(a);
         for (int i = 0; i < int(b.size()); i++)
-            b[i] = int(1ll * b[i] * n % mod);
-        return modExp(b);
+            b[i]= int(1ll * b[i] * n % mod);
+        return exp(b);
     }
 
-    vector<int> pow(const vector<int>& a, int n, int maxDegree) {
+    vector<int> pow(const vector<int>& p, int n, int maxDegree) {
         if (n == 0)
             return{ 1 };
 
-        auto poly = pow(a, n / 2, maxDegree);
+        auto poly = pow(p, n / 2, maxDegree);
         poly = square(poly);
         if (int(poly.size()) > maxDegree + 1)
             poly.resize(maxDegree + 1);
 
         if (n & 1) {
-            poly = multiply(poly, a);
+            poly = multiply(poly, p);
             if (int(poly.size()) > maxDegree + 1)
                 poly.resize(maxDegree + 1);
         }
