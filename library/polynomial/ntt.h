@@ -8,17 +8,17 @@
 //    - 10^9 + 7
 //    - 10^9 + 9
 struct NTT {
-    int M, root;
+    int mod, root;
 
     NTT(int mod, int root) {
-        this->M = mod;
+        this->mod = mod;
         this->root = root;
     }
 
     void ntt(vector<int>& a, bool inverse = false) {
         int n = int(a.size());
 
-        int base = modPow(root, (M - 1) / n);
+        int base = modPow(root, (mod - 1) / n);
         if (inverse)
             base = modInv(base);
 
@@ -28,13 +28,13 @@ struct NTT {
             for (int i = 0; i < mh; i++) {
                 for (int j = i; j < n; j += m) {
                     int k = j + mh;
-                    int x = int((a[j] - a[k] + M) % M);
-                    a[j] = (a[j] + a[k]) % M;
-                    a[k] = int(1ll * w * x % M);
+                    int x = int((a[j] - a[k] + mod) % mod);
+                    a[j] = (a[j] + a[k]) % mod;
+                    a[k] = int(1ll * w * x % mod);
                 }
-                w = int(1ll * w * base % M);
+                w = int(1ll * w * base % mod);
             }
-            base = int(1ll * base * base % M);
+            base = int(1ll * base * base % mod);
         }
 
         int i = 0;
@@ -48,7 +48,7 @@ struct NTT {
         if (inverse) {
             int inv = modInv(n);
             for (int j = 0; j < n; j++)
-                a[j] = int(1ll * a[j] * inv % M);
+                a[j] = int(1ll * a[j] * inv % mod);
         }
     }
 
@@ -66,15 +66,15 @@ struct NTT {
             copy(b.begin(), b.end(), B.begin());
         else
             copy(b.begin(), b.end(), B.rbegin());
-        
+
         ntt(A);
         ntt(B);
 
         vector<int> C(size);
         for (int i = 0; i < size; i++)
-            C[i] = int(1ll * A[i] * B[i] % M);
+            C[i] = int(1ll * A[i] * B[i] % mod);
         ntt(C, true);
-        
+
         C.resize(n);
 
         return C;
@@ -84,18 +84,150 @@ struct NTT {
         return multiply(x, h, reverseH);
     }
 
-private:
+    //--- extended operations
+
+    vector<int> square(const vector<int>& a) {
+        int n = int(a.size()) * 2 - 1;
+
+        int size = 1;
+        while (size < n)
+            size <<= 1;
+
+        vector<int> A(size);
+        copy(a.begin(), a.end(), A.begin());
+
+        ntt(A);
+
+        vector<int> C(size);
+        for (int i = 0; i < size; i++)
+            C[i] = int(1ll * A[i] * A[i] % mod);
+        ntt(C, true);
+
+        C.resize(n);
+
+        return C;
+    }
+
+    // low order first
+    vector<int> modInv(vector<int> a) {
+        int size = 1;
+        while (size < int(a.size()))
+            size <<= 1;
+
+        if (int(a.size()) != size)
+            a.resize(size);
+
+        if (size == 1)
+            return{ modPow(a[0], mod - 2) }; // 1/a[0]
+
+        vector<int> b(a.begin(), a.begin() + (size >> 1));
+        b = modInv(b);
+
+        a.resize(size << 1);
+        b.resize(size << 1);
+
+        ntt(a);
+        ntt(b);
+        for(int i = 0; i < (size << 1); i++)
+            b[i] = int(((b[i] * 2ll - 1ll * a[i] * b[i] % mod * b[i]) % mod + mod) % mod);
+        // b[i] = b[i] * 2 - a[i] * b[i]^2
+        ntt(b, true);
+        b.resize(size); 
+
+        return b;
+    }
+
+    // differentiation, low order first
+    vector<int> modDiff(vector<int> a) {
+        a.back() = 0;
+        for(int i = 1; i < int(a.size()); i++)
+            a[i - 1] = int(1ll * a[i] * i % mod);  
+        return a;
+    }
+
+    // integration, low order first
+    vector<int> modInt(vector<int> a){
+        for(int i = int(a.size()) - 1; i > 0; i--)
+            //a[i] = int(1ll * a[i - 1] * gInv[i] % mod);
+            a[i] = int(1ll * a[i - 1] * modPow(i, mod - 2) % mod);
+        a[0] = 0;  
+        return a;
+    }
+
+    // low order first
+    vector<int> modLn(vector<int> a) {
+        auto A = modInv(a);
+        auto B = modDiff(a);
+        A = multiply(A, B);
+        A.resize(a.size());
+        return modInt(A);  
+    }
+
+    // low order first
+    vector<int> modExp(vector<int> a) {
+        int size = 1;
+        while (size < int(a.size()))
+            size <<= 1;
+
+        if(size == 1)
+            return{ 1 };
+
+        a.resize(size);
+
+        vector<int> dd(a.begin(), a.begin() + (size >> 1));
+
+        vector<int> b = modExp(dd);
+        b.resize(size);
+
+        vector<int> c = modLn(b);
+        for (int i = 0; i < size; i++)
+            c[i] = int((a[i] - c[i] + mod) % mod);
+        c[0]++;
+
+        b = multiply(b, c);
+        b.resize(size);
+
+        return b;
+    }
+
+    // a[0] != 0
+    vector<int> powFast(const vector<int>& a, int n) { // m >= 0
+        auto b = modLn(a);
+        for (int i = 0; i < int(b.size()); i++)
+            b[i] = int(1ll * b[i] * n % mod);
+        return modExp(b);
+    }
+
+    vector<int> pow(const vector<int>& a, int n, int maxDegree) {
+        if (n == 0)
+            return{ 1 };
+
+        auto poly = pow(a, n / 2, maxDegree);
+        poly = square(poly);
+        if (int(poly.size()) > maxDegree + 1)
+            poly.resize(maxDegree + 1);
+
+        if (n & 1) {
+            poly = multiply(poly, a);
+            if (int(poly.size()) > maxDegree + 1)
+                poly.resize(maxDegree + 1);
+        }
+
+        return poly;
+    }
+
+//private:
     int modPow(int x, int n) {
         if (n == 0)
             return 1;
 
-        int p = modPow(x, n / 2) % M;
-        p = int(1ll * p * p % M);
+        int p = modPow(x, n / 2) % mod;
+        p = int(1ll * p * p % mod);
 
-        return ((n & 1) == 0) ? p : int(1ll * p * x % M);
+        return ((n & 1) == 0) ? p : int(1ll * p * x % mod);
     }
 
     int modInv(int a) {
-        return modPow(a, M - 2);
+        return modPow(a, mod - 2);
     }
 };

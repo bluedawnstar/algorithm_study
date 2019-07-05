@@ -19,11 +19,129 @@ using namespace std;
 #include "polynomialMod.h"
 
 #define MOD     998244353
+#define ROOT    3
+
+// https://www.codechef.com/problems/TREDEG
+
+struct Solver {
+    vector<int> fact;
+    vector<int> factInv;
+    vector<int> inv;
+
+    // O(N)
+    void build(int N) {
+        fact.resize(N + 1);
+        factInv.resize(N + 1);
+        inv.resize(N + 1);
+
+        inv[0] = 0;
+        inv[1] = 1;
+        for (int i = 2; i <= N; i++)
+            inv[i] = int((MOD - 1ll * (MOD / i) * inv[MOD % i] % MOD) % MOD);
+
+        fact[0] = 1;
+        factInv[0] = 1;
+
+        fact[1] = 1;
+        factInv[1] = 1;
+
+        for (int i = 2; i <= N; i++) {
+            fact[i] = int(1ll * fact[i - 1] * i % MOD);
+            factInv[i] = int(1ll * factInv[i - 1] * inv[i] % MOD);
+        }
+    }
+
+    int solve(int N, int K) {
+        NTT ntt(MOD, 3);
+
+        if (K == 1) {
+            long long ans = 0;
+            for (int i = 0; i <= N - 2; i++)
+                ans = (ans + 1ll * fact[i] * comb(N, i) % MOD * comb(N - 2, i) % MOD * modPow(N, N - 2 - i)) % MOD;
+            return ans * modPow(N, MOD - 1 - (N - 2)) % MOD;
+        }
+
+        vector<int> A(N);
+        for (int i = 0; i < N; i++)
+            A[i] = 1ll * ntt.modPow(i + 1, K) * factInv[i] % MOD;
+
+        // poly = (1^k * x^0/0! + 2^k * x^1/1!*x + 3^k * x^2/2! + ... + n^k * x^(n-1)/(n-1)!)^n
+        auto poly = ntt.powFast(A, N);
+
+        // res = poly[n-2] * (n - 2)! / n^(n-2)
+        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * ntt.modInv(ntt.modPow(N, N - 2)) % MOD);
+    }
+
+private:
+    int perm(int n, int r) {
+        return int(1ll * fact[n] * factInv[n - r] % MOD);
+    }
+
+    int permInv(int n, int r) {
+        return int(1ll * factInv[n] * fact[n - r] % MOD);
+    }
+
+    int comb(int n, int r) {
+        if (n < r)
+            return 0;
+
+        if (n == 0 || r == 0 || n == r)
+            return 1;
+
+        if (n - r < r)
+            r = n - r;
+
+        return int(1ll * fact[n] * factInv[n - r] % MOD * factInv[r] % MOD);
+    }
+
+    int combInv(int n, int r) {
+        if (n < r)
+            return 0;
+
+        if (n == 0 || r == 0 || n == r)
+            return 1;
+
+        if (n - r < r)
+            r = n - r;
+
+        return int(1ll * factInv[n] * fact[n - r] % MOD * fact[r] % MOD);
+    }
+
+    int modPow(int x, int n) {
+        if (n == 0)
+            return 1;
+
+        long long t = x;
+        long long res = 1;
+        for (; n > 0; n >>= 1) {
+            if (n & 1)
+                res = res * t % MOD;
+            t = t * t % MOD;
+        }
+        return int(res);
+    }
+
+    int modInv(int x) {
+        return modPow(x, MOD - 2);
+    }
+};
+
 
 void testNTT() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- NTT ------------------------" << endl;
+    {
+        Solver solver;
+        solver.build(2000000);
+        int ans1 = solver.solve(3, 1);
+        int ans2 = solver.solve(4, 2);
+
+        if (ans1 != 2 || ans2 != 748683279)
+            cout << "Invalid answer : " << ans1 << ", " << ans2 << endl;
+        assert(ans1 == 2);
+        assert(ans2 == 748683279);
+    }
     {
         NTT ntt(MOD, 3);
         int TESTN = 1000;
