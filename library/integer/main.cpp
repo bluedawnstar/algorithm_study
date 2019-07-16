@@ -10,13 +10,14 @@ int main(void) {
     TEST(PrimeNumberEratosthenes);
     TEST(Gcd);
     TEST(IntMod);
+    TEST(FactorialMod);
     TEST(Factor);
     TEST(PrimeFactor);
     TEST(EulerTheorem);
     TEST(Mobius);
     TEST(Digit);
     TEST(ChineseRemainderTheorem);
-    TEST(Equations);
+    TEST(DiophantineEquation);
     TEST(PrimitiveRoot);
     TEST(BigInt);
     TEST(Bit);
@@ -25,7 +26,7 @@ int main(void) {
     TEST(PrimalityTestInt32);
     TEST(PrimalityTestInt64);
     TEST(PrimeFactorInt64);
-    TEST(ModularEquations);
+    TEST(DiscreteEquations);
     TEST(GarnerAlgorithm);
     TEST(FastModOp);
 }

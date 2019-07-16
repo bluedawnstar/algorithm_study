@@ -146,10 +146,11 @@
     <ClCompile Include="bit.cpp" />
     <ClCompile Include="chineseRemainderTheorem.cpp" />
     <ClCompile Include="digit.cpp" />
-    <ClCompile Include="equations.cpp" />
-    <ClCompile Include="equationsMod.cpp" />
+    <ClCompile Include="diophantineEquation.cpp" />
+    <ClCompile Include="discreteEquations.cpp" />
     <ClCompile Include="eulerTheorem.cpp" />
     <ClCompile Include="factor.cpp" />
+    <ClCompile Include="factorialMod.cpp" />
     <ClCompile Include="fastModOp.cpp" />
     <ClCompile Include="garnerAlgorithm.cpp" />
     <ClCompile Include="gcd.cpp" />
@@ -171,8 +172,10 @@
     <ClInclude Include="bit.h" />
     <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="digit.h" />
-    <ClInclude Include="equations.h" />
-    <ClInclude Include="equationsMod.h" />
+    <ClInclude Include="diophantineEquation.h" />
+    <ClInclude Include="discreteEquations.h" />
+    <ClInclude Include="discreteLog.h" />
+    <ClInclude Include="discreteRoot.h" />
     <ClInclude Include="eulerTheorem.h" />
     <ClInclude Include="factor.h" />
     <ClInclude Include="fastModOp.h" />
@@ -181,7 +184,7 @@
     <ClInclude Include="gcdAlgo.h" />
     <ClInclude Include="grayCode.h" />
     <ClInclude Include="intMod.h" />
-    <ClInclude Include="intModExt.h" />
+    <ClInclude Include="factorialMod.h" />
     <ClInclude Include="mobius.h" />
     <ClInclude Include="primalityTest.h" />
     <ClInclude Include="primalityTestFast.h" />

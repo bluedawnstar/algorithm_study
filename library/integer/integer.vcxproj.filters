@@ -42,9 +42,6 @@
     <ClCompile Include="chineseRemainderTheorem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="equations.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="primitiveRoot.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -58,9 +55,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="mobius.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="equationsMod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="garnerAlgorithm.cpp">
@@ -82,6 +76,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="fastModOp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="diophantineEquation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="factorialMod.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="discreteEquations.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,12 +113,6 @@
     <ClInclude Include="chineseRemainderTheorem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="equations.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="intModExt.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="primitiveRoot.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -126,9 +123,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mobius.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="equationsMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="grayCode.h">
@@ -159,6 +153,21 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="intMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="diophantineEquation.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="factorialMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="discreteEquations.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="discreteRoot.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="discreteLog.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
