@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "equations.h"
+#include "diophantineEquation.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -15,10 +15,10 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
-void testEquations() {
+void testDiophantineEquation() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Equations -------------------------" << endl;
+    cout << "--- Diophantine Equations -------------------------" << endl;
     // linear diophantine equation
     {
         int a = 7, b = 2, c = 5;
