@@ -87,6 +87,9 @@
     <ClCompile Include="discreteEquations.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="chineseRemainderTheorem-like.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gcd.h">

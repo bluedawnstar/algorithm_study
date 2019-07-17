@@ -145,6 +145,7 @@
     <ClCompile Include="bigint.cpp" />
     <ClCompile Include="bit.cpp" />
     <ClCompile Include="chineseRemainderTheorem.cpp" />
+    <ClCompile Include="chineseRemainderTheorem-like.cpp" />
     <ClCompile Include="digit.cpp" />
     <ClCompile Include="diophantineEquation.cpp" />
     <ClCompile Include="discreteEquations.cpp" />
