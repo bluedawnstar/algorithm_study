@@ -24,6 +24,9 @@
     <ClCompile Include="wythoffGame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="pirateGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mexSet.h">
@@ -33,6 +36,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="wythoffGame.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pirateGame.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pirateGameExtended.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

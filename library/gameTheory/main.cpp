@@ -8,4 +8,5 @@ using namespace std;
 int main(void) {
     TEST(MexTrie);
     TEST(WythoffGame);
+    TEST(PirateGame);
 }
