@@ -2,8 +2,24 @@
 
 #include "ntt.h"
 
+// It's slower than PolyFFTMod
 struct PolyNTT {
+    static vector<int> multiplySlow(const vector<int>& left, const vector<int>& right, int mod) {
+        vector<int> res(left.size() + right.size() - 1);
+
+        for (int i = 0; i < int(right.size()); i++) {
+            for (int j = 0; j < int(left.size()); j++) {
+                res[i + j] = int((res[i + j] + 1ll * left[j] * right[i]) % mod);
+            }
+        }
+
+        return res;
+    }
+
     static vector<int> multiply(const vector<int>& a, const vector<int>& b, int mod) {
+        if (int(a.size() + b.size()) <= 256)
+            return multiplySlow(a, b, mod);
+
         static NTT ntt1(167772161, 3);
         static NTT ntt2(469762049, 3);
         static NTT ntt3(998244353, 3);
@@ -31,6 +47,9 @@ struct PolyNTT {
     }
 
     static vector<int> multiplyFast(const vector<int>& a, const vector<int>& b, int mod) {
+        if (int(a.size() + b.size()) <= 256)
+            return multiplySlow(a, b, mod);
+
         static NTT ntt1(167772161, 3);
         static NTT ntt2(469762049, 3);
         static NTT ntt3(998244353, 3);
@@ -43,8 +62,8 @@ struct PolyNTT {
         const int m2 = ntt2.mod;
         const int m3 = ntt3.mod;
 
-        const int m1InvM2 = modInvIter(m1, m2);
-        const int m12InvM3 = modInvIter(1ll * m1 * m2 % m3, m3);
+        const int m1InvM2 = modInv(m1, m2);
+        const int m12InvM3 = modInv(1ll * m1 * m2 % m3, m3);
         const int m12Mod = 1ll * m1 * m2 % mod;
 
         vector<int> res(x.size());
@@ -81,7 +100,109 @@ struct PolyNTT {
         return multiply(x, h, reverseH);
     }
 
-private:
+    //--- extended operations
+
+    static vector<int> square(const vector<int>& a, int mod) {
+        return multiplyFast(a, a, mod);
+    }
+
+
+    // low order first
+    static vector<int> inverse(vector<int> a, int mod) {
+        //assert(!a.empty());
+        int n = int(a.size());
+        vector<int> b = { modInv(a[0], mod) };
+        while (int(b.size()) < n) {
+            vector<int> a_cut(a.begin(), a.begin() + min(a.size(), b.size() << 1));
+            vector<int> x = multiply(square(b, mod), a_cut, mod);
+            b.resize(b.size() << 1);
+            for (int i = int(b.size()) >> 1; i < int(min(x.size(), b.size())); i++)
+                b[i] = mod - x[i];
+        }
+        b.resize(n);
+        return b;
+    }
+
+    // low order first
+    static vector<int> differentiate(vector<int> a, int mod) {
+        a.back() = 0;
+        for(int i = 1; i < int(a.size()); i++)
+            a[i - 1] = int(1ll * a[i] * i % mod);  
+        return a;
+    }
+
+    // low order first
+    static vector<int> integrate(vector<int> a, int mod) {
+        for(int i = int(a.size()) - 1; i > 0; i--)
+            a[i] = int(1ll * a[i - 1] * modInv(i, mod) % mod);
+        a[0] = 0;  
+        return a;
+    }
+
+    // ln f(x) = INTEGRAL f'(x) / f(x)
+    // low order first
+    static vector<int> ln(vector<int> a, int mod) {
+        auto A = inverse(a, mod);
+        auto B = differentiate(a, mod);
+        A = multiply(A, B, mod);
+        A.resize(a.size());
+        return integrate(A, mod);  
+    }
+
+    // low order first
+    static vector<int> exp(vector<int> a, int mod) {
+        int size = 1;
+        while (size < int(a.size()))
+            size <<= 1;
+
+        if(size == 1)
+            return{ 1 };
+
+        a.resize(size);
+
+        vector<int> dd(a.begin(), a.begin() + (size >> 1));
+
+        vector<int> b = exp(dd, mod);
+        b.resize(size);
+
+        vector<int> c = ln(b, mod);
+        for (int i = 0; i < size; i++)
+            c[i] = int((a[i] - c[i] + mod) % mod);
+        c[0]++;
+
+        b = multiply(b, c, mod);
+        b.resize(size);
+
+        return b;
+    }
+
+    // a[0] != 0
+    static vector<int> powFast(const vector<int>& a, int n, int mod) { // n >= 0
+        auto b = ln(a, mod);
+        for (int i = 0; i < int(b.size()); i++)
+            b[i]= int(1ll * b[i] * n % mod);
+        return exp(b, mod);
+    }
+
+    static vector<int> pow(const vector<int>& p, int n, int maxDegree, int mod) {
+        if (n == 0)
+            return{ 1 };
+
+        auto poly = pow(p, n / 2, maxDegree, mod);
+        poly = square(poly, mod);
+        if (int(poly.size()) > maxDegree + 1)
+            poly.resize(maxDegree + 1);
+
+        if (n & 1) {
+            poly = multiply(poly, p, mod);
+            if (int(poly.size()) > maxDegree + 1)
+                poly.resize(maxDegree + 1);
+        }
+
+        return poly;
+    }
+
+//private:
     static int garner(vector<pair<int, int>> p, int mod) {
         int n = int(p.size());
 
@@ -92,7 +213,7 @@ private:
         vector<int> a(p.size(), 1);
         vector<int> b(p.size(), 0);
         for (int i = 0; i < n; i++) {
-            int x = int(1ll * (p[i].second - b[i]) * modInvPrime(a[i], p[i].first) % p[i].first);
+            int x = int(1ll * (p[i].second - b[i]) * modInv(a[i], p[i].first) % p[i].first);
             if (x < 0)
                 x += p[i].first;
 
@@ -105,45 +226,22 @@ private:
         return b[n];
     }
 
-    static int modPow(int x, int n, int M) {
+    static int modPow(int x, int n, int mod) {
         if (n == 0)
             return 1;
 
-        long long t = x % M;
+        long long t = x % mod;
         long long res = 1;
         for (; n > 0; n >>= 1) {
             if (n & 1)
-                res = res * t % M;
-            t = t * t % M;
+                res = res * t % mod;
+            t = t * t % mod;
         }
         return int(res);
     }
 
-    // M is a prime number.
-    static int modInvPrime(int a, int M) {
-        return modPow(a, M - 2, M);
-    }
-
-    // a and M are coprime
-    static int modInvIter(int a, int M) {
-        int b = M;
-        int y = 0, x = 1;
-
-        if (M == 1)
-            return 0;
-
-        while (a > 1 && b != 0) {
-            int q = a / b;
-
-            int t = b;
-            b = a % b;
-            a = t;
-
-            t = y;
-            y = x - q * y;
-            x = t;
-        }
-
-        return (x % M + M) % M;
+    // mod is a prime number.
+    static int modInv(int a, int mod) {
+        return modPow(a, mod - 2, mod);
     }
 };

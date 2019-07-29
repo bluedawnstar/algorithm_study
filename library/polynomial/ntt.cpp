@@ -1,4 +1,5 @@
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -72,6 +73,44 @@ struct Solver {
         return int(1ll * poly[N - 2] * fact[N - 2] % MOD * ntt.modInv(ntt.modPow(N, N - 2)) % MOD);
     }
 
+    int solveWithFFT(int N, int K) {
+        if (K == 1) {
+            long long ans = 0;
+            for (int i = 0; i <= N - 2; i++)
+                ans = (ans + 1ll * fact[i] * comb(N, i) % MOD * comb(N - 2, i) % MOD * modPow(N, N - 2 - i)) % MOD;
+            return ans * modPow(N, MOD - 1 - (N - 2)) % MOD;
+        }
+
+        vector<int> A(N);
+        for (int i = 0; i < N; i++)
+            A[i] = 1ll * PolyFFTMod::modPow(i + 1, K, MOD) * factInv[i] % MOD;
+
+        // poly = (1^k * x^0/0! + 2^k * x^1/1!*x + 3^k * x^2/2! + ... + n^k * x^(n-1)/(n-1)!)^n
+        auto poly =PolyFFTMod::powFast(A, N, MOD);
+
+        // res = poly[n-2] * (n - 2)! / n^(n-2)
+        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * PolyFFTMod::modInv(PolyFFTMod::modPow(N, N - 2, MOD), MOD) % MOD);
+    }
+
+    int solveWithPolyNTT(int N, int K) {
+        if (K == 1) {
+            long long ans = 0;
+            for (int i = 0; i <= N - 2; i++)
+                ans = (ans + 1ll * fact[i] * comb(N, i) % MOD * comb(N - 2, i) % MOD * modPow(N, N - 2 - i)) % MOD;
+            return ans * modPow(N, MOD - 1 - (N - 2)) % MOD;
+        }
+
+        vector<int> A(N);
+        for (int i = 0; i < N; i++)
+            A[i] = 1ll * PolyNTT::modPow(i + 1, K, MOD) * factInv[i] % MOD;
+
+        // poly = (1^k * x^0/0! + 2^k * x^1/1!*x + 3^k * x^2/2! + ... + n^k * x^(n-1)/(n-1)!)^n
+        auto poly = PolyNTT::powFast(A, N, MOD);
+
+        // res = poly[n-2] * (n - 2)! / n^(n-2)
+        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * PolyNTT::modInv(PolyNTT::modPow(N, N - 2, MOD), MOD) % MOD);
+    }
+
 private:
     int perm(int n, int r) {
         return int(1ll * fact[n] * factInv[n - r] % MOD);
@@ -136,11 +175,23 @@ void testNTT() {
         solver.build(2000000);
         int ans1 = solver.solve(3, 1);
         int ans2 = solver.solve(4, 2);
+        int ans3 = solver.solveWithFFT(3, 1);
+        int ans4 = solver.solveWithFFT(4, 2);
+        int ans5 = solver.solveWithPolyNTT(3, 1);
+        int ans6 = solver.solveWithPolyNTT(4, 2);
 
         if (ans1 != 2 || ans2 != 748683279)
             cout << "Invalid answer : " << ans1 << ", " << ans2 << endl;
+        if (ans3 != 2 || ans4 != 748683279)
+            cout << "Invalid answer with FFT : " << ans3 << ", " << ans4 << endl;
+        if (ans5 != 2 || ans6 != 748683279)
+            cout << "Invalid answer with NTT : " << ans5 << ", " << ans6 << endl;
         assert(ans1 == 2);
         assert(ans2 == 748683279);
+        assert(ans3 == 2);
+        assert(ans4 == 748683279);
+        assert(ans5 == 2);
+        assert(ans6 == 748683279);
     }
     {
         NTT ntt(MOD, 3);

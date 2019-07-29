@@ -46,15 +46,28 @@ struct NTT {
         }
 
         if (inverse) {
-            int inv = modInv(n);
+            int inverse = modInv(n);
             for (int j = 0; j < n; j++)
-                a[j] = int(1ll * a[j] * inv % mod);
+                a[j] = int(1ll * a[j] * inverse % mod);
         }
+    }
+
+
+    vector<int> multiplySlow(const vector<int>& left, const vector<int>& right) {
+        vector<int> res(left.size() + right.size() - 1);
+
+        for (int i = 0; i < int(right.size()); i++) {
+            for (int j = 0; j < int(left.size()); j++) {
+                res[i + j] = int((res[i + j] + 1ll * left[j] * right[i]) % mod);
+            }
+        }
+
+        return res;
     }
 
     vector<int> multiply(const vector<int>& a, const vector<int>& b, bool reverseB = false) {
         int n = int(a.size()) + int(b.size()) - 1;
-        if (n < 128)
+        if (n <= 128)
             return multiplySlow(a, b);
 
         int size = 1;
@@ -88,18 +101,6 @@ struct NTT {
 
     //--- extended operations
 
-    vector<int> multiplySlow(const vector<int>& left, const vector<int>& right) {
-        vector<int> res(left.size() + right.size() - 1);
-
-        for (int i = 0; i < int(right.size()); i++) {
-            for (int j = 0; j < int(left.size()); j++) {
-                res[i + j] = int((res[i + j] + 1ll * left[j] * right[i]) % mod);
-            }
-        }
-
-        return res;
-    }
-
     vector<int> square(const vector<int>& a) {
         int n = int(a.size()) * 2 - 1;
         if (n < 128)
@@ -125,7 +126,7 @@ struct NTT {
     }
 
     // low order first
-    vector<int> inv(vector<int> a) {
+    vector<int> inverse(vector<int> a) {
         int size = 1;
         while (size < int(a.size()))
             size <<= 1;
@@ -134,10 +135,10 @@ struct NTT {
             a.resize(size);
 
         if (size == 1)
-            return{ modPow(a[0], mod - 2) }; // 1/a[0]
+            return{ modInv(a[0]) }; // 1/a[0]
 
         vector<int> b(a.begin(), a.begin() + (size >> 1));
-        b = inv(b);
+        b = inverse(b);
 
         a.resize(size << 1);
         b.resize(size << 1);
@@ -162,17 +163,17 @@ struct NTT {
     }
 
     // low order first
-    vector<int> integrate(vector<int> a){
+    vector<int> integrate(vector<int> a) {
         for(int i = int(a.size()) - 1; i > 0; i--)
-            //a[i] = int(1ll * a[i - 1] * gInv[i] % mod);
-            a[i] = int(1ll * a[i - 1] * modPow(i, mod - 2) % mod);
+            a[i] = int(1ll * a[i - 1] * modInv(i) % mod);
         a[0] = 0;  
         return a;
     }
 
+    // ln f(x) = INTEGRAL f'(x) / f(x)
     // low order first
     vector<int> ln(vector<int> a) {
-        auto A = inv(a);
+        auto A = inverse(a);
         auto B = differentiate(a);
         A = multiply(A, B);
         A.resize(a.size());
