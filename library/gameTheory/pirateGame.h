@@ -28,6 +28,7 @@
 */
 struct PirateGame {
     // N = the number of pirates, M = the number of gold pieces
+    // O(1)
     static long long solve(long long N, long long M) {
         long long base = M * 2 + 1;
 

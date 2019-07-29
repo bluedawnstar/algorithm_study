@@ -80,4 +80,7 @@
        (e^x - 1)^k = SUM T(n,k) * x^n/n!   , T(n,k) = k! * S(n,k)
                      n=0
 
+
+ https://en.wikipedia.org/wiki/Generating_function
+
 */
