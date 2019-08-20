@@ -5,64 +5,64 @@
 template <typename T>
 struct Matrix {
     int N;
-    vector<vector<T>> val;
+    vector<vector<T>> mat;
 
-    Matrix(int _N) : N(_N), val(_N, vector<T>(_N)) {
+    explicit Matrix(int _N) : N(_N), mat(_N, vector<T>(_N)) {
     }
 
-    Matrix(const vector<vector<T>>& rhs) : N(int(rhs.size())), val(rhs) {
+    Matrix(const vector<vector<T>>& rhs) : N(int(rhs.size())), mat(rhs) {
     }
 
-    Matrix(vector<vector<T>>&& rhs) : N(int(rhs.size())), val(move(rhs)) {
-    }
-
-    template <typename U>
-    Matrix(const vector<vector<U>>& rhs) : N(int(rhs.size())), val(N, vector<T>(N)) {
-        for (int i = 0; i < N; i++)
-            for (int j = 0; j < N; j++)
-                val[i][j] = (T)rhs[i][j];
+    Matrix(vector<vector<T>>&& rhs) : N(int(rhs.size())), mat(move(rhs)) {
     }
 
     template <typename U>
-    Matrix(const Matrix<U>& rhs) : N(rhs.N), val(N, vector<T>(N)) {
+    Matrix(const vector<vector<U>>& rhs) : N(int(rhs.size())), mat(N, vector<T>(N)) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] = (T)rhs.val[i][j];
+                mat[i][j] = static_cast<T>(rhs[i][j]);
+    }
+
+    template <typename U>
+    Matrix(const Matrix<U>& rhs) : N(rhs.N), mat(N, vector<T>(N)) {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                mat[i][j] = static_cast<T>(rhs.mat[i][j]);
     }
 
 
     Matrix& operator =(const vector<vector<T>>& rhs) {
-        N = int(rhs.N);
-        val = rhs;
+        N = static_cast<int>(rhs.N);
+        mat = rhs;
         return *this;
     }
 
     Matrix& operator =(vector<vector<T>>&& rhs) {
-        N = int(rhs.size());
-        val = move(rhs);
+        N = static_cast<int>(rhs.size());
+        mat = move(rhs);
         return *this;
     }
 
     template <typename U>
     Matrix& operator =(const vector<vector<U>>& rhs) {
-        N = int(rhs.size());
+        N = static_cast<int>(rhs.size());
 
-        val.assign(N, vector<T>(N));
+        mat.assign(N, vector<T>(N));
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] = (T)rhs[i][j];
+                mat[i][j] = static_cast<T>(rhs[i][j]);
 
         return *this;
     }
 
     template <typename U>
     Matrix& operator =(const Matrix<U>& rhs) {
-        N = int(rhs.size());
+        N = static_cast<int>(rhs.size());
 
-        val.assign(N, vector<T>(N));
+        mat.assign(N, vector<T>(N));
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] = (T)rhs.val[i][j];
+                mat[i][j] = static_cast<T>(rhs.mat[i][j]);
 
         return *this;
     }
@@ -70,28 +70,28 @@ struct Matrix {
 
     Matrix& init() {
         for (int i = 0; i < N; i++)
-            fill(val[i].begin(), val[i].end(), 0);
+            fill(mat[i].begin(), mat[i].end(), 0);
         return *this;
     }
 
     Matrix& identity() {
         for (int i = 0; i < N; i++)
-            val[i][i] = 1;
+            mat[i][i] = 1;
         return *this;
     }
 
     const vector<T>& operator[](int row) const {
-        return val[row];
+        return mat[row];
     }
 
     vector<T>& operator[](int row) {
-        return val[row];
+        return mat[row];
     }
 
     Matrix& operator +=(T x) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] += x;
+                mat[i][j] += x;
         return *this;
     }
 
@@ -102,14 +102,14 @@ struct Matrix {
     Matrix& operator *=(T x) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] *= x;
+                mat[i][j] *= x;
         return *this;
     }
 
     Matrix& operator /=(T x) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] /= x;
+                mat[i][j] /= x;
         return *this;
     }
 
@@ -122,14 +122,14 @@ struct Matrix {
     Matrix& operator +=(const Matrix& rhs) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] += rhs.val[i][j];
+                mat[i][j] += rhs.mat[i][j];
         return *this;
     }
 
     Matrix& operator -=(const Matrix& rhs) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
-                val[i][j] -= rhs.val[i][j];
+                mat[i][j] -= rhs.mat[i][j];
         return *this;
     }
 
@@ -216,6 +216,61 @@ struct Matrix {
     }
 
 
+    Matrix<double> inverse() const {
+        const double EPS = 1e-10;
+
+        Matrix<double> res(N);
+        for (int i = 0; i < N; i++)
+            res[i][i] = 1;
+
+        Matrix<double> mat = this->mat;
+        for (int i = 0; i < N; i++) {
+            int selected = -1;
+            for (int j = i; j < N; j++) {
+                if (fabs(mat[j][i]) > EPS) {
+                    selected = j;
+                    break;
+                }
+            }
+            if (selected == -1)
+                continue;
+            if (i != selected) {
+                swap(mat[i], mat[selected]);
+                swap(res[i], res[selected]);
+            }
+
+            double freq = 1.0 / mat[i][i];
+            for (int j = 0; j < N; j++) {
+                mat[i][j] *= freq;
+                res[i][j] *= freq;
+            }
+            for (int j = 0; j < N; j++) {
+                if (i == j)
+                    continue;
+                if (fabs(mat[j][i]) < EPS)
+                    continue;
+
+                auto freq = mat[j][i];
+                for (int k = 0; k < N; k++) {
+                    mat[j][k] -= mat[i][k] * freq;
+                    res[j][k] -= res[i][k] * freq;
+                }
+            }
+        }
+
+        //for (int i = 0; i < N; i++) {
+        //    for (int j = 0; j < N; j++) {
+        //        if (i == j)
+        //            assert(1.0 - EPS < mat[i][j] && mat[i][j] < 1.0 + EPS);
+        //        else
+        //            assert(fabs(mat[i][j]) < EPS);
+        //    }
+        //}
+
+        return res;
+    }
+
+
     static void multiply(Matrix& out, const Matrix& left, const Matrix& right) {
         int N = left.N;
         for (int r = 0; r < N; r++) {
@@ -258,6 +313,4 @@ struct Matrix {
 };
 
 // https://github.com/yosupo06/Algorithm/tree/54cd52339c4bb8be8719ef04dbb4486e355f03fb/src/math
-//TODO: inverse
-//TODO: matrix determinant
 //TODO: QR decomposition

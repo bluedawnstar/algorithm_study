@@ -5,15 +5,17 @@
 using namespace std;
 
 #include "matrix.h"
+#include "matrixMod.h"
 #include "matrix2x2.h"
+#include "matrix2x2Mod.h"
 
 template <typename T>
 static Matrix<T> fibonacci(int n) {
     Matrix<T> fm(2);
-    fm.val[0][0] = 1ll;
-    fm.val[0][1] = 1ll;
-    fm.val[1][0] = 1ll;
-    fm.val[1][1] = 0ll;
+    fm.mat[0][0] = 1ll;
+    fm.mat[0][1] = 1ll;
+    fm.mat[1][0] = 1ll;
+    fm.mat[1][1] = 0ll;
     return Matrix<T>::pow(fm, n);
 }
 
@@ -48,7 +50,7 @@ static long long fibonacciSlow(int n) {
 }
 
 void testMatrix() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Matrix ---------------------------------" << endl;
 
@@ -57,10 +59,38 @@ void testMatrix() {
     }
 
     {
-        Matrix<int> m(vector<vector<int>>{ { 2, 4, 3, 5, 4 }, { 5, 4, 0, 2, 4 }, { 0, 5, 5, 2, 3 },
-                                           { 1, 0, 4, 3, 0 }, { 0, 5, 1, 4, 4 } });
+        Matrix<int> m(vector<vector<int>>{
+            { 2, 4, 3, 5, 4 },
+            { 5, 4, 0, 2, 4 },
+            { 0, 5, 5, 2, 3 },
+            { 1, 0, 4, 3, 0 },
+            { 0, 5, 1, 4, 4 }
+        });
         cout << m.det() << endl;
         assert(fabs(m.det() - 279) < 1e-9);
+    }
+    {
+        Matrix<int> mat(vector<vector<int>>{
+            {  5, -2,  2,  7 },
+            {  1,  0,  0,  3 },
+            { -3,  1,  5,  0 },
+            {  3, -1, -9,  4 }
+        });
+        auto inv = mat.inverse();
+
+        for (int i = 0; i < int(mat.mat.size()); i++) {
+            for (int j = 0; j < int(mat.mat[0].size()); j++) {
+                cout << mat.mat[i][j] << ", ";
+            }
+            cout << endl;
+        }
+
+        for (int i = 0; i < int(inv.mat.size()); i++) {
+            for (int j = 0; j < int(inv.mat[0].size()); j++) {
+                cout << inv.mat[i][j] << ", ";
+            }
+            cout << endl;
+        }
     }
 
     PROFILE_START(0);
