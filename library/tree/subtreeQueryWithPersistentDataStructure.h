@@ -40,17 +40,17 @@
             }
             sort(subtrees.begin(), subtrees.end(), greater<pair<int,int>>());
 
-            int root = -1;
+            int root = -1;  //TODO: initial root
             if (!subtrees.empty()) {
                 root = nodeToRoot[subtrees[0].second];
                 for (int i = 1; i < int(subtrees.size()); i++) {
                     int tL = visitTime[subtrees[i].second].first;
                     int tR = visitTime[subtrees[i].second].second;
                     for (int t = tL; t < tR; t++)
-                        root = persistentDS.add(root, timeToNode[t]);
+                        root = persistentDS.add(root, timeToNode[t], ...);
                 }
             }
-            nodeToRoot[u] = persistentDS.add(root, u);
+            nodeToRoot[u] = persistentDS.add(root, u, ...);
         }
 
 */
