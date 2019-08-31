@@ -61,7 +61,6 @@ struct MergeSortTree {
     }
 
     // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= valHigh - valLow)
-    // If not found, return valHigh
     T kth(int left, int right, int k, T valLow, T valHigh) const {
         T lo = valLow, hi = valHigh;
         while (lo <= hi) {
@@ -71,7 +70,7 @@ struct MergeSortTree {
             else
                 lo = mid + 1;
         }
-        return lo; // lower bound
+        return lo;
     }
 
     // O(1), inclusive (0 <= k < N)
