@@ -201,6 +201,9 @@
     <ClCompile Include="sqrtTree.cpp" />
     <ClCompile Include="sqrtTreeCompact.cpp" />
     <ClCompile Include="sqrtTreeFast.cpp" />
+    <ClCompile Include="vectorRangeCount.cpp" />
+    <ClCompile Include="vectorRangeQuery.cpp" />
+    <ClCompile Include="vectorRangeSum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
@@ -267,6 +270,9 @@
     <ClInclude Include="sqrtTree.h" />
     <ClInclude Include="sqrtTreeCompact.h" />
     <ClInclude Include="sqrtTreeFast.h" />
+    <ClInclude Include="vectorRangeCount.h" />
+    <ClInclude Include="vectorRangeQuery.h" />
+    <ClInclude Include="vectorRangeSum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

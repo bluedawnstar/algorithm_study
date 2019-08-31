@@ -152,9 +152,6 @@
     <ClCompile Include="persistentArray.cpp" />
     <ClCompile Include="persistentStack.cpp" />
     <ClCompile Include="prefixSum.cpp" />
-    <ClCompile Include="vectorRangeCount.cpp" />
-    <ClCompile Include="vectorRangeQuery.cpp" />
-    <ClCompile Include="vectorRangeSum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="prefixSum2D.h" />
@@ -162,9 +159,6 @@
     <ClInclude Include="persistentArray.h" />
     <ClInclude Include="persistentStack.h" />
     <ClInclude Include="prefixSum.h" />
-    <ClInclude Include="vectorRangeCount.h" />
-    <ClInclude Include="vectorRangeQuery.h" />
-    <ClInclude Include="vectorRangeSum.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

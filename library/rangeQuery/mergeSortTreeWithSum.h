@@ -71,7 +71,7 @@ struct MergeSortTreeWithSum {
         return make_pair(r.first - l.first, r.second - l.second);
     }
 
-    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
+    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= valLow - valHigh)
     // If not found, return valHigh
     T kth(int left, int right, int k, T valLow, T valHigh) const {
         T lo = valLow, hi = valHigh;

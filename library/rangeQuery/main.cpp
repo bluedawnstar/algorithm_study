@@ -60,4 +60,7 @@ int main(void) {
     TEST(IntTrie);
     TEST(IntTriePersistent);
     TEST(KTimesValueCounter);
+    TEST(VectorRangeCount);
+    TEST(VectorRangeSum);
+    TEST(VectorRangeQuery);
 }

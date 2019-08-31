@@ -135,9 +135,9 @@ struct KTimesValueCounter {
 
         // build a persistent tree for range query
         /*       L           R
-        x  0 | 1 2 3 ... K | K+1 ...
-        -1 +1
-        +1 -2  +1 
+            x  0 | 1 2 3 ... K | K+1 ...
+           -1 +1
+           +1 -2  +1 
         =>  0 -1  +1
         */
         roots.assign(n + 1, 0);

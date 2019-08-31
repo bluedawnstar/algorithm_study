@@ -180,6 +180,15 @@
     <ClCompile Include="fenwickTreeMultAddPersistent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="vectorRangeCount.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="vectorRangeQuery.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="vectorRangeSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -372,6 +381,15 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fenwickTreeMultAddPersistent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vectorRangeCount.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vectorRangeQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="vectorRangeSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

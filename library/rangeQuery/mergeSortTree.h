@@ -60,7 +60,7 @@ struct MergeSortTree {
         return countLessThanOrEqual(valHigh) - countLessThanOrEqual(valLow - 1);
     }
 
-    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= right - left)
+    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= valHigh - valLow)
     // If not found, return valHigh
     T kth(int left, int right, int k, T valLow, T valHigh) const {
         T lo = valLow, hi = valHigh;
