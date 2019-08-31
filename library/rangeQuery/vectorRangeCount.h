@@ -277,7 +277,6 @@ struct VectorRangeCount {
 
 
     // O(sqrt(N) * log(N) * log(A)), inclusive (0 <= left <= right < N, 0 <= k <= valHigh - valLow)
-    // If not found, return valHigh
     T kth(int left, int right, int k, T valLow, T valHigh) {
         T lo = valLow, hi = valHigh;
         while (lo <= hi) {
@@ -287,7 +286,27 @@ struct VectorRangeCount {
             else
                 lo = mid + 1;
         }
-        return lo; // lower bound
+        return lo;
+    }
+
+    // O(sqrt(N) * log(N) * log(A)), inclusive (0 <= left <= right < N, 0 <= k <= valHigh - valLow)
+    // bool existF(int left, int right, T value);
+    int kthUnused(int left, int right, int k, T valLow, T valHigh, const function<bool(int,int,T)>& existF) {
+        T lo = valLow, hi = valHigh;
+        while (lo <= hi) {
+            T mid = lo + (hi - lo) / 2;
+            bool found = existF(left, right, mid);
+            int used = countLessOrEqual(left, right, mid);
+            int unused = int(mid - valLow + 1) - used;
+            if (unused == k + 1 && !found)
+                return mid;
+
+            if (unused <= k)
+                lo = mid + 1;
+            else
+                hi = mid - 1;
+        }
+        return lo;
     }
 
 private:
