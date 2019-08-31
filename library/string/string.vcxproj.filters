@@ -150,6 +150,9 @@
     <ClCompile Include="palindromicSubstring.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="simpleSubstring.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -309,6 +312,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicSubstringLongest_manacher.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="simpleSubstring.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
