@@ -23,7 +23,7 @@ int main(void) {
     TEST(CompressedTrieAM);
     TEST(DistinctSubstringCounter);
     TEST(PalindromicSubsequence);
-    TEST(PalindromicString);
+    TEST(PalindromicSubstring);
     TEST(PalindromicNumber);
     TEST(PalindromicTree);
     TEST(Split);

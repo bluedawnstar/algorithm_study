@@ -33,9 +33,6 @@
     <ClCompile Include="lcpArraySparseTable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="palindromicString.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="longestCommonSubstring_queryTwoStringAmongStrings.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -150,6 +147,9 @@
     <ClCompile Include="stringMatchingWithFFT.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="palindromicSubstring.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -165,9 +165,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicTree.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="palindromicString.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicSubsequence.h">
@@ -300,6 +297,18 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="stringMatchingWithFFT.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArray_LarssonSadakane.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicSubstringDP.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicSubstringAll_manacher.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="palindromicSubstringLongest_manacher.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

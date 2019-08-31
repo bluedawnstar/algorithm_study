@@ -13,10 +13,11 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/rand.h"
 
-#include "palindromicString.h"
+#include "palindromicSubstringDP.h"
+#include "palindromicSubstringLongest_manacher.h"
 
 void testPalindromicTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     vector<string> in{
         "a",
@@ -32,7 +33,7 @@ void testPalindromicTree() {
     for (auto s : in) {
         PalindromicTree tree(10);
 
-        int gt = countPalindromicSubstring(s, int(s.length()));
+        int gt = PalindromicSubstringDP::countPalindromicSubstring(s);
         int ans = int(tree.count(s));
         if (ans != gt) {
             cout << "gt = " << gt << ", ans = " << ans << endl;
@@ -50,7 +51,7 @@ void testPalindromicTree() {
             vector<int> gt(int(s.length()));
             int prevN = 0;
             for (int i = 0; i < int(s.length()); i++) {
-                int currN = countPalindromicSubstring(s, i + 1);
+                int currN = PalindromicSubstringDP::countPalindromicSubstring(s.c_str(), i + 1);
                 gt[i] = currN - prevN;
                 prevN = currN;
             }
@@ -65,7 +66,7 @@ void testPalindromicTree() {
         }
         // lengths of palindromic strings
         {
-            vector<int> gt = getLongestPalindromesByEnd(s, int(s.length()));
+            vector<int> gt = LongestPalindromicSubstring::getLongestPalindromesByEnd(s);
 
             PalindromicTree tree(int(s.length()));
             vector<int> ans;
