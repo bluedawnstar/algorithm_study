@@ -61,16 +61,34 @@ static int count(vector<int>& v, int L, int R, int val) {
     return res;
 }
 
+static pair<int,int> minmax(vector<int>& v, int L, int R) {
+    pair<int, int> res{ v[L], v[L] };
+    while (++L <= R) {
+        res.first = min(res.first, v[L]);
+        res.second = max(res.second, v[L]);
+    }
+    return res;
+}
+
+static int kth(vector<int>& v, int L, int R, int k) {
+    vector<int> vec;
+    vec.reserve(R - L + 1);
+    while (L <= R)
+        vec.push_back(v[L++]);
+    sort(vec.begin(), vec.end());
+    return vec[k];
+}
+
 void testVectorRangeCount() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Vector Range Count ----------" << endl;
     {
-        int N = 100000;
-        int T = 100000;
+        int N = 20000;
+        int T = 20000;
 #ifdef _DEBUG
-        N = 10000;
-        T = 10000;
+        N = 1000;
+        T = 1000;
 #endif
 
         vector<int> vec(N);
@@ -107,6 +125,14 @@ void testVectorRangeCount() {
                 if (gt != ans)
                     cout << "Mismatched: " << gt << ", " << ans << endl;
                 assert(gt == ans);
+
+                auto mm = minmax(vec, L, R);
+                int k = RandInt32::get() % (R - L + 1);
+                int gt2 = kth(vec, L, R, k);
+                int ans2 = vrc.kth(L, R, k, mm.first, mm.second);
+                if (gt2 != ans2)
+                    cout << "Mismatched: " << gt2 << ", " << ans2 << endl;
+                assert(gt2 == ans2);
 
                 assert(countLess(vec, L, R, val) == vrc.countLess(L, R, val));
                 assert(countGreaterOrEqual(vec, L, R, val) == vrc.countGreaterOrEqual(L, R, val));

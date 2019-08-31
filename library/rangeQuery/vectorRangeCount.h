@@ -275,6 +275,21 @@ struct VectorRangeCount {
         return res;
     }
 
+
+    // O(sqrt(N) * log(N) * log(A)), inclusive (0 <= left <= right < N, 0 <= k <= valHigh - valLow)
+    // If not found, return valHigh
+    T kth(int left, int right, int k, T valLow, T valHigh) {
+        T lo = valLow, hi = valHigh;
+        while (lo <= hi) {
+            T mid = lo + (hi - lo) / 2;
+            if (countLessOrEqual(left, right, mid) >= k + 1)
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
+        return lo; // lower bound
+    }
+
 private:
     void rebuild() {
         vector<int> v(values.size());
