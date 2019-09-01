@@ -1,7 +1,6 @@
 #pragma once
 
-const int MAXN = 105000;
-
+// with Suffix Automaton
 struct PalindromicTree {
     static const int MaxCharN = 26;
     static int ch2i(int c) { return c - 'a'; }
@@ -15,10 +14,10 @@ struct PalindromicTree {
     };
 
     string s;
-    vector<NodeT> tree;
+    vector<NodeT> nodes;
 
-    int nodeN;          // node 1 - root with len -1, node 2 - root with len 0
-    int lastSuffix;
+    int nodeN;              
+    int lastSuffix;         // special nodes: nodes[1] - root with len -1, nodes[2] - root with len 0
 
     PalindromicTree() {
     }
@@ -30,13 +29,13 @@ struct PalindromicTree {
     void init(int maxN) {
         s.clear();
 
-        tree = vector<NodeT>(maxN + 3, NodeT{ 0, 0, 0, 0, { 0, }, 0 });
+        nodes = vector<NodeT>(maxN + 3, NodeT{ 0, 0, 0, 0, { 0, }, 0 });
         s.reserve(maxN);
 
         nodeN = 2;
         lastSuffix = 2;
-        tree[1].len = -1; tree[1].suffixLink = 1;
-        tree[2].len = 0; tree[2].suffixLink = 1;
+        nodes[1].len = -1; nodes[1].suffixLink = 1;
+        nodes[2].len = 0; nodes[2].suffixLink = 1;
     }
 
     // return (the number of added palindrom strings, if new palindromic substring)
@@ -48,41 +47,57 @@ struct PalindromicTree {
         s += ch;
 
         while (true) {
-            curlen = tree[cur].len;
+            curlen = nodes[cur].len;
             if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == ch)
                 break;
-            cur = tree[cur].suffixLink;
+            cur = nodes[cur].suffixLink;
         }
-        if (tree[cur].next[let]) {
-            lastSuffix = tree[cur].next[let];
-            return make_pair(tree[lastSuffix].count, false);
+        if (nodes[cur].next[let]) {
+            lastSuffix = nodes[cur].next[let];
+            return make_pair(nodes[lastSuffix].count, false);
         }
 
         lastSuffix = ++nodeN;
-        tree[cur].next[let] = nodeN;
+        nodes[cur].next[let] = nodeN;
 
-        tree[nodeN].len = tree[cur].len + 2;
-        tree[nodeN].start = pos - tree[nodeN].len + 1;
-        tree[nodeN].end = pos;
+        nodes[nodeN].len = nodes[cur].len + 2;
+        nodes[nodeN].start = pos - nodes[nodeN].len + 1;
+        nodes[nodeN].end = pos;
 
-        if (tree[nodeN].len == 1) {
-            tree[nodeN].suffixLink = 2;
-            tree[nodeN].count = 1;
-            return make_pair(tree[lastSuffix].count, true);
+        if (nodes[nodeN].len == 1) {
+            nodes[nodeN].suffixLink = 2;
+            nodes[nodeN].count = 1;
+            return make_pair(nodes[lastSuffix].count, true);
         }
 
         while (true) {
-            cur = tree[cur].suffixLink;
-            curlen = tree[cur].len;
+            cur = nodes[cur].suffixLink;
+            curlen = nodes[cur].len;
             if (pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos]) {
-                tree[nodeN].suffixLink = tree[cur].next[let];
+                nodes[nodeN].suffixLink = nodes[cur].next[let];
                 break;
             }
         }
-        tree[nodeN].count = 1 + tree[tree[nodeN].suffixLink].count;
+        nodes[nodeN].count = 1 + nodes[nodes[nodeN].suffixLink].count;
 
-        return make_pair(tree[lastSuffix].count, true);
+        return make_pair(nodes[lastSuffix].count, true);
     }
+
+    int countLastSuffixPalindromes() const {
+        return nodes[lastSuffix].count;
+    }
+
+    vector<string> getLastSuffixPalindromes() const {
+        vector<string> pals;
+        int curr = lastSuffix;
+        while (curr > 2) {
+            pals.push_back(s.substr(nodes[curr].start, nodes[curr].len));
+            curr = nodes[curr].suffixLink;
+        }
+        return pals;
+    }
+
+    //---
 
     long long count(const string& s) {
         long long res = 0;

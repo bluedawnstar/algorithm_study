@@ -103,7 +103,6 @@ struct eerTree {
         palCount.assign(maxN, make_pair(0, false));
     }
 
-
     // return (the number of added palindrom strings, if new palindromic substring)
     pair<int, bool> extend(char ch) {
         auto res = add(ch);
@@ -116,6 +115,22 @@ struct eerTree {
         return res;
     }
 
+    int countLastSuffixPalindromes() const {
+        return nodes[lastSuffix].count;
+    }
+
+    vector<string> getLastSuffixPalindromes() const {
+        vector<string> pals;
+        int curr = lastSuffix;
+        while (curr > 2) {
+            pals.push_back(s.substr(nodes[curr].start, nodes[curr].len));
+            curr = nodes[curr].suffixLink;
+        }
+        return pals;
+    }
+
+    //---
+
     void build(const char s[], int n) {
         for (int i = 0; i < n; i++)
             extend(s[i]);
@@ -125,7 +140,6 @@ struct eerTree {
         for (auto c : s)
             extend(c);
     }
-
 
     long long countPalindromes() const {
         long long res = 0;
@@ -161,7 +175,8 @@ struct eerTree {
         for (int p = lastSuffix; n > 0; ) {
             res.push_back(s.substr(nodes[p].start, nodes[p].len));
             n -= nodes[p].len;
-            p = suffixNodes[n - 1];
+            if (n > 0)
+                p = suffixNodes[n - 1];
         }
         reverse(res.begin(), res.end());
         return res;

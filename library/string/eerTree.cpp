@@ -25,8 +25,25 @@ static string makeRandomString(int n) {
     return s;
 }
 
+static bool isPalindrome(const string& s, int L, int R) {
+    while (L < R) {
+        if (s[L++] != s[R--])
+            return false;
+    }
+    return true;
+}
+
+static vector<string> findSuffixPalindromes(const string& s, int R) {
+    vector<string> res;
+    for (int i = R; i >= 0; i--) {
+        if (isPalindrome(s, i, R))
+            res.push_back(s.substr(i, R - i + 1));
+    }
+    return res;
+}
+
 void testEerTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- eerTree --------------------------------" << endl;
     {            // 01234567890123 
@@ -46,6 +63,24 @@ void testEerTree() {
             cout << "Mismatched : " << ans1 << ", " << ans2 << endl;
 
         assert(ans1 == ans2);
+    }
+    {
+        const string s = "ababaacabd";
+
+        eerTree tree(int(s.length()));
+        for (int i = 0; i < int(s.length()); i++) {
+            tree.extend(s[i]);
+
+            vector<string> pals = tree.getLastSuffixPalindromes();
+            reverse(pals.begin(), pals.end());
+
+            vector<string> gt = findSuffixPalindromes(s, i);
+
+            if (pals != gt)
+                cout << "Mismatched at " << i << ": " << pals << endl;
+            assert(pals == gt);
+            assert(pals.size() == tree.nodes[tree.lastSuffix].count);
+        }
     }
     {
         int N = 1000;
