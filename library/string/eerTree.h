@@ -52,10 +52,10 @@ struct eerTree {
         int suffixLink;     // suffix link
         int next[MaxCharN];
         int count;          // the number of palindromic strings to be ended at the current node
-
         int occ;            // the occurrences of this NodeT in the whole string
-        int serialLink;     // serial link: used in palindromic factorization
-        int diff, dp;       // used in palindromic factorization
+
+        int serialLink;     //+ serial link: used in palindromic factorization
+        int diff, dp;       //+ used in palindromic factorization
 
         NodeT() {
             memset(this, 0, sizeof(NodeT));
@@ -108,7 +108,7 @@ struct eerTree {
         auto res = add(ch);
 
         palCount[s.length() - 1] = res;
-        factorize();
+        factorize();                        //+
 
         suffixNodes.push_back(lastSuffix);
 

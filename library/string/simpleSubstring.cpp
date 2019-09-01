@@ -55,8 +55,8 @@ void testSimpleSubstring() {
                 ++treeMap1[s.substr(i, j - i + 1)];
                 ++hashMap1[s.substr(i, j - i + 1)];
 
-                ++treeMap2[SimpleSubstring(s.c_str() + i, j - i + 1, builder.substrHash(i, j - i + 1))];
-                ++hashMap2[SimpleSubstring(s.c_str() + i, j - i + 1, builder.substrHash(i, j - i + 1))];
+                ++treeMap2[builder.build(i, j - i + 1)];
+                ++hashMap2[builder.build(i, j - i + 1)];
             }
         }
         assert(treeMap1.size() == treeMap2.size());
@@ -112,7 +112,7 @@ void testSimpleSubstring() {
         PROFILE_START(1);
         for (int i = 0; i < N; i++) {
             for (int j = i; j < N; j++)
-                ++treeMap2[SimpleSubstring(s.c_str() + i, j - i + 1, builder.substrHash(i, j - i + 1))];
+                ++treeMap2[builder.build(i, j - i + 1)];
         }
         PROFILE_STOP(1);
 
@@ -126,7 +126,7 @@ void testSimpleSubstring() {
         PROFILE_START(3);
         for (int i = 0; i < N; i++) {
             for (int j = i; j < N; j++)
-                ++hashMap2[SimpleSubstring(s.c_str() + i, j - i + 1, builder.substrHash(i, j - i + 1))];
+                ++hashMap2[builder.build(i, j - i + 1)];
         }
         PROFILE_STOP(3);
 

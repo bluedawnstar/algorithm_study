@@ -118,6 +118,24 @@ void testPalindromicTree() {
             assert(pals.size() == tree.nodes[tree.lastSuffix].count);
         }
     }
+    {
+        const string s = "aaaaaaaaaaaaaa";
+
+        PalindromicTree tree(int(s.length()));
+        for (int i = 0; i < int(s.length()); i++) {
+            tree.extend(s[i]);
+
+            vector<string> pals = tree.getLastSuffixPalindromes();
+            reverse(pals.begin(), pals.end());
+
+            vector<string> gt = findSuffixPalindromes(s, i);
+
+            if (pals != gt)
+                cout << "Mismatched at " << i << ": " << pals << endl;
+            assert(pals == gt);
+            assert(pals.size() == tree.nodes[tree.lastSuffix].count);
+        }
+    }
 
     cout << "OK!" << endl;
 }

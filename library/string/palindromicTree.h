@@ -11,6 +11,7 @@ struct PalindromicTree {
         int suffixLink;     // maximum palindromic suffix node for the current node
         int next[MaxCharN]; // 
         int count;          // the number of palindromic strings to be ended at the current node
+        int occurrence;     // the occurrences of this NodeT in the whole string
     };
 
     string s;
@@ -29,7 +30,7 @@ struct PalindromicTree {
     void init(int maxN) {
         s.clear();
 
-        nodes = vector<NodeT>(maxN + 3, NodeT{ 0, 0, 0, 0, { 0, }, 0 });
+        nodes = vector<NodeT>(maxN + 3, NodeT{ 0, 0, 0, 0, { 0, }, 0, 0 });
         s.reserve(maxN);
 
         nodeN = 2;
@@ -54,6 +55,7 @@ struct PalindromicTree {
         }
         if (nodes[cur].next[let]) {
             lastSuffix = nodes[cur].next[let];
+            nodes[lastSuffix].occurrence++;
             return make_pair(nodes[lastSuffix].count, false);
         }
 
@@ -80,6 +82,7 @@ struct PalindromicTree {
         }
         nodes[nodeN].count = 1 + nodes[nodes[nodeN].suffixLink].count;
 
+        nodes[lastSuffix].occurrence++;
         return make_pair(nodes[lastSuffix].count, true);
     }
 

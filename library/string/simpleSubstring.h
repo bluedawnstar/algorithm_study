@@ -58,10 +58,12 @@ struct SimpleSubstringBuilder {
 
     // per each string
 
+    const char* str;
     vector<unsigned long long> H1;
     vector<unsigned long long> H2;
 
     void prepare(const char* s, int n) {
+        str = s;
         H1.resize(n + 1);
         H2.resize(n + 1);
 
@@ -77,10 +79,13 @@ struct SimpleSubstringBuilder {
         return prepare(s.c_str(), int(s.length()));
     }
 
-
     unsigned long long substrHash(int i, int len) const {
         unsigned long long h1 = H1[i + len] - H1[i] * D1[len];
         unsigned long long h2 = H2[i + len] - H2[i] * D2[len];
         return h1 * h2;
+    }
+
+    SimpleSubstring build(int i, int len) {
+        return SimpleSubstring(str + i, len, substrHash(i, len));
     }
 };
