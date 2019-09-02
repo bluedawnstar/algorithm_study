@@ -157,6 +157,7 @@
     <ClCompile Include="fenwickTreeMultAddPersistent.cpp" />
     <ClCompile Include="fenwickTreePersistent.cpp" />
     <ClCompile Include="fenwickTreeXor.cpp" />
+    <ClCompile Include="gcdOnSubsegments.cpp" />
     <ClCompile Include="generalizedBIT.cpp" />
     <ClCompile Include="intTrie.cpp" />
     <ClCompile Include="intTriePersistent.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="fenwickTreeMultAddPersistent.h" />
     <ClInclude Include="fenwickTreePersistent.h" />
     <ClInclude Include="fenwickTreeXor.h" />
+    <ClInclude Include="gcdOnSubsegments.h" />
     <ClInclude Include="generalizedBIT.h" />
     <ClInclude Include="intTrie.h" />
     <ClInclude Include="intTriePersistent.h" />

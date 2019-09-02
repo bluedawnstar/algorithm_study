@@ -63,4 +63,5 @@ int main(void) {
     TEST(VectorRangeCount);
     TEST(VectorRangeSum);
     TEST(VectorRangeQuery);
+    TEST(GcdOnSubsegments);
 }
