@@ -43,7 +43,7 @@ private:
             sortSub(data, j + 1, right);
     }
 
-    static void sortSub2(int* data, int left, int right) {
+    static void sortSub2(T data[], int left, int right) {
         T pivot = data[(left + right) / 2];
 
         int i = left - 1;

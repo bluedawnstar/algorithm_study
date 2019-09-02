@@ -154,6 +154,7 @@
     <ClInclude Include="sortHeap.h" />
     <ClInclude Include="sortMerge.h" />
     <ClInclude Include="sortQuick.h" />
+    <ClInclude Include="sortQuick3way.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

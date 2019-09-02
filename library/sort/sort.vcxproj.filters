@@ -35,5 +35,8 @@
     <ClInclude Include="sortQuick.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="sortQuick3way.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

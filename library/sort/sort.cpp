@@ -7,6 +7,7 @@ using namespace std;
 #include "sortHeap.h"
 #include "sortMerge.h"
 #include "sortQuick.h"
+#include "sortQuick3way.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -44,17 +45,21 @@ void testSort() {
             auto vout3 = vin;
             QuickSort<int>::sort(vout3);
 
-            if (vout1 != vout2 || vout1 != vout3)
+            auto vout4 = vin;
+            QuickSort3way<int>::sort(vout4);
+
+            if (vout1 != vout2 || vout1 != vout3 || vout1 != vout4)
                 cout << "ERROR : mismatched!" << endl;
 
             assert(vout1 == vout2);
             assert(vout1 == vout3);
+            assert(vout1 == vout4);
         }
     }
     cout << "OK!" << endl;
-    cout << "--- speed test" << endl;
+    cout << "--- speed test #1" << endl;
     {
-        int N = 100000;
+        int N = 1000000;
         int T = 100;
 
 #ifdef _DEBUG
@@ -92,6 +97,115 @@ void testSort() {
             QuickSort<int>::sort(vout3);
         }
         PROFILE_STOP(2);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(3);
+        auto vout4 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4 = vin;
+            QuickSort3way<int>::sort(vout4);
+        }
+        PROFILE_STOP(3);
+    }
+    cout << "--- speed test #2" << endl;
+    {
+        int N = 1000000;
+        int T = 100;
+
+#ifdef _DEBUG
+        N = 1000;
+        T = 10;
+#endif
+
+        vector<int> vin(N);
+        for (int i = 0; i < N; i++)
+            vin[i] = RandInt32::get() % (N / 10);
+
+        cout << "Heap sort..." << endl;
+        PROFILE_START(0);
+        auto vout1 = vin;
+        for (int i = 0; i < T; i++) {
+            vout1 = vin;
+            MaxHeap<int>::sort(vout1);
+        }
+        PROFILE_STOP(0);
+
+        cout << "Merge sort..." << endl;
+        PROFILE_START(1);
+        auto vout2 = vin;
+        for (int i = 0; i < T; i++) {
+            vout2 = vin;
+            MergeSort<int>::sort(vout2);
+        }
+        PROFILE_STOP(1);
+
+        cout << "Quick sort..." << endl;
+        PROFILE_START(2);
+        auto vout3 = vin;
+        for (int i = 0; i < T; i++) {
+            vout3 = vin;
+            QuickSort<int>::sort(vout3);
+        }
+        PROFILE_STOP(2);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(3);
+        auto vout4 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4 = vin;
+            QuickSort3way<int>::sort(vout4);
+        }
+        PROFILE_STOP(3);
+    }
+    cout << "--- speed test #3" << endl;
+    {
+        int N = 1000000;
+        int T = 100;
+
+#ifdef _DEBUG
+        N = 1000;
+        T = 10;
+#endif
+
+        vector<int> vin(N);
+        for (int i = 0; i < N; i++)
+            vin[i] = RandInt32::get() % (N / 100);
+
+        cout << "Heap sort..." << endl;
+        PROFILE_START(0);
+        auto vout1 = vin;
+        for (int i = 0; i < T; i++) {
+            vout1 = vin;
+            MaxHeap<int>::sort(vout1);
+        }
+        PROFILE_STOP(0);
+
+        cout << "Merge sort..." << endl;
+        PROFILE_START(1);
+        auto vout2 = vin;
+        for (int i = 0; i < T; i++) {
+            vout2 = vin;
+            MergeSort<int>::sort(vout2);
+        }
+        PROFILE_STOP(1);
+
+        cout << "Quick sort..." << endl;
+        PROFILE_START(2);
+        auto vout3 = vin;
+        for (int i = 0; i < T; i++) {
+            vout3 = vin;
+            QuickSort<int>::sort(vout3);
+        }
+        PROFILE_STOP(2);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(3);
+        auto vout4 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4 = vin;
+            QuickSort3way<int>::sort(vout4);
+        }
+        PROFILE_STOP(3);
     }
     cout << "OK!" << endl;
 }
