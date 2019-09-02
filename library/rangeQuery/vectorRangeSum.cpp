@@ -24,7 +24,7 @@ static int sumRange(vector<int>& v, int L, int R) {
 }
 
 void testVectorRangeSum() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Vector Range Sum ----------" << endl;
     {

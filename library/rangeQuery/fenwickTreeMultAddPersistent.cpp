@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testPersistentFenwickTreeMultAdd() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- PersistentFenwickTreeMultAdd --------------------------------------" << endl;
 

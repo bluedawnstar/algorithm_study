@@ -81,7 +81,7 @@ static int kth(vector<int>& v, int L, int R, int k) {
 }
 
 void testVectorRangeCount() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Vector Range Count ----------" << endl;
     {

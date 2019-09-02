@@ -39,7 +39,7 @@ static int maxRange(vector<int>& v, int L, int R) {
 }
 
 void testVectorRangeQuery() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Vector Range Query ----------" << endl;
     {

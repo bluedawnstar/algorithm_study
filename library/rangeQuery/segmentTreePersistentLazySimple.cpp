@@ -52,7 +52,7 @@ static void updateSlow(vector<long long>& v, int L, int R, int x) {
 }
 
 void testSegmentTreePersistentLazySimple() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simple Lazy Persistent Segment Tree --------------------------------------" << endl;
     {
