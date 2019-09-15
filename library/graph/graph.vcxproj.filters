@@ -170,6 +170,12 @@
     <ClInclude Include="bipartiteMatchingKuhnArray.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="basicUndirectedGraph_Bridge.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="basicUndirectedGraph_CutVertex.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">

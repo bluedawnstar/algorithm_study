@@ -9,6 +9,8 @@
 using namespace std;
 
 #include "basicUndirectedGraph.h"
+#include "basicUndirectedGraph_Bridge.h"
+#include "basicUndirectedGraph_CutVertex.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -123,14 +125,14 @@ static BasicUndirectedGraph buildGraphForEulerPath3() {
     return graph;
 }
 
-static bool check(vector<pair<int, int>>& L, vector<pair<int, int>>& R) {
+static bool check(vector<pair<int, int>> L, vector<pair<int, int>> R) {
     sort(L.begin(), L.end());
     sort(R.begin(), R.end());
     return L == R;
 }
 
 void testBasicUndirectedGraph() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Basic Undirected Graph ---------" << endl;
     cout << "* Shortest path" << endl;
@@ -158,30 +160,48 @@ void testBasicUndirectedGraph() {
     }
     cout << "* Articulation point" << endl;
     {
-        auto graph1 = buildGraphForCutVertex1();
+        auto g1 = buildGraphForCutVertex1();
         vector<bool> gt1{ true, false, false, true, false };
+        UndirectedGraphCutVertex graph1;
+        graph1.N = g1.N;
+        graph1.edges = g1.edges;
         assert(graph1.findCutVertex() == gt1);
 
-        auto graph2 = buildGraphForCutVertex2();
+        auto g2 = buildGraphForCutVertex2();
         vector<bool> gt2{ false, true, true, false, false };
+        UndirectedGraphCutVertex graph2;
+        graph2.N = g2.N;
+        graph2.edges = g2.edges;
         assert(graph2.findCutVertex() == gt2);
 
-        auto graph3 = buildGraphForCutVertex3();
+        auto g3 = buildGraphForCutVertex3();
         vector<bool> gt3{ false, true, false, false, false, false, false };
+        UndirectedGraphCutVertex graph3;
+        graph3.N = g3.N;
+        graph3.edges = g3.edges;
         assert(graph3.findCutVertex() == gt3);
     }
     cout << "* Bridge" << endl;
     {
-        auto graph1 = buildGraphForCutVertex1();
+        auto g1 = buildGraphForCutVertex1();
         vector<pair<int, int>> gt1{ {3, 4}, {0, 3} };
+        UndirectedGraphBridge graph1;
+        graph1.N = g1.N;
+        graph1.edges = g1.edges;
         assert(check(graph1.findBridge(), gt1));
 
-        auto graph2 = buildGraphForCutVertex2();
+        auto g2 = buildGraphForCutVertex2();
         vector<pair<int, int>> gt2{ {2, 3}, {1, 2}, {0, 1} };
+        UndirectedGraphBridge graph2;
+        graph2.N = g2.N;
+        graph2.edges = g2.edges;
         assert(check(graph2.findBridge(), gt2));
 
-        auto graph3 = buildGraphForCutVertex3();
+        auto g3 = buildGraphForCutVertex3();
         vector<pair<int, int>> gt3{ {1, 6} };
+        UndirectedGraphBridge graph3;
+        graph3.N = g3.N;
+        graph3.edges = g3.edges;
         assert(check(graph3.findBridge(), gt3));
     }
     cout << "* Eulerian path & circuit (existence)" << endl;
