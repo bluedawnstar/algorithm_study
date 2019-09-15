@@ -45,18 +45,15 @@ struct ReverseSubstringsBetweenParentheses {
         }
 
         string res;
-        bool reverse = false;
+        int delta = 1;  // 1: forward, -1: backward
 
         for (int i = 0; i < N; ) {
             if (s[i] == '(' || s[i] == ')') {
-                if (!reverse)
-                    i = par[i] - 1;
-                else
-                    i = par[i] + 1;
-                reverse = !reverse;
+                delta = -delta;
+                i = par[i] + delta;
             } else {
                 res.push_back(s[i]);
-                i += reverse ? -1 : 1;
+                i += delta;
             }
         }
 
