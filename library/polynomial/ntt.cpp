@@ -53,8 +53,6 @@ struct Solver {
     }
 
     int solve(int N, int K) {
-        NTT ntt(MOD, 3);
-
         if (K == 1) {
             long long ans = 0;
             for (int i = 0; i <= N - 2; i++)
@@ -64,13 +62,13 @@ struct Solver {
 
         vector<int> A(N);
         for (int i = 0; i < N; i++)
-            A[i] = 1ll * ntt.modPow(i + 1, K) * factInv[i] % MOD;
+            A[i] = 1ll * NTT<MOD,3>::modPow(i + 1, K) * factInv[i] % MOD;
 
         // poly = (1^k * x^0/0! + 2^k * x^1/1!*x + 3^k * x^2/2! + ... + n^k * x^(n-1)/(n-1)!)^n
-        auto poly = ntt.powFast(A, N);
+        auto poly = NTT<MOD,3>::powFast(A, N);
 
         // res = poly[n-2] * (n - 2)! / n^(n-2)
-        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * ntt.modInv(ntt.modPow(N, N - 2)) % MOD);
+        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * NTT<MOD,3>::modInv(NTT<MOD,3>::modPow(N, N - 2)) % MOD);
     }
 
     int solveWithFFT(int N, int K) {
@@ -83,13 +81,13 @@ struct Solver {
 
         vector<int> A(N);
         for (int i = 0; i < N; i++)
-            A[i] = 1ll * PolyFFTMod::modPow(i + 1, K, MOD) * factInv[i] % MOD;
+            A[i] = 1ll * PolyFFTMod<MOD>::modPow(i + 1, K) * factInv[i] % MOD;
 
         // poly = (1^k * x^0/0! + 2^k * x^1/1!*x + 3^k * x^2/2! + ... + n^k * x^(n-1)/(n-1)!)^n
-        auto poly =PolyFFTMod::powFast(A, N, MOD);
+        auto poly =PolyFFTMod<MOD>::powFast(A, N);
 
         // res = poly[n-2] * (n - 2)! / n^(n-2)
-        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * PolyFFTMod::modInv(PolyFFTMod::modPow(N, N - 2, MOD), MOD) % MOD);
+        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * PolyFFTMod<MOD>::modInv(PolyFFTMod<MOD>::modPow(N, N - 2)) % MOD);
     }
 
     int solveWithPolyNTT(int N, int K) {
@@ -102,13 +100,13 @@ struct Solver {
 
         vector<int> A(N);
         for (int i = 0; i < N; i++)
-            A[i] = 1ll * PolyNTT::modPow(i + 1, K, MOD) * factInv[i] % MOD;
+            A[i] = 1ll * PolyNTT<MOD,3>::modPow(i + 1, K) * factInv[i] % MOD;
 
         // poly = (1^k * x^0/0! + 2^k * x^1/1!*x + 3^k * x^2/2! + ... + n^k * x^(n-1)/(n-1)!)^n
-        auto poly = PolyNTT::powFast(A, N, MOD);
+        auto poly = PolyNTT<MOD,3>::powFast(A, N);
 
         // res = poly[n-2] * (n - 2)! / n^(n-2)
-        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * PolyNTT::modInv(PolyNTT::modPow(N, N - 2, MOD), MOD) % MOD);
+        return int(1ll * poly[N - 2] * fact[N - 2] % MOD * PolyNTT<MOD,3>::modInv(PolyNTT<MOD,3>::modPow(N, N - 2)) % MOD);
     }
 
 private:
@@ -194,7 +192,6 @@ void testNTT() {
         assert(ans6 == 748683279);
     }
     {
-        NTT ntt(MOD, 3);
         int TESTN = 1000;
         for (int i = 0; i < 10; i++) {
             vector<int> A(TESTN);
@@ -205,8 +202,8 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % MOD;
 
-            vector<int> out1 = PolyFFTMod::multiply(A, B, MOD);
-            vector<int> out2 = ntt.multiply(A, B);
+            vector<int> out1 = PolyFFTMod<MOD>::multiply(A, B);
+            vector<int> out2 = NTT<MOD,3>::multiply(A, B);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
                 cout << out1 << endl;
@@ -216,7 +213,6 @@ void testNTT() {
         }
     }
     {
-        NTT ntt(MOD, 3);
         int TESTN = 1000;
         for (int i = 0; i < 10; i++) {
             vector<int> A(TESTN);
@@ -227,8 +223,8 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % MOD;
 
-            vector<int> out1 = PolyFFTMod::multiply(A, B, MOD);
-            vector<int> out2 = ntt.multiply(A, B);
+            vector<int> out1 = PolyFFTMod<MOD>::multiply(A, B);
+            vector<int> out2 = NTT<MOD,3>::multiply(A, B);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
                 cout << out1 << endl;
@@ -239,6 +235,7 @@ void testNTT() {
     }
     {
         static const int M = 1000000007;
+        static const int R = 5;
         int TESTN = 1000;
         for (int i = 0; i < 10; i++) {
             vector<int> A(TESTN);
@@ -249,8 +246,8 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % M;
 
-            vector<int> out1 = PolyFFTMod::multiply(A, B, M);
-            vector<int> out2 = PolyNTT::multiply(A, B, M);
+            vector<int> out1 = PolyFFTMod<M>::multiply(A, B);
+            vector<int> out2 = PolyNTT<M,R>::multiply(A, B);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
                 cout << out1 << endl;
@@ -261,6 +258,7 @@ void testNTT() {
     }
     {
         static const int M = 1000000007;
+        static const int R = 5;
         int TESTN = 1000;
         for (int i = 0; i < 10; i++) {
             vector<int> A(TESTN);
@@ -271,8 +269,8 @@ void testNTT() {
             for (int i = 0; i < int(B.size()); i++)
                 B[i] = RandInt32::get() % M;
 
-            vector<int> out1 = PolyFFTMod::multiply(A, B, M);
-            vector<int> out2 = PolyNTT::multiplyFast(A, B, M);
+            vector<int> out1 = PolyFFTMod<M>::multiply(A, B);
+            vector<int> out2 = PolyNTT<M,R>::multiplyFast(A, B);
             if (out1 != out2) {
                 cout << "Mismatched : " << endl;
                 cout << out1 << endl;
@@ -284,6 +282,7 @@ void testNTT() {
     {
         //static const int M = 1000000007;
         static const int M = MOD;
+        static const int R = ROOT;
 
         cout << "*** Speed test ***" << endl;
         for (int n = 32; n <= 2048; n <<= 1) {
@@ -299,7 +298,7 @@ void testNTT() {
             cout << "  PolyFFTMod::multiplySlow() : ";
             PROFILE_START(0);
             for (int i = 0; i < 1000; i++) {
-                out = PolyFFTMod::multiplySlow(in1, in2, M);
+                out = PolyFFTMod<M>::multiplySlow(in1, in2);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }
@@ -308,17 +307,16 @@ void testNTT() {
             cout << "  PolyFFTMod::multiply() : ";
             PROFILE_START(1);
             for (int i = 0; i < 1000; i++) {
-                out = PolyFFTMod::multiply(in1, in2, M);
+                out = PolyFFTMod<M>::multiply(in1, in2);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }
             PROFILE_STOP(1);
 
             cout << "  NTT::multiply() : ";
-            NTT ntt(MOD, 3);
             PROFILE_START(2);
             for (int i = 0; i < 1000; i++) {
-                out = ntt.multiply(in1, in2);
+                out = NTT<MOD,3>::multiply(in1, in2);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }
@@ -327,7 +325,7 @@ void testNTT() {
             cout << "  PolyNTT::multiply() : ";
             PROFILE_START(3);
             for (int i = 0; i < 1000; i++) {
-                out = PolyNTT::multiply(in1, in2, M);
+                out = PolyNTT<M,R>::multiply(in1, in2);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }
@@ -336,7 +334,7 @@ void testNTT() {
             cout << "  PolyNTT::multiplyFast() : ";
             PROFILE_START(4);
             for (int i = 0; i < 1000; i++) {
-                out = PolyNTT::multiplyFast(in1, in2, M);
+                out = PolyNTT<M,R>::multiplyFast(in1, in2);
                 if (out.empty())
                     cerr << "It'll never be shwon!" << endl;
             }

@@ -45,7 +45,7 @@ void testLagrange() {
         assert(ans == 35);
     }
     {
-        auto ans = LagrangePolynomialMod::interpolate(vector<pair<int, int>>{ { 0, 2 }, { 1, 3 }, { 2, 12 }, { 5, 147 } }, 3, MOD);
+        auto ans = LagrangePolynomialMod<MOD>::interpolate(vector<pair<int, int>>{ { 0, 2 }, { 1, 3 }, { 2, 12 }, { 5, 147 } }, 3);
         cout << "f(3) = " << ans << endl;
         assert(ans == 35);
     }
@@ -66,12 +66,12 @@ void testLagrange() {
                 YY[i - 1].second = Y[i - 1];
             }
 
-            FastLagrangePolynomialMod interp(N, MOD);
+            FastLagrangePolynomialMod<MOD> interp(N);
 
             for (int i = 0; i < T; i++) {
                 int x = RandInt32::get();
 
-                int ans1 = LagrangePolynomialMod::interpolate(YY.data(), N + 1, x, MOD);
+                int ans1 = LagrangePolynomialMod<MOD>::interpolate(YY.data(), N + 1, x);
                 int ans2 = interp.interpolate(Y, x);
                 int gt = F(coeff, x);
 

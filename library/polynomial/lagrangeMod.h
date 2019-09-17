@@ -12,10 +12,11 @@
            j=0        0<=m<=n
                         m!=j
 */
+template <int mod>
 struct LagrangePolynomialMod {
     // O(n^2 + n*logMOD)
     // samples = { ..., (Xi, Yi), ... }
-    static int interpolate(const pair<int, int> samples[], int n, long long x, int mod) {
+    static int interpolate(const pair<int, int> samples[], int n, long long x) {
         long long res = 0;
 
         x %= mod;
@@ -28,7 +29,7 @@ struct LagrangePolynomialMod {
                     termP = termP * (samples[i].first - samples[j].first + mod) % mod;
                 }
             } 
-            res = (res + termQ * modInv(termP, mod) % mod) % mod;
+            res = (res + termQ * modInv(termP) % mod) % mod;
         } 
 
         return int(res);
@@ -36,13 +37,13 @@ struct LagrangePolynomialMod {
 
     // O(n^2)
     // samples = { ..., (Xi, Yi), ... }
-    static int interpolate(const vector<pair<int, int>>& samples, long long x, int mod) {
-        return interpolate(samples.data(), int(samples.size()), x, mod);
+    static int interpolate(const vector<pair<int, int>>& samples, long long x) {
+        return interpolate(samples.data(), int(samples.size()), x);
     }
 
 private:
     // O(logn), mod must be a prime number
-    static int modPow(long long x, int n, int mod) {
+    static int modPow(long long x, int n) {
         if (n == 0)
             return 1;
 
@@ -57,7 +58,7 @@ private:
     }
 
     // O(logn), mod must be a prime number
-    static int modInv(long long a, int mod) {
-        return modPow(a, mod - 2, mod);
+    static int modInv(long long a) {
+        return modPow(a, mod - 2);
     }
 };

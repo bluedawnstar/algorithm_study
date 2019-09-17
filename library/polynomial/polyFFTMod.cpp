@@ -19,7 +19,7 @@ using namespace std;
 #define MOD     1000000007
 
 void testPolyFFTMod() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Modular Polynomial Multiplication ----------------" << endl;
 
@@ -32,9 +32,9 @@ void testPolyFFTMod() {
         for (int i = 0; i < int(B.size()); i++)
             B[i] = RandInt32::get() % MOD;
 
-        vector<int> out1 = PolyFFTMod::multiplySlow(A, B, MOD);
-        vector<int> out2 = PolyFFTMod::multiply(A, B, MOD);
-        vector<int> out3 = PolyNTT::multiply(A, B, MOD);
+        vector<int> out1 = PolyFFTMod<MOD>::multiplySlow(A, B);
+        vector<int> out2 = PolyFFTMod<MOD>::multiply(A, B);
+        vector<int> out3 = PolyNTT<MOD,3>::multiply(A, B);
         assert(out1 == out2);
         assert(out1 == out3);
     }
@@ -53,7 +53,7 @@ void testPolyFFTMod() {
         cout << "  PolyFFTMod::multiplySlow() : ";
         PROFILE_START(0);
         for (int i = 0; i < 1000; i++) {
-            out = PolyFFTMod::multiplySlow(in1, in2, MOD);
+            out = PolyFFTMod<MOD>::multiplySlow(in1, in2);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
@@ -62,7 +62,7 @@ void testPolyFFTMod() {
         cout << "  PolyFFTMod::multiply() : ";
         PROFILE_START(1);
         for (int i = 0; i < 1000; i++) {
-            out = PolyFFTMod::multiply(in1, in2, MOD);
+            out = PolyFFTMod<MOD>::multiply(in1, in2);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }
@@ -71,7 +71,7 @@ void testPolyFFTMod() {
         cout << "  PolyNTT::multiply() : ";
         PROFILE_START(2);
         for (int i = 0; i < 1000; i++) {
-            out = PolyNTT::multiply(in1, in2, MOD);
+            out = PolyNTT<MOD,3>::multiply(in1, in2);
             if (out.empty())
                 cerr << "It'll never be shwon!" << endl;
         }

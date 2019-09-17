@@ -53,8 +53,8 @@ void testPowerSumPolyMod() {
         K = 1000 - 1;
 #endif
 
-        FastSumOfPowerMod fsop(K, MOD);
-        PowerSumPolyMod psp(K, MOD);
+        FastSumOfPowerMod<MOD> fsop(K);
+        PowerSumPolyMod<MOD> psp(K);
 
         vector<int> Y(K + 2);
         Y[0] = modPow(1, K, MOD);

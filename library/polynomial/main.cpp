@@ -16,4 +16,5 @@ int main(void) {
     TEST(Lagrange);
     TEST(PowerSumPolyMod);
     TEST(WalshHadamard);
+    TEST(VandermondeMatrix);
 }

@@ -7,15 +7,9 @@
 // It's not working for below 'M's. Use PolyNTT for these
 //    - 10^9 + 7
 //    - 10^9 + 9
+template <int mod, int root>
 struct NTT {
-    int mod, root;
-
-    NTT(int mod, int root) {
-        this->mod = mod;
-        this->root = root;
-    }
-
-    void ntt(vector<int>& a, bool inverse = false) {
+    static void ntt(vector<int>& a, bool inverse = false) {
         int n = int(a.size());
 
         int base = modPow(root, (mod - 1) / n);
@@ -46,14 +40,14 @@ struct NTT {
         }
 
         if (inverse) {
-            int inverse = modInv(n);
+            int inv = modInv(n);
             for (int j = 0; j < n; j++)
-                a[j] = int(1ll * a[j] * inverse % mod);
+                a[j] = int(1ll * a[j] * inv % mod);
         }
     }
 
 
-    vector<int> multiplySlow(const vector<int>& left, const vector<int>& right) {
+    static vector<int> multiplySlow(const vector<int>& left, const vector<int>& right) {
         vector<int> res(left.size() + right.size() - 1);
 
         for (int i = 0; i < int(right.size()); i++) {
@@ -65,7 +59,7 @@ struct NTT {
         return res;
     }
 
-    vector<int> multiply(const vector<int>& a, const vector<int>& b, bool reverseB = false) {
+    static vector<int> multiply(const vector<int>& a, const vector<int>& b, bool reverseB = false) {
         int n = int(a.size()) + int(b.size()) - 1;
         if (n <= 128)
             return multiplySlow(a, b);
@@ -95,13 +89,13 @@ struct NTT {
         return C;
     }
 
-    vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
+    static vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
         return multiply(x, h, reverseH);
     }
 
     //--- extended operations
 
-    vector<int> square(const vector<int>& a) {
+    static vector<int> square(const vector<int>& a) {
         int n = int(a.size()) * 2 - 1;
         if (n < 128)
             return multiplySlow(a, a);
@@ -126,7 +120,7 @@ struct NTT {
     }
 
     // low order first
-    vector<int> inverse(vector<int> a) {
+    static vector<int> inverse(vector<int> a) {
         int size = 1;
         while (size < int(a.size()))
             size <<= 1;
@@ -155,7 +149,7 @@ struct NTT {
     }
 
     // low order first
-    vector<int> differentiate(vector<int> a) {
+    static vector<int> differentiate(vector<int> a) {
         a.back() = 0;
         for(int i = 1; i < int(a.size()); i++)
             a[i - 1] = int(1ll * a[i] * i % mod);  
@@ -163,7 +157,7 @@ struct NTT {
     }
 
     // low order first
-    vector<int> integrate(vector<int> a) {
+    static vector<int> integrate(vector<int> a) {
         for(int i = int(a.size()) - 1; i > 0; i--)
             a[i] = int(1ll * a[i - 1] * modInv(i) % mod);
         a[0] = 0;  
@@ -172,7 +166,7 @@ struct NTT {
 
     // ln f(x) = INTEGRAL f'(x) / f(x)
     // low order first
-    vector<int> ln(vector<int> a) {
+    static vector<int> ln(vector<int> a) {
         auto A = inverse(a);
         auto B = differentiate(a);
         A = multiply(A, B);
@@ -181,7 +175,7 @@ struct NTT {
     }
 
     // low order first
-    vector<int> exp(vector<int> a) {
+    static vector<int> exp(vector<int> a) {
         int size = 1;
         while (size < int(a.size()))
             size <<= 1;
@@ -208,14 +202,14 @@ struct NTT {
     }
 
     // a[0] != 0
-    vector<int> powFast(const vector<int>& a, int n) { // n >= 0
+    static vector<int> powFast(const vector<int>& a, int n) { // n >= 0
         auto b = ln(a);
         for (int i = 0; i < int(b.size()); i++)
             b[i]= int(1ll * b[i] * n % mod);
         return exp(b);
     }
 
-    vector<int> pow(const vector<int>& p, int n, int maxDegree) {
+    static vector<int> pow(const vector<int>& p, int n, int maxDegree) {
         if (n == 0)
             return{ 1 };
 
@@ -234,17 +228,22 @@ struct NTT {
     }
 
 //private:
-    int modPow(int x, int n) {
+    template <typename T>
+    static int modPow(T x, int n) {
         if (n == 0)
             return 1;
 
-        int p = modPow(x, n / 2) % mod;
-        p = int(1ll * p * p % mod);
-
-        return ((n & 1) == 0) ? p : int(1ll * p * x % mod);
+        long long t = x % mod;
+        long long res = 1;
+        for (; n > 0; n >>= 1) {
+            if (n & 1)
+                res = res * t % mod;
+            t = t * t % mod;
+        }
+        return int(res);
     }
 
-    int modInv(int a) {
+    static int modInv(int a) {
         return modPow(a, mod - 2);
     }
 };

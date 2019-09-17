@@ -15,9 +15,9 @@
     Y = { y(1), y(2), ..., y(k + 1) }
     X = { 1, 2, ..., k + 1 }
 */
+template <int mod>  // mod is a prime number
 struct FastLagrangePolynomialMod {
     int maxDegree;
-    int mod;                    // prime number
     vector<int> factorial;      // factorial
     vector<int> factInverse;    // inverse factorial
     vector<int> inverse;
@@ -25,15 +25,14 @@ struct FastLagrangePolynomialMod {
     FastLagrangePolynomialMod() {
     }
 
-    FastLagrangePolynomialMod(int maxDegree, int mod) { 
-        build(maxDegree, mod);
+    explicit FastLagrangePolynomialMod(int maxDegree) { 
+        build(maxDegree);
     }
 
     // O(maxK)
-    void build(int maxDegree, int mod) {
+    void build(int maxDegree) {
         maxDegree += 2;
         this->maxDegree = max(1, maxDegree);
-        this->mod = mod;
 
         factorial.resize(maxDegree + 1);
         factInverse.resize(maxDegree + 1);
@@ -76,7 +75,7 @@ struct FastLagrangePolynomialMod {
             if ((degree + 1 - i) & 1)
                 suffix = mod - suffix;
             // ans += q * Y[i - 1] / { (x - i) * (i - 1)! * (degree + 1 - i)! * (-1)^(degree + 1 - i) }
-            ans = (ans + q * modInv(x - i, mod) % mod * prefix % mod * suffix % mod * Y[i - 1] % mod) % mod;
+            ans = (ans + q * modInv(x - i) % mod * prefix % mod * suffix % mod * Y[i - 1] % mod) % mod;
         }
 
         return int(ans);
@@ -91,7 +90,7 @@ struct FastLagrangePolynomialMod {
 
 private:
     // O(logn), mod must be a prime number
-    static int modPow(long long x, int n, int mod) {
+    static int modPow(long long x, int n) {
         if (n == 0)
             return 1;
 
@@ -106,7 +105,7 @@ private:
     }
 
     // O(logn), mod must be a prime number
-    static int modInv(long long a, int mod) {
-        return modPow(a, mod - 2, mod);
+    static int modInv(long long a) {
+        return modPow(a, mod - 2);
     }
 };

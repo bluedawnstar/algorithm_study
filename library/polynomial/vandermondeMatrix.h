@@ -23,13 +23,10 @@ https://en.wikipedia.org/wiki/Generating_function
          (1 - a0 * x) * (1 - a1 * x) * (1 - a2 * x) * ... * (1 - a(n-1) * x)
 */
 
+template <int mod>
 struct VandermondeMatrixMultiplierMod {
-    int mod;
-    explicit VandermondeMatrixMultiplierMod(int mod) : mod(mod) {
-    }
-
     // C = { c0, c1, c2, ..., c(n-1) }, A = { a0, a1, a2, ..., a(n-1) }
-    vector<int> multiply(const vector<int>& C, const vector<int>& A, int m) {
+    static vector<int> multiply(const vector<int>& C, const vector<int>& A, int m) {
         //assert(C.size() == A.size());
 
         int n = int(C.size());
@@ -41,7 +38,7 @@ struct VandermondeMatrixMultiplierMod {
         auto r = multiply(f);
         r.second.resize(m + 1);
 
-        auto res = PolyFFTMod::multiply(r.first, PolyFFTMod::inverse(r.second, mod), mod);
+        auto res = PolyFFTMod<mod>::multiply(r.first, PolyFFTMod<mod>::inverse(r.second));
         res.resize(m + 1);
 
         return res;
@@ -50,12 +47,12 @@ struct VandermondeMatrixMultiplierMod {
     // A = { (c0, 1 - a0 * x), (c1, 1 - a1 * x), ..., (c(n-1), 1 - a(n-1) * x) }
     // result.first = c0 * (1 - a1 * x) * (1 - a2 * x) * ... * (1 - a(n-1) * x)  +  c1 * (1 - a0 * x) * (1 - a2 * x) * ... * (1 - a(n-1) * x)  +  c(n-1) * (1 - a0 * x) * ... * (1 - a(n - 2) * x)
     // result.second = (1 - a0 * x) * (1 - a1 * x) * (1 - a2 * x) * ... * (1 - a(n-1) * x)
-    pair<vector<int>, vector<int>> multiply(const vector<pair<vector<int>, vector<int>>>& A) {
+    static pair<vector<int>, vector<int>> multiply(const vector<pair<vector<int>, vector<int>>>& A) {
         return recMult(A, 0, int(A.size()) - 1);
     }
 
 private:
-    pair<vector<int>, vector<int>> recMult(const vector<pair<vector<int>, vector<int>>>& A, int left, int right) {
+    static pair<vector<int>, vector<int>> recMult(const vector<pair<vector<int>, vector<int>>>& A, int left, int right) {
         if (left == right)
             return A[left];
 
@@ -63,13 +60,13 @@ private:
         auto x = recMult(A, left, mid);
         auto y = recMult(A, mid + 1, right);
 
-        auto q0 = PolyFFTMod::multiply(x.first, y.second, mod);
-        auto q1 = PolyFFTMod::multiply(x.second, y.first, mod);
+        auto q0 = PolyFFTMod<mod>::multiply(x.first, y.second);
+        auto q1 = PolyFFTMod<mod>::multiply(x.second, y.first);
         if (q0.size() < q1.size())
             swap(q0, q1);
         for (int i = 0; i < int(q1.size()); i++)
             q0[i] = (q0[i] + q1[i]) % mod;
 
-        return make_pair(q0, PolyFFTMod::multiply(x.second, y.second, mod));
+        return make_pair(q0, PolyFFTMod<mod>::multiply(x.second, y.second));
     };
 };

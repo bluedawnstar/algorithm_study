@@ -11,9 +11,9 @@
        => a polynomial with degree n+1 in k
           (https://math.stackexchange.com/questions/18983/why-is-sum-limits-k-1n-km-a-polynomial-with-degree-m1-in-n)
 */
+template <int mod>  // mod is a prime number
 struct PowerSumPolyMod {
     int maxK;
-    int mod;                    // prime number
     vector<int> factorial;      // factorial
     vector<int> factInverse;    // inverse factorial
     vector<int> inverse;
@@ -21,15 +21,14 @@ struct PowerSumPolyMod {
     PowerSumPolyMod() {
     }
 
-    PowerSumPolyMod(int maxK, int mod) { 
-        build(maxK, mod);
+    explicit PowerSumPolyMod(int maxK) { 
+        build(maxK);
     }
 
     // O(maxK)
-    void build(int maxK, int mod) {
+    void build(int maxK) {
         maxK += 2;
         this->maxK = max(1, maxK);
-        this->mod = mod;
 
         factorial.resize(maxK + 1);
         factInverse.resize(maxK + 1);
@@ -76,7 +75,7 @@ struct PowerSumPolyMod {
             if ((k + 2 - i) & 1)
                 suffix = mod - suffix;
             // ans += q * Y[i - 1] / { (n - i) * (i - 1)! * (k + 2 - i)! * (-1)^(k + 2 - i) }
-            ans = (ans + q * modInv(n - i, mod) % mod * prefix % mod * suffix % mod * Y[i - 1] % mod) % mod;
+            ans = (ans + q * modInv(n - i) % mod * prefix % mod * suffix % mod * Y[i - 1] % mod) % mod;
         }
 
         return int(ans);
@@ -84,7 +83,7 @@ struct PowerSumPolyMod {
 
 private:
     // O(logn), mod must be a prime number
-    static int modPow(long long x, int n, int mod) {
+    static int modPow(long long x, int n) {
         if (n == 0)
             return 1;
 
@@ -99,7 +98,7 @@ private:
     }
 
     // O(logn), mod must be a prime number
-    static int modInv(long long a, int mod) {
-        return modPow(a, mod - 2, mod);
+    static int modInv(long long a) {
+        return modPow(a, mod - 2);
     }
 };
