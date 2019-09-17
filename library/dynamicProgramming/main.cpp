@@ -36,4 +36,5 @@ int main(void) {
     TEST(SelectBlock2xN);
     TEST(IntegerPartition);
     TEST(TwoSameSumSubset);
+    TEST(PowerSumOfAllCombinations);
 }

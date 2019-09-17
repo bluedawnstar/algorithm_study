@@ -114,6 +114,9 @@
     <ClCompile Include="partitionProblemMultiple.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="powerSumOfAllCombinations.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -243,6 +246,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="digitCounter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="powerSumOfAllCombinations_NTT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
