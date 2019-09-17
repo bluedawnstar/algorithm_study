@@ -11,30 +11,30 @@
        { 1, 2, 3, ..., p - 1 } = { g^0, g^1, g^2, ..., g^(p - 2) }, g is a primitive root of prime number p
 */
 
+template <int mod>
 struct SumOfPowerMod {
     static const int INF = 0x7f7f7f7f; //0x3f3f3f3f;
 
     int maxK;
-    int mod;
 
     vector<vector<long long>> comb; // nCr
     vector<long long> B;            // bernoulli
 
-    SumOfPowerMod(int maxK, int mod)
-        : maxK(maxK + 1), mod(mod), comb(maxK + 2, vector<long long>(maxK + 2)), B(maxK + 2) {
+    explicit SumOfPowerMod(int maxK)
+        : maxK(maxK + 1), comb(maxK + 2, vector<long long>(maxK + 2)), B(maxK + 2) {
         makeTable();
     }
 
     // faulhaberMode(n, k) = 1^k + 2^k + 3^k + ... + n^k
     // O(k^2)
     int faulhaberMod(long long n, int k) {
-        long long ans = powMod(n, k + 1, mod);
+        long long ans = powMod(n, k + 1);
         if (k >= 1)
-            ans = (ans - comb[k + 1][1] * bernoulliMod(1) % mod * powMod(n, k, mod) % mod + mod) % mod;
+            ans = (ans - comb[k + 1][1] * bernoulliMod(1) % mod * powMod(n, k) % mod + mod) % mod;
         for (int i = 2; i <= k; i += 2)
-            ans = (ans + comb[k + 1][i] * bernoulliMod(i) % mod * powMod(n, k + 1 - i, mod) % mod) % mod;
+            ans = (ans + comb[k + 1][i] * bernoulliMod(i) % mod * powMod(n, k + 1 - i) % mod) % mod;
 
-        ans = ans * modInverse(k + 1, mod) % mod;
+        ans = ans * modInverse(k + 1) % mod;
 
         return int(ans);
     }
@@ -49,7 +49,7 @@ private:
                 B[i] = -INF;
         }
         B[0] = 1;
-        B[1] = mod - modInverse(2, mod);
+        B[1] = mod - modInverse(2);
     }
 
     //---
@@ -59,7 +59,7 @@ private:
             long long sum = (1 + comb[n + 1][1] * B[1]) % mod;
             for (int i = 2; i < n; i += 2)
                 sum = (sum + (comb[n + 1][i] * bernoulliMod(i) % mod)) % mod;
-            B[n] = sum * modInverse(n + 1, mod) % mod;
+            B[n] = sum * modInverse(n + 1) % mod;
             B[n] *= -1;
             while (B[n] < 0)
                 B[n] += mod;
@@ -80,7 +80,7 @@ private:
         }
     }
 
-    static long long powMod(long long x, int n, int mod) {
+    static long long powMod(long long x, int n) {
         if (n == 0)
             return 1;
 
@@ -94,7 +94,7 @@ private:
         return res;
     }
 
-    static long long modInverse(int a, int mod) {
-        return powMod(a, mod - 2, mod);
+    static long long modInverse(int a) {
+        return powMod(a, mod - 2);
     }
 };

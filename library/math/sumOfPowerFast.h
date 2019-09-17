@@ -20,9 +20,9 @@
 */
 // https://codeforces.com/problemset/problem/622/F
 
+template <int mod>  // mod is a prime number
 struct FastSumOfPowerMod {
     int maxK;
-    int mod;                    // prime number
     vector<int> factorial;      // factorial
     vector<int> factInverse;    // inverse factorial
     vector<int> inverse;
@@ -30,15 +30,14 @@ struct FastSumOfPowerMod {
     FastSumOfPowerMod() {
     }
 
-    FastSumOfPowerMod(int maxK, int mod) {
-        build(maxK, mod);
+    explicit FastSumOfPowerMod(int maxK) {
+        build(maxK);
     }
 
     // O(maxK)
-    void build(int maxK, int mod) {
+    void build(int maxK) {
         maxK += 2;
         this->maxK = max(1, maxK);
-        this->mod = mod;
 
         factorial.resize(maxK + 1);
         factInverse.resize(maxK + 1);
@@ -70,7 +69,7 @@ struct FastSumOfPowerMod {
         vector<long long> Y(k + 3);
         Y[0] = 0;
         for (int i = 1; i <= k + 2; i++)
-            Y[i] = (Y[i - 1] + modPow(i, k, mod)) % mod;    // Y[i] = SUM_(1..i) { i^k }
+            Y[i] = (Y[i - 1] + modPow(i, k)) % mod;         // Y[i] = SUM_(1..i) { i^k }
 
         if (n <= k + 2)
             return int(Y[n]);
@@ -86,7 +85,7 @@ struct FastSumOfPowerMod {
             if ((k + 2 - i) & 1)
                 suf = mod - suf;
             // ans += q * Y[i] / { (n - i) * (i - 1)! * (k + 2 - i)! * (-1)^(k + 2 - i) }
-            ans = (ans + q * modInv(n - i, mod) % mod * pre % mod * suf % mod * Y[i] % mod) % mod;
+            ans = (ans + q * modInv(n - i) % mod * pre % mod * suf % mod * Y[i] % mod) % mod;
         }
 
         return int(ans);
@@ -94,7 +93,7 @@ struct FastSumOfPowerMod {
 
 private:
     // O(logn), mod must be a prime number
-    static int modPow(long long x, int n, int mod) {
+    static int modPow(long long x, int n) {
         if (n == 0)
             return 1;
 
@@ -109,7 +108,7 @@ private:
     }
 
     // O(logn), mod must be a prime number
-    static int modInv(long long a, int mod) {
-        return modPow(a, mod - 2, mod);
+    static int modInv(long long a) {
+        return modPow(a, mod - 2);
     }
 };

@@ -50,8 +50,8 @@ void testSumOfPower() {
         int N = 100;
         int K = 100;
 
-        SumOfPowerMod sop(K, MOD);
-        FastSumOfPowerMod fsop(K, MOD);
+        SumOfPowerMod<MOD> sop(K);
+        FastSumOfPowerMod<MOD> fsop(K);
 
         for (int i = 1; i <= N; i++) {
             for (int j = 0; j <= K; j++) {
@@ -75,8 +75,8 @@ void testSumOfPower() {
         K = 1000 - 1;
 #endif
 
-        SumOfPowerMod sop(K, MOD);
-        FastSumOfPowerMod fsop(K, MOD);
+        SumOfPowerMod<MOD> sop(K);
+        FastSumOfPowerMod<MOD> fsop(K);
 
         int ans = sop.faulhaberMod(N, K);
         int ans2 = fsop.faulhaberMod(N, K);
@@ -97,12 +97,12 @@ void testSumOfPower() {
 #endif
 
         PROFILE_START(0);
-        SumOfPowerMod sop(K, MOD);
+        SumOfPowerMod<MOD> sop(K);
         auto ans1 = sop.faulhaberMod(N, K);
         PROFILE_STOP(0);
 
         PROFILE_START(1);
-        FastSumOfPowerMod fsop(K, MOD);
+        FastSumOfPowerMod<MOD> fsop(K);
         auto ans2 = fsop.faulhaberMod(N, K);
         PROFILE_STOP(1);
 

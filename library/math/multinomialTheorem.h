@@ -9,6 +9,9 @@
       (x1 + x2 + .. + xm)^n =  SUM C(n, {k1,k2,...,km})*(x1^k1 * x2^k2 * ... * xm^km)
                           k1+k2+...+km=n
 
+                            = n! * SUM { (x1^k1 / k1!) * (x2^k2 / k2!) * ... * (xm^km / km!) }
+                                  k1+k2+...+km=n
+
       where 
 
       C(n, {k1,k2,...,km}) = n! / (k1! * k2! * ... * km!) , ki >= 0
