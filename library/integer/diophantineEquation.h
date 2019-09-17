@@ -2,7 +2,7 @@
 
 #include "gcd.h"
 
-// https://e-maxx-eng.appspot.com/algebra/linear-diophantine-equation.html
+// https://cp-algorithms.com/algebra/linear-diophantine-equation.html
 // find (x, y) satisfying ax + by = c (diophantine equation)
 template <typename T>
 struct DiophantineEquation {

@@ -4,6 +4,10 @@
 #include "primeNumberBasic.h"
 #include "primeFactor.h"
 
+// primitive root of 998244353 = 3
+// primitive root of 1000000007 = 5
+// primitive root of 1000000009 = 13
+
 // https://e-maxx-eng.appspot.com/algebra/primitive-root.html
 
 struct PrimitiveRootFinder {
