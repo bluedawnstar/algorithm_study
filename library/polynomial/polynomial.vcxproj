@@ -154,8 +154,10 @@
     <ClCompile Include="polyFFT.cpp" />
     <ClCompile Include="polyFFTMod.cpp" />
     <ClCompile Include="ntt.cpp" />
+    <ClCompile Include="polynomial.cpp" />
     <ClCompile Include="powerSumPolyMod.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
+    <ClCompile Include="vandermondeMatrix.cpp" />
     <ClCompile Include="walshHadamard.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +168,7 @@
     <ClInclude Include="lagrange.h" />
     <ClInclude Include="lagrangeMod.h" />
     <ClInclude Include="lagrangeModFast.h" />
+    <ClInclude Include="polynomial.h" />
     <ClInclude Include="powerSumPolyMod.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="polyFFT.h" />
     <ClInclude Include="polyFFTMod.h" />
     <ClInclude Include="rootFindingLaguerre.h" />
+    <ClInclude Include="vandermondeMatrix.h" />
     <ClInclude Include="walshHadamard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

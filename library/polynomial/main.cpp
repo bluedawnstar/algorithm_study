@@ -17,4 +17,5 @@ int main(void) {
     TEST(PowerSumPolyMod);
     TEST(WalshHadamard);
     TEST(VandermondeMatrix);
+    TEST(Polynomial);
 }
