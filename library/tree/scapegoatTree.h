@@ -82,7 +82,7 @@ protected:
         while (x != sentinel) {
             parent = x;
 
-            if (val == x->value && !duplicate) {
+            if (val == x->value && !duplicatable) {
                 return make_pair(x, false);
             } else {
                 if (val < x->value)

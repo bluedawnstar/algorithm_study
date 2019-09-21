@@ -21,21 +21,8 @@ struct RBTreeSimple {
         RBColor color;
         T       value;
 
-        Node() {
-            init();
-        }
-
         Node(const T& item) {
             init(item);
-        }
-
-        void init() {
-            parent = this;
-            left = this;
-            right = this;
-            cnt = 0;
-
-            color = rbcBlack;
         }
 
         void init(const T& item) {
@@ -107,20 +94,20 @@ struct RBTreeSimple {
     };
 
     Node*       root;     // root node
-    bool        duplicate;
+    bool        duplicatable;
     int         count;
 
     //-----------------------------------------------------------
 
     RBTreeSimple() {
         root = nullptr;
-        duplicate = false;
+        duplicatable = false;
         count = 0;
     }
 
     RBTreeSimple(const RBTreeSimple<T>& tree) {
         root = nullptr;
-        duplicate = false;
+        duplicatable = false;
         count = 0;
         copyRecursive(tree.root);
     }
@@ -132,7 +119,7 @@ struct RBTreeSimple {
     RBTreeSimple<T>& operator =(const RBTreeSimple<T>& tree) {
         if (this != &tree) {
             deleteRecursive(root);
-            duplicate = tree.duplicate;
+            duplicatable = tree.duplicatable;
             root = nullptr;
             copyRecursive(tree.root);
         }
@@ -147,12 +134,12 @@ struct RBTreeSimple {
         return count == 0;
     }
 
-    bool canDuplicate() const {
-        return duplicate;
+    bool isDuplicatable() const {
+        return duplicatable;
     }
 
-    void enableDuplicate(bool enable) {
-        duplicate = enable;
+    void setDuplicatable(bool enable) {
+        duplicatable = enable;
     }
 
     const Node* begin() const {
@@ -413,7 +400,7 @@ protected:
         while (x != nullptr) {
             parent = x;
 
-            if (item == x->value && !duplicate) {
+            if (item == x->value && !duplicatable) {
                 return make_pair(x, false);
             } else {
                 if (item < x->value)

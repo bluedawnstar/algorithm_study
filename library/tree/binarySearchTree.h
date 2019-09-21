@@ -36,7 +36,7 @@ struct BSTNode {
 template <typename T, typename Node = BSTNode<T>>
 struct BST {
     Node*       root;     // root node
-    bool        duplicate;
+    bool        duplicatable;
     int         count;
 
     Node*       sentinel;
@@ -48,7 +48,7 @@ struct BST {
         sentinel->init();
 
         root = sentinel;
-        duplicate = false;
+        duplicatable = false;
         count = 0;
     }
 
@@ -57,7 +57,7 @@ struct BST {
         sentinel->init();
 
         root = sentinel;
-        duplicate = false;
+        duplicatable = false;
         count = 0;
         copyRecursive(tree.root);
     }
@@ -70,7 +70,7 @@ struct BST {
     BST<T>& operator =(const BST<T>& tree) {
         if (this != &tree) {
             deleteRecursive(root);
-            duplicate = tree.duplicate;
+            duplicatable = tree.duplicatable;
             root = sentinel;
             copyRecursive(tree.root);
         }
@@ -89,12 +89,12 @@ struct BST {
         return find(key) != nullptr;
     }
 
-    bool canDuplicate() const {
-        return duplicate;
+    bool isDuplicatable() const {
+        return duplicatable;
     }
 
-    void enableDuplicate(bool enable) {
-        duplicate = enable;
+    void setDuplicatable(bool enable) {
+        duplicatable = enable;
     }
 
 
@@ -110,7 +110,7 @@ struct BST {
         while (x != sentinel) {
             parent = x;
 
-            if (item == x->value && !duplicate) {
+            if (item == x->value && !duplicatable) {
                 return make_pair(x, false);
             } else {
                 if (item < x->value)
