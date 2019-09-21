@@ -8,4 +8,5 @@ using namespace std;
 int main(void) {
     TEST(SortSqrt);
     TEST(Sort);
+    TEST(InversionCounter);
 }
