@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "polynomial.h"
+#include "modInt.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -25,7 +26,8 @@ using namespace std;
 using namespace algebra;
 
 const int MOD = 1000000007;
-typedef modular<MOD> baseT;
+typedef ModInt<int, MOD> baseT;
+//typedef ModInt<long long, MOD> baseT;
 typedef poly<baseT> polyT;
 
 //---
@@ -107,7 +109,7 @@ void testPolynomial() {
 
             auto ans2 = interpolate(vector<baseT>{0, 1, 2, 5}, vector<baseT>{2, 3, 12, 147}).eval(baseT(3));
             cout << "f(3) = " << ans2 << endl;
-            assert(ans2.r == 35);
+            assert(ans2.value == 35);
         }
         {
             int T = 100;
@@ -134,7 +136,7 @@ void testPolynomial() {
                 //copyFrom(modX, X);
                 //copyFrom(modY, Y);
                 //auto poly = interpolate(modX, modY);
-                auto poly = interpolate(copyFrom<MOD>(X), copyFrom<MOD>(Y));
+                auto poly = interpolate(copyFrom<int, MOD>(X), copyFrom<int, MOD>(Y));
 
                 for (int i = 0; i < T; i++) {
                     int x = RandInt32::get();
@@ -144,9 +146,9 @@ void testPolynomial() {
                     auto ans3 = poly.eval(baseT(x));
                     int gt = F(coeff, x);
 
-                    if (gt != ans1 || gt != ans2 || gt != ans3.r)
+                    if (gt != ans1 || gt != ans2 || gt != ans3.value)
                         cout << "Mismatched : " << ans1 << ", " << ans2 << ", " << ans3 << ", " << gt << endl;
-                    assert(ans1 == gt && ans2 == gt && ans3.r == gt);
+                    assert(ans1 == gt && ans2 == gt && ans3.value == gt);
                 }
             }
         }

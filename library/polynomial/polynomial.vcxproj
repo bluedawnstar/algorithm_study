@@ -174,6 +174,7 @@
     <ClInclude Include="lagrange.h" />
     <ClInclude Include="lagrangeMod.h" />
     <ClInclude Include="lagrangeModFast.h" />
+    <ClInclude Include="modInt.h" />
     <ClInclude Include="polyFFT2.h" />
     <ClInclude Include="polyFFTMod2.h" />
     <ClInclude Include="polynomial.h" />

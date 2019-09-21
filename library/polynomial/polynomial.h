@@ -2,8 +2,6 @@
 
 // https://cp-algorithms.com/algebra/polynomial.html
 
-#include <complex>
-
 namespace algebra {
     // from https://github.com/e-maxx-eng/e-maxx-eng-aux/blob/master/src/polynomial.cpp
 
@@ -20,7 +18,7 @@ namespace algebra {
         point w[MAXN];
         bool initiated = false;
 
-        void init() {
+        inline void init() {
             if (!initiated) {
                 for (int i = 1; i < MAXN; i <<= 1) {
                     for (int j = 0; j < i; j++) {
@@ -105,12 +103,14 @@ namespace algebra {
             reverse(C + 1, C + size);
             reverse(D + 1, D + size);
 
+            static const T SCALE2(1 << 2 * shift);
+            static const T SCALE(1 << shift);
+
             int t = 4 * static_cast<int>(size);
             for (size_t i = 0; i < size; i++) {
-                long long A0 = llround(real(C[i]) / t);
-                T A1 = static_cast<T>(llround(imag(D[i]) / t));
-                T A2 = static_cast<T>(llround(imag(C[i]) / t));
-                a[i] = static_cast<T>(A0 + (A1 << shift) + (A2 << 2 * shift));
+                a[i] = T(llround(real(C[i]) / t))
+                     + T(llround(imag(D[i]) / t)) * SCALE
+                     + T(llround(imag(C[i]) / t)) * SCALE2;
             }
         }
     }
@@ -151,92 +151,6 @@ namespace algebra {
         return res;
     }
 
-    template <int mod>
-    struct modular {
-        long long r;
-        
-        modular() : r(0) {
-        }
-        
-        modular(long long rr) : r(rr) {
-            if (abs(r) >= mod)
-                r %= mod;
-            if (r < 0)
-                r += mod;
-        }
-
-        template <typename U>
-        modular(U rr) : r(rr) {
-            if (abs(r) >= mod)
-                r %= mod;
-            if (r < 0)
-                r += mod;
-        }
-
-        modular inverse() const {
-            return bpow(*this, mod - 2);
-        }
-
-        modular operator *(const modular& t) const {
-            return (r * t.r) % mod;
-        }
-
-        modular operator /(const modular& t) const {
-            return *this * t.inverse();
-        }
-
-        modular& operator +=(const modular& t) {
-            r += t.r;
-            if (r >= mod)
-                r -= mod;
-            return *this;
-        }
-
-        modular& operator -=(const modular& t) {
-            r -= t.r;
-            if (r < 0)
-                r += mod;
-            return *this;
-        }
-
-        modular operator +(const modular& t) const {
-            return modular(*this) += t;
-        }
-
-        modular operator -(const modular& t) const {
-            return modular(*this) -= t;
-        }
-
-        modular& operator *=(const modular& t) {
-            return *this = *this * t;
-        }
-
-        modular& operator /=(const modular& t) {
-            return *this = *this / t;
-        }
-
-        bool operator ==(const modular& t) const {
-            return r == t.r;
-        }
-
-        bool operator !=(const modular& t) const {
-            return r != t.r;
-        }
-
-        operator long long() const {
-            return r;
-        }
-    };
-
-    template <int T>
-    inline istream& operator >>(istream& in, modular<T>& x) {
-        return in >> x.r;
-    }
-
-    template <int T>
-    inline ostream& operator <<(ostream& os, const modular<T>& x) {
-        return os << x.r;
-    }
 
     // low order first
     template <typename T>
@@ -715,28 +629,11 @@ namespace algebra {
     }
 
     // interpolates minimum polynomial from (Xi, Yi) pairs
-    template<typename T>
+    template <typename T>
     poly<T> interpolate(const vector<T>& x, const vector<T>& y) {
         int n = int(x.size());
         vector<poly<T>> tree(4 * n);
         return build(tree, 1, begin(x), end(x)).derivate().interpolate(tree, 1, begin(x), end(x), begin(y), end(y));
-    }
-
-    template <int mod, typename T>
-    void copyFrom(vector<modular<mod>>& dst, const vector<T>& src) {
-        dst.clear();
-        dst.reserve(src.size());
-        for (auto& it : src)
-            dst.emplace_back(it);
-    }
-
-    template <int mod, typename T>
-    vector<modular<mod>> copyFrom(const vector<T>& src) {
-        vector<modular<mod>> dst;
-        dst.reserve(src.size());
-        for (auto& it : src)
-            dst.emplace_back(it);
-        return dst;
     }
 };
 
@@ -745,7 +642,7 @@ namespace algebra {
 using namespace algebra;
 
 const int MOD = 1000000007;
-typedef modular<MOD> baseT;
+typedef ModInt<int,MOD> baseT;
 typedef poly<baseT> polyT;
 
 */
