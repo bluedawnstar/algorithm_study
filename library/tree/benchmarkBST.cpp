@@ -8,6 +8,8 @@ using namespace std;
 
 #include "binarySearchTree.h"
 #include "redBlackTree.h"
+#include "redBlackTreeSimple.h"
+#include "redBlackTreeLeftLeaning.h"
 #include "AVLTree.h"
 #include "scapegoatTree.h"
 #include "splayTree.h"
@@ -25,6 +27,58 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/rand.h"
 #include "../common/profile.h"
+
+/*
+1) Insert sorted elements (N = 10^6)
+    ------------+----------
+      Type      | time
+    ------------+----------
+      set       | 0.149*
+      RBT       | 0.237+
+      SRBT      | 0.217+
+      LLRBT     | 0.229+
+      AVL       | 0.253+
+      SGT(0.6)  | 1.154 !
+      SGT(0.75) | 0.777
+      SGT(0.9)  | 1.069 !
+      SPT       | 0.046*
+      TRP       | 0.167*
+    ------------+----------
+
+2) Insert random elements and Search elements (N = 10^6)
+    ------------+---------+----------
+      Type      | insert  | search
+    ------------+---------+----------
+      BST       | 0.810-  | 0.673+
+      set       | 0.625*  | 0.681+
+      RBT       | 0.749+  | 0.557*
+      SRBT      | 0.756+  | 0.578*
+      LLRBT     | 0.865-  | 0.608+
+      AVL       | 0.933   | 0.594*
+      SGT(0.6)  | 0.864-  | 0.634+
+      SGT(0.75) | 0.811-  | 0.658+
+      SGT(0.9)  | 0.849-  | 0.690+
+      SPT       | 1.104 ! | 1.484 !
+      TRP       | 1.085 ! | 0.846
+    ------------+---------+----------
+
+3) Insert random elements and Erase elements (N = 10^6)
+    ------------+---------+----------
+      Type      | insert  | erase
+    ------------+---------+----------
+      BST       | 0.813-  | 0.825+
+      set       | 0.608*  | 0.914
+      RBT       | 0.746+  | 0.780*
+      SRBT      | 0.744+  | 0.759*
+      LLRBT     | 0.892-  | 1.172 !
+      AVL       | 0.906   | 0.879+
+      SGT(0.6)  | 0.846-  | 0.965
+      SGT(0.75) | 0.810-  | 0.924
+      SGT(0.9)  | 0.847-  | 0.833+
+      SPT       | 1.109 ! | 1.390 !
+      TRP       | 1.092 ! | 1.097 !
+    ------------+---------+----------
+*/
 
 template <typename TreeT>
 static void testInsertSorted(TreeT& tr, const vector<int>& add) {
@@ -95,7 +149,7 @@ static void testInsertAndEraseRandom(TreeT& tr, const vector<int>& add, const ve
 }
 
 void testBenchmarkBST() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Benchmark Test of Binary Search Trees ---------------------" << endl;
 
@@ -112,6 +166,8 @@ void testBenchmarkBST() {
         //{ cout << "BST:       "; BST<int> tree;                 testInsertSorted(tree, in); } // too much slow!!!
         { cout << "set:       "; set<int> tree;                 testInsertSorted(tree, in); }
         { cout << "RBT:       "; RBTree<int> tree;              testInsertSorted(tree, in); }
+        { cout << "SRBT:      "; RBTreeSimple<int> tree;        testInsertSorted(tree, in); }
+        { cout << "LLRBT:     "; LeftLeaningRBTree<int> tree;   testInsertSorted(tree, in); }
         { cout << "AVL:       "; AVLTree<int> tree;             testInsertSorted(tree, in); }
         { cout << "SGT(0.6):  "; ScapegoatTree<int> tree(0.6);  testInsertSorted(tree, in); }
         { cout << "SGT(0.75): "; ScapegoatTree<int> tree(0.75); testInsertSorted(tree, in); }
@@ -132,6 +188,8 @@ void testBenchmarkBST() {
         { cout << "BST:       "; BST<int> tree;                 testInsertAndSearchRandom(tree, in, key); }
         { cout << "set:       "; set<int> tree;                 testInsertAndSearchRandom(tree, in, key); }
         { cout << "RBT:       "; RBTree<int> tree;              testInsertAndSearchRandom(tree, in, key); }
+        { cout << "SRBT:      "; RBTreeSimple<int> tree;        testInsertAndSearchRandom(tree, in, key); }
+        { cout << "LLRBT:     "; LeftLeaningRBTree<int> tree;   testInsertAndSearchRandom(tree, in, key); }
         { cout << "AVL:       "; AVLTree<int> tree;             testInsertAndSearchRandom(tree, in, key); }
         { cout << "SGT(0.6):  "; ScapegoatTree<int> tree(0.6);  testInsertAndSearchRandom(tree, in, key); }
         { cout << "SGT(0.75): "; ScapegoatTree<int> tree(0.75); testInsertAndSearchRandom(tree, in, key); }
@@ -152,6 +210,8 @@ void testBenchmarkBST() {
         { cout << "BST:       "; BST<int> tree;                 testInsertAndEraseRandom(tree, in, key); }
         { cout << "set:       "; set<int> tree;                 testInsertAndEraseRandom(tree, in, key); }
         { cout << "RBT:       "; RBTree<int> tree;              testInsertAndEraseRandom(tree, in, key); }
+        { cout << "SRBT:      "; RBTreeSimple<int> tree;        testInsertAndEraseRandom(tree, in, key); }
+        { cout << "LLRBT:     "; LeftLeaningRBTree<int> tree;   testInsertAndEraseRandom(tree, in, key); }
         { cout << "AVL:       "; AVLTree<int> tree;             testInsertAndEraseRandom(tree, in, key); }
         { cout << "SGT(0.6):  "; ScapegoatTree<int> tree(0.6);  testInsertAndEraseRandom(tree, in, key); }
         { cout << "SGT(0.75): "; ScapegoatTree<int> tree(0.75); testInsertAndEraseRandom(tree, in, key); }
