@@ -1,3 +1,5 @@
+#pragma once
+
 template <typename T, typename U>
 static ostream& operator <<(ostream& os, const pair<T, U>& rhs) {
     os << "(" << rhs.first << ", " << rhs.second << ")";
