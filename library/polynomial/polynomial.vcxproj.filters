@@ -54,6 +54,9 @@
     <ClCompile Include="vandermondeMatrix.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="fft2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -108,6 +111,27 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="vandermondeMatrix.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fft2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polyFFT2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polyFFTMod2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="factorialMod2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="convolution2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="convolutionMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="convolutionMod2.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

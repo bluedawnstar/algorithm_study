@@ -149,6 +149,7 @@
     <ClCompile Include="convolution.cpp" />
     <ClCompile Include="factorialMod.cpp" />
     <ClCompile Include="fft.cpp" />
+    <ClCompile Include="fft2.cpp" />
     <ClCompile Include="lagrange.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polyFFT.cpp" />
@@ -161,13 +162,20 @@
     <ClCompile Include="walshHadamard.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="convolution2.h" />
+    <ClInclude Include="convolutionMod.h" />
+    <ClInclude Include="convolutionMod2.h" />
     <ClInclude Include="dft.h" />
     <ClInclude Include="factorialMod.h" />
+    <ClInclude Include="factorialMod2.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="factorialNTT.h" />
+    <ClInclude Include="fft2.h" />
     <ClInclude Include="lagrange.h" />
     <ClInclude Include="lagrangeMod.h" />
     <ClInclude Include="lagrangeModFast.h" />
+    <ClInclude Include="polyFFT2.h" />
+    <ClInclude Include="polyFFTMod2.h" />
     <ClInclude Include="polynomial.h" />
     <ClInclude Include="powerSumPolyMod.h" />
     <ClInclude Include="mycomplex.h" />

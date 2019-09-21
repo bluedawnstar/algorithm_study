@@ -96,7 +96,6 @@ void testPolynomial() {
 
         if (c != a % md)
             cout << "Mismatched!" << endl;
-
         assert(c == a % md);
     }
     // interpolation
@@ -157,40 +156,37 @@ void testPolynomial() {
         for (int n = 32; n <= 2048; n <<= 1) {
             vector<int> in1(n);
             vector<int> in2(n);
-            vector<int> out;
             for (int i = 0; i < n; i++) {
                 in1[i] = RandInt32::get() % 1024;
                 in2[i] = RandInt32::get() % 1024;
             }
 
+            vector<int> out1, out2;
+
             cout << "N = " << n << endl;
+
             cout << "  PolyFFTMod::multiplySlow() : ";
             PROFILE_START(0);
-            for (int i = 0; i < 1000; i++) {
-                out = PolyFFTMod<MOD>::multiplySlow(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out1 = PolyFFTMod<MOD>::multiplySlow(in1, in2);
             PROFILE_STOP(0);
 
             cout << "  PolyFFTMod::multiply() : ";
             PROFILE_START(1);
-            for (int i = 0; i < 1000; i++) {
-                out = PolyFFTMod<MOD>::multiply(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out2 = PolyFFTMod<MOD>::multiply(in1, in2);
             PROFILE_STOP(1);
 
             cout << "  Polynomial : ";
-            polyT A(in1), B(in2), out2;
+            polyT A(in1), B(in2), out3;
             PROFILE_START(2);
-            for (int i = 0; i < 1000; i++) {
-                out2 = A * B;
-                if (out2.a.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out3 = A * B;
             PROFILE_STOP(2);
+
+            if (out1 != out2 || polyT(out1) != out3)
+                cout << "ERROR at " << __LINE__ << endl;
+            assert(out1 == out2 && polyT(out1) == out3);
         }
     }
 

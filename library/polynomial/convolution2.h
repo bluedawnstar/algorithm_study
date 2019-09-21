@@ -1,9 +1,9 @@
 #pragma once
 
-#include "fft.h"
+#include "fft2.h"
 
-struct Convolution {
-    static vector<int> convoluteSlow(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
+struct Convolution2 : public FFT2 {
+    vector<int> convoluteSlow(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
         int xN = int(x.size());
         int hN = int(h.size());
 
@@ -32,7 +32,7 @@ struct Convolution {
     }
 
     // It's better performance than convoluteSlow() when N >= 128
-    static vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
+    vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
         int sizeL = int(x.size());
         int sizeR = int(h.size());
         int sizeDst = sizeL + sizeR - 1;
@@ -53,8 +53,8 @@ struct Convolution {
                 B[i].first = h[j];
         }
 
-        FFT::fft(A);
-        FFT::fft(B);
+        fft(A);
+        fft(B);
 
         vector<pair<double,double>> C(size);
         for (int i = 0; i < size; i++) {
@@ -63,7 +63,7 @@ struct Convolution {
             C[i].second = A[i].first * B[i].second + A[i].second * B[i].first;
         }
 
-        FFT::fft(C, true);
+        fft(C, true);
 
         vector<int> res(sizeDst);
         for (int i = 0; i < sizeDst; i++)

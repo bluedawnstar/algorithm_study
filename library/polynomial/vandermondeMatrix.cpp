@@ -35,17 +35,31 @@ static vector<int> solver(vector<int> A, int N, int M, int K) {
     return VandermondeMatrixMultiplierMod<MOD>::multiply(C, A, M);
 }
 
+static vector<int> solver2(vector<int> A, int N, int M, int K) {
+    reverse(A.begin(), A.end());
+    vector<int> C(N);
+
+    FastModOp op(N + K, MOD);
+    for (int i = 0; i < N; i++)
+        C[i] = op.comb(K + i - 1, i); // H(K + i - 1, i)
+
+    VandermondeMatrixMultiplierMod2<MOD> solution;
+    return solution.multiply(C, A, M);
+}
+
 void testVandermondeMatrix() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Vandermonde Matrix ----------------" << endl;
     {
         auto ans = solver(vector<int>{ 1, 2, 3 }, 3, 3, 2);
+        auto ans2 = solver2(vector<int>{ 1, 2, 3 }, 3, 3, 2);
         if (ans[1] != 10 || ans[2] != 20 || ans[3] != 46)
             cout << "Invalid answer : " << ans << endl;
-        assert(ans[1] == 10);
-        assert(ans[2] == 20);
-        assert(ans[3] == 46);
+        if (ans2[1] != 10 || ans2[2] != 20 || ans2[3] != 46)
+            cout << "Invalid answer : " << ans << endl;
+        assert(ans[1] == 10 && ans[2] == 20 && ans[3] == 46);
+        assert(ans2[1] == 10 && ans2[2] == 20 && ans2[3] == 46);
     }
     cout << "OK!" << endl;
 }

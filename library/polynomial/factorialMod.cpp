@@ -4,6 +4,7 @@
 using namespace std;
 
 #include "factorialMod.h"
+#include "factorialMod2.h"
 #include "factorialNTT.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////

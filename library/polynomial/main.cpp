@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void) {
     TEST(FFT);
+    TEST(FastFFT);
     TEST(PolyFFT);
     TEST(PolyFFTMod);
     TEST(Convolution);

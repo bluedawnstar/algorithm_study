@@ -288,57 +288,48 @@ void testNTT() {
         for (int n = 32; n <= 2048; n <<= 1) {
             vector<int> in1(n);
             vector<int> in2(n);
-            vector<int> out;
             for (int i = 0; i < n; i++) {
                 in1[i] = RandInt32::get() % M;
                 in2[i] = RandInt32::get() % M;
             }
 
+            vector<int> out1, out2, out3, out4, out5;
+
             cout << "N = " << n << endl;
+
             cout << "  PolyFFTMod::multiplySlow() : ";
             PROFILE_START(0);
-            for (int i = 0; i < 1000; i++) {
-                out = PolyFFTMod<M>::multiplySlow(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out1 = PolyFFTMod<M>::multiplySlow(in1, in2);
             PROFILE_STOP(0);
 
             cout << "  PolyFFTMod::multiply() : ";
             PROFILE_START(1);
-            for (int i = 0; i < 1000; i++) {
-                out = PolyFFTMod<M>::multiply(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out2 = PolyFFTMod<M>::multiply(in1, in2);
             PROFILE_STOP(1);
 
             cout << "  NTT::multiply() : ";
             PROFILE_START(2);
-            for (int i = 0; i < 1000; i++) {
-                out = NTT<MOD,3>::multiply(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out3 = NTT<MOD,3>::multiply(in1, in2);
             PROFILE_STOP(2);
 
             cout << "  PolyNTT::multiply() : ";
             PROFILE_START(3);
-            for (int i = 0; i < 1000; i++) {
-                out = PolyNTT<M,R>::multiply(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out4 = PolyNTT<M,R>::multiply(in1, in2);
             PROFILE_STOP(3);
 
             cout << "  PolyNTT::multiplyFast() : ";
             PROFILE_START(4);
-            for (int i = 0; i < 1000; i++) {
-                out = PolyNTT<M,R>::multiplyFast(in1, in2);
-                if (out.empty())
-                    cerr << "It'll never be shwon!" << endl;
-            }
+            for (int i = 0; i < 1000; i++)
+                out5 = PolyNTT<M,R>::multiplyFast(in1, in2);
             PROFILE_STOP(4);
+
+            if (out1 != out2 || out1 != out3 || out1 != out4 || out1 != out5)
+                cout << "ERROR at " << __LINE__ << endl;
+            assert(out1 == out2 && out1 == out3 && out1 == out4 && out1 == out5);
         }
     }
 
