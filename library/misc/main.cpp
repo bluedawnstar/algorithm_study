@@ -9,4 +9,5 @@ int main(void) {
     TEST(CycleDetection);
     TEST(JumpPointerSparseTable);
     TEST(ReservoirSampling);
+    TEST(HuffmanAlgorithm);
 }

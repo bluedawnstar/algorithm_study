@@ -147,12 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cycleDetection.cpp" />
+    <ClCompile Include="huffmanAlgorithm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="jumpPointerSparseTable.cpp" />
     <ClCompile Include="reservoirSampling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h" />
+    <ClInclude Include="huffmanAlgorithm.h" />
     <ClInclude Include="jumpPointerSparseTable.h" />
     <ClInclude Include="reservoirSampling.h" />
   </ItemGroup>
