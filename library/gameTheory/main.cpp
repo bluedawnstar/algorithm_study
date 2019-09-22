@@ -9,4 +9,5 @@ int main(void) {
     TEST(MexTrie);
     TEST(WythoffGame);
     TEST(PirateGame);
+    TEST(MinimumKnightMoves);
 }
