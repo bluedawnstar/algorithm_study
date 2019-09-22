@@ -32,8 +32,9 @@ struct DAG {
         res.reserve(N);
 
         vector<bool> visited(N);
+        vector<bool> stk(N);
 
-        bool cycleDetected = topologicalSortDFS(u, visited, res);
+        bool cycleDetected = topologicalSortDFS(u, visited, stk, res);
         reverse(res.begin(), res.end());
 
         return cycleDetected;
@@ -45,11 +46,12 @@ struct DAG {
         res.reserve(N);
 
         vector<bool> visited(N);
+        vector<bool> stk(N);
 
         bool cycleDetected = false;
         for (int i = 0; i < N; i++) {
             if (!visited[i]) {
-                if (topologicalSortDFS(i, visited, res))
+                if (topologicalSortDFS(i, visited, stk, res))
                     cycleDetected = true;
             }
         }
@@ -191,18 +193,18 @@ struct DAG {
 
 private:
     // return if cycle detected
-    bool topologicalSortDFS(int u, vector<bool>& visited, vector<int>& res) const {
+    bool topologicalSortDFS(int u, vector<bool>& visited, vector<bool>& stk, vector<int>& res) const {
         visited[u] = true;
+        stk[u] = true;
         for (auto& e : edges[u]) {
             if (!visited[e.first]) {
-                if (topologicalSortDFS(e.first, visited, res))
+                if (topologicalSortDFS(e.first, visited, stk, res))
                     return true;
-            }
-            //TODO: uncomment if cycle detection is necessary
-            //else if (find(res.begin(), res.end(), e.first) == res.end())
-            //    return true;
+            } else if (stk[e.first])
+                return true;
         }
         res.push_back(u);
+        stk[u] = false;
         return false;
     }
 
