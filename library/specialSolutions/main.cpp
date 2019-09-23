@@ -7,4 +7,5 @@ using namespace std;
 
 int main(void) {
     TEST(DivideAndSum);
+    TEST(AssignGraphColorsByDividing);
 }
