@@ -42,6 +42,15 @@ void testInversionCounter() {
         assert(ans1 == gt && ans2 == gt);
     }
     {
+        vector<int> A{ 3, 3, 2, 3, 2, 4 };
+        int gt = 5;
+        int ans1 = int(InversionCounter<int>::count(A));
+        int ans2 = int(InversionCounter2::count(A));
+        if (ans1 != gt || ans2 != gt)
+            cout << "ERROR at " << __LINE__ << endl;
+        assert(ans1 == gt && ans2 == gt);
+    }
+    {
         int N = 1000;
 
         vector<int> A(N);
