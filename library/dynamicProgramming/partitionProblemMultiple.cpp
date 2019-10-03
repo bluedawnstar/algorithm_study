@@ -25,6 +25,14 @@ void testPartitionProblemMultiple() {
         auto ans = MultiplePartitionProblem::countPartitions(value, 3, 12);
         assert(ans == 8);
     }
+    {
+        vector<int> A{ 2, 1, 1, 2 };
+        auto ans = MultiplePartitionProblem2::countPartitions(A);
+        assert(ans == 3);
+
+        ans = MultiplePartitionProblem2::countPartitionsMod(A, 1000000007);
+        assert(ans == 3);
+    }
 
     cout << "OK!" << endl;
 }

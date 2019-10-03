@@ -179,6 +179,7 @@
     <ClCompile Include="persistentConvexHull.cpp" />
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
+    <ClCompile Include="subsequenceSpecial.cpp" />
     <ClCompile Include="twoSameSumSubset.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +226,7 @@
     <ClInclude Include="persistentUpperConvexHull.h" />
     <ClInclude Include="steinerTree.h" />
     <ClInclude Include="subsequence.h" />
+    <ClInclude Include="subsequenceSpecial.h" />
     <ClInclude Include="twoSameSumSubset.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
