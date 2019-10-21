@@ -178,6 +178,7 @@
     <ClInclude Include="discreteLog.h" />
     <ClInclude Include="discreteRoot.h" />
     <ClInclude Include="eulerTheorem.h" />
+    <ClInclude Include="eulerTheoremEx.h" />
     <ClInclude Include="factor.h" />
     <ClInclude Include="fastModOp.h" />
     <ClInclude Include="garnerAlgorithm.h" />
