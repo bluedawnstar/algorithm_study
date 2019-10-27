@@ -45,7 +45,7 @@ inline bool nextBalancedSequence(string& s) {
 
 template <typename T>
 struct BalancedBracketSequences {
-    vector<vector<T>> dp;
+    vector<vector<T>> dp;       // dp[length][depth]
 
     BalancedBracketSequences() {
     }
@@ -88,14 +88,14 @@ struct BalancedBracketSequences {
         int half = n >> 1;
 
         int depth = 0;
-        for (int i = 0; i < n; i++) {
-            if (depth + 1 <= half && dp[n - i - 1][depth + 1] >= kth) {
+        for (int i = 1; i <= n; i++) {
+            if (depth + 1 <= half && kth <= dp[n - i][depth + 1]) {
                 ans += '(';
                 depth++;
             } else {
                 ans += ')';
                 if (depth + 1 <= half)
-                    kth -= dp[n - i - 1][depth + 1];
+                    kth -= dp[n - i][depth + 1];
                 depth--;
             }
         }
@@ -113,10 +113,10 @@ struct BalancedBracketSequences {
 
         int depth = 0;
         stack<char> st;
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i <= n; i++) {
             // '('
             if (depth + 1 <= half) {
-                int cnt = dp[n - i - 1][depth + 1] << ((n - i - 1 - depth - 1) / 2);
+                int cnt = dp[n - i][depth + 1] << ((n - i - depth - 1) / 2);
                 if (cnt >= kth) {
                     ans += '(';
                     st.push('(');
@@ -128,7 +128,7 @@ struct BalancedBracketSequences {
 
             // ')'
             if (depth && st.top() == '(') {
-                int cnt = dp[n - i - 1][depth - 1] << ((n - i - 1 - depth + 1) / 2);
+                int cnt = dp[n - i][depth - 1] << ((n - i - depth + 1) / 2);
                 if (cnt >= kth) {
                     ans += ')';
                     st.pop();
@@ -140,7 +140,7 @@ struct BalancedBracketSequences {
 
             // '['
             if (depth + 1 <= half) {
-                int cnt = dp[n - i - 1][depth + 1] << ((n - i - 1 - depth - 1) / 2);
+                int cnt = dp[n - i][depth + 1] << ((n - i - depth - 1) / 2);
                 if (cnt >= kth) {
                     ans += '[';
                     st.push('[');
@@ -174,37 +174,47 @@ struct BalancedBracketSequences {
         if (total < kth)
             return ans;
 
-        --kth;
-
         ans.assign(n, '(');
 
-        vector<int> b(n + 2);
-        vector<vector<bool>> good(n + 2, vector<bool>(n + 2));
+        vector<int> depth(n + 2);
+        vector<vector<bool>> good(n + 2, vector<bool>(n + 2));  // good[start][end]
 
         for (int i = 1; i <= n + 1; i++)
             good[i][i - 1] = true;
 
         for (int i = 1; i <= n; i++) {
-            b[i] = b[i - 1] + 1;
-            for (int j = 1; j <= i; ++j)
-                good[j][i] = (good[j][i - 1] && (b[i] - b[j - 1]) >= 0);
-
-            T cur = 0;
-            for (int j = 1; j <= i; ++j)
-                if (good[1][j - 1] && b[j - 1] == 0 && good[j + 1][i])
-                    cur += dp[n - i][b[i] - b[j]];
-
-            if (good[1][i]) {
-                for (int j = i + 1; j <= n; ++j)
-                    cur += 2 * dp[j - i - 1][b[i]] * dp[n - j][0];
+            // try to set '(' to the position i
+            depth[i] = depth[i - 1] + 1;
+            for (int j = 1; j <= i; ++j) {
+                // good[start][end] = good[start][end-1] && depth[start..end-1] >= -1
+                good[j][i] = (good[j][i - 1] && (depth[i] - depth[j - 1]) >= 0);
             }
 
-            if (cur <= kth) {
+            T cur = 0;
+            for (int j = 1; j <= i; ++j) {
+                //  1    j-1   j  j+1...i | i+1   n
+                // [(......)]  x  (...... | ......)
+                //  balanced       balanc | ed
+                if (good[1][j - 1] && depth[j - 1] == 0 && good[j + 1][i])
+                    cur += dp[n - i][depth[i] - depth[j]];
+            }
+
+            if (good[1][i]) {
+                //  1...i | i+1...j-1  j  j+1...n
+                //  (.... | ........)  X  (.....)
+                //    bal | anced         balanced
+                for (int j = i + 1; j <= n; ++j)
+                    cur += 2 * dp[j - 1 - i][depth[i]] * dp[n - j][0];
+            }
+
+            if (cur < kth) {
                 kth -= cur;
                 ans[i - 1] = ')';
-                b[i] = b[i - 1] - 1;
+
+                // set ')' to the position i
+                depth[i] = depth[i - 1] - 1;
                 for (int j = 1; j <= i; j++)
-                    good[j][i] = (good[j][i - 1] && (b[i] - b[j - 1]) >= 0);
+                    good[j][i] = (good[j][i - 1] && (depth[i] - depth[j - 1]) >= 0);
             }
         }
 
@@ -216,7 +226,7 @@ struct BalancedBracketSequences {
         T res = 0;
         if (n & 1) {
             for (int i = 0; i <= n; i += 2)
-                res += 2 * dp[i][0] * dp[n - 1 - i][0];
+                res += 2 * dp[i][0] * dp[n - 1 - i][0];     // "(...)" + x + "(...)"
         }
         return res;
     }
