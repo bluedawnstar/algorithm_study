@@ -153,6 +153,12 @@
     <ClCompile Include="simpleSubstring.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="reverseSubstringsBetweenParentheses.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="bracketSequencesBalanced.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -315,6 +321,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="simpleSubstring.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="reverseSubstringsBetweenParentheses.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bracketSequencesBalanced.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

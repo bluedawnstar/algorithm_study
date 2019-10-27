@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ahoCorasickAM.cpp" />
+    <ClCompile Include="bracketSequencesBalanced.cpp" />
     <ClCompile Include="burrowsWheelerTransform.cpp" />
     <ClCompile Include="compressedTrie.cpp" />
     <ClCompile Include="compressedTrieAM.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="palindromicFactorization.cpp" />
     <ClCompile Include="palindromicNumber.cpp" />
     <ClCompile Include="patternSubsequence.cpp" />
+    <ClCompile Include="reverseSubstringsBetweenParentheses.cpp" />
     <ClCompile Include="rleString.cpp" />
     <ClCompile Include="simpleSubstring.cpp" />
     <ClCompile Include="stringMatchingWithFFT.cpp" />
@@ -191,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ahoCorasickAM.h" />
+    <ClInclude Include="bracketSequencesBalanced.h" />
     <ClInclude Include="burrowsWheelerTransform.h" />
     <ClInclude Include="compressedTrie.h" />
     <ClInclude Include="compressedTrieAM.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="palindromicSubstringAll_manacher.h" />
     <ClInclude Include="palindromicSubstringLongest_manacher.h" />
     <ClInclude Include="patternSubsequence.h" />
+    <ClInclude Include="reverseSubstringsBetweenParentheses.h" />
     <ClInclude Include="rleString.h" />
     <ClInclude Include="simpleSubstring.h" />
     <ClInclude Include="stringMatchingWithFFT.h" />

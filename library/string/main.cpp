@@ -50,4 +50,6 @@ int main(void) {
     TEST(SuffixRollingHash);
     TEST(StringMatchingWithFFT);
     TEST(SimpleSubstring);
+    TEST(ReverseSubstringsBetweenParentheses);
+    TEST(BracketSequencesBalanced);
 }
