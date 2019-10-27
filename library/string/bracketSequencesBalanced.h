@@ -214,8 +214,10 @@ struct BalancedBracketSequences {
 //private:
     T countAlmostBalanced(int n) {
         T res = 0;
-        for (int i = 0; i <= n; i += 2)
-            res += 2 * dp[i][0] * dp[n - 1 - i][0];
+        if (n & 1) {
+            for (int i = 0; i <= n; i += 2)
+                res += 2 * dp[i][0] * dp[n - 1 - i][0];
+        }
         return res;
     }
 };
