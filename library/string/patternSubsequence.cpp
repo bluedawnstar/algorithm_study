@@ -19,7 +19,7 @@ using namespace std;
 // https://www.codechef.com/MARCH19A/problems/MATPER
 
 void testPatternSubsequence() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Pattern Subsequence -------------------------" << endl;
     {

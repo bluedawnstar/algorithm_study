@@ -1,3 +1,5 @@
+#include <tuple>
+#include <queue>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -6,6 +8,8 @@ using namespace std;
 
 #include "suffixArray.h"
 #include "suffixArrayAlgo.h"
+
+#include "suffixArray_LarssonSadakane.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -49,7 +53,7 @@ static int lowerBoundBackwardSlow(const vector<int>& sa, int right, int length, 
 }
 
 void testSuffixArray() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Suffix Array --------------------" << endl;
     {
@@ -63,6 +67,25 @@ void testSuffixArray() {
         long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
         assert(cntAns == cntGT);
     }
+#if 0
+    {
+        //        01234567890123456
+        string s("abdadafaaabdfaeef");
+
+        vector<int> ans = SuffixArrayLarssonSadakane::build(s);
+        vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
+        if (ans != gt) {
+            cout << "Mismatched : " << endl
+                 << "    ans = " << ans << endl
+                 << "     gt = " << gt << endl;
+        }
+        assert(ans == gt);
+
+        long long cntAns = SuffixArrayAlgo::countSubstrings(ans, s);
+        long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
+        assert(cntAns == cntGT);
+    }
+#endif
     {
         int T = 10;
         while (T-- > 0) {

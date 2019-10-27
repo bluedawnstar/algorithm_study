@@ -38,7 +38,7 @@ static ostream& operator <<(ostream& os, DynamicStringHashWithSplayTree& tr) {
 //---
 
 void testDynamicStringHashWithSplayTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Dynamic String Hash with Splay Tree --------------------------" << endl;
     {

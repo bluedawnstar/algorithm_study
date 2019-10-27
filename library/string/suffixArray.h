@@ -22,6 +22,16 @@ struct SuffixArray {
         build(s, charMin, charMax);
     }
 
+    void build(const char* s, int n, const vector<int>& sa, int charMin = 'a', int charMax = 'z') {
+        suffixArray = sa;
+        lcpArray = SuffixArray::buildLcpArray(suffixArray, s, n);
+        lcpSparseTable.build(lcpArray);
+
+        suffixArrayRev.resize(n);
+        for (int i = 0; i < n; i++)
+            suffixArrayRev[suffixArray[i]] = i;
+    }
+
     void build(const char* s, int n, int charMin = 'a', int charMax = 'z') {
         suffixArray = SuffixArray::buildSuffixArray(s, n, charMin, charMax);
         lcpArray = SuffixArray::buildLcpArray(suffixArray, s, n);

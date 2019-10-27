@@ -43,7 +43,7 @@ static vector<string> findSuffixPalindromes(const string& s, int R) {
 }
 
 void testEerTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- eerTree --------------------------------" << endl;
     {            // 01234567890123 
