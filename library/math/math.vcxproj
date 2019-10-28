@@ -154,6 +154,7 @@
     <ClCompile Include="gaussianElimination.cpp" />
     <ClCompile Include="booleanXorExpression.cpp" />
     <ClCompile Include="linearRecurrence.cpp" />
+    <ClCompile Include="longestArithmeticSubsequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="simpsonIntegration.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="booleanXorExpression.h" />
     <ClInclude Include="generatingFunction.h" />
     <ClInclude Include="linearRecurrence.h" />
+    <ClInclude Include="longestArithmeticSubsequence.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="matrix2x2.h" />
     <ClInclude Include="matrix2x2Mod.h" />

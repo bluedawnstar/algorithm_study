@@ -69,6 +69,9 @@
     <ClCompile Include="linearRecurrence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="longestArithmeticSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -147,6 +150,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="matrix2x2Mod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestArithmeticSubsequence.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

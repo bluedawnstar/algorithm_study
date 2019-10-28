@@ -22,4 +22,5 @@ int main(void) {
     TEST(SternBrocotTree);
     TEST(LinearRecurrence);
     TEST(SumOfPower);
+    TEST(LongestArithmeticSubsequence);
 }
