@@ -41,7 +41,7 @@ static int sumOfPower(int x, int k, int mod) {
 }
 
 void testSumOfPower() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Sum of Power -------------------------" << endl;
     {
