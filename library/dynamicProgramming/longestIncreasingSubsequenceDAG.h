@@ -25,7 +25,7 @@ struct LisDAG {
         build(v);
     }
 
-    // worst case O(N^2), but normally O(NlogN)
+    // worst case O(N^2)
     void build(const T v[], int n) {
         value.assign(v, v + n);
 
