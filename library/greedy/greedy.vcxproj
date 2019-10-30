@@ -147,10 +147,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="overlappingIntervals.cpp" />
+    <ClCompile Include="nonoverlappingIntervals.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="overlappingIntervals.h" />
+    <ClInclude Include="nonoverlappingIntervals.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

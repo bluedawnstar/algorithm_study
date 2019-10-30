@@ -6,5 +6,5 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(OverlappingIntervals);
+    TEST(NonoverlappingIntervals);
 }

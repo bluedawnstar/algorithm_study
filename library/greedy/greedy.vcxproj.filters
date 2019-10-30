@@ -18,12 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="overlappingIntervals.cpp">
+    <ClCompile Include="nonoverlappingIntervals.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="overlappingIntervals.h">
+    <ClInclude Include="nonoverlappingIntervals.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

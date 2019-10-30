@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "overlappingIntervals.h"
+#include "nonoverlappingIntervals.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -16,13 +16,15 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void testOverlappingIntervals() {
+// https://leetcode.com/problems/non-overlapping-intervals/
+
+void testNonoverlappingIntervals() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Overlapping Intervals ------------------------------" << endl;
+    cout << "--- Non-overlapping Intervals ------------------------------" << endl;
     {
         vector<pair<int, int>> in{ { 1, 3 }, { 2, 5 }, { 4, 7 }, { 6, 9 }, { 8, 10 } };
-        auto ans = countOverlapIntervals(in);
+        auto ans = countNonoverlapIntervals(in);
         if (ans != 3)
             cout << "invalid answer : " << 3 << ", " << ans << endl;
         assert(ans == 3);
