@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="bitDP.cpp" />
     <ClCompile Include="integerPartition.cpp" />
+    <ClCompile Include="nonoverlappingIntervals.cpp" />
     <ClCompile Include="partitionProblemMultiple.cpp" />
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />
+    <ClInclude Include="nonoverlappingIntervals.h" />
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
     <ClInclude Include="powerSumOfAllCombinations_NTT.h" />
