@@ -3,6 +3,7 @@
 using namespace std;
 
 #include "walshHadamard.h"
+#include "walshHadamardMod.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -101,6 +102,55 @@ static vector<T> slowAnd(const vector<T>& A, const vector<T>& B) {
     return C;
 }
 
+//---
+
+const int MOD = 1000000007;
+
+template <typename T>
+static vector<T> slowXorMod(const vector<T>& A, const vector<T>& B) {
+    int size = 1;
+    while (size < int(A.size()) || size < int(B.size()))
+        size <<= 1;
+
+    vector<T> C(size);
+    for (int i = 0; i < int(A.size()); i++) {
+        for (int j = 0; j < int(B.size()); j++)
+            C[i ^ j] = T((C[i ^ j] + 1ll * A[i] * B[j]) % MOD);
+    }
+
+    return C;
+}
+
+template <typename T>
+static vector<T> slowOrMod(const vector<T>& A, const vector<T>& B) {
+    int size = 1;
+    while (size < int(A.size()) || size < int(B.size()))
+        size <<= 1;
+
+    vector<T> C(size);
+    for (int i = 0; i < int(A.size()); i++) {
+        for (int j = 0; j < int(B.size()); j++)
+            C[i | j] = T((C[i | j] + 1ll * A[i] * B[j]) % MOD);
+    }
+
+    return C;
+}
+
+template <typename T>
+static vector<T> slowAndMod(const vector<T>& A, const vector<T>& B) {
+    int size = 1;
+    while (size < int(A.size()) || size < int(B.size()))
+        size <<= 1;
+
+    vector<T> C(size);
+    for (int i = 0; i < int(A.size()); i++) {
+        for (int j = 0; j < int(B.size()); j++)
+            C[i & j] = T((C[i & j] + 1ll * A[i] * B[j]) % MOD);
+    }
+
+    return C;
+}
+
 void testWalshHadamard() {
     //return; //TODO: if you want to test, make this line a comment.
 
@@ -129,6 +179,43 @@ void testWalshHadamard() {
             auto gtXor = slowXor(A, B);
             auto gtOr = slowOr(A, B);
             auto gtAnd = slowAnd(A, B);
+
+            if (ansXor != gtXor)
+                cout << "Mismatched XOR!" << endl;
+            if (ansOr != gtOr)
+                cout << "Mismatched OR!" << endl;
+            if (ansAnd != gtAnd)
+                cout << "Mismatched AND!" << endl;
+
+            assert(ansXor == gtXor);
+            assert(ansOr == gtOr);
+            assert(ansAnd == gtAnd);
+        }
+    }
+    {
+        int T = 100;
+        int N = 1000;
+
+#if _DEBUG
+        T = 10;
+        N = 100;
+#endif
+
+        while (T-- > 0) {
+            vector<int> A(N);
+            vector<int> B(N);
+            for (int i = 0; i < N; i++) {
+                A[i] = RandInt32::get() % 10000;
+                B[i] = RandInt32::get() % 10000;
+            }
+
+            auto ansXor = FWHTMod<int>::fastXor(A, B);
+            auto ansOr  = FWHTMod<int>::fastOr(A, B);
+            auto ansAnd = FWHTMod<int>::fastAnd(A, B);
+
+            auto gtXor = slowXorMod(A, B);
+            auto gtOr = slowOrMod(A, B);
+            auto gtAnd = slowAndMod(A, B);
 
             if (ansXor != gtXor)
                 cout << "Mismatched XOR!" << endl;
