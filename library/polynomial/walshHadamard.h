@@ -10,7 +10,7 @@ template <typename T>
 struct FWHT {
     // C = SUM SUM A[i] * B[j] * x^(i xor j)
     //      i   j
-    static vector<T> fastXor(vector<T>& A, vector<T>& B) {
+    static vector<T> fastXor(const vector<T>& A, const vector<T>& B) {
         int size = 1;
         while (size < int(A.size()) || size < int(B.size()))
             size <<= 1;
@@ -25,18 +25,17 @@ struct FWHT {
         transformXor(tA, false);
         transformXor(tB, false);
 
-        vector<T> C(size);
         for (int i = 0; i < size; i++)
-            C[i] = tA[i] * tB[i];
+            tA[i] *= tB[i];
 
-        transformXor(C, true);
+        transformXor(tA, true);
 
-        return C;
+        return tA;
     }
 
     // C = SUM SUM A[i] * B[j] * x^(i or j)
     //      i   j
-    static vector<T> fastOr(vector<T>& A, vector<T>& B) {
+    static vector<T> fastOr(const vector<T>& A, const vector<T>& B) {
         int size = 1;
         while (size < int(A.size()) || size < int(B.size()))
             size <<= 1;
@@ -51,18 +50,17 @@ struct FWHT {
         transformOr(tA, false);
         transformOr(tB, false);
 
-        vector<T> C(size);
         for (int i = 0; i < size; i++)
-            C[i] = tA[i] * tB[i];
+            tA[i] *= tB[i];
 
-        transformOr(C, true);
+        transformOr(tA, true);
 
-        return C;
+        return tA;
     }
 
     // C = SUM SUM A[i] * B[j] * x^(i and j)
     //      i   j
-    static vector<T> fastAnd(vector<T>& A, vector<T>& B) {
+    static vector<T> fastAnd(const vector<T>& A, const vector<T>& B) {
         int size = 1;
         while (size < int(A.size()) || size < int(B.size()))
             size <<= 1;
@@ -77,13 +75,12 @@ struct FWHT {
         transformAnd(tA, false);
         transformAnd(tB, false);
 
-        vector<T> C(size);
         for (int i = 0; i < size; i++)
-            C[i] = tA[i] * tB[i];
+            tA[i] *= tB[i];
 
-        transformAnd(C, true);
+        transformAnd(tA, true);
 
-        return C;
+        return tA;
     }
 
 private:
