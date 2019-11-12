@@ -1,6 +1,6 @@
 #pragma once
 
-// https://leetcode.com/problems/minimum-time-to-build-cost/
+// https://leetcode.com/problems/minimum-time-to-build-blocks/
 
 class BlockBuilder {
 public:
