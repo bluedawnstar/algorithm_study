@@ -189,6 +189,7 @@
     <ClInclude Include="vandermondeMatrix.h" />
     <ClInclude Include="walshHadamard.h" />
     <ClInclude Include="walshHadamardMod.h" />
+    <ClInclude Include="walshHadamardMod3xor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

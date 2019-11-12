@@ -4,6 +4,7 @@ using namespace std;
 
 #include "walshHadamard.h"
 #include "walshHadamardMod.h"
+#include "walshHadamardMod3xor.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -151,6 +152,31 @@ static vector<T> slowAndMod(const vector<T>& A, const vector<T>& B) {
     return C;
 }
 
+
+//-----------------------------------------------------------------------------
+// https://www.codechef.com/problems/MDSWIN
+// -> https://discuss.codechef.com/t/mdswin-editorial/44120
+
+const int MAXVALUE = 177147;    // 3^11
+
+static long long solveMDSWIN(const vector<int>& A, int K) {
+    int N = int(A.size());
+
+    vector<int> cnt(MAXVALUE);
+    for (int i = 0; i < N; i++) {
+        ++cnt[FWHTMod3Xor<int,MOD>::binaryToBase3(A[i])];
+    }
+
+    auto P = FWHTMod3Xor<int,MOD>::pow(cnt, K);
+
+    long long res = 0;
+    for (int i = 1; i < int(P.size()); i++)
+        res = (res + P[i]) % MOD;
+
+    return res;
+}
+
+
 void testWalshHadamard() {
     //return; //TODO: if you want to test, make this line a comment.
 
@@ -228,6 +254,19 @@ void testWalshHadamard() {
             assert(ansOr == gtOr);
             assert(ansAnd == gtAnd);
         }
+    }
+    {
+        auto ans1 = solveMDSWIN(vector<int>{1, 2}, 3);
+        int gt1 = 6;
+        if (ans1 != gt1)
+            cout << "Mismatched : " << ans1 << ", " << gt1 << endl;
+        assert(ans1 == gt1);
+
+        auto ans2 = solveMDSWIN(vector<int>{1, 2}, 6);
+        int gt2 = 42;
+        if (ans2 != gt2)
+            cout << "Mismatched : " << ans2 << ", " << gt2 << endl;
+        assert(ans2 == gt2);
     }
 
     cout << "OK!" << endl;
