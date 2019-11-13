@@ -123,6 +123,9 @@
     <ClCompile Include="nonoverlappingIntervals.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="maxProfit.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -261,6 +264,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="nonoverlappingIntervals.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxProfit.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

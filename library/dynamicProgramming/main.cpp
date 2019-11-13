@@ -39,4 +39,5 @@ int main(void) {
     TEST(TwoSameSumSubset);
     TEST(PowerSumOfAllCombinations);
     TEST(MaxWeightedNonoverlappingIntervals);
+    TEST(MaxProfit);
 }
