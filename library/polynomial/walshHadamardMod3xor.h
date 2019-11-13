@@ -107,7 +107,7 @@ struct FWHTMod3Xor {
         return res;
     }
 
-    // C = SUM SUM A[i] * B[j] * x^((i+j) % 3)
+    // C = SUM SUM A[i] * B[j] * x^(i 3xor j)  ---  i and j are numbers in bases
     //      i   j
     // A = a list of count of numbers in base 3
     // B = a list of count of numbers in base 3
@@ -139,8 +139,8 @@ struct FWHTMod3Xor {
         return res;
     }
 
-    // C = SUM SUM (A[i] ^ k) * x^(i xor3 j)
-    //      i   j
+    // C = { A[0] + A[1] * x^1 + A[2] * x^3 + ... + A[n-1] * x^(n-1) } ^ k
+    //     A_square[i 3xor j] += A[i] * A[j] * x^(i 3xor j)
     // A = a list of count of numbers in base 3
     // O(N*log_3(N))
     template <typename U>
@@ -168,7 +168,7 @@ struct FWHTMod3Xor {
     }
 
 private:
-    // the size of P must be a power of 2
+    // the size of P must be a power of 3
     static void transform(vector<NumW3Mod<T,mod>>& P, bool inverse) {
         static NumW3Mod<T, mod> w(0, 1);
         static NumW3Mod<T, mod> w2(mod - 1, mod - 1);
