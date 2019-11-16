@@ -269,5 +269,11 @@
     <ClInclude Include="maxProfit.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="maxProfitFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maxProfitFast2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

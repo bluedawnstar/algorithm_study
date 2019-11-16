@@ -191,6 +191,8 @@
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />
     <ClInclude Include="maxProfit.h" />
+    <ClInclude Include="maxProfitFast.h" />
+    <ClInclude Include="maxProfitFast2.h" />
     <ClInclude Include="nonoverlappingIntervals.h" />
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
