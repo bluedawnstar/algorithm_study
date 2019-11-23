@@ -148,6 +148,7 @@
     <ClCompile Include="lcaTarjan.cpp" />
     <ClCompile Include="perfectTreeLevelSize.cpp" />
     <ClCompile Include="redBlackTreeLeftLeaning.cpp" />
+    <ClCompile Include="redBlackTreeRangeQuery.cpp" />
     <ClCompile Include="treeBlockTreeLevelUpdate.cpp" />
     <ClCompile Include="centroidDecomposition.cpp" />
     <ClCompile Include="lcaSchieberVishkin.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="lcaTarjan.h" />
     <ClInclude Include="perfectTreeLevelSize.h" />
     <ClInclude Include="redBlackTreeLeftLeaning.h" />
+    <ClInclude Include="redBlackTreeRangeQuery.h" />
     <ClInclude Include="subtreeQueryWithPersistentDataStructure.h" />
     <ClInclude Include="treeBlockTreeLevelUpdate.h" />
     <ClInclude Include="centroidDecomposition.h" />
