@@ -38,6 +38,6 @@ int main(void) {
     TEST(IntegerPartition);
     TEST(TwoSameSumSubset);
     TEST(PowerSumOfAllCombinations);
-    TEST(MaxWeightedNonoverlappingIntervals);
+    TEST(MaxNonoverlappingIntervals);
     TEST(MaxProfit);
 }

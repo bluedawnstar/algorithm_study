@@ -1,5 +1,28 @@
 #pragma once
 
+// https://leetcode.com/problems/non-overlapping-intervals/
+// intervals = { (startTime, endTime), ... }, O(NlogN)
+template <typename T>
+int maximumNonoverlappingIntervals(vector<pair<T,T>> intervals) {
+    int N = int(intervals.size());
+
+    sort(intervals.begin(), intervals.end(), [&](const pair<T,T>& a, const pair<T,T>& b) {
+        return (a.second != b.second) ? (a.second < b.second) : (a.first < b.first);
+    });
+
+    int res = 0;
+    T lastTime = numeric_limits<T>::min();
+    for (auto& x : intervals) {
+        if (lastTime <= x.first) {
+            res++;
+            lastTime = x.second;
+        }
+    }
+
+    return res;
+}
+
+// https://leetcode.com/problems/maximum-profit-in-job-scheduling/
 // intervals = { (startTime, endTime, weight), ... }, O(NlogN)
 template <typename T, typename U>
 U maximumWeightedNonoverlappingIntervals(vector<tuple<T,T,U>> intervals) {
