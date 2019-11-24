@@ -282,27 +282,17 @@ struct RBTreeRangeQuery {
         if (z == nullptr)
             return false;
 
-        Node *y, *x;
-
-        if ((z->left == nullptr) || (z->right == nullptr))
-            y = z;
-        else
-            y = z->next();
-
-        // find child with which to replace y
-        if (y->left != nullptr)
-            x = y->left;
-        else
-            x = y->right;
+        Node* y = ((z->left == nullptr) || (z->right == nullptr)) ? z : z->next();
+        Node* x = (y->left != nullptr) ? y->left : y->right;    // find child with which to replace y
 
         // splice child onto parent
         if (x != nullptr)
             x->parent = y->parent;
 
-        if (y->parent == nullptr)
+        if (y->parent == nullptr) {
             // if deleting node is root, then replace root with x
             root = x;
-        else {
+        } else {
             // splice in child node
             if (y == y->parent->left)
                 y->parent->left = x;
@@ -319,7 +309,6 @@ struct RBTreeRangeQuery {
         // adjust tree under red-black rules
         if (y != nullptr && y->color == rbcBlack)
             deleteFixup(x);
-
         destroyNode(y);
 
         return true;
@@ -338,46 +327,50 @@ struct RBTreeRangeQuery {
 
     // query in range [0, index]
     T queryPrefix(int index) const {
-        int n = index + 1;
-
-        if (n >= count && root != nullptr)
-            return root->rangeValue;
-
-        T res = defaultValue;
-
-        Node* p = root;
-        while (p != nullptr && n > 0) {
-            while (p->left != nullptr && p->left->cnt >= n)
-                p = p->left;
-            if (p->cnt <= n) {
-                res = mergeOp(res, p->rangeValue);
-                break;
-            }
-
-            if (p->left != nullptr) {
-                n -= p->left->cnt;
-                res = mergeOp(res, p->left->rangeValue);
-            }
-            if (n > 0) {
-                res = mergeOp(res, p->value);
-                n--;
-            }
-            p = p->right;
-        }
-
-        return res;
+        return queryPrefix(root, index + 1);
     }
 
     // query in range [index, N - 1]
     T querySuffix(int index) const {
-        //TODO: ...
-        return defaultValue;
+        return querySuffix(root, count - index);
     }
 
     // query in range [lef, right]
-    T query(int left, int right) const {
-        //TODO: ...
-        return defaultValue;
+    T query(int leftIndex, int rightIndex) const {
+        if (leftIndex <= 0 && count <= rightIndex + 1 && root != nullptr)
+            return root->rangeValue;
+
+        int nL = leftIndex + 1, nR = rightIndex + 1;
+
+        // find a LCA
+        Node* lca = root;
+        Node* p = root;
+        while (p != nullptr && nL > 0 && nR > 0) {
+            while (p->left != nullptr && p->left->cnt >= nR)
+                p = p->left;
+            lca = p;
+
+            int leftSize = (p->left ? p->left->cnt : 0) + 1;
+            if (nL <= leftSize)
+                break;
+            nL -= leftSize;
+            nR -= leftSize;
+            p = p->right;
+        }
+
+        T res = lca->value;
+        if (left == right)
+            return res;
+
+        // left subtree of the LCA
+        if (lca->left != nullptr)
+            res = mergeOp(res, querySuffix(lca->left, (lca->cnt - nL) - (lca->right ? lca->right->cnt : 0)));
+
+        // right subtree of the LCA
+        if (lca->right != nullptr)
+            res = mergeOp(res, queryPrefix(lca->right, nR - (lca->left ? lca->left->cnt : 0) - 1));
+
+        return res;
     }
 
 protected:
@@ -563,7 +556,6 @@ protected:
         x->color = rbcBlack;
     }
 
-
     void updateNodeToRoot(Node* node) {
         // update count
         while (node != nullptr) {
@@ -579,5 +571,69 @@ protected:
                                mergeOp(node->left ? node->left->rangeValue : defaultValue,
                                        node->right ? node->right->rangeValue : defaultValue));
         }
+    }
+
+    //---
+
+    T queryPrefix(Node* node, int cnt) const {
+        if (node == nullptr || cnt <= 0)
+            return defaultValue;
+        else if (cnt >= node->cnt)
+            return node->rangeValue;
+
+        T res = defaultValue;
+
+        Node* p = node;
+        while (p != nullptr && cnt > 0) {
+            while (p->left != nullptr && p->left->cnt >= cnt)
+                p = p->left;
+            if (p->cnt <= cnt) {
+                res = mergeOp(res, p->rangeValue);
+                break;
+            }
+
+            if (p->left != nullptr) {
+                cnt -= p->left->cnt;
+                res = mergeOp(res, p->left->rangeValue);
+            }
+            if (cnt > 0) {
+                res = mergeOp(res, p->value);
+                cnt--;
+            }
+            p = p->right;
+        }
+
+        return res;
+    }
+
+    T querySuffix(Node* node, int cnt) const {
+        if (node == nullptr || cnt <= 0)
+            return defaultValue;
+        else if (cnt >= node->cnt)
+            return node->rangeValue;
+
+        T res = defaultValue;
+
+        Node* p = node;
+        while (p != nullptr && cnt > 0) {
+            while (p->right != nullptr && p->right->cnt >= cnt)
+                p = p->right;
+            if (p->cnt <= cnt) {
+                res = mergeOp(res, p->rangeValue);
+                break;
+            }
+
+            if (p->right != nullptr) {
+                cnt -= p->right->cnt;
+                res = mergeOp(res, p->right->rangeValue);
+            }
+            if (cnt > 0) {
+                res = mergeOp(res, p->value);
+                cnt--;
+            }
+            p = p->left;
+        }
+
+        return res;
     }
 };

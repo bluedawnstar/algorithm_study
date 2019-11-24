@@ -19,10 +19,47 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testRBTreePrefixQuery() {
+void testRBTreeRangeQuery() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Simple Red-Black Tree with Prefix Query -------------------------" << endl;
+    cout << "--- Simple Red-Black Tree with Range Query -------------------------" << endl;
+    {
+        RBTreeRangeQuery<int> tree([](int a, int b) { return a + b; }, 0);
+
+        int N = 5;
+        vector<int> v{ 1, 2, 3, 4, 5 };
+
+        for (int i = 0; i < N; i++)
+            tree.insert(v[i]);
+
+        for (int i = 0; i < N; i++) {
+            int gt = accumulate(v.begin(), v.begin() + i + 1, 0);
+            int ans = tree.queryPrefix(i);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+
+        for (int i = 0; i < N; i++) {
+            int gt = accumulate(v.begin() + i, v.end(), 0);
+            int ans = tree.querySuffix(i);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = i; j < N; j++) {
+                int gt = accumulate(v.begin() + i, v.begin() + j + 1, 0);
+                int ans = tree.query(i, j);
+                if (gt != ans) {
+                    cout << "Mismatched : " << ans << ", " << gt << endl;
+                    ans = tree.query(i, j);
+                }
+                assert(ans == gt);
+            }
+        }
+    }
     {
         RBTreeRangeQuery<int> tree([](int a, int b) { return a + b; }, 0);
 
@@ -41,6 +78,24 @@ void testRBTreePrefixQuery() {
             if (gt != ans)
                 cout << "Mismatched : " << ans << ", " << gt << endl;
             assert(ans == gt);
+        }
+
+        for (int i = 0; i < N; i++) {
+            int gt = accumulate(v.begin() + i, v.end(), 0);
+            int ans = tree.querySuffix(i);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = i; j < N; j++) {
+                int gt = accumulate(v.begin() + i, v.begin() + j + 1, 0);
+                int ans = tree.query(i, j);
+                if (gt != ans)
+                    cout << "Mismatched : " << ans << ", " << gt << endl;
+                assert(ans == gt);
+            }
         }
     }
     cout << "OK!" << endl;

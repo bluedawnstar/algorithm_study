@@ -21,7 +21,7 @@ int main(void) {
     TEST(BST);
     TEST(RedBlackTree);
     TEST(RBTreeSimple);
-    TEST(RBTreePrefixQuery);
+    TEST(RBTreeRangeQuery);
     TEST(RedBlackTreeLeftLeaning);
     TEST(AVLTree);
     TEST(ScapegoatTree);
