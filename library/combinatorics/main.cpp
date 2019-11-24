@@ -13,4 +13,6 @@ int main(void) {
     TEST(DeBruijnSequence);
     TEST(StirlingNumber);
     TEST(PruferCode);
+    TEST(KirchhoffTheorem);
+    TEST(Catalan);
 }

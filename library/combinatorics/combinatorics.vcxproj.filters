@@ -39,6 +39,12 @@
     <ClCompile Include="pruferCode.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="kirchhoffTheorem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="catalanNumber.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -74,7 +80,13 @@
     <ClInclude Include="pruferCode.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Cayley.h">
+    <ClInclude Include="catalanNumber.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="cayleyFormula.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="kirchhoffTheorem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
