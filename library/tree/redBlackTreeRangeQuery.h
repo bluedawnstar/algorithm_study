@@ -335,17 +335,15 @@ struct RBTreeRangeQuery {
         return querySuffix(root, count - index);
     }
 
-    // query in range [lef, right]
+    // query in range [lefIndex, rightIndex], 0 <= leftIndex, rightIndex < N
     T query(int leftIndex, int rightIndex) const {
         if (leftIndex <= 0 && count <= rightIndex + 1 && root != nullptr)
             return root->rangeValue;
 
         int nL = leftIndex + 1, nR = rightIndex + 1;
 
-        // find a LCA
         Node* lca = root;
-        Node* p = root;
-        while (p != nullptr && nL > 0 && nR > 0) {
+        for (Node* p = root; p != nullptr && nL > 0 && nR > 0; p = p->right) {
             while (p->left != nullptr && p->left->cnt >= nR)
                 p = p->left;
             lca = p;
@@ -355,20 +353,41 @@ struct RBTreeRangeQuery {
                 break;
             nL -= leftSize;
             nR -= leftSize;
-            p = p->right;
         }
 
         T res = lca->value;
         if (left == right)
             return res;
 
-        // left subtree of the LCA
         if (lca->left != nullptr)
             res = mergeOp(res, querySuffix(lca->left, (lca->cnt - nL) - (lca->right ? lca->right->cnt : 0)));
 
-        // right subtree of the LCA
         if (lca->right != nullptr)
             res = mergeOp(res, queryPrefix(lca->right, nR - (lca->left ? lca->left->cnt : 0) - 1));
+
+        return res;
+    }
+
+    // query in range [low value, high value]
+    T queryWithValue(int leftValue, int rightValue) const {
+        Node* lca = root;
+        while (lca != nullptr) {
+            if (rightValue < lca->value)
+                lca = lca->left;
+            else if (leftValue > lca->value)
+                lca = lca->right;
+            else
+                break;
+        }
+        if (lca == nullptr)
+            return defaultValue;
+
+        T res = lca->value;
+        if (lca->left != nullptr)
+            res = mergeOp(res, queryGreaterThanEqual(lca->left, leftValue));
+
+        if (lca->right != nullptr)
+            res = mergeOp(res, queryLessThanEqual(lca->right, rightValue));
 
         return res;
     }
@@ -632,6 +651,49 @@ protected:
                 cnt--;
             }
             p = p->left;
+        }
+
+        return res;
+    }
+
+
+    T queryLessThanEqual(Node* node, T x) const {
+        if (node == nullptr)
+            return defaultValue;
+
+        T res = defaultValue;
+
+        Node* p = node;
+        while (p != nullptr) {
+            if (p->value <= x) {
+                res = mergeOp(res, p->value);
+                if (p->left)
+                    res = mergeOp(res, p->left->rangeValue);
+                p = p->right;
+            } else {
+                p = p->left;
+            }
+        }
+
+        return res;
+    }
+
+    T queryGreaterThanEqual(Node* node, T x) const {
+        if (node == nullptr)
+            return defaultValue;
+
+        T res = defaultValue;
+
+        Node* p = node;
+        while (p != nullptr) {
+            if (x <= p->value) {
+                res = mergeOp(res, p->value);
+                if (p->right)
+                    res = mergeOp(res, p->right->rangeValue);
+                p = p->left;
+            } else {
+                p = p->right;
+            }
         }
 
         return res;

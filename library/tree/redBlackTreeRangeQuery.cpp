@@ -32,6 +32,7 @@ void testRBTreeRangeQuery() {
         for (int i = 0; i < N; i++)
             tree.insert(v[i]);
 
+        // prefix query with indexes
         for (int i = 0; i < N; i++) {
             int gt = accumulate(v.begin(), v.begin() + i + 1, 0);
             int ans = tree.queryPrefix(i);
@@ -40,6 +41,7 @@ void testRBTreeRangeQuery() {
             assert(ans == gt);
         }
 
+        // suffix query with indexes
         for (int i = 0; i < N; i++) {
             int gt = accumulate(v.begin() + i, v.end(), 0);
             int ans = tree.querySuffix(i);
@@ -48,6 +50,7 @@ void testRBTreeRangeQuery() {
             assert(ans == gt);
         }
 
+        // range query with indexes
         for (int i = 0; i < N; i++) {
             for (int j = i; j < N; j++) {
                 int gt = accumulate(v.begin() + i, v.begin() + j + 1, 0);
@@ -56,6 +59,30 @@ void testRBTreeRangeQuery() {
                     cout << "Mismatched : " << ans << ", " << gt << endl;
                     ans = tree.query(i, j);
                 }
+                assert(ans == gt);
+            }
+        }
+
+        // range query with value
+        {
+            int gt = accumulate(v.begin(), v.end(), 0);
+            int ans = tree.queryWithValue(-1, 10001);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+        for (int i = 0; i < N; i++) {
+            if (i > 0 && v[i] == v[i - 1])
+                continue;
+
+            for (int j = i; j < N; j++) {
+                if (j + 1 < N && v[j] == v[j + 1])
+                    continue;
+
+                int gt = accumulate(v.begin() + i, v.begin() + j + 1, 0);
+                int ans = tree.queryWithValue(v[i], v[j]);
+                if (gt != ans)
+                    cout << "Mismatched : " << ans << ", " << gt << endl;
                 assert(ans == gt);
             }
         }
@@ -72,6 +99,7 @@ void testRBTreeRangeQuery() {
         for (int i = 0; i < N; i++)
             tree.insert(v[i]);
 
+        // prefix query with indexes
         for (int i = 0; i < N; i++) {
             int gt = accumulate(v.begin(), v.begin() + i + 1, 0);
             int ans = tree.queryPrefix(i);
@@ -80,6 +108,7 @@ void testRBTreeRangeQuery() {
             assert(ans == gt);
         }
 
+        // suffix query with indexes
         for (int i = 0; i < N; i++) {
             int gt = accumulate(v.begin() + i, v.end(), 0);
             int ans = tree.querySuffix(i);
@@ -88,10 +117,35 @@ void testRBTreeRangeQuery() {
             assert(ans == gt);
         }
 
+        // range query with indexes
         for (int i = 0; i < N; i++) {
             for (int j = i; j < N; j++) {
                 int gt = accumulate(v.begin() + i, v.begin() + j + 1, 0);
                 int ans = tree.query(i, j);
+                if (gt != ans)
+                    cout << "Mismatched : " << ans << ", " << gt << endl;
+                assert(ans == gt);
+            }
+        }
+
+        // range query with value
+        {
+            int gt = accumulate(v.begin(), v.end(), 0);
+            int ans = tree.queryWithValue(-1, 10001);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+        for (int i = 0; i < N; i++) {
+            if (i > 0 && v[i] == v[i - 1])
+                continue;
+
+            for (int j = i; j < N; j++) {
+                if (j + 1 < N && v[j] == v[j + 1])
+                    continue;
+
+                int gt = accumulate(v.begin() + i, v.begin() + j + 1, 0);
+                int ans = tree.queryWithValue(v[i], v[j]);
                 if (gt != ans)
                     cout << "Mismatched : " << ans << ", " << gt << endl;
                 assert(ans == gt);
