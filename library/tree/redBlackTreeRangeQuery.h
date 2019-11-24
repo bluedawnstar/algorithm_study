@@ -368,6 +368,15 @@ struct RBTreeRangeQuery {
         return res;
     }
 
+
+    T queryPrefixWithValue(int value) const {
+        return queryLessThanEqual(root, value);
+    }
+
+    T querySuffixWithValue(int value) const {
+        return queryGreaterThanEqual(root, value);
+    }
+
     // query in range [low value, high value]
     T queryWithValue(int leftValue, int rightValue) const {
         Node* lca = root;

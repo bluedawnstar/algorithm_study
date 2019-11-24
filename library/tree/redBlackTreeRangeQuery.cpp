@@ -74,6 +74,25 @@ void testRBTreeRangeQuery() {
         for (int i = 0; i < N; i++) {
             if (i > 0 && v[i] == v[i - 1])
                 continue;
+            int gt = accumulate(v.begin() + i, v.end(), 0);
+            int ans = tree.querySuffixWithValue(v[i]);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+        for (int j = 0; j < N; j++) {
+            if (j + 1 < N && v[j] == v[j + 1])
+                continue;
+
+            int gt = accumulate(v.begin(), v.begin() + j + 1, 0);
+            int ans = tree.queryPrefixWithValue(v[j]);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+        for (int i = 0; i < N; i++) {
+            if (i > 0 && v[i] == v[i - 1])
+                continue;
 
             for (int j = i; j < N; j++) {
                 if (j + 1 < N && v[j] == v[j + 1])
@@ -132,6 +151,25 @@ void testRBTreeRangeQuery() {
         {
             int gt = accumulate(v.begin(), v.end(), 0);
             int ans = tree.queryWithValue(-1, 10001);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+        for (int i = 0; i < N; i++) {
+            if (i > 0 && v[i] == v[i - 1])
+                continue;
+            int gt = accumulate(v.begin() + i, v.end(), 0);
+            int ans = tree.querySuffixWithValue(v[i]);
+            if (gt != ans)
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            assert(ans == gt);
+        }
+        for (int j = 0; j < N; j++) {
+            if (j + 1 < N && v[j] == v[j + 1])
+                continue;
+
+            int gt = accumulate(v.begin(), v.begin() + j + 1, 0);
+            int ans = tree.queryPrefixWithValue(v[j]);
             if (gt != ans)
                 cout << "Mismatched : " << ans << ", " << gt << endl;
             assert(ans == gt);
