@@ -99,10 +99,32 @@ https://en.wikipedia.org/wiki/Catalan_number
 
 */
 
+template <typename T>
+struct Catalan {
+    vector<T> C;
+
+    // O(N^2)
+    void build(int N) {
+        C.resize(N + 1);
+
+        C[0] = C[1] = 1;
+        for (int i = 2; i <= N; i++) {
+            C[i] = 0;
+            for (int j = 0; j < i; j++)
+                C[i] += C[j] * C[i - j - 1];
+        }
+    }
+
+    T operator [](int n) const {
+        return C[n];
+    }
+};
+
 template <typename T, T mod = 1000000007>
 struct CatalanMod {
     vector<T> C;
 
+    // O(N^2)
     void build(int N) {
         C.resize(N + 1);
 
@@ -111,10 +133,11 @@ struct CatalanMod {
             C[i] = 0;
             for (int j = 0; j < i; j++)
                 C[i] += T(1ll * C[j] * C[i - j - 1] % mod);
+            C[i] %= mod;
         }
     }
 
-    T operator ()(int n) const {
+    T operator [](int n) const {
         return C[n];
     }
 };
