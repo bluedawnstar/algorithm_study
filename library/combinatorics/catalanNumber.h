@@ -122,7 +122,7 @@ struct Catalan {
 
 template <typename T, T mod = 1000000007>
 struct CatalanMod {
-    vector<T> C;
+    vector<long long> C;
 
     // O(N^2)
     void build(int N) {
@@ -132,12 +132,12 @@ struct CatalanMod {
         for (int i = 2; i <= N; i++) {
             C[i] = 0;
             for (int j = 0; j < i; j++)
-                C[i] += T(1ll * C[j] * C[i - j - 1] % mod);
+                C[i] += 1ll * C[j] * C[i - j - 1] % mod;
             C[i] %= mod;
         }
     }
 
     T operator [](int n) const {
-        return C[n];
+        return T(C[n]);
     }
 };
