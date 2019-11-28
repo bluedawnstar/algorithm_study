@@ -86,8 +86,9 @@ https://en.wikipedia.org/wiki/Catalan_number
              i=0
 
 2. Generating function
-
-
+                                                     inf
+      1/x * g(x) = 1/(2x) * { 1 - (1 - 4x)^(1/2) } = SUM C(n) * x^n
+                                                     n=0
 
 3. Applications
    1) the number of Dyck words of length 2*n
