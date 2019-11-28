@@ -56,20 +56,40 @@ https://en.wikipedia.org/wiki/Catalan_number
 
 1. Basic formula
    1)
-      C(n) = comb(2n, n) / (n + 1)
+             comb(2n, n)
+      C(n) = -----------                   , n >= 0
+               (n + 1)
+
+                 (2n)!
+           = -------------
+             (n + 1)! * n!
+
+             (n + n) * (n + n - 1) * (n + n - 2) * ... * (n + 2)
+           = ---------------------------------------------------
+                n    *   (n - 1)   *   (n - 2)   * ... *    2
 
       C(n) = comb(2n, n) - comb(2n, n + 1)
-           = comb(2n, n) / (n + 1)
+           = comb(2n, n) - comb(2n, n - 1)
+             comb(2n, n)
+           = -----------                   , n >= 0
+               (n + 1)
+
+              2(2n - 1)
+      C(n) = ----------- C(n - 1)          , C(0) = 1
+                n + 1
 
    2) 
       C(0) = 1
 
              n-1
-      C(n) = SUM C(i) * C(n - 1 - i)      , n >= 1
+      C(n) = SUM C(i) * C(n - 1 - i)       , n >= 1
              i=0
 
+2. Generating function
 
-2. Applications
+
+
+3. Applications
    1) the number of Dyck words of length 2*n
         XXXYYY   |   XYXXYY   |   XYXYXY   |   XXYYXY   |   XXYXYY
 
@@ -89,12 +109,39 @@ https://en.wikipedia.org/wiki/Catalan_number
      x   x          x   x                   x   x          x   x
 
    5) the number of non-isomorphic ordered trees with n + 1 vertices
+
    6) the number of monotonic lattice paths along the edges of a grid with n ¡¿ n square cells
-   7) The number of triangles formed is n and the number of different ways that this can be achieved
-   8) the number of permutations with no n-term increasing subsequence
+       +******     +****-+     +****-+     +**-+-+     +**-+-+
+       |\| | *     |\| * |     |\| * |     |\* | |     |\* | |
+       +-+-+-*     +-+-***     +-+-*-+     +-*****     +-***-+
+       | |\| *     | |\| *     | |\* |     | |\| *     | |\* |
+       +-+-+-*     +-+-+-*     +-+-***     +-+-+-*     +-+-***
+       | | |\*     | | |\*     | | |\*     | | |\*     | | |\*
+       +-+-+-+     +-+-+-+     +-+-+-+     +-+-+-+     +-+-+-+
+
+   7) The number of triangulations of a convex polygon with n + 2 sides
+
+   8) The number of ways to connect the 2n points on a circle to form n disjoint chords.
+
+   9) Number of permutations of length n that can be stack sorted
+      (ex: it can be shown that the rearrangement is stack sorted
+           if and only if there is no such index i < j < k, such that a[k] < a[i] < a[j])
+
+   10) the number of permutations with no n-term increasing subsequence
        132  |  213  |  231  |  312  |  321
-   9) the number of ways to tile a stairstep shape of height n with n rectangles
-   10) the number of ways that the vertices of a convex 2n-gon can be paired
+
+   11) the number of ways to tile a stairstep shape of height n with n rectangles
+       111     111     123     122     112
+       22      23      12      13      11
+       3       2       1       1       3
+
+   12) the number of ways to form a "mountain range" with n upstrokes and n downstrokes
+       that all stay above a horizontal line
+                                             /\
+                   /\     /\       /\/\     /  \
+       /\/\/\ , /\/  \ , /  \/\ , /    \ , /    \
+
+   12) the number of ways that the vertices of a convex 2n-gon can be paired
        so that the line segments joining paired vertices do not intersect
 
 */
@@ -122,7 +169,7 @@ struct Catalan {
 
 template <typename T, T mod = 1000000007>
 struct CatalanMod {
-    vector<long long> C;
+    vector<T> C;
 
     // O(N^2)
     void build(int N) {
@@ -130,10 +177,26 @@ struct CatalanMod {
 
         C[0] = C[1] = 1;
         for (int i = 2; i <= N; i++) {
-            C[i] = 0;
+            long long catalan = 0;
             for (int j = 0; j < i; j++)
-                C[i] += 1ll * C[j] * C[i - j - 1] % mod;
-            C[i] %= mod;
+                catalan += 1ll * C[j] * C[i - j - 1] % mod;
+            C[i] = T(catalan % mod);
+        }
+    }
+
+    // O(N)
+    void buildFast(int N) {
+        C.resize(N + 1);
+
+        vector<T> inv(N + 2);
+        inv[0] = 0;
+        inv[1] = 1;
+        inv[2] = T((mod - 1ll * (mod / 2) * inv[mod % 2] % mod) % mod);
+
+        C[0] = C[1] = 1;
+        for (int i = 2; i <= N; i++) {
+            inv[i + 1] = int((mod - 1ll * (mod / (i + 1)) * inv[mod % (i + 1)] % mod) % mod);
+            C[i] = T(2ll * (2ll * i - 1) * inv[i + 1] % mod * C[i - 1] % mod);
         }
     }
 
