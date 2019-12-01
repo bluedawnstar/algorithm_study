@@ -2,9 +2,9 @@
 
 // the number of combinations:
 //      gcd(a,b,c,d,...) = 1, 1 <= a < b < c < d < ... <= N
+template <int mod = 1000000007>
 struct Gcd1CombCounter {
     int maxN;
-    int mod;
     int K;
     vector<int> values;         // values[i] is the number of combinations in gcd(a,b,c,...) = 1, 1 <= a < b < c < ... <= i
 
@@ -17,15 +17,14 @@ struct Gcd1CombCounter {
     Gcd1CombCounter() {
     }
 
-    Gcd1CombCounter(int maxN, int K, int mod) {
-        build(maxN, K, mod);
+    Gcd1CombCounter(int maxN, int K) {
+        build(maxN, K);
     }
 
     // for gcd(x[0],x[1],x[2],...,x[k-1]) = 1,  1 <= x[0] < x[1] < x[2] < ... < x[k - 1] <= N
     // O(N*logN)?
-    void build(int maxN, int K, int mod) {
+    void build(int maxN, int K) {
         this->maxN = maxN;
-        this->mod = mod;
         this->K = K;
 
         buildFactorial();
@@ -55,6 +54,8 @@ struct Gcd1CombCounter {
         }
     }
 
+    // the number of combinations where gcd(x[0],x[1],x[2],...,x[k-1]) = 1,
+    //   1 <= x[0] < x[1] < x[2] < ... < x[k - 1] <= n
     int count(int n) const {
         return values[n];
     }

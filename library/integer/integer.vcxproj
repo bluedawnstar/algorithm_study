@@ -187,6 +187,7 @@
     <ClInclude Include="garnerAlgorithm.h" />
     <ClInclude Include="gcd.h" />
     <ClInclude Include="gcdAlgo.h" />
+    <ClInclude Include="gcdAlgo2.h" />
     <ClInclude Include="grayCode.h" />
     <ClInclude Include="intMod.h" />
     <ClInclude Include="factorialMod.h" />

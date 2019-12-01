@@ -106,7 +106,7 @@ static long long calcGcdSumOfAllPairsMod(int n) {
 }
 
 void testEulerTheorem() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Euler Theorem -----------------------" << endl;
     {

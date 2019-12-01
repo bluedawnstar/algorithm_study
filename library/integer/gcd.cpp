@@ -8,6 +8,7 @@ using namespace std;
 #include "factor.h"
 #include "gcd.h"
 #include "gcdAlgo.h"
+#include "gcdAlgo2.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -22,23 +23,54 @@ using namespace std;
 
 // https://www.hackerearth.com/challenges/competitive/june-circuits-19/algorithm/calculate-gcd-june-circuit-e5e41856/
 struct GcdCombSolver {
-    Gcd1CombCounter gcd1;
+    Gcd1CombCounter<MOD> gcd1;
 
     void build(int maxN) {
-        gcd1.build(maxN, 4, MOD);
+        gcd1.build(maxN, 4);
     }
 
-    // SUM  SUM   SUM   SUM  gcd(i,j,k,l)^4
-    // i=1 j=i+1 k=j+1 l=k+1
+    /*
+        N    N     N     N
+       SUM  SUM   SUM   SUM  gcd(i,j,k,l)^4
+       i=1 j=i+1 k=j+1 l=k+1
+    */ 
     // O(N)
     int solve(int N) const {
         long long res = 0;
-        for (int i = 1; i <= N - 3; i++) {
-            long long xx = 1ll * i * i % MOD;
-            long long xxxx = 1ll * xx * xx % MOD;
-            res = (res + (xxxx - 1) * gcd1.count(N / i) % MOD) % MOD; // subtract the number of gcd(a,b,c,d) != 1
+        for (int g = 1; g <= N - 3; g++) {
+            long long gg = 1ll * g * g % MOD;
+            long long gggg = 1ll * gg * gg % MOD;
+            res = (res + (gggg - 1) * gcd1.count(N / g) % MOD) % MOD; // subtract the number of gcd(a,b,c,d) != 1
         }
         res = (res + gcd1.comb(N, 4)) % MOD;    // all gcd(a,b,c,d) = 1
+
+        return int(res);
+    }
+};
+
+// https://www.hackerearth.com/challenges/competitive/june-circuits-19/algorithm/calculate-gcd-june-circuit-e5e41856/editorial/
+struct GcdCombSolver2 {
+    GcdCombCounter<MOD> gcd;
+
+    void build(int maxN) {
+        gcd.prepare(maxN);
+    }
+
+    /*
+        N    N     N     N
+       SUM  SUM   SUM   SUM  gcd(i,j,k,l)^4
+       i=1 j=i+1 k=j+1 l=k+1
+    */
+    // O(N*logN)
+    int solve(int N) {
+        gcd.build(N, 4);
+
+        long long res = 0;
+        for (int g = 1; g <= N - 3; g++) {
+            long long gg = 1ll * g * g % MOD;
+            long long gggg = 1ll * gg * gg % MOD;
+            res = (res + gggg * gcd.count(g) % MOD) % MOD;  // where gcd(a,b,c,d) = g
+        }
 
         return int(res);
     }
@@ -111,6 +143,9 @@ void testGcd() {
         GcdCombSolver solver;
         solver.build(20);
 
+        GcdCombSolver2 solver2;
+        solver2.build(20);
+
         vector<int> gt{
             0,
             0,
@@ -136,9 +171,11 @@ void testGcd() {
 
         for (int i = 1; i <= 20; i++) {
             int ans = solver.solve(i);
-            if (ans != gt[i - 1])
-                cout << "Mismatched at " << i << ": " << ans << ", " << gt[i] << endl;
+            int ans2 = solver2.solve(i);
+            if (ans != gt[i - 1] || ans2 != gt[i - 1])
+                cout << "Mismatched at " << i << ": " << ans << ", " << ans2 << ", " << gt[i] << endl;
             assert(solver.solve(i) == gt[i - 1]);
+            assert(solver2.solve(i) == gt[i - 1]);
         }
     }
 
