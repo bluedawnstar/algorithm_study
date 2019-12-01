@@ -28,13 +28,33 @@
         d|n
 
          n
-    4)  SUM k  =  1/2 * n * phi(n)
+    4)  SUM k  =  1/2 * n * phi(n),     n > 1
         k=1
       gcd(k,n)=1
 
       --- prove ---
 
-      TODO: ...
+       case 1) n = 2
+               2
+              SUM k = 1 = 1/2 * 2 * phi(2)
+              k=1
+            gcd(k,2)=1
+
+       case 2) n > 2
+
+          If p (1 <= p <= n) is gcd(p, n) = 1, then gcd(n - p, n) = 1
+
+          Therefore 
+
+               n
+              SUM k = n * { phi(n) / 2 } = 1/2 * n * phi(n)
+              k=1
+            gcd(k,n)=1
+
+        2n
+    5)  SUM k  =  2 * n * phi(n),     n > 1
+        k=1
+      gcd(k,n)=1
 
 
  1-1. Pillai's arithmetical function (OEIS A018804)

@@ -182,5 +182,8 @@
     <ClInclude Include="eulerTheorem-gcdOfAllPairs.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="eulerTheorem-PillaiArithmeticalFunction.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

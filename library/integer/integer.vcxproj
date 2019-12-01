@@ -179,6 +179,7 @@
     <ClInclude Include="discreteRoot.h" />
     <ClInclude Include="eulerTheorem-coprimePairs.h" />
     <ClInclude Include="eulerTheorem-gcdOfAllPairs.h" />
+    <ClInclude Include="eulerTheorem-PillaiArithmeticalFunction.h" />
     <ClInclude Include="eulerTheorem.h" />
     <ClInclude Include="eulerTheoremEx.h" />
     <ClInclude Include="factor.h" />
