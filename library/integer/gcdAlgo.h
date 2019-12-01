@@ -55,7 +55,7 @@ struct Gcd1CombCounter {
         }
     }
 
-    int get(int n) const {
+    int count(int n) const {
         return values[n];
     }
 

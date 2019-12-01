@@ -36,7 +36,7 @@ struct GcdCombSolver {
         for (int i = 1; i <= N - 3; i++) {
             long long xx = 1ll * i * i % MOD;
             long long xxxx = 1ll * xx * xx % MOD;
-            res = (res + (xxxx - 1) * gcd1.get(N / i) % MOD) % MOD; // subtract the number of gcd(a,b,c,d) != 1
+            res = (res + (xxxx - 1) * gcd1.count(N / i) % MOD) % MOD; // subtract the number of gcd(a,b,c,d) != 1
         }
         res = (res + gcd1.comb(N, 4)) % MOD;    // all gcd(a,b,c,d) = 1
 
