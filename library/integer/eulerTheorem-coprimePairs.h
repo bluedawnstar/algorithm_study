@@ -39,7 +39,7 @@ struct CoprimePairMultSum {
     }
 
     // O(1)
-    long long sum(int n) {
+    long long sum(int n) const {
         return dp[n];
     }
 };
@@ -72,13 +72,14 @@ struct CoprimePairMultSumMod {
     }
 
     // O(1)
-    T sum(int n) {
+    T sum(int n) const {
         return dp[n];
     }
 };
 
 
 // 2) Special multiplication-sum of all pairs in [1, n]
+// 
 //     n   n
 //    SUM SUM i/gcd(i,j) * j/gcd(i,j)
 //    i=1 j=1
@@ -131,7 +132,7 @@ struct CoprimeMultSumOfAllPairs {
     }
 
     // O(n)
-    long long sum(int n) {
+    long long sum(int n) const {
         long long res = 0;
         for (int i = 1; i <= n; i++)
             res += dp[n / i];
@@ -167,7 +168,7 @@ struct CoprimeMultSumOfAllPairsMod {
     }
 
     // O(n)
-    T sum(int n) {
+    T sum(int n) const {
         T res = 0;
         for (int i = 1; i <= n; i++)
             res = (res + dp[n / i]) % mod;

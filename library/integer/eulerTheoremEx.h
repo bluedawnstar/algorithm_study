@@ -32,6 +32,10 @@
         k=1
       gcd(k,n)=1
 
+      --- prove ---
+
+      TODO: ...
+
 
  1-1. Pillai's arithmetical function (OEIS A018804)
             1    2    3    4    5    6    7    8    9   10

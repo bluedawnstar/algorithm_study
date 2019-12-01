@@ -9,6 +9,7 @@ using namespace std;
 #include "eulerTheorem.h"
 #include "eulerTheoremEx.h"
 #include "eulerTheorem-coprimePairs.h"
+#include "eulerTheorem-gcdOfAllPairs.h"
 
 #include "primeFactor.h"
 #include "primeNumberBasic.h"
@@ -32,6 +33,7 @@ static long long phiSum(int n) {
         res += phi(i);
     return res;
 }
+
 
 static int gcd(int p, int q) {
     return q == 0 ? p : gcd(q, p % q);
@@ -59,6 +61,7 @@ static long long calcCoprimePairMultSumMod(int n) {
     return res;
 }
 
+
 static long long calcCoprimeMultSumOfAllPairs(int n) {
     long long res = 0;
     for (int i = 1; i <= n; i++) {
@@ -79,6 +82,27 @@ static long long calcCoprimeMultSumOfAllPairsMod(int n) {
         }
     }
     return res;
+}
+
+
+static long long calcGcdSumOfAllPairs(int n) {
+    long long res = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            res += gcd(i, j);
+        }
+    }
+    return res;
+}
+
+static long long calcGcdSumOfAllPairsMod(int n) {
+    long long res = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            res += gcd(i, j);
+        }
+    }
+    return res % MOD;
 }
 
 void testEulerTheorem() {
@@ -189,6 +213,41 @@ void testEulerTheorem() {
         for (int i = 1; i <= N; i++) {
             auto ans = sum.sum(i);
             auto gt = calcCoprimeMultSumOfAllPairsMod(i);
+            if (ans != gt) {
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+    }
+    //-- GCD-sum of all pairs 
+    {
+        int N = 1000;
+#ifdef _DEBUG
+        N = 100;
+#endif
+        GcdSumOfAllPairs sum;
+        sum.build(N);
+
+        for (int i = 1; i <= N; i++) {
+            auto ans = sum.sum(i);
+            auto gt = calcGcdSumOfAllPairs(i);
+            if (ans != gt) {
+                cout << "Mismatched : " << ans << ", " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+    }
+    {
+        int N = 1000;
+#ifdef _DEBUG
+        N = 100;
+#endif
+        GcdSumOfAllPairsMod<int> sum;
+        sum.build(N);
+
+        for (int i = 1; i <= N; i++) {
+            auto ans = sum.sum(i);
+            auto gt = calcGcdSumOfAllPairsMod(i);
             if (ans != gt) {
                 cout << "Mismatched : " << ans << ", " << gt << endl;
             }
