@@ -6,10 +6,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mobius Inversion Formula
 /*
-    g(n) =  sum{f(d)}
-             d|n
-    f(n) =  sum{g(d) * mu(n/d)}
-             d|n
+    g(n) =  SUM{f(d)}
+            d|n
+
+    f(n) =  SUM{g(d) * mu(n/d)}
+            d|n
 
     d is n's factors, including 1
 */

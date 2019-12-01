@@ -24,8 +24,39 @@
     2) phi(n) = SUM mu(d)*(n/d)
                 d|n
 
-    3) SUM phi(d) = n
-       d|n
+    3)  SUM phi(d) = n
+        d|n
+
+         n
+    4)  SUM k  =  1/2 * n * phi(n)
+        k=1
+      gcd(k,n)=1
+
+
+ 1-1. Pillai's arithmetical function (OEIS A018804)
+            1    2    3    4    5    6    7    8    9   10
+        ----------------------------------------------------
+    P = {   1,   3,   5,   8,   9,  15,  13,  20,  21,  27,
+           21,  40,  25,  39,  45,  48,  33,  63,  37,  72,
+           65,  63,  45, 100,  65,  75,  81, 104,  57, 135,
+           61, 112, 105,  99, 117, 168,  73, 111, 125, 180,
+           81, 195,  85, 168, 189, 135,  93, 240, 133, 195,
+          165, 200, 105, 243, 189, 260, 185, 171, 117, 360 }
+
+            n
+    P(n) = SUM gcd(k, n)
+           k=1
+
+                 n
+         = SUM  SUM d
+           d|n  k=1
+              gcd(k,n)=d
+
+         = SUM d * phi(n / d)           , d is a divisor of n
+           d|n
+
+         = SUM d * D(d) * mu(n / d)     , D(n) is the number of divisors
+           d|n
 
 
 2. extended formula
