@@ -40,4 +40,5 @@ int main(void) {
     TEST(PowerSumOfAllCombinations);
     TEST(MaxNonoverlappingIntervals);
     TEST(MaxProfit);
+    TEST(PalindromicPartitioning);
 }
