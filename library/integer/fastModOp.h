@@ -1,8 +1,8 @@
 #pragma once
 
+template <int mod = 1000000007>
 struct FastModOp {
     int N;
-    int mod;                    // prime number
     vector<int> factorial;      // factorial
     vector<int> factInverse;    // inverse factorial
     vector<int> inverse;
@@ -10,14 +10,13 @@ struct FastModOp {
     FastModOp() {
     }
 
-    FastModOp(int maxN, int mod) {
-        build(maxN, mod);
+    explicit FastModOp(int maxN) {
+        build(maxN);
     }
 
     // O(N)
-    void build(int maxN, int mod) {
+    void build(int maxN) {
         N = max(1, maxN);
-        this->mod = mod;
 
         factorial.resize(maxN + 1);
         factInverse.resize(maxN + 1);
@@ -91,7 +90,7 @@ struct FastModOp {
     //---
 
     // O(logn), mod must be a prime number
-    static int modPow(long long x, int n, int mod) {
+    static int modPow(long long x, int n) {
         if (n == 0)
             return 1;
 
@@ -106,7 +105,7 @@ struct FastModOp {
     }
 
     // O(logn), mod must be a prime number
-    static int modInv(long long a, int mod) {
-        return modPow(a, mod - 2, mod);
+    static int modInv(long long a) {
+        return modPow(a, mod - 2);
     }
 };

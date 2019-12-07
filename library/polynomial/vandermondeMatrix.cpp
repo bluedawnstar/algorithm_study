@@ -28,7 +28,7 @@ static vector<int> solver(vector<int> A, int N, int M, int K) {
     reverse(A.begin(), A.end());
     vector<int> C(N);
 
-    FastModOp op(N + K, MOD);
+    FastModOp<MOD> op(N + K);
     for (int i = 0; i < N; i++)
         C[i] = op.comb(K + i - 1, i); // H(K + i - 1, i)
 
@@ -39,7 +39,7 @@ static vector<int> solver2(vector<int> A, int N, int M, int K) {
     reverse(A.begin(), A.end());
     vector<int> C(N);
 
-    FastModOp op(N + K, MOD);
+    FastModOp<MOD> op(N + K);
     for (int i = 0; i < N; i++)
         C[i] = op.comb(K + i - 1, i); // H(K + i - 1, i)
 

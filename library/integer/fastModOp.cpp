@@ -27,7 +27,7 @@ static int permSlow(int n, int r) {
 }
 
 static int combSlow(int n, int r) {
-    return int(1ll * permSlow(n, r) * FastModOp::modInv(permSlow(r, r), MOD) % MOD);
+    return int(1ll * permSlow(n, r) * FastModOp<MOD>::modInv(permSlow(r, r)) % MOD);
 }
 
 void testFastModOp() {
@@ -39,7 +39,7 @@ void testFastModOp() {
 #ifdef _DEBUG
         N = 10000;
 #endif
-        FastModOp modOp(N, MOD);
+        FastModOp<MOD> modOp(N);
         for (int r = 0; r <= N; r++) {
             //--- factorial
             {
@@ -49,7 +49,7 @@ void testFastModOp() {
                     cout << "Mismatched at line " << __LINE__ << " : " << ans << ", " << gt << endl;
                 assert(gt == ans);
 
-                gt = FastModOp::modInv(gt, MOD);
+                gt = FastModOp<MOD>::modInv(gt);
                 ans = modOp.factInv(N);
                 if (gt != ans)
                     cout << "Mismatched at line " << __LINE__ << " : " << ans << ", " << gt << endl;
@@ -63,7 +63,7 @@ void testFastModOp() {
                     cout << "Mismatched at line " << __LINE__ << " : " << ans << ", " << gt << endl;
                 assert(gt == ans);
 
-                gt = FastModOp::modInv(gt, MOD);
+                gt = FastModOp<MOD>::modInv(gt);
                 ans = modOp.permInv(N, r);
                 if (gt != ans)
                     cout << "Mismatched at line " << __LINE__ << " : " << ans << ", " << gt << endl;
@@ -77,7 +77,7 @@ void testFastModOp() {
                     cout << "Mismatched at line " << __LINE__ << " : " << ans << ", " << gt << endl;
                 assert(gt == ans);
 
-                gt = FastModOp::modInv(gt, MOD);
+                gt = FastModOp<MOD>::modInv(gt);
                 ans = modOp.combInv(N, r);
                 if (gt != ans)
                     cout << "Mismatched at line " << __LINE__ << " : " << ans << ", " << gt << endl;
