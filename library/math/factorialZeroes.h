@@ -1,7 +1,7 @@
 #pragma once
 
 // f(x) = x * (x - 1) * (x - 2) * ... * 2 * 1
-long long countTrailingZeroesOfFactorial(long long x) {
+inline long long countTrailingZeroesOfFactorial(long long x) {
     long long res = 0;
 
     while (x) {
@@ -12,7 +12,7 @@ long long countTrailingZeroesOfFactorial(long long x) {
 }
 
 // f(L, R) = R * (R - 1) * (R - 2) * ... * (L + 1) * L
-long long countTrailingZeroesOfFactorial(long long L, long long R) {
+inline long long countTrailingZeroesOfFactorial(long long L, long long R) {
     long long res = 0;
 
     long long xL2 = max(0ll, L - 1);

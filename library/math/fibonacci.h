@@ -28,14 +28,14 @@ F(m + n) = F(m) * F(n + 1) + F(m - 1) * F(n)
 
 // n >= 0
 template <typename T>
-Matrix2x2<T> fibonacci(T n) {
+inline Matrix2x2<T> fibonacci(T n) {
     static Matrix2x2<T> fm{ 1ll, 1ll, 1ll, 0ll };
     return Matrix2x2<T>::pow(fm, n);
 }
 
 // n >= 0
 template <typename T, int mod>
-Matrix2x2Mod<T, mod> fibonacciMod(T n) {
+inline Matrix2x2Mod<T, mod> fibonacciMod(T n) {
     static Matrix2x2Mod<T, mod> fm{ 1ll, 1ll, 1ll, 0ll };
     return Matrix2x2Mod<T, mod>::pow(fm, n);
 }
