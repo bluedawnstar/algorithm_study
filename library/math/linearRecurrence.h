@@ -19,17 +19,16 @@
 //  https://gist.github.com/koosaga/d4afc4434dbaa348d5bef0d60ac36aa4
 
 // Linear recurrence relation : x(n) = c(0)*x(n - 1) + c(1)*x(n - 2) + ... + c(k - 1)*x(n - k), k < n
-// - MOD must be a prime number.
-template <typename T>
+// - mod must be a prime number.
+template <typename T, int mod = 1000000007>
 struct LinearRecurrence {
-    T MOD;
     vector<T> X;    // initial values
     vector<T> C;    // coefficients of linear recurrence relation
 
-    explicit LinearRecurrence(T mod) : MOD(mod) {
+    LinearRecurrence() {
     }
 
-    LinearRecurrence(T mod, const vector<T>& x) : MOD(mod) {
+    explicit LinearRecurrence(const vector<T>& x) {
         build(x);
     }
 
@@ -39,11 +38,11 @@ struct LinearRecurrence {
         auto update = [this](vector<T>& A, const vector<T>& B, int m, T b, T d) {
             if (B.size() + m > A.size())
                 A.resize(B.size() + m);
-            long long coef = 1ll * d * modPow(b, MOD - 2, MOD) % MOD;
+            long long coef = 1ll * d * modPow(b, mod - 2) % mod;
             for (int j = 0; j < int(B.size()); j++) {
-                A[j + m] -= T(1ll * coef * B[j] % MOD);
+                A[j + m] -= T(1ll * coef * B[j] % mod);
                 if (A[j + m] < 0)
-                    A[j + m] += MOD;
+                    A[j + m] += mod;
             }
         };
 
@@ -52,7 +51,7 @@ struct LinearRecurrence {
         for (int i = 1, m = 1; i < int(x.size()); i++, m++) {
             long long d = 0;
             for (int j = 0; j < int(A.size()); j++)
-                d = (d + 1ll * A[j] * x[i - j]) % MOD;
+                d = (d + 1ll * A[j] * x[i - j]) % mod;
 
             if (d == 0)
                 continue;
@@ -75,7 +74,7 @@ struct LinearRecurrence {
         int m = int(A.size()) - 1;
         C.resize(m);
         for (int i = 0; i < m; i++)
-            C[i] = (MOD - A[i + 1]) % MOD;
+            C[i] = (mod - A[i + 1]) % mod;
         this->X.assign(x.begin(), x.begin() + m);
     }
 
@@ -101,16 +100,16 @@ struct LinearRecurrence {
 
         long long res = 0;
         for (int i = 0; i < m; i++)
-            res += 1ll * s[i] * X[i] % MOD;
+            res += 1ll * s[i] * X[i] % mod;
 
-        return T(res % MOD);
+        return T(res % mod);
     }
 
-    static T guessNthTerm(const vector<T>& x, T mod, long long n) {
+    static T guessNthTerm(const vector<T>& x, long long n) {
         if (n < (long long)x.size())
             return x[n];
 
-        LinearRecurrence<T> rec(mod, x);
+        LinearRecurrence<T,mod> rec(x);
         return rec.getNth(n);
     }
 
@@ -126,36 +125,36 @@ struct LinearRecurrence {
     //        i=0..k
     //
     // O(N*size(A))
-    static vector<T> getMinPoly(int N, const vector<tuple<T,T,T>>& A, T MOD) {
+    static vector<T> getMinPoly(int N, const vector<tuple<T,T,T>>& A) {
         vector<T> rnd1, rnd2;
         mt19937 rng(0xCDEF);
         auto randint = [&rng](T lo, T hi) {
             return uniform_int_distribution<T>(lo, hi)(rng);
         };
         for (int i = 0; i < N; i++) {
-            rnd1.push_back(randint(1, MOD - 1));
-            rnd2.push_back(randint(1, MOD - 1));
+            rnd1.push_back(randint(1, mod - 1));
+            rnd2.push_back(randint(1, mod - 1));
         }
 
         vector<T> gobs;
         for (int i = 0; i < 2 * N + 2; i++) {
             long long tmp = 0;
             for (int j = 0; j < N; j++) {
-                tmp += 1ll * rnd2[j] * rnd1[j] % MOD;
-                if (tmp >= MOD)
-                    tmp -= MOD;
+                tmp += 1ll * rnd2[j] * rnd1[j] % mod;
+                if (tmp >= mod)
+                    tmp -= mod;
             }
             gobs.push_back(T(tmp));
             vector<T> nxt(N);
             for (auto& i : A) {
-                nxt[get<0>(i)] += 1ll * get<2>(i) * rnd1[get<1>(i)] % MOD;
-                if (nxt[get<0>(i)] >= MOD)
-                    nxt[get<0>(i)] -= MOD;
+                nxt[get<0>(i)] += 1ll * get<2>(i) * rnd1[get<1>(i)] % mod;
+                if (nxt[get<0>(i)] >= mod)
+                    nxt[get<0>(i)] -= mod;
             }
             rnd1 = nxt;
         }
 
-        LinearRecurrence<T> rec(MOD, gobs);
+        LinearRecurrence<T,mod> rec(gobs);
         reverse(rec.C.begin(), rec.C.end());    // reverse!
         return rec.C;
     }
@@ -167,7 +166,7 @@ struct LinearRecurrence {
     //     A[i] = (x, y, val), it means A(x, y) = val
     //
     // O(N*size(A))
-    static T det(int N, vector<tuple<T,T,T>> A, T MOD) {
+    static T det(int N, vector<tuple<T,T,T>> A) {
         vector<T> rnd;
         mt19937 rng(0xCDEF);
         auto randint = [&rng](T lo, T hi) {
@@ -175,33 +174,33 @@ struct LinearRecurrence {
         };
 
         for (int i = 0; i < N; i++)
-            rnd.push_back(randint(1, MOD - 1));
+            rnd.push_back(randint(1, mod - 1));
 
         for (auto& i : A)
-            get<2>(i) = T(1ll * get<2>(i) * rnd[get<1>(i)] % MOD);
+            get<2>(i) = T(1ll * get<2>(i) * rnd[get<1>(i)] % mod);
 
-        auto sol = getMinPoly(N, A, MOD)[0];
+        auto sol = getMinPoly(N, A)[0];
 
         if ((N & 1) == 0)
-            sol = MOD - sol;
+            sol = mod - sol;
 
         for (auto& i : rnd)
-            sol = T(1ll * sol * modPow(i, MOD - 2, MOD) % MOD);
+            sol = T(1ll * sol * modPow(i, mod - 2) % mod);
 
         return T(sol);
     }
 
 private:
-    static T modPow(T x, T n, T MOD) {
+    static T modPow(T x, T n) {
         if (n == 0)
             return 1;
 
-        long long t = x % MOD;
+        long long t = x % mod;
         long long res = 1;
         for (; n > 0; n >>= 1) {
             if (n & 1)
-                res = res * t % MOD;
-            t = t * t % MOD;
+                res = res * t % mod;
+            t = t * t % mod;
         }
         return T(res);
     }
@@ -213,16 +212,16 @@ private:
         //TODO: optimize with FFT for big K
         for (int j = 0; j < m; j++) {
             for (int k = 0; k < m; k++) {
-                t[j + k] += T(1ll * v[j] * w[k] % MOD);
-                if (t[j + k] >= MOD)
-                    t[j + k] -= MOD;
+                t[j + k] += T(1ll * v[j] * w[k] % mod);
+                if (t[j + k] >= mod)
+                    t[j + k] -= mod;
             }
         }
         for (int j = 2 * m - 1; j >= m; j--) {
             for (int k = 1; k <= m; k++) {
-                t[j - k] += T(1ll * t[j] * C[k - 1] % MOD);
-                if (t[j - k] >= MOD)
-                    t[j - k] -= MOD;
+                t[j - k] += T(1ll * t[j] * C[k - 1] % mod);
+                if (t[j - k] >= mod)
+                    t[j - k] -= mod;
             }
         }
         t.resize(m);

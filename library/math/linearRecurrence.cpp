@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testLinearRecurrence() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Linear Recurrence (Berlekamp-Massey & Kitamasa) ---------------------------" << endl;
     // Berlekamp-Massey & Kitamasa
@@ -47,7 +47,7 @@ void testLinearRecurrence() {
                 X.push_back(int(xx));
             }
 
-            LinearRecurrence<int> rec(MOD);
+            LinearRecurrence<int,MOD> rec;
             rec.build(X);
             if (rec.C != C)
                 cout << "Mismatched : " << rec.C << ", " << C << endl;
@@ -91,8 +91,8 @@ void testLinearRecurrence() {
                     aa.emplace_back(c, r, A[r][c]);
             }
 
-            auto ans1 = DetMod<int>::det(N, A, MOD);
-            auto ans2 = LinearRecurrence<int>::det(N, aa, MOD);
+            auto ans1 = DetMod<int,MOD>::det(N, A);
+            auto ans2 = LinearRecurrence<int,MOD>::det(N, aa);
 
             if (ans1 != ans2)
                 cout << "Mismatched : " << ans1 << ", " << ans2 << endl;
