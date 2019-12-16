@@ -129,6 +129,9 @@
     <ClCompile Include="palindromicPartitioning.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="digitDP_IncreasingDigitSequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -279,6 +282,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="palindromicPartitioning.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="digitDP_IncreasingDigitSequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="digitDP_IncreasingDigitSequenceNaive.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bitDP.cpp" />
+    <ClCompile Include="digitDP_IncreasingDigitSequence.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="maxProfit.cpp" />
     <ClCompile Include="nonoverlappingIntervals.cpp" />
@@ -189,6 +190,8 @@
     <ClInclude Include="bitDP.h" />
     <ClInclude Include="digitCounter.h" />
     <ClInclude Include="digitDPFast.h" />
+    <ClInclude Include="digitDP_IncreasingDigitSequence.h" />
+    <ClInclude Include="digitDP_IncreasingDigitSequenceNaive.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />
     <ClInclude Include="maxProfit.h" />

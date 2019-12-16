@@ -14,6 +14,7 @@ int main(void) {
     TEST(Knapsack);
     TEST(BitDP);
     TEST(DigitDP);
+    TEST(DigitDP_IncreasingDigitSequence);
     TEST(ProductSumOfSubarray);
     TEST(PersistentConvexHull);
     TEST(DynamicUpperEnvelope);
