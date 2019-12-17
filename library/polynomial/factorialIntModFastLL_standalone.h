@@ -4,8 +4,8 @@
 #define M_PI       3.14159265358979323846   // pi
 #endif
 
-// 1) N, mod < 2^45(=35,184,372,088,832)
-//    struct FastFactorialIntModStandaloneLL45
+// 1) N, mod < 2^51(=2,251,799,813,685,248)
+//    struct FastFactorialIntModStandaloneLL51
 // 
 // 2) N, mod < 2^34(=17,179,869,184)
 //    struct FastFactorialIntModStandaloneLL34
@@ -13,18 +13,18 @@
 // https://www.acmicpc.net/problem/17468
 
 // N, mod < 2^45
-struct FastFactorialIntModStandaloneLL45 {
+struct FastFactorialIntModStandaloneLL51 {
     int maxN;
     long long mod;
     vector<long long> factorial;    // factorial
     vector<long long> factInverse;  // inverse factorial
     vector<long long> inverse;
 
-    FastFactorialIntModStandaloneLL45() { 
+    FastFactorialIntModStandaloneLL51() { 
     }
 
     // maxN > sqrt(maxDegree) * 4
-    FastFactorialIntModStandaloneLL45(int maxN, long long mod) { 
+    FastFactorialIntModStandaloneLL51(int maxN, long long mod) { 
         build(maxN, mod);
     }
 
@@ -244,10 +244,13 @@ private:
 
     //--- polynomial multiplication by FFT
 
-    static const long long SCALE1 = (1ll << 15);
-    static const long long SCALE2 = (1ll << 30);
-    static const long long SCALE3 = (1ll << 45);
-    static const long long SCALE4 = (1ll << 60);
+    static const int SCALE1_BIT = 17;
+    static const int SCALE2_BIT = SCALE1_BIT * 2;
+    static const int SCALE3_BIT = SCALE1_BIT * 3;
+
+    static const long long SCALE1 = (1ll << SCALE1_BIT);
+    static const long long SCALE2 = (1ll << SCALE2_BIT);
+    static const long long SCALE3 = (1ll << SCALE3_BIT);
 
     static vector<long long> multiplyFT(
             const vector<pair<double,double>>& A1, const vector<pair<double,double>>& A2, const vector<pair<double,double>>& A3, 
@@ -256,6 +259,8 @@ private:
         int N = int(A1.size());
         vector<pair<double,double>> C(N);
 
+        const long long SCALE4 = modMul(SCALE2 % mod, SCALE2 % mod, mod);
+
         for (int i = 0; i < N; i++) {
             // C[i] = A1[i] * B1[i]
             C[i].first = A1[i].first * B1[i].first - A1[i].second * B1[i].second;
@@ -263,7 +268,7 @@ private:
         }
         fft(C, true);
         for (int i = 0; i < int(result.size()); i++)
-            result[i] = modMul(static_cast<long long>(fmod(C[i].first + 0.5, mod)), SCALE4 % mod, mod);
+            result[i] = modMul(static_cast<long long>(fmod(C[i].first + 0.5, mod)), SCALE4, mod);
 
         for (int i = 0; i < N; i++) {
             //C[i] = A1[i] * B2[i] + A2[i] * B1[i];
@@ -354,14 +359,14 @@ private:
         vector<pair<double,double>> A1(size), A2(size), A3(size);
         vector<pair<double,double>> B1(size), B2(size), B3(size);
         for (int i = 0; i < sizeL; i++) {
-            A1[i].first = static_cast<double>((left[i] >> 30)               );
-            A2[i].first = static_cast<double>((left[i] >> 15) & (SCALE1 - 1));
-            A3[i].first = static_cast<double>((left[i]      ) & (SCALE1 - 1));
+            A1[i].first = static_cast<double>((left[i] >> SCALE2_BIT)               );
+            A2[i].first = static_cast<double>((left[i] >> SCALE1_BIT) & (SCALE1 - 1));
+            A3[i].first = static_cast<double>((left[i]              ) & (SCALE1 - 1));
         }
         for (int i = 0; i < sizeR; i++) {
-            B1[i].first = static_cast<double>((right[i] >> 30)               );
-            B2[i].first = static_cast<double>((right[i] >> 15) & (SCALE1 - 1));
-            B3[i].first = static_cast<double>((right[i]      ) & (SCALE1 - 1));
+            B1[i].first = static_cast<double>((right[i] >> SCALE2_BIT)               );
+            B2[i].first = static_cast<double>((right[i] >> SCALE1_BIT) & (SCALE1 - 1));
+            B3[i].first = static_cast<double>((right[i]              ) & (SCALE1 - 1));
         }
 
         fft(A1); fft(A2); fft(A3);
