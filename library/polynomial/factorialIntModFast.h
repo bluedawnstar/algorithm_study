@@ -20,6 +20,7 @@
     N! (mod p) = (v * (v + 1))! * (v * (v + 1) + 1) * (v * (v + 1) + 2) * ... * N
 
                = f(v * (v + 1), 0)! * (v * (v + 1) + 1) * (v * (v + 1) + 2) * ... * N
+
                = { f(v, 0) * f(v, 1) * ... * f(v, v) } * (v * (v + 1) + 1) * (v * (v + 1) + 2) * ... * N
 
 */
@@ -52,7 +53,7 @@ struct FastFactorialIntMod {
         long long deg = 1;
         vector<int> factPart = { 1, 2 };
         while (N > deg * (deg + 1)) {
-            factPart = squarepoly(factPart);
+            factPart = squarePoly(factPart);
             deg *= 2;
         }
 
@@ -69,7 +70,7 @@ struct FastFactorialIntMod {
     }
 
 private:
-    vector<int> squarepoly(const vector<int>& poly) {
+    vector<int> squarePoly(const vector<int>& poly) {
         // y(0), y(1), y(2), ..., y(4 * d + 1)
         vector<int> ss = lagrange.interpolateRange0(poly, (int(poly.size()) - 1) * 4 + 1);
         vector<int> res(ss.size() / 2);

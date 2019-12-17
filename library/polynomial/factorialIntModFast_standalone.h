@@ -59,7 +59,7 @@ struct FastFactorialIntModStandalone {
         long long deg = 1;
         vector<int> factPart = { 1, 2 };
         while (N > deg * (deg + 1)) {
-            factPart = squarepoly(factPart);
+            factPart = squarePoly(factPart);
             deg *= 2;
         }
 
@@ -297,7 +297,7 @@ private:
 
     //--- factorial
 
-    vector<int> squarepoly(const vector<int>& poly) {
+    vector<int> squarePoly(const vector<int>& poly) {
         // y(0), y(1), y(2), ..., y(4 * d + 1)
         vector<int> ss = interpolateRange0(poly, (int(poly.size()) - 1) * 4 + 1);
         vector<int> res(ss.size() / 2);
