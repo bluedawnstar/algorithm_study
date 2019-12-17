@@ -210,7 +210,7 @@ struct FastLagrangePolynomialMod {
         return interpolate0(Y.data(), int(Y.size()) - 1, x);
     }
 
-    /* O(n*logn)
+    /* multipoint evaluation - O(n*logn)
         Y = { y(0), y(1), y(2), ..., y(degree) }
         X = { 0, 1, 2, ..., degree }
         result = { y(0), y(1), y(2), ..., y(maxX) }, maxX >= degree
@@ -245,7 +245,7 @@ struct FastLagrangePolynomialMod {
         return res;
     }
 
-    /* O(n*logn)
+    /* multipoint evaluation - O(n*logn)
         Y = { y(0), y(1), y(2), ..., y(degree) }
         X = { 0, 1, 2, ..., degree }
         result = { y(0), y(1), y(2), ..., y(maxX) }, maxX >= degree

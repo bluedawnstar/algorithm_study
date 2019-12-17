@@ -152,5 +152,8 @@
     <ClInclude Include="factorialIntModFast_standalone.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="factorialIntModFastLL_standalone.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -48,7 +48,6 @@ struct FastFactorialIntModStandalone {
 
     //---
 
-
     // O(sqrt(N) * logN)
     int calcFactorial(int N) {
         if (N >= mod)
@@ -102,7 +101,7 @@ private:
                 int step = m << 1;
                 for (int i = j; i < size; i += step) {
                     pair<double, double> t(out[i + m].first * w.first - out[i + m].second * w.second,
-                        out[i + m].first * w.second + out[i + m].second * w.first);
+                                           out[i + m].first * w.second + out[i + m].second * w.first);
                     out[i + m].first = out[i].first - t.first;
                     out[i + m].second = out[i].second - t.second;
                     out[i].first += t.first;
@@ -145,7 +144,7 @@ private:
                 int step = m << 1;
                 for (int i = j; i < size; i += step) {
                     pair<double, double> t(data[i + m].first * w.first - data[i + m].second * w.second,
-                        data[i + m].first * w.second + data[i + m].second * w.first);
+                                           data[i + m].first * w.second + data[i + m].second * w.first);
                     data[i + m].first = data[i].first - t.first;
                     data[i + m].second = data[i].second - t.second;
                     data[i].first += t.first;
@@ -186,9 +185,9 @@ private:
         for (int i = 0; i < N; i++) {
             //C[i] = A1[i] * B2[i] + A2[i] * B1[i];
             C[i].first = A1[i].first * B2[i].first - A1[i].second * B2[i].second
-                + A2[i].first * B1[i].first - A2[i].second * B1[i].second;
+                       + A2[i].first * B1[i].first - A2[i].second * B1[i].second;
             C[i].second = A1[i].first * B2[i].second + A1[i].second * B2[i].first
-                + A2[i].first * B1[i].second + A2[i].second * B1[i].first;
+                        + A2[i].first * B1[i].second + A2[i].second * B1[i].first;
         }
         fft(C, true);
         for (int i = 0; i < int(result.size()); i++)
@@ -251,7 +250,7 @@ private:
 
     //--- lagrange
 
-    /* O(n*logn)
+    /* multipoint evaluation - O(n*logn)
         Y = { y(0), y(1), y(2), ..., y(degree) }
         X = { 0, 1, 2, ..., degree }
         result = { y(0), y(1), y(2), ..., y(maxX) }, maxX >= degree
@@ -286,7 +285,7 @@ private:
         return res;
     }
 
-    /* O(n*logn)
+    /* multipoint evaluation - O(n*logn)
         Y = { y(0), y(1), y(2), ..., y(degree) }
         X = { 0, 1, 2, ..., degree }
         result = { y(0), y(1), y(2), ..., y(maxX) }, maxX >= degree
