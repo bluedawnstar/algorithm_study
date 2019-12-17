@@ -6,6 +6,7 @@ using namespace std;
 
 #include "intMod.h"
 #include "factorialMod.h"
+#include "factorialModFast.h"
 #include "eulerTheorem.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////

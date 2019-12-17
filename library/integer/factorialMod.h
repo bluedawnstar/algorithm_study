@@ -2,31 +2,17 @@
 
 #include "intMod.h"
 
-// Returns value of n! % p
-inline int factorialModNaive(int n, int M) {
-    if (n >= M)
+// Returns value of n! % P
+inline int factorialModNaive(int n, int P) {
+    if (n >= P)
         return 0;
 
     int result = 1;
     for (int i = 1; i <= n; i++)
-        result = int((long long)result * i % M);
+        result = int((long long)result * i % P);
 
     return result;
 }
-
-// https://acmcairoscience.wordpress.com/2015/04/06/factorial-calculation-modulo/
-// O(M*log_M(N))
-inline int factorialMod(int n, int M) {
-    long long res = 1;
-    while (n > 1) {
-        res = (res * ((n / M) % 2 ? M - 1 : 1)) % M;
-        for (int i = 2; i <= n % M; ++i)
-            res = (res * i) % M;
-        n /= M;
-    }
-    return int(res % M);
-}
-
 
 /*
 <Wilson's Theorem>
@@ -37,6 +23,7 @@ inline int factorialMod(int n, int M) {
 // returns n! % M using Wilson's Theorem
 // It is efficient when n is close to M
 
+// O((p - n)*logn)
 // PRECONDITION: M is a prime number
 inline int factorialModWilson(int n, int M) {
     // n! % M is 0 if n >= M
