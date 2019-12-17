@@ -167,6 +167,7 @@
     <ClInclude Include="convolutionMod.h" />
     <ClInclude Include="convolutionMod2.h" />
     <ClInclude Include="dft.h" />
+    <ClInclude Include="factorialIntModFast_standalone.h" />
     <ClInclude Include="factorialMod.h" />
     <ClInclude Include="factorialMod2.h" />
     <ClInclude Include="factorialIntModFast.h" />

@@ -1,9 +1,13 @@
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
 #include <vector>
 #include <algorithm>
 
 using namespace std;
 
 #include "factorialIntModFast.h"
+#include "factorialIntModFast_standalone.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -32,15 +36,17 @@ void testFactorialIntModFast() {
         const int T = 10;
 
         FastFactorialIntMod<MOD> factorial(int(sqrt(MOD)) * 10);
+        FastFactorialIntModStandalone factorial2(int(sqrt(MOD)) * 10, MOD);
         for (int i = 0; i < T; i++) {
             int x = RandInt32::get() % (MOD - 1) + 1;
 
             auto gt = factorialModSlow(x);
             auto ans = factorial.factorial(x);
-            if (ans != gt) {
-                cout << "Mismatched : " << x << "! = " << ans << ", " << gt << endl;
+            auto ans2 = factorial2.calcFactorial(x);
+            if (ans != gt || ans2 != gt) {
+                cout << "Mismatched : " << x << "! = " << ans << ", " << ans2 << ", " << gt << endl;
             }
-            assert(ans == gt);
+            assert(ans == gt && ans2 == gt);
         }
     }
 
