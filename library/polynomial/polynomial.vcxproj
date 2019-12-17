@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="convolution.cpp" />
+    <ClCompile Include="factorialIntModFast.cpp" />
     <ClCompile Include="factorialMod.cpp" />
     <ClCompile Include="fft.cpp" />
     <ClCompile Include="fft2.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="dft.h" />
     <ClInclude Include="factorialMod.h" />
     <ClInclude Include="factorialMod2.h" />
+    <ClInclude Include="factorialIntModFast.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="factorialNTT.h" />
     <ClInclude Include="fft2.h" />

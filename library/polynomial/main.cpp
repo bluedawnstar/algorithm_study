@@ -19,4 +19,5 @@ int main(void) {
     TEST(WalshHadamard);
     TEST(VandermondeMatrix);
     TEST(Polynomial);
+    TEST(FactorialIntModFast);
 }

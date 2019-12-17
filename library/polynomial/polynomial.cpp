@@ -49,7 +49,7 @@ static int F(const vector<int>& coeff, int x) {
 }
 
 void testPolynomial() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Polynomial ------------------------" << endl;
     // multiplication

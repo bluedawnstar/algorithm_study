@@ -36,7 +36,7 @@ static int F(const vector<int>& coeff, int x) {
 }
 
 void testLagrange() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Lagrange's Interpolation ------------------------" << endl;
     {

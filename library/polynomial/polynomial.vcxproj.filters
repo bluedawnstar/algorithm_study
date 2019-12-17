@@ -57,6 +57,9 @@
     <ClCompile Include="fft2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="factorialIntModFast.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -141,6 +144,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="walshHadamardMod3xor.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="factorialIntModFast.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
