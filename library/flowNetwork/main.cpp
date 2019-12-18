@@ -17,4 +17,6 @@ int main(void) {
     TEST(MinCostMaxFlowSPFA);
     TEST(CirculationProblemWithVertexDemand);
     TEST(CirculationProblemWithEdgeDemand);
+    TEST(MinCostCirculation);
+    TEST(MaxCostCirculation);
 }
