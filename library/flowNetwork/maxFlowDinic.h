@@ -10,7 +10,7 @@ struct MaxFlowDinic {
         T   flow;
         T   capacity;
 
-        T   edgeIndex;              // 
+        int edgeIndex;              // 
     };
 
     int N;                          // the number of vertices
