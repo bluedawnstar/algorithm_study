@@ -19,7 +19,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testSort() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- sort ---------------------------------" << endl;
     {
@@ -45,15 +45,23 @@ void testSort() {
             auto vout3 = vin;
             QuickSort<int>::sort(vout3);
 
+            auto vout3_3 = vin;
+            QuickSort<int>::sort(vout3_3);
+
             auto vout4 = vin;
             QuickSort3way<int>::sort(vout4);
 
-            if (vout1 != vout2 || vout1 != vout3 || vout1 != vout4)
+            auto vout4_2 = vin;
+            QuickSort3way<int>::sort2(vout4_2);
+
+            if (vout1 != vout2 || vout1 != vout3 || vout1 != vout3_3 || vout1 != vout4 || vout1 != vout4_2)
                 cout << "ERROR : mismatched!" << endl;
 
             assert(vout1 == vout2);
             assert(vout1 == vout3);
+            assert(vout1 == vout3_3);
             assert(vout1 == vout4);
+            assert(vout1 == vout4_2);
         }
     }
     cout << "OK!" << endl;
@@ -98,14 +106,32 @@ void testSort() {
         }
         PROFILE_STOP(2);
 
-        cout << "3-way Quick sort..." << endl;
+        cout << "Quick sort with MED3..." << endl;
         PROFILE_START(3);
+        auto vout3_3 = vin;
+        for (int i = 0; i < T; i++) {
+            vout3_3 = vin;
+            QuickSort<int>::sort3(vout3_3);
+        }
+        PROFILE_STOP(3);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(4);
         auto vout4 = vin;
         for (int i = 0; i < T; i++) {
             vout4 = vin;
             QuickSort3way<int>::sort(vout4);
         }
-        PROFILE_STOP(3);
+        PROFILE_STOP(4);
+
+        cout << "3-way Quick sort with MED3..." << endl;
+        PROFILE_START(5);
+        auto vout4_2 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4_2 = vin;
+            QuickSort3way<int>::sort2(vout4_2);
+        }
+        PROFILE_STOP(5);
     }
     cout << "--- speed test #2" << endl;
     {
@@ -148,14 +174,32 @@ void testSort() {
         }
         PROFILE_STOP(2);
 
-        cout << "3-way Quick sort..." << endl;
+        cout << "Quick sort with MED3..." << endl;
         PROFILE_START(3);
+        auto vout3_3 = vin;
+        for (int i = 0; i < T; i++) {
+            vout3_3 = vin;
+            QuickSort<int>::sort3(vout3_3);
+        }
+        PROFILE_STOP(3);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(4);
         auto vout4 = vin;
         for (int i = 0; i < T; i++) {
             vout4 = vin;
             QuickSort3way<int>::sort(vout4);
         }
-        PROFILE_STOP(3);
+        PROFILE_STOP(4);
+
+        cout << "3-way Quick sort with MED3..." << endl;
+        PROFILE_START(5);
+        auto vout4_2 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4_2 = vin;
+            QuickSort3way<int>::sort2(vout4_2);
+        }
+        PROFILE_STOP(5);
     }
     cout << "--- speed test #3" << endl;
     {
@@ -198,14 +242,32 @@ void testSort() {
         }
         PROFILE_STOP(2);
 
-        cout << "3-way Quick sort..." << endl;
+        cout << "Quick sort with MED3..." << endl;
         PROFILE_START(3);
+        auto vout3_3 = vin;
+        for (int i = 0; i < T; i++) {
+            vout3_3 = vin;
+            QuickSort<int>::sort3(vout3_3);
+        }
+        PROFILE_STOP(3);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(4);
         auto vout4 = vin;
         for (int i = 0; i < T; i++) {
             vout4 = vin;
             QuickSort3way<int>::sort(vout4);
         }
-        PROFILE_STOP(3);
+        PROFILE_STOP(4);
+
+        cout << "3-way Quick sort with MED3..." << endl;
+        PROFILE_START(5);
+        auto vout4_2 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4_2 = vin;
+            QuickSort3way<int>::sort2(vout4_2);
+        }
+        PROFILE_STOP(5);
     }
     cout << "OK!" << endl;
 }
