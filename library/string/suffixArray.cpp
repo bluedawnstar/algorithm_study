@@ -16,6 +16,7 @@ using namespace std;
 #include <cassert>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/profile.h"
 #include "../common/rand.h"
 
 static string makeRandomString(int n) {
@@ -67,12 +68,16 @@ void testSuffixArray() {
         long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
         assert(cntAns == cntGT);
     }
-#if 0
     {
         //        01234567890123456
         string s("abdadafaaabdfaeef");
 
+#if 0
         vector<int> ans = SuffixArrayLarssonSadakane::build(s);
+#else
+        SuffixArrayLarssonSadakane larsson;
+        vector<int> ans = larsson.build(s);
+#endif
         vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
         if (ans != gt) {
             cout << "Mismatched : " << endl
@@ -85,7 +90,6 @@ void testSuffixArray() {
         long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
         assert(cntAns == cntGT);
     }
-#endif
     {
         int T = 10;
         while (T-- > 0) {
@@ -100,8 +104,17 @@ void testSuffixArray() {
             sort(v.begin(), v.end());
 
             auto SA = SuffixArray::buildSuffixArray(s);
-            for (int i = 0; i < N; i++)
-                assert(v[i].second == SA[i]);
+#if 0
+            auto SA2 = SuffixArrayLarssonSadakane::build(s);
+#else
+            SuffixArrayLarssonSadakane larsson;
+            vector<int> SA2 = larsson.build(s);
+#endif
+            for (int i = 0; i < N; i++) {
+                if (v[i].second != SA[i] || v[i].second != SA2[i])
+                    cout << "Mismatched  at " << __LINE__ << endl;
+                assert(v[i].second == SA[i] && v[i].second == SA2[i]);
+            }
         }
     }
     {
@@ -121,6 +134,118 @@ void testSuffixArray() {
                 assert(SA.upperBoundLcpBackward(i, len) == lowerBoundBackwardSlow(SA.suffixArray, i, len - 1, s));
             }
         }
+    }
+    // speed test
+    {
+        int T = 10000;
+        int N = 10000;
+#ifdef _DEBUG
+        T = 100;
+        N = 100;
+#endif
+
+        vector<string> in;
+        for (int i = 0; i < T; i++)
+            in.push_back(makeRandomString(N));
+
+        int sum1 = 0;
+        int sum2 = 0;
+
+        PROFILE_START(0);
+        for (int i = 0; i < T; i++) {
+            auto SA = SuffixArray::buildSuffixArray(in[i]);
+            sum1 += SA[0];
+        }
+        PROFILE_STOP(0);
+
+        PROFILE_START(1);
+        SuffixArrayLarssonSadakane larsson;
+        for (int i = 0; i < T; i++) {
+#if 0
+            auto SA = SuffixArrayLarssonSadakane::build(in[i]);
+#else
+            vector<int> SA = larsson.build(in[i]);
+#endif
+            sum2 += SA[0];
+        }
+        PROFILE_STOP(1);
+
+        if (sum1 != sum2)
+            cout << "Mismatched  at " << __LINE__ << endl;
+    }
+    {
+        int T = 1000;
+        int N = 100000;
+#ifdef _DEBUG
+        T = 100;
+        N = 100;
+#endif
+
+        vector<string> in;
+        for (int i = 0; i < T; i++)
+            in.push_back(makeRandomString(N));
+
+        int sum1 = 0;
+        int sum2 = 0;
+
+        PROFILE_START(0);
+        for (int i = 0; i < T; i++) {
+            auto SA = SuffixArray::buildSuffixArray(in[i]);
+            sum1 += SA[0];
+        }
+        PROFILE_STOP(0);
+
+        PROFILE_START(1);
+        SuffixArrayLarssonSadakane larsson;
+        for (int i = 0; i < T; i++) {
+#if 0
+            auto SA = SuffixArrayLarssonSadakane::build(in[i]);
+#else
+            vector<int> SA = larsson.build(in[i]);
+#endif
+            sum2 += SA[0];
+        }
+        PROFILE_STOP(1);
+
+        if (sum1 != sum2)
+            cout << "Mismatched  at " << __LINE__ << endl;
+    }
+    {
+        int T = 100;
+        int N = 1000000;
+#ifdef _DEBUG
+        T = 100;
+        N = 100;
+#endif
+
+        vector<string> in;
+        for (int i = 0; i < T; i++)
+            in.push_back(makeRandomString(N));
+
+        int sum1 = 0;
+        int sum2 = 0;
+
+        PROFILE_START(0);
+        for (int i = 0; i < T; i++) {
+            auto SA = SuffixArray::buildSuffixArray(in[i]);
+            sum1 += SA[0];
+        }
+        PROFILE_STOP(0);
+
+        PROFILE_START(1);
+        SuffixArrayLarssonSadakane larsson;
+        for (int i = 0; i < T; i++) {
+#if 0
+            auto SA = SuffixArrayLarssonSadakane::build(in[i]);
+#else
+            vector<int> SA = larsson.build(in[i]);
+#endif
+            sum2 += SA[0];
+        }
+        PROFILE_STOP(1);
+
+        if (sum1 != sum2)
+            cout << "Mismatched  at " << __LINE__ << endl;
     }
     cout << "OK!" << endl;
 }
