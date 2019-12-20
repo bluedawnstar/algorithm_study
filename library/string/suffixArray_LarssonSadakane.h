@@ -1,15 +1,17 @@
 #pragma once
 
+// "Faster Suffix Sorting", Larsson, N. Jesper and Sadakane, Kunihiko. 1999
 // http://www.larsson.dogma.net/ssrev-tr.pdf
 // https://www.sciencedirect.com/science/article/pii/S0304397507005257
 
 // from https://github.com/carrotsearch/jsuffixarrays/blob/master/src/main/java/org/jsuffixarrays/QSufSort.java
 
-// "Faster Suffix Sorting", Larsson, N. Jesper and Sadakane, Kunihiko. 
+// Doubling algorithm (Larsson, Sadakane)
 struct SuffixArrayLarssonSadakane {
     vector<int> sa;             // sa
     vector<int> S;              // 
 
+    // O(NlogN)
     vector<int> build(const char* str, int n, int charMin = 'a', int charMax = 'z') {
         sa.assign(n + 1, 0);
         S.assign(n + 1, 0);
@@ -108,8 +110,8 @@ private:
     }
 
     int MED3(int a, int b, int c) const {
-        return (KEY(a) < KEY(b) ? (KEY(b) < KEY(c) ? (b) : KEY(a) < KEY(c) ? (c) : (a))
-            : (KEY(b) > KEY(c) ? (b) : KEY(a) > KEY(c) ? (c) : (a)));
+        return KEY(a) < KEY(b) ? (KEY(b) < KEY(c) ? (b) : KEY(a) < KEY(c) ? (c) : (a))
+                               : (KEY(b) > KEY(c) ? (b) : KEY(a) > KEY(c) ? (c) : (a));
     }
 
     int choosePivot(int start, int n) {

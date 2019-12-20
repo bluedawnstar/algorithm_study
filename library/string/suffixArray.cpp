@@ -1,7 +1,9 @@
 #include <tuple>
+#include <memory>
 #include <queue>
 #include <vector>
 #include <string>
+#include <functional>
 #include <algorithm>
 
 using namespace std;
@@ -10,6 +12,7 @@ using namespace std;
 #include "suffixArrayAlgo.h"
 
 #include "suffixArray_LarssonSadakane.h"
+#include "suffixArray_ManberMyers.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -72,21 +75,17 @@ void testSuffixArray() {
         //        01234567890123456
         string s("abdadafaaabdfaeef");
 
-#if 0
-        vector<int> ans = SuffixArrayLarssonSadakane::build(s);
-#else
         SuffixArrayLarssonSadakane larsson;
-        vector<int> ans = larsson.build(s);
-#endif
-        vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
-        if (ans != gt) {
-            cout << "Mismatched : " << endl
-                 << "    ans = " << ans << endl
-                 << "     gt = " << gt << endl;
-        }
-        assert(ans == gt);
+        vector<int> ans1 = larsson.build(s);
 
-        long long cntAns = SuffixArrayAlgo::countSubstrings(ans, s);
+        vector<int> ans2 = SuffixArrayManberMyers::build(s);
+
+        vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
+        if (ans1 != gt || ans2 != gt)
+            cout << "Mismatched : " << ans1 << ", " << ans2 << ", " << gt << endl;
+        assert(ans1 == gt && ans2 == gt);
+
+        long long cntAns = SuffixArrayAlgo::countSubstrings(ans1, s);
         long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
         assert(cntAns == cntGT);
     }
@@ -104,16 +103,16 @@ void testSuffixArray() {
             sort(v.begin(), v.end());
 
             auto SA = SuffixArray::buildSuffixArray(s);
-#if 0
-            auto SA2 = SuffixArrayLarssonSadakane::build(s);
-#else
+
             SuffixArrayLarssonSadakane larsson;
             vector<int> SA2 = larsson.build(s);
-#endif
+
+            vector<int> SA3 = SuffixArrayManberMyers::build(s);
+
             for (int i = 0; i < N; i++) {
-                if (v[i].second != SA[i] || v[i].second != SA2[i])
+                if (v[i].second != SA[i] || v[i].second != SA2[i] || v[i].second != SA3[i])
                     cout << "Mismatched  at " << __LINE__ << endl;
-                assert(v[i].second == SA[i] && v[i].second == SA2[i]);
+                assert(v[i].second == SA[i] && v[i].second == SA2[i] && v[i].second == SA3[i]);
             }
         }
     }
@@ -150,6 +149,7 @@ void testSuffixArray() {
 
         int sum1 = 0;
         int sum2 = 0;
+        int sum3 = 0;
 
         PROFILE_START(0);
         for (int i = 0; i < T; i++) {
@@ -161,16 +161,19 @@ void testSuffixArray() {
         PROFILE_START(1);
         SuffixArrayLarssonSadakane larsson;
         for (int i = 0; i < T; i++) {
-#if 0
-            auto SA = SuffixArrayLarssonSadakane::build(in[i]);
-#else
             vector<int> SA = larsson.build(in[i]);
-#endif
             sum2 += SA[0];
         }
         PROFILE_STOP(1);
 
-        if (sum1 != sum2)
+        PROFILE_START(2);
+        for (int i = 0; i < T; i++) {
+            vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+            sum3 += SA[0];
+        }
+        PROFILE_STOP(2);
+
+        if (sum1 != sum2 || sum1 != sum3)
             cout << "Mismatched  at " << __LINE__ << endl;
     }
     {
@@ -187,6 +190,7 @@ void testSuffixArray() {
 
         int sum1 = 0;
         int sum2 = 0;
+        int sum3 = 0;
 
         PROFILE_START(0);
         for (int i = 0; i < T; i++) {
@@ -198,16 +202,19 @@ void testSuffixArray() {
         PROFILE_START(1);
         SuffixArrayLarssonSadakane larsson;
         for (int i = 0; i < T; i++) {
-#if 0
-            auto SA = SuffixArrayLarssonSadakane::build(in[i]);
-#else
             vector<int> SA = larsson.build(in[i]);
-#endif
             sum2 += SA[0];
         }
         PROFILE_STOP(1);
 
-        if (sum1 != sum2)
+        PROFILE_START(2);
+        for (int i = 0; i < T; i++) {
+            vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+            sum3 += SA[0];
+        }
+        PROFILE_STOP(2);
+
+        if (sum1 != sum2 || sum1 != sum3)
             cout << "Mismatched  at " << __LINE__ << endl;
     }
     {
@@ -224,6 +231,7 @@ void testSuffixArray() {
 
         int sum1 = 0;
         int sum2 = 0;
+        int sum3 = 0;
 
         PROFILE_START(0);
         for (int i = 0; i < T; i++) {
@@ -235,16 +243,19 @@ void testSuffixArray() {
         PROFILE_START(1);
         SuffixArrayLarssonSadakane larsson;
         for (int i = 0; i < T; i++) {
-#if 0
-            auto SA = SuffixArrayLarssonSadakane::build(in[i]);
-#else
             vector<int> SA = larsson.build(in[i]);
-#endif
             sum2 += SA[0];
         }
         PROFILE_STOP(1);
 
-        if (sum1 != sum2)
+        PROFILE_START(2);
+        for (int i = 0; i < T; i++) {
+            vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+            sum3 += SA[0];
+        }
+        PROFILE_STOP(2);
+
+        if (sum1 != sum2 || sum1 != sum3)
             cout << "Mismatched  at " << __LINE__ << endl;
     }
     cout << "OK!" << endl;
