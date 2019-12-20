@@ -180,7 +180,6 @@
     <ClCompile Include="suffixArraySimple.cpp" />
     <ClCompile Include="suffixRollingHash.cpp" />
     <ClCompile Include="suffixSparseTable.cpp" />
-    <ClCompile Include="suffixArray_notUsed.cpp" />
     <ClCompile Include="suffixAutomaton.cpp" />
     <ClCompile Include="suffixAutomatonAM.cpp" />
     <ClCompile Include="suffixTree.cpp" />
@@ -236,6 +235,7 @@
     <ClInclude Include="suffixArraySimple.h" />
     <ClInclude Include="suffixArray_LarssonSadakane.h" />
     <ClInclude Include="suffixArray_ManberMyers.h" />
+    <ClInclude Include="suffixArray_Skew.h" />
     <ClInclude Include="suffixRollingHash.h" />
     <ClInclude Include="suffixSparseTable.h" />
     <ClInclude Include="suffixAutomaton.h" />

@@ -34,7 +34,7 @@ static string makeRandomString(int n, int charCnt) {
 }
 
 void testSimpleSuffixArray() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simple Suffix Array --------------------" << endl;
     {
@@ -43,7 +43,12 @@ void testSimpleSuffixArray() {
         vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
 
         SimpleSuffixArray sa(s);
-        assert(sa.sa == gt);
+        auto sa2 = SimpleSuffixArray::build(s);
+
+        if (sa.sa != gt || sa2 != gt)
+            cout << "Mismatched : " << sa.sa << ", " << sa2 << ", " << gt << endl;
+
+        assert(sa.sa == gt && sa2 == gt);
     }
     {
         int T = 10;
@@ -59,8 +64,13 @@ void testSimpleSuffixArray() {
             sort(v.begin(), v.end());
 
             SimpleSuffixArray sa(s);
-            for (int i = 0; i < N; i++)
-                assert(v[i].second == sa.sa[i]);
+            auto sa2 = SimpleSuffixArray::build(s);
+
+            for (int i = 0; i < N; i++) {
+                if (v[i].second != sa.sa[i] || v[i].second != sa2[i])
+                    cout << "Mismatched : " << sa.sa[i] << ", " << sa2[i] << ", " << v[i].second << endl;
+                assert(v[i].second == sa.sa[i] && v[i].second == sa2[i]);
+            }
         }
     }
     cout << "*** Speed test ..." << endl;
@@ -87,9 +97,14 @@ void testSimpleSuffixArray() {
             auto lcpa2 = sa2.buildLcpArrayNaive();
             PROFILE_STOP(3);
 
-            if (sa1 != sa2.sa || lcpa1 != lcpa2)
+            PROFILE_START(4);
+            auto sa3 = SimpleSuffixArray::build(s);
+            PROFILE_STOP(4);
+
+            if (sa1 != sa2.sa || lcpa1 != lcpa2 || sa1 != sa3)
                 cout << "ERROR!" << endl;
             assert(sa1 == sa2.sa);
+            assert(sa1 == sa3);
             assert(lcpa1 == lcpa2);
         }
     }

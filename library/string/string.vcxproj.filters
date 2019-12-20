@@ -24,9 +24,6 @@
     <ClCompile Include="suffixArray.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="suffixArray_notUsed.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="distinctSubstringCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -330,6 +327,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixArray_ManberMyers.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArray_Skew.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

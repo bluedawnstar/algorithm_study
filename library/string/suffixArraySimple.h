@@ -52,11 +52,54 @@ struct SimpleSuffixArray {
     vector<int> sa;
 
     explicit SimpleSuffixArray(const string& s) {
-        build(s);
+        buildNaive(s);
     }
 
+    // O(N*(logN)^2), practically slower than buildNaive()
+    static vector<int> build(const string& s) {
+        int N = int(s.length());
+
+        vector<int> group(N + 1);
+        for (int i = 0; i < N; i++)
+            group[i] = s[i];
+        group[N] = -1;
+
+        vector<int> perm(N);
+        for (int i = 0; i < N; i++)
+            perm[i] = i;
+
+        int t = 1;
+        while (t < N) {
+            auto op = [t, &group](int a, int b) {
+                if (group[a] != group[b])
+                    return group[a] < group[b];
+                return group[a + t] < group[b + t];
+            };
+            sort(perm.begin(), perm.end(), op);
+
+            t <<= 1;
+            if (t >= N)
+                break;
+
+            vector<int> g2(N + 1);
+            g2[N] = -1;
+            g2[perm[0]] = 0;
+            for (int i = 1; i < int(perm.size()); i++) {
+                if (op(perm[i - 1], perm[i]))
+                    g2[perm[i]] = g2[perm[i - 1]] + 1;
+                else
+                    g2[perm[i]] = g2[perm[i - 1]];
+            }
+            group = g2;
+        }
+
+        return perm;
+    }
+
+    //---
+
     // O(N^2*logN), but fast enough in normal situation
-    void build(const string& s) {
+    void buildNaive(const string& s) {
         S = s;
         int N = int(s.length());
 
