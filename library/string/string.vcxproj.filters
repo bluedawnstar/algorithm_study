@@ -332,8 +332,5 @@
     <ClInclude Include="suffixArray_ManberMyers.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="suffixArray_unknown.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

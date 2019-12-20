@@ -38,6 +38,16 @@ static string makeRandomString(int n, int charCnt) {
     return s;
 }
 
+static string makeRandomRepeatedString(int n, int charCnt) {
+    string s;
+    s.reserve(n);
+    for (int i = 0; i < n && i < charCnt; i++)
+        s.push_back(RandInt32::get() % charCnt + 'a');
+    for (int i = charCnt; i < n; i++)
+        s.push_back(s[i % charCnt]);
+    return s;
+}
+
 static int lowerBoundForwardSlow(const vector<int>& sa, int left, int length, const string& s) {
     for (int i = left + 1; i < int(sa.size()); i++) {
         if (SuffixArrayAlgo::commonPrefixNaive(s, sa[left], sa[i]) <= length)
@@ -134,129 +144,107 @@ void testSuffixArray() {
             }
         }
     }
-    // speed test
+    cout << "*** speed test" << endl;
     {
-        int T = 10000;
-        int N = 10000;
 #ifdef _DEBUG
-        T = 100;
-        N = 100;
+        vector<pair<int, int>> testCases{
+            { 100, 100 }
+        };
+#else
+        vector<pair<int, int>> testCases{
+            { 10000, 10000 },
+            { 1000, 100000 },
+            { 100, 1000000 }
+        };
 #endif
+        for (auto& tc : testCases) {
+            int T = tc.first;
+            int N = tc.second;
 
-        vector<string> in;
-        for (int i = 0; i < T; i++)
-            in.push_back(makeRandomString(N));
+            vector<string> in;
+            for (int i = 0; i < T; i++)
+                in.push_back(makeRandomString(N));
 
-        int sum1 = 0;
-        int sum2 = 0;
-        int sum3 = 0;
+            int sum1 = 0;
+            int sum2 = 0;
+            int sum3 = 0;
 
-        PROFILE_START(0);
-        for (int i = 0; i < T; i++) {
-            auto SA = SuffixArray::buildSuffixArray(in[i]);
-            sum1 += SA[0];
+            PROFILE_START(0);
+            for (int i = 0; i < T; i++) {
+                auto SA = SuffixArray::buildSuffixArray(in[i]);
+                sum1 += SA[0];
+            }
+            PROFILE_STOP(0);
+
+            PROFILE_START(1);
+            SuffixArrayLarssonSadakane larsson;
+            for (int i = 0; i < T; i++) {
+                vector<int> SA = larsson.build(in[i]);
+                sum2 += SA[0];
+            }
+            PROFILE_STOP(1);
+
+            PROFILE_START(2);
+            for (int i = 0; i < T; i++) {
+                vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+                sum3 += SA[0];
+            }
+            PROFILE_STOP(2);
+
+            if (sum1 != sum2 || sum1 != sum3)
+                cout << "Mismatched  at " << __LINE__ << endl;
         }
-        PROFILE_STOP(0);
-
-        PROFILE_START(1);
-        SuffixArrayLarssonSadakane larsson;
-        for (int i = 0; i < T; i++) {
-            vector<int> SA = larsson.build(in[i]);
-            sum2 += SA[0];
-        }
-        PROFILE_STOP(1);
-
-        PROFILE_START(2);
-        for (int i = 0; i < T; i++) {
-            vector<int> SA = SuffixArrayManberMyers::build(in[i]);
-            sum3 += SA[0];
-        }
-        PROFILE_STOP(2);
-
-        if (sum1 != sum2 || sum1 != sum3)
-            cout << "Mismatched  at " << __LINE__ << endl;
     }
+    cout << "*** speed test for repeated strings" << endl;
     {
-        int T = 1000;
-        int N = 100000;
 #ifdef _DEBUG
-        T = 100;
-        N = 100;
+        vector<pair<int, int>> testCases{
+            { 100, 100 },
+        };
+#else
+        vector<pair<int, int>> testCases{
+            { 10000, 10000 },
+            { 1000, 100000 },
+            { 100, 1000000 }
+        };
 #endif
+        for (auto& tc : testCases) {
+            int T = tc.first;
+            int N = tc.second;
 
-        vector<string> in;
-        for (int i = 0; i < T; i++)
-            in.push_back(makeRandomString(N));
+            vector<string> in;
+            for (int i = 0; i < T; i++)
+                in.push_back(makeRandomRepeatedString(N, 3));
 
-        int sum1 = 0;
-        int sum2 = 0;
-        int sum3 = 0;
+            int sum1 = 0;
+            int sum2 = 0;
+            int sum3 = 0;
 
-        PROFILE_START(0);
-        for (int i = 0; i < T; i++) {
-            auto SA = SuffixArray::buildSuffixArray(in[i]);
-            sum1 += SA[0];
+            PROFILE_START(0);
+            for (int i = 0; i < T; i++) {
+                auto SA = SuffixArray::buildSuffixArray(in[i]);
+                sum1 += SA[0];
+            }
+            PROFILE_STOP(0);
+
+            PROFILE_START(1);
+            SuffixArrayLarssonSadakane larsson;
+            for (int i = 0; i < T; i++) {
+                vector<int> SA = larsson.build(in[i]);
+                sum2 += SA[0];
+            }
+            PROFILE_STOP(1);
+
+            PROFILE_START(2);
+            for (int i = 0; i < T; i++) {
+                vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+                sum3 += SA[0];
+            }
+            PROFILE_STOP(2);
+
+            if (sum1 != sum2 || sum1 != sum3)
+                cout << "Mismatched  at " << __LINE__ << endl;
         }
-        PROFILE_STOP(0);
-
-        PROFILE_START(1);
-        SuffixArrayLarssonSadakane larsson;
-        for (int i = 0; i < T; i++) {
-            vector<int> SA = larsson.build(in[i]);
-            sum2 += SA[0];
-        }
-        PROFILE_STOP(1);
-
-        PROFILE_START(2);
-        for (int i = 0; i < T; i++) {
-            vector<int> SA = SuffixArrayManberMyers::build(in[i]);
-            sum3 += SA[0];
-        }
-        PROFILE_STOP(2);
-
-        if (sum1 != sum2 || sum1 != sum3)
-            cout << "Mismatched  at " << __LINE__ << endl;
-    }
-    {
-        int T = 100;
-        int N = 1000000;
-#ifdef _DEBUG
-        T = 100;
-        N = 100;
-#endif
-
-        vector<string> in;
-        for (int i = 0; i < T; i++)
-            in.push_back(makeRandomString(N));
-
-        int sum1 = 0;
-        int sum2 = 0;
-        int sum3 = 0;
-
-        PROFILE_START(0);
-        for (int i = 0; i < T; i++) {
-            auto SA = SuffixArray::buildSuffixArray(in[i]);
-            sum1 += SA[0];
-        }
-        PROFILE_STOP(0);
-
-        PROFILE_START(1);
-        SuffixArrayLarssonSadakane larsson;
-        for (int i = 0; i < T; i++) {
-            vector<int> SA = larsson.build(in[i]);
-            sum2 += SA[0];
-        }
-        PROFILE_STOP(1);
-
-        PROFILE_START(2);
-        for (int i = 0; i < T; i++) {
-            vector<int> SA = SuffixArrayManberMyers::build(in[i]);
-            sum3 += SA[0];
-        }
-        PROFILE_STOP(2);
-
-        if (sum1 != sum2 || sum1 != sum3)
-            cout << "Mismatched  at " << __LINE__ << endl;
     }
     cout << "OK!" << endl;
 }

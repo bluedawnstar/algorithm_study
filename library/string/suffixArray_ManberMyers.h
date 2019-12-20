@@ -37,7 +37,6 @@ struct SuffixArrayManberMyers {
                         newRank[sa[j]] = r;
                     }
 
-                    // copy back - note can't update rank too eagerly
                     for (int j = left + 1; j <= right; j++)
                         rank[sa[j]] = newRank[sa[j]];
 
@@ -55,7 +54,7 @@ struct SuffixArrayManberMyers {
     }
 
 private:
-    // radix sort
+    // MSD(most-significant-digit-first) radix sort
     static void radixSort(const char* s, int n, int charMin, int charMax, int sa[], int rank[]) {
         int range = charMax - charMin + 1;
 
@@ -72,11 +71,36 @@ private:
             sa[freq[s[i] - charMin]++] = i;
     }
 
+    static int choosePivot(int sa[], int rank[], int left, int right) {
+#define KEY(idx)    rank[sa[idx]]
+#define MED3(a,b,c) (KEY(a) < KEY(b) ? (KEY(b) < KEY(c) ? (b) : KEY(a) < KEY(c) ? (c) : (a)) \
+                                     : (KEY(b) > KEY(c) ? (b) : KEY(a) > KEY(c) ? (c) : (a)))
+        int n = right - left + 1;
+        int mid = (left + right) >> 1;
+        if (n > 7) {
+            int lo = left;
+            int hi = left + n - 1;
+            if (n > 40) {
+                int s = n >> 3;
+                lo = MED3(lo, lo + s, lo + s + s);
+                mid = MED3(mid - s, mid, mid + s);
+                hi = MED3(hi - s - s, hi - s, hi);
+            }
+            mid = MED3(lo, mid, hi);
+        }
+        return mid;
+#undef KEY
+#undef MED3
+    }
+
     // 3-way quicksort
     static void quicksort(int sa[], int rank[], int left, int right) {
         if (right <= left)
             return;
 
+        int pivot = choosePivot(sa, rank, left, right);
+        if (pivot != right)
+            swap(sa[pivot], sa[right]);
         int v = sa[right];
 
         int i = left - 1, j = right;
@@ -91,17 +115,17 @@ private:
             if (i >= j)
                 break;
             swap(sa[i], sa[j]);
-            if (rank[sa[i]] == rank[sa[right]])
+            if (rank[sa[i]] == rank[v])
                 swap(sa[++p], sa[i]);
-            if (rank[sa[j]] == rank[sa[right]])
+            if (rank[sa[j]] == rank[v])
                 swap(sa[--q], sa[j]);
         }
         swap(sa[i], sa[right]);
         j = i - 1;
         i = i + 1;
-        for (int k = left; k <= p; k++)
+        for (int k = left; k < p; k++)
             swap(sa[k], sa[j--]);
-        for (int k = right - 1; k >= q; k--)
+        for (int k = right - 1; k > q; k--)
             swap(sa[k], sa[i++]);
         quicksort(sa, rank, left, j);
         quicksort(sa, rank, i, right);
