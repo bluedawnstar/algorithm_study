@@ -43,7 +43,7 @@ void testSimpleSuffixArray() {
         vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
 
         SimpleSuffixArray sa(s);
-        auto sa2 = SimpleSuffixArray::build(s);
+        auto sa2 = SimpleSuffixArray2::build(s);
 
         if (sa.sa != gt || sa2 != gt)
             cout << "Mismatched : " << sa.sa << ", " << sa2 << ", " << gt << endl;
@@ -64,7 +64,7 @@ void testSimpleSuffixArray() {
             sort(v.begin(), v.end());
 
             SimpleSuffixArray sa(s);
-            auto sa2 = SimpleSuffixArray::build(s);
+            auto sa2 = SimpleSuffixArray2::build(s);
 
             for (int i = 0; i < N; i++) {
                 if (v[i].second != sa.sa[i] || v[i].second != sa2[i])
@@ -98,7 +98,7 @@ void testSimpleSuffixArray() {
             PROFILE_STOP(3);
 
             PROFILE_START(4);
-            auto sa3 = SimpleSuffixArray::build(s);
+            auto sa3 = SimpleSuffixArray2::build(s);
             PROFILE_STOP(4);
 
             if (sa1 != sa2.sa || lcpa1 != lcpa2 || sa1 != sa3)
