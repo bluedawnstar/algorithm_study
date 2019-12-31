@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // LSB first
 struct BoolExprBitSet {
     static int popCount(unsigned long long x) {

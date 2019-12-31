@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 template <typename T>
 struct TreePathSqrtDecompositionSum {
     int                 N;          // the number of vertex

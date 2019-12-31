@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // Improved FFT
 struct FFT2 {
     const double PI = acos(-1.0);

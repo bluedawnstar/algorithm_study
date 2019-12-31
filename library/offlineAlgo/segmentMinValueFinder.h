@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // https://www.hackerrank.com/contests/hourrank-31/challenges/basketball-tournament-1
 /*
                    R

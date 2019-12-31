@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 #define USE_LAZY_REBUILDING
 
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>

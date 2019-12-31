@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 //--- Array Mapped ----------------
 struct SuffixAutomatonAM {
     static const size_t MaxCharN = 26;

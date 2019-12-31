@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // BitSet class with mBitCnt member variable
 struct BitSet {
     static int clz(unsigned x) {

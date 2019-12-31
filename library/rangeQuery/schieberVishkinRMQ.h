@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 template <typename T, typename CompareT = less<T>>
 struct SchieberVishkinRMQ {
     CompareT compare;

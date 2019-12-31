@@ -1,5 +1,7 @@
 #pragma once
 
+#include <immintrin.h>
+
 template <typename T, const T INF = 0x3f3f3f3f>
 struct SparseTableOnGomoryHuTree {
     int                 N;          // the number of vertex

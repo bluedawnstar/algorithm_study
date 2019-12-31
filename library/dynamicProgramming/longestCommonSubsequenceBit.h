@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // Bit-String Longest Common Subsequence (LCS) Algorithm
 // 
 // http://www.csse.monash.edu.au/~lloyd/tildeStrings/Alignment/86.IPL.html

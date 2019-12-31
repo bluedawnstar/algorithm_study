@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // https://en.wikipedia.org/wiki/Independent_set_(graph_theory)
 
 // Undirected graph

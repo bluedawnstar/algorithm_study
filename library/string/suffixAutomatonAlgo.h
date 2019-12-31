@@ -202,7 +202,7 @@ struct SuffixAutomatonAlgo {
 
     // 8. Longest common substring.
 
-    // It's better that t's length is shorter than SuffixAutomation's length
+    // It's better that t's length is shorter than SuffixAutomaton's length
     int lengthOfLcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
         for (int i = 0; i < int(t.length()); ++i) {
@@ -244,7 +244,7 @@ struct SuffixAutomatonAlgo {
     }
 
     // 9. Longest common substring of multiple substring.
-    // step1) make SuffixAutomation instances of all strings
+    // step1) make SuffixAutomaton instances of all strings
     // step2) call lengthOfLcs(sa[L], str[R]) - length(str[R]) <= length(str[L])
     //        if length(str[L]) < length(str[R]) then swap(L, R)
 

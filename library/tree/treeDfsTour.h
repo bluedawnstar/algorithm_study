@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 struct DfsTourTree {
     int                 N;          // the number of vertex
     int                 logN;       // log2(N - 1) + 2

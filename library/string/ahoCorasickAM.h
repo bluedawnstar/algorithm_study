@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 #include "trie.h"
 
 //--- Aho-Corasick ------------------------------------------------------------

@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // counting leading zeros
 inline int clz(unsigned x) {
 #ifndef __GNUC__

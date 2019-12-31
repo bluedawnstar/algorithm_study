@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // with SQRT-decomposition
 struct BitSetRangeFlip {
 #if 0

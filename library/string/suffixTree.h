@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 struct SuffixTree {
     static int popcnt(unsigned x) {
 #ifndef __GNUC__

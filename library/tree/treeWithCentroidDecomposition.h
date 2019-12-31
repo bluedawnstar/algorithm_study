@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 /*
  <DFS property>
     currDist[i] = parentDist[i - 1] - currDist[i - 2] + currDist[i],  (parent is in original tree, not centroid tree)

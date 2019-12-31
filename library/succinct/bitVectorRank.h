@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 struct BitVectorRank {
     static const int BIT_SIZE = sizeof(unsigned int) * 8;
     static const unsigned int BIT_ALL = (unsigned int)-1;

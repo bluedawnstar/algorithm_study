@@ -35,7 +35,7 @@ static vector<vector<int>> getCombinationsSlow(int n, int r) {
 }
 
 void testNextCombination() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Next Combination --------------------------------------" << endl;
     {
@@ -45,11 +45,14 @@ void testNextCombination() {
 
         initCombination(c, N, R);
         do {
-            //cout << c << endl;
+            cout << c << endl;
             ans.push_back(c);
         } while (nextCombination(c, N));
 
         auto gt = getCombinationsSlow(N, R);
+        if (ans != gt) {
+            cout << "Mismatched : " << ans << ", " << gt << endl;
+        }
         assert(ans == gt);
     }
 

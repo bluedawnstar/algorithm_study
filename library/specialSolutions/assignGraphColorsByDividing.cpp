@@ -1,5 +1,9 @@
 #include <vector>
 #include <algorithm>
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
 
 using namespace std;
 

@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // "Faster Suffix Sorting", Larsson, N. Jesper and Sadakane, Kunihiko. 1999
 // http://www.larsson.dogma.net/ssrev-tr.pdf
 // https://www.sciencedirect.com/science/article/pii/S0304397507005257

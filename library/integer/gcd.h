@@ -1,5 +1,7 @@
 #pragma once
 
+#include <immintrin.h>
+
 // recursive
 template <typename T>
 T gcd(T p, T q) {

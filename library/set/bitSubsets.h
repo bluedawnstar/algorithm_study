@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 struct BitSubsets {
     static int clz(unsigned x) {
 #ifndef __GNUC__

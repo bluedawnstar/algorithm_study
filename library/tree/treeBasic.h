@@ -1,5 +1,7 @@
 #pragma once
 
+#include <immintrin.h>
+
 /*
 <How to use>
     1) call add() to construct tree

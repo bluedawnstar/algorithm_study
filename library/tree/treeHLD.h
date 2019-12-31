@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 // Simplified heavy-light decomposition
 struct HLD {
     int                 N;          // the number of vertex
