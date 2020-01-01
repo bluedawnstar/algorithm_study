@@ -137,10 +137,10 @@ private:
         a = a % M;
         while (x > 0) {
             if (x & 1)
-                res = long long(mulMod(res, a, M));
+                res = static_cast<long long>(mulMod(res, a, M));
 
             x >>= 1;
-            a = long long(mulMod(a, a, M));
+            a = static_cast<long long>(mulMod(a, a, M));
         }
 
         return res;
@@ -156,7 +156,8 @@ private:
         while (t--) {
             y = x;
             x = power(x, 2, n);
-            if (x == 1 && y != 1 && y != n - 1) return 1;
+            if (x == 1 && y != 1 && y != n - 1)
+                return 1;
         }
         return x != 1;
     }
