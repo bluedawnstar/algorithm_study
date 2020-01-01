@@ -29,4 +29,5 @@ int main(void) {
     TEST(DiscreteEquations);
     TEST(GarnerAlgorithm);
     TEST(FastModOp);
+    TEST(Int128);
 }

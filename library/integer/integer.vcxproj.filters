@@ -90,6 +90,9 @@
     <ClCompile Include="chineseRemainderTheorem-like.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="int128.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gcd.h">
@@ -189,6 +192,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="factorialModFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="int128.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
