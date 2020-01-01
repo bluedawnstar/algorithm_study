@@ -18,12 +18,12 @@ inline UInt128 makeUInt128(unsigned long long hi, unsigned long long lo) {
 
 #ifndef __GNUC__
 #include <intrin.h>
+#include <immintrin.h>
+#pragma warning(disable: 4146)
 #else
 #include <x86intrin.h>
-#endif
 #include <immintrin.h>
-
-#pragma warning(disable: 4146)
+#endif
 
 inline int clz(unsigned long long x) {
 #if defined(_M_X64)
@@ -81,7 +81,9 @@ inline unsigned long long mulx_u64_slow(unsigned long long x, unsigned long long
 
     return l;
 }
+#ifdef __GNUC__
 #define _mulx_u64   mulx_u64_slow
+#endif
 
 // (hi, lo)
 inline
