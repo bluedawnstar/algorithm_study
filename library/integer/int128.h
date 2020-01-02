@@ -145,8 +145,8 @@ inline unsigned long long mulx_u64_slow(unsigned long long x, unsigned long long
 
 // (hi, lo)
 inline
-static pair<pair<unsigned long long, unsigned long long>,  // quotient
-            pair<unsigned long long, unsigned long long>>  // remainder
+pair<pair<unsigned long long, unsigned long long>,  // quotient
+     pair<unsigned long long, unsigned long long>>  // remainder
 udivmod(pair<unsigned long long, unsigned long long> num,
         pair<unsigned long long, unsigned long long> den) {
     pair<unsigned long long, unsigned long long> bit(0ull, 1ull);
