@@ -194,6 +194,31 @@ void testInt128() {
         assert(z == gt);
     }
 
+    {
+        Int128 x(0x1234567890123456ll, 0x7890123456789012ull);
+        auto y = 0x23423432423ll;
+        auto z = x % Int128(y);
+
+        Int128 gt(0x0000000000000000ll, 0x000000cae23811d3ull);
+        if (z != gt) {
+            printf("Mismatched : (0x%016llx, 0x%016llx) %% 0x%016llx = (0x%016llx, 0x%016llx)\n",
+                   x.first, x.second, y, z.first, z.second);
+        }
+        assert(z == gt);
+    }
+    {
+        Int128 x(0x8234567890123456ll, 0x7890123456789012ull);
+        Int128 y(0x123ll, 0x4567890123456789ull);
+        auto z = x % y;
+
+        Int128 gt(0xffffffffffffffffll, 0xce3ae2345646cb72ull);
+        if (z != gt) {
+            printf("Mismatched : (0x%016llx, 0x%016llx) %% (0x%016llx, 0x%016llx) = (0x%016llx, 0x%016llx)\n",
+                   x.first, x.second, y.first, y.second, z.first, z.second);
+        }
+        assert(z == gt);
+    }
+
     //---
 
     {
@@ -340,6 +365,31 @@ void testInt128() {
         UInt128 gt(0x0000000000000000ull, 0x0010000000000000ull);
         if (z != gt) {
             printf("Mismatched : (0x%016llx, 0x%016llx) / (0x%016llx, 0x%016llx) = (0x%016llx, 0x%016llx)\n",
+                   x.first, x.second, y.first, y.second, z.first, z.second);
+        }
+        assert(z == gt);
+    }
+
+    {
+        UInt128 x(0x1234567890123456ull, 0x7890123456789012ull);
+        auto y = 0x23423432423ull;
+        auto z = x % UInt128(y);
+
+        UInt128 gt(0x0000000000000000ull, 0x000000cae23811d3ull);
+        if (z != gt) {
+            printf("Mismatched : (0x%016llx, 0x%016llx) %% 0x%016llx = (0x%016llx, 0x%016llx)\n",
+                   x.first, x.second, y, z.first, z.second);
+        }
+        assert(z == gt);
+    }
+    {
+        UInt128 x(0x1234567890123456ull, 0x7890123456789012ull);
+        UInt128 y(0x123ull, 0x4567890123456789ull);
+        auto z = x % y;
+
+        UInt128 gt(0x0000000000000000ull, 0x0000123456789012ull);
+        if (z != gt) {
+            printf("Mismatched : (0x%016llx, 0x%016llx) %% (0x%016llx, 0x%016llx) = (0x%016llx, 0x%016llx)\n",
                    x.first, x.second, y.first, y.second, z.first, z.second);
         }
         assert(z == gt);
