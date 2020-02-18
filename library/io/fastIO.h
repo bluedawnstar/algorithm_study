@@ -83,12 +83,12 @@ namespace FastIO {
             init();
         }
 
-        Stream& operator >> (int& x) {
+        Stream& operator >>(int& x) {
             x = readInt();
             return *this;
         }
 
-        Stream& operator >> (long long& x) {
+        Stream& operator >>(long long& x) {
             x = readLL();
             return *this;
         }

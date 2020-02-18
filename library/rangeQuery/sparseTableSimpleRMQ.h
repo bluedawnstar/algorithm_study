@@ -5,7 +5,7 @@
 #endif
 #include <immintrin.h>
 
-template<class T>
+template<typename T>
 struct SimpleSparseTableRMQ {
     int N;
     int H;
