@@ -1,5 +1,38 @@
 #pragma once
 
+// find all prime numbers and prime factors from 1 to n
+inline void primeFactorization(int n, vector<int>& primes, vector<vector<pair<int, int>>>& primeFactors) {
+    primes.clear();
+    primeFactors = vector<vector<pair<int, int>>>(n + 1);
+    if (n < 2)
+        return;
+
+    if (n >= 2) {
+        primes.push_back(2);
+        primeFactors[2].push_back(make_pair(2, 1));
+    }
+
+    for (int i = 3; i <= n; i++) {
+        bool isPrime = true;
+        int root = int(sqrt(i));
+        for (int j = 0; primes[j] <= root; j++) {
+            if (i % primes[j] == 0) {
+                primeFactors[i] = primeFactors[i / primes[j]];
+                if (primeFactors[i][0].first == primes[j])
+                    primeFactors[i][0].second++;
+                else
+                    primeFactors[i].insert(primeFactors[i].begin(), make_pair(primes[j], 1));
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime) {
+            primes.push_back(i);
+            primeFactors[i].push_back(make_pair(i, 1));
+        }
+    }
+}
+
 //--------- Prime Factors -------------------------------------------------
 
 // all minimum prime factors of [0, n]
