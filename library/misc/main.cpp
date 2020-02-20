@@ -10,4 +10,5 @@ int main(void) {
     TEST(JumpPointerSparseTable);
     TEST(ReservoirSampling);
     TEST(HuffmanAlgorithm);
+    TEST(Calendar);
 }

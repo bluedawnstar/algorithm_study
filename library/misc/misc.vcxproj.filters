@@ -30,6 +30,9 @@
     <ClCompile Include="huffmanAlgorithm.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="calendar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cycleDetection.h">
@@ -42,6 +45,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="huffmanAlgorithm.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="calendar.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
