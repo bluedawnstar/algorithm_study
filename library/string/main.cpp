@@ -52,4 +52,5 @@ int main(void) {
     TEST(SimpleSubstring);
     TEST(ReverseSubstringsBetweenParentheses);
     TEST(BracketSequencesBalanced);
+    TEST(SuffixArrayAlgoPrefixCounter);
 }

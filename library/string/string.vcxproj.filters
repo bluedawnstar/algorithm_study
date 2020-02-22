@@ -156,6 +156,9 @@
     <ClCompile Include="bracketSequencesBalanced.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="suffixArrayAlgo_PrefixCounter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -330,6 +333,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixArray_Skew.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArrayAlgo_PrefixCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
