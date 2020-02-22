@@ -41,7 +41,7 @@ using namespace std;
     } while (0)
 
 
-int getMaxCommonProperPrefixSuffix(const string& s, int x, int y) {
+static int getMaxCommonProperPrefixSuffix(const string& s, int x, int y) {
     if (x > y)
         swap(x, y);
 
@@ -58,7 +58,7 @@ int getMaxCommonProperPrefixSuffix(const string& s, int x, int y) {
     return 0;
 }
 
-int getMaxCommonPrefixSuffix(const string& s, int x, int y) {
+static int getMaxCommonPrefixSuffix(const string& s, int x, int y) {
     if (x > y)
         swap(x, y);
 
@@ -174,6 +174,96 @@ void testPrefixFunction() {
         assert(pfst.getMaxPrefixSuffixLessThanEqualK(5, 1) == 0);
         assert(pfst.getMaxPrefixSuffixLessThanEqualK(5, 0) == 0);
     }
+    //...
+#if 0
+    {
+        {
+            //Mismatched at 388 : (1, 75) = 2, 1, 2
+            const string s = "bbbbbaabbbbababababbabababaabbbabbaaaaaaabbabbabbaaaaaaaabbababababbbbbaabb"
+                "bbabbbbbabaabaaabbbbaabbaaabbbbbaaabbabbabbbbbaabbaabbabaaabbabaaaabbabbababbbbb"
+                "bbbbabaaaabababaaababbbbaaabbabbabbaabbaaabbbbbabaaababbbaaaaaabaabaabbaaaaaaaaa"
+                "aaabbabbbbbbbabbabaabbabbaababbbbbabbbbabbabababababbbabbbaaababbbaabbaaaaaaaaba"
+                "bbbbabbaaaabababaabbbbaababaaaabbaaabaaaabbbbbbbbbaabbbaaababbabbbaabbbbbaabaaab"
+                "babaaaabaabbbaaabbabbaaababbaababbbbaaababbabbbababbbbaabbbababbbaabaabbababbaab"
+                "babababbbbabaaaaaaaaaabababaabbbabbbabbaabbbabaabbaaababbbababbabaaaabaaabbbbbaa"
+                "baabaaaaaabbbabbbbaababaaaaabbabbaabaaabbbbababaaabbbabbaababbbaaababbaaaababbab"
+                "babbaabbaabaabaabbbabaababbbababbbaaaaaaababbaaaabaabbaaaabbbabbbaabbbbaabbababa"
+                "baababbaaaabbabbbbaabbbababbaaaabbbbabababbbabbaaabbbbabaaabaabbaaabbbbabababbaa"
+                "ababbabaaaaababaaabbbbaaaabaabbaabbbaaaaabaabbaaaaaabaaabbaaaabbabbaabbbbbbaaaba"
+                "aabbbaaabaabbabbaabbaaaabaaaabbabaaaabaabbbbaabaaaaababbbbabbbaaaaaabaababbbaabb"
+                "abbabababaaaaaababbabbbbbbabbaaaaaabaabbababa";
+            PrefixFunction pf(s);
+            int gt = getMaxCommonPrefixSuffix(s, 1, 75);
+            int ans1 = pf.getMaxCommonPrefixSuffix(1, 75);
+            int ans2 = pf.getMaxCommonPrefixSuffixFast(1, 75);
+            assert(gt == ans1 && gt == ans2);
+        }
+        {
+            //Mismatched at 388 : (1, 76) = 2, 1, 2
+            const string s = "bbbbbaabbbbababababbabababaabbbabbaaaaaaabbabbabbaaaaaaaabbababababbbbbaabb"
+                "bbabbbbbabaabaaabbbbaabbaaabbbbbaaabbabbabbbbbaabbaabbabaaabbabaaaabbabbababbbbb"
+                "bbbbabaaaabababaaababbbbaaabbabbabbaabbaaabbbbbabaaababbbaaaaaabaabaabbaaaaaaaaa"
+                "aaabbabbbbbbbabbabaabbabbaababbbbbabbbbabbabababababbbabbbaaababbbaabbaaaaaaaaba"
+                "bbbbabbaaaabababaabbbbaababaaaabbaaabaaaabbbbbbbbbaabbbaaababbabbbaabbbbbaabaaab"
+                "babaaaabaabbbaaabbabbaaababbaababbbbaaababbabbbababbbbaabbbababbbaabaabbababbaab"
+                "babababbbbabaaaaaaaaaabababaabbbabbbabbaabbbabaabbaaababbbababbabaaaabaaabbbbbaa"
+                "baabaaaaaabbbabbbbaababaaaaabbabbaabaaabbbbababaaabbbabbaababbbaaababbaaaababbab"
+                "babbaabbaabaabaabbbabaababbbababbbaaaaaaababbaaaabaabbaaaabbbabbbaabbbbaabbababa"
+                "baababbaaaabbabbbbaabbbababbaaaabbbbabababbbabbaaabbbbabaaabaabbaaabbbbabababbaa"
+                "ababbabaaaaababaaabbbbaaaabaabbaabbbaaaaabaabbaaaaaabaaabbaaaabbabbaabbbbbbaaaba"
+                "aabbbaaabaabbabbaabbaaaabaaaabbabaaaabaabbbbaabaaaaababbbbabbbaaaaaabaababbbaabb"
+                "abbabababaaaaaababbabbbbbbabbaaaaaabaabbababa";
+            PrefixFunction pf(s);
+            int gt = getMaxCommonPrefixSuffix(s, 1, 76);
+            int ans1 = pf.getMaxCommonPrefixSuffix(1, 76);
+            int ans2 = pf.getMaxCommonPrefixSuffixFast(1, 76);
+            assert(gt == ans1 && gt == ans2);
+        }
+        {
+            //Mismatched at 388 : (1, 369) = 2, 1, 2
+            const string s = "bbbbbaabbbbababababbabababaabbbabbaaaaaaabbabbabbaaaaaaaabbababababbbbbaabb"
+                "bbabbbbbabaabaaabbbbaabbaaabbbbbaaabbabbabbbbbaabbaabbabaaabbabaaaabbabbababbbbb"
+                "bbbbabaaaabababaaababbbbaaabbabbabbaabbaaabbbbbabaaababbbaaaaaabaabaabbaaaaaaaaa"
+                "aaabbabbbbbbbabbabaabbabbaababbbbbabbbbabbabababababbbabbbaaababbbaabbaaaaaaaaba"
+                "bbbbabbaaaabababaabbbbaababaaaabbaaabaaaabbbbbbbbbaabbbaaababbabbbaabbbbbaabaaab"
+                "babaaaabaabbbaaabbabbaaababbaababbbbaaababbabbbababbbbaabbbababbbaabaabbababbaab"
+                "babababbbbabaaaaaaaaaabababaabbbabbbabbaabbbabaabbaaababbbababbabaaaabaaabbbbbaa"
+                "baabaaaaaabbbabbbbaababaaaaabbabbaabaaabbbbababaaabbbabbaababbbaaababbaaaababbab"
+                "babbaabbaabaabaabbbabaababbbababbbaaaaaaababbaaaabaabbaaaabbbabbbaabbbbaabbababa"
+                "baababbaaaabbabbbbaabbbababbaaaabbbbabababbbabbaaabbbbabaaabaabbaaabbbbabababbaa"
+                "ababbabaaaaababaaabbbbaaaabaabbaabbbaaaaabaabbaaaaaabaaabbaaaabbabbaabbbbbbaaaba"
+                "aabbbaaabaabbabbaabbaaaabaaaabbabaaaabaabbbbaabaaaaababbbbabbbaaaaaabaababbbaabb"
+                "abbabababaaaaaababbabbbbbbabbaaaaaabaabbababa";
+            PrefixFunction pf(s);
+            int gt = getMaxCommonPrefixSuffix(s, 1, 369);
+            int ans1 = pf.getMaxCommonPrefixSuffix(1, 369);
+            int ans2 = pf.getMaxCommonPrefixSuffixFast(1, 369);
+            assert(gt == ans1 && gt == ans2);
+        }
+        {
+            //Mismatched at 388 : (2, 76) = 3, 2, 3
+            const string s = "bbbbbaabbbbababababbabababaabbbabbaaaaaaabbabbabbaaaaaaaabbababababbbbbaabb"
+                "bbabbbbbabaabaaabbbbaabbaaabbbbbaaabbabbabbbbbaabbaabbabaaabbabaaaabbabbababbbbb"
+                "bbbbabaaaabababaaababbbbaaabbabbabbaabbaaabbbbbabaaababbbaaaaaabaabaabbaaaaaaaaa"
+                "aaabbabbbbbbbabbabaabbabbaababbbbbabbbbabbabababababbbabbbaaababbbaabbaaaaaaaaba"
+                "bbbbabbaaaabababaabbbbaababaaaabbaaabaaaabbbbbbbbbaabbbaaababbabbbaabbbbbaabaaab"
+                "babaaaabaabbbaaabbabbaaababbaababbbbaaababbabbbababbbbaabbbababbbaabaabbababbaab"
+                "babababbbbabaaaaaaaaaabababaabbbabbbabbaabbbabaabbaaababbbababbabaaaabaaabbbbbaa"
+                "baabaaaaaabbbabbbbaababaaaaabbabbaabaaabbbbababaaabbbabbaababbbaaababbaaaababbab"
+                "babbaabbaabaabaabbbabaababbbababbbaaaaaaababbaaaabaabbaaaabbbabbbaabbbbaabbababa"
+                "baababbaaaabbabbbbaabbbababbaaaabbbbabababbbabbaaabbbbabaaabaabbaaabbbbabababbaa"
+                "ababbabaaaaababaaabbbbaaaabaabbaabbbaaaaabaabbaaaaaabaaabbaaaabbabbaabbbbbbaaaba"
+                "aabbbaaabaabbabbaabbaaaabaaaabbabaaaabaabbbbaabaaaaababbbbabbbaaaaaabaababbbaabb"
+                "abbabababaaaaaababbabbbbbbabbaaaaaabaabbababa";
+            PrefixFunction pf(s);
+            int gt = getMaxCommonPrefixSuffix(s, 2, 76);
+            int ans1 = pf.getMaxCommonPrefixSuffix(2, 76);
+            int ans2 = pf.getMaxCommonPrefixSuffixFast(2, 76);
+            assert(gt == ans1 && gt == ans2);
+        }
+    }
+    //...
+#endif
     //--- max common proper prefix-suffix
     {
         for (int CHAR_N = 1; CHAR_N <= 10; CHAR_N++) {
@@ -187,7 +277,7 @@ void testPrefixFunction() {
                     int ans1 = pf.getMaxCommonProperPrefixSuffix(x, y);
                     int ans2 = pf.getMaxCommonProperPrefixSuffixFast(x, y);
                     if (gt != ans1 || gt != ans2) {
-                        cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                        cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                         cout << " s = " << s << endl;
                     }
                     assert(gt == ans1 && gt == ans2);
@@ -209,7 +299,7 @@ void testPrefixFunction() {
                 int ans1 = pf.getMaxCommonProperPrefixSuffix(x, y);
                 int ans2 = pf.getMaxCommonProperPrefixSuffixFast(x, y);
                 if (gt != ans1 || gt != ans2) {
-                    cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                    cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                     cout << " s = " << s << endl;
                 }
                 assert(gt == ans1 && gt == ans2);
@@ -230,7 +320,7 @@ void testPrefixFunction() {
                 int ans1 = pf.getMaxCommonProperPrefixSuffix(x, y);
                 int ans2 = pf.getMaxCommonProperPrefixSuffixFast(x, y);
                 if (gt != ans1 || gt != ans2) {
-                    cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                    cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                     cout << " s = " << s << endl;
                 }
                 assert(gt == ans1 && gt == ans2);
@@ -252,7 +342,7 @@ void testPrefixFunction() {
                     int ans1 = pf.getMaxCommonProperPrefixSuffix(x, y);
                     int ans2 = pf.getMaxCommonProperPrefixSuffixFast(x, y);
                     if (gt != ans1 || gt != ans2) {
-                        cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                        cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                         cout << " s = " << s << endl;
                     }
                     assert(gt == ans1 && gt == ans2);
@@ -275,7 +365,7 @@ void testPrefixFunction() {
                     int ans1 = pf.getMaxCommonProperPrefixSuffix(x, y);
                     int ans2 = pf.getMaxCommonProperPrefixSuffixFast(x, y);
                     if (gt != ans1 || gt != ans2) {
-                        cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                        cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                         cout << " s = " << s << endl;
                     }
                     assert(gt == ans1 && gt == ans2);
@@ -296,7 +386,7 @@ void testPrefixFunction() {
                     int ans1 = pf.getMaxCommonPrefixSuffix(x, y);
                     int ans2 = pf.getMaxCommonPrefixSuffixFast(x, y);
                     if (gt != ans1 || gt != ans2) {
-                        cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                        cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                         cout << " s = " << s << endl;
                     }
                     assert(gt == ans1 && gt == ans2);
@@ -318,10 +408,8 @@ void testPrefixFunction() {
                 int ans1 = pf.getMaxCommonPrefixSuffix(x, y);
                 int ans2 = pf.getMaxCommonPrefixSuffixFast(x, y);
                 if (gt != ans1 || gt != ans2) {
-                    cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                    cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                     cout << " s = " << s << endl;
-                    ans1 = pf.getMaxCommonPrefixSuffix(x, y);
-                    ans2 = pf.getMaxCommonPrefixSuffixFast(x, y);
                 }
                 assert(gt == ans1 && gt == ans2);
             }
@@ -341,7 +429,7 @@ void testPrefixFunction() {
                 int ans1 = pf.getMaxCommonPrefixSuffix(x, y);
                 int ans2 = pf.getMaxCommonPrefixSuffixFast(x, y);
                 if (gt != ans1 || gt != ans2) {
-                    cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                    cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                     cout << " s = " << s << endl;
                 }
                 assert(gt == ans1 && gt == ans2);
@@ -363,7 +451,7 @@ void testPrefixFunction() {
                     int ans1 = pf.getMaxCommonPrefixSuffix(x, y);
                     int ans2 = pf.getMaxCommonPrefixSuffixFast(x, y);
                     if (gt != ans1 || gt != ans2) {
-                        cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                        cout << "Mismatched " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                         cout << " s = " << s << endl;
                     }
                     assert(gt == ans1 && gt == ans2);
@@ -386,13 +474,20 @@ void testPrefixFunction() {
                     int ans1 = pf.getMaxCommonPrefixSuffix(x, y);
                     int ans2 = pf.getMaxCommonPrefixSuffixFast(x, y);
                     if (gt != ans1 || gt != ans2) {
-                        cout << "Mismatched : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
+                        cout << "Mismatched at " << __LINE__ << " : (" << x << ", " << y << ") = " << ans1 << ", " << ans2 << ", " << gt << endl;
                         cout << " s = " << s << endl;
                     }
                     assert(gt == ans1 && gt == ans2);
                 }
             }
         }
+    }
+    //--- count all prefix
+    {
+        const string s = "bcabcabc";
+        PrefixFunction pf(s);
+        auto cnt = countAllPrefix(pf);
+        cout << "the number of all prefix of \"" << s << "\" : " << cnt << endl;
     }
 
     cout << "OK!" << endl;

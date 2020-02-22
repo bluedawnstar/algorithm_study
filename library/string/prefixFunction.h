@@ -159,7 +159,7 @@ struct PrefixFunction {
 
             int repeat1 = n1 - pi[n1 - 1];
             int repeat2 = n2 - pi[n2 - 1];
-            if (repeat1 == repeat2)
+            if (repeat1 == repeat2 && n1 % repeat1 == n2 % repeat2)
                 return min(n1, n2);
 
             if (n1 > n2)
@@ -203,17 +203,32 @@ struct PrefixFunction {
 
         if (i > j)
             swap(i, j);
+        if (i == 0)
+            return 1;
 
         int n1 = i + 1;
-        int n2 = pi[j];
-        if (n1 == n2)
-            return n1;
-        else if (n1 < n2) {
-            int repeat2 = n2 - pi[n2 - 1];
-            if ((n2 - n1) % repeat2 == 0)
+        int n2 = j + 1;
+        while (n1 > 0 && n2 > 0) {
+            if (n1 == n2)
                 return n1;
-        }
 
-        return getMaxCommonProperPrefixSuffixFast(i, j);
+            int repeat1 = n1 - pi[n1 - 1];
+            int repeat2 = n2 - pi[n2 - 1];
+            if (repeat1 == repeat2 && n1 % repeat1 == n2 % repeat2)
+                return min(n1, n2);
+
+            if (n1 > n2)
+                if (n1 == i + 1)
+                    n1 = pi[i];
+                else
+                    n1 %= repeat1;
+            else {
+                if (n2 == j + 1)
+                    n2 = pi[j];
+                else
+                    n2 %= repeat2;
+            }
+        }
+        return 0;
     }
 };
