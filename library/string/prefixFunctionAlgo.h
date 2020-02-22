@@ -3,7 +3,7 @@
 #include "prefixFunction.h"
 
 // return max overlapping length between a's suffix and b's prefix
-int maxOverlapLength(const string& a, const string& b) {
+inline int maxOverlapLength(const string& a, const string& b) {
     int n = int(a.length()), m = int(b.length());
     PrefixFunction bPref(b);
 
@@ -19,7 +19,7 @@ int maxOverlapLength(const string& a, const string& b) {
     return j;
 }
 
-int maxOverlapLength(const string& a, const PrefixFunction& b) {
+inline int maxOverlapLength(const string& a, const PrefixFunction& b) {
     int n = int(a.length()), m = int(b.p.length());
 
     int j = 0;
@@ -32,4 +32,23 @@ int maxOverlapLength(const string& a, const PrefixFunction& b) {
     }
 
     return j;
+}
+
+inline vector<int> countAllPrefix(const PrefixFunction& pf) {
+    int n = int(pf.p.length());
+
+    vector<int> res(n + 1);
+    // longest proper prefix-suffix
+    for (int i = 0; i < n; i++)
+        res[pf.pi[i]]++;
+    // all proper subset of prefix-suffix
+    for (int i = n - 1; i > 0; i--)
+        res[pf.pi[i - 1]] += res[i];
+    // each prefix itself
+    for (int i = 0; i <= n; i++)
+        res[i]++;
+
+    res[0] = 0;
+
+    return res;
 }
