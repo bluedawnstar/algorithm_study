@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "diophantineEquation.h"
+#include "diophantineEquation2.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -14,9 +15,10 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 
 void testDiophantineEquation() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Diophantine Equations -------------------------" << endl;
     // linear diophantine equation
@@ -39,6 +41,26 @@ void testDiophantineEquation() {
                 assert(!(minx <= xx && xx <= maxx && miny <= yy && yy <= maxy));
             else
                 assert(minx <= xx && xx <= maxx && miny <= yy && yy <= maxy);
+        }
+    }
+    {
+        int T = 1000;
+        int N = 10000;
+        while (T-- > 0) {
+            long long a = RandInt32::get() % N + 1;
+            long long b = RandInt32::get() % N + 1;
+            long long c = RandInt32::get() % N + 1;
+            long long i, j;
+            if (DiophantineEquation2::solveDiophantine(a, b, c, i, j)) {
+                int y = a * i - b * j;
+                if (y != c) {
+                    cout << "Mismatched at " << i << " : " << a << " * i - " << b << " * j = " << c << endl;
+                    cout << "          " << a << " * " << i << " - " << b << " * " << j << " = " << y << endl;
+                }
+                assert(a * i - b * j == c);
+            } else {
+                cout << "Can't solve this equation : " << a << " * i - " << b << " * j = " << c << endl;
+            }
         }
     }
     cout << "OK!" << endl;

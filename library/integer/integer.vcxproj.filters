@@ -197,5 +197,8 @@
     <ClInclude Include="int128.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="diophantineEquation2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

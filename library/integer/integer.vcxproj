@@ -175,6 +175,7 @@
     <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="digit.h" />
     <ClInclude Include="diophantineEquation.h" />
+    <ClInclude Include="diophantineEquation2.h" />
     <ClInclude Include="discreteEquations.h" />
     <ClInclude Include="discreteLog.h" />
     <ClInclude Include="discreteRoot.h" />
