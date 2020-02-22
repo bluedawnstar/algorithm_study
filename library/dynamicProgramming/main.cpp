@@ -15,6 +15,8 @@ int main(void) {
     TEST(BitDP);
     TEST(DigitDP);
     TEST(DigitDP_IncreasingDigitSequence);
+    TEST(DigitDP100Sum);
+    TEST(DigitDPPalindromicNumber);
     TEST(ProductSumOfSubarray);
     TEST(PersistentConvexHull);
     TEST(DynamicUpperEnvelope);

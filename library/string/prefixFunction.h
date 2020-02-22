@@ -118,8 +118,10 @@ struct PrefixFunction {
         return res;
     }
 
+    //---
+
     // length of max common proper suffix-prefix substring between substring s[0..i] and s[0..j]
-    //   ex) "bcabcabc" : getMaxCommonPrefixSuffix(4, 7) = 2
+    //   ex) "bcabcabc" : getMaxCommonProperPrefixSuffix(4, 7) = 2
     // [CAUTION] exclude s[0..i] == s[(j-i)..j]
     int getMaxCommonProperPrefixSuffix(int i, int j) const {
         if (p[i] != p[j])
@@ -141,7 +143,7 @@ struct PrefixFunction {
     }
 
     // length of max common proper suffix-prefix substring between substring s[0..i] and s[0..j]
-    //   ex) "bcabcabc" : getMaxCommonPrefixSuffix(4, 7) = 2
+    //   ex) "bcabcabc" : getMaxCommonProperPrefixSuffix(4, 7) = 2
     // [CAUTION] exclude s[0..i] == s[(j-i)..j]
     int getMaxCommonProperPrefixSuffixFast(int i, int j) const {
         if (p[i] != p[j])
@@ -155,67 +157,63 @@ struct PrefixFunction {
             if (n1 == n2)
                 return n1;
 
-            int cycle1 = n1 - pi[n1 - 1];
-            int cycle2 = n2 - pi[n2 - 1];
-            if (cycle1 == cycle2)
+            int repeat1 = n1 - pi[n1 - 1];
+            int repeat2 = n2 - pi[n2 - 1];
+            if (repeat1 == repeat2)
                 return min(n1, n2);
 
             if (n1 > n2)
-                n1 %= cycle1;
+                n1 %= repeat1;
             else
-                n2 %= cycle2;
+                n2 %= repeat2;
         }
         return 0;
     }
 
-private:
-    // a * x + b * y = gcd(a, b)
-    static int extGcd(int a, int b, int& x, int& y) {
-        if (b == 0) {
-            x = 1;
-            y = 0;
-            return a;
+    //---
+
+    // length of max common proper suffix-prefix substring between substring s[0..i] and s[0..j]
+    //   ex) "bcabcabc" : getMaxCommonPrefixSuffix(4, 7) = 2, getMaxCommonPrefixSuffix(3, 6) = 4
+    int getMaxCommonPrefixSuffix(int i, int j) const {
+        if (p[i] != p[j])
+            return 0;
+        else if (i == j)
+            return i + 1;
+
+        int n1 = i + 1;
+        int n2 = j + 1;
+        while (n1 > 0 && n2 > 0) {
+            if (n1 == n2)
+                return n1;
+            else if (n1 > n2)
+                n1 = pi[n1 - 1];
+            else
+                n2 = pi[n2 - 1];
         }
-
-        int x1, y1;
-        int g = extGcd(b, a % b, x1, y1);
-
-        x = y1;
-        y = x1 - (a / b) * y1;
-        return g;
+        return 0;
     }
 
-    // a*i - b*j = c (diophantine equation), (a > 0, b > 0, c > 0, i > 0, j >= 0)
-    // find (i, j) with absolute minimum value of i and j
-    static bool solveDiophantine(int a, int b, int c, int& i, int& j) {
-        int g = extGcd(a, b, i, j);
-        if (c % g)
-            return false;
+    // length of max common proper suffix-prefix substring between substring s[0..i] and s[0..j]
+    //   ex) "bcabcabc" : getMaxCommonPrefixSuffix(4, 7) = 2, getMaxCommonPrefixSuffix(3, 6) = 4
+    int getMaxCommonPrefixSuffixFast(int i, int j) const {
+        if (p[i] != p[j])
+            return 0;
+        else if (i == j)
+            return i + 1;
 
-        i *= c / g;
-        j *= c / g;
+        if (i > j)
+            swap(i, j);
 
-        int at = a / g;
-        int bt = b / g;
-
-        if (i < 0 || j > 0) {
-            // (i < 0 && j >= 0) or (i <= 0 && j > 0)
-            int k = min((abs(i) + bt - 1) / bt, (abs(j) + at - 1) / at);
-            i += bt * k;
-            j -= at * k;
-        } else {
-            // (i >= 0 && j <= 0)
-            int k = min(abs(i) / bt, abs(j) / at);
-            i -= bt * k;
-            j += at * k;
+        int n1 = i + 1;
+        int n2 = pi[j];
+        if (n1 == n2)
+            return n1;
+        else if (n1 < n2) {
+            int repeat2 = n2 - pi[n2 - 1];
+            if ((n2 - n1) % repeat2 == 0)
+                return n1;
         }
-        if (i == 0) {
-            i += bt;
-            j -= at;
-        }
-        if (j < 0)
-            j = -j;
 
-        return true;
+        return getMaxCommonProperPrefixSuffixFast(i, j);
     }
 };
