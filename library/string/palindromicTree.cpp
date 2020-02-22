@@ -34,7 +34,7 @@ static vector<string> findSuffixPalindromes(const string& s, int R) {
 }
 
 void testPalindromicTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Palindromic Tree ---" << endl;
     {

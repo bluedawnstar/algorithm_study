@@ -34,7 +34,7 @@ static string makeRandomString(int n, int charCnt) {
 }
 
 void testSimpleSuffixArray() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Simple Suffix Array --------------------" << endl;
     {
