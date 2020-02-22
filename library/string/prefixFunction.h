@@ -117,4 +117,105 @@ struct PrefixFunction {
         }
         return res;
     }
+
+    // length of max common proper suffix-prefix substring between substring s[0..i] and s[0..j]
+    //   ex) "bcabcabc" : getMaxCommonPrefixSuffix(4, 7) = 2
+    // [CAUTION] exclude s[0..i] == s[(j-i)..j]
+    int getMaxCommonProperPrefixSuffix(int i, int j) const {
+        if (p[i] != p[j])
+            return 0;
+        else if (i == j)
+            return pi[i];
+
+        int n1 = pi[i];
+        int n2 = pi[j];
+        while (n1 > 0 && n2 > 0) {
+            if (n1 == n2)
+                return n1;
+            else if (n1 > n2)
+                n1 = pi[n1 - 1];
+            else
+                n2 = pi[n2 - 1];
+        }
+        return 0;
+    }
+
+    // length of max common proper suffix-prefix substring between substring s[0..i] and s[0..j]
+    //   ex) "bcabcabc" : getMaxCommonPrefixSuffix(4, 7) = 2
+    // [CAUTION] exclude s[0..i] == s[(j-i)..j]
+    int getMaxCommonProperPrefixSuffixFast(int i, int j) const {
+        if (p[i] != p[j])
+            return 0;
+        else if (i == j)
+            return pi[i];
+
+        int n1 = pi[i];
+        int n2 = pi[j];
+        while (n1 > 0 && n2 > 0) {
+            if (n1 == n2)
+                return n1;
+
+            int cycle1 = n1 - pi[n1 - 1];
+            int cycle2 = n2 - pi[n2 - 1];
+            if (cycle1 == cycle2)
+                return min(n1, n2);
+
+            if (n1 > n2)
+                n1 %= cycle1;
+            else
+                n2 %= cycle2;
+        }
+        return 0;
+    }
+
+private:
+    // a * x + b * y = gcd(a, b)
+    static int extGcd(int a, int b, int& x, int& y) {
+        if (b == 0) {
+            x = 1;
+            y = 0;
+            return a;
+        }
+
+        int x1, y1;
+        int g = extGcd(b, a % b, x1, y1);
+
+        x = y1;
+        y = x1 - (a / b) * y1;
+        return g;
+    }
+
+    // a*i - b*j = c (diophantine equation), (a > 0, b > 0, c > 0, i > 0, j >= 0)
+    // find (i, j) with absolute minimum value of i and j
+    static bool solveDiophantine(int a, int b, int c, int& i, int& j) {
+        int g = extGcd(a, b, i, j);
+        if (c % g)
+            return false;
+
+        i *= c / g;
+        j *= c / g;
+
+        int at = a / g;
+        int bt = b / g;
+
+        if (i < 0 || j > 0) {
+            // (i < 0 && j >= 0) or (i <= 0 && j > 0)
+            int k = min((abs(i) + bt - 1) / bt, (abs(j) + at - 1) / at);
+            i += bt * k;
+            j -= at * k;
+        } else {
+            // (i >= 0 && j <= 0)
+            int k = min(abs(i) / bt, abs(j) / at);
+            i -= bt * k;
+            j += at * k;
+        }
+        if (i == 0) {
+            i += bt;
+            j -= at;
+        }
+        if (j < 0)
+            j = -j;
+
+        return true;
+    }
 };
