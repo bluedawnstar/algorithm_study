@@ -33,6 +33,45 @@ inline void primeFactorization(int n, vector<int>& primes, vector<vector<pair<in
     }
 }
 
+// primeFactors = { (factor, power), ... }
+inline vector<int> generateFactors(const vector<pair<int, int>>& primeFactors) {
+    if (primeFactors.empty())
+        return vector<int>(1, 1);
+
+    int sz = 1;
+    for (auto& it : primeFactors)
+        sz *= it.second + 1;
+
+    vector<int> res;
+    res.reserve(sz);
+
+    res.push_back(1);
+
+    int x = primeFactors[0].first;
+    int n = primeFactors[0].second;
+    int xpow = x;
+    for (int i = 0; i < n; i++) {
+        res.push_back(xpow);
+        xpow *= x;
+    }
+    for (int i = 1; i < int(primeFactors.size()); i++) {
+        int prevN = int(res.size());
+
+        x = primeFactors[i].first;
+        n = primeFactors[i].second;
+        int xpow = x;
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < prevN; k++)
+                res.push_back(res[k] * xpow);
+            xpow *= x;
+        }
+    }
+
+    sort(res.begin(), res.end());
+
+    return res;
+}
+
 //--------- Prime Factors -------------------------------------------------
 
 // all minimum prime factors of [0, n]
