@@ -1,6 +1,6 @@
 #pragma once
 
-// https://www.hackerearth.com/challenges/competitive/february-circuits-20/algorithm/find-the-number-3-a38198db/
+// https://www.hackerearth.com/problem/algorithm/find-the-number-3-a38198db/
 
 // '100sum' is a number that adds up to 100 for each digit.
 struct DigitDP_100Sum {

@@ -1,6 +1,6 @@
 #pragma once
 
-// https://www.hackerearth.com/challenges/competitive/february-circuits-20/algorithm/kth-palindrome-45f48699/ 
+// https://www.hackerearth.com/problem/algorithm/kth-palindrome-45f48699/
 
 struct DigitDP_PalindromicNumber {
     static long long count(long long n) {
