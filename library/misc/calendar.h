@@ -1,8 +1,8 @@
 #pragma once
 
 struct Calendar {
-    static bool isLeapYear(int y) {
-        return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+    static bool isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
     // 1.1.1 = monday
@@ -13,7 +13,7 @@ struct Calendar {
 
         int y = year - 1;
 
-        long long res = 365 * y + y / 4 - y / 100 + y / 400;
+        long long res = 365ll * y + y / 4 - y / 100 + y / 400;
         if (month > 2 && isLeapYear(year))
             res++;
 
@@ -23,6 +23,19 @@ struct Calendar {
 
         return res;
     }
+
+
+    // magical algorithm
+    // https://leetcode.com/problems/number-of-days-between-two-dates/discuss/517582/Python-Magical-Formula
+    static long long getTotalDaysSimple(int year, int month, int day) {
+        if (month == 1 || month == 2) {
+            month += 12;
+            year--;
+        }
+        auto res = 365ll * year + year / 4 + year / 400 - year / 100 + day + (153 * month + 8) / 5;
+        return res - 399;
+    }
+
 
     // [INFO] The combination of month, day, and day of the week repeats every 800 years.
     // 1.1.1 = 801.1.1 = monday
