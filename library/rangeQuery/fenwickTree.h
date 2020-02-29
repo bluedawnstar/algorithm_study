@@ -124,7 +124,7 @@ struct FenwickTree {
         T res = tree[pos + 1];
         if (pos > 0) {
             int lca = pos & (pos + 1);
-            for (pos; pos != lca; pos &= pos - 1)
+            for (; pos != lca; pos &= pos - 1)
                 res -= tree[pos];
         }
 

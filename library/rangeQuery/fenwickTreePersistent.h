@@ -73,7 +73,7 @@ struct PartiallyPersistentFenwickTree {
         T res = getLastAt(pos + 1);
         if (pos > 0) {
             int lca = pos & (pos + 1);
-            for (pos; pos != lca; pos &= pos - 1)
+            for (; pos != lca; pos &= pos - 1)
                 res -= getLastAt(pos);
         }
 
@@ -85,7 +85,7 @@ struct PartiallyPersistentFenwickTree {
         T res = getAt(time, pos + 1);
         if (pos > 0) {
             int lca = pos & (pos + 1);
-            for (pos; pos != lca; pos &= pos - 1)
+            for (; pos != lca; pos &= pos - 1)
                 res -= getAt(time, pos);
         }
 
