@@ -56,7 +56,7 @@ static vector<vector<pair<int, int>>> buildR2L(const vector<int>& v) {
 }
 
 void testGcdOnSubsegments() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- GCD on Subsegments -------------------" << endl;
     {

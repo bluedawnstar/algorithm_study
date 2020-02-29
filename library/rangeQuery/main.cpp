@@ -64,4 +64,5 @@ int main(void) {
     TEST(VectorRangeSum);
     TEST(VectorRangeQuery);
     TEST(GcdOnSubsegments);
+    TEST(MaxConsecutiveSubarray);
 }
