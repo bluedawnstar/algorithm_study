@@ -27,6 +27,7 @@ struct Calendar {
 
     // magical algorithm
     // https://leetcode.com/problems/number-of-days-between-two-dates/discuss/517582/Python-Magical-Formula
+    // http://www.ams.org/publicoutreach/feature-column/fcarc-time?fbclid=IwAR3XPF5qaGqb-oFrWlkGJT1TC56jWMwzJNbN6LathIswnyDAenBOzdREqjk
     static long long getTotalDaysSimple(int year, int month, int day) {
         if (month == 1 || month == 2) {
             month += 12;
