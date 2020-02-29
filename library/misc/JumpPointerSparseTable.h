@@ -6,7 +6,7 @@ struct JumpPointerSparseTable {
     int                 logN;      // 
     vector<vector<int>> P;         // P[0][n] points to the parent
 
-    JumpPointerSparseTable(int N) {
+    explicit JumpPointerSparseTable(int N) {
         init(N);
     }
 
