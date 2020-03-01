@@ -23,4 +23,5 @@ int main(void) {
     TEST(LinearRecurrence);
     TEST(SumOfPower);
     TEST(LongestArithmeticSubsequence);
+    TEST(RoundRobinTournament);
 }

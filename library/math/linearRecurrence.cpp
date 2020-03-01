@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/rand.h"
 
 void testLinearRecurrence() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Linear Recurrence (Berlekamp-Massey & Kitamasa) ---------------------------" << endl;
     // Berlekamp-Massey & Kitamasa
