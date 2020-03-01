@@ -44,4 +44,5 @@ int main(void) {
     TEST(MaxNonoverlappingIntervals);
     TEST(MaxProfit);
     TEST(PalindromicPartitioning);
+    TEST(BracketChangeCounter);
 }

@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bitDP.cpp" />
+    <ClCompile Include="bracketChangeCounter.cpp" />
     <ClCompile Include="digitDP_100sum.cpp" />
     <ClCompile Include="digitDP_IncreasingDigitSequence.cpp" />
     <ClCompile Include="digitDP_PalindromicNumber.cpp" />
@@ -190,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitDP.h" />
+    <ClInclude Include="bracketChangeCounter.h" />
     <ClInclude Include="digitCounter.h" />
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="digitDP_100sum.h" />

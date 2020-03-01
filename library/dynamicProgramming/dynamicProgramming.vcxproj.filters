@@ -138,6 +138,9 @@
     <ClCompile Include="digitDP_PalindromicNumber.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bracketChangeCounter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -300,6 +303,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="digitDP_PalindromicNumber.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bracketChangeCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
