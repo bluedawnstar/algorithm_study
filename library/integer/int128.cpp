@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testInt128() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Int128 -------------------------" << endl;
     {

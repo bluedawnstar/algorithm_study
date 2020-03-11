@@ -78,7 +78,7 @@ struct GcdCombSolver2 {
 
 
 void testGcd() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- gcd() / lcm() / extGcd() -------------------------" << endl;
     {

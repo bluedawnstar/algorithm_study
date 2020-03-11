@@ -31,7 +31,7 @@ static int combSlow(int n, int r) {
 }
 
 void testFastModOp() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Fast Modular Operation -------------------------" << endl;
     {
