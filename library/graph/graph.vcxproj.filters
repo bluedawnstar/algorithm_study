@@ -87,6 +87,9 @@
     <ClCompile Include="bipartiteMatching.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="dagMinPathCover.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -174,6 +177,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="basicUndirectedGraph_CutVertex.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dagMinPathCover.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

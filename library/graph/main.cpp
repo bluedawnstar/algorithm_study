@@ -14,6 +14,7 @@ int main(void) {
     TEST(BCC);
     TEST(BlockCutTree);
     TEST(DAG);
+    TEST(MinPathCoverDAG);
     TEST(BipartiteMaching);
     TEST(BipartiteGraphCheck);
     TEST(GeneralGraphMaxMatching);
