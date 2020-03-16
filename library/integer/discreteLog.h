@@ -9,25 +9,37 @@ struct DiscreteLog {
         int n = int(ceil(sqrt(mod))) + 1;
 
         long long an = 1;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
+            if (an == b)
+                return i;
             an = modMul(an, a, mod);
-
-        unordered_map<long long, long long> vals;
-        long long cur = an;
-        for (int i = 1; i <= n; i++) {
-            if (vals.find(cur) == vals.end())
-                vals[cur] = i;
-            cur = modMul(cur, an, mod);
+        }
+        {
+            // try to find smallest value
+            auto t = an;
+            for (int i = n, maxi = int(min(10000ll, mod)); i <= maxi; i++) {
+                if (t == b)
+                    return i;
+                t = modMul(t, a, mod);
+            }
         }
 
-        cur = b;
+        // baby-step
+        unordered_map<long long, int> vals;
+        long long cur = b;
         for (int i = 0; i <= n; i++) {
-            if (vals.find(cur) != vals.end()) {
-                long long ans = vals[cur] * n - i;
-                if (ans < mod)
-                    return ans;
-            }
+            if (vals.find(cur) == vals.end())
+                vals[cur] = i;
             cur = modMul(cur, a, mod);
+        }
+
+        // giant-step
+        cur = an;
+        for (int i = 1; i <= n; i++) {
+            auto it = vals.find(cur);
+            if (it != vals.end())
+                return 1ll * n * i - it->second;
+            cur = modMul(cur, an, mod);
         }
 
         return -1;
@@ -40,25 +52,37 @@ struct DiscreteLog {
         int n = int(ceil(sqrt(mod))) + 1;
 
         long long an = 1;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
+            if (an == bm)
+                return i;
             an = (an * am) % mod;
-
-        unordered_map<long long, int> vals;
-        long long cur = an;
-        for (int i = 1; i <= n; i++) {
-            if (vals.find(cur) == vals.end())
-                vals[cur] = i;
-            cur = (cur * an) % mod;
+        }
+        {
+            // try to find smallest value
+            auto t = an;
+            for (int i = n, maxi = min(100, mod); i <= maxi; i++) {
+                if (t == bm)
+                    return i;
+                t = (t * am) % mod;
+            }
         }
 
-        cur = bm;
+        // baby-steps
+        unordered_map<long long, int> vals;
+        long long cur = bm;
         for (int i = 0; i <= n; i++) {
-            if (vals.find(cur) != vals.end()) {
-                int ans = vals[cur] * n - i;
-                if (ans < mod)
-                    return ans;
-            }
+            if (vals.find(cur) == vals.end())
+                vals[cur] = i;
             cur = (cur * am) % mod;
+        }
+
+        // giant-steps
+        cur = an;
+        for (int i = 1; i <= n; i++) {
+            auto it = vals.find(cur);
+            if (it != vals.end())
+                return n * i - it->second;
+            cur = (cur * an) % mod;
         }
 
         return -1;

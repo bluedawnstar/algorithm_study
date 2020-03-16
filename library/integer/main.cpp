@@ -30,4 +30,5 @@ int main(void) {
     TEST(GarnerAlgorithm);
     TEST(FastModOp);
     TEST(Int128);
+    TEST(DiscreteLog);
 }
