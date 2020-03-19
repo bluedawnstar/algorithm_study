@@ -32,7 +32,7 @@ struct BitSet {
     }
 
     static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = unsigned(-1);
+    static const unsigned BIT_ALL = ~0u;
     static const unsigned BIT_ONE = 1u;
 
     static const int INDEX_MASK = 0x1F;

@@ -13,7 +13,7 @@ struct HAMTConfig {
     //typedef unsigned int BitmapT;
 
     //static const int BITMAP_BITS = sizeof(unsigned int) * 8;
-    //static const unsigned int BITMAP_ALL = 0xffffffffu;
+    //static const unsigned int BITMAP_ALL = ~0u;
     //static const unsigned int BITMAP_ONE = 1u;
 
     //* for hash values
@@ -39,7 +39,7 @@ struct HAMTConfigUInt32 {
     typedef unsigned int BitmapT;
 
     static const int BITMAP_BITS = sizeof(unsigned int) * 8;
-    static const unsigned int BITMAP_ALL = 0xffffffffu;
+    static const unsigned int BITMAP_ALL = ~0u;
     static const unsigned int BITMAP_ONE = 1u;
 
     // for hash values (unsigned int)
@@ -47,7 +47,7 @@ struct HAMTConfigUInt32 {
     static const unsigned int HASH_BITMAP_INDEX_MASK = 0x1F;
 
     static const int ROOT_HASH_BITS = _HASH_BITS - _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
-    static const unsigned int ROOT_HASH_MASK = 0xffffffffu << (_MAX_DEPTH * HASH_BITMAP_INDEX_BITS);
+    static const unsigned int ROOT_HASH_MASK = ~0u << (_MAX_DEPTH * HASH_BITMAP_INDEX_BITS);
 
     static const int HAMT_BITS = _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
     static const int MAX_HAMT_DEPTH = HAMT_BITS / HASH_BITMAP_INDEX_BITS;
@@ -74,7 +74,7 @@ struct HAMTConfigUInt64 {
     typedef unsigned long long BitmapT;
 
     static const int BITMAP_BITS = sizeof(unsigned long long) * 8;
-    static const unsigned long long BITMAP_ALL = 0xffffffffffffffffull;
+    static const unsigned long long BITMAP_ALL = ~0ull;
     static const unsigned long long BITMAP_ONE = 1ull;
 
     // for hash values (unsigned int)
@@ -82,7 +82,7 @@ struct HAMTConfigUInt64 {
     static const unsigned int HASH_BITMAP_INDEX_MASK = 0x3F;
 
     static const int ROOT_HASH_BITS = _HASH_BITS - _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
-    static const unsigned int ROOT_HASH_MASK = 0xffffffffu << (_MAX_DEPTH * HASH_BITMAP_INDEX_BITS);
+    static const unsigned int ROOT_HASH_MASK = ~0u << (_MAX_DEPTH * HASH_BITMAP_INDEX_BITS);
 
     static const int HAMT_BITS = _MAX_DEPTH * HASH_BITMAP_INDEX_BITS;
     static const int MAX_HAMT_DEPTH = HAMT_BITS / HASH_BITMAP_INDEX_BITS;
@@ -108,7 +108,7 @@ struct HAMTConfigUInt32Depth1 {
     typedef unsigned int BitmapT;
 
     static const int BITMAP_BITS = sizeof(unsigned int) * 8;
-    static const unsigned int BITMAP_ALL = 0xffffffffu;
+    static const unsigned int BITMAP_ALL = ~0u;
     static const unsigned int BITMAP_ONE = 1u;
 
     // for hash values (unsigned int)
@@ -142,7 +142,7 @@ struct HAMTConfigUInt64Depth1 {
     typedef unsigned long long BitmapT;
 
     static const int BITMAP_BITS = sizeof(unsigned long long) * 8;
-    static const unsigned long long BITMAP_ALL = 0xffffffffffffffffull;
+    static const unsigned long long BITMAP_ALL = ~0ull;
     static const unsigned long long BITMAP_ONE = 1ull;
 
     // for hash values (unsigned int)

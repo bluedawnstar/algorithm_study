@@ -26,7 +26,7 @@ struct BitSetVariable64 {
     }
 
     static const int BIT_SIZE = sizeof(unsigned long long) * 8;
-    static const unsigned long long BIT_ALL = (unsigned long long)-1ll;
+    static const unsigned long long BIT_ALL = ~0ull;
     static const unsigned long long BIT_ONE = 1ull;
 
     static const int INDEX_MASK = 0x3F;

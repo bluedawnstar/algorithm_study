@@ -50,7 +50,7 @@ struct BitSubsets {
     typedef int SignedT;
 
     static const int BIT_SIZE = sizeof(unsigned) * 8;
-    static const unsigned BIT_ALL = unsigned(-1);
+    static const unsigned BIT_ALL = ~0u;
     static const unsigned BIT_ONE = 1u;
 
     static const int INDEX_MASK = 0x1F;
@@ -60,7 +60,7 @@ struct BitSubsets {
     typedef long long SignedT;
 
     static const int BIT_SIZE = sizeof(unsigned long long) * 8;
-    static const unsigned long long BIT_ALL = (unsigned long long) - 1ll;
+    static const unsigned long long BIT_ALL = ~0ull;
     static const unsigned long long BIT_ONE = 1ull;
 
     static const int INDEX_MASK = 0x3F;

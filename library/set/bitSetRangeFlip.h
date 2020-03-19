@@ -12,7 +12,7 @@ struct BitSetRangeFlip {
     typedef int SignedValueT;
 
     static const int BIT_SIZE = sizeof(unsigned int) * 8;
-    static const unsigned int BIT_ALL = 0xffffffffu;
+    static const unsigned int BIT_ALL = ~0u;
     static const unsigned int BIT_ONE = 1u;
 
     static const int INDEX_MASK = 0x1F;
@@ -22,7 +22,7 @@ struct BitSetRangeFlip {
     typedef long long SignedValueT;
 
     static const int BIT_SIZE = sizeof(unsigned long long) * 8;
-    static const unsigned long long BIT_ALL = 0xffffffffffffffffull;
+    static const unsigned long long BIT_ALL = ~0ull;
     static const unsigned long long BIT_ONE = 1ull;
 
     static const int INDEX_MASK = 0x3F;
