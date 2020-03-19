@@ -15,7 +15,7 @@ struct PrefixSum2D {
         int H = int(in.size());
         int W = int(in[0].size());
 
-        sum = vector<vector<int>>(H + 1, vector<int>(W + 1));
+        sum = vector<vector<T>>(H + 1, vector<T>(W + 1));
         for (int i = 0; i < H; i++) {
             for (int j = 0; j < W; j++) {
                 sum[i + 1][j + 1] = sum[i][j + 1] + sum[i + 1][j] - sum[i][j] + in[i][j];
