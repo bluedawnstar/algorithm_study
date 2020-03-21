@@ -100,7 +100,7 @@ struct SegmentTree {
     }
 
 
-    // inclusive, O(logK*logN)
+    // inclusive, O(logN)
     T query(int left, int right) const {
         return querySub(left, right, 1, 0, N - 1);
     }
