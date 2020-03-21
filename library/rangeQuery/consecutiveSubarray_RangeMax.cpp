@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "maxConsecutiveSubarray.h"
+#include "consecutiveSubarray_RangeMax.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

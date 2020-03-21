@@ -9,21 +9,28 @@
         value : 0, 1, 2, ..., N-1
         index : 0, 1, 2, ..., N-1
 
-    6 |                     x
-    5 |             x
-    4 |     x
-    3 |         x
-    2 |                 x
-    1 | x
-    0 |                         x
-      +---+---+---+---+---+---+---
-        0   1   2   3   4   5   6
+        6 |                     x
+        5 |             x
+        4 |     x
+        3 |         x
+        2 |                 x
+        1 | x
+        0 |                         x
+          +---+---+---+---+---+---+---
+            0   1   2   3   4   5   6
 
-       query[0, 2] = 2
-       query[0, 3] = 3
-       query[0, 4] = 5
-       query[1, 3] = 3
-       query[1, 4] = 4
+           query[0, 2] = 2
+           query[0, 3] = 3
+           query[0, 4] = 5
+           query[1, 3] = 3
+           query[1, 4] = 4
+
+    1. property
+       Call a subarray [i, j] as ¡°good¡± if all numbers in it can be re-arranged such that they are all consecutive.
+
+       - If A ¡û B != {} and A and B are good, then A ¡ú B is also good.
+       - If A ¡û B != {} and A and B are good, then A ¡û B is also good.
+       - If A ¡û B != {} and A and B are good, then A \ B is also good.
 */
 struct MaxConsecutiveSubarray {
     struct SegmentTreeMin {
