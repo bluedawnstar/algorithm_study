@@ -192,7 +192,10 @@
     <ClCompile Include="gcdOnSubsegments.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="maxConsecutiveSubarray.cpp">
+    <ClCompile Include="consecutiveSubarray_DivideCombineTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="consecutiveSubarray_RangeMax.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -401,7 +404,13 @@
     <ClInclude Include="gcdOnSubsegments.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="maxConsecutiveSubarray.h">
+    <ClInclude Include="consecutiveSubarray_DivideCombineTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="consecutiveSubarray_RangeMax.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

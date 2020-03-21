@@ -65,4 +65,5 @@ int main(void) {
     TEST(VectorRangeQuery);
     TEST(GcdOnSubsegments);
     TEST(MaxConsecutiveSubarray);
+    TEST(DivideCombineTree);
 }

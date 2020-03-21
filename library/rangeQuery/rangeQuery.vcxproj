@@ -161,7 +161,8 @@
     <ClCompile Include="generalizedBIT.cpp" />
     <ClCompile Include="intTrie.cpp" />
     <ClCompile Include="intTriePersistent.cpp" />
-    <ClCompile Include="maxConsecutiveSubarray.cpp" />
+    <ClCompile Include="consecutiveSubarray_RangeMax.cpp" />
+    <ClCompile Include="consecutiveSubarray_DivideCombineTree.cpp" />
     <ClCompile Include="mergeSortTree.cpp" />
     <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp" />
     <ClCompile Include="mergeSortTreeCompact.cpp" />
@@ -209,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
+    <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
     <ClInclude Include="disjointSparseTable.h" />
     <ClInclude Include="dynamicSegmentTree.h" />
     <ClInclude Include="dynamicSegmentTreeMaxSubarray.h" />
@@ -223,7 +225,8 @@
     <ClInclude Include="generalizedBIT.h" />
     <ClInclude Include="intTrie.h" />
     <ClInclude Include="intTriePersistent.h" />
-    <ClInclude Include="maxConsecutiveSubarray.h" />
+    <ClInclude Include="consecutiveSubarray_RangeMax.h" />
+    <ClInclude Include="consecutiveSubarray_DivideCombineTree.h" />
     <ClInclude Include="mergeSortTree.h" />
     <ClInclude Include="mergeSortTree2DPoint_DynamicFast.h" />
     <ClInclude Include="mergeSortTreeCompact.h" />
