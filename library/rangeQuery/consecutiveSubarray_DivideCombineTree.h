@@ -217,8 +217,8 @@ struct DivideCombineTree {
     }
 
     // the number of unique intersected consecutive subarray pairs (exclude nested pairs)
-    long long countIntersectedPairs(int minOverlappedLen) const {
-        return dfsCountIntersectedPairs(root, minOverlappedLen);
+    long long countIntersectedPairs(int minIntersectLen) const {
+        return dfsCountIntersectedPairs(root, minIntersectLen);
     }
 
 private:

@@ -22,9 +22,11 @@ struct DivideCombineTreeWithLCA : public DivideCombineTree {
         build(P.data(), int(P.size()));
     }
 
-    //--- query for array indexes
+    //--- query based on array indexes
 
-    // find smallest consecutive subarray to include [left, right], O(logN)
+    // find smallest consecutive subarray to include [left, right]
+    // - 0 <= left <= right < N
+    // - result.first <= left <= right <= result.second, O(logN)
     pair<int, int> findSmallestConsecutiveSubarray(int left, int right) {
         int u = indexToNode[left];
         int v = indexToNode[right];
@@ -41,7 +43,7 @@ struct DivideCombineTreeWithLCA : public DivideCombineTree {
         return make_pair(left, right);
     }
 
-    //--- query for tree nodes
+    //--- query based on tree nodes
 
     int climbTree(int node, int dist) const {
         if (dist <= 0)
