@@ -152,6 +152,7 @@
     <ClCompile Include="bipartiteGraphCheck.cpp" />
     <ClCompile Include="bipartiteMatching.cpp" />
     <ClCompile Include="blockCutTree.cpp" />
+    <ClCompile Include="bridgeBlockTree.cpp" />
     <ClCompile Include="dagMinPathCover.cpp" />
     <ClCompile Include="dominatorTree.cpp" />
     <ClCompile Include="eulerianDigraph.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="bipartiteMatchingKuhn.h" />
     <ClInclude Include="bipartiteMatchingHopcroftKarp.h" />
     <ClInclude Include="blockCutTree.h" />
+    <ClInclude Include="bridgeBlockTree.h" />
     <ClInclude Include="dagMinPathCover.h" />
     <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />

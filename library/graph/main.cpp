@@ -30,4 +30,5 @@ int main(void) {
     TEST(DominatorTree);
     TEST(GraphRealization);
     TEST(PathCount);
+    TEST(BridgeBlockTree);
 }

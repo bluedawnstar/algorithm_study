@@ -90,6 +90,9 @@
     <ClCompile Include="dagMinPathCover.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bridgeBlockTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -180,6 +183,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="dagMinPathCover.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bridgeBlockTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
