@@ -94,6 +94,7 @@ struct PersistentIntTrie {
         return xL < xR;
     }
 
+    // find a number to make a maximum xor value with k
     pair<IntT, T> findMaxXor(int root, IntT k) const {
         int x = root;
 
@@ -110,7 +111,24 @@ struct PersistentIntTrie {
         return make_pair(res, nodes[x].value);
     }
 
-    // find a maximum xor value with k in [L, R]
+    // find a number to make a minimum xor value with k
+    pair<IntT, T> findMinXor(int root, IntT k) const {
+        int x = root;
+
+        IntT res = 0;
+        for (IntT bit = IntT(1) << (bitSize - 1); bit; bit >>= 1) {
+            if ((nodes[x].L < 0) || (nodes[x].R >= 0 && (k & bit))) {
+                x = nodes[x].R;
+                res |= bit;
+            } else {
+                x = nodes[x].L;
+            }
+        }
+
+        return make_pair(res, nodes[x].value);
+    }
+
+    // find a number to make a maximum xor value with k in [L, R]
     // - rootL = root of time (L - 1)
     // - rootR = root of time R
     pair<IntT, T> findMaxXor(int rootL, int rootR, IntT k) const {
@@ -124,6 +142,32 @@ struct PersistentIntTrie {
             int xRL = (xR >= 0) ? nodes[xR].L : -1;
             int xRR = (xR >= 0) ? nodes[xR].R : -1;
             if (xLL >= xRL || (xLR < xRR && !(k & bit))) {
+                xL = xLR;
+                xR = xRR;
+                res |= bit;
+            } else {
+                xL = xLL;
+                xR = xRL;
+            }
+        }
+
+        return make_pair(res, nodes[xR].value);
+    }
+
+    // find a number to make a minimum xor value with k in [L, R]
+    // - rootL = root of time (L - 1)
+    // - rootR = root of time R
+    pair<IntT, T> findMinXor(int rootL, int rootR, IntT k) const {
+        int xL = rootL;
+        int xR = rootR;
+
+        IntT res = 0;
+        for (IntT bit = IntT(1) << (bitSize - 1); bit; bit >>= 1) {
+            int xLL = (xL >= 0) ? nodes[xL].L : -1;
+            int xLR = (xL >= 0) ? nodes[xL].R : -1;
+            int xRL = (xR >= 0) ? nodes[xR].L : -1;
+            int xRR = (xR >= 0) ? nodes[xR].R : -1;
+            if (xLL >= xRL || (xLR < xRR && (k & bit))) {
                 xL = xLR;
                 xR = xRR;
                 res |= bit;

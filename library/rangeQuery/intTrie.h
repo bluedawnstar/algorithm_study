@@ -89,6 +89,7 @@ struct IntTrie {
         return x >= 0;
     }
 
+    // find a number to make a maximum xor value with k
     pair<IntT, T> findMaxXor(int root, IntT k) const {
         int x = root;
 
@@ -101,6 +102,30 @@ struct IntTrie {
                 x = nodes[x].L;
             } else {
                 if (k & bit)
+                    x = nodes[x].L;
+                else {
+                    x = nodes[x].R;
+                    res |= bit;
+                }
+            }
+        }
+
+        return make_pair(res, nodes[x].value);
+    }
+
+    // find a number to make a minimum xor value with k
+    pair<IntT, T> findMinXor(int root, IntT k) const {
+        int x = root;
+
+        IntT res = 0;
+        for (IntT bit = IntT(1) << (bitSize - 1); bit; bit >>= 1) {
+            if (nodes[x].L < 0) {
+                x = nodes[x].R;
+                res |= bit;
+            } else if (nodes[x].R < 0) {
+                x = nodes[x].L;
+            } else {
+                if (!(k & bit))
                     x = nodes[x].L;
                 else {
                     x = nodes[x].R;
