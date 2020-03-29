@@ -198,6 +198,9 @@
     <ClCompile Include="consecutiveSubarray_RangeMax.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeSubsetXor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -411,6 +414,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeSubsetXor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

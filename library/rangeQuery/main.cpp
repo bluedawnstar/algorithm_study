@@ -66,4 +66,5 @@ int main(void) {
     TEST(GcdOnSubsegments);
     TEST(MaxConsecutiveSubarray);
     TEST(DivideCombineTree);
+    TEST(SubsetXorSegmentTree);
 }
