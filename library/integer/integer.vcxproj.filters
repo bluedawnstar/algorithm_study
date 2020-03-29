@@ -96,6 +96,9 @@
     <ClCompile Include="discreteLog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="subsetXor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gcd.h">
@@ -204,6 +207,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="discreteLogFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="subsetXor.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

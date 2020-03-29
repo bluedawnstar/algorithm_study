@@ -31,4 +31,5 @@ int main(void) {
     TEST(FastModOp);
     TEST(Int128);
     TEST(DiscreteLog);
+    TEST(SubsetXOR);
 }
