@@ -53,7 +53,7 @@ https://cp-algorithms.com/combinatorics/catalan-numbers.html
     35  3116285494907301262
     36 11959798385860453492
     37 45950804324621742364
-    ¡¦
+    ...
 
 1. Basic formula
    1)
