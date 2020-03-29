@@ -184,6 +184,7 @@
     <ClCompile Include="palindromicSubstring.cpp" />
     <ClCompile Include="partitionProblem.cpp" />
     <ClCompile Include="persistentConvexHull.cpp" />
+    <ClCompile Include="squareSubsets.cpp" />
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
     <ClCompile Include="subsequenceSpecial.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="partitionProblem.h" />
     <ClInclude Include="persistentLowerConvexHull.h" />
     <ClInclude Include="persistentUpperConvexHull.h" />
+    <ClInclude Include="squareSubsets.h" />
     <ClInclude Include="steinerTree.h" />
     <ClInclude Include="subsequence.h" />
     <ClInclude Include="subsequenceSpecial.h" />

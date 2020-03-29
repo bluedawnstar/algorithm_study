@@ -141,6 +141,9 @@
     <ClCompile Include="bracketChangeCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="squareSubsets.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -306,6 +309,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bracketChangeCounter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="squareSubsets.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

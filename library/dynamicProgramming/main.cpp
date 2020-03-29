@@ -45,4 +45,5 @@ int main(void) {
     TEST(MaxProfit);
     TEST(PalindromicPartitioning);
     TEST(BracketChangeCounter);
+    TEST(SquareSubsets);
 }
