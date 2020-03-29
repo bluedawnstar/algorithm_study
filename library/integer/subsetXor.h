@@ -76,10 +76,55 @@ struct SubsetXor {
 
     // the number of subsets whose XOR value is the target.
     // [CAUTION] if target is 0, then result includes empty set
-    int countSubset(int target) const {
+    int countSubsetXor(int target) const {
         int res = 0;
         if (checkXor(target))
             res = pow2[valueCount - basisCount];
+        return res;
+    }
+
+    // the number of distinct integers that can be represented using XOR over the subset of the given elements.
+    int countDistinctXorIntegers() const {
+        return pow2[basisCount];    // 2^basisCount
+    }
+
+    // the maximum possible XOR of the elements of some subset
+    int getMaxSubsetXor() const {
+        int res = 0;
+        for (int i = bitSize - 1; i >= 0; i--) {
+            if (!basis[i])
+                continue;
+
+            if (res & (1 << i))
+                continue;
+
+            res ^= basis[i];
+        }
+
+        return res;
+    }
+
+    // the Kth number from the set of all possible XOR of elements from a subset
+    // 1 <= kth <= |set|
+    int kthSubsetXor(int kth) const {
+        int res = 0;
+
+        int total = 1 << basisCount;
+        for (int i = basisCount - 1; i >= 0; i--) {
+            if (basis[i]) {
+                int low = total >> 1;
+
+                if ((low < kth && (res & (1 << i)) == 0) ||
+                    (low >= kth && (res & (1 << i)) > 0))
+                    res ^= basis[i];
+
+                if (low < kth)
+                    kth -= low;
+
+                total >>= 1;
+            }
+        }
+
         return res;
     }
 };

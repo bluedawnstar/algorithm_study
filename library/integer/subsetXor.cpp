@@ -29,9 +29,9 @@ void solve(SubsetXor<MOD>& sxor, const int A[], int L, const vector<pair<int, in
         while (i < R[j].first)
             sxor.insert(A[++i]);
 
-        int s = sxor.countSubset(0);
+        int s = sxor.countSubsetXor(0);
         for (int x = (1 << 25); x; x >>= 1) {
-            s += sxor.countSubset(x);
+            s += sxor.countSubsetXor(x);
             if (s >= MOD)
                 s -= MOD;
         }
@@ -44,8 +44,28 @@ void testSubsetXOR() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Subset XOR -----------------------------" << endl;
+    {
+        SubsetXor<MOD> sxor;
+        sxor.init(7, 3);
+        for (int i = 1; i <= 7; i++)
+            sxor.insert(i);
 
-    // ...
+        int distinctXor = sxor.countDistinctXorIntegers();
+        if (distinctXor != 8)
+            cout << "Invalid the number of distinct XORs : " << distinctXor << endl;
+        assert(distinctXor == 8);
 
+        int maxXor = sxor.getMaxSubsetXor();
+        if (maxXor != 7)
+            cout << "Invalid max XOR : " << maxXor << endl;
+        assert(maxXor == 7);
+
+        for (int i = 1; i <= 8; i++) {
+            int kth = sxor.kthSubsetXor(i);
+            if (kth != (i - 1))
+                cout << "Invalid " << i << "th XOR : " << kth << endl;
+            assert(kth == (i - 1));
+        }
+    }
     cout << "OK!" << endl;
 }
