@@ -33,9 +33,9 @@ void solve(SubsetXorSegmentTree<26, MOD>& sxor, const int A[], int N, const vect
             int x = R;
             sxor.update(L, x);
         } else {
-            int ans = sxor.countSubset(L, R, 0);
+            int ans = sxor.countSubsetXor(L, R, 0);
             for (int x = 1 << 25; x; x >>= 1) {
-                ans += sxor.countSubset(L, R, x);
+                ans += sxor.countSubsetXor(L, R, x);
                 if (ans >= MOD)
                     ans -= MOD;
             }

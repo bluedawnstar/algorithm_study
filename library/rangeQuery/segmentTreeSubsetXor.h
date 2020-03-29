@@ -126,12 +126,62 @@ struct SubsetXorSegmentTree {
 
     // the number of subsets whose XOR value is the target.
     // [CAUTION] if target is 0, then result includes empty set
-    int countSubset(int left, int right, int target) const {
+    int countSubsetXor(int left, int right, int target) const {
         auto node = dfsQuery(left, right, 1, 0, N - 1);
 
         int res = 0;
         if (node.checkXor(target))
             res = pow2[(right - left + 1) - node.basisCount];
+        return res;
+    }
+
+    // the number of distinct integers that can be represented using XOR over the subset of the given elements.
+    int countDistinctXorIntegers(int left, int right) const {
+        auto node = dfsQuery(left, right, 1, 0, N - 1);
+        return pow2[node.basisCount];   // 2^basisCount
+    }
+
+    // the maximum possible XOR of the elements of some subset
+    int getMaxSubsetXor(int left, int right) const {
+        auto node = dfsQuery(left, right, 1, 0, N - 1);
+
+        int res = 0;
+        for (int i = maxBitSize - 1; i >= 0; i--) {
+            if (!node.basis[i])
+                continue;
+
+            if (res & (1 << i))
+                continue;
+
+            res ^= node.basis[i];
+        }
+
+        return res;
+    }
+
+    // the Kth number from the set of all possible XOR of elements from a subset
+    // 1 <= kth <= |set|
+    int kthSubsetXor(int left, int right, int kth) const {
+        auto node = dfsQuery(left, right, 1, 0, N - 1);
+
+        int res = 0;
+
+        int total = 1 << node.basisCount;
+        for (int i = node.basisCount - 1; i >= 0; i--) {
+            if (node.basis[i]) {
+                int low = total >> 1;
+
+                if ((low < kth && (res & (1 << i)) == 0) ||
+                    (low >= kth && (res & (1 << i)) > 0))
+                    res ^= node.basis[i];
+
+                if (low < kth)
+                    kth -= low;
+
+                total >>= 1;
+            }
+        }
+
         return res;
     }
 
@@ -158,7 +208,7 @@ private:
 
         Node res;
         res.merge(dfsQuery(left, right, node * 2, nodeLeft, mid),
-            dfsQuery(left, right, node * 2 + 1, mid + 1, nodeRight));
+                  dfsQuery(left, right, node * 2 + 1, mid + 1, nodeRight));
         return res;
     }
 
