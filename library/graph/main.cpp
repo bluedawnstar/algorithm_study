@@ -31,4 +31,5 @@ int main(void) {
     TEST(GraphRealization);
     TEST(PathCount);
     TEST(BridgeBlockTree);
+    TEST(ChordalGraph);
 }
