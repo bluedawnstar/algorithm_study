@@ -16,4 +16,5 @@ int main(void) {
     TEST(KirchhoffTheorem);
     TEST(Catalan);
     TEST(LatinSquare);
+    TEST(MaxMatchingInMatrix);
 }
