@@ -2,6 +2,7 @@
 
 // Indicium in Qualification Round 2020 - Code Jam 2020
 
+// 1 <= latinSquare[row][col] <= N
 struct LatinSquare {
     // K = the trace of a square matrix is the sum of the values on the main diagonal
     static bool findAnyWithTrace(vector<vector<int>>& out, int N, int K) {
@@ -21,27 +22,26 @@ struct LatinSquare {
         for (int i = 0; i < N; i++)
             out[i][i] = diag[i];
 
+        // step #1 : numbers in diagonal
         for (int a = 1; a <= N; a++) {
             if (!S[a])
                 continue;
 
-            vector<vector<int>> m;
+            vector<vector<int>> m(N, vector<int>(N, 0));
             for (int i = 0; i < N; i++) {
-                vector<int> can(N, 0);
                 int found = -1;
                 for (int j = 0; j < N; j++) {
                     if (out[i][j] == a)
                         found = j;
                 }
                 if (found >= 0) {
-                    can[found] = 1;
+                    m[i][found] = 1;
                 } else {
                     for (int j = 0; j < N; j++) {
                         if (out[i][j] < 0)
-                            can[j] = 1;
+                            m[i][j] = 1;
                     }
                 }
-                m.push_back(can);
             }
             vector<int> lhs, rhs;
             if (bipartiteMatching(m, lhs, rhs) != N)
@@ -50,22 +50,17 @@ struct LatinSquare {
                 out[i][lhs[i]] = a;
         }
 
+        // step #2 : numbers not in diagonal
         for (int a = 1; a <= N; a++) {
-            vector<vector<int>> m;
+            if (S[a])
+                continue;
+
+            vector<vector<int>> m(N, vector<int>(N, 0));
             for (int i = 0; i < N; i++) {
-                vector<int> can(N, 0);
-                int found = -1;
                 for (int j = 0; j < N; j++) {
-                    if (out[i][j] == a) found = j;
+                    if (out[i][j] < 0)
+                        m[i][j] = 1;
                 }
-                if (found >= 0) {
-                    can[found] = 1;
-                } else {
-                    for (int j = 0; j < N; j++) {
-                        if (out[i][j] < 0) can[j] = 1;
-                    }
-                }
-                m.push_back(can);
             }
             vector<int> lhs, rhs;
             if (bipartiteMatching(m, lhs, rhs) != N)
@@ -79,6 +74,9 @@ struct LatinSquare {
     }
 
 private:
+    // i = row index
+    // row[y] = col index in row y
+    // col[x] = row index in col x
     static bool findMatch(int i, const vector<vector<int>>& mat, vector<int>& row, vector<int>& col, vector<bool>& seen) {
         for (int j = 0; j < int(mat[i].size()); j++) {
             if (mat[i][j] && !seen[j]) {
@@ -93,6 +91,8 @@ private:
         return false;
     }
 
+    // row[y] = col index in row y
+    // col[x] = row index in col x
     static int bipartiteMatching(const vector<vector<int>>& mat, vector<int>& row, vector<int>& col) {
         row = vector<int>(mat.size(), -1);
         col = vector<int>(mat[0].size(), -1);
