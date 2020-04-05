@@ -45,6 +45,9 @@
     <ClCompile Include="catalanNumber.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="latinSquare.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -87,6 +90,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="kirchhoffTheorem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="latinSquare.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

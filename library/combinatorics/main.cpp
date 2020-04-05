@@ -15,4 +15,5 @@ int main(void) {
     TEST(PruferCode);
     TEST(KirchhoffTheorem);
     TEST(Catalan);
+    TEST(LatinSquare);
 }
