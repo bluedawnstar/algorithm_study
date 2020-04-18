@@ -2,7 +2,7 @@
 
 // https://cp-algorithms.com/combinatorics/bracket_sequences.html
 
-inline bool isBalancedSequence(string& s) {
+inline bool isBalancedSequence(const string& s) {
     int n = int(s.length());
     if (n & 1)
         return false;
