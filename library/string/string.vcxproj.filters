@@ -338,5 +338,8 @@
     <ClInclude Include="suffixArrayAlgo_PrefixCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="bracketSequencesBalanced2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

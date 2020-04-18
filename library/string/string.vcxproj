@@ -194,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="ahoCorasickAM.h" />
     <ClInclude Include="bracketSequencesBalanced.h" />
+    <ClInclude Include="bracketSequencesBalanced2.h" />
     <ClInclude Include="burrowsWheelerTransform.h" />
     <ClInclude Include="compressedTrie.h" />
     <ClInclude Include="compressedTrieAM.h" />

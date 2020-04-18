@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "bracketSequencesBalanced.h"
+#include "bracketSequencesBalanced2.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
