@@ -27,11 +27,25 @@ void testMOAlgorithm() {
         vector<int> gt{ 3, 2, 2, 1 };
 
         MOAlgorithm mo;
-        vector<int> ans = mo.query(4, in, qry);
+        vector<int> ans = mo.solve(4, in, qry);
         if (ans != gt) {
             cerr << "Failed: " << endl
                  << "gt = " << gt << endl
                  << "ans = " << ans << endl;
+        }
+        assert(ans == gt);
+    }
+    {
+        vector<int> in{ 1, 3, 3, 4 };
+        vector<pair<int, int>> qry{ { 0, 3 }, { 1, 3 }, { 2, 3 }, { 3, 3 } };
+        vector<int> gt{ 3, 2, 2, 1 };
+
+        MOAlgorithm mo;
+        vector<int> ans = mo.solveWithHilbertOrder(4, in, qry);
+        if (ans != gt) {
+            cerr << "Failed: " << endl
+                << "gt = " << gt << endl
+                << "ans = " << ans << endl;
         }
         assert(ans == gt);
     }
