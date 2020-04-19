@@ -1,6 +1,7 @@
 #pragma once
 
 #include "treeDfsTour.h"
+#include "../sort/hilbertOrder.h"
 
 /* MO's algorithm
 
@@ -29,7 +30,7 @@
         curAns -= ...;
     }
 */
-struct TreeMO {
+struct TreeMOWithHilbertOrder {
     DfsTourTree&                tree;
 
     vector<bool>                active;
@@ -37,11 +38,11 @@ struct TreeMO {
     function<void(int, int)>    onAdd;
     function<void(int, int)>    onRemove;
 
-    vector<int>                 lca;        // lca[Q index] -> lca of (L, R)
-    vector<tuple<int, int, int>> MO;        // (MO_L, MO_R, Q index)
+    vector<int>                 lca;            // lca[Q index] -> lca of (L, R)
+    vector<tuple<int, int, int, long long>> MO; // (MO_L, MO_R, Q index)
 
     // Q[i] = (left, right), inclusive
-    TreeMO(DfsTourTree& _tree) : tree(_tree) {
+    TreeMOWithHilbertOrder(DfsTourTree& _tree) : tree(_tree) {
     }
 
     void build(vector<pair<int, int>>& Q, function<void(int, int)> onAdd, function<void(int, int)> onRemove) {
@@ -58,27 +59,19 @@ struct TreeMO {
             int lc = tree.findLCA(L, R);
             lca.push_back(lc == L ? -1 : lc);
             if (lc == L)
-                MO.emplace_back(tree.visTime[L].first, tree.visTime[R].first, i);
+                MO.emplace_back(tree.visTime[L].first, tree.visTime[R].first, i, HilbertOrder<>::get2(tree.visTime[L].first, tree.visTime[R].first));
             else
-                MO.emplace_back(tree.visTime[L].second, tree.visTime[R].first, i);
+                MO.emplace_back(tree.visTime[L].second, tree.visTime[R].first, i, HilbertOrder<>::get2(tree.visTime[L].second, tree.visTime[R].first));
         }
 
         const int blockN = int(sqrt(2 * tree.N));
         sort(MO.begin(), MO.end(), [blockN](const auto& l, const auto& r) {
-#if 0
-            if (get<0>(l) / blockN != get<0>(r) / blockN)
-                return get<0>(l) / blockN < get<0>(r) / blockN;
-            return get<1>(l) < get<1>(r);
-#else
-            if (get<0>(l) / blockN != get<0>(r) / blockN)
-                return l < r;
-            return ((get<0>(l) / blockN) & 1) ? (get<1>(l) < get<1>(r)) : (get<1>(l) > get<1>(r));
-#endif
+            return get<3>(l) < get<3>(r);
         });
     }
 
     //--- query ---------------------------------------------------------------
-    
+
     void add(int t) {
         int u = tree.time2Node[t];
         if (active[u]) {

@@ -190,6 +190,7 @@
     <ClCompile Include="treeKthValueInDistance.cpp" />
     <ClCompile Include="treeMO.cpp" />
     <ClCompile Include="splayTree.cpp" />
+    <ClCompile Include="treeMOwithHilbertOrder.cpp" />
     <ClCompile Include="treePathSqrtDecomposition.cpp" />
     <ClCompile Include="treePathSqrtDecompositionSum.cpp" />
     <ClCompile Include="treeBlockTreeLCA.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="treeKthDistance.h" />
     <ClInclude Include="treeKthValueInDistance.h" />
     <ClInclude Include="treeMO.h" />
+    <ClInclude Include="treeMOwithHilbertOrder.h" />
     <ClInclude Include="treePathSqrtDecomposition.h" />
     <ClInclude Include="treePathSqrtDecompositionSum.h" />
     <ClInclude Include="treeBlockTreeLCA.h" />

@@ -177,6 +177,9 @@
     <ClCompile Include="redBlackTreeRangeQuery.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeMOwithHilbertOrder.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -363,6 +366,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="redBlackTreeRangeQuery.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeMOwithHilbertOrder.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

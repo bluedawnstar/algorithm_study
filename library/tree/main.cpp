@@ -15,6 +15,7 @@ int main(void) {
     TEST(DfsTourTreeSubtreeUpdate);
     TEST(EulerTour);
     TEST(TreeMO);
+    TEST(TreeMOWithHilbertOrder);
     TEST(LcaSparseTable);
     TEST(LcaShieberVishkin);
     TEST(LcaTarjan);
