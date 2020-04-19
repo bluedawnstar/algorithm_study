@@ -23,6 +23,7 @@ struct HilbertOrder {
         return ans;
     }
 
+    // faster than get()
     static long long get2(int x, int y) {
         long long d = 0;
         for (int s = LogN - 1; s >= 0; s--) {
