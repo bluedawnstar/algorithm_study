@@ -175,6 +175,7 @@
     <ClCompile Include="persistentBinarySearchTreeRangeSum.cpp" />
     <ClCompile Include="redBlackTreeRangeSum.cpp" />
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp" />
+    <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
     <ClCompile Include="segmentTreeSubsetXor.cpp" />
     <ClCompile Include="sparseTableSimpleRMQ.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="persistentBinarySearchTreeRangeSum.h" />
     <ClInclude Include="redBlackTreeRangeSum.h" />
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h" />
+    <ClInclude Include="segmentTreePersistent-UniqueValueCounter.h" />
     <ClInclude Include="segmentTreePersistentLazySimple.h" />
     <ClInclude Include="segmentTreeSubsetXor.h" />
     <ClInclude Include="sparseTableSimpleRMQ.h" />
