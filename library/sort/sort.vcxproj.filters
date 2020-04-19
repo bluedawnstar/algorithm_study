@@ -47,5 +47,8 @@
     <ClInclude Include="inversionCounter2.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="hilbertOrder.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

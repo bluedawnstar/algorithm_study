@@ -152,6 +152,7 @@
     <ClCompile Include="sqrtSort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="hilbertOrder.h" />
     <ClInclude Include="inversionCounter.h" />
     <ClInclude Include="inversionCounter2.h" />
     <ClInclude Include="sortHeap.h" />
