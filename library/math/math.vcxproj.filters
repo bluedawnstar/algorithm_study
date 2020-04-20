@@ -75,6 +75,9 @@
     <ClCompile Include="roundRobinTournament.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="josephusProblem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -159,6 +162,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="roundRobinTournament.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="josephusProblem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

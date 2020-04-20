@@ -24,4 +24,5 @@ int main(void) {
     TEST(SumOfPower);
     TEST(LongestArithmeticSubsequence);
     TEST(RoundRobinTournament);
+    TEST(JosephusProblem);
 }
