@@ -177,6 +177,81 @@ struct BasicUndirectedGraph {
         return path;
     }
 
+    //---
+
+    // Lexicographic Breadth First Search (Lex-BFS), O(V + E)
+    vector<int> findLexicographicBFS() {
+        // initialize a sequence ¥Ò of sets, to contain a single set containing all vertices.
+        struct ListT {
+            list<int> set;
+            int time;
+        };
+
+        list<ListT> sigma;
+        {
+            sigma.resize(1);
+            for (int i = 0; i < N; i++)
+                sigma.back().set.push_back(i);
+            sigma.back().time = 0;
+        }
+
+        vector<bool> visit(N);
+        vector<list<ListT>::iterator> setInSigma(N, sigma.begin());
+        vector<list<int>::iterator> nodeInSet;
+        nodeInSet.reserve(N);
+        for (auto it = sigma.front().set.begin(); it != sigma.front().set.end(); ++it)
+            nodeInSet.push_back(it);
+
+        int time = 0;
+        vector<int> res;
+
+        while (!sigma.empty()) {
+            if (sigma.front().set.empty()) {
+                sigma.pop_front();
+                continue;
+            }
+
+            // find and remove a vertex u from the first set in ¥Ò
+            int u = sigma.front().set.front();
+            sigma.front().set.pop_front();
+
+            // if the first set in ¥Ò is now empty, remove it from ¥Ò
+            if (sigma.front().set.empty())
+                sigma.pop_front();
+
+            // add u to the end of the output sequence.
+            res.push_back(u);
+            visit[u] = true;
+            ++time;
+
+            // for each edge u-v such that v still belongs to a set S in ¥Ò :
+            for (auto v : edges[u]) {
+                if (visit[v])
+                    continue;
+
+                // If the set S containing v has not yet been replaced while processing u,
+                //   create a new empty replacement set T and place it prior to S in the sequence;
+                // otherwise, let T be the set prior to S.
+
+                auto iter = setInSigma[v];
+
+                setInSigma[v]->set.erase(nodeInSet[v]);
+                if (setInSigma[v]->time < time) {
+                    setInSigma[v]->time = time;
+                    setInSigma[v] = sigma.insert(setInSigma[v], ListT{ {}, 0 });
+                } else {
+                    --setInSigma[v];
+                }
+                nodeInSet[v] = setInSigma[v]->set.insert(setInSigma[v]->set.end(), v);
+
+                if (iter->set.empty())
+                    sigma.erase(iter);
+            }
+        }
+
+        return res;
+    }
+
 protected:
     void dfs(vector<bool>& visited, int u) const {
         //cout << "dfs(" << u << ")" << endl;

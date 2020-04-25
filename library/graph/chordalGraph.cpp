@@ -1,5 +1,7 @@
 #include <vector>
 #include <queue>
+#include <list>
+#include <unordered_set>
 #include <unordered_map>
 #include <algorithm>
 
@@ -14,6 +16,32 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
+
+// https://www.codechef.com/problems/EGGFREE
+
+// result = { (u->v direction?), ... }
+static vector<bool> solveEggFree(const vector<pair<int, int>>& edges, int N) {
+    ChordalGraph graph(N);
+
+    for (int i = 0; i < int(edges.size()); i++)
+        graph.addEdge(edges[i].first, edges[i].second);
+
+    auto order = graph.findPerfectEliminationOrdering();
+    //auto order = graph.findPerfectEliminationOrderingWithLexBFS();
+    if (order.empty())
+        return vector<bool>();
+
+    vector<int> rev(N);
+    for (int i = 0; i < N; i++)
+        rev[order[i]] = i;
+
+    vector<bool> res(edges.size());
+    for (int i = 0; i < int(edges.size()); i++)
+        res[i] = (rev[edges[i].first] < rev[edges[i].second]);
+
+    return res;
+}
+
 
 void testChordalGraph() {
     //return; //TODO: if you want to test, make this line a comment.
