@@ -44,7 +44,7 @@ struct SimpleHLDPathQueryBIT {
     }
 
     T query(int u, int v, int lca) const {
-        return querySub(lca, u) + queryBottom(lca, v);
+        return querySub(lca, u) + querySub(lca, v);
     }
 
     T query(int u, int v) const {
