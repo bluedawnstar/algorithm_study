@@ -180,6 +180,7 @@ struct BasicUndirectedGraph {
     //---
 
     // Lexicographic Breadth First Search (Lex-BFS), O(V + E)
+    // https://en.wikipedia.org/wiki/Lexicographic_breadth-first_search
     vector<int> findLexicographicBFS() {
         // initialize a sequence ¥Ò of sets, to contain a single set containing all vertices.
         struct ListT {
