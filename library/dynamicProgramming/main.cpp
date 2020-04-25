@@ -46,4 +46,5 @@ int main(void) {
     TEST(PalindromicPartitioning);
     TEST(BracketChangeCounter);
     TEST(SquareSubsets);
+    TEST(GridPathCounterWithObstacles);
 }
