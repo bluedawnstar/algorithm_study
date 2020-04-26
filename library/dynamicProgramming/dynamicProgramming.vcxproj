@@ -189,6 +189,7 @@
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
     <ClCompile Include="subsequenceSpecial.cpp" />
+    <ClCompile Include="treeDP_sameDistanceTripleCounte.cpp" />
     <ClCompile Include="twoSameSumSubset.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +249,7 @@
     <ClInclude Include="steinerTree.h" />
     <ClInclude Include="subsequence.h" />
     <ClInclude Include="subsequenceSpecial.h" />
+    <ClInclude Include="treeDP_sameDistanceTripleCounter.h" />
     <ClInclude Include="twoSameSumSubset.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

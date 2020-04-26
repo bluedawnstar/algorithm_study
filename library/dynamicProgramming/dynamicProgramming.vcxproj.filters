@@ -147,6 +147,9 @@
     <ClCompile Include="gridPathCounterWithObstacles.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeDP_sameDistanceTripleCounte.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="divideConquerOptimization.h">
@@ -318,6 +321,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="gridPathCounterWithObstacles.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeDP_sameDistanceTripleCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -47,4 +47,5 @@ int main(void) {
     TEST(BracketChangeCounter);
     TEST(SquareSubsets);
     TEST(GridPathCounterWithObstacles);
+    TEST(SameDistanceTripleCounterOnTree);
 }
