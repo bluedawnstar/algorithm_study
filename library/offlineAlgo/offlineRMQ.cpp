@@ -1,0 +1,1 @@
+#include "../rangeQuery/offlineRMQ.cpp"

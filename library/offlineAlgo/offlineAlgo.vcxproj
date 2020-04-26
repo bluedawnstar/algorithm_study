@@ -147,12 +147,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="countUniqueNumbers.cpp" />
+    <ClCompile Include="lcaTarjan.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MOAlgorithm.cpp" />
+    <ClCompile Include="offlineRMQ.cpp" />
     <ClCompile Include="segmentMinValueFinder.cpp" />
+    <ClCompile Include="xTimesValueChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="countUniqueNumbers.h" />
+    <ClInclude Include="lcaTarjan.h" />
+    <ClInclude Include="MOAlgorithm.h" />
+    <ClInclude Include="offlineRMQ.h" />
     <ClInclude Include="segmentMinValueFinder.h" />
+    <ClInclude Include="xTimesValueChecker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

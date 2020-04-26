@@ -24,12 +24,36 @@
     <ClCompile Include="segmentMinValueFinder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="lcaTarjan.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MOAlgorithm.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="offlineRMQ.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="xTimesValueChecker.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="countUniqueNumbers.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentMinValueFinder.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="lcaTarjan.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MOAlgorithm.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="offlineRMQ.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="xTimesValueChecker.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
