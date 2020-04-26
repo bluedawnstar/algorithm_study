@@ -8,4 +8,8 @@ using namespace std;
 int main(void) {
     TEST(CountUniqueNumbers);
     TEST(SegmentMinValueFinder);
+    TEST(LcaTarjan);
+    TEST(OfflineRMQ);
+    TEST(MOAlgorithm);
+    TEST(XTimesValueChecker);
 }
