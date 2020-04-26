@@ -156,7 +156,7 @@ struct ChordalGraph {
 
     // perfect elimination ordering with Lex-BFS, O(V + E)
     vector<int> findPerfectEliminationOrderingWithLexBFS() {
-        auto order = findLexicographicBFS();
+        auto order = lexicographicBFS();
         reverse(order.begin(), order.end());
         if (!isPerfectEliminationOrdering(order))
             return vector<int>{};
@@ -167,7 +167,7 @@ struct ChordalGraph {
 
     // Lexicographic Breadth First Search (Lex-BFS), O(V + E)
     // https://en.wikipedia.org/wiki/Lexicographic_breadth-first_search
-    vector<int> findLexicographicBFS() {
+    vector<int> lexicographicBFS() {
         // initialize a sequence ¥Ò of sets, to contain a single set containing all vertices.
         struct ListT {
             list<int> set;
