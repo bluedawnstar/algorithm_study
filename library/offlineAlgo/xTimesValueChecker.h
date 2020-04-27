@@ -48,7 +48,6 @@ struct XTimesValueChecker {
     // M = value range
     // A = value array (0 <= A[i] < M, 0 <= i < N)
     // X = required count of number i in a range (1 <= X[i] <= N, 0 <= i < M)
-
     static vector<bool> solve(const vector<int>& A, const vector<int>& X, const vector<pair<int, int>>& query) {
         int N = int(A.size());
         int M = int(X.size());
@@ -69,13 +68,13 @@ struct XTimesValueChecker {
             /*
                ... j      j+1 ...... j+X[i]  j+X[i]+1 ...
              --------------------------------------------------
-               ... a ..... a ......... a ...... a ............
-                     ^     ^         ^          ^             ^
-                     |     |         |          |             |
-                    l1 ** r1         |          |             |
-                          l2 ****** r2         l3 ********** r3
+               ....a.......a...........a........a.............
+                    ^      ^          ^         ^             ^
+                    |      |          |         |             |
+                   l1 *** r1          |         |             |
+                          l2 ******* r2        l3 ********** r3
 
-                     OOOOOOxxxxxxxxxxxxOOOOOOOOOxxxxxxxxxxxxxxxx
+                    OOOOOOOxxxxxxxxxxxxOOOOOOOOOxxxxxxxxxxxxxxxx
                            :           :        :               :
                     l1:   +1          -1       +1              -1
                     r1:   -1          +1       -1              +1
