@@ -8,4 +8,5 @@ using namespace std;
 int main(void) {
     TEST(SkipList);
     TEST(IndexableSkipList);
+    TEST(LRUCache);
 }
