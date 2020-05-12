@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <string>
 
 namespace FastIO {
     const int SIZE = (1 << 24);
@@ -78,6 +79,17 @@ namespace FastIO {
         return res;
     }
 
+    std::string readString() {
+        while (*gInPtr && *gInPtr <= 32)
+            ++gInPtr;
+
+        auto* start = gInPtr;
+        while (*gInPtr && *gInPtr > 32)
+            ++gInPtr;
+
+        return std::string(start, gInPtr - start);
+    }
+
     struct Stream {
         Stream() {
             init();
@@ -90,6 +102,11 @@ namespace FastIO {
 
         Stream& operator >>(long long& x) {
             x = readLL();
+            return *this;
+        }
+
+        Stream& operator >>(std::string& s) {
+            s = readString();
             return *this;
         }
     };
