@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ahoCorasick.cpp" />
     <ClCompile Include="ahoCorasickAM.cpp" />
     <ClCompile Include="bracketSequencesBalanced.cpp" />
     <ClCompile Include="burrowsWheelerTransform.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="searchZAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ahoCorasick.h" />
     <ClInclude Include="ahoCorasickAM.h" />
     <ClInclude Include="bracketSequencesBalanced.h" />
     <ClInclude Include="bracketSequencesBalanced2.h" />
