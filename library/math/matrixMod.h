@@ -282,9 +282,9 @@ struct MatrixMod {
             for (int j = 0; j < N; j++) {
                 if (i == j)
                     continue;
-                if (!m[j][i])
+                if (!mat[j][i])
                     continue;
-                auto freq = mod - m[j][i];
+                auto freq = mod - mat[j][i];
                 for (int k = 0; k < N; k++) {
                     mat[j][k] = static_cast<int>((mat[j][k] + 1ll * mat[i][k] * freq) % mod);
                     res[j][k] = static_cast<int>((res[j][k] + 1ll * res[i][k] * freq) % mod);
