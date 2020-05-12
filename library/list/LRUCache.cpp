@@ -33,24 +33,24 @@ void testLRUCache() {
         assert(a == -1);
 
         int b = lru.get(2);
-        if (b == 20)
+        if (b != 20)
             cout << "ERROR: " << b << ", " << 20 << endl;
         assert(b == 20);
 
         lru.put(4, 40);
 
         int c = lru.get(3);
-        if (c == -1)
+        if (c != -1)
             cout << "ERROR: " << c << ", " << -1 << endl;
         assert(c == -1);
 
         int d = lru.get(2);
-        if (d == 20)
+        if (d != 20)
             cout << "ERROR: " << d << ", " << 20 << endl;
         assert(d == 20);
 
         int e = lru.get(4);
-        if (e == 40)
+        if (e != 40)
             cout << "ERROR: " << e << ", " << 40 << endl;
         assert(e == 40);
     }
