@@ -3,6 +3,7 @@
 #include "matrix.h"
 
 // SLAE = System of n linear algebraic equations
+// - A*x = b
 struct SLAE {
     // O(N^3), 'a' is a N x N matrix
     static vector<double> gauss(Matrix<double> a, vector<double> b) {
