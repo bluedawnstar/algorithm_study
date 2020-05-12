@@ -10,4 +10,5 @@ int main(void) {
     TEST(MinStack);
     TEST(MinQueue);
     TEST(MergeableHeap);
+    TEST(QueueWith2Stacks);
 }

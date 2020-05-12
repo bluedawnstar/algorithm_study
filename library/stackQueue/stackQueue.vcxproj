@@ -151,12 +151,14 @@
     <ClCompile Include="mergeableHeap.cpp" />
     <ClCompile Include="minQueue.cpp" />
     <ClCompile Include="minStack.cpp" />
+    <ClCompile Include="queueWith2Stacks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="largestRectangle.h" />
     <ClInclude Include="mergeableHeap.h" />
     <ClInclude Include="minQueue.h" />
     <ClInclude Include="minStack.h" />
+    <ClInclude Include="queueWith2Stacks.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
