@@ -174,7 +174,7 @@ void testIndexableSkipList() {
         IndexableSkipList<int> skl(30);
 
 #ifdef _DEBUG
-        vector<int> in(300000);
+        vector<int> in(30000);
 #else
         vector<int> in(3000000);
 #endif

@@ -1,30 +1,34 @@
 #pragma once
 
+template <typename KeyT, typename ValueT>
 class LRUCache {
 public:
-    int capacity;
-    list<pair<int, int>> cache;                                     // (key, value)
-    unordered_map<int, list<pair<int, int>>::iterator> keyToItem;   // 
+    size_t capacity;
+    ValueT invalidValue;
 
-    LRUCache(int capacity) : capacity(capacity) {
+    typename list<pair<KeyT, ValueT>> cache;                                     // (key, value)
+    unordered_map<KeyT, typename list<pair<KeyT, ValueT>>::iterator> keyToItem;  // 
+
+    LRUCache(size_t capacity, ValueT invalidValue)
+        : capacity(capacity), invalidValue(invalidValue) {
     }
 
-    int get(int key) {
+    ValueT get(KeyT key) {
         auto it = keyToItem.find(key);
         if (it == keyToItem.end())
-            return -1;
+            return invalidValue;
 
-        int value = it->second->second;
+        ValueT value = it->second->second;
         cache.erase(it->second);
         keyToItem[key] = cache.emplace(cache.end(), key, value);
         return value;
     }
 
-    void put(int key, int value) {
+    void put(KeyT key, ValueT value) {
         auto it = keyToItem.find(key);
         if (it != keyToItem.end()) {
             cache.erase(it->second);
-        } else if (cache.size() == capacity) {
+        } else if (cache.size() >= capacity) {
             keyToItem.erase(cache.front().first);
             cache.pop_front();
         }
