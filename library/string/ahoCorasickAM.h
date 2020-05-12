@@ -202,6 +202,38 @@ struct AhoCorasickAM {
         }
     }
 
+    //---
+
+    // out = { pattern_id, ... }
+    const Node* firstAhoCorasick(char ch, vector<int>& out) const {
+        const Node* state = &mRoot;
+
+        int chIdx = ch2i(ch);
+        while (state != &mRoot && !state->hasChild(chIdx))
+            state = state->suffixLink;
+        if (state->hasChild(chIdx))
+            state = state->getChild(chIdx);
+
+        out.insert(out.end(), state->output.begin(), state->output.end());
+
+        return state;
+    }
+
+    // out = { pattern_id, ... }
+    const Node* nextAhoCorasick(const Node* currState, char ch, vector<int>& out) const {
+        int chIdx = ch2i(ch);
+        while (currState != &mRoot && !currState->hasChild(chIdx))
+            currState = currState->suffixLink;
+        if (currState->hasChild(chIdx))
+            currState = currState->getChild(chIdx);
+
+        out.insert(out.end(), currState->output.begin(), currState->output.end());
+
+        return currState;
+    }
+
+    //---
+
     // search all patterns in s
     // return (last_character_in_s, pattern_id)s
     // O(M + N + K), M = the sum of all pattern lengths, N = text length, K = the number of patterns in the text

@@ -42,6 +42,39 @@ void testAhoCorasickAM() {
         vector<pair<int, int>> gt{ { 1, 1 }, { 3, 2 }, { 6, 3 }, { 8, 0 }, { 8, 1 } };
         assert(ans == gt);
     }
+    {
+        AhoCorasickAM<> trie;
+
+        trie.insert("she", 0);
+        trie.insert("he", 1);
+        trie.insert("hers", 2);
+        trie.insert("his", 3);
+        trie.build();
+
+        //                012345678
+        const string s = "hershishe";
+
+        vector<vector<int>> gt{
+            { },
+            { 1 },
+            { 1 },
+            { 1, 2 },
+            { 1, 2 },
+            { 1, 2 },
+            { 1, 2, 3 },
+            { 1, 2, 3 },
+            { 1, 2, 3, 1, 0 },
+        };
+
+        vector<int> ans;
+
+        auto* curr = trie.firstAhoCorasick(s[0], ans);
+
+        for (int i = 1; i < int(s.length()); i++) {
+            curr = trie.nextAhoCorasick(curr, s[i], ans);
+            assert(ans == gt[i]);
+        }
+    }
 
     cout << "OK!" << endl;
 }
