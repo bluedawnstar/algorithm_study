@@ -40,6 +40,7 @@
 
 #include "lcpArraySparseTable.h"
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixArray {
     vector<int>         suffixArray;
     vector<int>         lcpArray;
@@ -50,15 +51,15 @@ struct SuffixArray {
     SuffixArray() {
     }
 
-    SuffixArray(const char* s, int n, int charMin = 'a', int charMax = 'z') {
-        build(s, n, charMin, charMax);
+    SuffixArray(const char* s, int n) {
+        build(s, n);
     }
 
-    SuffixArray(const string& s, int charMin = 'a', int charMax = 'z') {
-        build(s, charMin, charMax);
+    SuffixArray(const string& s) {
+        build(s);
     }
 
-    void build(const char* s, int n, const vector<int>& sa, int charMin = 'a', int charMax = 'z') {
+    void build(const char* s, int n, const vector<int>& sa) {
         suffixArray = sa;
         lcpArray = SuffixArray::buildLcpArray(suffixArray, s, n);
         lcpSparseTable.build(lcpArray);
@@ -68,8 +69,8 @@ struct SuffixArray {
             suffixArrayRev[suffixArray[i]] = i;
     }
 
-    void build(const char* s, int n, int charMin = 'a', int charMax = 'z') {
-        suffixArray = SuffixArray::buildSuffixArray(s, n, charMin, charMax);
+    void build(const char* s, int n) {
+        suffixArray = SuffixArray::buildSuffixArray(s, n);
         lcpArray = SuffixArray::buildLcpArray(suffixArray, s, n);
         lcpSparseTable.build(lcpArray);
 
@@ -78,8 +79,8 @@ struct SuffixArray {
             suffixArrayRev[suffixArray[i]] = i;
     }
 
-    void build(const string& s, int charMin = 'a', int charMax = 'z') {
-        build(&s[0], int(s.length()), charMin, charMax);
+    void build(const string& s) {
+        build(&s[0], int(s.length()));
     }
 
 
@@ -209,16 +210,16 @@ struct SuffixArray {
     //------------------------------------------------------------------------
 
     // O(NlogN)
-    static vector<int> buildSuffixArray(const char* s, int n, int charMin = 'a', int charMax = 'z') {
+    static vector<int> buildSuffixArray(const char* s, int n) {
         vector<int> SA(n);
         if (n <= 1)
             return SA;
 
-        int m = charMax - charMin + 1;
+        int m = MaxCharN;
         vector<int> cnt(max(n, m)), currG(n), nextG(n);
 
         for (int i = 0; i < n; i++) {
-            currG[i] = s[i] - charMin;
+            currG[i] = s[i] - BaseChar;
             ++cnt[currG[i]];
         }
         for (int i = 1; i < m; i++)
@@ -264,8 +265,8 @@ struct SuffixArray {
         return SA;
     }
 
-    static vector<int> buildSuffixArray(const string& s, int charMin = 'a', int charMax = 'z') {
-        return buildSuffixArray(&s[0], int(s.length()), charMin, charMax);
+    static vector<int> buildSuffixArray(const string& s) {
+        return buildSuffixArray(&s[0], int(s.length()));
     }
 
     // Kasai algorithm - O(N)

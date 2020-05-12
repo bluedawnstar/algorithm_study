@@ -1,18 +1,19 @@
 #pragma once
 
 #include "suffixArray.h"
+#include "suffixAutomaton.h"
 #include "../rangeQuery/segmentTreeRMQ.h"
 #include "../rangeQuery/fenwickTreeMultAdd.h"
 
 // 'T' is a type of result
-template <typename T>
+template <typename T, int MaxCharN = 26, int BaseChar = 'a'>
 struct DistinctSubstringCounterWithSuffixArray {
     int N;
     int currSuffixPos;
 
-    SuffixArray     SA;
-    RMQ             addedSuffix;    // suffix string poistion
-    vector<int>     revSA;          // suffix string position to suffix array index
+    SuffixArray<MaxCharN,BaseChar> SA;
+    RMQ         addedSuffix;    // suffix string poistion
+    vector<int> revSA;          // suffix string position to suffix array index
 
     FenwickTreeMultAdd<T>   fsum;
 
@@ -70,16 +71,17 @@ struct DistinctSubstringCounterWithSuffixArray {
     }
 };
 
-template <typename T>
-struct DistinctSubstringCounterWithSuffixAutomaton : public SuffixAutomaton {
+template <typename T, int MaxCharN = 26, int BaseChar = 'a'>
+struct DistinctSubstringCounterWithSuffixAutomaton : public SuffixAutomaton<MaxCharN,BaseChar> {
     FenwickTreeMultAdd<T> bit;
 
-    DistinctSubstringCounterWithSuffixAutomaton(int maxN) : SuffixAutomaton(maxN), bit(maxN) {
+    explicit DistinctSubstringCounterWithSuffixAutomaton(int maxN)
+        : SuffixAutomaton<MaxCharN,BaseChar>(maxN), bit(maxN) {
         // no action
     }
 
     void extend(char c) {
-        SuffixAutomaton::extend(c);
+        SuffixAutomaton<MaxCharN,BaseChar>::extend(c);
         update(last);
     }
 

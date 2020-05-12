@@ -19,7 +19,7 @@ using namespace std;
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-static void dump(CompressedTrie::Node* p, int level) {
+static void dump(CompressedTrie<>::Node* p, int level) {
     if (!p)
         return;
 
@@ -29,7 +29,7 @@ static void dump(CompressedTrie::Node* p, int level) {
     for (int i = 0; i < p->textLen; i++)
         cout << p->text[i];
     cout << ", leaf=" << p->leafCount << endl;
-    for (int i = 0; i < CompressedTrie::MaxCharN; i++) {
+    for (int i = 0; i < 26; i++) {
         if (p->children[i])
             dump(p->children[i], level + 1);
     }
@@ -40,7 +40,7 @@ void testCompressedTrie() {
 
     cout << "-- Compressed Trie -------------------------------------" << endl;
 
-    CompressedTrie compTrie;
+    CompressedTrie<> compTrie;
 
     const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
     for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)

@@ -35,7 +35,7 @@ void testTrieAM() {
 
     cout << "-- Array Mapped Trie ---------------------------------" << endl;
     {
-        TrieAM trie;
+        TrieAM<> trie;
 
         const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
         for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
@@ -103,18 +103,18 @@ void testTrieAM() {
 
         PROFILE_START(0);
         {
-            Trie tree;
+            Trie<> tree;
             for (int i = 0; i < N; i++) {
                 tree.insert(in[i]);
             }
-            if (count(tree.mRoot.children, tree.mRoot.children + Trie::MaxCharN, nullptr) == Trie::MaxCharN)
+            if (count(tree.mRoot.children, tree.mRoot.children + 26, nullptr) == 26)
                 cerr << "What?" << endl;
         }
         PROFILE_STOP(0);
 
         PROFILE_START(1);
         {
-            TrieAM tree;
+            TrieAM<> tree;
             for (int i = 0; i < N; i++) {
                 tree.insert(in[i]);
             }

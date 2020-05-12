@@ -4,6 +4,7 @@
 
 // https://www.hackerearth.com/practice/algorithms/string-algorithm/string-searching/practice-problems/algorithm/prefix-and-substring-queries-87616b64/
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct PrefixCounter {
     struct PersistentSegmentTree {
         int N;
@@ -92,7 +93,7 @@ struct PrefixCounter {
 
     vector<int> roots;
     PersistentSegmentTree segTree;
-    SuffixArray sa;
+    SuffixArray<MaxCharN,BaseChar> sa;
 
     void build(const char s[], int n) {
         sa.build(s, n);

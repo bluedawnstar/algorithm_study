@@ -25,7 +25,7 @@ void testSubsequenceDAG() {
     {
         string s = "abcab";
 
-        SubsequenceDAG sdag(s);
+        SubsequenceDAG<> sdag(s);
         int cnt = 0;
         sdag.iterateAll([&cnt](int node, const string& s) {
             //cout << s << endl;
@@ -67,7 +67,7 @@ void testSubsequenceDAG() {
             "cb"
         };
 
-        SubsequenceDAGAlgo algo(sdag, int(s.length()));
+        SubsequenceDAGAlgo<> algo(sdag, int(s.length()));
         // 1. count all distinct subsequences
         auto cnt2 = algo.countSubsequences();
         assert(cnt == cnt2);

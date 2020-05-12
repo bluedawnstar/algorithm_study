@@ -60,7 +60,7 @@ void testSuffixArrayAlgoPrefixCounter() {
             const int N = CHAR_N * 5;
             auto s = makeRepeatString(N, CHAR_N);
 
-            PrefixCounter pc;
+            PrefixCounter<> pc;
             pc.build(s);
 
             for (int len = 1; len < 5; len++) {
@@ -85,7 +85,7 @@ void testSuffixArrayAlgoPrefixCounter() {
         auto s = rep1 + rep2 + rep1 + rep2;
         const int N = int(s.length());
 
-        PrefixCounter pc;
+        PrefixCounter<> pc;
         pc.build(s);
 
         for (int len = 1; len < 5; len++) {
@@ -109,7 +109,7 @@ void testSuffixArrayAlgoPrefixCounter() {
         auto s = rep1 + rep2 + rep1 + rep2;
         const int N = int(s.length());
 
-        PrefixCounter pc;
+        PrefixCounter<> pc;
         pc.build(s);
 
         for (int len = 1; len < 5; len++) {
@@ -134,7 +134,7 @@ void testSuffixArrayAlgoPrefixCounter() {
             auto s = rep1 + rep2 + rep1 + rep2;
             const int N = int(s.length());
 
-            PrefixCounter pc;
+            PrefixCounter<> pc;
             pc.build(s);
 
             for (int len = 1; len < 5; len++) {
@@ -160,7 +160,7 @@ void testSuffixArrayAlgoPrefixCounter() {
 #endif
             auto s = makeString(N, CHAR_N);
 
-            PrefixCounter pc;
+            PrefixCounter<> pc;
             pc.build(s);
 
             for (int len = 1; len < 5; len++) {

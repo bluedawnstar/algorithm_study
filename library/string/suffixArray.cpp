@@ -51,7 +51,7 @@ static string makeRandomRepeatedString(int n, int charCnt) {
 
 static int lowerBoundForwardSlow(const vector<int>& sa, int left, int length, const string& s) {
     for (int i = left + 1; i < int(sa.size()); i++) {
-        if (SuffixArrayAlgo::commonPrefixNaive(s, sa[left], sa[i]) <= length)
+        if (SuffixArrayAlgo<>::commonPrefixNaive(s, sa[left], sa[i]) <= length)
             return i;
     }
 
@@ -60,7 +60,7 @@ static int lowerBoundForwardSlow(const vector<int>& sa, int left, int length, co
 
 static int lowerBoundBackwardSlow(const vector<int>& sa, int right, int length, const string& s) {
     for (int i = right - 1; i >= 0; i--) {
-        if (SuffixArrayAlgo::commonPrefixNaive(s, sa[i], sa[right]) <= length)
+        if (SuffixArrayAlgo<>::commonPrefixNaive(s, sa[i], sa[right]) <= length)
             return i;
     }
 
@@ -74,12 +74,12 @@ void testSuffixArray() {
     {
         string s("abdadafaaabdfaeef");
 
-        vector<int> ans = SuffixArray::buildSuffixArray(s);
+        vector<int> ans = SuffixArray<>::buildSuffixArray(s);
         vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
         assert(ans == gt);
 
-        long long cntAns = SuffixArrayAlgo::countSubstrings(ans, s);
-        long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
+        long long cntAns = SuffixArrayAlgo<>::countSubstrings(ans, s);
+        long long cntGT = SuffixArrayAlgo<>::countSubstringsNaive(gt, s);
         assert(cntAns == cntGT);
     }
     {
@@ -89,16 +89,16 @@ void testSuffixArray() {
         SuffixArrayLarssonSadakane larsson;
         vector<int> ans1 = larsson.build(s);
 
-        vector<int> ans2 = SuffixArrayManberMyers::build(s);
-        vector<int> ans3 = SuffixArraySkew::build(s);
+        vector<int> ans2 = SuffixArrayManberMyers<>::build(s);
+        vector<int> ans3 = SuffixArraySkew<>::build(s);
 
         vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
         if (ans1 != gt || ans2 != gt || ans3 != gt)
             cout << "Mismatched : " << ans1 << ", " << ans2 << ", " << ans3 << ", " << gt << endl;
         assert(ans1 == gt && ans2 == gt && ans3 == gt);
 
-        long long cntAns = SuffixArrayAlgo::countSubstrings(ans1, s);
-        long long cntGT = SuffixArrayAlgo::countSubstringsNaive(gt, s);
+        long long cntAns = SuffixArrayAlgo<>::countSubstrings(ans1, s);
+        long long cntGT = SuffixArrayAlgo<>::countSubstringsNaive(gt, s);
         assert(cntAns == cntGT);
     }
     {
@@ -114,13 +114,13 @@ void testSuffixArray() {
 
             sort(v.begin(), v.end());
 
-            auto SA = SuffixArray::buildSuffixArray(s);
+            auto SA = SuffixArray<>::buildSuffixArray(s);
 
             SuffixArrayLarssonSadakane larsson;
             vector<int> SA2 = larsson.build(s);
 
-            vector<int> SA3 = SuffixArrayManberMyers::build(s);
-            vector<int> SA4 = SuffixArraySkew::build(s);
+            vector<int> SA3 = SuffixArrayManberMyers<>::build(s);
+            vector<int> SA4 = SuffixArraySkew<>::build(s);
 
             for (int i = 0; i < N; i++) {
                 if (v[i].second != SA[i] || v[i].second != SA2[i] || v[i].second != SA3[i] || v[i].second != SA4[i])
@@ -135,7 +135,7 @@ void testSuffixArray() {
         int L = 5;
         string s = makeRandomString(N, 3);
 
-        SuffixArray SA(s);
+        SuffixArray<> SA(s);
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < T; j++) {
@@ -175,7 +175,7 @@ void testSuffixArray() {
 
             PROFILE_START(0);
             for (int i = 0; i < T; i++) {
-                auto SA = SuffixArray::buildSuffixArray(in[i]);
+                auto SA = SuffixArray<>::buildSuffixArray(in[i]);
                 sum1 += SA[0];
             }
             PROFILE_STOP(0);
@@ -190,14 +190,14 @@ void testSuffixArray() {
 
             PROFILE_START(2);
             for (int i = 0; i < T; i++) {
-                vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+                vector<int> SA = SuffixArrayManberMyers<>::build(in[i]);
                 sum3 += SA[0];
             }
             PROFILE_STOP(2);
 
             PROFILE_START(3);
             for (int i = 0; i < T; i++) {
-                vector<int> SA = SuffixArraySkew::build(in[i]);
+                vector<int> SA = SuffixArraySkew<>::build(in[i]);
                 sum4 += SA[0];
             }
             PROFILE_STOP(3);
@@ -234,7 +234,7 @@ void testSuffixArray() {
 
             PROFILE_START(0);
             for (int i = 0; i < T; i++) {
-                auto SA = SuffixArray::buildSuffixArray(in[i]);
+                auto SA = SuffixArray<>::buildSuffixArray(in[i]);
                 sum1 += SA[0];
             }
             PROFILE_STOP(0);
@@ -249,14 +249,14 @@ void testSuffixArray() {
 
             PROFILE_START(2);
             for (int i = 0; i < T; i++) {
-                vector<int> SA = SuffixArrayManberMyers::build(in[i]);
+                vector<int> SA = SuffixArrayManberMyers<>::build(in[i]);
                 sum3 += SA[0];
             }
             PROFILE_STOP(2);
 
             PROFILE_START(3);
             for (int i = 0; i < T; i++) {
-                vector<int> SA = SuffixArraySkew::build(in[i]);
+                vector<int> SA = SuffixArraySkew<>::build(in[i]);
                 sum4 += SA[0];
             }
             PROFILE_STOP(3);

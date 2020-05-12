@@ -20,7 +20,7 @@ using namespace std;
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-void dump(SuffixTrieAM::Node* p, int idx, int level) {
+void dump(SuffixTrieAM<>::Node* p, int idx, int level) {
     if (!p)
         return;
 
@@ -29,7 +29,7 @@ void dump(SuffixTrieAM::Node* p, int idx, int level) {
     if (idx >= 0)
         cout << " " << char('a' + idx) << endl;
 
-    for (int i = 0; i < SuffixTrieAM::MaxCharN; i++) {
+    for (int i = 0; i < 26; i++) {
         if (p->hasChild(i))
             dump(p->getChild(i), i, level + 1);
     }
@@ -42,7 +42,7 @@ void testSuffixTrieAM() {
     cout << "-- Array Mapped Suffix Trie -----------------------------------------" << endl;
 
     const char* s;
-    SuffixTrieAM trie;
+    SuffixTrieAM<> trie;
 
     // test buildSuffix()
 

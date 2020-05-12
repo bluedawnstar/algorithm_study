@@ -31,10 +31,10 @@ void testBurrowsWheelerTransform() {
         auto in = "banana";
 
         auto gt = "bnn{aa|a";
-        auto ans = BurrowsWheelerTransform::bwt(in);
+        auto ans = BurrowsWheelerTransform<>::bwt(in);
         assert(ans == gt);
 
-        auto ivt = BurrowsWheelerTransform::ibwt(ans);
+        auto ivt = BurrowsWheelerTransform<>::ibwt(ans);
         assert(ivt == in);
     }
     {
@@ -42,7 +42,7 @@ void testBurrowsWheelerTransform() {
         int T = 1000;
         for (int i = 0; i < T; i++) {
             auto s = makeRandomString(N);
-            assert(BurrowsWheelerTransform::ibwt(BurrowsWheelerTransform::bwt(s)) == s);
+            assert(BurrowsWheelerTransform<>::ibwt(BurrowsWheelerTransform<>::bwt(s)) == s);
         }
     }
 

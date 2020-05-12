@@ -1,10 +1,11 @@
 #pragma once
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SubsequenceDAGAlgo {
     int maxN;
-    SubsequenceDAG& dag;
+    SubsequenceDAG<MaxCharN,BaseChar>& dag;
 
-    SubsequenceDAGAlgo(SubsequenceDAG& dat, int maxN) : dag(dat), maxN(maxN),
+    SubsequenceDAGAlgo(SubsequenceDAG<MaxCharN,BaseChar>& dat, int maxN) : dag(dat), maxN(maxN),
         D(maxN * 2, 0), totLen(maxN * 2, 0) {
     }
 
@@ -17,7 +18,7 @@ struct SubsequenceDAGAlgo {
 
         long long res = 1;
 
-        for (int i = 0; i < SubsequenceDAG::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             if (dag.nodes[u].next[i])
                 res += countSubsequences(dag.nodes[u].next[i]);
         }
@@ -39,7 +40,7 @@ struct SubsequenceDAGAlgo {
         if (totLen[u])
             return totLen[u];
 
-        for (int i = 0; i < SubsequenceDAG::MaxCharN; i++)
+        for (int i = 0; i < MaxCharN; i++)
             if (dag.nodes[u].next[i])
                 //res += totalLengthOfAllDistinctSubsequences(dag.nodes[u].next[i]) + D[dag.nodes[u].next[i]];
                 res += totalLengthOfAllDistinctSubsequences(dag.nodes[u].next[i]) + countSubsequences(dag.nodes[u].next[i]);
@@ -59,10 +60,10 @@ struct SubsequenceDAGAlgo {
     // 3. Lexicographically kth subsequence.
     // kth >= 1
     bool kthSubsequence(string& res, int kth, int u, int& path) {
-        for (int i = 0; i < SubsequenceDAG::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             if (dag.nodes[u].next[i]) {
                 if (++path == kth || kthSubsequence(res, kth, dag.nodes[u].next[i], path)) {
-                    res.push_back(SubsequenceDAG::i2ch(i));
+                    res.push_back(SubsequenceDAG<MaxCharN,BaseChar>::i2ch(i));
                     return true;
                 }
             }
@@ -90,7 +91,7 @@ struct SubsequenceDAGAlgo {
 
     // kth >= 1
     bool kthSubsequenceFast(string& res, long long kth, int u, long long& path) {
-        for (int i = 0; i < SubsequenceDAG::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             int v = dag.nodes[u].next[i];
             if (v) {
                 if (path + D[v] < kth) {
@@ -99,7 +100,7 @@ struct SubsequenceDAGAlgo {
                 }
 
                 if (++path == kth || kthSubsequenceFast(res, kth, dag.nodes[u].next[i], path)) {
-                    res.push_back(SubsequenceDAG::i2ch(i));
+                    res.push_back(SubsequenceDAG<MaxCharN,BaseChar>::i2ch(i));
                     return true;
                 }
             }

@@ -4,11 +4,11 @@
 
 //--- Compressed Trie ---------------------------------------------------------
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct CompressedTrie {
-    static const size_t MaxCharN = 26;
     static const size_t AllocBlockSize = 128;
-    static int ch2i(char ch) {
-        return ch - 'a';
+    static constexpr int ch2i(char ch) {
+        return ch - BaseChar;
     }
 
     struct Node {

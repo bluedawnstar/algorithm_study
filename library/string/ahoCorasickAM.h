@@ -9,10 +9,10 @@
 
 //--- Aho-Corasick ------------------------------------------------------------
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct AhoCorasickAM {
-    static const size_t MaxCharN = 26;
-    static int ch2i(char ch) {
-        return ch - 'a';
+    static constexpr int ch2i(char ch) {
+        return ch - BaseChar;
     }
 
     static int popcnt(unsigned x) {

@@ -49,7 +49,7 @@ void testPalindromicTree() {
         };
 
         for (auto s : in) {
-            PalindromicTree tree(10);
+            PalindromicTree<> tree(10);
 
             int gt = PalindromicSubstringDP::countPalindromicSubstring(s);
             int ans = int(tree.count(s));
@@ -74,7 +74,7 @@ void testPalindromicTree() {
                     prevN = currN;
                 }
 
-                PalindromicTree tree(int(s.length()));
+                PalindromicTree<> tree(int(s.length()));
                 vector<int> ans = tree.countAll(s);
                 if (ans != gt) {
                     cout << s << endl;
@@ -86,7 +86,7 @@ void testPalindromicTree() {
             {
                 vector<int> gt = LongestPalindromicSubstring::getLongestPalindromesByEnd(s);
 
-                PalindromicTree tree(int(s.length()));
+                PalindromicTree<> tree(int(s.length()));
                 vector<int> ans;
                 for (int i = 0; i < int(s.length()); i++) {
                     tree.extend(s[i]);
@@ -103,7 +103,7 @@ void testPalindromicTree() {
     {
         const string s = "ababaacabd";
 
-        PalindromicTree tree(int(s.length()));
+        PalindromicTree<> tree(int(s.length()));
         for (int i = 0; i < int(s.length()); i++) {
             tree.extend(s[i]);
 
@@ -121,7 +121,7 @@ void testPalindromicTree() {
     {
         const string s = "aaaaaaaaaaaaaa";
 
-        PalindromicTree tree(int(s.length()));
+        PalindromicTree<> tree(int(s.length()));
         for (int i = 0; i < int(s.length()); i++) {
             tree.extend(s[i]);
 

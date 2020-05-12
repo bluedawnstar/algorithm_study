@@ -31,15 +31,15 @@ void testSuffixAutomationAM() {
 
     cout << "-- Suffix Automation - Array Mapped --------------------" << endl;
     string s("aabaa");
-    SuffixAutomatonAM sa(10);
+    SuffixAutomatonAM<> sa(10);
     sa.extend(s);
 
     string s2("abbb");
-    SuffixAutomatonAM sa2(10);
+    SuffixAutomatonAM<> sa2(10);
     sa2.extend(s2);
 
-    SuffixAutomatonAMAlgo saA(sa, MAXN);
-    SuffixAutomatonAMAlgo saA2(sa2, MAXN);
+    SuffixAutomatonAMAlgo<> saA(sa, MAXN);
+    SuffixAutomatonAMAlgo<> saA2(sa2, MAXN);
 
     //--- countSubstrings() ---
     cout << "countSubstrings(" << s << ") : " << saA.countSubstrings() << endl;
@@ -63,8 +63,8 @@ void testSuffixAutomationAM() {
         { "abaa", 2 }
     };
     for (int i = 0; i < sizeof(minShiftTest) / sizeof(minShiftTest[0]); i++) {
-        cout << "minShift(" << minShiftTest[i].first << ") : " << SuffixAutomatonAMAlgo::minShiftAM(minShiftTest[i].first) << endl;
-        assert(SuffixAutomatonAMAlgo::minShiftAM(minShiftTest[i].first) == minShiftTest[i].second);
+        cout << "minShift(" << minShiftTest[i].first << ") : " << SuffixAutomatonAMAlgo<>::minShiftAM(minShiftTest[i].first) << endl;
+        assert(SuffixAutomatonAMAlgo<>::minShiftAM(minShiftTest[i].first) == minShiftTest[i].second);
     }
 
     //--- findFirst() ---

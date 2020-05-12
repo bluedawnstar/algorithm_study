@@ -43,7 +43,7 @@ void testSuffixRollingHash() {
     {
         string S("abdaaaaaaaaaaaaaaacccccccccccccccccccccaaaddddddddddddddddaaaaaaadddddddaaafaeef");
 
-        vector<int> a = SuffixArray::buildSuffixArray(S);
+        vector<int> a = SuffixArray<>::buildSuffixArray(S);
         SuffixRollingHash srh(S);
 
         for (int i = 0; i < 100; i++) {
@@ -55,7 +55,7 @@ void testSuffixRollingHash() {
             int lcp = srh.lcp(left, right);
 
             //cout << "LCP(" << left << ", " << right << ") = " << lcp << endl;
-            assert(lcp == SuffixArrayAlgo::commonPrefixNaive(S, left, right));
+            assert(lcp == SuffixArrayAlgo<>::commonPrefixNaive(S, left, right));
         }
     }
     //---
@@ -101,10 +101,10 @@ void testSuffixRollingHash() {
             auto s = makeRandomString(N, i);
 
             PROFILE_START(0);
-            auto sa1 = SuffixArray::buildSuffixArray(s);
+            auto sa1 = SuffixArray<>::buildSuffixArray(s);
             PROFILE_STOP(0);
             PROFILE_START(1);
-            auto lcpa1 = SuffixArray::buildLcpArray(sa1, s);
+            auto lcpa1 = SuffixArray<>::buildLcpArray(sa1, s);
             PROFILE_STOP(1);
 
             PROFILE_START(2);
@@ -116,7 +116,7 @@ void testSuffixRollingHash() {
 
             PROFILE_START(4);
             PROFILE_START(401);
-            SuffixSparseTable sst(s);
+            SuffixSparseTable<> sst(s);
             PROFILE_STOP(401);
             PROFILE_START(402);
             auto sa3 = sst.buildSuffixArray();

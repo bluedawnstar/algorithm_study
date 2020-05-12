@@ -3,19 +3,19 @@
 // "Simple linear work suffix array construction", J. Karkkainen and P. Sanders.
 // Skew method, O(N)
 
+template <typename T = char, int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixArraySkew {
     // O(N), but slower than Larsson-Sadakane
-    template <typename T = char, typename U = int>
-    static vector<int> build(const T s[], int n, U charMin = 'a', U charMax = 'z') {
+    static vector<int> build(const T s[], int n) {
         if (n < 2)
             return{};
 
-        int size = charMax - charMin + 1;
+        int size = MaxCharN;
         vector<int> sa(n + 3);
 
         vector<int> in(n + 3);
         for (int i = 0; i < n; i++)
-            in[i] = s[i] - charMin + 1;
+            in[i] = s[i] - BaseChar + 1;
 
         buildSub(in, sa, n, size);
         sa.resize(n);
@@ -23,13 +23,16 @@ struct SuffixArraySkew {
         return sa;
     }
 
-    template <typename T = char, typename U = int>
-    static vector<int> build(const vector<T>& s, U charMin = 'a', U charMax = 'z') {
-        return build(s.data(), int(s.size()), charMin, charMax);
+    static vector<int> build(const vector<T>& s) {
+        return build(s.data(), int(s.size()));
     }
 
-    static vector<int> build(const string& s, int charMin = 'a', int charMax = 'z') {
-        return build(s.c_str(), int(s.length()), charMin, charMax);
+    static vector<int> build(const string& s) {
+        vector<T> s2;
+        s2.reserve(s.size());
+        for (auto c : s)
+            s2.push_back(c);
+        return build(s2.data(), int(s2.size()));
     }
 
 private:

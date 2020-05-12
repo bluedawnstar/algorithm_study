@@ -1,10 +1,11 @@
 #pragma once
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixAutomatonAMAlgo {
     int maxN;
-    SuffixAutomatonAM& sa;
+    SuffixAutomatonAM<MaxCharN,BaseChar>& sa;
 
-    SuffixAutomatonAMAlgo(SuffixAutomatonAM& _sa, int _maxN) : sa(_sa), maxN(_maxN),
+    SuffixAutomatonAMAlgo(SuffixAutomatonAM<MaxCharN, BaseChar>& _sa, int _maxN) : sa(_sa), maxN(_maxN),
         D(maxN * 2, 0), totLen(maxN * 2, 0) {
     }
 
@@ -16,7 +17,7 @@ struct SuffixAutomatonAMAlgo {
 
         long long res = 1;
 
-        for (int i = 0; i < SuffixAutomatonAM::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             if (sa.state[u].hasNext(i))
                 res += countSubstrings(sa.state[u].getNext(i));
         }
@@ -37,7 +38,7 @@ struct SuffixAutomatonAMAlgo {
         if (totLen[u])
             return totLen[u];
 
-        for (int i = 0; i < SuffixAutomatonAM::MaxCharN; i++)
+        for (int i = 0; i < MaxCharN; i++)
             if (sa.state[u].hasNext(i))
                 //res += totalLengthOfAllDistinctSubstrings(sa.state[u].getNext(i)) + gD[sa.state[u].getNext(i)];
                 res += totalLengthOfAllDistinctSubstrings(sa.state[u].getNext(i)) + countSubstrings(sa.state[u].getNext(i));
@@ -56,7 +57,7 @@ struct SuffixAutomatonAMAlgo {
     // 3. Lexographically kth substring.
     // kth >= 1
     bool kthSubstring(string& res, int kth, int u, int& path) {
-        for (int i = 0; i < SuffixAutomatonAM::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             if (sa.state[u].hasNext(i)) {
                 if (++path == kth || kthSubstring(res, kth, sa.state[u].getNext(i), path)) {
                     res.push_back('a' + i);
@@ -81,7 +82,7 @@ struct SuffixAutomatonAMAlgo {
     // 4. Smallest Cyclic Shift to obtain lexicographical smallest of All possible  
     static int minShiftAM(const string& s) {
         string ss = s + s;
-        SuffixAutomatonAM sa(int(ss.length()));
+        SuffixAutomatonAM<MaxCharN,BaseChar> sa(int(ss.length()));
         sa.init();
         sa.extend(ss);
 
@@ -89,7 +90,7 @@ struct SuffixAutomatonAMAlgo {
         int len = 0, cur = 0;
 
         do {
-            for (int j = 0; j < SuffixAutomatonAM::MaxCharN; j++) {
+            for (int j = 0; j < MaxCharN; j++) {
                 if (sa.state[cur].hasNext(j)) {
                     if (++len == int(s.length()))
                         res = sa.state[cur].rightEnd - int(s.length()) + 2;
@@ -107,7 +108,7 @@ struct SuffixAutomatonAMAlgo {
     int findFirst(const string& pattern) {
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(pattern[i]));
             if (u <= 0)
                 return -1;
         }
@@ -132,7 +133,7 @@ struct SuffixAutomatonAMAlgo {
 
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(pattern[i]));
             if (u <= 0)
                 return{};
         }
@@ -156,7 +157,7 @@ struct SuffixAutomatonAMAlgo {
     vector<int> findAll(vector<vector<int>>& children, const string& pattern) {
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(pattern[i]));
             if (u <= 0)
                 return{};
         }
@@ -188,7 +189,7 @@ struct SuffixAutomatonAMAlgo {
     int countPattern(const vector<int>& countTable, const string& pattern) {
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(pattern[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(pattern[i]));
             if (u <= 0)
                 return 0;
         }
@@ -201,7 +202,7 @@ struct SuffixAutomatonAMAlgo {
     int lengthOfLcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
         for (int i = 0; i < int(t.length()); ++i) {
-            int ch = SuffixAutomatonAM::ch2i(t[i]);
+            int ch = SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(t[i]);
             while (v && !sa.state[v].hasNext(ch)) {
                 v = sa.state[v].suffixLink;
                 len = sa.state[v].len;
@@ -221,7 +222,7 @@ struct SuffixAutomatonAMAlgo {
     string lcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
         for (int i = 0; i < int(t.length()); ++i) {
-            int ch = SuffixAutomatonAM::ch2i(t[i]);
+            int ch = SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(t[i]);
             while (v && !sa.state[v].hasNext(ch)) {
                 v = sa.state[v].suffixLink;
                 len = sa.state[v].len;
@@ -249,7 +250,7 @@ struct SuffixAutomatonAMAlgo {
 
         int u = 0;
         for (int i = 0; i < int(s.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(s[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(s[i]));
             if (u <= 0)
                 return false;
         }
@@ -259,7 +260,7 @@ struct SuffixAutomatonAMAlgo {
     bool isSuffix(vector<int>& term, const string& s) {
         int u = 0;
         for (int i = 0; i < int(s.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(s[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(s[i]));
             if (u <= 0)
                 return false;
         }
@@ -269,7 +270,7 @@ struct SuffixAutomatonAMAlgo {
     bool isSuffixWithSortedTerm(vector<int>& term, const string& s) {
         int u = 0;
         for (int i = 0; i < int(s.length()); i++) {
-            u = sa.state[u].getNext(SuffixAutomatonAM::ch2i(s[i]));
+            u = sa.state[u].getNext(SuffixAutomatonAM<MaxCharN,BaseChar>::ch2i(s[i]));
             if (u <= 0)
                 return false;
         }

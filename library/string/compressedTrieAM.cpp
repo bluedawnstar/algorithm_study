@@ -24,7 +24,7 @@ using namespace std;
 
 #include "compressedTrie.h"
 
-static void dump(CompressedTrieAM::Node* p, int level) {
+static void dump(CompressedTrieAM<>::Node* p, int level) {
     if (!p)
         return;
 
@@ -34,7 +34,7 @@ static void dump(CompressedTrieAM::Node* p, int level) {
     for (int i = 0; i < p->textLen; i++)
         cout << p->text[i];
     cout << ", leaf=" << p->leafCount << endl;
-    for (int i = 0; i < CompressedTrieAM::MaxCharN; i++) {
+    for (int i = 0; i < 26; i++) {
         if (p->hasChild(i))
             dump(p->getChild(i), level + 1);
     }
@@ -53,7 +53,7 @@ void testCompressedTrieAM() {
 
     cout << "-- Memory Mapped Compressed Trie -------------------------------------" << endl;
     {
-        CompressedTrieAM compTrie;
+        CompressedTrieAM<> compTrie;
 
         const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
         for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
@@ -139,18 +139,18 @@ void testCompressedTrieAM() {
 
         PROFILE_START(0);
         {
-            CompressedTrie tree;
+            CompressedTrie<> tree;
             for (int i = 0; i < N; i++) {
                 tree.insert(in[i]);
             }
-            if (count(tree.mRoot.children, tree.mRoot.children + CompressedTrie::MaxCharN, nullptr) == CompressedTrie::MaxCharN)
+            if (count(tree.mRoot.children, tree.mRoot.children + 26, nullptr) == 26)
                 cerr << "What?" << endl;
         }
         PROFILE_STOP(0);
 
         PROFILE_START(1);
         {
-            CompressedTrieAM tree;
+            CompressedTrieAM<> tree;
             for (int i = 0; i < N; i++) {
                 tree.insert(in[i]);
             }

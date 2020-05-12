@@ -5,9 +5,10 @@
 // This class is intended for general suffix operation in O(logN)
 
 // It's slower than SuffixArray and SimpleSuffixArray.
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixSparseTable {
-    static int ch2i(char ch) {
-        return ch - 'a';
+    static constexpr int ch2i(char ch) {
+        return ch - BaseChar;
     }
 
     //---

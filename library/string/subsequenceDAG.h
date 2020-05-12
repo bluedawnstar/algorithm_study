@@ -2,10 +2,10 @@
 
 // Directed Acyclic Graph to recognize all the subsequences of a string.
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SubsequenceDAG {
-    static const int MaxCharN = 26;
-    static int ch2i(int c) { return c - 'a'; }
-    static int i2ch(int i) { return i + 'a'; }
+    static constexpr int ch2i(int c) { return c - BaseChar; }
+    static constexpr int i2ch(int i) { return i + BaseChar; }
 
     struct NodeT {
         int next[MaxCharN]; // 0'th is null node

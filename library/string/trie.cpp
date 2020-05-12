@@ -24,7 +24,7 @@ void testTrie() {
 
     cout << "-- Trie ------------------------------------------------" << endl;
 
-    Trie trie;
+    Trie<> trie;
 
     const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
     for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)

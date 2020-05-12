@@ -84,10 +84,10 @@ void testSimpleSuffixArray() {
             auto s = makeRandomString(N, i);
 
             PROFILE_START(0);
-            auto sa1 = SuffixArray::buildSuffixArray(s);
+            auto sa1 = SuffixArray<>::buildSuffixArray(s);
             PROFILE_STOP(0);
             PROFILE_START(1);
-            auto lcpa1 = SuffixArray::buildLcpArray(sa1, s);
+            auto lcpa1 = SuffixArray<>::buildLcpArray(sa1, s);
             PROFILE_STOP(1);
 
             PROFILE_START(2);

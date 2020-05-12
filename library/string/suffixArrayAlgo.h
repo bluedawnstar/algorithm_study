@@ -1,5 +1,6 @@
 #pragma once
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixArrayAlgo {
     // O(N)
     static int commonPrefixNaive(const char* s, int n, int i, int j) {
@@ -32,7 +33,7 @@ struct SuffixArrayAlgo {
     static long long countSubstrings(const vector<int>& suffixArray, const char* s, int n) {
         long long ans = 0;
 
-        vector<int> lcp = SuffixArray::buildLcpArray(suffixArray, s, n);
+        vector<int> lcp = SuffixArray<MaxCharN,BaseChar>::buildLcpArray(suffixArray, s, n);
         for (int i = 0; i < int(lcp.size()); i++) {
             ans += n - suffixArray[i] - lcp[i];
         }
@@ -45,7 +46,7 @@ struct SuffixArrayAlgo {
 };
 
 //--- O(N (logN)^2) method ---
-template <typename T>
+template <typename T, int MaxCharN = 26, int BaseChar = 'a'>
 vector<int> makeSuffixArrayNaive(T s, int n) {
     // A structure to store suffixes and their indexes
     vector<pair<int, int>> suffixes(n);     // (current rank, next rank)
@@ -64,8 +65,8 @@ vector<int> makeSuffixArrayNaive(T s, int n) {
     // The structure is needed to sort the suffixes alphabatically
     // and maintain their old indexes while sorting
     for (int i = 0; i < n; i++) {
-        suffixes[i].first = s[i] - 'a';                             //TODO: check conversion from character to rank
-        suffixes[i].second = ((i + 1) < n) ? (s[i + 1] - 'a') : -1; //TODO: check conversion from character to rank
+        suffixes[i].first = s[i] - BaseChar;
+        suffixes[i].second = ((i + 1) < n) ? (s[i + 1] - BaseChar) : -1;
     }
 
     // Sort the suffixes using the comparison function defined above.

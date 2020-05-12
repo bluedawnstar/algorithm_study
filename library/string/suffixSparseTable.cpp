@@ -42,8 +42,8 @@ void testSuffixSparseTable() {
     {
         string S("abdaaaaaaaaaaaaaaacccccccccccccccccccccaaaddddddddddddddddaaaaaaadddddddaaafaeef");
 
-        vector<int> a = SuffixArray::buildSuffixArray(S);
-        SuffixSparseTable suffixST(S);
+        vector<int> a = SuffixArray<>::buildSuffixArray(S);
+        SuffixSparseTable<> suffixST(S);
 
         for (int i = 0; i < 100; i++) {
             int left = RandInt32::get() % S.length();
@@ -54,7 +54,7 @@ void testSuffixSparseTable() {
             int lcp = suffixST.lcp(left, right);
 
             //cout << "LCP(" << left << ", " << right << ") = " << lcp << endl;
-            assert(lcp == SuffixArrayAlgo::commonPrefixNaive(S, left, right));
+            assert(lcp == SuffixArrayAlgo<>::commonPrefixNaive(S, left, right));
         }
     }
     //---
@@ -63,7 +63,7 @@ void testSuffixSparseTable() {
 
         vector<int> gt = makeSuffixArrayNaive(s, int(s.length()));
 
-        SuffixSparseTable sst(s);
+        SuffixSparseTable<> sst(s);
         auto sa = sst.buildSuffixArray();
 
         if (sa != gt)
@@ -83,7 +83,7 @@ void testSuffixSparseTable() {
 
             sort(v.begin(), v.end());
 
-            SuffixSparseTable sst(s);
+            SuffixSparseTable<> sst(s);
             auto sa = sst.buildSuffixArray();
             for (int i = 0; i < N; i++)
                 assert(v[i].second == sa[i]);
@@ -100,10 +100,10 @@ void testSuffixSparseTable() {
             auto s = makeRandomString(N, i);
 
             PROFILE_START(0);
-            auto sa1 = SuffixArray::buildSuffixArray(s);
+            auto sa1 = SuffixArray<>::buildSuffixArray(s);
             PROFILE_STOP(0);
             PROFILE_START(1);
-            auto lcpa1 = SuffixArray::buildLcpArray(sa1, s);
+            auto lcpa1 = SuffixArray<>::buildLcpArray(sa1, s);
             PROFILE_STOP(1);
 
             PROFILE_START(2);
@@ -115,7 +115,7 @@ void testSuffixSparseTable() {
 
             PROFILE_START(4);
             PROFILE_START(401);
-            SuffixSparseTable sst(s);
+            SuffixSparseTable<> sst(s);
             PROFILE_STOP(401);
             PROFILE_START(402);
             auto sa3 = sst.buildSuffixArray();

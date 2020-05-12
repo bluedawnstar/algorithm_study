@@ -13,6 +13,7 @@ using namespace std;
 // https://www.hackerrank.com/contests/w30/challenges/substring-queries
 // 
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct LongestCommonStringLengthWithSuffixArray {
     int mN;                                             // the number of strings
     int mQ;                                             // the number of queries
@@ -21,7 +22,7 @@ struct LongestCommonStringLengthWithSuffixArray {
 
     vector<int> mSuffixToStrID;
 
-    SuffixArray mSA;
+    SuffixArray<MaxCharN + 1,BaseChar> mSA;
 
     vector<int> mAns;
     vector<pair<int, int>> mQIn;
@@ -82,7 +83,7 @@ struct LongestCommonStringLengthWithSuffixArray {
         }
 
         // making suffix array, LCP array, sparse table for LCP array
-        mSA.build(mSS, 'a', 'z' + 1);
+        mSA.build(mSS);
 
         // check forward
         vector<int> lastSAIndex(mN, -1);
@@ -151,6 +152,7 @@ struct LongestCommonStringLengthWithSuffixArray {
 
 #include "suffixAutomaton.h"
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct LongestCommonStringLengthWithSuffixAutomation {
     int mN;                                             // the number of strings
     int mQ;                                             // the number of queries
@@ -160,14 +162,14 @@ struct LongestCommonStringLengthWithSuffixAutomation {
     unordered_map<int, unordered_map<int, int>> mQIndex;// (L, R) -> Q index
     vector<unordered_map<int, int>> mQuery;             // R --> (L, Q index)
 
-    vector<SuffixAutomaton> mSA;
+    vector<SuffixAutomaton<MaxCharN,BaseChar>> mSA;
 
     vector<int> solve(const vector<string>& strs, const vector<pair<int, int>>& query) {
         mN = int(strs.size());
         mQ = int(query.size());
 
         for (int i = 0; i < mN; i++) {
-            SuffixAutomaton t(int(strs[i].length()));
+            SuffixAutomaton<MaxCharN,BaseChar> t(int(strs[i].length()));
             t.extend(strs[i]);
             mSA.emplace_back(move(t));
         }
@@ -215,10 +217,10 @@ struct LongestCommonStringLengthWithSuffixAutomation {
     }
 
 private:
-    int lcs(SuffixAutomaton& sa, const string& t) {
+    int lcs(SuffixAutomaton<MaxCharN,BaseChar>& sa, const string& t) {
         int v = 0, l = 0, best = 0, bestpos = 0;
         for (int i = 0; i < int(t.length()); ++i) {
-            int ch = SuffixAutomaton::ch2i(t[i]);
+            int ch = SuffixAutomaton<MaxCharN,BaseChar>::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
                 l = sa.state[v].len;
@@ -554,10 +556,10 @@ void testLongestCommonSubstring_queryTwoStringAmongStrings() {
         { 0 },
     };
 
-    LongestCommonStringLengthWithSuffixArray lcsSuffixArray;
+    LongestCommonStringLengthWithSuffixArray<> lcsSuffixArray;
     assert(lcsSuffixArray.solve(s1, q1) == ans1);
 
-    LongestCommonStringLengthWithSuffixAutomation lcsSuffixAutomation;
+    LongestCommonStringLengthWithSuffixAutomation<> lcsSuffixAutomation;
     assert(lcsSuffixAutomation.solve(s1, q1) == ans1);
 
     cout << "OK!" << endl;

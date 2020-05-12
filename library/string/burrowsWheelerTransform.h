@@ -2,9 +2,10 @@
 
 // https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct BurrowsWheelerTransform {
-    static const char FirstChar = 'a';
-    static const char LastChar = 'z';
+    static const char FirstChar = BaseChar;
+    static const char LastChar = BaseChar + MaxCharN - 1;
 
     static const char StartMark = LastChar + 1; // '{'
     static const char EndMark = LastChar + 2;   // '|'

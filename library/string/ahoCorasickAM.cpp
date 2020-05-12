@@ -23,20 +23,20 @@ using namespace std;
 #include "../common/profile.h"
 
 void testAhoCorasickAM() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Array Mapped Aho-Corasick -------------------------" << endl;
     {
-        AhoCorasickAM trie;
+        AhoCorasickAM<> trie;
 
-        trie.insert("SHE", 0);
-        trie.insert("HE", 1);
-        trie.insert("HERS", 2);
-        trie.insert("HIS", 3);
+        trie.insert("she", 0);
+        trie.insert("he", 1);
+        trie.insert("hers", 2);
+        trie.insert("his", 3);
         trie.build();
 
         //                             012345678
-        auto ans = trie.doAhoCorasick("HERSHISHE");
+        auto ans = trie.doAhoCorasick("hershishe");
         sort(ans.begin(), ans.end());
         
         vector<pair<int, int>> gt{ { 1, 1 }, { 3, 2 }, { 6, 3 }, { 8, 0 }, { 8, 1 } };

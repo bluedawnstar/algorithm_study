@@ -19,7 +19,7 @@ using namespace std;
 #include <vector>
 #include "../common/iostreamhelper.h"
 
-void dump(SuffixTrie::Node* p, int idx, int level) {
+void dump(SuffixTrie<>::Node* p, int idx, int level) {
     if (!p)
         return;
 
@@ -28,7 +28,7 @@ void dump(SuffixTrie::Node* p, int idx, int level) {
     if (idx >= 0)
         cout << " " << char('a' + idx) << endl;
 
-    for (int i = 0; i < SuffixTrie::MaxCharN; i++) {
+    for (int i = 0; i < 26; i++) {
         if (p->children[i])
             dump(p->children[i], i, level + 1);
     }
@@ -41,7 +41,7 @@ void testSuffixTrie() {
     cout << "-- Suffix Trie -----------------------------------------" << endl;
 
     const char* s;
-    SuffixTrie trie;
+    SuffixTrie<> trie;
 
     // test buildSuffix()
 

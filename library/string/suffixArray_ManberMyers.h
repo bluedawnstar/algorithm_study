@@ -6,13 +6,14 @@
 #if 1
 //--- type #1
 // modified version of https://algs4.cs.princeton.edu/63suffix/Manber.java.html
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixArrayManberMyers {
     // O(NlogN)
-    static vector<int> build(const char* str, int n, int charMin = 'a', int charMax = 'z') {
+    static vector<int> build(const char* str, int n) {
         vector<int> sa(n + 1);
         vector<int> rank(n + 1);
 
-        radixSort(str, n, charMin, charMax, sa.data(), rank.data());
+        radixSort(str, n, sa.data(), rank.data());
 
         // sentinels
         sa[n] = n;
@@ -49,26 +50,26 @@ struct SuffixArrayManberMyers {
         return sa;
     }
 
-    static vector<int> build(const string& s, int charMin = 'a', int charMax = 'z') {
-        return build(s.c_str(), int(s.length()), charMin, charMax);
+    static vector<int> build(const string& s) {
+        return build(s.c_str(), int(s.length()));
     }
 
 private:
     // MSD(most-significant-digit-first) radix sort
-    static void radixSort(const char* s, int n, int charMin, int charMax, int sa[], int rank[]) {
-        int range = charMax - charMin + 1;
+    static void radixSort(const char* s, int n, int sa[], int rank[]) {
+        int range = MaxCharN;
 
         vector<int> freq(range + 1);
         for (int i = 0; i < n; i++)
-            freq[s[i] - charMin + 1]++;
+            freq[s[i] - BaseChar + 1]++;
         for (int i = 1; i < range; i++)
             freq[i] += freq[i - 1];
 
         for (int i = 0; i < n; i++)
-            rank[i] = freq[s[i] - charMin];
+            rank[i] = freq[s[i] - BaseChar];
 
         for (int i = 0; i < n; i++)
-            sa[freq[s[i] - charMin]++] = i;
+            sa[freq[s[i] - BaseChar]++] = i;
     }
 
     static int choosePivot(int sa[], int rank[], int left, int right) {

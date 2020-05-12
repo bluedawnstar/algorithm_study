@@ -1,10 +1,11 @@
 #pragma once
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixAutomatonAlgo {
     int maxN;
-    SuffixAutomaton& sa;
+    SuffixAutomaton<MaxCharN,BaseChar>& sa;
 
-    SuffixAutomatonAlgo(SuffixAutomaton& _sa, int _maxN) : sa(_sa), maxN(_maxN),
+    SuffixAutomatonAlgo(SuffixAutomaton<MaxCharN,BaseChar>& _sa, int _maxN) : sa(_sa), maxN(_maxN),
         D(maxN * 2, 0), totLen(maxN * 2, 0) {
     }
 
@@ -16,7 +17,7 @@ struct SuffixAutomatonAlgo {
 
         long long res = 1;
 
-        for (int i = 0; i < SuffixAutomaton::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             if (sa.state[u].next[i])
                 res += countSubstrings(sa.state[u].next[i]);
         }
@@ -37,7 +38,7 @@ struct SuffixAutomatonAlgo {
         if (totLen[u])
             return totLen[u];
 
-        for (int i = 0; i < SuffixAutomaton::MaxCharN; i++)
+        for (int i = 0; i < MaxCharN; i++)
             if (sa.state[u].next[i])
                 //res += totalLengthOfAllDistinctSubstrings(sa.state[u].next[i]) + D[sa.state[u].next[i]];
                 res += totalLengthOfAllDistinctSubstrings(sa.state[u].next[i]) + countSubstrings(sa.state[u].next[i]);
@@ -56,7 +57,7 @@ struct SuffixAutomatonAlgo {
     // 3. Lexicographically kth substring.
     // kth >= 1
     bool kthSubstring(string& res, int kth, int u, int& path) {
-        for (int i = 0; i < SuffixAutomaton::MaxCharN; i++) {
+        for (int i = 0; i < MaxCharN; i++) {
             if (sa.state[u].next[i]) {
                 if (++path == kth || kthSubstring(res, kth, sa.state[u].next[i], path)) {
                     res.push_back('a' + i);
@@ -82,7 +83,7 @@ struct SuffixAutomatonAlgo {
     // 4. Smallest Cyclic Shift to obtain lexicographical smallest of All possible  
     static int minShift(const string& s) {
         string ss = s + s;
-        SuffixAutomaton sa(int(ss.length()));
+        SuffixAutomaton<MaxCharN,BaseChar> sa(int(ss.length()));
         sa.init();
         sa.extend(ss);
 
@@ -90,7 +91,7 @@ struct SuffixAutomatonAlgo {
         int len = 0, cur = 0;
 
         do {
-            for (int j = 0; j < SuffixAutomaton::MaxCharN; j++) {
+            for (int j = 0; j < MaxCharN; j++) {
                 if (sa.state[cur].next[j]) {
                     if (++len == int(s.length()))
                         res = sa.state[cur].rightEnd - int(s.length()) + 2;
@@ -109,7 +110,7 @@ struct SuffixAutomatonAlgo {
     int findFirst(const string& pattern) {
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(pattern[i])];
             if (u <= 0)
                 return -1;
         }
@@ -135,7 +136,7 @@ struct SuffixAutomatonAlgo {
 
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(pattern[i])];
             if (u <= 0)
                 return{};
         }
@@ -159,7 +160,7 @@ struct SuffixAutomatonAlgo {
     vector<int> findAll(vector<vector<int>>& children, const string& pattern) {
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(pattern[i])];
             if (u <= 0)
                 return{};
         }
@@ -192,7 +193,7 @@ struct SuffixAutomatonAlgo {
     int countPattern(const vector<int>& countTable, const string& pattern) {
         int u = 0;
         for (int i = 0; i < int(pattern.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(pattern[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(pattern[i])];
             if (u <= 0)
                 return 0;
         }
@@ -206,7 +207,7 @@ struct SuffixAutomatonAlgo {
     int lengthOfLcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
         for (int i = 0; i < int(t.length()); ++i) {
-            int ch = SuffixAutomaton::ch2i(t[i]);
+            int ch = SuffixAutomaton<MaxCharN,BaseChar>::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
                 len = sa.state[v].len;
@@ -226,7 +227,7 @@ struct SuffixAutomatonAlgo {
     string lcs(string& t) {
         int v = 0, len = 0, bestPos = 0, bestLen = 0;
         for (int i = 0; i < int(t.length()); ++i) {
-            int ch = SuffixAutomaton::ch2i(t[i]);
+            int ch = SuffixAutomaton<MaxCharN,BaseChar>::ch2i(t[i]);
             while (v && !sa.state[v].next[ch]) {
                 v = sa.state[v].suffixLink;
                 len = sa.state[v].len;
@@ -254,7 +255,7 @@ struct SuffixAutomatonAlgo {
 
         int u = 0;
         for (int i = 0; i < int(s.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(s[i])];
             if (u <= 0)
                 return false;
         }
@@ -264,7 +265,7 @@ struct SuffixAutomatonAlgo {
     bool isSuffix(vector<int>& term, const string& s) {
         int u = 0;
         for (int i = 0; i < int(s.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(s[i])];
             if (u <= 0)
                 return false;
         }
@@ -274,7 +275,7 @@ struct SuffixAutomatonAlgo {
     bool isSuffixWithSortedTerm(vector<int>& term, const string& s) {
         int u = 0;
         for (int i = 0; i < int(s.length()); i++) {
-            u = sa.state[u].next[SuffixAutomaton::ch2i(s[i])];
+            u = sa.state[u].next[SuffixAutomaton<MaxCharN,BaseChar>::ch2i(s[i])];
             if (u <= 0)
                 return false;
         }

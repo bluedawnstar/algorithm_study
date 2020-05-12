@@ -53,7 +53,7 @@ void testEerTree() {
         PalindromicFactorization fact(s);
         int ans1 = min(fact.countMinEventFactorization(), fact.countMinOddFactorization());
 
-        eerTree tr(100);
+        eerTree<> tr(100);
         tr.build(s);
         int ans2 = tr.countMinFactorization();
 
@@ -67,7 +67,7 @@ void testEerTree() {
     {
         const string s = "ababaacabd";
 
-        eerTree tree(int(s.length()));
+        eerTree<> tree(int(s.length()));
         for (int i = 0; i < int(s.length()); i++) {
             tree.extend(s[i]);
 
@@ -94,7 +94,7 @@ void testEerTree() {
         cout << "Min event factorization = " << fact.countMinEventFactorization() << endl;
         cout << "Min odd factorization = " << fact.countMinOddFactorization() << endl;
 
-        eerTree tr(N);
+        eerTree<> tr(N);
         tr.build(s);
 
         for (int i = 1; i <= int(s.length()); i++) {
@@ -122,7 +122,7 @@ void testEerTree() {
         cout << "Min odd factorization = " << fact.countMinOddFactorization() << endl;
 
         PROFILE_START(1);
-        eerTree tr(N);
+        eerTree<> tr(N);
         tr.build(s);
         PROFILE_STOP(1);
 

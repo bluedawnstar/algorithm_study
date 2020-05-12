@@ -40,11 +40,12 @@
    4. Minimum palindrome division: Add a serial link, detailed reference paper
 */
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct eerTree {
     static const int INF = 1000000000;
-    static const int MaxCharN = 26;
-
-    static int ch2i(int c) { return c - 'a'; }
+    static constexpr int ch2i(int c) {
+        return c - BaseChar;
+    }
 
     struct NodeT {
         int start, end;     // 

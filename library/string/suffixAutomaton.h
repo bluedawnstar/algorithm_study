@@ -1,8 +1,10 @@
 #pragma once
 
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixAutomaton {
-    static const size_t MaxCharN = 26;
-    static int ch2i(int c) { return c - 'a'; }
+    static constexpr int ch2i(int c) {
+        return c - BaseChar;
+    }
 
     struct StateT {
         int len;                    // the length of the longest string in a class
@@ -16,7 +18,7 @@ struct SuffixAutomaton {
     vector<StateT> state;           // t0 is zeroth state, other states get numbers 1,2,3,...
     int last;
 
-    SuffixAutomaton(int maxN) : state(maxN * 2, StateT{ 0, 0, { 0, } }) {
+    explicit SuffixAutomaton(int maxN) : state(maxN * 2, StateT{ 0, 0, { 0, } }) {
         init();
     }
 

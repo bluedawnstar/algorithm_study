@@ -6,9 +6,12 @@
 #include <immintrin.h>
 
 //--- Array Mapped ----------------
+
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixAutomatonAM {
-    static const size_t MaxCharN = 26;
-    static int ch2i(int c) { return c - 'a'; }
+    static constexpr int ch2i(int c) {
+        return c - BaseChar;
+    }
 
     static int popcnt(unsigned x) {
 #ifndef __GNUC__

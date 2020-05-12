@@ -23,8 +23,8 @@ void testLcpArraySparseTable() {
     {
         string S("abdadafaaabdfaeef");
 
-        vector<int> a = SuffixArray::buildSuffixArray(S);
-        vector<int> lcpArray = SuffixArray::buildLcpArray(a, S);
+        vector<int> a = SuffixArray<>::buildSuffixArray(S);
+        vector<int> lcpArray = SuffixArray<>::buildLcpArray(a, S);
         LcpArraySparseTable lcpArrayST(lcpArray);
 
         for (int i = 0; i < 100; i++) {
@@ -38,13 +38,13 @@ void testLcpArraySparseTable() {
                 lcp = int(S.length()) - a[left];
 
             cout << "LCP(" << left << ", " << right << ") = " << lcp << endl;
-            assert(lcp == SuffixArrayAlgo::commonPrefixNaive(S, a[left], a[right]));
+            assert(lcp == SuffixArrayAlgo<>::commonPrefixNaive(S, a[left], a[right]));
         }
     }
     {
         string S("abdadafaaabdfaeef");
 
-        SuffixArray SA(S);
+        SuffixArray<> SA(S);
 
         for (int i = 0; i < 100; i++) {
             int left = RandInt32::get() % S.length();
@@ -56,7 +56,7 @@ void testLcpArraySparseTable() {
             int lcp = SA.lcp(left, right);
 
             cout << "LCP(" << left << ", " << right << ") = " << lcp << endl;
-            assert(lcp == SuffixArrayAlgo::commonPrefixNaive(S, SA[left], SA[right]));
+            assert(lcp == SuffixArrayAlgo<>::commonPrefixNaive(S, SA[left], SA[right]));
         }
     }
 
