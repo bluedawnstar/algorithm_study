@@ -98,6 +98,7 @@ struct TrieAM {
         for (auto* p : mRoot.children) {
             deleteNode(p);
         }
+        mRoot.init();
     }
 
     // return true if it's a new string.
