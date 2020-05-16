@@ -154,6 +154,7 @@
     <ClCompile Include="gridPathCounterWithObstacles.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="maxProfit.cpp" />
+    <ClCompile Include="maxWeightOfAllConcatenatedStrings.cpp" />
     <ClCompile Include="nonoverlappingIntervals.cpp" />
     <ClCompile Include="palindromicPartitioning.cpp" />
     <ClCompile Include="partitionProblemMultiple.cpp" />
@@ -207,6 +208,8 @@
     <ClInclude Include="maxProfit.h" />
     <ClInclude Include="maxProfitFast.h" />
     <ClInclude Include="maxProfitFast2.h" />
+    <ClInclude Include="maxWeightOfAllConcatenatedStrings.h" />
+    <ClInclude Include="maxWeightOfAllConcatenatedStrings2.h" />
     <ClInclude Include="nonoverlappingIntervals.h" />
     <ClInclude Include="palindromicPartitioning.h" />
     <ClInclude Include="palindromicSubstringEx.h" />

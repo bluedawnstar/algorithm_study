@@ -48,4 +48,5 @@ int main(void) {
     TEST(SquareSubsets);
     TEST(GridPathCounterWithObstacles);
     TEST(SameDistanceTripleCounterOnTree);
+    TEST(MaxWeightOfAllConcatenatedStrings);
 }
