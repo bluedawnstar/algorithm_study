@@ -32,10 +32,10 @@ struct AhoCorasickAM {
     }
 
     struct Node {
-        int             terminal;       // number of string to be ended at this node
+        int             terminal;       // id of string to be ended at this node
         Node*           suffixLink;
 
-        vector<int>     output;
+        vector<int>     output;         // matched id list
 
         unsigned        childSet;
         vector<Node*>   children;
@@ -123,9 +123,11 @@ struct AhoCorasickAM {
         return insert(&s[0], int(s.length()), id);
     }
 
+    //--- trie
+
     // return exactly matched word
     Node* find(const string& s) const {
-        return find(&s[0], int(s.length()));
+        return find(s.c_str(), int(s.length()));
     }
 
     // return exactly matched word
@@ -163,7 +165,7 @@ struct AhoCorasickAM {
         return search(&s[0], int(s.length()));
     }
 
-    //--- Aho-Corasick --------------------------------------------------------
+    //--- Aho-Corasick
 
     // compute failure function
     // O(M), M = the sum of all pattern lengths

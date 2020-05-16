@@ -347,5 +347,8 @@
     <ClInclude Include="ahoCorasick.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ahoCorasickPatternWeightSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

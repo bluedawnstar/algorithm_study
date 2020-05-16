@@ -1,49 +1,32 @@
 #pragma once
 
-//--- Aho-Corasick ------------------------------------------------------------
-
 template <int MaxCharN = 26, int BaseChar = 'a'>
-struct AhoCorasick {
+struct AhoCorasickPatternWeightSum {
     static constexpr int ch2i(char ch) {
         return ch - BaseChar;
     }
 
     struct Node {
-        int         terminal;       // id of string to be ended at this node
         Node*       suffixLink;
 
-        vector<int> output;         // matched id list
+        long long   value;              // weight-sum of matched patterns in suffixes at this node
+                                        // 0 means no matched string
         Node*       children[MaxCharN];
 
         void init() {
-            this->terminal = -1;
             this->suffixLink = nullptr;
-            output.clear();
+            value = 0;
             memset(children, 0, sizeof(children));
-        }
-
-        bool isTerminal() const {
-            return terminal >= 0;
-        }
-
-        bool isEmpty() const {
-            if (terminal >= 0)
-                return false;
-            for (int i = 0; i < MaxCharN; i++) {
-                if (children[i])
-                    return false;
-            }
-            return true;
         }
     };
 
     Node mRoot;
 
-    AhoCorasick() {
+    AhoCorasickPatternWeightSum() {
         mRoot.init();
     }
 
-    ~AhoCorasick() {
+    ~AhoCorasickPatternWeightSum() {
         clear();
     }
 
@@ -54,7 +37,7 @@ struct AhoCorasick {
         mRoot.init();
     }
 
-    void insert(const char* s, int len, int id) {
+    void insert(const char* s, int len, int weight) {
         if (len <= 0)
             return;
 
@@ -65,19 +48,19 @@ struct AhoCorasick {
                 p->children[idx] = allocNode();
             p = p->children[idx];
         }
-        p->terminal = id;
+        p->value += weight;
     }
 
     // return true if it's a new string.
-    void insert(const string& s, int id) {
-        return insert(&s[0], int(s.length()), id);
+    void insert(const string& s, int weight) {
+        return insert(s.c_str(), int(s.length()), weight);
     }
 
     //--- trie
 
     // return exactly matched word
     Node* find(const string& s) const {
-        return find(&s[0], int(s.length()));
+        return find(s.c_str(), int(s.length()));
     }
 
     // return exactly matched word
@@ -86,31 +69,31 @@ struct AhoCorasick {
             return nullptr;
 
         Node* p = (Node*)&mRoot;
-        for (int i = 0; i < len && p; i++) {
+        for (int i = 0; i < len && p; i++)
             p = p->children[ch2i(s[i])];
-        }
-        return (p && p->isTerminal()) ? p : nullptr;
+
+        return (p && p->value) ? p : nullptr;
     }
 
     // prefix matching
-    // return (prefix_matching_length, string_id_if_exactly_matched)
-    pair<int, int> search(const char* s, int len) const {
+    // return (prefix_matching_length, weight_sum_of_matched_patterns)
+    pair<int, long long> search(const char* s, int len) const {
         if (len <= 0)
-            return make_pair(0, -1);
+            return make_pair(0, 0ll);
 
         Node* p = (Node*)&mRoot;
         for (int i = 0; i < len; i++) {
             int idx = ch2i(s[i]);
             p = p->children[idx];
             if (!p)
-                return make_pair(i, -1);
+                return make_pair(i, 0ll);
         }
-        return make_pair(len, p->terminal);
+        return make_pair(len, p->value);
     }
 
     // prefix matching
-    // return (prefix_matching_length, string_id_if_exactly_matched)
-    pair<int, int> search(const string& s) const {
+    // return (prefix_matching_length, weight_sum_of_matched_patterns)
+    pair<int, long long> search(const string& s) const {
         return search(&s[0], int(s.length()));
     }
 
@@ -144,9 +127,7 @@ struct AhoCorasick {
                     child->suffixLink = t;
                 }
 
-                child->output = child->suffixLink->output;
-                if (child->terminal != -1)
-                    child->output.push_back(child->terminal);
+                child->value += child->suffixLink->value;
                 Q.push(child);
             }
         }
@@ -155,34 +136,33 @@ struct AhoCorasick {
     //---
 
     // out = { pattern_id, ... }
-    const Node* firstAhoCorasick(char ch, vector<int>& out) const {
+    const Node* firstAhoCorasick(char ch, long long& out) const {
         return nextAhoCorasick(&mRoot, ch, out);
     }
 
     // out = { pattern_id, ... }
-    const Node* nextAhoCorasick(const Node* currState, char ch, vector<int>& out) const {
+    const Node* nextAhoCorasick(const Node* currState, char ch, long long& out) const {
         int chIdx = ch2i(ch);
         while (currState != &mRoot && !currState->children[chIdx])
             currState = currState->suffixLink;
         if (currState->children[chIdx])
             currState = currState->children[chIdx];
 
-        out.insert(out.end(), currState->output.begin(), currState->output.end());
+        out += currState->value;
 
         return currState;
     }
 
     //---
 
-    // search all patterns in s
-    // return (last_character_in_s, pattern_id)s
+    // return weight-sum of all matched-patterns in s
     // O(M + N + K), M = the sum of all pattern lengths, N = text length, K = the number of patterns in the text
-    vector<pair<int, int>> doAhoCorasick(const string& s) const {
+    long long doAhoCorasick(const string& s) const {
         return doAhoCorasick(&s[0], int(s.length()));
     }
 
-    vector<pair<int, int>> doAhoCorasick(const char* s, int len) const {
-        vector<pair<int, int>> ret;
+    long long doAhoCorasick(const char* s, int len) const {
+        long long res = 0;
 
         const Node* state = &mRoot;
 
@@ -193,10 +173,9 @@ struct AhoCorasick {
             if (state->children[chIdx])
                 state = state->children[chIdx];
 
-            for (int j = 0; j < int(state->output.size()); j++)
-                ret.push_back(make_pair(i, state->output[j]));
+            res += state->value;
         }
-        return ret;
+        return res;
     }
 
 private:

@@ -195,6 +195,7 @@
   <ItemGroup>
     <ClInclude Include="ahoCorasick.h" />
     <ClInclude Include="ahoCorasickAM.h" />
+    <ClInclude Include="ahoCorasickPatternWeightSum.h" />
     <ClInclude Include="bracketSequencesBalanced.h" />
     <ClInclude Include="bracketSequencesBalanced2.h" />
     <ClInclude Include="burrowsWheelerTransform.h" />
