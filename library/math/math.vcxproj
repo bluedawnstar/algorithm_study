@@ -153,6 +153,7 @@
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="gaussianElimination.cpp" />
     <ClCompile Include="booleanXorExpression.cpp" />
+    <ClCompile Include="generatedDistinctValueCounterByBitwiseOperation.cpp" />
     <ClCompile Include="josephusProblem.cpp" />
     <ClCompile Include="linearRecurrence.cpp" />
     <ClCompile Include="longestArithmeticSubsequence.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gaussianElimination.h" />
     <ClInclude Include="booleanXorExpression.h" />
+    <ClInclude Include="generatedDistinctValueCounterByBitwiseOperation.h" />
     <ClInclude Include="generatingFunction.h" />
     <ClInclude Include="josephusProblem.h" />
     <ClInclude Include="linearRecurrence.h" />
