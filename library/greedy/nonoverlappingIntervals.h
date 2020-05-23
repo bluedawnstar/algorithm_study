@@ -1,6 +1,6 @@
 #pragma once
 
-// intervals = { (startTime, endTime), ... }, O(N)
+// intervals = { (startTime, endTime), ... }, O(NlogN)
 template <typename T>
 inline int countNonoverlapIntervals(vector<pair<T,T>> intervals) {
     sort(intervals.begin(), intervals.end(), [](const pair<T,T>& a, const pair<T,T>& b) {
