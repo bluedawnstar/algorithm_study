@@ -207,6 +207,7 @@
     <ClInclude Include="sat2.h" />
     <ClInclude Include="shortestPathAllPair.h" />
     <ClInclude Include="shortestPathOneSource.h" />
+    <ClInclude Include="wheelGraph.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
