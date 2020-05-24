@@ -9,8 +9,8 @@ struct ShortestPathWithWildcard {
     int N;                                  // the number of vertexes
     int K;                                  // the maximum number of wildcards to be used in a path
     vector<vector<pair<int, T>>> edges;     // (vertex, weight)
-    vector<vector<T>> dist;
-    vector<vector<int>> parent;
+    vector<vector<T>> dist;                 // dist[u][level]
+    vector<vector<pair<int,int>>> parent;   // parent[v][level] = { prev_u, prev_level }
 
     ShortestPathWithWildcard() : N(0), K(0) {
     }
@@ -24,7 +24,7 @@ struct ShortestPathWithWildcard {
         K = k;
         edges = vector<vector<pair<int, T>>>(N);
         dist = vector<vector<T>>(N, vector<T>(K + 1, INF));
-        parent = vector<vector<int>>(N, vector<int>(K + 1, -1));
+        parent = vector<vector<pair<int,int>>>(N, vector<pair<int,int>>(K + 1, make_pair(-1, -1)));
     }
 
     // add edges to directed graph
@@ -42,7 +42,7 @@ struct ShortestPathWithWildcard {
 
         pq.emplace(0, start, 0);
         dist[start][0] = 0;
-        parent[start][0] = -1;
+        parent[start][0] = make_pair(-1, -1);
         while (!pq.empty()) {
             T w = -get<0>(pq.top());        // weight
             int u = get<1>(pq.top());       // vertex u
@@ -62,7 +62,7 @@ struct ShortestPathWithWildcard {
                     if (dist[v][levelU] > vDist) {
                         pq.emplace(-vDist, v, levelU);
                         dist[v][levelU] = vDist;
-                        parent[v][levelU] = u;
+                        parent[v][levelU] = make_pair(u, levelU);
                     }
                 }
                 // move to next level
@@ -70,7 +70,7 @@ struct ShortestPathWithWildcard {
                     if (dist[v][levelU + 1] > w) {
                         pq.emplace(-w, v, levelU + 1);
                         dist[v][levelU + 1] = w;
-                        parent[v][levelU + 1] = u;
+                        parent[v][levelU + 1] = make_pair(u, levelU);
                     }
                 }
             }
