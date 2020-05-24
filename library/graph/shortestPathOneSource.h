@@ -11,14 +11,14 @@ struct ShortestPath {
     ShortestPath() : N(0) {
     }
 
-    ShortestPath(int n) : N(n), edges(N), dist(N), parent(N) {
+    ShortestPath(int n) : N(n), edges(n), dist(n), parent(n) {
     }
 
     void init(int n) {
         N = n;
         edges = vector<vector<pair<int, T>>>(N);
         dist = vector<T>(N);
-        parent = vector<T>(N);
+        parent = vector<int>(N);
     }
 
     // add edges to directed graph
