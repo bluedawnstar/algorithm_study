@@ -96,6 +96,9 @@
     <ClCompile Include="chordalGraph.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="shortestPathOneSourceWithWildcard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -195,6 +198,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="wheelGraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="shortestPathOneSourceWithWildcard.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

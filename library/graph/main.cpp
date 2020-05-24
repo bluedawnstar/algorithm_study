@@ -32,4 +32,5 @@ int main(void) {
     TEST(PathCount);
     TEST(BridgeBlockTree);
     TEST(ChordalGraph);
+    TEST(ShortestPathWithWildcard);
 }
