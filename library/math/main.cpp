@@ -25,5 +25,7 @@ int main(void) {
     TEST(LongestArithmeticSubsequence);
     TEST(RoundRobinTournament);
     TEST(JosephusProblem);
-    TEST(GeneratedDistinctValueCounterByBitwiseOperation);
+    TEST(GeneratedDistinctNumbersCounterByBitwiseOperation);
+    TEST(GolombRuler);
+    TEST(ArrayGeneratorWithDistinctSubarraySums);
 }

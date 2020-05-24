@@ -78,7 +78,13 @@
     <ClCompile Include="josephusProblem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="generatedDistinctValueCounterByBitwiseOperation.cpp">
+    <ClCompile Include="generatedDistinctNumbersCounterByBitwiseOperation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="golombRuler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,7 +176,13 @@
     <ClInclude Include="josephusProblem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="generatedDistinctValueCounterByBitwiseOperation.h">
+    <ClInclude Include="generatedDistinctNumbersCounterByBitwiseOperation.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="golombRuler.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

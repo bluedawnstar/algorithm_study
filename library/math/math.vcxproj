@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.cpp" />
     <ClCompile Include="expressionParser.cpp" />
     <ClCompile Include="factorialZeroes.cpp" />
     <ClCompile Include="fareySequence.cpp" />
@@ -153,7 +154,8 @@
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="gaussianElimination.cpp" />
     <ClCompile Include="booleanXorExpression.cpp" />
-    <ClCompile Include="generatedDistinctValueCounterByBitwiseOperation.cpp" />
+    <ClCompile Include="generatedDistinctNumbersCounterByBitwiseOperation.cpp" />
+    <ClCompile Include="golombRuler.cpp" />
     <ClCompile Include="josephusProblem.cpp" />
     <ClCompile Include="linearRecurrence.cpp" />
     <ClCompile Include="longestArithmeticSubsequence.cpp" />
@@ -170,6 +172,7 @@
     <ClCompile Include="weightedMedian.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.h" />
     <ClInclude Include="detMod.h" />
     <ClInclude Include="expressionParser.h" />
     <ClInclude Include="factorialZeroes.h" />
@@ -179,8 +182,9 @@
     <ClInclude Include="fractionAlgo.h" />
     <ClInclude Include="gaussianElimination.h" />
     <ClInclude Include="booleanXorExpression.h" />
-    <ClInclude Include="generatedDistinctValueCounterByBitwiseOperation.h" />
+    <ClInclude Include="generatedDistinctNumbersCounterByBitwiseOperation.h" />
     <ClInclude Include="generatingFunction.h" />
+    <ClInclude Include="golombRuler.h" />
     <ClInclude Include="josephusProblem.h" />
     <ClInclude Include="linearRecurrence.h" />
     <ClInclude Include="longestArithmeticSubsequence.h" />
