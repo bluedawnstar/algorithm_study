@@ -64,7 +64,7 @@ struct MinCutMaxFlow {
         }
 
         T res = 0;
-        for (int u = 0; u < int(N); u++) {
+        for (int u = 0; u < N; u++) {
             for (int j = 0; j < int(edges[u].size()); j++) {
                 auto& e = edges[u][j];
                 if (e.capacity > 0 && ((parent[u].first != -1) && (parent[e.to].first == -1))) {
