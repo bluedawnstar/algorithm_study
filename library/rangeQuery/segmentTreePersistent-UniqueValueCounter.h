@@ -103,17 +103,6 @@ struct UniqueValueCounter {
 
         //--- any-times values
 
-        vector<int> rangeFirst(n, -1);  // first position of a range with K values
-        for (int i = 0; i < uniqueValueN; i++) {
-            int front = first[i];
-            int rear = front;
-            while (rear < n) {
-                rangeFirst[rear] = front;
-                front = next[front];
-                rear = next[rear];
-            }
-        }
-
         // build a persistent tree for range query
         /*       L            R
             x  x | x  x  x ... | ...
@@ -128,12 +117,12 @@ struct UniqueValueCounter {
 
         for (int i = 0; i < n; i++) {
             int r = rootAny[i];
-            if (rangeFirst[i] >= 0) {
-                int p = prev[rangeFirst[i]];
-                if (p >= 0)
-                    r = treeAny.add(r, p, -1);
-                r = treeAny.add(r, rangeFirst[i], 1);
-            }
+
+            int p = prev[i];
+            if (p >= 0)
+                r = treeAny.add(r, p, -1);
+            r = treeAny.add(r, i, 1);
+
             rootAny[i + 1] = r;
         }
     }

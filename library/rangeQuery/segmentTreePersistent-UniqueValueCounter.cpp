@@ -33,12 +33,13 @@ void testUniqueValueCounter() {
     cout << "--- The number of unique values in a range ----------------------------" << endl;
     {
         int N = 100000;
-        int MaxValue = N;
+        int MaxValue = 10000;
         int T = 30;
 
 #ifdef _DEBUG
         N = 1000;
         T = 10;
+        MaxValue = 100;
 #endif
 
         for (int i = 0; i < T; i++) {
