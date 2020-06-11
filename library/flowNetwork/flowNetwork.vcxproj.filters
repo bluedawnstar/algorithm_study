@@ -57,6 +57,9 @@
     <ClCompile Include="maxCostCirculation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="minCutMaxFlow_algo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="minCostMaxFlow.h">
@@ -96,6 +99,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="maxCostCirculation.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minCutMaxFlowDinic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minCutMaxFlow_algo_signAssignmentProblem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

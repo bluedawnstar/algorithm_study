@@ -160,6 +160,7 @@
     <ClCompile Include="minCostMaxFlowPotential.cpp" />
     <ClCompile Include="minCostMaxFlowSPFA.cpp" />
     <ClCompile Include="minCutMaxFlow.cpp" />
+    <ClCompile Include="minCutMaxFlow_algo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="circulationProblemWithVertexDemand.h" />
@@ -175,6 +176,8 @@
     <ClInclude Include="minCostMaxFlowPotential.h" />
     <ClInclude Include="minCostMaxFlowSPFA.h" />
     <ClInclude Include="minCutMaxFlow.h" />
+    <ClInclude Include="minCutMaxFlowDinic.h" />
+    <ClInclude Include="minCutMaxFlow_algo_signAssignmentProblem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

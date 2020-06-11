@@ -19,4 +19,5 @@ int main(void) {
     TEST(CirculationProblemWithEdgeDemand);
     TEST(MinCostCirculation);
     TEST(MaxCostCirculation);
+    TEST(MinCutMaxFlowAlgo);
 }
