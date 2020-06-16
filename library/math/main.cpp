@@ -28,4 +28,5 @@ int main(void) {
     TEST(GeneratedDistinctNumbersCounterByBitwiseOperation);
     TEST(GolombRuler);
     TEST(ArrayGeneratorWithDistinctSubarraySums);
+    TEST(TransformOperationByAddOrMult);
 }

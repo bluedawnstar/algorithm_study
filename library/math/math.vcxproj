@@ -168,6 +168,7 @@
     <ClCompile Include="sternBrocotTree.cpp" />
     <ClCompile Include="sumOfPower.cpp" />
     <ClCompile Include="ternarySearch.cpp" />
+    <ClCompile Include="transformOperationByAddOrMult.cpp" />
     <ClCompile Include="triangle.cpp" />
     <ClCompile Include="weightedMedian.cpp" />
   </ItemGroup>
@@ -204,6 +205,7 @@
     <ClInclude Include="ternarySearch.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="weightedMedian.h" />
+    <ClInclude Include="transformOperationByAddOrMult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

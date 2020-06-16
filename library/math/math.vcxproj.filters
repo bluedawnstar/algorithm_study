@@ -87,6 +87,9 @@
     <ClCompile Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="transformOperationByAddOrMult.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -183,6 +186,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="golombRuler.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="transformOperationByAddOrMult.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
