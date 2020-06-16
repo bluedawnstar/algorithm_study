@@ -72,6 +72,9 @@
     <ClCompile Include="dynamicUpperEnvelope.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="polygonInt.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="line.h">
@@ -129,6 +132,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="dynamicUpperEnvelope.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polygonInt.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

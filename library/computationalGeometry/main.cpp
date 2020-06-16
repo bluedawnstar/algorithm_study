@@ -9,6 +9,7 @@ int main(void) {
     TEST(Vector);
     TEST(Line);
     TEST(Polygon);
+    TEST(PolygonInt);
     TEST(PolygonDiameter);
     TEST(ConvexHull);
     TEST(GridConvexHull);

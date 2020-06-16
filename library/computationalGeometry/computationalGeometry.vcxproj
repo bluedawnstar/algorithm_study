@@ -164,6 +164,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="polygonDiameter.cpp" />
+    <ClCompile Include="polygonInt.cpp" />
     <ClCompile Include="vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +186,7 @@
     <ClInclude Include="distanceSumManhattan.h" />
     <ClInclude Include="polygon.h" />
     <ClInclude Include="polygonDiameter.h" />
+    <ClInclude Include="polygonInt.h" />
     <ClInclude Include="vec2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
