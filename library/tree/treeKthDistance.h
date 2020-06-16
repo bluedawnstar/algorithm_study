@@ -80,7 +80,7 @@ struct KthDistance {
     vector<bool> ctMark;
     vector<vector<int>> ctDist;     // ctDist[u] = { distance from u to the nearest ancestor in centroid tree, next centroid, ..., the farthest ancestor }
 
-                                    //---
+    //---
 
     vector<vector<pair<int, int>>> addNodes; // addNodes[i] = all descendants of i to add, addNodes[i][j] = { distance, value }
     vector<vector<pair<int, int>>> subNodes; // subNodes[i] = all descendants of i to subtract, subNodes[i][j] = { distance, value }
