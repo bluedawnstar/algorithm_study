@@ -30,7 +30,7 @@ static int factorialModSlow(int n) {
 }
 
 void testFactorialIntModFast() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Fast Modular Integer Factorial ----------------" << endl;
     {

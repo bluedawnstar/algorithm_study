@@ -34,7 +34,7 @@ void testPowerSeries() {
         };
         PowerSeriesMod<998'244'353, 3> solver;
         vector<int> ans = solver.calculateAllCombinationWithNTT(p, 7);
-        vector<int> gt{ 0, 1, 2, 4, 4, 7, 9, 10 };
+        vector<int> gt{ 1, 1, 2, 4, 4, 7, 9, 10 };
         if (ans != gt)
             cout << "Mismatched : " << ans << ", " << gt << endl;
         assert(ans == gt);
