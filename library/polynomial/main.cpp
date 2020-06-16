@@ -20,4 +20,5 @@ int main(void) {
     TEST(VandermondeMatrix);
     TEST(Polynomial);
     TEST(FactorialIntModFast);
+    TEST(PowerSeries);
 }

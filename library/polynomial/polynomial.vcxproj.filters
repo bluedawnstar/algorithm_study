@@ -60,6 +60,9 @@
     <ClCompile Include="factorialIntModFast.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="powerSeries.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -153,6 +156,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="factorialIntModFastLL_standalone.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="powerSeries.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

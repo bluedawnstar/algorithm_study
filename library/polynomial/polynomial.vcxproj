@@ -157,6 +157,7 @@
     <ClCompile Include="polyFFTMod.cpp" />
     <ClCompile Include="ntt.cpp" />
     <ClCompile Include="polynomial.cpp" />
+    <ClCompile Include="powerSeries.cpp" />
     <ClCompile Include="powerSumPolyMod.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
     <ClCompile Include="vandermondeMatrix.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="polyFFT2.h" />
     <ClInclude Include="polyFFTMod2.h" />
     <ClInclude Include="polynomial.h" />
+    <ClInclude Include="powerSeries.h" />
     <ClInclude Include="powerSumPolyMod.h" />
     <ClInclude Include="mycomplex.h" />
     <ClInclude Include="convolution.h" />
