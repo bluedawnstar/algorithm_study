@@ -16,21 +16,21 @@ struct IntPolygon {
 
     // The result is counter-clockwise, O(NlogN)
     // The starting point of the result is the bottom of the leftmost
-    static vector<pair<int,int>> convexhull(vector<pair<int, int>>& P) {
+    static vector<pair<int, int>> convexhull(vector<pair<int, int>>& P) {
         int N = int(P.size());
         if (N <= 1)
             return { P[0] };
 
-        vector<pair<int,int>> res(N * 2);
+        vector<pair<int, int>> res(N * 2);
 
         int k = 0;
         for (int i = 0; i < N; i++) {
-            while (k >= 2 && cw(res[k - 2], res[k - 1], P[i]))
+            while (k >= 2 && !ccw(res[k - 2], res[k - 1], P[i]))
                 k--;
             res[k++] = P[i];
         }
         for (int i = N - 2, t = k; i >= 0; i--) {
-            while (k > t && cw(res[k - 2], res[k - 1], P[i]))
+            while (k > t && !ccw(res[k - 2], res[k - 1], P[i]))
                 k--;
             res[k++] = P[i];
         }
@@ -61,6 +61,54 @@ struct IntPolygon {
         res.resize(k - 1 - (res[0] == res[1]));
         return res;
     }
+
+    static vector<pair<int,int>> convexhullIncludingBoundary(vector<pair<int, int>>& P) {
+        int N = int(P.size());
+        if (N <= 1)
+            return { P[0] };
+
+        vector<pair<int,int>> res(N * 2);
+
+        int k = 0;
+        for (int i = 0; i < N; i++) {
+            while (k >= 2 && cw(res[k - 2], res[k - 1], P[i]))
+                k--;
+            res[k++] = P[i];
+        }
+        for (int i = N - 2, t = k; i >= 0; i--) {
+            while (k > t && cw(res[k - 2], res[k - 1], P[i]))
+                k--;
+            res[k++] = P[i];
+        }
+
+        res.resize(k - 1 - (res[0] == res[1]));
+        return res;
+    }
+
+    static vector<int> convexhullIndirectIncludingBoundary(vector<pair<int, int>>& P) {
+        int N = int(P.size());
+        if (N <= 1)
+            return { 0 };
+
+        vector<int> res(N * 2);
+
+        int k = 0;
+        for (int i = 0; i < N; i++) {
+            while (k >= 2 && cw(P[res[k - 2]], P[res[k - 1]], P[i]))
+                k--;
+            res[k++] = i;
+        }
+        for (int i = N - 2, t = k; i >= 0; i--) {
+            while (k > t && cw(P[res[k - 2]], P[res[k - 1]], P[i]))
+                k--;
+            res[k++] = i;
+        }
+
+        res.resize(k - 1 - (res[0] == res[1]));
+        return res;
+    }
+
+    //---
 
     static bool isInPolygon(const vector<pair<int, int>>& polygon, int x, int y) {
         int n = int(polygon.size());
