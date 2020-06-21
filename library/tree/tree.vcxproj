@@ -197,6 +197,7 @@
     <ClCompile Include="treeBlockTreePathQuery.cpp" />
     <ClCompile Include="treeBlockTreePathQueryDynamic.cpp" />
     <ClCompile Include="treeWithCentroidDecomposition.cpp" />
+    <ClCompile Include="treeUniqueValueCounterInDistanceOfSubtree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
@@ -262,6 +263,7 @@
     <ClInclude Include="treeBlockTreePathQueryDynamic.h" />
     <ClInclude Include="treeWithCentroidDecomposition.h" />
     <ClInclude Include="treeWithCentroidDecomposition_algo.h" />
+    <ClInclude Include="treeUniqueValueCounterInDistanceOfSubtree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
