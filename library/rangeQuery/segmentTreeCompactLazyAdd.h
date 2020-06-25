@@ -12,7 +12,6 @@
 // http://codeforces.com/blog/entry/18051
 
 // It's slower than FenwickTree 10x for just summation
-// (a.k.a. Starry Sky Tree)
 template <typename T, typename MergeOp = function<T(T, T)>>
 struct CompactSegmentTreeLazyAdd {
     int       RealN;
@@ -25,7 +24,7 @@ struct CompactSegmentTreeLazyAdd {
     T         defaultValue;
 
     explicit CompactSegmentTreeLazyAdd(MergeOp op, T dflt = T())
-        : mergeOp(), defaultValue(dflt) {
+        : mergeOp(op), defaultValue(dflt) {
     }
 
     CompactSegmentTreeLazyAdd(int size, MergeOp op, T dflt = T())
