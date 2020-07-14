@@ -30,6 +30,8 @@ typedef ModInt<int, MOD> baseT;
 //typedef ModInt<long long, MOD> baseT;
 typedef poly<baseT> polyT;
 
+#include "polynomial_application.h"
+
 //---
 
 static int modPowSlow(int x, int n) {
@@ -152,6 +154,17 @@ void testPolynomial() {
                 }
             }
         }
+    }
+    // application
+    {
+        int ans1 = WeirdProductWithPolynomial<998'244'353>::solve(vector<int>{2, 1, 1}, 1);
+        int ans2 = WeirdProductWithPolynomial<998'244'353>::solve(vector<int>{1}, 7);
+        int ans3 = WeirdProductWithPolynomial<998'244'353>::solve(vector<int>{5, 5, 5, 5, 5}, 998244351);
+        int ans4 = WeirdProductWithPolynomial<998'244'353>::solve(vector<int>{2, 0, 1, 6, 3, 3, 1, 0, 5, 1}, 69);
+        assert(ans1 == 2304);
+        assert(ans2 == 1);
+        assert(ans3 == 253808779);
+        assert(ans4 == 0);
     }
     cout << "*** Speed test ***" << endl;
     {

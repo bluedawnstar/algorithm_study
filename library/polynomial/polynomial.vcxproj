@@ -183,6 +183,7 @@
     <ClInclude Include="polyFFT2.h" />
     <ClInclude Include="polyFFTMod2.h" />
     <ClInclude Include="polynomial.h" />
+    <ClInclude Include="polynomial_application.h" />
     <ClInclude Include="powerSeries.h" />
     <ClInclude Include="powerSumPolyMod.h" />
     <ClInclude Include="mycomplex.h" />
