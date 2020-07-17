@@ -33,12 +33,12 @@ struct FastFactorialIntMod {
 
     // N > sqrt(maxDegree) * 4
     explicit FastFactorialIntMod(int N) { 
-        lagrange.build(N);
+        lagrange.prepare(N);
     }
 
     // N > sqrt(maxDegree) * 4
     void build(int N) {
-        lagrange.build(N);
+        lagrange.prepare(N);
     }
 
     //---

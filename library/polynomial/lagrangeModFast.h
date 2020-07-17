@@ -67,11 +67,11 @@ struct FastLagrangePolynomialMod {
     }
 
     explicit FastLagrangePolynomialMod(int maxDegree) { 
-        build(maxDegree);
+        prepare(maxDegree);
     }
 
     // O(maxK)
-    void build(int maxDegree) {
+    void prepare(int maxDegree) {
         maxDegree += 2;
         this->maxDegree = max(1, maxDegree);
 

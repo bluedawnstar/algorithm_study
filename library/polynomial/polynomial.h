@@ -428,7 +428,7 @@ namespace algebra {
         }
 
         // calculate log p(x) mod x^n
-        poly log(size_t n) {
+        poly ln(size_t n) {
             //assert(a[0] == T(1));
             return (derivate().modXK(n) * inverse(n)).integrate().modXK(n);
         }
