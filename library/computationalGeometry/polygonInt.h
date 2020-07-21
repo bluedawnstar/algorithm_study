@@ -135,4 +135,19 @@ struct IntPolygon {
             return false;
         return true;
     }
+
+    //---
+
+    static long long calcArea2(const vector<pair<int,int>>& polygon) {
+        long long res = 0;
+
+        if (polygon.size() > 2) {
+            int last = int(polygon.size()) - 1;
+            for (int i = 0; i < last; i++)
+                res += 1ll * polygon[i].first * polygon[i + 1].second - 1ll * polygon[i + 1].first * polygon[i].second;
+            res += 1ll * polygon[last].first * polygon[0].second - 1ll * polygon[0].first * polygon[last].second;
+        }
+
+        return res;
+    }
 };

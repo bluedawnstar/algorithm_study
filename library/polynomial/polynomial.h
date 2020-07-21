@@ -2,12 +2,20 @@
 
 // https://cp-algorithms.com/algebra/polynomial.html
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 namespace algebra {
     // from https://github.com/e-maxx-eng/e-maxx-eng-aux/blob/master/src/polynomial.cpp
 
     const int INF = 0x3f3f3f3f;
     const int MAGIC = 256;              // threshold for sizes to run the naive algo
 
+//#define USE_NTT
+
+#ifndef USE_NTT
     namespace fft {
         typedef double ftype;
         typedef complex<ftype> point;
@@ -114,6 +122,164 @@ namespace algebra {
             }
         }
     }
+#else
+    namespace ntt {
+        const int MAXN_BIT = 20;        // TODO: tuning point
+        const int MAXN = 1 << MAXN_BIT;
+
+        const int mod = 998'244'353;    // (119 * 2 ^ 23 + 1)
+        const int root = 3;             // primitive root
+
+        template <typename T, typename U>
+        T pow(T x, U b) {
+            T res = 1;
+            while (b > 0) {
+                if (b & 1)
+                    res *= x;
+                x *= x;
+                b >>= 1;
+            }
+            return res;
+        }
+
+        template <>
+        int pow(int x, int b) {
+            long long res = 1;
+            long long xx = x;
+            while (b > 0) {
+                if (b & 1)
+                    res = res * xx % mod;
+                xx = xx * xx % mod;
+                b >>= 1;
+            }
+            return int(res);
+        }
+
+        template <typename T>
+        T inverse(T x) {
+            return pow(x, mod - 2);
+        }
+
+        template <>
+        int inverse(int x) {
+            return pow(x, mod - 2);
+        }
+
+        int w[MAXN], wInv[MAXN];
+        int nInv[MAXN_BIT + 1];
+        bool initiated = false;
+
+        // counting trailing zeros
+        inline int ctz(int x) {
+#ifndef __GNUC__
+            return int(_tzcnt_u32(static_cast<unsigned>(x)));
+#else
+            return __builtin_ctz(static_cast<unsigned>(x));
+#endif
+        }
+
+        inline void init() {
+            if (!initiated) {
+                for (int i = 1; i < MAXN; i <<= 1) {
+                    int base = pow(root, (mod - 1) / (i * 2));
+                    int baseInv = inverse(base);
+
+                    int tw = 1, twInv = 1;
+                    for (int j = 0; j < i; j++) {
+                        w[i + j] = tw;
+                        wInv[i + j] = twInv;
+
+                        tw = int(1ll * tw * base % mod);
+                        twInv = int(1ll * twInv * baseInv % mod);
+                    }
+                }
+
+                for (int i = 0; i <= MAXN_BIT; i++)
+                    nInv[i] = inverse(1 << i);
+
+                initiated = true;
+            }
+        }
+
+        template <typename T>
+        void ntt(const T* in, T* out, int n, int k = 1) {
+            if (n == 1) {
+                *out = *in;
+            } else {
+                n >>= 1;
+                ntt(in, out, n, k << 1);
+                ntt(in + k, out + n, n, k << 1);
+                for (int i = 0; i < n; i++) {
+                    auto t = out[i + n] * w[i + n];
+                    out[i + n] = out[i] - t;
+                    out[i] += t;
+                }
+            }
+        }
+
+        template <typename T>
+        void nttInv(const T* in, T* out, int n, int k = 1) {
+            if (n == 1) {
+                *out = *in;
+            } else {
+                n >>= 1;
+                nttInv(in, out, n, k << 1);
+                nttInv(in + k, out + n, n, k << 1);
+                for (int i = 0; i < n; i++) {
+                    auto t = out[i + n] * wInv[i + n];
+                    out[i + n] = out[i] - t;
+                    out[i] += t;
+                }
+            }
+        }
+
+        // a *= b
+        template<typename T>
+        void multiplySlow(vector<T>& a, const vector<T>& b) {
+            vector<T> res(a.size() + b.size() - 1);
+            for (size_t i = 0; i < a.size(); i++) {
+                for (size_t j = 0; j < b.size(); j++) {
+                    res[i + j] += a[i] * b[j];
+                }
+            }
+            swap(a, res);
+        }
+
+        template<typename T>
+        void multiply(vector<T>& a, vector<T> b) {
+            if (min(a.size(), b.size()) < MAGIC) {
+                multiplySlow(a, b);
+                return;
+            }
+
+            init();
+
+            int n = int(a.size()) + int(b.size()) - 1;
+            int size = 1;
+            while (size < n)
+                size <<= 1;
+
+            a.resize(size);
+            b.resize(size);
+
+            static T A2[MAXN];
+            static T B2[MAXN];
+
+            ntt(a.data(), A2, size);
+            ntt(b.data(), B2, size);
+
+            for (int i = 0; i < size; i++)
+                A2[i] *= B2[i];
+
+            nttInv(A2, a.data(), size);
+
+            T inv = nInv[ctz(size)];
+            for (int i = 0; i < size; i++)
+                a[i] *= inv;
+        }
+    }
+    namespace fft = ntt;
+#endif
 
     template <typename T>
     T bpow(T x, size_t n) {
@@ -150,7 +316,6 @@ namespace algebra {
         }
         return res;
     }
-
 
     // low order first
     template <typename T>
@@ -291,7 +456,7 @@ namespace algebra {
             if (min(d, b.deg()) < MAGIC)
                 return divmodSlow(b);
 
-            poly D = (reverse(d + 1) * b.reverse(d + 1).inverse(d + 1)).modXK(d + 1).reverse(d + 1, 1);
+            poly D = (reverse(d + 1) * b.reverse(d + 1).inverse(d + 1)).modXK(d + 1).reverse(d + 1, true);
             return { D, *this - D * b };
         }
 
@@ -428,7 +593,7 @@ namespace algebra {
         }
 
         // calculate log p(x) mod x^n
-        poly log(size_t n) {
+        poly ln(size_t n) {
             //assert(a[0] == T(1));
             return (derivate().modXK(n) * inverse(n)).integrate().modXK(n);
         }

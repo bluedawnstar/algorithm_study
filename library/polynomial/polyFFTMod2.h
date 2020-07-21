@@ -90,19 +90,22 @@ struct PolyFFTMod2 : public FFT2 {
     }
 
     // low order first
-    vector<int> differentiate(vector<int> a) {
-        a.back() = 0;
-        for(int i = 1; i < int(a.size()); i++)
-            a[i - 1] = int(1ll * a[i] * i % mod);  
-        return a;
+    static vector<int> derivate(const vector<int>& poly) {
+        vector<int> res;
+        res.reserve(poly.size());
+        for (int i = 1; i < int(poly.size()); i++)
+            res.push_back(int(1ll * i * poly[i] % mod));
+        return res;
     }
 
     // low order first
-    vector<int> integrate(vector<int> a) {
-        for(int i = int(a.size()) - 1; i > 0; i--)
-            a[i] = int(1ll * a[i - 1] * modInv(i) % mod);
-        a[0] = 0;  
-        return a;
+    static vector<int> integrate(const vector<int>& poly) {
+        vector<int> res;
+        res.reserve(poly.size() + 1);
+        res.push_back(0);
+        for (int i = 0; i < int(poly.size()); i++)
+            res.push_back(int(1ll * poly[i] * modInv(i + 1) % mod));
+        return res;
     }
 
     // ln f(x) = INTEGRAL f'(x) / f(x)
