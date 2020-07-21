@@ -181,7 +181,9 @@
     <ClInclude Include="lagrangeModFast.h" />
     <ClInclude Include="modInt.h" />
     <ClInclude Include="polyFFT2.h" />
+    <ClInclude Include="polyFFT3.h" />
     <ClInclude Include="polyFFTMod2.h" />
+    <ClInclude Include="polyFFTMod3.h" />
     <ClInclude Include="polynomial.h" />
     <ClInclude Include="polynomial_application.h" />
     <ClInclude Include="powerSeries.h" />

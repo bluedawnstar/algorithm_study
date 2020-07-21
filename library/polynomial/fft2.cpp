@@ -37,7 +37,7 @@ static bool check2(const vector<pair<double,double>>& l, const vector<pair<doubl
     return true;
 }
 
-void testFastFFT() {
+void testFFT2() {
     return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Fast FFT ------------------------" << endl;

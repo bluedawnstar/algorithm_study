@@ -5,6 +5,7 @@ using namespace std;
 
 #include "polyFFT.h"
 #include "polyFFT2.h"
+#include "polyFFT3.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

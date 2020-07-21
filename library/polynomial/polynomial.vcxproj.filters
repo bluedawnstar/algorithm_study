@@ -164,5 +164,11 @@
     <ClInclude Include="polynomial_application.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="polyFFT3.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polyFFTMod3.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
