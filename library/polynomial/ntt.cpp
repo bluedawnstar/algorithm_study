@@ -4,6 +4,7 @@
 using namespace std;
 
 #include "ntt.h"
+#include "ntt_fast.h"
 #include "polyNTT.h"
 #include "factorialNTT.h"
 

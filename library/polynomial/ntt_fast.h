@@ -1,75 +1,105 @@
 #pragma once
 
-#ifndef M_PI
-#define M_PI       3.14159265358979323846   // pi
-#endif
+// Number Theoretic Transforms
+// M = 998244353 (119 * 2^23 + 1), primitive root = 3
+//
+// [CAUTION]
+// It's not working for below 'M's. Use PolyNTT for these
+//    - 10^9 + 7
+//    - 10^9 + 9
+template <int mod, int root, int MaxBitSize = 20>
+struct FastNTT {
+    static const int MAXN = 1 << MaxBitSize;
 
-template <int mod, int MaxN = (1 << 20)>
-struct PolyFFTMod3 {
-    static pair<double, double> w[MaxN];
-    static bool initialized;
+    static int w[MAXN], wInv[MAXN];
+    static int nInv[MaxBitSize + 1];
+    static bool initiated;
+
+    // counting trailing zeros
+    static int ctz(int x) {
+#ifndef __GNUC__
+        return int(_tzcnt_u32(static_cast<unsigned>(x)));
+#else
+        return __builtin_ctz(static_cast<unsigned>(x));
+#endif
+    }
 
     static void init() {
-        if (!initialized) {
-            for (int i = 1; i < MaxN; i <<= 1) {
+        if (!initiated) {
+            for (int i = 1; i < MAXN; i <<= 1) {
+                int base = modPow(root, (mod - 1) / (i * 2));
+                int baseInv = modInv(base);
+
+                int tw = 1, twInv = 1;
                 for (int j = 0; j < i; j++) {
-                    w[i + j].first = cos(M_PI * j / i);
-                    w[i + j].second = sin(M_PI * j / i);
+                    w[i + j] = tw;
+                    wInv[i + j] = twInv;
+
+                    tw = int(1ll * tw * base % mod);
+                    twInv = int(1ll * twInv * baseInv % mod);
                 }
             }
-            initialized = true;
+
+            for (int i = 0; i <= MaxBitSize; i++)
+                nInv[i] = modInv(1 << i);
+
+            initiated = true;
         }
     }
 
-    static void fft(const pair<double, double>* in, pair<double, double>* out, int n, int k = 1) {
+    static void ntt(const int* in, int* out, int n, int k = 1) {
         if (n == 1) {
             *out = *in;
         } else {
             n >>= 1;
-            fft(in, out, n, k << 1);
-            fft(in + k, out + n, n, k << 1);
+            ntt(in, out, n, k << 1);
+            ntt(in + k, out + n, n, k << 1);
             for (int i = 0; i < n; i++) {
-                pair<double, double> t(out[i + n].first * w[i + n].first - out[i + n].second * w[i + n].second,
-                    out[i + n].second * w[i + n].first + out[i + n].first * w[i + n].second);
+                int t = int(1ll * out[i + n] * w[i + n] % mod);
 
-                out[i + n].first = out[i].first - t.first;
-                out[i + n].second = out[i].second - t.second;
-                out[i].first += t.first;
-                out[i].second += t.second;
+                out[i + n] = out[i] - t;
+                if (out[i + n] < 0)
+                    out[i + n] += mod;
+
+                out[i] += t;
+                if (out[i] >= mod)
+                    out[i] -= mod;
             }
         }
     }
 
-    static void fftInv(const pair<double, double>* in, pair<double, double>* out, int n, int k = 1) {
+    static void nttInv(const int* in, int* out, int n, int k = 1) {
         if (n == 1) {
             *out = *in;
         } else {
             n >>= 1;
-            fftInv(in, out, n, k << 1);
-            fftInv(in + k, out + n, n, k << 1);
+            nttInv(in, out, n, k << 1);
+            nttInv(in + k, out + n, n, k << 1);
             for (int i = 0; i < n; i++) {
-                pair<double, double> t(out[i + n].first * w[i + n].first + out[i + n].second * w[i + n].second,
-                    out[i + n].second * w[i + n].first - out[i + n].first * w[i + n].second);
+                int t = int(1ll * out[i + n] * wInv[i + n] % mod);
 
-                out[i + n].first = out[i].first - t.first;
-                out[i + n].second = out[i].second - t.second;
-                out[i].first += t.first;
-                out[i].second += t.second;
+                out[i + n] = out[i] - t;
+                if (out[i + n] < 0)
+                    out[i + n] += mod;
+
+                out[i] += t;
+                if (out[i] >= mod)
+                    out[i] -= mod;
             }
-        }
 
-        if (k == 1) {
-            for (int i = 0; i < n; i++) {
-                out[i].first /= n;
-                out[i].second /= n;
+            if (k == 1) {
+                n <<= 1;
+                int inv = nInv[ctz(n)];
+                for (int i = 0; i < n; i++)
+                    out[i] = int(1ll * out[i] * inv % mod);
             }
         }
     }
 
     //---
 
-    static pair<double, double> A[MaxN], B[MaxN];
-    static pair<double, double> C[MaxN], D[MaxN];
+    static int A[MAXN], B[MAXN];
+    static int C[MAXN], D[MAXN];
 
     static vector<int> multiplySlow(const vector<int>& a, const vector<int>& b) {
         vector<int> res(a.size() + b.size() - 1);
@@ -81,79 +111,49 @@ struct PolyFFTMod3 {
         return res;
     }
 
-    static vector<int> multiply(const vector<int>& left, const vector<int>& right) {
-        int sizeL = int(left.size());
-        int sizeR = int(right.size());
-        int sizeDst = sizeL + sizeR - 1;
+    static vector<int> multiply(const vector<int>& a, const vector<int>& b, bool reverseB = false) {
+        int sizeA = int(a.size());
+        int sizeB = int(b.size());
 
-        if (min(sizeL, sizeR) <= 256)
-            return multiplySlow(left, right);
+        if (min(sizeA, sizeB) < 256)
+            return multiplySlow(a, b);
 
         init();
 
-        static const int shift = 15;
-        static const int mask = (1 << shift) - 1;
-
+        int n = sizeA + sizeB - 1;
         int size = 1;
-        while (size < sizeDst)
+        while (size < n)
             size <<= 1;
-        int sizeMask = size - 1;
 
-        for (int i = 0; i < size; i++) {
-            if (i < sizeL) {
-                A[i].first = left[i] & mask;
-                A[i].second = left[i] >> shift;
-            } else {
-                A[i].first = 0;
-                A[i].second = 0;
-            }
-            if (i < sizeR) {
-                B[i].first = right[i] & mask;
-                B[i].second = right[i] >> shift;
-            } else {
-                B[i].first = 0;
-                B[i].second = 0;
-            }
+        memcpy(A, a.data(), sizeof(int) * sizeA);
+        if (!reverseB)
+            memcpy(B, b.data(), sizeof(int) * sizeB);
+        else {
+            for (int i = 0, j = sizeB - 1; j >= 0; i++, j--)
+                B[j] = b[i];
         }
+        memset(A + sizeA, 0, sizeof(int) * (size - sizeA));
+        memset(B + sizeB, 0, sizeof(int) * (size - sizeB));
 
-        fft(A, C, size);
-        fft(B, D, size);
-        for (int i = 0; i < size; i++) {
-            int j = (size - i) & sizeMask;
-            pair<double, double> c0(C[i].first + C[j].first, C[i].second - C[j].second);
-            pair<double, double> c1(C[i].first - C[j].first, C[i].second + C[j].second);
-            pair<double, double> d0(D[i].first + D[j].first, D[i].second - D[j].second);
-            pair<double, double> d1(D[i].first - D[j].first, D[i].second + D[j].second);
-            //A[i] = c0 * d0 - point(0, 1) * c1 * d1;
-            A[i].first = (c0.first * d0.first - c0.second * d0.second) + (c1.first * d1.second + c1.second * d1.first);
-            A[i].second = (c0.first * d0.second + c0.second * d0.first) - (c1.first * d1.first - c1.second * d1.second);
-            //B[i] = c0 * d1 + d0 * c1;
-            B[i].first = (c0.first * d1.first - c0.second * d1.second) + (d0.first * c1.first - d0.second * c1.second);
-            B[i].second = (c0.first * d1.second + c0.second * d1.first) + (d0.first * c1.second + d0.second * c1.first);
-        }
+        ntt(A, C, size);
+        ntt(B, D, size);
 
-        fft(A, C, size);
-        fft(B, D, size);
-        std::reverse(C + 1, C + size);
-        std::reverse(D + 1, D + size);
+        for (int i = 0; i < size; i++)
+            A[i] = int(1ll * C[i] * D[i] % mod);
 
-        static const int SCALE2 = (1 << 2 * shift);
-        static const int SCALE = (1 << shift);
+        vector<int> res(size);
+        nttInv(A, res.data(), size);
 
-        vector<int> res(sizeDst);
-
-        int t = 4 * size;
-        for (int i = 0; i < sizeDst; i++) {
-            res[i] = int((llround(C[i].first / t) % mod
-                        + llround(D[i].second / t) % mod * SCALE
-                        + llround(C[i].second / t) % mod * SCALE2) % mod);
-        }
+        res.resize(n);
         normalize(res);
-
         return res;
     }
 
-    //--- extended operations (low order first)
+    static vector<int> convolute(const vector<int>& x, const vector<int>& h, bool reverseH = true) {
+        return multiply(x, h, reverseH);
+    }
+
+    //--- extended operations
 
     static void normalize(vector<int>& poly) {
         while (!poly.empty() && poly.back() == 0)
@@ -180,7 +180,7 @@ struct PolyFFTMod3 {
 
     // divide by x^k, dropping coefficients
     static vector<int> divXK(const vector<int>& poly, int k) {
-        k = min(k, poly.size());
+        k = min(k, int(poly.size()));
         return vector<int>(begin(poly) + k, end(poly));
     }
 
@@ -296,65 +296,34 @@ struct PolyFFTMod3 {
 
     //---
 
-    static vector<int> square(const vector<int>& poly) {
-        int n = int(poly.size());
-        int sizeDst = n * 2 - 1;
-
-        if (n < 256)
-            return multiplySlow(poly, poly);
+    static vector<int> square(const vector<int>& a) {
+        int sizeA = int(a.size());
+        if (sizeA < 256)
+            return multiplySlow(a, a);
 
         init();
 
-        static const int shift = 15;
-        static const int mask = (1 << shift) - 1;
-
+        int n = sizeA * 2 - 1;
         int size = 1;
-        while (size < sizeDst)
+        while (size < n)
             size <<= 1;
-        int sizeMask = size - 1;
 
-        for (int i = 0; i < size; i++) {
-            if (i < n) {
-                A[i].first = poly[i] & mask;
-                A[i].second = poly[i] >> shift;
-            } else {
-                A[i].first = 0;
-                A[i].second = 0;
-            }
-        }
+        memcpy(A, a.data(), sizeof(int) * sizeA);
+        memset(A + sizeA, 0, sizeof(int) * (size - sizeA));
 
-        fft(A, C, size);
-        for (int i = 0; i < size; i++) {
-            int j = (size - i) & sizeMask;
-            pair<double, double> c0(C[i].first + C[j].first, C[i].second - C[j].second);
-            pair<double, double> c1(C[i].first - C[j].first, C[i].second + C[j].second);
-            //A[i] = c0 * c0 - point(0, 1) * c1 * c1;
-            A[i].first = (c0.first * c0.first - c0.second * c0.second) + (c1.first * c1.second + c1.second * c1.first);
-            A[i].second = (c0.first * c0.second + c0.second * c0.first) - (c1.first * c1.first - c1.second * c1.second);
-            //B[i] = c0 * c1 + c0 * c1;
-            B[i].first = (c0.first * c1.first - c0.second * c1.second) + (c0.first * c1.first - c0.second * c1.second);
-            B[i].second = (c0.first * c1.second + c0.second * c1.first) + (c0.first * c1.second + c0.second * c1.first);
-        }
+        ntt(A, B, size);
 
-        fft(A, C, size);
-        fft(B, D, size);
-        std::reverse(C + 1, C + size);
-        std::reverse(D + 1, D + size);
-
-        static const int SCALE2 = (1 << 2 * shift);
-        static const int SCALE = (1 << shift);
+        for (int i = 0; i < size; i++)
+            A[i] = int(1ll * B[i] * B[i] % mod);
 
         vector<int> res(size);
+        nttInv(A, res.data(), size);
 
-        int t = 4 * size;
-        for (int i = 0; i < size; i++) {
-            res[i] = int((llround(C[i].first / t) % mod
-                        + llround(D[i].second / t) % mod * SCALE
-                        + llround(C[i].second / t) % mod * SCALE2) % mod);
-        }
-
+        res.resize(n);
+        normalize(res);
         return res;
     }
+
 
 #if 1
     // get inverse series mod x^n
@@ -388,7 +357,7 @@ struct PolyFFTMod3 {
     }
 #endif
 
-    static vector<int> inverse(const vector<int>& a) {
+    static vector<int> inverse(vector<int> a) {
         return inverse(a, int(a.size()));
     }
 
@@ -413,11 +382,11 @@ struct PolyFFTMod3 {
 
     // ln f(x) = INTEGRAL f'(x) / f(x)
     // low order first
-    static vector<int> ln(const vector<int>& poly) {
-        auto A = inverse(poly);
-        auto B = derivate(poly);
+    static vector<int> ln(vector<int> a) {
+        auto A = inverse(a);
+        auto B = derivate(a);
         A = multiply(A, B);
-        A.resize(poly.size());
+        A.resize(a.size());
         return integrate(A);
     }
 
@@ -513,8 +482,8 @@ struct PolyFFTMod3 {
         }
 
         vector<int> dfsEvaluate(const vector<int>& poly, const vector<int>& X, int node, int L, int R) {
-            if (L == R) {
-                return vector<int>{ PolyFFTMod3<mod, MaxN>::evaluate(poly, X[L]) };
+            if (R == L) {
+                return vector<int>{ FastNTT<mod, root, MaxBitSize>::evaluate(poly, X[L]) };
             } else {
                 int mid = L + (R - L) / 2;
                 auto A = dfsEvaluate(divmod(poly, tree[2 * node]).second, X, 2 * node, L, mid);
@@ -557,20 +526,26 @@ struct PolyFFTMod3 {
     }
 };
 
-template <int mod, int MaxN>
-pair<double, double> PolyFFTMod3<mod, MaxN>::w[MaxN];
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::w[FastNTT<mod, root, MaxBitSize>::MAXN];
 
-template <int mod, int MaxN>
-bool PolyFFTMod3<mod, MaxN>::initialized = false;
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::wInv[FastNTT<mod, root, MaxBitSize>::MAXN];
 
-template <int mod, int MaxN>
-pair<double, double> PolyFFTMod3<mod, MaxN>::A[MaxN];
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::nInv[MaxBitSize + 1];
 
-template <int mod, int MaxN>
-pair<double, double> PolyFFTMod3<mod, MaxN>::B[MaxN];
+template <int mod, int root, int MaxBitSize>
+bool FastNTT<mod, root, MaxBitSize>::initiated = false;
 
-template <int mod, int MaxN>
-pair<double, double> PolyFFTMod3<mod, MaxN>::C[MaxN];
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::A[FastNTT<mod, root, MaxBitSize>::MAXN];
 
-template <int mod, int MaxN>
-pair<double, double> PolyFFTMod3<mod, MaxN>::D[MaxN];
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::B[FastNTT<mod, root, MaxBitSize>::MAXN];
+
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::C[FastNTT<mod, root, MaxBitSize>::MAXN];
+
+template <int mod, int root, int MaxBitSize>
+int FastNTT<mod, root, MaxBitSize>::D[FastNTT<mod, root, MaxBitSize>::MAXN];
