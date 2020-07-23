@@ -166,40 +166,40 @@ struct PolyFFTMod3 {
     }
 
     // get same polynomial mod x^k
-    static vector<int> modXK(vector<int> poly, size_t k) {
-        poly.resize(min(k, poly.size()));
+    static vector<int> modXK(vector<int> poly, int k) {
+        poly.resize(min(k, int(poly.size())));
         return poly;
     }
 
     // multiply by x^k
-    static vector<int> mulXK(const vector<int>& poly, size_t k) {
+    static vector<int> mulXK(const vector<int>& poly, int k) {
         vector<int> res(k);
         res.insert(res.end(), begin(poly), end(poly));
         return res;
     }
 
     // divide by x^k, dropping coefficients
-    static vector<int> divXK(const vector<int>& poly, size_t k) {
+    static vector<int> divXK(const vector<int>& poly, int k) {
         k = min(k, poly.size());
         return vector<int>(begin(poly) + k, end(poly));
     }
 
     // return modXK(r).divXK(l)
-    static vector<int> substr(const vector<int>& poly, size_t l, size_t r) {
-        l = min(l, poly.size());
-        r = min(r, poly.size());
+    static vector<int> substr(const vector<int>& poly, int l, int r) {
+        l = min(l, int(poly.size()));
+        r = min(r, int(poly.size()));
         return vector<int>(begin(poly) + l, begin(poly) + r);
     }
 
     // reverses and leaves only n terms
-    static vector<int> reverse(const vector<int>& poly, size_t n, bool rev = false) {
+    static vector<int> reverse(const vector<int>& poly, int n, bool rev = false) {
         vector<int> res(poly);
         if (rev) {   // if rev == true then tail goes to head
-            res.resize(max(n, res.size()));
+            res.resize(max(n, int(res.size())));
             std::reverse(res.begin(), res.end());
         } else {
             std::reverse(res.begin(), res.end());
-            res.resize(max(n, res.size()));
+            res.resize(max(n, int(res.size())));
         }
         return res;
     }
@@ -358,11 +358,11 @@ struct PolyFFTMod3 {
 
 #if 1
     // get inverse series mod x^n
-    static vector<int> inverse(const vector<int>& poly, size_t n) {
+    static vector<int> inverse(const vector<int>& poly, int n) {
         //assert(!poly.empty());
 
         vector<int> res{ modInv(poly[0]) };
-        size_t a = 1;
+        int a = 1;
         while (a < n) {
             vector<int> C = substr(multiply(res, modXK(poly, 2 * a)), a, 2 * a);
             subtract(res, mulXK(modXK(multiply(res, C), a), a));
@@ -473,6 +473,7 @@ struct PolyFFTMod3 {
 
         return poly;
     }
+
 
     struct EvaluationTree {
         int N;
