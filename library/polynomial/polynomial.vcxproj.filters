@@ -170,5 +170,8 @@
     <ClInclude Include="polyFFTMod3.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ntt2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
