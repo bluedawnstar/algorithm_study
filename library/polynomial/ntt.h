@@ -119,32 +119,19 @@ struct NTT {
         return C;
     }
 
-    // low order first
+
     static vector<int> inverse(vector<int> a) {
-        int size = 1;
-        while (size < int(a.size()))
-            size <<= 1;
-
-        if (int(a.size()) != size)
-            a.resize(size);
-
-        if (size == 1)
-            return{ modInv(a[0]) }; // 1/a[0]
-
-        vector<int> b(a.begin(), a.begin() + (size >> 1));
-        b = inverse(b);
-
-        a.resize(size << 1);
-        b.resize(size << 1);
-
-        ntt(a);
-        ntt(b);
-        for(int i = 0; i < (size << 1); i++)
-            b[i] = int(((b[i] * 2ll - 1ll * a[i] * b[i] % mod * b[i]) % mod + mod) % mod);
-        // b[i] = b[i] * 2 - a[i] * b[i]^2
-        ntt(b, true);
-        b.resize(size); 
-
+        //assert(!a.empty());
+        int n = int(a.size());
+        vector<int> b = { modInv(a[0]) };
+        while (int(b.size()) < n) {
+            vector<int> a_cut(a.begin(), a.begin() + min(a.size(), b.size() << 1));
+            vector<int> x = multiply(square(b), a_cut);
+            b.resize(b.size() << 1);
+            for (int i = int(b.size()) >> 1; i < int(min(x.size(), b.size())); i++)
+                b[i] = mod - x[i];
+        }
+        b.resize(n);
         return b;
     }
 
