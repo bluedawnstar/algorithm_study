@@ -8,7 +8,7 @@
 //    - 10^9 + 7
 //    - 10^9 + 9
 template <int mod, int root, int MaxBitSize = 20>
-struct NTT2 {
+struct FastNTT {
     static const int MAXN = 1 << MaxBitSize;
 
     static int w[MAXN], wInv[MAXN];
@@ -483,7 +483,7 @@ struct NTT2 {
 
         vector<int> dfsEvaluate(const vector<int>& poly, const vector<int>& X, int node, int L, int R) {
             if (R == L) {
-                return vector<int>{ NTT2<mod, root, MaxBitSize>::evaluate(poly, X[L]) };
+                return vector<int>{ FastNTT<mod, root, MaxBitSize>::evaluate(poly, X[L]) };
             } else {
                 int mid = L + (R - L) / 2;
                 auto A = dfsEvaluate(divmod(poly, tree[2 * node]).second, X, 2 * node, L, mid);
@@ -527,25 +527,25 @@ struct NTT2 {
 };
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::w[NTT2<mod, root, MaxBitSize>::MAXN];
+int FastNTT<mod, root, MaxBitSize>::w[FastNTT<mod, root, MaxBitSize>::MAXN];
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::wInv[NTT2<mod, root, MaxBitSize>::MAXN];
+int FastNTT<mod, root, MaxBitSize>::wInv[FastNTT<mod, root, MaxBitSize>::MAXN];
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::nInv[MaxBitSize + 1];
+int FastNTT<mod, root, MaxBitSize>::nInv[MaxBitSize + 1];
 
 template <int mod, int root, int MaxBitSize>
-bool NTT2<mod, root, MaxBitSize>::initiated = false;
+bool FastNTT<mod, root, MaxBitSize>::initiated = false;
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::A[NTT2<mod, root, MaxBitSize>::MAXN];
+int FastNTT<mod, root, MaxBitSize>::A[FastNTT<mod, root, MaxBitSize>::MAXN];
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::B[NTT2<mod, root, MaxBitSize>::MAXN];
+int FastNTT<mod, root, MaxBitSize>::B[FastNTT<mod, root, MaxBitSize>::MAXN];
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::C[NTT2<mod, root, MaxBitSize>::MAXN];
+int FastNTT<mod, root, MaxBitSize>::C[FastNTT<mod, root, MaxBitSize>::MAXN];
 
 template <int mod, int root, int MaxBitSize>
-int NTT2<mod, root, MaxBitSize>::D[NTT2<mod, root, MaxBitSize>::MAXN];
+int FastNTT<mod, root, MaxBitSize>::D[FastNTT<mod, root, MaxBitSize>::MAXN];
