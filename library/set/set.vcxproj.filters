@@ -60,6 +60,9 @@
     <ClCompile Include="hashMapOAHT.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="unionFindWithValues.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -120,6 +123,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="hashMapOAHT.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="unionFindWithValues.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

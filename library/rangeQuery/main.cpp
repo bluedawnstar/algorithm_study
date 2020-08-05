@@ -28,6 +28,7 @@ int main(void) {
     TEST(SegmentTreeMaxSubarray);
     TEST(DynamicSegmentTree);
     TEST(DynamicSegmentTreeMaxSubarray);
+    TEST(DynamicSegmentTreeForest);
     TEST(SparseTable);
     TEST(SparseTable2D);
     TEST(DisjointSparseTable);
