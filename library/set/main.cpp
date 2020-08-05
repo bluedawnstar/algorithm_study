@@ -9,6 +9,7 @@ int main(void) {
     TEST(UnionFind);
     TEST(UnionFindWithCount);
     TEST(UnionFindSegment);
+    TEST(UnionFindWithValues);
     TEST(BitSet);
     TEST(BitSetRangeUpdate);
     TEST(RangeSet);
