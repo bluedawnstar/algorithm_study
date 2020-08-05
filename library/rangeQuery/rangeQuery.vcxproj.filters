@@ -204,6 +204,9 @@
     <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="dynamicSegmentTreeForest.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -423,6 +426,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreePersistent-UniqueValueCounter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicSegmentTreeForest.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fenwickTreeMod.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -178,6 +178,7 @@
     <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
     <ClCompile Include="segmentTreeSubsetXor.cpp" />
+    <ClCompile Include="dynamicSegmentTreeForest.cpp" />
     <ClCompile Include="sparseTableSimpleRMQ.cpp" />
     <ClCompile Include="schieberVishkinRMQ.cpp" />
     <ClCompile Include="mergeSortTree2DPoint.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
     <ClInclude Include="fenwickTreeEx.h" />
+    <ClInclude Include="fenwickTreeMod.h" />
     <ClInclude Include="fenwickTreeMultAdd.h" />
     <ClInclude Include="fenwickTreeMultAddPersistent.h" />
     <ClInclude Include="fenwickTreePersistent.h" />
@@ -244,6 +246,7 @@
     <ClInclude Include="segmentTreePersistent-UniqueValueCounter.h" />
     <ClInclude Include="segmentTreePersistentLazySimple.h" />
     <ClInclude Include="segmentTreeSubsetXor.h" />
+    <ClInclude Include="dynamicSegmentTreeForest.h" />
     <ClInclude Include="sparseTableSimpleRMQ.h" />
     <ClInclude Include="schieberVishkinRMQ.h" />
     <ClInclude Include="mergeSortTree2DPoint.h" />
