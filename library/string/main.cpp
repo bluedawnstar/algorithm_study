@@ -54,4 +54,5 @@ int main(void) {
     TEST(ReverseSubstringsBetweenParentheses);
     TEST(BracketSequencesBalanced);
     TEST(SuffixArrayAlgoPrefixCounter);
+    TEST(PeriodicSubstringWeightSumOfAllSubstrings);
 }
