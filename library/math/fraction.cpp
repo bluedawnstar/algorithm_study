@@ -83,28 +83,6 @@ void testFraction() {
     
     cout << "--------- testFraction() -----------------" << endl;
     {
-        int N = 1000000;
-        int T = 100;
-        for (int i = 0; i < T; i++) {
-            int a = RandInt32::get() % N + 1;
-            int b = RandInt32::get() % N + 1;
-            int n = RandInt32::get() % N;
-
-            int g = gcd(a, b);
-            a /= g;
-            b /= g;
-
-            long long ans = sumFloor(n, a, b);
-            long long gt = 0;
-            for (int j = 0; j <= n; j++)
-                gt += 1ll * a * j / b;
-
-            if (ans != gt)
-                cout << "Mismatched : sumFloor(" << n << ", " << a << ", " << b << ") = " << ans << ", " << gt << endl;
-            assert(ans == gt);
-        }
-    }
-    {
         Fraction<int> f1(6, 21);
         assert(f1.copyReduce() == Fraction<int>(2, 7));
 
