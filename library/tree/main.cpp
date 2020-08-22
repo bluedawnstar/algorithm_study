@@ -56,6 +56,7 @@ int main(void) {
     TEST(CentroidDecompositionSolver);
     TEST(CentroidDecompositionSolverDiviceAndConquer);
     TEST(UniqueValueCounterInDistanceOfSubtree);
+    TEST(TreeReordering);
 
     TEST(BenchmarkBST);
 }

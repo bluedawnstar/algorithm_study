@@ -157,6 +157,7 @@
     <ClCompile Include="generatedDistinctNumbersCounterByBitwiseOperation.cpp" />
     <ClCompile Include="golombRuler.cpp" />
     <ClCompile Include="josephusProblem.cpp" />
+    <ClCompile Include="latticePoints.cpp" />
     <ClCompile Include="linearRecurrence.cpp" />
     <ClCompile Include="longestArithmeticSubsequence.cpp" />
     <ClCompile Include="main.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="generatingFunction.h" />
     <ClInclude Include="golombRuler.h" />
     <ClInclude Include="josephusProblem.h" />
+    <ClInclude Include="latticePoints.h" />
     <ClInclude Include="linearRecurrence.h" />
     <ClInclude Include="longestArithmeticSubsequence.h" />
     <ClInclude Include="matrix.h" />

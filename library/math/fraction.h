@@ -6,6 +6,9 @@
 
 template <typename T>
 struct Fraction {
+    T num;
+    T denom;
+
     explicit Fraction(T x) : num(x), denom(1) {
     }
 
@@ -24,6 +27,14 @@ struct Fraction {
         return gcd(num, denom);
     }
 
+    T floor() const {
+        return num / denom;
+    }
+
+    T ceil() const {
+        return (num + denom - 1) / denom;
+    }
+
     void reduce() {
         T g = gcd();
         num /= g;
@@ -33,6 +44,10 @@ struct Fraction {
     Fraction copyReduce() const {
         T g = gcd();
         return Fraction(num / g, denom / g);
+    }
+
+    Fraction inverse() const {
+        return Fraction(denom, num);
     }
 
     Fraction& operator +=(const Fraction& rhs) {
@@ -49,6 +64,16 @@ struct Fraction {
         return *this;
     }
 
+    Fraction& operator +=(T rhs) {
+        num += denom * rhs;
+        return *this;
+    }
+
+    Fraction& operator -=(T rhs) {
+        num -= denom * rhs;
+        return *this;
+    }
+
     Fraction& operator *=(const Fraction& rhs) {
         num *= rhs.num;
         denom *= rhs.denom;
@@ -61,15 +86,34 @@ struct Fraction {
         return *this;
     }
 
+    Fraction& operator *=(T rhs) {
+        num *= rhs;
+        return *this;
+    }
+
+    Fraction& operator /=(T rhs) {
+        denom *= rhs;
+        return *this;
+    }
+
     Fraction operator +(const Fraction& rhs) const {
         T g = gcd(denom, rhs.denom);
-        return Fraction(num * rhs.denom / g + rhs.num * denom / g, denom / g * rhs.denom);
+        return Fraction(num * (rhs.denom / g) + rhs.num * (denom / g), denom / g * rhs.denom);
     }
 
     Fraction operator -(const Fraction& rhs) const {
         T g = gcd(denom, rhs.denom);
-        return Fraction(num * rhs.denom / g - rhs.num * denom / g, denom / g * rhs.denom);
+        return Fraction(num * (rhs.denom / g) - rhs.num * (denom / g), denom / g * rhs.denom);
     }
+
+    Fraction operator +(T rhs) const {
+        return Fraction(num + denom * rhs, denom);
+    }
+
+    Fraction operator -(T rhs) const {
+        return Fraction(num - denom * rhs, denom);
+    }
+
 
     Fraction operator *(const Fraction& rhs) const {
         return Fraction(num * rhs.num, denom * rhs.denom);
@@ -77,6 +121,14 @@ struct Fraction {
 
     Fraction operator /(const Fraction& rhs) const {
         return Fraction(num * rhs.denom, denom * rhs.num);
+    }
+
+    Fraction operator *(T rhs) const {
+        return Fraction(num * rhs, denom);
+    }
+
+    Fraction operator /(T rhs) const {
+        return Fraction(num, denom * rhs);
     }
 
     Fraction operator -() const {
@@ -114,7 +166,4 @@ struct Fraction {
     static T gcd(T p, T q) {
         return q == 0 ? p : gcd(q, p % q);
     }
-
-    T num;
-    T denom;
 };

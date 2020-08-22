@@ -16,6 +16,7 @@ int main(void) {
     TEST(FactorialZeroes);
     TEST(WeightedMedian);
     TEST(Fraction);
+    TEST(LatticePoints);
     TEST(FareySequence);
     TEST(SternBrocotSequence);
     TEST(SternBrocotFractionFinder);
