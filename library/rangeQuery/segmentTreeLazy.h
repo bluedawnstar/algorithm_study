@@ -158,6 +158,7 @@ private:
         if (nodeLeft == nodeRight)
             return tree[node] = newValue;
 
+#if 0
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
         if (lazyExist[node]) {
             lazyExist[node] = false;
@@ -171,6 +172,21 @@ private:
             treeLazy[node] = newValue;
             return tree[node] = blockOp(newValue, nodeRight - nodeLeft + 1);
         }
+#else
+        if (left <= nodeLeft && nodeRight <= right) {
+            lazyExist[node] = true;
+            treeLazy[node] = newValue;
+            return tree[node] = blockOp(newValue, nodeRight - nodeLeft + 1);
+        }
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        if (lazyExist[node]) {
+            lazyExist[node] = false;
+            pushDown(treeLazy[node], node * 2, nodeLeft, mid);
+            pushDown(treeLazy[node], node * 2 + 1, mid + 1, nodeRight);
+            //treeLazy[node] = defaultValue;
+        }
+#endif
 
         return tree[node] = mergeOp(updateRangeSub(left, right, newValue, node * 2, nodeLeft, mid),
                                     updateRangeSub(left, right, newValue, node * 2 + 1, mid + 1, nodeRight));
