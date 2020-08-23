@@ -9,6 +9,7 @@ using namespace std;
 
 #include "segmentTreeBeatsMin.h"
 #include "segmentTreeBeatsMax.h"
+#include "segmentTreeBeatsMinMax.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -126,6 +127,57 @@ void testSegmentTreeBeats() {
 
                 updateMaxSlow(A, L, R, x);
                 tree.updateMax(L, R, x);
+            }
+
+            for (int i = 0; i < N; i++) {
+                int L = RandInt32::get() % N;
+                int R = RandInt32::get() % N;
+                if (L > R)
+                    swap(L, R);
+
+                auto sum1 = sumSlow(A, L, R);
+                auto sum2 = tree.querySum(L, R);
+                if (sum1 != sum2) {
+                    cout << "Mismatched : " << sum1 << ", " << sum2 << endl;
+                }
+                assert(sum1 == sum2);
+
+                auto mx1 = minmaxSlow(A, L, R);
+                auto mx2 = tree.queryMinMax(L, R);
+                if (mx1 != mx2) {
+                    cout << "Mismatched : " << mx1 << ", " << mx2 << endl;
+                }
+                assert(mx1 == mx2);
+            }
+        }
+    }
+    {
+        const int MAXX = 100'000'000;
+        int N = 1000;
+        int T = 10;
+
+        for (int tt = 0; tt < T; tt++) {
+            vector<long long> A(N);
+            for (int i = 0; i < N; i++)
+                A[i] = RandInt32::get() % MAXX + 1;
+
+            SegmentTreeBeatsMinMax<long long> tree;
+            tree.build(A);
+
+            for (int i = 0; i < N; i++) {
+                int L = RandInt32::get() % N;
+                int R = RandInt32::get() % N;
+                if (L > R)
+                    swap(L, R);
+                long long x = RandInt32::get() % MAXX + 1;
+
+                if (RandInt32::get() & 1) {
+                    updateMinSlow(A, L, R, x);
+                    tree.updateMin(L, R, x);
+                } else {
+                    updateMaxSlow(A, L, R, x);
+                    tree.updateMax(L, R, x);
+                }
             }
 
             for (int i = 0; i < N; i++) {
