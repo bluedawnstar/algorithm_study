@@ -8,6 +8,7 @@ struct LatticePoints {
         sumFloor(a, b, n) = SUM floor(a / b * x) ,   x = 0, 1, 2, ..., n
                             x=0
     */
+    // O(logN)
     static long long count(long long a, long long b, long long n) {
         //assert(gcd(a, b) == 1);
         long long res = 0;
@@ -52,6 +53,7 @@ struct LatticePoints {
         sumFloor(a, b, n) = SUM floor((a.num / a.denom) * x + (b.num / b.denom)) ,   x = 0, 1, 2, ..., n
                             x=0
     */
+    // O(logN)
     static long long count(Fraction<long long> a, Fraction<long long> b, long long n) {
         long long res = 0;
 
