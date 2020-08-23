@@ -101,16 +101,18 @@ struct SegmentTreeBeatsMax {
     }
 
 
-    T querySum(int left, int right) {
-        return querySumSub(left, right, 1, 0, N - 1);
-    }
-
-
-    // A[i] = max(A[i], X), inclusive
+    // A[i] = max(A[i], X), inclusive, O(logN)
     void updateMax(int left, int right, T newValue) {
         updateSub(left, right, newValue, 1, 0, N - 1);
     }
 
+
+    // inclusive, O(logN)
+    T querySum(int left, int right) {
+        return querySumSub(left, right, 1, 0, N - 1);
+    }
+
+    // inclusive, O(logN)
     pair<T, T> queryMinMax(int left, int right) {
         return queryMinMaxSub(left, right, 1, 0, N - 1);
     }
@@ -201,22 +203,6 @@ private:
 
     //---
 
-    pair<T, T> queryMinMaxSub(int left, int right, int node, int nodeLeft, int nodeRight) {
-        if (right < nodeLeft || nodeRight < left)
-            return make_pair(INF, -INF);
-
-        if (left <= nodeLeft && nodeRight <= right)
-            return make_pair(tree[node].minValue, tree[node].maxValue);
-
-        pushDown(node, nodeLeft, nodeRight);
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        auto resL = queryMinMaxSub(left, right, node * 2, nodeLeft, mid);
-        auto resR = queryMinMaxSub(left, right, node * 2 + 1, mid + 1, nodeRight);
-
-        return make_pair(min(resL.first, resR.first), max(resL.second, resR.second));
-    }
-
     T querySumSub(int left, int right, int node, int nodeLeft, int nodeRight) {
         if (right < nodeLeft || nodeRight < left)
             return 0;
@@ -231,5 +217,21 @@ private:
         auto resR = querySumSub(left, right, node * 2 + 1, mid + 1, nodeRight);
 
         return resL + resR;
+    }
+
+    pair<T, T> queryMinMaxSub(int left, int right, int node, int nodeLeft, int nodeRight) {
+        if (right < nodeLeft || nodeRight < left)
+            return make_pair(INF, -INF);
+
+        if (left <= nodeLeft && nodeRight <= right)
+            return make_pair(tree[node].minValue, tree[node].maxValue);
+
+        pushDown(node, nodeLeft, nodeRight);
+
+        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        auto resL = queryMinMaxSub(left, right, node * 2, nodeLeft, mid);
+        auto resR = queryMinMaxSub(left, right, node * 2 + 1, mid + 1, nodeRight);
+
+        return make_pair(min(resL.first, resR.first), max(resL.second, resR.second));
     }
 };

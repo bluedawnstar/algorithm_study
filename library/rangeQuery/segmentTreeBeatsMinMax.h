@@ -127,21 +127,23 @@ struct SegmentTreeBeatsMinMax {
     }
 
 
-    // A[i] = min(A[i], X), inclusive
+    // A[i] = min(A[i], X), inclusive, O(logN)
     void updateMin(int left, int right, T newValue) {
         updateMinSub(left, right, newValue, 1, 0, N - 1);
     }
 
-    // A[i] = max(A[i], X), inclusive
+    // A[i] = max(A[i], X), inclusive, O(logN)
     void updateMax(int left, int right, T newValue) {
         updateMaxSub(left, right, newValue, 1, 0, N - 1);
     }
 
 
+    // inclusive, O(logN)
     T querySum(int left, int right) {
         return querySumSub(left, right, 1, 0, N - 1);
     }
 
+    // inclusive, O(logN)
     pair<T, T> queryMinMax(int left, int right) {
         return queryMinMaxSub(left, right, 1, 0, N - 1);
     }
