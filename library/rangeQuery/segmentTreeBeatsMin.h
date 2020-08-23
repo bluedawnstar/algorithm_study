@@ -21,6 +21,8 @@ struct SegmentTreeBeatsMin {
         T   cntMax;
         T   sumValue;
 
+        T   minValue;
+
         Node() {
             init();
         }
@@ -31,6 +33,8 @@ struct SegmentTreeBeatsMin {
 
             cntMax = 0;
             sumValue = 0;
+
+            minValue = INF;
         }
 
         void init(T x) {
@@ -39,6 +43,8 @@ struct SegmentTreeBeatsMin {
 
             cntMax = 1;
             sumValue = x;
+
+            minValue = x;
         }
 
 
@@ -52,8 +58,9 @@ struct SegmentTreeBeatsMin {
                 maxValue2 = max(min(L.maxValue, R.maxValue), max(L.maxValue2, R.maxValue2));
                 cntMax = (maxValue == L.maxValue) ? L.cntMax : R.cntMax;
             }
-
             sumValue = L.sumValue + R.sumValue;
+
+            minValue = min(L.minValue, R.minValue);
         }
 
         bool isBreakCondition(T value) const {
@@ -101,8 +108,8 @@ struct SegmentTreeBeatsMin {
         updateSub(left, right, newValue, 1, 0, N - 1);
     }
 
-    T queryMax(int left, int right) {
-        return queryMaxSub(left, right, 1, 0, N - 1);
+    pair<T,T> queryMinMax(int left, int right) {
+        return queryMinMaxSub(left, right, 1, 0, N - 1);
     }
 
 private:
@@ -112,12 +119,16 @@ private:
 
         // left node
         if (tree[node].maxValue < tree[node * 2].maxValue) {
+            tree[node * 2].minValue = min(tree[node * 2].minValue, tree[node].maxValue);
+
             tree[node * 2].sumValue -= tree[node * 2].cntMax * (tree[node * 2].maxValue - tree[node].maxValue);
             tree[node * 2].maxValue = tree[node].maxValue;
         }
 
         // right node
         if (tree[node].maxValue < tree[node * 2 + 1].maxValue) {
+            tree[node * 2 + 1].minValue = min(tree[node * 2 + 1].minValue, tree[node].maxValue);
+
             tree[node * 2 + 1].sumValue -= tree[node * 2 + 1].cntMax * (tree[node * 2 + 1].maxValue - tree[node].maxValue);
             tree[node * 2 + 1].maxValue = tree[node].maxValue;
         }
@@ -169,9 +180,10 @@ private:
 
         pushDown(node, nodeLeft, nodeRight);
         if (left <= nodeLeft && nodeRight <= right && tree[node].isTagCondition(newValue)) {
+            tree[node].minValue = min(tree[node].minValue, newValue);
+
             tree[node].sumValue -= tree[node].cntMax * (tree[node].maxValue - newValue);
             tree[node].maxValue = newValue;
-            //pushDown(node, nodeLeft, nodeRight);
             return node;
         }
 
@@ -186,20 +198,20 @@ private:
 
     //---
 
-    T queryMaxSub(int left, int right, int node, int nodeLeft, int nodeRight) {
+    pair<T,T> queryMinMaxSub(int left, int right, int node, int nodeLeft, int nodeRight) {
         if (right < nodeLeft || nodeRight < left)
-            return -INF;
+            return make_pair(INF, -INF);
 
         if (left <= nodeLeft && nodeRight <= right)
-            return tree[node].maxValue;
+            return make_pair(tree[node].minValue, tree[node].maxValue);
 
         pushDown(node, nodeLeft, nodeRight);
 
         int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-        auto resL = queryMaxSub(left, right, node * 2, nodeLeft, mid);
-        auto resR = queryMaxSub(left, right, node * 2 + 1, mid + 1, nodeRight);
+        auto resL = queryMinMaxSub(left, right, node * 2, nodeLeft, mid);
+        auto resR = queryMinMaxSub(left, right, node * 2 + 1, mid + 1, nodeRight);
 
-        return max(resL, resR);
+        return make_pair(min(resL.first, resR.first), max(resL.second, resR.second));
     }
 
     T querySumSub(int left, int right, int node, int nodeLeft, int nodeRight) {

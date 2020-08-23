@@ -96,11 +96,11 @@ void testSegmentTreeBeats() {
                 assert(sum1 == sum2);
 
                 auto mx1 = minmaxSlow(A, L, R);
-                auto mx2 = tree.queryMax(L, R);
-                if (mx1.second != mx2) {
-                    cout << "Mismatched : " << mx1.second << ", " << mx2 << endl;
+                auto mx2 = tree.queryMinMax(L, R);
+                if (mx1 != mx2) {
+                    cout << "Mismatched : " << mx1 << ", " << mx2 << endl;
                 }
-                assert(mx1.second == mx2);
+                assert(mx1 == mx2);
             }
         }
     }
@@ -142,11 +142,11 @@ void testSegmentTreeBeats() {
                 assert(sum1 == sum2);
 
                 auto mx1 = minmaxSlow(A, L, R);
-                auto mx2 = tree.queryMin(L, R);
-                if (mx1.first != mx2) {
-                    cout << "Mismatched : " << mx1.first << ", " << mx2 << endl;
+                auto mx2 = tree.queryMinMax(L, R);
+                if (mx1 != mx2) {
+                    cout << "Mismatched : " << mx1 << ", " << mx2 << endl;
                 }
-                assert(mx1.first == mx2);
+                assert(mx1 == mx2);
             }
         }
     }
