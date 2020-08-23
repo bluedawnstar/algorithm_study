@@ -69,4 +69,5 @@ int main(void) {
     TEST(MaxConsecutiveSubarray);
     TEST(DivideCombineTree);
     TEST(SubsetXorSegmentTree);
+    TEST(SegmentTreeBeats);
 }

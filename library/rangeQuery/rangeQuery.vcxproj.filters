@@ -207,6 +207,9 @@
     <ClCompile Include="dynamicSegmentTreeForest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeBeats.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -432,6 +435,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fenwickTreeMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeBeatsMin.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeBeatsMax.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
