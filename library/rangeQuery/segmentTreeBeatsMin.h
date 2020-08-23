@@ -1,6 +1,9 @@
 #pragma once
 
 /*
+https://codeforces.com/blog/entry/58564
+https://codeforces.com/blog/entry/57319
+
     1. update
         A[i] = min(A[i], x)   ,  L <= i <= R
 

@@ -22,7 +22,8 @@ using namespace std;
 #include "../common/rand.h"
 
 // <Related problems>
-// https://www.acmicpc.net/problem/17474
+// https://www.acmicpc.net/problem/17474   (DONE)
+// https://www.acmicpc.net/problem/17473   (TODO)
 
 template <typename T>
 static T sumSlow(vector<T>& v, int L, int R) {

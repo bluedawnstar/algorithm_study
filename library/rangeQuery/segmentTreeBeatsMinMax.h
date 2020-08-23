@@ -1,13 +1,19 @@
 #pragma once
 
 /*
-    1. update
+https://codeforces.com/blog/entry/58564
+https://codeforces.com/blog/entry/57319
+
+    1. update #1
         A[i] = min(A[i], x)   ,  L <= i <= R
 
-    2. query #1
+    2. update #2
+        A[i] = max(A[i], x)   ,  L <= i <= R
+
+    3. query #1
         max(A[L], A[L + 1], ..., A[R])
 
-    3. query #2
+    4. query #2
         sum(A[L], A[L + 1], ..., A[R])
 */
 template <typename T>
