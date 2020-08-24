@@ -118,25 +118,24 @@ struct SegmentTreeBeatsMin {
     }
 
 private:
+    void applyMin(int node, T value) {
+        tree[node].minValue = min(tree[node].minValue, value);
+
+        tree[node].sumValue -= tree[node].cntMax * (tree[node].maxValue - value);
+        tree[node].maxValue = value;
+    }
+
     void pushDown(int node, int nodeLeft, int nodeRight) {
         if (nodeLeft == nodeRight)
             return;
 
         // left node
-        if (tree[node].maxValue < tree[node * 2].maxValue) {
-            tree[node * 2].minValue = min(tree[node * 2].minValue, tree[node].maxValue);
-
-            tree[node * 2].sumValue -= tree[node * 2].cntMax * (tree[node * 2].maxValue - tree[node].maxValue);
-            tree[node * 2].maxValue = tree[node].maxValue;
-        }
+        if (tree[node].maxValue < tree[node * 2].maxValue)
+            applyMin(node * 2, tree[node].maxValue);
 
         // right node
-        if (tree[node].maxValue < tree[node * 2 + 1].maxValue) {
-            tree[node * 2 + 1].minValue = min(tree[node * 2 + 1].minValue, tree[node].maxValue);
-
-            tree[node * 2 + 1].sumValue -= tree[node * 2 + 1].cntMax * (tree[node * 2 + 1].maxValue - tree[node].maxValue);
-            tree[node * 2 + 1].maxValue = tree[node].maxValue;
-        }
+        if (tree[node].maxValue < tree[node * 2 + 1].maxValue)
+            applyMin(node * 2 + 1, tree[node].maxValue);
     }
 
     //---
@@ -185,10 +184,7 @@ private:
 
         pushDown(node, nodeLeft, nodeRight);
         if (left <= nodeLeft && nodeRight <= right && tree[node].isTagCondition(newValue)) {
-            tree[node].minValue = min(tree[node].minValue, newValue);
-
-            tree[node].sumValue -= tree[node].cntMax * (tree[node].maxValue - newValue);
-            tree[node].maxValue = newValue;
+            applyMin(node, newValue);
             return node;
         }
 
