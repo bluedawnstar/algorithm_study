@@ -19,7 +19,7 @@
                   /      \
                 fork    fork
 
-        a = u-leg, b = u-c, d = c-fork
+        a = u-leg, b = u-v, d = v-fork
 
             d = a + b
         <=> a = d - b
