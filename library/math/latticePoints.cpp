@@ -64,7 +64,7 @@ static long long sumFloorSlow(Fraction<long long> a, Fraction<long long> b, long
 }
 
 void testLatticePoints() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--------- Lattice Points -----------------" << endl;
     {
