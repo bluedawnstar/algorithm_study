@@ -30,4 +30,5 @@ int main(void) {
     TEST(GolombRuler);
     TEST(ArrayGeneratorWithDistinctSubarraySums);
     TEST(TransformOperationByAddOrMult);
+    TEST(ProuhetTarryEscottProblem);
 }
