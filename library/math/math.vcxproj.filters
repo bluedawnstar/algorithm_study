@@ -93,6 +93,9 @@
     <ClCompile Include="latticePoints.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="prouhetTarryEscottProblem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -195,6 +198,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="latticePoints.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prouhetTarryEscottProblem.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

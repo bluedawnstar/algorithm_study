@@ -162,6 +162,7 @@
     <ClCompile Include="longestArithmeticSubsequence.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="prouhetTarryEscottProblem.cpp" />
     <ClCompile Include="roundRobinTournament.cpp" />
     <ClCompile Include="simpsonIntegration.cpp" />
     <ClCompile Include="sternBrocot-fractionFinder.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="matrix2x2Mod.h" />
     <ClInclude Include="matrixMod.h" />
     <ClInclude Include="multinomialTheorem.h" />
+    <ClInclude Include="prouhetTarryEscottProblem.h" />
     <ClInclude Include="roundRobinTournament.h" />
     <ClInclude Include="simpsonIntegration.h" />
     <ClInclude Include="sternBrocot-fractionFinder.h" />

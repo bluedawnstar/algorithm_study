@@ -186,6 +186,9 @@
     <ClCompile Include="treeReordering.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeCentroidDecompositionSolverDivideAndConquer_XorDistance.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -381,6 +384,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeReordering.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeCentroidDecompositionSolverDivideAndConquer_XorDistance.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
