@@ -6,7 +6,7 @@ struct Matrix2x2 {
     T a10, a11;
 
     Matrix2x2& init() {
-        a00 = a01 = a10 = a11;
+        a00 = a01 = a10 = a11 = 0;
         return *this;
     }
 
