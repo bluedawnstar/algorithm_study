@@ -210,6 +210,9 @@
     <ClCompile Include="segmentTreeBeats.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreePrimeFactorXorRollingHash.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -444,6 +447,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreeBeatsMinMax.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreePrimeFactorXorRollingHash.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
