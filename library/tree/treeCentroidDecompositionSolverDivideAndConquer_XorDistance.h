@@ -83,6 +83,7 @@ struct TreeCentroidDecompositionSolverDivideAndConquer_XorDistance {
 
     //---
 
+    // O(N*(logN)^2)
     void solve() {
         dfsSize(0, -1);
         dfsSolve(0, -1);
