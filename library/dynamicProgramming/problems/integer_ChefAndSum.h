@@ -113,11 +113,7 @@ struct ChefAndSumSolver {
                         curXM -= mod;
                     prvP = curP;
                     curP = int(1ll * modPowLL(curM, K - 1) * curXM % mod);
-                    sum += int(1ll * minPF * (curP - prvP) % mod);
-                    if (sum >= mod)
-                        sum -= mod;
-                    else if (sum < 0)
-                        sum += mod;
+                    sum = int((sum + 1ll * minPF * (curP - prvP + mod)) % mod);
                 }
             } else {
                 if (freq[g] > 0) {
@@ -160,11 +156,12 @@ struct ChefAndSumSolver {
                     curM -= mod;
                 if ((curXM += vXM[i]) >= mod)
                     curXM -= mod;
-                curP = int(1ll * modPowLL(curM, K - 1) * curXM % mod);
-                sum = int((sum + 1ll * primes[i] * (curP - prvP + mod)) % mod);
 
                 prvP = curP;
                 vM[i] = vXM[i] = 0;
+
+                curP = int(1ll * modPowLL(curM, K - 1) * curXM % mod);
+                sum = int((sum + 1ll * primes[i] * (curP - prvP + mod)) % mod);
             }
 
             /*
@@ -208,11 +205,12 @@ struct ChefAndSumSolver {
                     curM -= mod;
                 if ((curXM += vXM[i]) >= mod)
                     curXM -= mod;
-                curP = int(1ll * modPowLL(curM, K - 1) * curXM % mod);
-                sum = int((sum + 1ll * primes[i] * (curP - prvP + mod)) % mod);
 
                 prvP = curP;
                 vM[i] = vXM[i] = 0;
+
+                curP = int(1ll * modPowLL(curM, K - 1) * curXM % mod);
+                sum = int((sum + 1ll * primes[i] * (curP - prvP + mod)) % mod);
             }
 
             for (int d = 2; d <= maxX; d++) {

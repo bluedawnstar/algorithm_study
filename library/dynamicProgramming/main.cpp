@@ -49,4 +49,6 @@ int main(void) {
     TEST(GridPathCounterWithObstacles);
     TEST(SameDistanceTripleCounterOnTree);
     TEST(MaxWeightOfAllConcatenatedStrings);
+    //--- problems
+    TEST(ChefAndSum);
 }

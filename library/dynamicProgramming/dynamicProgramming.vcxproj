@@ -159,6 +159,7 @@
     <ClCompile Include="palindromicPartitioning.cpp" />
     <ClCompile Include="partitionProblemMultiple.cpp" />
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
+    <ClCompile Include="problems\integer_ChefAndSum.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
@@ -215,6 +216,8 @@
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
     <ClInclude Include="powerSumOfAllCombinations_NTT.h" />
+    <ClInclude Include="problems\integer_ChefAndSum.h" />
+    <ClInclude Include="problems\integer_ChefAndSum2.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />
