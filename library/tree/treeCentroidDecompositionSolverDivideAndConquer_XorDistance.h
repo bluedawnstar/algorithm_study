@@ -91,6 +91,8 @@ struct TreeCentroidDecompositionSolverDivideAndConquer_XorDistance {
 
 private:
     static int clz(int x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(_lzcnt_u32((unsigned)x));
 #else

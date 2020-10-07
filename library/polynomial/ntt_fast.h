@@ -17,6 +17,8 @@ struct FastNTT {
 
     // counting trailing zeros
     static int ctz(int x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(_tzcnt_u32(static_cast<unsigned>(x)));
 #else

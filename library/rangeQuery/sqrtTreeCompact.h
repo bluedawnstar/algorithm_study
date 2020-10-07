@@ -177,6 +177,8 @@ private:
     }
 
     static int clz(int x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(__lzcnt(unsigned(x)));
 #else

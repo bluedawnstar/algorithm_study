@@ -8,10 +8,14 @@ typedef __int128_t      Int128;
 typedef __uint128_t     UInt128;
 
 inline int clz(unsigned int x) {
+    if (!x)
+        return 32;
     return __builtin_clz(x);
 }
 
 inline int ctz(unsigned int x) {
+    if (!x)
+        return 32;
     return __builtin_ctz(x);
 }
 
@@ -20,10 +24,14 @@ inline int popcount(unsigned int x) {
 }
 
 inline int clz(unsigned long long x) {
+    if (!x)
+        return 64;
     return __builtin_clzll(x);
 }
 
 inline int ctz(unsigned long long x) {
+    if (!x)
+        return 64;
     return __builtin_ctzll(x);
 }
 
@@ -32,13 +40,13 @@ inline int popcount(unsigned long long x) {
 }
 
 inline int clz(__int128_t x) {
-    return __builtin_clzll(static_cast<unsigned long long>(x >> 64))
-         + __builtin_clzll(static_cast<unsigned long long>(x      ));
+    return clz(static_cast<unsigned long long>(x >> 64))
+         + clz(static_cast<unsigned long long>(x      ));
 }
 
 inline int ctz(__int128_t x) {
-    return __builtin_ctzll(static_cast<unsigned long long>(x >> 64))
-         + __builtin_ctzll(static_cast<unsigned long long>(x      ));
+    return ctz(static_cast<unsigned long long>(x >> 64))
+         + ctz(static_cast<unsigned long long>(x      ));
 }
 
 inline int popcount(__int128_t x) {
@@ -47,13 +55,13 @@ inline int popcount(__int128_t x) {
 }
 
 inline int clz(__uint128_t x) {
-    return __builtin_clzll(static_cast<unsigned long long>(x >> 64))
-         + __builtin_clzll(static_cast<unsigned long long>(x      ));
+    return clz(static_cast<unsigned long long>(x >> 64))
+         + clz(static_cast<unsigned long long>(x      ));
 }
 
 inline int ctz(__uint128_t x) {
-    return __builtin_ctzll(static_cast<unsigned long long>(x >> 64))
-         + __builtin_ctzll(static_cast<unsigned long long>(x      ));
+    return ctz(static_cast<unsigned long long>(x >> 64))
+         + ctz(static_cast<unsigned long long>(x      ));
 }
 
 inline int popcount(__uint128_t x) {
@@ -78,10 +86,14 @@ inline UInt128 makeUInt128(unsigned long long hi, unsigned long long lo) {
 #pragma warning(disable: 4146)
 
 inline int clz(unsigned int x) {
+    if (!x)
+        return 32;
     return int(_lzcnt_u32(x));
 }
 
 inline int ctz(unsigned int x) {
+    if (!x)
+        return 32;
     return int(_tzcnt_u32(x));
 }
 
@@ -90,6 +102,8 @@ inline int popcount(unsigned int x) {
 }
 
 inline int clz(unsigned long long x) {
+    if (!x)
+        return 64;
 #if defined(_M_X64)
     return int(_lzcnt_u64(x));
 #else
@@ -101,6 +115,8 @@ inline int clz(unsigned long long x) {
 }
 
 inline int ctz(unsigned long long x) {
+    if (!x)
+        return 64;
 #if defined(_M_X64)
     return int(_tzcnt_u64(x));
 #else
