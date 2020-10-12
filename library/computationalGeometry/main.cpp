@@ -25,4 +25,5 @@ int main(void) {
     TEST(DistanceSum);
     TEST(DynamicLowerEnvelope);
     TEST(DynamicUpperEnvelope);
+    TEST(MaxHanhattanDistanceOfAllPairs);
 }
