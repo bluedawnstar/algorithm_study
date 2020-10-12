@@ -24,12 +24,6 @@
     <ClCompile Include="convexHullTrick.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="knuthOptimization.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="divideConquerOptimization.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="steinerTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -64,9 +58,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="persistentConvexHull.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="divideConquerOptimization_OptimalSquareDistance1D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="bitonicTour.cpp">
@@ -159,14 +150,17 @@
     <ClCompile Include="problems\integer_ChefAndSum.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="optimizationKnuth.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="optimizationDivideConquer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="optimizationDivideConquer_OptimalSquareDistance1D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="divideConquerOptimization.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="knuthOptimization.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="steinerTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -215,9 +209,6 @@
     <ClInclude Include="convexHullTrickMin.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="divideConquerOptimization_OptimalSquareDistance1D.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="bitonicTour.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -225,9 +216,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="longestCommonSubsequence.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="divideConquerOptimization_OptimalKMeans1D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="eggDropping.h">
@@ -346,6 +334,18 @@
     </ClInclude>
     <ClInclude Include="problems\integer_ChefAndSum2.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="optimizationKnuth.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="optimizationDivideConquer.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="optimizationDivideConquer_OptimalKMeans1D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="optimizationDivideConquer_OptimalSquareDistance1D.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

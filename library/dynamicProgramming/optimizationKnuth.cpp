@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "knuthOptimization.h"
+#include "optimizationKnuth.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////

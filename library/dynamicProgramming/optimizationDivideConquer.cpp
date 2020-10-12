@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "divideConquerOptimization.h"
+#include "optimizationDivideConquer.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
