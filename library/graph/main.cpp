@@ -33,4 +33,5 @@ int main(void) {
     TEST(BridgeBlockTree);
     TEST(ChordalGraph);
     TEST(ShortestPathWithWildcard);
+    TEST(SpecialMST);
 }

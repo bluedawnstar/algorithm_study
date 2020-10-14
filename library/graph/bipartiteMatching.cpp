@@ -62,7 +62,7 @@ static BipartiteMatchingHopcroftKarp buildGraphHopcroftKarp() {
 }
 
 void testBipartiteMaching() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Bipartite Maching -------------" << endl;
     {
