@@ -63,6 +63,9 @@
     <ClCompile Include="powerSeries.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="pentagonalNumber.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -171,6 +174,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="ntt_fast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pentagonalNumber.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
