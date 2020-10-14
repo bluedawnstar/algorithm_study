@@ -5,10 +5,16 @@
 // C(n,r) % 2
 template <typename T>
 inline T combMod2(T n, T r) {
+#if 1
     if (r & (n - r))
         return 0;
     else
         return 1;
+#else
+    if (n < r || r < 0)
+        return 0;
+    return T((n & r) == r);
+#endif
 }
 
 template <typename T>
