@@ -2,6 +2,15 @@
 
 #include "../integer/intMod.h"
 
+// C(n,r) % 2
+template <typename T>
+inline T combMod2(T n, T r) {
+    if (r & (n - r))
+        return 0;
+    else
+        return 1;
+}
+
 template <typename T>
 inline T combMod(int n, int r, T M) {
     if (n < r)
