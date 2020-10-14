@@ -7,6 +7,19 @@
   1. precondition
     - root node is not articulation point
     - root node has N - 1 edges, it means root node has direct edges to all other nodes
+
+  2. algorithm
+    1) connect all edges to root node(node 0) and sum weight of the edges
+       -> make N - 1 groups except node 0
+
+    2) find group of min increasing weight
+
+       new_cost_sum = current_cost_sum +
+                      (weight_of_new_connected_edge_from_a_group_to_another_group - weight_of_erased_edge_from_the_root)
+
+    3) cut a edge from root, merge two groups, and update cost
+
+    4) repeat 2, 3
 */
 struct SpecialMST {
     struct UnionFind {
@@ -130,6 +143,7 @@ struct SpecialMST {
     // total cost of minimum spanning tree by degree of root node
     // - result[root_degree] = cost of MST
     // - root is 0
+    // O((V+E)*logE)
     vector<long long> calcMstCostByDegreeOfRootNode() {
         vector<long long> res(N);
 
