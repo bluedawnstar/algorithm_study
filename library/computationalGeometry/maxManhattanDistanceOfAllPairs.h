@@ -72,4 +72,70 @@ struct MaxHanhattanDistanceOfAllPairs {
     static T maxDistance2D(const vector<pair<T, T>>& A) {
         return maxDistance2D(A.data(), int(A.size()));
     }
+
+    //--- multi-dimension
+
+    // O(2^(D-1)*N*logN)
+    template <typename T>
+    static T maxDistance(const vector<vector<T>>& A, int dimension) {
+        int N = int(A.size());
+        int K = 1 << (dimension - 1);
+        vector<vector<T>> val(K, vector<T>(N));
+
+        for (int i = 0; i < N; i++) {
+            val[0][i] = accumulate(A[i].begin(), A[i].end(), T(0));
+            for (int j = 1; j < K; j++) {
+                int idx = ctz(j);
+                val[j][i] = val[j & (j - 1)][i] - A[i][idx] * 2;
+            }
+        }
+
+        for (int j = 0; j < K; j++)
+            sort(val[j].begin(), val[j].end());
+
+        T res = numeric_limits<T>::min();
+        for (int j = 0; j < K; j++)
+            res = max(res, val[j][N - 1] - val[j][0]);
+
+        return res;
+    }
+
+    template <typename T, int D>
+    static T maxDistance(const vector<array<T,D>>& A) {
+        int N = int(A.size());
+        int K = 1 << (D - 1);
+        vector<vector<T>> val(K, vector<T>(N));
+
+        for (int i = 0; i < N; i++) {
+            val[0][i] = 0;
+            for (int j = 0; j < D; j++)
+                val[0][i] += A[i][j];
+
+            for (int j = 1; j < K; j++) {
+                int idx = ctz(j);
+                val[j][i] = val[j & (j - 1)][i] - A[i][idx] * 2;
+            }
+        }
+
+        for (int j = 0; j < K; j++)
+            sort(val[j].begin(), val[j].end());
+
+        T res = numeric_limits<T>::min();
+        for (int j = 0; j < K; j++)
+            res = max(res, val[j][N - 1] - val[j][0]);
+
+        return res;
+    }
+
+private:
+    // counting trailing zeros
+    static int ctz(int x) {
+        if (!x)
+            return 32;
+#ifndef __GNUC__
+        return int(_tzcnt_u32(unsigned(x)));
+#else
+        return __builtin_ctz(unsigned(x));
+#endif
+    }
 };
