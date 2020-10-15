@@ -23,6 +23,8 @@ using namespace std;
 #include "../common/rand.h"
 
 static inline int clz(unsigned x) {
+    if (!x)
+        return 32;
 #ifndef __GNUC__
     return int(_lzcnt_u32(x));
 #else

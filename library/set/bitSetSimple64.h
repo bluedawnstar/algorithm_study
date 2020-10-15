@@ -8,6 +8,8 @@
 // BitSet class without mBitCnt member variable
 struct BitSetSimple64 {
     static int clz(unsigned long long x) {
+        if (!x)
+            return 64;
 #if defined(_M_X64)
         return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)

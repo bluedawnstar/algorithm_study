@@ -16,7 +16,7 @@ using namespace std;
 #define NN  1000000
 
 void testPrimeFactor() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     clock_t start;
 

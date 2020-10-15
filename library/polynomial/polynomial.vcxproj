@@ -153,6 +153,7 @@
     <ClCompile Include="fft2.cpp" />
     <ClCompile Include="lagrange.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pentagonalNumber.cpp" />
     <ClCompile Include="polyFFT.cpp" />
     <ClCompile Include="polyFFTMod.cpp" />
     <ClCompile Include="ntt.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="lagrangeModFast.h" />
     <ClInclude Include="modInt.h" />
     <ClInclude Include="ntt_fast.h" />
+    <ClInclude Include="pentagonalNumber.h" />
     <ClInclude Include="polyFFT2.h" />
     <ClInclude Include="polyFFT3.h" />
     <ClInclude Include="polyFFTMod2.h" />

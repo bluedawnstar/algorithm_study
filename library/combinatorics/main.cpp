@@ -17,4 +17,5 @@ int main(void) {
     TEST(Catalan);
     TEST(LatinSquare);
     TEST(MaxMatchingInMatrix);
+    TEST(IntegerPartition);
 }

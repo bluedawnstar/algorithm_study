@@ -31,4 +31,5 @@ int main(void) {
     TEST(ArrayGeneratorWithDistinctSubarraySums);
     TEST(TransformOperationByAddOrMult);
     TEST(ProuhetTarryEscottProblem);
+    TEST(InversionCounter);
 }

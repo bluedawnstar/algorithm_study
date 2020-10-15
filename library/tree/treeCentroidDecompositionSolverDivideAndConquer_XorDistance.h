@@ -83,6 +83,7 @@ struct TreeCentroidDecompositionSolverDivideAndConquer_XorDistance {
 
     //---
 
+    // O(N*(logN)^2)
     void solve() {
         dfsSize(0, -1);
         dfsSolve(0, -1);
@@ -90,6 +91,8 @@ struct TreeCentroidDecompositionSolverDivideAndConquer_XorDistance {
 
 private:
     static int clz(int x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(_lzcnt_u32((unsigned)x));
 #else

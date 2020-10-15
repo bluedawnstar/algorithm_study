@@ -7,6 +7,8 @@
 
 // counting leading zeros
 inline int clz(unsigned x) {
+    if (!x)
+        return 32;
 #ifndef __GNUC__
     return int(_lzcnt_u32(x));
 #else
@@ -16,6 +18,8 @@ inline int clz(unsigned x) {
 
 inline int clz(unsigned long long x) {
 #if defined(_M_X64)
+    if (!x)
+        return 64;
     return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)
     return __builtin_clzll(x);
@@ -29,6 +33,8 @@ inline int clz(unsigned long long x) {
 
 // counting trailing zeros
 inline int ctz(unsigned x) {
+    if (!x)
+        return 32;
 #ifndef __GNUC__
     return int(_tzcnt_u32(x));
 #else
@@ -37,6 +43,8 @@ inline int ctz(unsigned x) {
 }
 
 inline int ctz(unsigned long long x) {
+    if (!x)
+        return 64;
 #if defined(_M_X64)
     return int(_tzcnt_u64(x));
 #elif defined(__GNUC__)

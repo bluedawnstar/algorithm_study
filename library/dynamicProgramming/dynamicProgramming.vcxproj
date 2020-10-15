@@ -159,6 +159,7 @@
     <ClCompile Include="palindromicPartitioning.cpp" />
     <ClCompile Include="partitionProblemMultiple.cpp" />
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
+    <ClCompile Include="problems\integer_ChefAndSum.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
@@ -166,15 +167,15 @@
     <ClCompile Include="brokenProfileEx.cpp" />
     <ClCompile Include="convexHullTrick.cpp" />
     <ClCompile Include="digitDP.cpp" />
-    <ClCompile Include="divideConquerOptimization.cpp" />
-    <ClCompile Include="divideConquerOptimization_OptimalSquareDistance1D.cpp" />
+    <ClCompile Include="optimizationDivideConquer.cpp" />
+    <ClCompile Include="optimizationDivideConquer_OptimalSquareDistance1D.cpp" />
     <ClCompile Include="dynamicConvexHull.cpp" />
     <ClCompile Include="dynamicLowerEnvelope.cpp" />
     <ClCompile Include="dynamicUpperEnvelope.cpp" />
     <ClCompile Include="editDistance.cpp" />
     <ClCompile Include="eggDropping.cpp" />
     <ClCompile Include="knapsack.cpp" />
-    <ClCompile Include="knuthOptimization.cpp" />
+    <ClCompile Include="optimizationKnuth.cpp" />
     <ClCompile Include="longestCommonSubsequence.cpp" />
     <ClCompile Include="longestCommonSubsequenceCyclic.cpp" />
     <ClCompile Include="longestIncreasingSubsequence.cpp" />
@@ -215,6 +216,8 @@
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
     <ClInclude Include="powerSumOfAllCombinations_NTT.h" />
+    <ClInclude Include="problems\integer_ChefAndSum.h" />
+    <ClInclude Include="problems\integer_ChefAndSum2.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />
@@ -223,9 +226,9 @@
     <ClInclude Include="convexHullTrickMin.h" />
     <ClInclude Include="convexHullTrickMax.h" />
     <ClInclude Include="digitDP.h" />
-    <ClInclude Include="divideConquerOptimization.h" />
-    <ClInclude Include="divideConquerOptimization_OptimalKMeans1D.h" />
-    <ClInclude Include="divideConquerOptimization_OptimalSquareDistance1D.h" />
+    <ClInclude Include="optimizationDivideConquer.h" />
+    <ClInclude Include="optimizationDivideConquer_OptimalKMeans1D.h" />
+    <ClInclude Include="optimizationDivideConquer_OptimalSquareDistance1D.h" />
     <ClInclude Include="dynamicConvexHullLower.h" />
     <ClInclude Include="dynamicLowerEnvelope.h" />
     <ClInclude Include="dynamicConvexHullUpper.h" />
@@ -233,7 +236,7 @@
     <ClInclude Include="editDistance.h" />
     <ClInclude Include="eggDropping.h" />
     <ClInclude Include="knapsack.h" />
-    <ClInclude Include="knuthOptimization.h" />
+    <ClInclude Include="optimizationKnuth.h" />
     <ClInclude Include="longestCommonSubsequence.h" />
     <ClInclude Include="longestCommonSubsequenceCyclic.h" />
     <ClInclude Include="longestCommonSubsequenceDAG.h" />

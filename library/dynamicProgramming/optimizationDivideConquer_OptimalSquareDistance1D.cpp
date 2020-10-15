@@ -4,8 +4,8 @@
 
 using namespace std;
 
-#include "divideConquerOptimization_OptimalSquareDistance1D.h"
-#include "divideConquerOptimization_OptimalKMeans1D.h"
+#include "optimizationDivideConquer_OptimalSquareDistance1D.h"
+#include "optimizationDivideConquer_OptimalKMeans1D.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////

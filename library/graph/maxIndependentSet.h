@@ -58,6 +58,8 @@ private:
 
 
     static int clz(unsigned x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(__lzcnt(x));
 #else
@@ -66,6 +68,8 @@ private:
     }
 
     static int clz(unsigned long long x) {
+        if (!x)
+            return 64;
         if ((x >> 32) != 0)
             return clz(unsigned(x >> 32));
         else

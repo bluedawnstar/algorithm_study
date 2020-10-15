@@ -46,6 +46,8 @@ inline int modPow(int x, int n, int mod) {
 
 // mod is a prime number
 inline int modPowPrime(int x, long long n, int mod) {
+    if (x == 0 && n > 0)
+        return 0;
     return modPow(x, int(n % (mod - 1)), mod);
 }
 
@@ -212,6 +214,8 @@ inline long long modPow(long long x, long long n, long long mod) {
 
 // mod is a prime number
 inline long long modPowPrime(long long x, long long n, long long mod) {
+    if (x == 0 && n > 0)
+        return 0ll;
     return modPow(x, n % (mod - 1), mod);
 }
 

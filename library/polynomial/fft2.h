@@ -15,6 +15,8 @@ struct FFT2 {
 
     // counting trailing zeros
     static int ctz(unsigned x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(_tzcnt_u32(x));
 #else

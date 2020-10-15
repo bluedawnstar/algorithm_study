@@ -162,6 +162,7 @@
     <ClCompile Include="lineSegmentSet1D.cpp" />
     <ClCompile Include="lineSegmentUnion.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maxManhattanDistanceOfAllPairs.cpp" />
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="polygonDiameter.cpp" />
     <ClCompile Include="polygonInt.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="lineSegmentSet1D.h" />
     <ClInclude Include="lineSegmentUnion.h" />
     <ClInclude Include="distanceSumManhattan.h" />
+    <ClInclude Include="maxManhattanDistanceOfAllPairs.h" />
     <ClInclude Include="polygon.h" />
     <ClInclude Include="polygonDiameter.h" />
     <ClInclude Include="polygonInt.h" />

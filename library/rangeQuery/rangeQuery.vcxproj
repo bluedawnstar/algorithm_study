@@ -178,6 +178,7 @@
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
+    <ClCompile Include="segmentTreePrimeFactorXorRollingHash.cpp" />
     <ClCompile Include="segmentTreeSubsetXor.cpp" />
     <ClCompile Include="dynamicSegmentTreeForest.cpp" />
     <ClCompile Include="sparseTableSimpleRMQ.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h" />
     <ClInclude Include="segmentTreePersistent-UniqueValueCounter.h" />
     <ClInclude Include="segmentTreePersistentLazySimple.h" />
+    <ClInclude Include="segmentTreePrimeFactorXorRollingHash.h" />
     <ClInclude Include="segmentTreeSubsetXor.h" />
     <ClInclude Include="dynamicSegmentTreeForest.h" />
     <ClInclude Include="sparseTableSimpleRMQ.h" />

@@ -156,6 +156,7 @@
     <ClCompile Include="booleanXorExpression.cpp" />
     <ClCompile Include="generatedDistinctNumbersCounterByBitwiseOperation.cpp" />
     <ClCompile Include="golombRuler.cpp" />
+    <ClCompile Include="inversionCounter.cpp" />
     <ClCompile Include="josephusProblem.cpp" />
     <ClCompile Include="latticePoints.cpp" />
     <ClCompile Include="linearRecurrence.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="generatedDistinctNumbersCounterByBitwiseOperation.h" />
     <ClInclude Include="generatingFunction.h" />
     <ClInclude Include="golombRuler.h" />
+    <ClInclude Include="inversionCounter.h" />
     <ClInclude Include="josephusProblem.h" />
     <ClInclude Include="latticePoints.h" />
     <ClInclude Include="linearRecurrence.h" />

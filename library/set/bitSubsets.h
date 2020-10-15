@@ -7,6 +7,8 @@
 
 struct BitSubsets {
     static int clz(unsigned x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(__lzcnt(x));
 #else
@@ -23,6 +25,8 @@ struct BitSubsets {
     }
 
     static int clz(unsigned long long x) {
+        if (!x)
+            return 64;
 #if defined(_M_X64)
         return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)

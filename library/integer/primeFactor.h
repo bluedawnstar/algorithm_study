@@ -1,6 +1,7 @@
 #pragma once
 
 // find all prime numbers and prime factors from 1 to n
+// - primes factors of each number are reversed
 inline void primeFactorization(int n, vector<int>& primes, vector<vector<pair<int, int>>>& primeFactors) {
     primes.clear();
     primeFactors = vector<vector<pair<int, int>>>(n + 1);
@@ -9,7 +10,7 @@ inline void primeFactorization(int n, vector<int>& primes, vector<vector<pair<in
 
     if (n >= 2) {
         primes.push_back(2);
-        primeFactors[2].push_back(make_pair(2, 1));
+        primeFactors[2].emplace_back(2, 1);
     }
 
     for (int i = 3; i <= n; i++) {
@@ -18,17 +19,44 @@ inline void primeFactorization(int n, vector<int>& primes, vector<vector<pair<in
         for (int j = 0; primes[j] <= root; j++) {
             if (i % primes[j] == 0) {
                 primeFactors[i] = primeFactors[i / primes[j]];
-                if (primeFactors[i][0].first == primes[j])
-                    primeFactors[i][0].second++;
+                if (primeFactors[i].back().first == primes[j])
+                    primeFactors[i].back().second++;
                 else
-                    primeFactors[i].insert(primeFactors[i].begin(), make_pair(primes[j], 1));
+                    primeFactors[i].emplace_back(primes[j], 1);
                 isPrime = false;
                 break;
             }
         }
         if (isPrime) {
             primes.push_back(i);
-            primeFactors[i].push_back(make_pair(i, 1));
+            primeFactors[i].emplace_back(i, 1);
+        }
+    }
+}
+
+// find all prime numbers and min prime factors from 1 to n, O(n*loglogn)
+inline void primeFactorization(int n, vector<int>& primes, vector<int>& minPrimeFactors) {
+    primes.clear();
+    minPrimeFactors = vector<int>(n + 1);
+
+    if (n >= 2) {
+        primes.push_back(2);
+        minPrimeFactors[2] = 2;
+        for (int j = 2 * 2; j <= n; j += 2)
+            minPrimeFactors[j] = 2;
+    }
+
+    for (int i = 3; i <= n; i += 2) {
+        if (!minPrimeFactors[i]) {
+            primes.push_back(i);
+            minPrimeFactors[i] = i;
+
+            if (1ll * i * i <= n) {
+                for (int j = i * i; j <= n; j += i) {
+                    if (!minPrimeFactors[j])
+                        minPrimeFactors[j] = i;
+                }
+            }
         }
     }
 }
@@ -100,8 +128,8 @@ struct MinFactors {
 
         int root = int(sqrt(n));
         for (int i = 3; i <= root; i += 2) {
-            if (minFactors[i] == i) {
-                for (int j = i * i; j >= 0 && j <= n; j += i) {
+            if (minFactors[i] == i && 1ll * i * i <= n) {
+                for (int j = i * i; j <= n; j += i) {
                     if (minFactors[j] == j)
                         minFactors[j] = i;
                 }

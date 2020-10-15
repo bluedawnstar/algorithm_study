@@ -70,4 +70,5 @@ int main(void) {
     TEST(DivideCombineTree);
     TEST(SubsetXorSegmentTree);
     TEST(SegmentTreeBeats);
+    TEST(SegmentTreePrimeFactorXorRollingHash);
 }
