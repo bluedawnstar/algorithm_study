@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\problems">
+      <UniqueIdentifier>{ad8b8f5e-4743-4bc4-a96e-1d729b828085}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -188,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="treeCentroidDecompositionSolverDivideAndConquer_XorDistance.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="problems\specialTreeOnGrid.cpp">
+      <Filter>소스 파일\problems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="treeCentroidDecompositionSolverDivideAndConquer_XorDistance.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\specialTreeOnGrid.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
