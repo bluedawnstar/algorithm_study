@@ -10,6 +10,8 @@ int main(void) {
     TEST(UnionFindWithCount);
     TEST(UnionFindSegment);
     TEST(UnionFindWithValues);
+    TEST(PersistentUnionFind);
+    TEST(UndoableUnionFind);
     TEST(BitSet);
     TEST(BitSetRangeUpdate);
     TEST(RangeSet);

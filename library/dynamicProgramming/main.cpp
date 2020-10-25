@@ -47,10 +47,11 @@ int main(void) {
     TEST(BracketChangeCounter);
     TEST(SquareSubsets);
     TEST(GridPathCounterWithObstacles);
-    TEST(SameDistanceTripleCounterOnTree);
     TEST(MaxWeightOfAllConcatenatedStrings);
     TEST(GridConnectedComponentCounter);
     TEST(LongestZigzagSubsequence);
+    TEST(SameDistanceTripleCounterOnTree);
+    TEST(IndependentEdgeSetOnTree);
     //--- problems
     TEST(ChefAndSum);
 }

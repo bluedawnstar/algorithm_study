@@ -192,6 +192,7 @@
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
     <ClCompile Include="subsequenceSpecial.cpp" />
+    <ClCompile Include="treeDP_independentEdgeSetOnTree.cpp" />
     <ClCompile Include="treeDP_sameDistanceTripleCounte.cpp" />
     <ClCompile Include="twoSameSumSubset.cpp" />
     <ClCompile Include="longestZigzagSubsequence.cpp" />
@@ -258,6 +259,8 @@
     <ClInclude Include="steinerTree.h" />
     <ClInclude Include="subsequence.h" />
     <ClInclude Include="subsequenceSpecial.h" />
+    <ClInclude Include="treeDP_independentEdgeSetOnTree.h" />
+    <ClInclude Include="treeDP_independentEdgeSetOnTreeMod2.h" />
     <ClInclude Include="treeDP_sameDistanceTripleCounter.h" />
     <ClInclude Include="twoSameSumSubset.h" />
     <ClInclude Include="longestZigzagSubsequence.h" />

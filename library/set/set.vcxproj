@@ -152,11 +152,13 @@
     <ClCompile Include="hashMapHAMT.cpp" />
     <ClCompile Include="hashMapOAHT.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="unionFindPersistent.cpp" />
     <ClCompile Include="rangeSet.cpp" />
     <ClCompile Include="lineSegmentSet1D.cpp" />
     <ClCompile Include="simpleHashMap.cpp" />
     <ClCompile Include="sparseSet.cpp" />
     <ClCompile Include="unionFind.cpp" />
+    <ClCompile Include="unionFindUndoable.cpp" />
     <ClCompile Include="unionFindWithCount.cpp" />
     <ClCompile Include="unionFindSegment.cpp" />
     <ClCompile Include="unionFindWithValues.cpp" />
@@ -180,6 +182,8 @@
     <ClInclude Include="sparseSet.h" />
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="unionFindMap.h" />
+    <ClInclude Include="unionFindPersistent.h" />
+    <ClInclude Include="unionFindUndoable.h" />
     <ClInclude Include="unionFindWithCount.h" />
     <ClInclude Include="unionFindSegment.h" />
     <ClInclude Include="unionFindWithValues.h" />
