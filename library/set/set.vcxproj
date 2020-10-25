@@ -158,6 +158,7 @@
     <ClCompile Include="simpleHashMap.cpp" />
     <ClCompile Include="sparseSet.cpp" />
     <ClCompile Include="unionFind.cpp" />
+    <ClCompile Include="unionFindUndoable.cpp" />
     <ClCompile Include="unionFindWithCount.cpp" />
     <ClCompile Include="unionFindSegment.cpp" />
     <ClCompile Include="unionFindWithValues.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="unionFindMap.h" />
     <ClInclude Include="unionFindPersistent.h" />
+    <ClInclude Include="unionFindUndoable.h" />
     <ClInclude Include="unionFindWithCount.h" />
     <ClInclude Include="unionFindSegment.h" />
     <ClInclude Include="unionFindWithValues.h" />

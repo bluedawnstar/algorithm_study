@@ -66,6 +66,9 @@
     <ClCompile Include="unionFindPersistent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="unionFindUndoable.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -132,6 +135,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="unionFindPersistent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="unionFindUndoable.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

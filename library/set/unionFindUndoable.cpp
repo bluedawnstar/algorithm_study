@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "unionFindPersistent.h"
+#include "unionFindUndoable.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -17,11 +17,12 @@ using namespace std;
 #include "../common/rand.h"
 
 #include "unionFind.h"
+#include "unionFindPersistent.h"
 
-void testPersistentUnionFind() {
+void testUndoableUnionFind() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Persistent Union-Find ---------------------" << endl;
+    cout << "--- Undoable Union-Find ---------------------" << endl;
     {
 #ifdef _DEBUG
         const int T = 10;
@@ -38,7 +39,7 @@ void testPersistentUnionFind() {
             DSU dsu(N);
             history.push_back(dsu);
 
-            PersistentUnionFind puf(N);
+            UndoableUnionFind uuf(N);
 
             for (int i = 0; i < UPT; i++) {
                 int a = RandInt32::get() % N;
@@ -48,48 +49,42 @@ void testPersistentUnionFind() {
                 }
 
                 dsu.merge(a, b);
+                uuf.merge(a, b);
+
+                a = RandInt32::get() % N;
+                b = RandInt32::get() % N;
+                while (a == b) {
+                    b = RandInt32::get() % N;
+                }
+
+                dsu.merge(a, b);
                 history.push_back(dsu);
 
-                puf.merge(a, b);
-                puf.upgradeTime();
+                uuf.merge(a, b);
+                uuf.commit();
             }
-            
-            for (int t = 0; t < int(history.size()); t++) {
-                for (int i = 0; i < N; i++) {
-                    int g1 = history[t].find(i);
-                    int g2 = puf.find(t, i);
-                    if (g1 != g2) {
-                        cout << "Mismatched at " << __LINE__ << " : " << g1 << ", " << g2 << endl;
-                    }
-                    assert(g1 == g2);
+
+            for (int i = 0; i < N; i++) {
+                int g1 = dsu.find(i);
+                int g2 = uuf.find(i);
+                if (g1 != g2) {
+                    cout << "Mismatched at " << __LINE__ << " : " << g1 << ", " << g2 << endl;
                 }
+                assert(g1 == g2);
             }
 
             //---
 
-            for (int i = 0; i < UPT; i++) {
-                int a = RandInt32::get() % N;
-                int b = RandInt32::get() % N;
-                while (a == b) {
-                    b = RandInt32::get() % N;
-                }
-
-                dsu.merge(a, b);
-                history.push_back(dsu);
-
-                puf.merge(a, b);
-                puf.upgradeTime();
-            }
-
-            for (int t = 0; t < int(history.size()); t++) {
+            for (int t = int(history.size()) - 1; t >= 0; t--) {
                 for (int i = 0; i < N; i++) {
                     int g1 = history[t].find(i);
-                    int g2 = puf.find(t, i);
+                    int g2 = uuf.find(i);
                     if (g1 != g2) {
                         cout << "Mismatched at " << __LINE__ << " : " << g1 << ", " << g2 << endl;
                     }
                     assert(g1 == g2);
                 }
+                uuf.undo();
             }
         }
     }
@@ -134,17 +129,17 @@ void testPersistentUnionFind() {
         PROFILE_START(1);
         long long dummy2 = 0;
         for (int tt = 0; tt < T; tt++) {
-            PersistentUnionFind puf(N);
+            UndoableUnionFind puf(N);
             for (int i = 0; i < UPT; i++) {
                 dummy2 += puf.merge(qry[i].first, qry[i].second);
-                puf.upgradeTime();
+                puf.commit();
             }
             for (int i = 0; i < N; i++)
                 dummy2 += puf.find(i);
 
             for (int i = 0; i < UPT; i++) {
                 dummy2 += puf.merge(qry[UPT + i].first, qry[UPT + i].second);
-                puf.upgradeTime();
+                puf.commit();
             }
             for (int i = 0; i < N; i++)
                 dummy2 += puf.find(i);
