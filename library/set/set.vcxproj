@@ -152,6 +152,7 @@
     <ClCompile Include="hashMapHAMT.cpp" />
     <ClCompile Include="hashMapOAHT.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="unionFindPersistent.cpp" />
     <ClCompile Include="rangeSet.cpp" />
     <ClCompile Include="lineSegmentSet1D.cpp" />
     <ClCompile Include="simpleHashMap.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="sparseSet.h" />
     <ClInclude Include="unionFind.h" />
     <ClInclude Include="unionFindMap.h" />
+    <ClInclude Include="unionFindPersistent.h" />
     <ClInclude Include="unionFindWithCount.h" />
     <ClInclude Include="unionFindSegment.h" />
     <ClInclude Include="unionFindWithValues.h" />
