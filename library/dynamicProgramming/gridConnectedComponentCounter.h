@@ -20,11 +20,76 @@
     3) the number of all connected components in all combinations
 
   2. Solution
-    ...
+    1) DP
+        S[aL][bR].componentCount += A[aL][aR].componentCount * B[bL][bR].combinationCount
+                                  + A[aL][aR].combinationCount * B[bL][bR].componentCount
+                                  + delta[aR][bL] * A[aL][aR].combinationCount * B[bL][bR].combinationCount
+        S[aL][bR].combinationCount += A[aL][aR].combinationCount * B[bL][bR].combinationCount
+
+    2) math
+        C[BB][n] = total number of connected component ending with BB
+        C[BW][n] = total number of connected component ending with BW
+        C[WB][n] = total number of connected component ending with WB
+        C[WW][n] = total number of connected component ending with WW
+        total number is C[BB] + C[BW] + C[WB] + C[WW]
+
+        N[BB][n] = number of all different configurations ending with BB
+        N[BW][n] = number of all different configurations ending with BW
+        N[WB][n] = number of all different configurations ending with WB
+        N[WW][n] = number of all different configurations ending with WW
+        by symmetry, N[BB] = N[BW] = N[WB] = N[WW] = 4^n / 4 = 4^(n-1)
+
+        C[BB][n+1] = C[BB][n] + C[BW][n] + C[WB][n] + { C[WW][n] + N[WW][n] }
+            B | B    B | B    W | B    W | B
+            B | B    W | B    B | B    W | B
+
+        C[BW][n+1] = { C[BB][n] + N[BB][n] } + C[BW][n] + { C[WB][n] + N[WB][n] * 2 } + { C[WW][n] + N[WW][n] }
+            B | B    B | B    W | B    W | B
+            B | W    W | W    B | W    W | W
+
+        C[WB][n+1] = { C[BB][n] + N[BB][n] } + { C[BW][n] + N[BW][n] * 2 } + C[WB][n] + { C[WW][n] + N[WW][n] }
+            B | W    B | W    W | W    W | W
+            B | B    W | B    B | B    W | B
+
+        C[WW][n+1] = { C[BB][n] + N[BB][n] } + C[BW][n] + C[WB][n] + C[WW][n]
+            B | W    B | W    W | W    W | W
+            B | W    W | W    B | W    W | W
+
+        
+        C[BB][n+1] + C[BW][n+1] + C[WB][n+1] + C[WW][n+1]
+        
+          = 4 * { C[BB][n] + C[BW][n] + C[WB][n] + C[WW][n] } + 3 * N[BB][n] + 2 * N[BW][n] + 2 * N[WB][n] + 3 * N[WW][n]
+
+          = 4 * { C[BB][n] + C[BW][n] + C[WB][n] + C[WW][n] } + 10 * 4^(n - 1)
+
+        <=>
+
+        S(n+1) = 4 * S(n) + 10 * 4^(n - 1)
+        
+        <=>
+
+        S(n) = 4 * S(n - 1) + 10 * 4^(n - 2)
+
+             = 4^(n - 1) * S(1) + 10 * 4^(n - 2) * (n - 1)
+
+             = 4^(n - 1) * 6 + 10 * 4^(n - 2) * (n - 1)                 , S(1) = 6
+
+             = 4^(n - 2) * { 4 * 6 + 10 * (n - 1) }
+
+             = 4^(n - 2) * { 24 + 10 * n - 10 }
+
+             = 4^(n - 2) * { 14 + 10 * n }
 */
 template <int mod = 1'000'000'007>
 struct GridConnectedComponentCounter2xN {
+    // O(logN)
     static int count(long long N) {
+        // 4^(N - 2) * { 14 + 10 * N }
+        return int((14ll + 10ll * (N % mod)) % mod * modPow(4, N - 2) % mod);
+    }
+
+    // O(logN)
+    static int countDP(long long N) {
         // [log(n)][left-side B/W][right-side B/W] = { black comp-count, white comp-count, combination }
         static int sDP[64][4][4][3];
         static bool initialized = false;
@@ -159,5 +224,25 @@ private:
                 }
             }
         }
+    }
+
+    static int modPow(int x, int n) {
+        if (n == 0)
+            return 1;
+
+        long long t = x % mod;
+        long long res = 1;
+        for (; n > 0; n >>= 1) {
+            if (n & 1)
+                res = res * t % mod;
+            t = t * t % mod;
+        }
+        return int(res);
+    }
+
+    static int modPow(int x, long long n) {
+        if (x == 0 && n > 0)
+            return 0;
+        return modPow(x, int(n % (mod - 1)));
     }
 };

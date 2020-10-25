@@ -21,9 +21,13 @@ void testGridConnectedComponentCounter() {
     cout << "--- Grid Connected Component Counter -----------" << endl;
     {
         assert(GridConnectedComponentCounter2xN<>::count(2) == 34);
+        assert(GridConnectedComponentCounter2xN<>::countDP(2) == 34);
         assert(GridConnectedComponentCounter2xN<>::count(3) == 176);
+        assert(GridConnectedComponentCounter2xN<>::countDP(3) == 176);
         assert(GridConnectedComponentCounter2xN<>::count(4) == 864);
+        assert(GridConnectedComponentCounter2xN<>::countDP(4) == 864);
         assert(GridConnectedComponentCounter2xN<>::count(5) == 4096);
+        assert(GridConnectedComponentCounter2xN<>::countDP(5) == 4096);
     }
 
     cout << "OK!" << endl;
