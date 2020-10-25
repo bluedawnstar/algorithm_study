@@ -7,7 +7,7 @@
       - space complexity : O(1)
 
   2. solution
-    F(N,K) = [x^K] x^0 * (x^0 + x^1) * ... * (x^0 + x^1 + ... + x^(N - 1))  <-
+    F(N,K) = [x^K] x^0 * (x^0 + x^1) * ... * (x^0 + x^1 + ... + x^(N - 1))
 
                     N-1
            = [x^K] PROD (x^0 + x^1 + ... + x^i)

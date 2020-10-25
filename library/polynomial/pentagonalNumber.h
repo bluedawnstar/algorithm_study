@@ -16,9 +16,6 @@
 
                    = SUM (-1)^abs(j) * x^{j*(3*j-1)/2}
                    j=0,1,-1,2,-2,...
-
-    
-
 */
 struct PentagonalNumber {
     // result = { (degree, value), ...}

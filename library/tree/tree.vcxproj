@@ -147,6 +147,7 @@
     <ClCompile Include="binarySearchTree.cpp" />
     <ClCompile Include="lcaTarjan.cpp" />
     <ClCompile Include="perfectTreeLevelSize.cpp" />
+    <ClCompile Include="problems\specialTreeOnGrid.cpp" />
     <ClCompile Include="redBlackTreeLeftLeaning.cpp" />
     <ClCompile Include="redBlackTreeRangeQuery.cpp" />
     <ClCompile Include="treeBlockTreeLevelUpdate.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="binarySearchTree.h" />
     <ClInclude Include="lcaTarjan.h" />
     <ClInclude Include="perfectTreeLevelSize.h" />
+    <ClInclude Include="problems\specialTreeOnGrid.h" />
     <ClInclude Include="redBlackTreeLeftLeaning.h" />
     <ClInclude Include="redBlackTreeRangeQuery.h" />
     <ClInclude Include="subtreeQueryWithPersistentDataStructure.h" />

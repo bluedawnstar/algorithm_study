@@ -159,6 +159,12 @@
     <ClCompile Include="optimizationDivideConquer_OptimalSquareDistance1D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="gridConnectedComponentCounter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="longestZigzagSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -345,6 +351,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="optimizationDivideConquer_OptimalSquareDistance1D.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="gridConnectedComponentCounter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestZigzagSubsequence.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

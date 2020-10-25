@@ -60,4 +60,6 @@ int main(void) {
     TEST(TreeReordering);
 
     TEST(BenchmarkBST);
+    //--- problems
+    TEST(SpecialTreeOnGrid);
 }

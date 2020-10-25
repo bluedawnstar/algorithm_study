@@ -49,6 +49,8 @@ int main(void) {
     TEST(GridPathCounterWithObstacles);
     TEST(SameDistanceTripleCounterOnTree);
     TEST(MaxWeightOfAllConcatenatedStrings);
+    TEST(GridConnectedComponentCounter);
+    TEST(LongestZigzagSubsequence);
     //--- problems
     TEST(ChefAndSum);
 }
