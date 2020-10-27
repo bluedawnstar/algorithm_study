@@ -99,7 +99,7 @@ static string makeRepeatString(int length, int charCount) {
 }
 
 void testPrefixFunction() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Prefix Function ---------" << endl;
     // checkRepeatedSubstring()

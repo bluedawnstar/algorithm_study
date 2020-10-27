@@ -38,6 +38,8 @@ private:
     int currPosition;           // length of already-sorted prefixes
 
     static int clz(int x) {
+        if (!x)
+            return 32;
 #ifndef __GNUC__
         return int(_lzcnt_u32(static_cast<unsigned>(x)));
 #else

@@ -13,6 +13,7 @@ public:
         : capacity(capacity), invalidValue(invalidValue) {
     }
 
+    // O(1)
     ValueT get(KeyT key) {
         auto it = keyToItem.find(key);
         if (it == keyToItem.end())
@@ -24,6 +25,7 @@ public:
         return value;
     }
 
+    // O(1)
     void put(KeyT key, ValueT value) {
         auto it = keyToItem.find(key);
         if (it != keyToItem.end()) {

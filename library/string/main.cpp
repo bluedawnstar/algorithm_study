@@ -55,4 +55,5 @@ int main(void) {
     TEST(BracketSequencesBalanced);
     TEST(SuffixArrayAlgoPrefixCounter);
     TEST(PeriodicSubstringWeightSumOfAllSubstrings);
+    TEST(OnlineZ);
 }

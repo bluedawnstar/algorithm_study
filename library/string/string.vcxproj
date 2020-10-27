@@ -157,6 +157,7 @@
     <ClCompile Include="lexicographicallyMinimalStringRotation.cpp" />
     <ClCompile Include="longestDuplicatedSubstring.cpp" />
     <ClCompile Include="lyndonFactorization.cpp" />
+    <ClCompile Include="onlineZ.cpp" />
     <ClCompile Include="palindromicFactorization.cpp" />
     <ClCompile Include="palindromicNumber.cpp" />
     <ClCompile Include="patternSubsequence.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="lexicographicallyMinimalStringRotation.h" />
     <ClInclude Include="longestDuplicatedSubstring.h" />
     <ClInclude Include="lyndonFactorization.h" />
+    <ClInclude Include="onlineZ.h" />
     <ClInclude Include="palindromicFactorization.h" />
     <ClInclude Include="palindromicNumber.h" />
     <ClInclude Include="palindromicSubstringAll_manacher.h" />
