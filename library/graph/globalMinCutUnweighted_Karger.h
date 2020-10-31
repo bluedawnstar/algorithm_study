@@ -1,11 +1,15 @@
 #pragma once
 
 /*
-  <Karger's algorithm>
+  <Karger's algorithm (1993)>
   https://www.geeksforgeeks.org/kargers-algorithm-for-minimum-cut-set-1-introduction-and-implementation/
 
   - for undirected, unweighted and connected graph
+  - randomized algorithm
+
   - probability that the cut produced by Karger¡¯s Algorithm is Min-Cut >= 1/n^2
+  - one operation : O(V^2)
+  - high probability : O(V^2*logV) times -> O(V^4*logV)
 */
 struct GlobalMinCutKarger {
     struct DSU {
@@ -57,7 +61,8 @@ struct GlobalMinCutKarger {
     GlobalMinCutKarger() : N(0) {
     }
 
-    explicit GlobalMinCutKarger(int n) : N(n) {
+    explicit GlobalMinCutKarger(int n) {
+        init(n);
     }
 
     void init(int n) {

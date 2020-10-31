@@ -158,6 +158,7 @@
     <ClCompile Include="dominatorTree.cpp" />
     <ClCompile Include="eulerianDigraph.cpp" />
     <ClCompile Include="globalMinCut.cpp" />
+    <ClCompile Include="globalMinCutUnweighted_Karger.cpp" />
     <ClCompile Include="graphRealization.cpp" />
     <ClCompile Include="hamiltonian.cpp" />
     <ClCompile Include="maxClique.cpp" />
@@ -193,7 +194,9 @@
     <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />
     <ClInclude Include="globalMinCut.h" />
+    <ClInclude Include="globalMinCutUnweighted_Karger.h" />
     <ClInclude Include="globalMinCutNaive.h" />
+    <ClInclude Include="globalMinCutUnweighted_KargerStein.h" />
     <ClInclude Include="graphRealization.h" />
     <ClInclude Include="hamiltonian.h" />
     <ClInclude Include="maxClique.h" />

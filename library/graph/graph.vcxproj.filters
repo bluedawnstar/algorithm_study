@@ -105,6 +105,9 @@
     <ClCompile Include="problems\specialMST.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="globalMinCutUnweighted_Karger.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -211,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="problems\specialMST.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="globalMinCutUnweighted_Karger.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="globalMinCutUnweighted_KargerStein.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

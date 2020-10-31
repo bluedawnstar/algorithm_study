@@ -34,4 +34,5 @@ int main(void) {
     TEST(ChordalGraph);
     TEST(ShortestPathWithWildcard);
     TEST(SpecialMST);
+    TEST(GlobalMinCutUnweightedKarger);
 }
