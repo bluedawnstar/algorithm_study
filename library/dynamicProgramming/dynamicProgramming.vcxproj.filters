@@ -168,6 +168,9 @@
     <ClCompile Include="treeDP_independentEdgeSetOnTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="pairCounterWithBitwiseOperation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -366,6 +369,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treeDP_independentEdgeSetOnTreeMod2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pairCounterWithBitwiseOperation.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

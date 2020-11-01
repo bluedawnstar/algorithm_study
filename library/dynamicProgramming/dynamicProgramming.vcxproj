@@ -157,6 +157,7 @@
     <ClCompile Include="maxProfit.cpp" />
     <ClCompile Include="maxWeightOfAllConcatenatedStrings.cpp" />
     <ClCompile Include="nonoverlappingIntervals.cpp" />
+    <ClCompile Include="pairCounterWithBitwiseOperation.cpp" />
     <ClCompile Include="palindromicPartitioning.cpp" />
     <ClCompile Include="partitionProblemMultiple.cpp" />
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="maxWeightOfAllConcatenatedStrings.h" />
     <ClInclude Include="maxWeightOfAllConcatenatedStrings2.h" />
     <ClInclude Include="nonoverlappingIntervals.h" />
+    <ClInclude Include="pairCounterWithBitwiseOperation.h" />
     <ClInclude Include="palindromicPartitioning.h" />
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
