@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-static long long countPairsWithANDZeroNaive(const vector<int>& A) {
+static long long countPairsWithAndZeroNaive(const vector<int>& A) {
     long long res = 0;
 
     int N = int(A.size());
@@ -31,7 +31,7 @@ static long long countPairsWithANDZeroNaive(const vector<int>& A) {
     return res;
 }
 
-static long long countPairsWithANDNaive(const vector<int>& A, int target) {
+static long long countPairsWithAndNaive(const vector<int>& A, int target) {
     long long res = 0;
 
     int N = int(A.size());
@@ -45,7 +45,7 @@ static long long countPairsWithANDNaive(const vector<int>& A, int target) {
     return res;
 }
 
-static long long countPairsWithORNaive(const vector<int>& A, int target) {
+static long long countPairsWithOrNaive(const vector<int>& A, int target) {
     long long res = 0;
 
     int N = int(A.size());
@@ -59,7 +59,7 @@ static long long countPairsWithORNaive(const vector<int>& A, int target) {
     return res;
 }
 
-static long long countPairsWithXORNaive(const vector<int>& A, int target) {
+static long long countPairsWithXorNaive(const vector<int>& A, int target) {
     long long res = 0;
 
     int N = int(A.size());
@@ -94,7 +94,7 @@ void testPairCounterWithBitwiseOperation() {
             for (int i = 0; i < N; i++)
                 A[i] = RandInt32::get() % MAXX;
 
-            auto gt = countPairsWithANDZeroNaive(A);
+            auto gt = countPairsWithAndZeroNaive(A);
             auto ans1 = PairCounterWithBitwiseOperation::countPairsWithAndZeroDP(A);
             auto ans2 = PairCounterWithBitwiseOperation::countPairsWithAndDP(A, 0);
 
@@ -122,7 +122,7 @@ void testPairCounterWithBitwiseOperation() {
             for (int i = 0; i < N; i++)
                 A[i] = RandInt32::get() % MAXX;
 
-            auto gt = countPairsWithANDNaive(A, target);
+            auto gt = countPairsWithAndNaive(A, target);
             auto ans = PairCounterWithBitwiseOperation::countPairsWithAndDP(A, target);
 
             if (gt != ans) {
@@ -150,7 +150,7 @@ void testPairCounterWithBitwiseOperation() {
             for (int i = 0; i < N; i++)
                 A[i] = RandInt32::get() % MAXX;
 
-            auto gt = countPairsWithORNaive(A, target);
+            auto gt = countPairsWithOrNaive(A, target);
             auto ans = PairCounterWithBitwiseOperation::countPairsWithOrDP(A, target);
 
             if (gt != ans) {
@@ -178,7 +178,7 @@ void testPairCounterWithBitwiseOperation() {
             for (int i = 0; i < N; i++)
                 A[i] = RandInt32::get() % MAXX;
 
-            auto gt = countPairsWithXORNaive(A, target);
+            auto gt = countPairsWithXorNaive(A, target);
             auto ans = PairCounterWithBitwiseOperation::countPairsWithXOR(A, target);
 
             if (gt != ans) {
@@ -194,7 +194,7 @@ void testPairCounterWithBitwiseOperation() {
             for (int i = 0; i < N; i++)
                 A[i] = RandInt32::get() % MAXX;
 
-            auto gt = countPairsWithXORNaive(A, target);
+            auto gt = countPairsWithXorNaive(A, target);
             auto ans = PairCounterWithBitwiseOperation::countPairsWithXOR(A, target);
 
             if (gt != ans) {
