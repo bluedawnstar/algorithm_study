@@ -1,8 +1,13 @@
 #include <cassert>
+#include <chrono>
+#include <random>
+#include <tuple>
+#include <vector>
 
 using namespace std;
 
 #include "treap.h"
+#include "treapForest.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -50,8 +55,22 @@ static void checkIndex(Treap<int>& tr, vector<int>& in) {
     }
 }
 
+static void checkSearch(TreapForest<int>& tr, TreapForest<int>::Node* root, vector<int>& in) {
+    for (int i = 0; i < int(in.size()); i++) {
+        int x = in[i];
+        assert(tr.find(root, x)->value == x);
+    }
+}
+
+static void checkIndex(TreapForest<int>& tr, TreapForest<int>::Node* root, vector<int>& in) {
+    assert(tr.size(root) == int(in.size()));
+    for (int i = 0; i < int(in.size()); i++) {
+        assert(tr.kth(root, i)->value == in[i]);
+    }
+}
+
 void testTreap() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Treap ----------------------------------" << endl;
 
@@ -59,10 +78,12 @@ void testTreap() {
     {
         RBTree<int> rbt;
         Treap<int> tr;
+        TreapForest<int> trForest;
 
         vector<int> in(1000);
         iota(in.begin(), in.end(), 0);
 
+        TreapForest<int>::Node* trForestRoot = nullptr;
         {
             vector<int> t(in);
             random_shuffle(t.begin(), t.end());
@@ -76,11 +97,19 @@ void testTreap() {
                 if (!p2)
                     cerr << "It'll never be shown!" << endl;
                 assert(p2 && p2->value == t[i]);
+
+                TreapForest<int>::Node* p3 = nullptr;
+                trForestRoot = trForest.insert(trForestRoot, t[i], &p3);
+                if (!p3)
+                    cerr << "It'll never be shown!" << endl;
+                assert(p3 && p3->value == t[i]);
             }
             checkSearch(rbt, in);
             checkIndex(rbt, in);
             checkSearch(tr, in);
             checkIndex(tr, in);
+            checkSearch(trForest, trForestRoot, in);
+            checkIndex(trForest, trForestRoot, in);
         }
         {
             vector<int> t(in), org(in);
@@ -106,6 +135,74 @@ void testTreap() {
                 assert(tr.size() == int(t.size()));
                 checkSearch(tr, org);
                 checkIndex(tr, org);
+
+                trForestRoot = trForest.erase(trForestRoot, x);
+                assert(trForest.size(trForestRoot) == int(t.size()));
+                checkSearch(trForest, trForestRoot, org);
+                checkIndex(trForest, trForestRoot, org);
+            }
+        }
+    }
+    {
+        RBTree<int> rbt;
+        Treap<int> tr;
+        TreapForest<int> trForest;
+
+        vector<int> in(1000);
+        iota(in.begin(), in.end(), 0);
+
+        TreapForest<int>::Node* trForestRoot = nullptr;
+        {
+            vector<int> t(in);
+            random_shuffle(t.begin(), t.end());
+
+            vector<int> sorted(in);
+            sort(sorted.begin(), sorted.end());
+
+            tr.build(sorted);
+            trForestRoot = trForest.build(sorted);
+            for (int i = 0; i < int(in.size()); i++) {
+                auto p1 = rbt.insert(t[i]);
+                if (!p1.second)
+                    cerr << "It'll never be shown!" << endl;
+                assert(p1.first->value == t[i] && p1.second);
+            }
+            checkSearch(rbt, in);
+            checkIndex(rbt, in);
+            checkSearch(tr, in);
+            checkIndex(tr, in);
+            checkSearch(trForest, trForestRoot, in);
+            checkIndex(trForest, trForestRoot, in);
+        }
+        {
+            vector<int> t(in), org(in);
+
+            random_shuffle(t.begin(), t.end());
+            while (!rbt.empty()) {
+                int x = t.back();
+                t.pop_back();
+                org.erase(find(org.begin(), org.end(), x));
+
+                bool b1 = rbt.erase(x);
+                if (!b1)
+                    cerr << "It'll never be shown!" << endl;
+                assert(b1);
+                assert(rbt.size() == int(t.size()));
+                checkSearch(rbt, org);
+                checkIndex(rbt, org);
+
+                bool b2 = tr.erase(x);
+                if (!b2)
+                    cerr << "It'll never be shown!" << endl;
+                assert(b2);
+                assert(tr.size() == int(t.size()));
+                checkSearch(tr, org);
+                checkIndex(tr, org);
+
+                trForestRoot = trForest.erase(trForestRoot, x);
+                assert(trForest.size(trForestRoot) == int(t.size()));
+                checkSearch(trForest, trForestRoot, org);
+                checkIndex(trForest, trForestRoot, org);
             }
         }
     }

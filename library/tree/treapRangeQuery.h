@@ -4,6 +4,8 @@
 
 //NOTE: Using SplayTreeRangeQuery is recommended instead of TreapRangeQuery,
 //      because SplayTreeRangeQuery is faster than TreapRangeQuery.
+
+// Implicit Treap
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct TreapRangeQuery {
     struct Node {
@@ -11,9 +13,9 @@ struct TreapRangeQuery {
         Node* left;
         Node* right;
 
-        int   priority;
         int   cnt;
 
+        int   priority;
         T     value;
         T     rangeValue;
 
@@ -279,7 +281,7 @@ protected:
 
         //TODO:
         // Customize this push down operation
-        // This implementation is indtended to set a value (no 'add' operation)
+        // This implementation is intended to set a value (no 'add' operation)
 
         if (x->left) {
             x->left->lazyExist = true;

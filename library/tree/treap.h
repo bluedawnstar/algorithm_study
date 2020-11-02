@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+// Treap (Cartesian tree) = tree + heap
 template <typename T>
 struct Treap {
     struct Node {
@@ -9,9 +10,9 @@ struct Treap {
         Node* left;
         Node* right;
 
-        int   priority;
         int   cnt;
 
+        int   priority;
         T     value;
 
         void init() {
@@ -37,8 +38,9 @@ struct Treap {
         return count;
     }
 
+    // O(logN)
     Node* find(const T& key) {
-        Node *p = tree;
+        Node* p = tree;
 
         while (p && !(p->value == key)) {
             if (key < p->value)
@@ -50,6 +52,7 @@ struct Treap {
         return p;
     }
 
+    // O(logN)
     Node* operator [](int nth) {
         assert((tree ? tree->cnt : 0) == count);
 
@@ -71,6 +74,7 @@ struct Treap {
         return p;
     }
 
+    // O(logN)
     int indexOf(Node* p) {
         assert((tree ? tree->cnt : 0) == count);
 
@@ -92,6 +96,22 @@ struct Treap {
         return res;
     }
 
+    //---
+
+    // O(N)
+    // precondition : A must be sorted
+    void build(const T A[], int N) {
+        tree = recBuild(A, 0, N - 1);
+        count = N;
+    }
+
+    // O(N)
+    // precondition : A must be sorted
+    void build(const vector<T>& A) {
+        build(A.data(), int(A.size()));
+    }
+
+    // O(logN)
     Node* insert(const T& value) {
         Node* p = createNode(value);
         tree = insert(tree, p);
@@ -99,6 +119,7 @@ struct Treap {
         return p;
     }
 
+    // O(logN)
     bool erase(const T& key) {
         tree = erase(tree, key);
         if (tree)
@@ -128,26 +149,84 @@ protected:
         }
     }
 
+    //---
 
     pair<Node*, Node*> split(Node* root, const T& key) {
         if (root == nullptr)
             return make_pair(nullptr, nullptr);
 
-        if (root->value < key) {
-            auto rs = split(root->right, key);
-            root->right = rs.first;
-            if (rs.first)
-                rs.first->parent = root;
-            update(root);
-            return make_pair(root, rs.second);
-        } else {
+        if (key < root->value) {
             auto ls = split(root->left, key);
             root->left = ls.second;
             if (ls.second)
                 ls.second->parent = root;
             update(root);
             return make_pair(ls.first, root);
+        } else {
+            auto rs = split(root->right, key);
+            root->right = rs.first;
+            if (rs.first)
+                rs.first->parent = root;
+            update(root);
+            return make_pair(root, rs.second);
         }
+    }
+
+    Node* merge(Node* a, Node* b) {
+        if (!a)
+            return b;
+        if (!b)
+            return a;
+
+        if (a->priority < b->priority) {
+            b->left = merge(a, b->left);
+            if (b->left)
+                b->left->parent = b;
+            update(b);
+            return b;
+        } else {
+            a->right = merge(a->right, b);
+            if (a->right)
+                a->right->parent = a;
+            update(a);
+            return a;
+        }
+    }
+
+    //---
+
+    void heapify(Node* p) {
+        if (!p)
+            return;
+
+        Node* maxNode = p;
+        if (p->left != nullptr && p->left->priority > maxNode->priority)
+            maxNode = p->left;
+        if (p->right != nullptr && p->right->priority > maxNode->priority)
+            maxNode = p->right;
+        if (maxNode != p) {
+            swap(p->priority, maxNode->priority);
+            heapify(maxNode);
+        }
+    }
+
+    Node* recBuild(const T A[], int L, int R) {
+        if (L > R)
+            return nullptr;
+
+        int mid = L + (R - L) / 2;
+        Node* p = createNode(A[mid]);
+
+        p->left = recBuild(A, L, mid - 1);
+        if (p->left)
+            p->left->parent = p;
+        p->right = recBuild(A, mid + 1, R);
+        if (p->right)
+            p->right->parent = p;
+
+        heapify(p);
+        update(p);
+        return p;
     }
 
     Node* insert(Node* root, Node* node) {
@@ -179,28 +258,6 @@ protected:
         return root;
     }
 
-
-    Node* merge(Node* a, Node* b) {
-        if (!a)
-            return b;
-        if (!b)
-            return a;
-
-        if (a->priority < b->priority) {
-            b->left = merge(a, b->left);
-            if (b->left)
-                b->left->parent = b;
-            update(b);
-            return b;
-        } else {
-            a->right = merge(a->right, b);
-            if (a->right)
-                a->right->parent = a;
-            update(a);
-            return a;
-        }
-    }
-
     Node* erase(Node* root, const T& key) {
         if (!root)
             return root;
@@ -224,6 +281,7 @@ protected:
         return root;
     }
 
+    //---
 
     void updateCnt(Node* x) {
         x->cnt = 1;
