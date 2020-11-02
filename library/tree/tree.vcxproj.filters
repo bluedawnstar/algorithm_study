@@ -398,5 +398,8 @@
     <ClInclude Include="problems\specialTreeOnGrid.h">
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
+    <ClInclude Include="treapForest.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
