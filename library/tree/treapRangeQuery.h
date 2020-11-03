@@ -54,6 +54,21 @@ struct TreapRangeQuery {
         return count;
     }
 
+
+    // O(N)
+    // precondition : A must be sorted
+    void build(const T A[], int N) {
+        tree = recBuild(A, 0, N - 1);
+        count = N;
+    }
+
+    // O(N)
+    // precondition : A must be sorted
+    void build(const vector<T>& A) {
+        build(A.data(), int(A.size()));
+    }
+
+
     void update(int index, T value) {
         update(index, index, value);
     }
@@ -79,6 +94,7 @@ struct TreapRangeQuery {
         }
     }
 
+
     T query(int index) {
         return query(index, index);
     }
@@ -103,6 +119,12 @@ struct TreapRangeQuery {
         if (tree)
             tree->parent = nullptr;
 
+        return res;
+    }
+
+    vector<T> serialize() {
+        vector<T> res;
+        serialize(tree, res);
         return res;
     }
 
@@ -248,6 +270,50 @@ protected:
             update(a);
             return a;
         }
+    }
+
+
+    void heapify(Node* p) {
+        if (!p)
+            return;
+
+        Node* maxNode = p;
+        if (p->left != nullptr && p->left->priority > maxNode->priority)
+            maxNode = p->left;
+        if (p->right != nullptr && p->right->priority > maxNode->priority)
+            maxNode = p->right;
+        if (maxNode != p) {
+            swap(p->priority, maxNode->priority);
+            heapify(maxNode);
+        }
+    }
+
+    Node* recBuild(const T A[], int L, int R) {
+        if (L > R)
+            return nullptr;
+
+        int mid = L + (R - L) / 2;
+        Node* p = createNode(A[mid]);
+
+        p->left = recBuild(A, L, mid - 1);
+        if (p->left)
+            p->left->parent = p;
+        p->right = recBuild(A, mid + 1, R);
+        if (p->right)
+            p->right->parent = p;
+
+        heapify(p);
+        update(p);
+        return p;
+    }
+
+    void serialize(Node* x, vector<T>& out) {
+        if (!x)
+            return;
+        pushDown(x);
+        serialize(x->left, out);
+        out.push_back(x->value);
+        serialize(x->right, out);
     }
 
 
