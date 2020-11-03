@@ -213,6 +213,7 @@
     <ClInclude Include="redBlackTreeRangeQuery.h" />
     <ClInclude Include="subtreeQueryWithPersistentDataStructure.h" />
     <ClInclude Include="treapForest.h" />
+    <ClInclude Include="treapRangeQueryEx.h" />
     <ClInclude Include="treeBlockTreeLevelUpdate.h" />
     <ClInclude Include="centroidDecomposition.h" />
     <ClInclude Include="lcaSchieberVishkin.h" />

@@ -3,8 +3,15 @@
 #include <algorithm>
 
 // Implicit Treap
-template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct TreapRangeQuery {
+template <typename T = int, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
+struct TreapRangeQueryEx {
+    enum LazyT {
+        lzNone,
+        lzSet = 0x01,
+        lzAdd = 0x02,
+        lzRevF = 0x04
+    };
+
     struct Node {
         Node* parent;
         Node* left;
@@ -16,14 +23,14 @@ struct TreapRangeQuery {
         T     value;
         T     rangeValue;
 
+        int   lazyType;
         T     lazy;
-        bool  lazyExist;
 
         void init() {
             parent = left = right = nullptr;
-            priority = (rand() & 0x7fff) * (rand() & 0x7fff);
+            priority = TreapRangeQueryEx<T, MergeOp, BlockOp>::random();
             cnt = 1;
-            lazyExist = false;
+            lazyType = lzNone;
         }
     };
 
@@ -34,25 +41,27 @@ struct TreapRangeQuery {
     int       count;
     Node*     tree;
 
-    explicit TreapRangeQuery(T dflt = T())
-        : defaultValue(dflt), mergeOp(), blockOp() {
+    explicit TreapRangeQueryEx(T dflt = T())
+            : defaultValue(dflt), mergeOp(), blockOp() {
         count = 0;
         tree = nullptr;
     }
 
-    TreapRangeQuery(MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    TreapRangeQueryEx(MergeOp mop, BlockOp bop, T dflt = T())
+            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         count = 0;
         tree = nullptr;
     }
 
-    ~TreapRangeQuery() {
+    ~TreapRangeQueryEx() {
         deleteRecursive(tree);
     }
 
     int size() const {
         return count;
     }
+
+    //--- 
 
     void update(int index, T value) {
         update(index, index, value);
@@ -70,14 +79,58 @@ struct TreapRangeQuery {
         auto ls = split(rs.first, left);
 
         if (ls.second) {
-            ls.second->lazyExist = true;
-            ls.second->value = ls.second->lazy = value;
-            ls.second->rangeValue = blockOp(value, ls.second->cnt);
+            pushDownTo(ls.second, lzSet, value);
+            //ls.second->lazyType = lzSet;
+            //ls.second->value = ls.second->lazy = value;
+            //ls.second->rangeValue = blockOp(value, ls.second->cnt);
             tree = merge(merge(ls.first, ls.second), rs.second);
             if (tree)
                 tree->parent = nullptr;
         }
     }
+
+    void add(int index, T value) {
+        add(index, index, value);
+    }
+
+    // inclusive
+    void add(int left, int right, T value) {
+        if (count <= 0 || left > right || right < 0 || left >= count)
+            return;
+
+        left = max(0, left);
+        right = min(count - 1, right);
+
+        auto rs = split(tree, right + 1);
+        auto ls = split(rs.first, left);
+
+        if (ls.second) {
+            pushDownTo(ls.second, lzAdd, value);
+            tree = merge(merge(ls.first, ls.second), rs.second);
+            if (tree)
+                tree->parent = nullptr;
+        }
+    }
+
+    void reverse(int left, int right) {
+        if (count <= 0 || left > right || right < 0 || left >= count)
+            return;
+
+        left = max(0, left);
+        right = min(count - 1, right);
+
+        auto rs = split(tree, right + 1);
+        auto ls = split(rs.first, left);
+
+        if (ls.second) {
+            ls.second->lazyType ^= lzRevF;
+            tree = merge(merge(ls.first, ls.second), rs.second);
+            if (tree)
+                tree->parent = nullptr;
+        }
+    }
+
+    //---
 
     T query(int index) {
         return query(index, index);
@@ -272,30 +325,66 @@ protected:
         updateValue(x);
     }
 
-    void pushDown(Node* x) {
-        if (!x || !x->lazyExist)
+
+    void pushDownTo(Node* x, LazyT type, T lazyValue) {
+        if (!x)
             return;
 
-        //TODO:
-        // Customize this push down operation
-        // This implementation is intended to set a value (no 'add' operation)
+        if (type == lzSet) {
+            x->lazyType = (x->lazyType & lzRevF) | lzSet;
+            x->value = x->lazy = lazyValue;
+            x->rangeValue = blockOp(lazyValue, x->cnt);
+        } else if (type == lzAdd) {
+            if ((x->lazyType & (lzSet | lzAdd)) == lzNone) {
+                x->lazyType = (x->lazyType & lzRevF) | lzAdd;
+                x->lazy = lazyValue;
+            } else {
+                x->lazy += lazyValue;
+            }
+            x->value += lazyValue;
+            x->rangeValue += blockOp(lazyValue, x->cnt);
+        }
+    }
 
-        if (x->left) {
-            x->left->lazyExist = true;
-            x->left->value = x->left->lazy = x->lazy;
-            x->left->rangeValue = blockOp(x->lazy, x->left->cnt);
+    void pushDown(Node* x) {
+        if (!x || x->lazyType == lzNone)
+            return;
+
+        if (x->lazyType & lzRevF) {
+            swap(x->left, x->right);
+            if (x->left)
+                x->left->lazyType ^= lzRevF;
+            if (x->right)
+                x->right->lazyType ^= lzRevF;
         }
-        if (x->right) {
-            x->right->lazyExist = true;
-            x->right->value = x->right->lazy = x->lazy;
-            x->right->rangeValue = blockOp(x->lazy, x->right->cnt);
+
+        switch (x->lazyType & (lzSet | lzAdd)) {
+        case lzSet:
+            pushDownTo(x->left, lzSet, x->lazy);
+            pushDownTo(x->right, lzSet, x->lazy);
+            break;
+        case lzAdd:
+            pushDownTo(x->left, lzAdd, x->lazy);
+            pushDownTo(x->right, lzAdd, x->lazy);
+            break;
         }
+
         x->lazy = defaultValue;
-        x->lazyExist = false;
+        x->lazyType = lzNone;
+    }
+
+    //---
+
+    static int random() {
+        //static std::random_device rd;
+        //static std::mt19937 eng(rd());
+        static std::mt19937 eng(7);
+        static std::uniform_int_distribution<int> dist(0, std::numeric_limits<int>::max());
+        return dist(eng);
     }
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline TreapRangeQuery<T, MergeOp, BlockOp> makeTreapRangeQuery(MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return TreapRangeQuery<T, MergeOp, BlockOp>(mop, bop, dfltValue);
+inline TreapRangeQueryEx<T, MergeOp, BlockOp> makeTreapRangeQueryEx(MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return TreapRangeQueryEx<T, MergeOp, BlockOp>(mop, bop, dfltValue);
 }

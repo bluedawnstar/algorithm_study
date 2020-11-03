@@ -70,7 +70,7 @@ static void checkIndex(TreapForest<int>& tr, TreapForest<int>::Node* root, vecto
 }
 
 void testTreap() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Treap ----------------------------------" << endl;
 
