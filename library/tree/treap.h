@@ -39,7 +39,7 @@ struct Treap {
     }
 
     // O(logN)
-    Node* find(const T& key) {
+    Node* find(T key) {
         Node* p = tree;
 
         while (p && !(p->value == key)) {
@@ -112,7 +112,7 @@ struct Treap {
     }
 
     // O(logN)
-    Node* insert(const T& value) {
+    Node* insert(T value) {
         Node* p = createNode(value);
         tree = insert(tree, p);
         tree->parent = nullptr;
@@ -120,7 +120,7 @@ struct Treap {
     }
 
     // O(logN)
-    bool erase(const T& key) {
+    bool erase(T key) {
         tree = erase(tree, key);
         if (tree)
             tree->parent = nullptr;
@@ -128,7 +128,7 @@ struct Treap {
     }
 
 protected:
-    Node* createNode(const T& item) {
+    Node* createNode(T item) {
         Node* p = new Node();
         p->init();
         p->value = item;
@@ -151,7 +151,7 @@ protected:
 
     //---
 
-    pair<Node*, Node*> split(Node* root, const T& key) {
+    pair<Node*, Node*> split(Node* root, T key) {
         if (root == nullptr)
             return make_pair(nullptr, nullptr);
 
@@ -258,7 +258,7 @@ protected:
         return root;
     }
 
-    Node* erase(Node* root, const T& key) {
+    Node* erase(Node* root, T key) {
         if (!root)
             return root;
         

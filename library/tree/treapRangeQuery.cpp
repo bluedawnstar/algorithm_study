@@ -58,7 +58,7 @@ static void reverse(vector<T>& A, int L, int R) {
 }
 
 void testTreapRangeQuery() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Treap with Range Query ----------------------------------" << endl;
 

@@ -7,8 +7,8 @@ template <typename T = int, typename MergeOp = function<T(T, T)>, typename Block
 struct TreapRangeQueryEx {
     enum LazyT {
         lzNone,
-        lzSet = 0x01,
-        lzAdd = 0x02,
+        lzSet  = 0x01,
+        lzAdd  = 0x02,
         lzRevF = 0x04
     };
 
@@ -180,7 +180,7 @@ struct TreapRangeQueryEx {
 
     //-------------------------------------------------------------------------
 
-    Node* insert(int index, const T& value) {
+    Node* insert(int index, T value) {
         index = max(0, min(count, index));
 
         Node* p = createNode(value);
@@ -250,7 +250,7 @@ struct TreapRangeQueryEx {
     }
 
 protected:
-    Node* createNode(const T& value) {
+    Node* createNode(T value) {
         Node* p = new Node();
         p->init();
         p->rangeValue = p->value = value;
