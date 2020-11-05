@@ -1,7 +1,10 @@
+#include <vector>
+
 using namespace std;
 
 #include "splayTree.h"
 #include "splayTreeRangeQuery.h"
+#include "splayTreeRangeQueryEx.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -54,8 +57,25 @@ static void checkIndex(SplayTreeRangeQuery<T, MergeOp, BlockOp>& spt, vector<int
     }
 }
 
+template <typename T>
+static void update(vector<T>& A, int L, int R, T x) {
+    for (int i = L; i <= R; i++)
+        A[i] = x;
+}
+
+template <typename T>
+static void add(vector<T>& A, int L, int R, T x) {
+    for (int i = L; i <= R; i++)
+        A[i] += x;
+}
+
+template <typename T>
+static void reverse(vector<T>& A, int L, int R) {
+    reverse(A.begin() + L, A.begin() + R + 1);
+}
+
 void testSplayRangeQuery() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Splay Tree with Range Query ----------------------------------" << endl;
 
@@ -190,6 +210,139 @@ void testSplayRangeQuery() {
             }
             }
         }
+    }
+    cout << "OK!" << endl;
+    {
+        const int MAXX = 1000;
+        int N = 10000;
+#ifdef _DEBUG
+        N = 1000;
+#endif
+
+        vector<long long> A(N);
+        auto tr = makeSplayTreeRangeQueryEx([](long long a, long long b) { return a + b; },
+                                            [](long long x, long long n) { return x * n; }, 0ll);
+        tr.build(N);
+
+        for (int i = 0; i < N; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
+
+            long long X = RandInt32::get() % MAXX;
+
+            switch (RandInt32::get() % 3) {
+            case 0:
+                tr.update(L, R, X);
+                update(A, L, R, X);
+                break;
+            case 1:
+                tr.add(L, R, X);
+                add(A, L, R, X);
+                break;
+            case 2:
+                tr.reverse(L, R);
+                reverse(A, L, R);
+                break;
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            auto gt = A[i];
+            auto ans = tr.query(i);
+            if (ans != gt) {
+                cout << "Mismatched at " << __LINE__ << " : " << ans << ", " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+        for (int i = 0; i < N; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
+
+            long long gt = accumulate(A.begin() + L, A.begin() + R + 1, 0ll);
+            long long ans = tr.query(L, R);
+            if (ans != gt) {
+                cout << "Mismatched at " << __LINE__ << " : " << ans << ", " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+
+        auto B = tr.serialize();
+        if (A != B) {
+            cout << "Mismatched at " << __LINE__ << endl;
+        }
+        assert(A == B);
+    }
+    cout << "OK!" << endl;
+    {
+        const int MAXX = 1000;
+        int N = 10000;
+#ifdef _DEBUG
+        N = 1000;
+#endif
+
+        vector<long long> A(N);
+        for (int i = 0; i < N; i++)
+            A[i] = RandInt32::get() % MAXX;
+
+        auto tr = makeSplayTreeRangeQueryEx([](long long a, long long b) { return a + b; },
+                                            [](long long x, long long n) { return x * n; }, 0ll);
+        tr.build(A);
+
+        for (int i = 0; i < N; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
+
+            long long X = RandInt32::get() % MAXX;
+
+            switch (RandInt32::get() % 3) {
+            case 0:
+                tr.update(L, R, X);
+                update(A, L, R, X);
+                break;
+            case 1:
+                tr.add(L, R, X);
+                add(A, L, R, X);
+                break;
+            case 2:
+                tr.reverse(L, R);
+                reverse(A, L, R);
+                break;
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            auto gt = A[i];
+            auto ans = tr.query(i);
+            if (ans != gt) {
+                cout << "Mismatched at " << __LINE__ << " : " << ans << ", " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+        for (int i = 0; i < N; i++) {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
+
+            long long gt = accumulate(A.begin() + L, A.begin() + R + 1, 0ll);
+            long long ans = tr.query(L, R);
+            if (ans != gt) {
+                cout << "Mismatched at " << __LINE__ << " : " << ans << ", " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+
+        auto B = tr.serialize();
+        if (A != B) {
+            cout << "Mismatched at " << __LINE__ << endl;
+        }
+        assert(A == B);
     }
     cout << "OK!" << endl;
 

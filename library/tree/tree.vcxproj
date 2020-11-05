@@ -211,6 +211,7 @@
     <ClInclude Include="problems\specialTreeOnGrid.h" />
     <ClInclude Include="redBlackTreeLeftLeaning.h" />
     <ClInclude Include="redBlackTreeRangeQuery.h" />
+    <ClInclude Include="splayTreeRangeQueryEx.h" />
     <ClInclude Include="subtreeQueryWithPersistentDataStructure.h" />
     <ClInclude Include="treapForest.h" />
     <ClInclude Include="treapRangeQueryEx.h" />

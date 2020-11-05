@@ -404,5 +404,8 @@
     <ClInclude Include="treapRangeQueryEx.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="splayTreeRangeQueryEx.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

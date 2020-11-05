@@ -34,7 +34,7 @@ struct SplayTree {
         return count;
     }
 
-    Node* find(const T& key) {
+    Node* find(T key) {
         Node* p = tree;
         if (!p)
             return nullptr;
@@ -96,7 +96,7 @@ struct SplayTree {
         return res;
     }
 
-    pair<Node*, bool> insert(const T& value) {
+    pair<Node*, bool> insert(T value) {
         Node* p = tree;
         Node** pp = nullptr;
 
@@ -135,7 +135,7 @@ struct SplayTree {
         return make_pair(x, true);
     }
 
-    bool erase(const T& key) {
+    bool erase(T key) {
         if (!find(key))
             return false;
 
