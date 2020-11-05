@@ -21,7 +21,7 @@ struct TreapRangeQuery {
 
         void init() {
             parent = left = right = nullptr;
-            priority = (rand() & 0x7fff) * (rand() & 0x7fff);
+            priority = TreapRangeQuery<T,MergeOp,BlockOp>::random();
             cnt = 1;
             lazyExist = false;
         }
@@ -358,6 +358,16 @@ protected:
         }
         x->lazy = defaultValue;
         x->lazyExist = false;
+    }
+
+    //---
+
+    static int random() {
+        //static std::random_device rd;
+        //static std::mt19937 eng(rd());
+        static std::mt19937 eng(7);
+        static std::uniform_int_distribution<int> dist(0, std::numeric_limits<int>::max());
+        return dist(eng);
     }
 };
 
