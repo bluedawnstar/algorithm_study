@@ -52,6 +52,7 @@ int main(void) {
     TEST(LongestZigzagSubsequence);
     TEST(SameDistanceTripleCounterOnTree);
     TEST(IndependentEdgeSetOnTree);
+    TEST(PairCounterWithBitwiseOperation);
     //--- problems
     TEST(ChefAndSum);
 }
