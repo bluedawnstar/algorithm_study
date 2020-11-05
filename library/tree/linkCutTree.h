@@ -15,7 +15,7 @@ struct LinkCutTree {
             init();
         }
 
-        Node(const T& val) : value(val) {
+        Node(T val) : value(val) {
             init();
         }
 
@@ -240,11 +240,11 @@ struct LinkCutTreeArray {
         // no action
     }
 
-    void setValue(int u, const T& value) {
+    void setValue(int u, T value) {
         nodes[u].value = value;
     }
 
-    const T& getValue(int u) const {
+    T getValue(int u) const {
         return nodes[u].value;
     }
 

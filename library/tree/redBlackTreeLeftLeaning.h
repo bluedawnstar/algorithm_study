@@ -26,11 +26,11 @@ struct LeftLeaningRBTree {
         RBColor color;  // color of incoming link
         T       value;
 
-        explicit Node(const T& item, RBColor c = rgbRed) {
+        explicit Node(T item, RBColor c = rgbRed) {
             init(item, c);
         }
 
-        void init(const T& item, RBColor c = rbcRed) {
+        void init(T item, RBColor c = rbcRed) {
             parent = nullptr;
             left = nullptr;
             right = nullptr;
@@ -165,7 +165,7 @@ struct LeftLeaningRBTree {
         return root ? root->maximum() : nullptr;
     }
 
-    bool exist(const T& key) const {
+    bool exist(T key) const {
         return find(key) != nullptr;
     }
 
@@ -211,14 +211,14 @@ struct LeftLeaningRBTree {
         return res;
     }
 
-    Node* find(const T& key) const {
+    Node* find(T key) const {
         Node *p = root;
         while (p != nullptr && !(p->value == key))
             p = (key < p->value) ? p->left : p->right;
         return p;
     }
 
-    Node* lowerBound(const T& key) const {
+    Node* lowerBound(T key) const {
         if (root == nullptr)
             return nullptr;
 
@@ -234,7 +234,7 @@ struct LeftLeaningRBTree {
         return y;
     }
 
-    Node* upperBound(const T& key) const {
+    Node* upperBound(T key) const {
         if (root == nullptr)
             return nullptr;
 
@@ -251,13 +251,13 @@ struct LeftLeaningRBTree {
     }
 
 
-    void insert(const T& item) {
+    void insert(T item) {
         root = insert(root, item);
         root->parent = nullptr;
         root->color = rbcBlack;
     }
 
-    void erase(const T& item) {
+    void erase(T item) {
         if (!isRed(root->left) && !isRed(root->right))
             root->color = rbcRed;
 
@@ -302,7 +302,7 @@ struct LeftLeaningRBTree {
     }
 
 protected:
-    Node* createNode(const T& item, RBColor c = rbcRed) {
+    Node* createNode(T item, RBColor c = rbcRed) {
         Node* p = new Node(item, c);
         count++;
         return p;
@@ -409,7 +409,7 @@ protected:
     }
 
 
-    Node* insert(Node* node, const T& item) {
+    Node* insert(Node* node, T item) {
         if (node == nullptr)
             return createNode(item);
 
@@ -473,7 +473,7 @@ protected:
         return balance(node);
     }
 
-    Node* erase(Node* node, const T& item) {
+    Node* erase(Node* node, T item) {
         if (item < node->value) {
             if (!isRed(node->left) && !isRed(node->left->left))
                 node = moveRedLeft(node);

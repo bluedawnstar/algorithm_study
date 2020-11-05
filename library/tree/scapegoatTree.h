@@ -37,7 +37,7 @@ struct ScapegoatTree : public BST<T, BSTNode<T>> {
     }
 
 
-    pair<Node*, bool> insert(const T& val) {
+    pair<Node*, bool> insert(T val) {
         int depth = 0;
         pair<Node*, bool> ins = insert(val, depth);
         if (!ins.second)
@@ -64,7 +64,7 @@ struct ScapegoatTree : public BST<T, BSTNode<T>> {
         return true;
     }
 
-    bool erase(const T& item) {
+    bool erase(T item) {
         return erase(find(item));
     }
 
@@ -73,7 +73,7 @@ protected:
         return int(ceil(logFactor * log(n)));
     }
 
-    pair<Node*, bool> insert(const T& val, int& depth) {
+    pair<Node*, bool> insert(T val, int& depth) {
         Node* parent = sentinel;
         Node* x = root;
 

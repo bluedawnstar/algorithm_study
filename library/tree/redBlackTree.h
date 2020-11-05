@@ -29,7 +29,7 @@ struct RBNode {
         color = rbcBlack;
     }
 
-    void init(const T& item, RBNode<T>* sentinel) {
+    void init(T item, RBNode<T>* sentinel) {
         parent = sentinel;
         left = sentinel;
         right = sentinel;
@@ -55,7 +55,7 @@ struct RBTree : public BST<T, RBNode<T>> {
         return *this;
     }
 
-    pair<Node*,bool> insert(const T& item) {
+    pair<Node*,bool> insert(T item) {
         pair<Node*, bool> ins = BST::insert(item);
         if (!ins.second)
             return ins;
@@ -158,7 +158,7 @@ struct RBTree : public BST<T, RBNode<T>> {
         return true;
     }
 
-    bool erase(const T& item) {
+    bool erase(T item) {
         return erase(find(item));
     }
 

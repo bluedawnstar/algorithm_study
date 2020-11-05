@@ -369,11 +369,11 @@ struct RBTreeRangeQuery {
     }
 
 
-    T queryPrefixWithValue(int value) const {
+    T queryPrefixWithValue(T value) const {
         return queryLessThanEqual(root, value);
     }
 
-    T querySuffixWithValue(int value) const {
+    T querySuffixWithValue(T value) const {
         return queryGreaterThanEqual(root, value);
     }
 
