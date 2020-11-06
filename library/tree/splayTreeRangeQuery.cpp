@@ -175,7 +175,7 @@ void testSplayRangeQuery() {
                 if (left > right)
                     swap(left, right);
                 value = RandInt32::get() % 100;
-                segt.updateRange(left, right, value);
+                segt.update(left, right, value);
                 spt.update(left, right, value);
                 assert(segt.query(left, right) == spt.query(left, right));
                 assert(segt.query(0, N - 1) == spt.query(0, N - 1));
@@ -452,7 +452,7 @@ void testSplayRangeQuery() {
         PROFILE_START(0);
         for (int i = 0; i < int(in.size()); i++) {
             if (!get<0>(in[i])) {
-                segt.updateRange(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
+                segt.update(get<1>(in[i]), get<2>(in[i]), get<3>(in[i]));
                 if (segt.N <= 0)
                     cerr << "It'll never be shown!" << endl;
             } else {

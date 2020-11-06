@@ -46,8 +46,8 @@ void testSqrtDecompositionSum() {
                 if (L > R)
                     swap(L, R);
 
-                int a = segTree.updateRange(L, R, x);
-                int b = segTreeLazy.updateRange(L, R, x);
+                int a = segTree.update(L, R, x);
+                int b = segTreeLazy.update(L, R, x);
                 sqrtDecom.update(L, R, x);
                 assert(a == b);
             }
@@ -103,8 +103,8 @@ void testSqrtDecompositionSum() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
-                segTreeLazy.updateRange(L, R, x);
+                segTree.update(L, R, x);
+                segTreeLazy.update(L, R, x);
                 sqrtDecom.update(L, R, x);
             }
         }
@@ -121,7 +121,7 @@ void testSqrtDecompositionSum() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
+                segTree.update(L, R, x);
             }
         }
         PROFILE_STOP(0);
@@ -137,7 +137,7 @@ void testSqrtDecompositionSum() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTreeLazy.updateRange(L, R, x);
+                segTreeLazy.update(L, R, x);
             }
         }
         PROFILE_STOP(1);

@@ -111,11 +111,11 @@ struct CompactSegmentTreeLazyAdd {
     //--- update
 
     void add(int index, T value) {
-        addRange(index, index, value);
+        add(index, index, value);
     }
 
     // inclusive
-    void addRange(int left, int right, T value) {
+    void add(int left, int right, T value) {
         for (int L = left + N, R = right + N + 1; L < R; L >>= 1, R >>= 1) {
             if (L & 1)
                 apply(L++, value);

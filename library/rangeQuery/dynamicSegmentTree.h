@@ -11,10 +11,10 @@ struct DynamicSegmentTreeLazy {
         Node*   left;
         Node*   right;
 
-        void init(int x) {
+        void init(T x) {
             value = x;
             lazyExist = false;
-            lazy = 0;
+            lazy = T();
 
             left = nullptr;
             right = nullptr;
@@ -108,7 +108,7 @@ private:
         return mergeOp(query(left, right, node->left, nodeLeft, mid),
                        query(left, right, node->right, mid + 1, nodeRight));
     }
-#endif
+#else
     T query(int left, int right, Node* node, int nodeLeft, int nodeRight) {
         if (!node || right < nodeLeft || nodeRight < left)
             return defaultValue;
@@ -123,8 +123,9 @@ private:
         return mergeOp(query(left, right, node->left, nodeLeft, mid),
                        query(left, right, node->right, mid + 1, nodeRight));
     }
+#endif
 
-    void pushDown(T value, Node *node, int nodeLeft, int nodeRight) {
+    void pushDown(T value, Node* node, int nodeLeft, int nodeRight) {
         if (!node)
             return;
 
@@ -141,5 +142,5 @@ private:
 template <typename T, typename MergeOp, typename BlockOp>
 inline DynamicSegmentTreeLazy<T, MergeOp, BlockOp>
 makeDynamicSegmentTreeLazy(int left, int right, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return SegmentTreeLazy<T, MergeOp, BlockOp>(left, right, mop, bop, dfltValue);
+    return DynamicSegmentTreeLazy<T, MergeOp, BlockOp>(left, right, mop, bop, dfltValue);
 }

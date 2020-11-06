@@ -114,7 +114,7 @@ struct CompactSegmentTree {
     }
 
     // inclusive
-    void updateRange(int left, int right, T newValue) {
+    void update(int left, int right, T newValue) {
         for (int L = left + N, R = right + N + 1; L < R; L++)
             tree[L] = newValue;
 
@@ -134,7 +134,7 @@ struct CompactSegmentTree {
     }
 
     // inclusive
-    void addRange(int left, int right, T value) {
+    void add(int left, int right, T value) {
         for (int L = left + N, R = right + N + 1; L < R; L++)
             tree[L] += value;
         

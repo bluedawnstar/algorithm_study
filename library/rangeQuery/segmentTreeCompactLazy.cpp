@@ -64,11 +64,11 @@ void testSegmentTreeCompactLazy() {
         ans = segTree2.query(1, 3);
         assert(ans == -10);
 
-        segTree.updateRange(0, 2, 3);
+        segTree.update(0, 2, 3);
         ans = segTree.query(1, 3);
         assert(ans == 9);
 
-        segTree2.updateRange(0, 2, 2);
+        segTree2.update(0, 2, 2);
         ans = segTree2.query(1, 3);
         assert(ans == 2);
     }
@@ -128,7 +128,7 @@ void testSegmentTreeCompactLazy() {
             if (L > R)
                 swap(L, R);
 
-            seg.updateRange(L, R, t);
+            seg.update(L, R, t);
             for (int j = L; j <= R; j++)
                 in[j] = t;
 
@@ -255,9 +255,9 @@ void testSegmentTreeCompactLazy() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
-                segTree2.updateRange(L, R, x);
-                segTree3.updateRange(L, R, x);
+                segTree.update(L, R, x);
+                segTree2.update(L, R, x);
+                segTree3.update(L, R, x);
             }
         }
         cout << "OK!" << endl;
@@ -273,7 +273,7 @@ void testSegmentTreeCompactLazy() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
+                segTree.update(L, R, x);
             }
         }
         PROFILE_STOP(0);
@@ -289,7 +289,7 @@ void testSegmentTreeCompactLazy() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree1.updateRange(L, R, x);
+                segTree1.update(L, R, x);
             }
         }
         PROFILE_STOP(1);
@@ -305,7 +305,7 @@ void testSegmentTreeCompactLazy() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree2.updateRange(L, R, x);
+                segTree2.update(L, R, x);
             }
         }
         PROFILE_STOP(2);
@@ -321,7 +321,7 @@ void testSegmentTreeCompactLazy() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree3.updateRange(L, R, x);
+                segTree3.update(L, R, x);
             }
         }
         PROFILE_STOP(3);

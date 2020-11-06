@@ -122,11 +122,11 @@ struct CompactSegmentTreeLazyUpdate {
     //--- update
 
     void update(int index, T newValue) {
-        updateRange(index, index, newValue);
+        update(index, index, newValue);
     }
 
     // inclusive
-    void updateRange(int left, int right, T newValue) {
+    void update(int left, int right, T newValue) {
         pushDown(left, left);
         if (left != right)
             pushDown(right, right);
