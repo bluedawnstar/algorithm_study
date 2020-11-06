@@ -175,6 +175,7 @@
     <ClCompile Include="persistentBinarySearchTreeRangeSum.cpp" />
     <ClCompile Include="redBlackTreeRangeSum.cpp" />
     <ClCompile Include="segmentTreeBeats.cpp" />
+    <ClCompile Include="segmentTreeCompactLazyEx.cpp" />
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
@@ -215,9 +216,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
+    <ClInclude Include="segmentTreeCompactLazyEx.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
     <ClInclude Include="disjointSparseTable.h" />
     <ClInclude Include="dynamicSegmentTree.h" />
+    <ClInclude Include="dynamicSegmentTreeEx.h" />
     <ClInclude Include="dynamicSegmentTreeMaxSubarray.h" />
     <ClInclude Include="fenwickTree.h" />
     <ClInclude Include="fenwickTree2D.h" />
