@@ -72,12 +72,12 @@ void testSegmentTree() {
         ansRMQ = rmq.query(1, 3);
         assert(ans == ansRMQ);
 
-        segTree.updateRange(0, 2, 3);
+        segTree.update(0, 2, 3);
         ans = segTree.query(1, 3);
         //cout << ans << endl;
         assert(ans == 9);
 
-        segTree2.updateRange(0, 2, 2);
+        segTree2.update(0, 2, 2);
         ans = segTree2.query(1, 3);
         //cout << ans << endl;
         assert(ans == 2);
@@ -218,8 +218,8 @@ void testSegmentTree() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
-                segTreeLazy.updateRange(L, R, x);
+                segTree.update(L, R, x);
+                segTreeLazy.update(L, R, x);
             }
         }
         cout << "OK!" << endl;
@@ -235,7 +235,7 @@ void testSegmentTree() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
+                segTree.update(L, R, x);
             }
         }
         PROFILE_STOP(0);
@@ -251,7 +251,7 @@ void testSegmentTree() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTreeLazy.updateRange(L, R, x);
+                segTreeLazy.update(L, R, x);
             }
         }
         PROFILE_STOP(1);

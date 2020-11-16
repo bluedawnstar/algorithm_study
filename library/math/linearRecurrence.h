@@ -18,9 +18,19 @@
 //  https://github.com/zimpha/algorithmic-library/blob/master/mathematics/linear-recurrence.cc
 //  https://gist.github.com/koosaga/d4afc4434dbaa348d5bef0d60ac36aa4
 
+/*
+    | F(n+1) | = | c0 c1 c2 ... c(k-3) c(k-2) c(k-1) | | F(n)   |
+    | F(n)   |   | 1  0  0  ...   0      0      0    | | F(n-1) |
+    | F(n-1) |   | 0  1  0  ...   0      0      0    | | F(n-2) |
+    | F(n-2) |   | 0  0  1  ...   0      0      0    | | F(n-3) |
+    | ...    |   | ...                               | | ...    |
+    | F(2)   |   | 0  0  0  ...   1      0      0    | | F(1)   |
+    | F(1)   |   | 0  0  0  ...   0      1      0    | | F(0)   |
+*/
+
 // Linear recurrence relation : x(n) = c(0)*x(n - 1) + c(1)*x(n - 2) + ... + c(k - 1)*x(n - k), k < n
 // - mod must be a prime number.
-template <typename T, int mod = 1000000007>
+template <typename T, int mod = 1'000'000'007>
 struct LinearRecurrence {
     vector<T> X;    // initial values
     vector<T> C;    // coefficients of linear recurrence relation
@@ -32,50 +42,54 @@ struct LinearRecurrence {
         build(x);
     }
 
-    // Berlekamp-Massey, O(n*K + n*logMOD), n = the number of initial Xs
-    // The size of x must be more than 2*k, x(1) ... x(2k)
+    // Berlekamp-Massey, O(N*K + N*logMOD), N = the number of initial Xs
+    // - N(the size of x) >= 2*K
     void build(const vector<T>& x) {
-        auto update = [this](vector<T>& A, const vector<T>& B, int m, T b, T d) {
-            if (B.size() + m > A.size())
-                A.resize(B.size() + m);
-            long long coef = 1ll * d * modPow(b, mod - 2) % mod;
-            for (int j = 0; j < int(B.size()); j++) {
-                A[j + m] -= T(1ll * coef * B[j] % mod);
-                if (A[j + m] < 0)
-                    A[j + m] += mod;
+        int N = int(x.size());
+
+        this->X = x;
+        C = vector<T>(N);
+
+        int size = 0, m = 0;
+        vector<T> B(N);
+
+        C[0] = B[0] = 1;
+        T b = 1;
+        for (int i = 0; i < N; i++) {
+            ++m;
+
+            T d = x[i];
+            for (int j = 1; j <= size; j++) {
+                d += T(1ll * C[j] * x[i - j] % mod);
+                if (d >= mod)
+                    d -= mod;
             }
-        };
-
-        vector<T> A{ 1 }, B{ 1 };
-        T b = x[0];
-        for (int i = 1, m = 1; i < int(x.size()); i++, m++) {
-            long long d = 0;
-            for (int j = 0; j < int(A.size()); j++)
-                d = (d + 1ll * A[j] * x[i - j]) % mod;
-
             if (d == 0)
                 continue;
 
-            if (2 * (int(A.size()) - 1) <= i) {
-                auto temp = A;
-                update(A, B, m, b, T(d));
-                B = temp;
-                b = T(d);
-                m = 0;
-            } else {
-                update(A, B, m, b, T(d));
+            auto t = C;
+            T coef = T(1ll * d * modInv(b) % mod);
+            for (int j = m; j < N; j++) {
+                C[j] -= T(1ll * coef * B[j - m] % mod);
+                if (C[j] < 0)
+                    C[j] += mod;
             }
+            if (2 * size > i)
+                continue;
+
+            size = i + 1 - size;
+            B = t;
+            b = d;
+            m = 0;
         }
-
-        //---
-
-        if (A.empty())
-            A.push_back(0);
-        int m = int(A.size()) - 1;
-        C.resize(m);
-        for (int i = 0; i < m; i++)
-            C[i] = (mod - A[i + 1]) % mod;
-        this->X.assign(x.begin(), x.begin() + m);
+        C.resize(size + 1);
+        for (int i = 1; i <= size; i++) {
+            if (C[i] > 0)
+                C[i - 1] = mod - C[i];
+            else
+                C[i - 1] = C[i];
+        }
+        C.pop_back();
     }
 
     // Kitamasa, O(K^2*logN)
@@ -84,6 +98,8 @@ struct LinearRecurrence {
             return X[n];
 
         int m = int(C.size());
+        if (m == 0)
+            return T(0);
 
         vector<T> s(m), t(m);
         s[0] = 1;
@@ -185,7 +201,7 @@ struct LinearRecurrence {
             sol = mod - sol;
 
         for (auto& i : rnd)
-            sol = T(1ll * sol * modPow(i, mod - 2) % mod);
+            sol = T(1ll * sol * modInv(i) % mod);
 
         return T(sol);
     }
@@ -203,6 +219,10 @@ private:
             t = t * t % mod;
         }
         return T(res);
+    }
+
+    static T modInv(T x) {
+        return modPow(x, mod - 2);
     }
 
     vector<T> mult(const vector<T>& v, const vector<T>& w) {

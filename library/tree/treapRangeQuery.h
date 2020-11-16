@@ -130,7 +130,7 @@ struct TreapRangeQuery {
 
     //-------------------------------------------------------------------------
 
-    Node* insert(int index, const T& value) {
+    Node* insert(int index, T value) {
         index = max(0, min(count, index));
 
         Node* p = createNode(value);
@@ -200,7 +200,7 @@ struct TreapRangeQuery {
     }
 
 protected:
-    Node* createNode(const T& value) {
+    Node* createNode(T value) {
         Node* p = new Node();
         p->init();
         p->rangeValue = p->value = value;

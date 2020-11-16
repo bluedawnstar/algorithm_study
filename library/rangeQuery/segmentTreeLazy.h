@@ -71,8 +71,8 @@ struct SegmentTreeLazy {
     }
 
     // inclusive
-    T updateRange(int left, int right, T newValue) {
-        return updateRangeSub(left, right, newValue, 1, 0, N - 1);
+    T update(int left, int right, T newValue) {
+        return updateSub(left, right, newValue, 1, 0, N - 1);
     }
 
 
@@ -151,7 +151,7 @@ private:
                                     updateSub(index, newValue, node * 2 + 1, mid + 1, nodeRight));
     }
 
-    T updateRangeSub(int left, int right, T newValue, int node, int nodeLeft, int nodeRight) {
+    T updateSub(int left, int right, T newValue, int node, int nodeLeft, int nodeRight) {
         if (right < nodeLeft || nodeRight < left)
             return tree[node];
 
@@ -188,8 +188,8 @@ private:
         }
 #endif
 
-        return tree[node] = mergeOp(updateRangeSub(left, right, newValue, node * 2, nodeLeft, mid),
-                                    updateRangeSub(left, right, newValue, node * 2 + 1, mid + 1, nodeRight));
+        return tree[node] = mergeOp(updateSub(left, right, newValue, node * 2, nodeLeft, mid),
+                                    updateSub(left, right, newValue, node * 2 + 1, mid + 1, nodeRight));
     }
 
     T pushDown(T newValue, int node, int nodeLeft, int nodeRight) {

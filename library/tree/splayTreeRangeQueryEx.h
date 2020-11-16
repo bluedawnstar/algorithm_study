@@ -3,7 +3,14 @@
 #include <algorithm>
 
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct SplayTreeRangeQuery {
+struct SplayTreeRangeQueryEx {
+    enum LazyT {
+        lzNone,
+        lzSet  = 0x01,
+        lzAdd  = 0x02,
+        lzRevF = 0x04
+    };
+
     struct Node {
         Node* parent;
         Node* left;
@@ -13,13 +20,13 @@ struct SplayTreeRangeQuery {
         T     value;
         T     rangeValue;
 
+        int   lazyType;
         T     lazy;
-        bool  lazyExist;
 
         void init() {
             parent = left = right = nullptr;
             cnt = 1;
-            lazyExist = false;
+            lazyType = lzNone;
         }
     };
 
@@ -30,19 +37,19 @@ struct SplayTreeRangeQuery {
     int       count;
     Node*     tree;
 
-    explicit SplayTreeRangeQuery(T dflt = T())
+    explicit SplayTreeRangeQueryEx(T dflt = T())
         : defaultValue(dflt), mergeOp(), blockOp() {
         count = 0;
         tree = nullptr;
     }
 
-    SplayTreeRangeQuery(MergeOp mop, BlockOp bop, T dflt = T())
+    SplayTreeRangeQueryEx(MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         count = 0;
         tree = nullptr;
     }
 
-    ~SplayTreeRangeQuery() {
+    ~SplayTreeRangeQueryEx() {
         deleteRecursive(tree);
     }
 
@@ -64,7 +71,7 @@ struct SplayTreeRangeQuery {
     }
 
     void build(const T A[], int n) {
-        Node *x;
+        Node* x;
 
         tree = x = createNode();
         x->cnt = n;
@@ -96,6 +103,7 @@ struct SplayTreeRangeQuery {
         return count;
     }
 
+
     void update(int index, T value) {
         Node* x = operator [](index);
         x->rangeValue = x->value = value;
@@ -115,16 +123,61 @@ struct SplayTreeRangeQuery {
 
         Node* x = interval(left, right);
         if (x) {
-            x->lazyExist = true;
-            x->value = x->lazy = value;
-            x->rangeValue = blockOp(value, x->cnt);
-
+            pushDownTo(x, lzSet, value);
             while (x->parent) {
                 x = x->parent;
                 updateValue(x);
             }
         }
     }
+
+
+    void add(int index, T value) {
+        Node* x = operator [](index);
+        x->rangeValue = x->value += value;
+        if (x->left)
+            x->rangeValue = mergeOp(x->rangeValue, x->left->rangeValue);
+        if (x->right)
+            x->rangeValue = mergeOp(x->rangeValue, x->right->rangeValue);
+    }
+
+    // inclusive
+    void add(int left, int right, T value) {
+        if (count <= 0 || left > right || right < 0 || left >= count)
+            return;
+
+        left = max(0, left);
+        right = min(count - 1, right);
+
+        Node* x = interval(left, right);
+        if (x) {
+            pushDownTo(x, lzAdd, value);
+            while (x->parent) {
+                x = x->parent;
+                updateValue(x);
+            }
+        }
+    }
+
+
+    // inclusive
+    void reverse(int left, int right) {
+        if (count <= 0 || left > right || right < 0 || left >= count)
+            return;
+
+        left = max(0, left);
+        right = min(count - 1, right);
+
+        Node* x = interval(left, right);
+        if (x) {
+            x->lazyType ^= lzRevF;
+            while (x->parent) {
+                x = x->parent;
+                updateValue(x);
+            }
+        }
+    }
+
 
     T query(int index) {
         if (count <= 0 || index < 0 || index >= count)
@@ -414,30 +467,56 @@ protected:
         updateValue(x);
     }
 
-    void pushDown(Node* x) {
-        if (!x || !x->lazyExist)
+
+    void pushDownTo(Node* x, LazyT type, T lazyValue) {
+        if (!x)
             return;
 
-        //TODO:
-        // Customize this push down operation
-        // This implementation is indtended to set a value (no 'add' operation)
+        if (type == lzSet) {
+            x->lazyType = (x->lazyType & lzRevF) | lzSet;
+            x->value = x->lazy = lazyValue;
+            x->rangeValue = blockOp(lazyValue, x->cnt);
+        } else if (type == lzAdd) {
+            if ((x->lazyType & (lzSet | lzAdd)) == lzNone) {
+                x->lazyType = (x->lazyType & lzRevF) | lzAdd;
+                x->lazy = lazyValue;
+            } else {
+                x->lazy += lazyValue;
+            }
+            x->value += lazyValue;
+            x->rangeValue += blockOp(lazyValue, x->cnt);
+        }
+    }
 
-        if (x->left) {
-            x->left->lazyExist = true;
-            x->left->value = x->left->lazy = x->lazy;
-            x->left->rangeValue = blockOp(x->lazy, x->left->cnt);
+    void pushDown(Node* x) {
+        if (!x || x->lazyType == lzNone)
+            return;
+
+        if (x->lazyType & lzRevF) {
+            swap(x->left, x->right);
+            if (x->left)
+                x->left->lazyType ^= lzRevF;
+            if (x->right)
+                x->right->lazyType ^= lzRevF;
         }
-        if (x->right) {
-            x->right->lazyExist = true;
-            x->right->value = x->right->lazy = x->lazy;
-            x->right->rangeValue = blockOp(x->lazy, x->right->cnt);
+
+        switch (x->lazyType & (lzSet | lzAdd)) {
+        case lzSet:
+            pushDownTo(x->left, lzSet, x->lazy);
+            pushDownTo(x->right, lzSet, x->lazy);
+            break;
+        case lzAdd:
+            pushDownTo(x->left, lzAdd, x->lazy);
+            pushDownTo(x->right, lzAdd, x->lazy);
+            break;
         }
+
         x->lazy = defaultValue;
-        x->lazyExist = false;
+        x->lazyType = lzNone;
     }
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline SplayTreeRangeQuery<T, MergeOp, BlockOp> makeSplayTreeRangeQuery(MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return SplayTreeRangeQuery<T, MergeOp, BlockOp>(mop, bop, dfltValue);
+inline SplayTreeRangeQueryEx<T, MergeOp, BlockOp> makeSplayTreeRangeQueryEx(MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return SplayTreeRangeQueryEx<T, MergeOp, BlockOp>(mop, bop, dfltValue);
 }

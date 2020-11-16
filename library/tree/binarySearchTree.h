@@ -24,7 +24,7 @@ struct BSTNode {
         cnt = 0;
     }
 
-    void init(const T& item, BSTNode<T>* sentinel) {
+    void init(T item, BSTNode<T>* sentinel) {
         parent = sentinel;
         left = sentinel;
         right = sentinel;
@@ -85,7 +85,7 @@ struct BST {
         return count == 0;
     }
 
-    bool exist(const T& key) const {
+    bool exist(T key) const {
         return find(key) != nullptr;
     }
 
@@ -103,7 +103,7 @@ struct BST {
     }
 
 
-    pair<Node*, bool> insert(const T& item) {
+    pair<Node*, bool> insert(T item) {
         Node* parent = sentinel;
         Node* x = root;
 
@@ -184,7 +184,7 @@ struct BST {
         return true;
     }
 
-    bool erase(const T& item) {
+    bool erase(T item) {
         return erase(find(item));
     }
 
@@ -237,7 +237,7 @@ struct BST {
     }
 
 
-    Node* find(const T& key) const {
+    Node* find(T key) const {
         Node *p = root;
 
         while (p != sentinel && !(p->value == key)) {
@@ -250,7 +250,7 @@ struct BST {
         return p;
     }
 
-    Node* lowerBound(const T& key) const {
+    Node* lowerBound(T key) const {
         if (root == sentinel)
             return sentinel;
 
@@ -266,7 +266,7 @@ struct BST {
         return y;
     }
 
-    Node* upperBound(const T& key) const {
+    Node* upperBound(T key) const {
         if (root == sentinel)
             return sentinel;
 
@@ -339,16 +339,16 @@ struct BST {
     }
 
 
-    void walkRecursive(const function<void(const T&)>& func) const {
+    void walkRecursive(const function<void(T)>& func) const {
         recurseWalk(root, func);
     }
 
-    void walkIterative(const function<void(const T&)>& func) const {
+    void walkIterative(const function<void(T)>& func) const {
         morrisInorderWalk(root, func);
     }
 
 protected:
-    Node* createNode(const T& item) {
+    Node* createNode(T item) {
         Node* p = new Node();
         p->init(item, sentinel);
         count++;
@@ -389,7 +389,7 @@ protected:
         }
     }
 
-    void recurseWalk(const Node* node, const function<void(const T&)>& func) const {
+    void recurseWalk(const Node* node, const function<void(T)>& func) const {
         if (node != sentinel) {
             recurseWalk(node->left, func);
             func(node->value);
@@ -397,7 +397,7 @@ protected:
         }
     }
 
-    void morrisInorderWalk(const Node* node, const function<void(const T&)>& func) const {
+    void morrisInorderWalk(const Node* node, const function<void(T)>& func) const {
         Node *p = root, *tmp;
         while (p != sentinel) {
             if (p->left == sentinel) {

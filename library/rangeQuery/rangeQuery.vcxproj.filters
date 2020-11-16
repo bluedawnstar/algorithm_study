@@ -213,6 +213,15 @@
     <ClCompile Include="segmentTreePrimeFactorXorRollingHash.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeCompactLazyEx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="longestIncreasingSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="longestIncreasingStep.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -450,6 +459,21 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreePrimeFactorXorRollingHash.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="dynamicSegmentTreeEx.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeCompactLazyEx.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestIncreasingSubsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestIncreasingSubsequenceOnline.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestIncreasingStep.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

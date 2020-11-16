@@ -58,6 +58,7 @@ int main(void) {
     TEST(TreeCentroidDecompositionSolverDivideAndConquer_XorDistance);
     TEST(UniqueValueCounterInDistanceOfSubtree);
     TEST(TreeReordering);
+    TEST(TreePathVertexWeightVectorDot);
 
     TEST(BenchmarkBST);
     //--- problems

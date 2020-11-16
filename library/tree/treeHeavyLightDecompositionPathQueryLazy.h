@@ -42,7 +42,7 @@ struct HLDPathQueryLazy {
         for (const auto& path : hld.heavyPaths) {
             int m = int(path.size()) - 1;
             segTrees.push_back(SegTreeT(m + 1, mergeOp, blockOp, defaultValue));
-            segTrees.back().updateRange(0, m, initValue);
+            segTrees.back().update(0, m, initValue);
         }
     }
 

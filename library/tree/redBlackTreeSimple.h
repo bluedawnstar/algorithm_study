@@ -21,11 +21,11 @@ struct RBTreeSimple {
         RBColor color;
         T       value;
 
-        Node(const T& item) {
+        Node(T item) {
             init(item);
         }
 
-        void init(const T& item) {
+        void init(T item) {
             parent = nullptr;
             left = nullptr;
             right = nullptr;
@@ -160,7 +160,7 @@ struct RBTreeSimple {
         return root ? root->maximum() : nullptr;
     }
 
-    bool exist(const T& key) const {
+    bool exist(T key) const {
         return find(key) != nullptr;
     }
 
@@ -206,7 +206,7 @@ struct RBTreeSimple {
         return res;
     }
 
-    Node* find(const T& key) const {
+    Node* find(T key) const {
         Node *p = root;
 
         while (p != nullptr && !(p->value == key)) {
@@ -219,7 +219,7 @@ struct RBTreeSimple {
         return p;
     }
 
-    Node* lowerBound(const T& key) const {
+    Node* lowerBound(T key) const {
         if (root == nullptr)
             return nullptr;
 
@@ -235,7 +235,7 @@ struct RBTreeSimple {
         return y;
     }
 
-    Node* upperBound(const T& key) const {
+    Node* upperBound(T key) const {
         if (root == nullptr)
             return nullptr;
 
@@ -252,7 +252,7 @@ struct RBTreeSimple {
     }
 
 
-    pair<Node*, bool> insert(const T& item) {
+    pair<Node*, bool> insert(T item) {
         pair<Node*, bool> ins = insertBST(item);
         if (!ins.second)
             return ins;
@@ -355,7 +355,7 @@ struct RBTreeSimple {
         return true;
     }
 
-    bool erase(const T& item) {
+    bool erase(T item) {
         return erase(find(item));
     }
 
@@ -365,7 +365,7 @@ struct RBTreeSimple {
     }
 
 protected:
-    Node* createNode(const T& item) {
+    Node* createNode(T item) {
         Node* p = new Node(item);
         count++;
         return p;
@@ -393,7 +393,7 @@ protected:
         }
     }
 
-    pair<Node*, bool> insertBST(const T& item) {
+    pair<Node*, bool> insertBST(T item) {
         Node* parent = nullptr;
         Node* x = root;
 

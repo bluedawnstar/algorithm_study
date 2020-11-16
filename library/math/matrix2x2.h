@@ -94,16 +94,16 @@ struct Matrix2x2 {
     }
 
     //PRECONDITION: n >= 0
-    static Matrix2x2 pow(const Matrix2x2& m, T n) {
+    static Matrix2x2 pow(const Matrix2x2& m, long long n) {
         if (n == 1)
             return m;
         else if (n == 0)
             return getIdentity();
 
-        if (n & 1)
-            return m * pow(m, n - 1);
-
         auto t = pow(m, n / 2);
-        return t * t;
+        if (n & 1)
+            return m * t * t;
+        else
+            return t * t;
     }
 };

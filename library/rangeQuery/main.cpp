@@ -25,6 +25,7 @@ int main(void) {
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);
+    TEST(SegmentTreeCompactLazyEx);
     TEST(SegmentTreeMaxSubarray);
     TEST(DynamicSegmentTree);
     TEST(DynamicSegmentTreeMaxSubarray);
@@ -71,4 +72,6 @@ int main(void) {
     TEST(SubsetXorSegmentTree);
     TEST(SegmentTreeBeats);
     TEST(SegmentTreePrimeFactorXorRollingHash);
+    TEST(LongestIncreasingSubsequence);
+    TEST(LongestIncreasingStep);
 }

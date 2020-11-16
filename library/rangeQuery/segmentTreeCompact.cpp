@@ -60,11 +60,11 @@ void testSegmentTreeCompact() {
         ans = segTree2.query(1, 3);
         assert(ans == -10);
 
-        segTree.updateRange(0, 2, 3);
+        segTree.update(0, 2, 3);
         ans = segTree.query(1, 3);
         assert(ans == 9);
 
-        segTree2.updateRange(0, 2, 2);
+        segTree2.update(0, 2, 2);
         ans = segTree2.query(1, 3);
         assert(ans == 2);
     }
@@ -112,7 +112,7 @@ void testSegmentTreeCompact() {
             if (L > R)
                 swap(L, R);
 
-            seg.addRange(L, R, t);
+            seg.add(L, R, t);
             for (int j = L; j <= R; j++)
                 in[j] += t;
 
@@ -218,8 +218,8 @@ void testSegmentTreeCompact() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
-                segTree2.updateRange(L, R, x);
+                segTree.update(L, R, x);
+                segTree2.update(L, R, x);
             }
         }
         cout << "OK!" << endl;
@@ -235,7 +235,7 @@ void testSegmentTreeCompact() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree.updateRange(L, R, x);
+                segTree.update(L, R, x);
             }
         }
         PROFILE_STOP(0);
@@ -251,7 +251,7 @@ void testSegmentTreeCompact() {
                 int L = get<1>(q);
                 int R = get<2>(q);
                 int x = get<3>(q);
-                segTree2.updateRange(L, R, x);
+                segTree2.update(L, R, x);
             }
         }
         PROFILE_STOP(1);

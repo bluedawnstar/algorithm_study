@@ -28,14 +28,49 @@ F(m + n) = F(m) * F(n + 1) + F(m - 1) * F(n)
 
 // n >= 0
 template <typename T>
-inline Matrix2x2<T> fibonacci(T n) {
-    static Matrix2x2<T> fm{ 1ll, 1ll, 1ll, 0ll };
-    return Matrix2x2<T>::pow(fm, n);
+inline T fibonacci(long long n) {
+    static Matrix2x2<T> fm{ 1, 1, 1, 0 };
+    return Matrix2x2<T>::pow(fm, n).a01;
 }
 
 // n >= 0
 template <typename T, int mod>
-inline Matrix2x2Mod<T, mod> fibonacciMod(T n) {
-    static Matrix2x2Mod<T, mod> fm{ 1ll, 1ll, 1ll, 0ll };
-    return Matrix2x2Mod<T, mod>::pow(fm, n);
+inline T fibonacciMod(long long n) {
+    static Matrix2x2Mod<T, mod> fm{ 1, 1, 1, 0 };
+    return Matrix2x2Mod<T, mod>::pow(fm, n).a01;
+}
+
+// O(logN)
+template <typename T, int mod>
+inline T fibonacciModFast(long long n) {
+    if (n == 0)
+        return 0;
+    else if (n == 1)
+        return 1;
+    else if (n == 2)
+        return 1;
+
+    int a = 0;
+    int b = 1;
+
+    long long i = 1ll;
+    while ((i << 1) <= n)
+        i <<= 1;
+
+    for (i >>= 1; i; i >>= 1) {
+        int na = (1ll * a * a + 1ll * b * b) % mod;
+        int nb = int((2ll * a + b) * b % mod);
+        a = na;
+        b = nb;
+
+        if (n & i) {
+            int c = a + b;
+            if (c >= mod)
+                c -= mod;
+            a = b;
+            b = c;
+        }
+    }
+
+    return b;
 }

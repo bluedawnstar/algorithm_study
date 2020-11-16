@@ -562,7 +562,7 @@ void testGeneralizedBIT() {
                 auto seg = makeSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
                 for (int i = 0; i < 10; i++) {
                     for (auto& it : Q) {
-                        seg.updateRange(get<0>(it), get<1>(it), get<2>(it));
+                        seg.update(get<0>(it), get<1>(it), get<2>(it));
                     }
                 }
                 cout << "result = " << seg.query(0, N - 1) << endl;
@@ -575,7 +575,7 @@ void testGeneralizedBIT() {
                 auto seg = makeCompactSegmentTree(T, [](int a, int b) { return min(a, b); }, numeric_limits<int>::max());
                 for (int i = 0; i < 10; i++) {
                     for (auto& it : Q) {
-                        seg.updateRange(get<0>(it), get<1>(it), get<2>(it));
+                        seg.update(get<0>(it), get<1>(it), get<2>(it));
                     }
                 }
                 cout << "result = " << seg.query(0, N - 1) << endl;

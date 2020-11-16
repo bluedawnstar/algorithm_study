@@ -151,6 +151,7 @@
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartiteGraphCheck.cpp" />
     <ClCompile Include="bipartiteMatching.cpp" />
+    <ClCompile Include="bipartiteWeightedMatching.cpp" />
     <ClCompile Include="blockCutTree.cpp" />
     <ClCompile Include="bridgeBlockTree.cpp" />
     <ClCompile Include="chordalGraph.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="bipartiteGraphCheck.h" />
     <ClInclude Include="bipartiteMatchingKuhn.h" />
     <ClInclude Include="bipartiteMatchingHopcroftKarp.h" />
+    <ClInclude Include="bipartiteWeightedMatching.h" />
     <ClInclude Include="blockCutTree.h" />
     <ClInclude Include="bridgeBlockTree.h" />
     <ClInclude Include="chordalGraph.h" />

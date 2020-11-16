@@ -57,7 +57,7 @@ static void updateMaxSlow(vector<T>& v, int L, int R, T x) {
 
 
 void testSegmentTreeBeats() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Segment Tree Beats -----------------------------------" << endl;
     {

@@ -35,4 +35,5 @@ int main(void) {
     TEST(ShortestPathWithWildcard);
     TEST(SpecialMST);
     TEST(GlobalMinCutUnweightedKarger);
+    TEST(BipartiteWeightedMaching);
 }

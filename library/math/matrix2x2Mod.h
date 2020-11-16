@@ -23,8 +23,19 @@ struct Matrix2x2Mod {
     }
 
     Matrix2x2Mod& operator +=(T x) {
-        a00 = (a00 + x) % mod; a01 = (a01 + x) % mod;
-        a10 = (a10 + x) % mod; a11 = (a11 + x) % mod;
+        x %= mod;
+        a00 += x;
+        if (a00 >= mod)
+            a00 -= mod;
+        a01 += x;
+        if (a01 >= mod)
+            a01 -= mod;
+        a10 += x;
+        if (a10 >= mod)
+            a10 -= mod;
+        a11 += x;
+        if (a11 >= mod)
+            a11 -= mod;
         return *this;
     }
 
@@ -33,25 +44,39 @@ struct Matrix2x2Mod {
     }
 
     Matrix2x2Mod& operator *=(T x) {
-        a00 = (a00 * x) % mod; a01 = (a01 * x) % mod;
-        a10 = (a10 * x) % mod; a11 = (a11 * x) % mod;
+        a00 = T(1ll * a00 * x % mod);
+        a01 = T(1ll * a01 * x % mod);
+        a10 = T(1ll * a10 * x % mod);
+        a11 = T(1ll * a11 * x % mod);
         return *this;
     }
 
     Matrix2x2Mod& operator *=(const Matrix2x2Mod& rhs) {
-        T t00 = (a00 * rhs.a00 + a01 * rhs.a10) % mod;
-        T t01 = (a00 * rhs.a01 + a01 * rhs.a11) % mod;
-        T t10 = (a10 * rhs.a00 + a11 * rhs.a10) % mod;
-        T t11 = (a10 * rhs.a01 + a11 * rhs.a11) % mod;
+        T t00 = T((1ll * a00 * rhs.a00 + 1ll * a01 * rhs.a10) % mod);
+        T t01 = T((1ll * a00 * rhs.a01 + 1ll * a01 * rhs.a11) % mod);
+        T t10 = T((1ll * a10 * rhs.a00 + 1ll * a11 * rhs.a10) % mod);
+        T t11 = T((1ll * a10 * rhs.a01 + 1ll * a11 * rhs.a11) % mod);
         a00 = t00; a01 = t01;
         a10 = t10; a11 = t11;
         return *this;
     }
 
     Matrix2x2Mod operator +(T x) const {
+        x %= mod;
+
         Matrix2x2Mod res;
-        res.a00 = (a00 + x) % mod; res.a01 = (a01 + x) % mod;
-        res.a10 = (a10 + x) % mod; res.a11 = (a11 + x) % mod;
+        res.a00 += x;
+        if (res.a00 >= mod)
+            res.a00 -= mod;
+        res.a01 += x;
+        if (res.a01 >= mod)
+            res.a01 -= mod;
+        res.a10 += x;
+        if (res.a10 >= mod)
+            res.a10 -= mod;
+        res.a11 += x;
+        if (res.a11 >= mod)
+            res.a11 -= mod;
         return res;
     }
 
@@ -61,17 +86,19 @@ struct Matrix2x2Mod {
 
     Matrix2x2Mod operator *(T x) const {
         Matrix2x2Mod res;
-        res.a00 = (a00 * x) % mod; res.a01 = (a01 * x) % mod;
-        res.a10 = (a10 * x) % mod; res.a11 = (a11 * x) % mod;
+        res.a00 = T(1ll * a00 * x % mod);
+        res.a01 = T(1ll * a01 * x % mod);
+        res.a10 = T(1ll * a10 * x % mod);
+        res.a11 = T(1ll * a11 * x % mod);
         return res;
     }
 
     Matrix2x2Mod operator *(const Matrix2x2Mod& rhs) const {
         Matrix2x2Mod res;
-        res.a00 = (a00 * rhs.a00 + a01 * rhs.a10) % mod;
-        res.a01 = (a00 * rhs.a01 + a01 * rhs.a11) % mod;
-        res.a10 = (a10 * rhs.a00 + a11 * rhs.a10) % mod;
-        res.a11 = (a10 * rhs.a01 + a11 * rhs.a11) % mod;
+        res.a00 = T((1ll * a00 * rhs.a00 + 1ll * a01 * rhs.a10) % mod);
+        res.a01 = T((1ll * a00 * rhs.a01 + 1ll * a01 * rhs.a11) % mod);
+        res.a10 = T((1ll * a10 * rhs.a00 + 1ll * a11 * rhs.a10) % mod);
+        res.a11 = T((1ll * a10 * rhs.a01 + 1ll * a11 * rhs.a11) % mod);
         return res;
     }
 
@@ -81,16 +108,16 @@ struct Matrix2x2Mod {
     }
 
     //PRECONDITION: n >= 0
-    static Matrix2x2Mod pow(const Matrix2x2Mod& m, T n) {
+    static Matrix2x2Mod pow(const Matrix2x2Mod& m, long long n) {
         if (n == 1)
             return m;
         else if (n == 0)
             return getIdentity();
 
-        if (n & 1)
-            return m * pow(m, n - 1);
-
         auto t = pow(m, n / 2);
-        return t * t;
+        if (n & 1)
+            return m * t * t;
+        else
+            return t * t;
     }
 };

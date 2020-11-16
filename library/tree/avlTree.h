@@ -24,7 +24,7 @@ struct AVLNode {
         height = 1;
     }
 
-    void init(const T& item, AVLNode<T>* sentinel) {
+    void init(T item, AVLNode<T>* sentinel) {
         parent = sentinel;
         left = sentinel;
         right = sentinel;
@@ -52,7 +52,7 @@ struct AVLTree : public BST<T, AVLNode<T>> {
         return *this;
     }
 
-    pair<Node*, bool> insert(const T& val) {
+    pair<Node*, bool> insert(T val) {
         pair<Node*, bool> ins = BST::insert(val);
         if (!ins.second)
             return ins;
@@ -130,7 +130,7 @@ struct AVLTree : public BST<T, AVLNode<T>> {
         return true;
     }
 
-    bool erase(const T& val) {
+    bool erase(T val) {
         return erase(find(val));
     }
 

@@ -22,4 +22,5 @@ int main(void) {
     TEST(FactorialIntModFast);
     TEST(PowerSeries);
     TEST(PentagonalNumber);
+    TEST(PolynomialSum);
 }

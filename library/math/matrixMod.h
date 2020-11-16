@@ -28,20 +28,20 @@ struct MatrixMod {
     }
 
 
-    MatrixMod& operator =(const vector<vector<int>>& rhs) {
-        N = static_cast<int>(rhs.N);
+    MatrixMod<mod>& operator =(const vector<vector<int>>& rhs) {
+        N = static_cast<int>(rhs.size());
         mat = rhs;
         return *this;
     }
 
-    MatrixMod& operator =(vector<vector<int>>&& rhs) {
+    MatrixMod<mod>& operator =(vector<vector<int>>&& rhs) {
         N = static_cast<int>(rhs.size());
         mat = move(rhs);
         return *this;
     }
 
     template <typename U>
-    MatrixMod& operator =(const vector<vector<U>>& rhs) {
+    MatrixMod<mod>& operator =(const vector<vector<U>>& rhs) {
         N = static_cast<int>(rhs.size());
 
         mat.assign(N, vector<int>(N));
@@ -52,8 +52,8 @@ struct MatrixMod {
         return *this;
     }
 
-    MatrixMod& operator =(const MatrixMod<mod>& rhs) {
-        N = static_cast<int>(rhs.size());
+    MatrixMod<mod>& operator =(const MatrixMod<mod>& rhs) {
+        N = rhs.N;
 
         mat.assign(N, vector<int>(N));
         for (int i = 0; i < N; i++)
@@ -64,13 +64,22 @@ struct MatrixMod {
     }
 
 
-    MatrixMod& init() {
+    bool operator ==(const MatrixMod<mod>& rhs) const {
+        return mat == rhs.mat;
+    }
+
+    bool operator !=(const MatrixMod<mod>& rhs) const {
+        return mat != rhs.mat;
+    }
+
+
+    MatrixMod<mod>& init() {
         for (int i = 0; i < N; i++)
             fill(mat[i].begin(), mat[i].end(), 0);
         return *this;
     }
 
-    MatrixMod& identity() {
+    MatrixMod<mod>& identity() {
         for (int i = 0; i < N; i++)
             mat[i][i] = 1;
         return *this;
@@ -85,7 +94,7 @@ struct MatrixMod {
     }
 
     template <typename U>
-    MatrixMod& operator +=(U x) {
+    MatrixMod<mod>& operator +=(U x) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 mat[i][j] += x;
@@ -99,31 +108,31 @@ struct MatrixMod {
     }
 
     template <typename U>
-    MatrixMod& operator -=(U x) {
+    MatrixMod<mod>& operator -=(U x) {
         return operator +=(-x);
     }
 
-    MatrixMod& operator *=(int x) {
+    MatrixMod<mod>& operator *=(int x) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
                 mat[i][j] = static_cast<int>(1ll * mat[i][j] * x % mod);
         return *this;
     }
 
-    MatrixMod& operator /=(int x) {
+    MatrixMod<mod>& operator /=(int x) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
                 mat[i][j] = static_cast<int>(1ll * mat[i][j] * modInv(x) % mod);
         return *this;
     }
 
-    MatrixMod& operator *=(const MatrixMod& rhs) {
+    MatrixMod<mod>& operator *=(const MatrixMod<mod>& rhs) {
         MatrixMod t = *this;
         multiply(*this, t, rhs);
         return *this;
     }
 
-    MatrixMod& operator +=(const MatrixMod& rhs) {
+    MatrixMod<mod>& operator +=(const MatrixMod<mod>& rhs) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++) {
                 mat[i][j] += rhs.mat[i][j];
@@ -135,7 +144,7 @@ struct MatrixMod {
         return *this;
     }
 
-    MatrixMod& operator -=(const MatrixMod& rhs) {
+    MatrixMod<mod>& operator -=(const MatrixMod<mod>& rhs) {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++) {
                 mat[i][j] -= rhs.mat[i][j];
@@ -147,50 +156,50 @@ struct MatrixMod {
         return *this;
     }
 
-    MatrixMod operator +(int x) const {
-        MatrixMod res = *this;
+    MatrixMod<mod> operator +(int x) const {
+        MatrixMod<mod> res = *this;
         res += x;
         return res;
     }
 
-    MatrixMod operator -(int x) const {
-        MatrixMod res = *this;
+    MatrixMod<mod> operator -(int x) const {
+        MatrixMod<mod> res = *this;
         res -= x;
         return res;
     }
 
-    MatrixMod operator *(int x) const {
-        MatrixMod res = *this;
+    MatrixMod<mod> operator *(int x) const {
+        MatrixMod<mod> res = *this;
         res *= x;
         return res;
     }
 
-    MatrixMod operator /(int x) const {
-        MatrixMod res = *this;
+    MatrixMod<mod> operator /(int x) const {
+        MatrixMod<mod> res = *this;
         res /= x;
         return res;
     }
 
-    MatrixMod operator *(const MatrixMod& rhs) const {
-        MatrixMod res(N);
+    MatrixMod<mod> operator *(const MatrixMod<mod>& rhs) const {
+        MatrixMod<mod> res(N);
         multiply(res, *this, rhs);
         return res;
     }
 
-    MatrixMod operator +(const MatrixMod& rhs) const {
-        MatrixMod res(N);
+    MatrixMod<mod> operator +(const MatrixMod<mod>& rhs) const {
+        MatrixMod<mod> res = *this;
         res += rhs;
         return res;
     }
 
-    MatrixMod operator -(const MatrixMod& rhs) const {
-        MatrixMod res(N);
+    MatrixMod<mod> operator -(const MatrixMod<mod>& rhs) const {
+        MatrixMod<mod> res = *this;
         res -= rhs;
         return res;
     }
 
-    MatrixMod pow(int n) const {
-        return MatrixMod<int>::pow(*this, n);
+    MatrixMod<mod> pow(long long n) const {
+        return MatrixMod<mod>::pow(*this, n);
     }
 
 
@@ -253,7 +262,7 @@ struct MatrixMod {
         return (res + mod) % mod;
     }
 
-    MatrixMod inverse() const {
+    MatrixMod<mod> inverse() const {
         MatrixMod<mod> res(N);
         for (int i = 0; i < N; i++)
             res[i][i] = 1;
@@ -305,7 +314,7 @@ struct MatrixMod {
     }
 
 
-    static void multiply(MatrixMod& out, const MatrixMod& left, const MatrixMod& right) {
+    static void multiply(MatrixMod<mod>& out, const MatrixMod<mod>& left, const MatrixMod<mod>& right) {
         int N = left.N;
         for (int r = 0; r < N; r++) {
             for (int c = 0; c < N; c++) {
@@ -318,14 +327,14 @@ struct MatrixMod {
         }
     }
 
-    static const MatrixMod& getIdentity(int N) {
-        static unordered_map<int, shared_ptr<MatrixMod<int>>> M;
+    static const MatrixMod<mod>& getIdentity(int N) {
+        static unordered_map<int, shared_ptr<MatrixMod<mod>>> M;
 
         auto it = M.find(N);
         if (it != M.end())
             return *it->second;
 
-        auto mat = make_shared<MatrixMod<int>>(N);
+        auto mat = make_shared<MatrixMod<mod>>(N);
         mat->identity();
         M[N] = mat;
 
@@ -333,7 +342,7 @@ struct MatrixMod {
     }
 
     //PRECONDITION: n >= 0
-    static MatrixMod pow(const MatrixMod& m, int n) {
+    static MatrixMod<mod> pow(const MatrixMod& m, long long n) {
         if (n == 1)
             return m;
         else if (n == 0)
