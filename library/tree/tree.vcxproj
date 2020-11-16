@@ -198,6 +198,7 @@
     <ClCompile Include="treeBlockTreeLCA.cpp" />
     <ClCompile Include="treeBlockTreePathQuery.cpp" />
     <ClCompile Include="treeBlockTreePathQueryDynamic.cpp" />
+    <ClCompile Include="treePathVertexWeightVectorDot.cpp" />
     <ClCompile Include="treeReordering.cpp" />
     <ClCompile Include="treeWithCentroidDecomposition.cpp" />
     <ClCompile Include="treeUniqueValueCounterInDistanceOfSubtree.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="treeBlockTreeLCA.h" />
     <ClInclude Include="treeBlockTreePathQuery.h" />
     <ClInclude Include="treeBlockTreePathQueryDynamic.h" />
+    <ClInclude Include="treePathVertexWeightVectorDot.h" />
     <ClInclude Include="treeReordering.h" />
     <ClInclude Include="treeWithCentroidDecomposition.h" />
     <ClInclude Include="treeWithCentroidDecomposition_algo.h" />
