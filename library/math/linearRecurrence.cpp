@@ -6,6 +6,7 @@ using namespace std;
 
 #include "linearRecurrence.h"
 #include "detMod.h"
+#include "linearRecurrenceMatrix_CayleyHamiltonTheorem.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -17,8 +18,40 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+#include "fibonacci.h"
+
+const int MOD = 998'244'353;
+
+// https://www.codechef.com/problems/PANIC
+struct PanicSolver {
+    static MatrixMod<MOD> solve(const MatrixMod<MOD>& mat, int A, int D, int N) {
+        int W = int(mat.N);
+        int K = int(mat.N) * 2 + 1;
+
+        vector<int> fibo(K * 2);
+        for (int i = 0; i < K * 2; i++)
+            fibo[i] = fibonacciModFast<int, MOD>(A + 1ll * i * D);
+
+        vector<MatrixMod<MOD>> dp(K * 2, MatrixMod<MOD>(W));
+
+        MatrixMod<MOD> curr(W);
+
+        curr.identity();
+
+        dp[0] = curr * fibo[0];
+        for (int kk = 1; kk < K * 2; kk++) {
+            auto next = curr * mat;
+            dp[kk] = dp[kk - 1] + next * fibo[kk];
+            swap(curr.mat, next.mat);
+        }
+
+        MatrixLinearRecurrence<int,MOD> rec(dp, mat);
+        return rec.getNth(N);
+    }
+};
+
 void testLinearRecurrence() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Linear Recurrence (Berlekamp-Massey & Kitamasa) ---------------------------" << endl;
     // Berlekamp-Massey & Kitamasa
@@ -98,6 +131,29 @@ void testLinearRecurrence() {
                 cout << "Mismatched : " << ans1 << ", " << ans2 << endl;
             assert(ans1 == ans2);
         }
+    }
+    // Matrix Linear Recurrence
+    {
+        vector<vector<int>> in{
+            { 5, 7, 2 },
+            { 1, 8, 9 },
+            { 3, 4, 5 }
+        };
+        vector<vector<int>> gt{
+            { 601338635, 934201293, 356700741 },
+            { 960409891, 125261415, 197093893 },
+            { 136328022, 287118456, 122438416 }
+        };
+
+        MatrixMod<MOD> mat(3);
+        mat.mat = in;
+
+        int A = 23, D = 45, N = 107;
+        auto ans = PanicSolver::solve(mat, A, D, N);
+        if (ans != gt) {
+            cout << "Mismatched at " << __LINE__ << endl;;
+        }
+        assert(ans == gt);
     }
 
     cout << "OK!" << endl;

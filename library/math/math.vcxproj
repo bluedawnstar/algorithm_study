@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.h" />
+    <ClInclude Include="linearRecurrenceMatrix_CayleyHamiltonTheorem.h" />
     <ClInclude Include="detMod.h" />
     <ClInclude Include="expressionParser.h" />
     <ClInclude Include="factorialZeroes.h" />
