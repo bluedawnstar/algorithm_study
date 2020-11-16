@@ -158,6 +158,7 @@
     <ClCompile Include="polyFFTMod.cpp" />
     <ClCompile Include="ntt.cpp" />
     <ClCompile Include="polynomial.cpp" />
+    <ClCompile Include="polynomialSumMod.cpp" />
     <ClCompile Include="powerSeries.cpp" />
     <ClCompile Include="powerSumPolyMod.cpp" />
     <ClCompile Include="rootFindingLaguerre.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="polyFFTMod2.h" />
     <ClInclude Include="polyFFTMod3.h" />
     <ClInclude Include="polynomial.h" />
+    <ClInclude Include="polynomialSumMod.h" />
     <ClInclude Include="polynomial_application.h" />
     <ClInclude Include="powerSeries.h" />
     <ClInclude Include="powerSumPolyMod.h" />
