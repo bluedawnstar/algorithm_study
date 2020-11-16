@@ -72,4 +72,6 @@ int main(void) {
     TEST(SubsetXorSegmentTree);
     TEST(SegmentTreeBeats);
     TEST(SegmentTreePrimeFactorXorRollingHash);
+    TEST(LongestIncreasingSubsequence);
+    TEST(LongestIncreasingStep);
 }

@@ -163,6 +163,8 @@
     <ClCompile Include="intTriePersistent.cpp" />
     <ClCompile Include="consecutiveSubarray_RangeMax.cpp" />
     <ClCompile Include="consecutiveSubarray_DivideCombineTree.cpp" />
+    <ClCompile Include="longestIncreasingStep.cpp" />
+    <ClCompile Include="longestIncreasingSubsequence.cpp" />
     <ClCompile Include="mergeSortTree.cpp" />
     <ClCompile Include="mergeSortTree2DPoint_DynamicFast.cpp" />
     <ClCompile Include="mergeSortTreeCompact.cpp" />
@@ -216,6 +218,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
+    <ClInclude Include="longestIncreasingStep.h" />
+    <ClInclude Include="longestIncreasingSubsequence.h" />
+    <ClInclude Include="longestIncreasingSubsequenceOnline.h" />
     <ClInclude Include="segmentTreeCompactLazyEx.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
     <ClInclude Include="disjointSparseTable.h" />
