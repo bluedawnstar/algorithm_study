@@ -7,6 +7,33 @@
 #endif
 #include <immintrin.h>
 
+/*
+   <How to use>
+
+   1. multipoint evaluation
+
+      F(x) = (x - C[0])(x - C[1])...(x - C[n-1])
+      Y = { F(x[0]), F(x[1]), ..., F(x[n - 1]) }
+
+      1) build polynomial
+         // F(x) = (x - C[0])(x - C[1])...(x - C[n-1])
+         vector<algebra::poly<ModInt<int, MOD>>> treeF(4 * N);
+         algebra::build(treeF, 1, begin(C), end(C));    // F(x) = treeF.tree[1]
+
+      2) build eval polynomial
+         vector<ModInt<int,MOD>> X(n + 1);
+
+         //-- fill X values
+         // for (int i = 0; i <= n; i++)
+         //    X[i] = i;
+
+         vector<algebra::poly<ModInt<int, MOD>>> evalTree(4 * N);
+         algebra::build(evalTree, 1, begin(X), end(X));
+
+      3) calculate Y
+         auto Y = evalTree[1].eval(treeF, 1, begin(X), end(X));
+*/
+
 namespace algebra {
     // from https://github.com/e-maxx-eng/e-maxx-eng-aux/blob/master/src/polynomial.cpp
 

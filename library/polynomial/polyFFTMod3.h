@@ -4,6 +4,31 @@
 #define M_PI       3.14159265358979323846   // pi
 #endif
 
+/*
+   <How to use>
+
+   1. multipoint evaluation
+
+      F(x) = (x - C[0])(x - C[1])...(x - C[n-1])
+      Y = { F(x[0]), F(x[1]), ..., F(x[n - 1]) }
+
+      1) build polynomial
+         // F(x) = (x - C[0])(x - C[1])...(x - C[n-1])
+         PolyFFTMod3<MOD>::EvaluationTree F;
+         F.build(C);    // F(x) = F.tree[1]
+
+      2) build eval polynomial
+         vector<int> X(n + 1);
+         // fill X values
+         // ex) iota(X.begin(), X.end(), 0);
+
+         PolyFFTMod3<MOD>::EvaluationTree evalTree;
+         evalTree.build(X);
+
+      3) calculate Y
+         auto Y = evalTree.evaluate(F.tree[1], X);
+*/
+
 template <int mod, int MaxN = (1 << 20)>
 struct PolyFFTMod3 {
     static pair<double, double> w[MaxN];

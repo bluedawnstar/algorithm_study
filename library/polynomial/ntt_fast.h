@@ -7,6 +7,32 @@
 // It's not working for below 'M's. Use PolyNTT for these
 //    - 10^9 + 7
 //    - 10^9 + 9
+
+/*
+   <How to use>
+
+   1. multipoint evaluation
+
+      F(x) = (x - C[0])(x - C[1])...(x - C[n-1])
+      Y = { F(x[0]), F(x[1]), ..., F(x[n - 1]) }
+
+      1) build polynomial 
+         // F(x) = (x - C[0])(x - C[1])...(x - C[n-1])
+         FastNTT<>::EvaluationTree F;
+         F.build(C);    // F(x) = F.tree[1]
+
+      2) build eval polynomial
+         vector<int> X(n + 1);
+         // fill X values
+         // ex) iota(X.begin(), X.end(), 0);
+
+         FastNTT<>::EvaluationTree evalTree;
+         evalTree.build(X);
+
+      3) calculate Y
+         auto Y = evalTree.evaluate(F.tree[1], X);
+*/
+
 template <int mod, int root, int MaxBitSize = 20>
 struct FastNTT {
     static const int MAXN = 1 << MaxBitSize;
