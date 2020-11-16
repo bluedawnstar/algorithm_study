@@ -298,17 +298,17 @@ struct Matrix {
     }
 
     //PRECONDITION: n >= 0
-    static Matrix pow(const Matrix& m, T n) {
+    static Matrix pow(const Matrix& m, long long n) {
         if (n == 1)
             return m;
         else if (n == 0)
             return getIdentity(m.N);
 
-        if (n & 1)
-            return m * pow(m, n - 1);
-
         auto t = pow(m, n / 2);
-        return t * t;
+        if (n & 1)
+            return m * t * t;
+        else
+            return t * t;
     }
 };
 
