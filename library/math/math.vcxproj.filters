@@ -99,6 +99,9 @@
     <ClCompile Include="inversionCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="matrixPowerSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -210,6 +213,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="linearRecurrenceMatrix_CayleyHamiltonTheorem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="matrixPowerSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
