@@ -233,7 +233,7 @@
     <ClInclude Include="generalMaxMatchingWeighted.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="generalMaxMatchingWeightedFast.h">
+    <ClInclude Include="generalMaxMatchingWeighted2.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

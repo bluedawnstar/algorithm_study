@@ -8,7 +8,7 @@
 using namespace std;
 
 #include "generalMaxMatchingWeighted.h"
-#include "generalMaxMatchingWeightedFast.h"
+#include "generalMaxMatchingWeighted2.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -53,7 +53,7 @@ static long long solve1(int N, const vector<int>& vertexWeight, const vector<tup
         }
     }
 
-    auto res = FastWeightedGeneralMaxMatching<long long>(N * 2, edges).calcMaxWeightedMatching();
+    auto res = WeightedGeneralMaxMatching2<long long>(N * 2, edges).calcMaxWeightedMatching();
     return res.first;
 }
 

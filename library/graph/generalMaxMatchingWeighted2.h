@@ -11,7 +11,7 @@
   from https://uoj.ac/submission/385253
 */
 template <typename T, T INF = T(1) << (sizeof(T) * 8 - 2)>
-struct FastWeightedGeneralMaxMatching {
+struct WeightedGeneralMaxMatching2 {
     // modifiable heap
     template <typename T>
     struct BinaryHeap {
@@ -359,7 +359,7 @@ struct FastWeightedGeneralMaxMatching {
 
 public:
     // inputEdges = { (u, v, cost), ... }, 0 <= u, v < N
-    FastWeightedGeneralMaxMatching(int N, const vector<tuple<int, int, T>>& inputEdges)
+    WeightedGeneralMaxMatching2(int N, const vector<tuple<int, int, T>>& inputEdges)
             : N(N), B((N - 1) / 2), S(N + B + 1), ofs(N + 2), edges(inputEdges.size() * 2),
               heap2(S), heap2s(S, S), heap3(int(edges.size())), heap4(S) {
         for (auto& e : inputEdges) {
