@@ -17,7 +17,7 @@ int main(void) {
     TEST(MinPathCoverDAG);
     TEST(BipartiteMaching);
     TEST(BipartiteGraphCheck);
-    TEST(GeneralGraphMaxMatching);
+    TEST(GeneralMaxMatching);
     TEST(MinimumSpanningTree);
     TEST(Hungarian);
     TEST(GraphColoringGreedy);
@@ -36,4 +36,5 @@ int main(void) {
     TEST(SpecialMST);
     TEST(GlobalMinCutUnweightedKarger);
     TEST(BipartiteWeightedMaching);
+    TEST(GeneralMaxMatchingWeighted);
 }

@@ -16,12 +16,12 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void testGeneralGraphMaxMatching() {
+void testGeneralMaxMatching() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- General Graph - Max Matching -------------" << endl;
+    cout << "--- Blossom Algorithm for General Matching -------------" << endl;
     {
-        GeneralGraphMaxMatching<int> graph(4);
+        GeneralMaxMatching graph(4);
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);
@@ -33,7 +33,7 @@ void testGeneralGraphMaxMatching() {
         assert(ans == 2);
     }
     {
-        GeneralGraphMaxMatching<int> graph(10);
+        GeneralMaxMatching graph(10);
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);

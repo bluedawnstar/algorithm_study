@@ -1,15 +1,14 @@
 #pragma once
 
-// undirected graph
-template <typename T, const T INF = 0x3f3f3f3f>
-struct GeneralGraphMaxMatching {
+// Blossom Algorithm - general matching for undirected graph
+struct GeneralMaxMatching {
     int N;
     vector<vector<int>> edges;
 
-    GeneralGraphMaxMatching() : N(0) {
+    GeneralMaxMatching() : N(0) {
     }
 
-    GeneralGraphMaxMatching(int n) : N(n), edges(N) {
+    GeneralMaxMatching(int n) : N(n), edges(N) {
     }
 
     void init(int n) {

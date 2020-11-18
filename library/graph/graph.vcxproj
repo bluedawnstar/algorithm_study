@@ -158,6 +158,7 @@
     <ClCompile Include="dagMinPathCover.cpp" />
     <ClCompile Include="dominatorTree.cpp" />
     <ClCompile Include="eulerianDigraph.cpp" />
+    <ClCompile Include="generalMaxMatchingWeighted.cpp" />
     <ClCompile Include="globalMinCut.cpp" />
     <ClCompile Include="globalMinCutUnweighted_Karger.cpp" />
     <ClCompile Include="graphRealization.cpp" />
@@ -195,6 +196,8 @@
     <ClInclude Include="dagMinPathCover.h" />
     <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />
+    <ClInclude Include="generalMaxMatchingWeighted.h" />
+    <ClInclude Include="generalMaxMatchingWeightedFast.h" />
     <ClInclude Include="globalMinCut.h" />
     <ClInclude Include="globalMinCutUnweighted_Karger.h" />
     <ClInclude Include="globalMinCutNaive.h" />
