@@ -6,6 +6,8 @@
 using namespace std;
 
 #include "generalMaxMatching.h"
+#include "generalMaxMatchingRandomized.h"
+#include "generalMaxMatchingAlgebraic.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -17,40 +19,66 @@ using namespace std;
 #include "../common/profile.h"
 
 void testGeneralMaxMatching() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Blossom Algorithm for General Matching -------------" << endl;
     {
-        GeneralMaxMatching graph(4);
-        graph.addEdge(0, 1);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        graph.addEdge(0, 3);
+        const int N = 4;
+        vector<pair<int, int>> edges{
+            { 0, 1 },
+            { 1, 2 },
+            { 2, 3 },
+            { 0, 3 }
+        };
+
+        GeneralMaxMatching graph(N);
+        RandomizedGeneralMaxMatching randGraph(N);
+        AlgebraicGeneralMaxMatching algGraph(N);
+        for (auto& it : edges) {
+            graph.addEdge(it.first, it.second);
+            randGraph.addEdge(it.first, it.second);
+            algGraph.addEdge(it.first, it.second);
+        }
 
         int ans = graph.calcMaxMatching();
-        cout << "general max matching : " << ans << endl;
-        cout << graph.getLastMaxMatchingEdges() << endl;
-        assert(ans == 2);
+        int ans2 = randGraph.calcMaxMatching();
+        int ans3 = algGraph.calcMaxMatching();
+        if (ans != ans2 || ans != ans3)
+            cout << "Mismatched  at " << __LINE__ << " : " << ans << ", " << ans2 << ", " << ans3 << endl;
+        assert(ans == 2 && ans2 == 2 && ans3 == 2);
     }
     {
-        GeneralMaxMatching graph(10);
-        graph.addEdge(0, 1);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 5);
-        graph.addEdge(1, 9);
-        graph.addEdge(9, 8);
-        graph.addEdge(8, 4);
-        graph.addEdge(4, 5);
-        graph.addEdge(8, 7);
-        graph.addEdge(4, 6);
-        graph.addEdge(5, 6);
-        graph.addEdge(7, 6);
+        const int N = 10;
+        vector<pair<int, int>> edges{
+            { 0, 1 },
+            { 1, 2 },
+            { 2, 3 },
+            { 3, 5 },
+            { 1, 9 },
+            { 9, 8 },
+            { 8, 4 },
+            { 4, 5 },
+            { 8, 7 },
+            { 4, 6 },
+            { 5, 6 },
+            { 7, 6 }
+        };
+
+        GeneralMaxMatching graph(N);
+        RandomizedGeneralMaxMatching randGraph(N);
+        AlgebraicGeneralMaxMatching algGraph(N);
+        for (auto& it : edges) {
+            graph.addEdge(it.first, it.second);
+            randGraph.addEdge(it.first, it.second);
+            algGraph.addEdge(it.first, it.second);
+        }
 
         int ans = graph.calcMaxMatching();
-        cout << "general max matching : " << ans << endl;
-        cout << graph.getLastMaxMatchingEdges() << endl;
-        assert(ans == 5);
+        int ans2 = randGraph.calcMaxMatching();
+        int ans3 = algGraph.calcMaxMatching();
+        if (ans != ans2 || ans != ans3)
+            cout << "Mismatched  at " << __LINE__ << " : " << ans << ", " << ans2 << ", " << ans3 << endl;
+        assert(ans == 5 && ans2 == 5 && ans3 == 5);
     }
 
     cout << "OK" << endl;

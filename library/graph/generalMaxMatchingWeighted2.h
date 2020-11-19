@@ -1,14 +1,17 @@
 #pragma once
 
 /*
-  Maximum Weighted Matching in General Undirected Graphs (edge-weighted)
+  Maximum Weighted Perfect Matching in General Undirected Graphs (edge-weighted)
 
-  - time : O(N*M*log(N))
+  - time : O(N*M*log(N)) for sparse graph
   - space : O(N + M)
 
   Note: each vertex is 1-indexed internally.
 
-  from https://uoj.ac/submission/385253
+  <Ref>
+  - Harold N. Gabow, "Data Structures for Weighted Matching and Extensions to b-matching and f-factors" (2016)
+    (https://arxiv.org/abs/1611.07541)
+  - from https://uoj.ac/submission/385253
 */
 template <typename T, T INF = T(1) << (sizeof(T) * 8 - 2)>
 struct WeightedGeneralMaxMatching2 {

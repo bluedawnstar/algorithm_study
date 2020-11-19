@@ -242,6 +242,12 @@
     <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted_Random.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="generalMaxMatchingRandomized.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingAlgebraic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">

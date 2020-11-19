@@ -196,6 +196,8 @@
     <ClInclude Include="dagMinPathCover.h" />
     <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />
+    <ClInclude Include="generalMaxMatchingAlgebraic.h" />
+    <ClInclude Include="generalMaxMatchingRandomized.h" />
     <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted.h" />
     <ClInclude Include="generalMaxMatchingWeighted.h" />
     <ClInclude Include="generalMaxMatchingWeighted2.h" />

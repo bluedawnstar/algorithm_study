@@ -1,6 +1,9 @@
 #pragma once
 
-// Blossom Algorithm - general matching for undirected graph
+/*
+  Blossom Algorithm - general matching for undirected graph
+  - O(V^3)
+*/
 struct GeneralMaxMatching {
     int N;
     vector<vector<int>> edges;

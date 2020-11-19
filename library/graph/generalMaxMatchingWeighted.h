@@ -2,11 +2,12 @@
 
 /*
   Maximum Weighted Matching in General Undirected Graphs (edge-weighted)
-  - Blossom Algorithm, O(N^3)
+  - Blossom Algorithm, O(N^3) for dense graph
 
   Note: each vertex is 1-indexed internally.
 
   from https://github.com/koosaga/DeobureoMinkyuParty/blob/master/teamnote.pdf
+  http://jorisvr.nl/article/maximum-matching
 */
 template <typename T, T INF = 0x3f3f3f3f>
 struct WeightedGeneralMaxMatching {
