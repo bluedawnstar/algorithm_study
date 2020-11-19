@@ -320,8 +320,7 @@ private:
                                 return true;
                         } else {
                             updateSlack(u, group[v]);
-                        }
-                    }                }            }
+                        }                    }                }            }
             T d = INF;
             for (int b = N + 1; b <= currN; ++b) {
                 if (group[b] == b && state[b] == 1)
