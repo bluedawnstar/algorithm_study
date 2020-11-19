@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "gaussianElimination.h"
+#include "gaussianEliminationMod.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -17,16 +18,23 @@ using namespace std;
 #include <iostream>
 #include "../common/iostreamhelper.h"
 
+const int MOD = 1'000'000'007;
+
 void testGaussianElimination() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Gaussian Elimination -----------------------" << endl;
     {
         auto ans = SLAE::gauss(Matrix<double>(vector<vector<double>>{ { 4, 2, -1 }, { 2, 4, 3 }, { -1, 3, 5 } }), vector<double>{ 5, 19, 20 });
+        auto ans2 = SLAEMod<MOD>::gauss(MatrixMod<MOD>(vector<vector<int>>{ { 4, 2, MOD - 1 }, { 2, 4, 3 }, { MOD - 1, 3, 5 } }), vector<int>{ 5, 19, 20 });
         cout << ans << endl;
+        cout << ans2 << endl;
         assert(int(ans[0] + 0.5) == 1);
         assert(int(ans[1] + 0.5) == 2);
         assert(int(ans[2] + 0.5) == 3);
+        assert(ans2[0] == 1);
+        assert(ans2[1] == 2);
+        assert(ans2[2] == 3);
     }
     {
         vector<double> ans;

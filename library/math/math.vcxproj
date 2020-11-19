@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrayGeneratorWithDistinctSubarraySums_GolombRuler.h" />
+    <ClInclude Include="gaussianEliminationMod.h" />
     <ClInclude Include="linearRecurrenceMatrix_CayleyHamiltonTheorem.h" />
     <ClInclude Include="detMod.h" />
     <ClInclude Include="expressionParser.h" />
