@@ -236,6 +236,9 @@
     <ClInclude Include="generalMaxMatchingWeighted2.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">

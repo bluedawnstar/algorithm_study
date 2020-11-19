@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-  Maximum Weighted Matching in General Undirected Graphs
+  Maximum Weighted Matching in General Undirected Graphs (edge-weighted)
   - Blossom Algorithm, O(N^3)
 
   Note: each vertex is 1-indexed internally.

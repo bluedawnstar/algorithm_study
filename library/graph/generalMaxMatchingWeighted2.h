@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-  Maximum Weighted Matching in General Undirected Graphs
+  Maximum Weighted Matching in General Undirected Graphs (edge-weighted)
 
   - time : O(N*M*log(N))
   - space : O(N + M)
@@ -378,7 +378,7 @@ public:
     }
 
     // return (weight-sum, mate vector),  -1 <= mate[i] < N
-    pair<T, vector<int>> calcMaxWeightedMatching(bool initMatching = false) {
+    pair<long long, vector<int>> calcMaxWeightedMatching(bool initMatching = false) {
         initialize();
         setPotential();
         if (initMatching)
@@ -389,7 +389,7 @@ public:
                 doEdmondsSearch(u);
         }
 
-        pair<T, vector<int>> res;
+        pair<long long, vector<int>> res;
         res.first = computeOptimalValue();
 
         res.second.reserve(N);
@@ -451,8 +451,8 @@ private:
         }
     };
 
-    T computeOptimalValue() const {
-        T res = 0;
+    long long computeOptimalValue() const {
+        long long res = 0;
         for (int u = 1; u <= N; ++u) {
             if (mate[u] > u) {
                 T maxCost = 0;
