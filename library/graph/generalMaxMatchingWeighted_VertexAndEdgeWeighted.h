@@ -4,6 +4,10 @@
 
 // https://www.codechef.com/problems/SELEDGE
 
+/*
+  Maximum Weighted Matching in General Undirected Graphs (vertex and edge weighted)
+  - Blossom Algorithm, O(N^3)
+*/
 template <typename T, T INF = 0x3f3f3f3f>
 struct GeneralMaxMatchingWithVertexAndEdgeWeight {
     static long long calcMaxMatching(int N, const vector<T>& vertexWeight,

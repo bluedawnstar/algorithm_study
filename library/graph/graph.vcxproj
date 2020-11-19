@@ -199,6 +199,7 @@
     <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted.h" />
     <ClInclude Include="generalMaxMatchingWeighted.h" />
     <ClInclude Include="generalMaxMatchingWeighted2.h" />
+    <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted_Random.h" />
     <ClInclude Include="globalMinCut.h" />
     <ClInclude Include="globalMinCutUnweighted_Karger.h" />
     <ClInclude Include="globalMinCutNaive.h" />

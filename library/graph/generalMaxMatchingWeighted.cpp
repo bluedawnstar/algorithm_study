@@ -1,6 +1,9 @@
 #include <assert.h>
 #include <tuple>
+#include <limits>
 #include <numeric>
+#include <random>
+#include <chrono>
 #include <vector>
 #include <queue>
 #include <unordered_map>
@@ -12,6 +15,7 @@ using namespace std;
 #include "generalMaxMatchingWeighted2.h"
 
 #include "generalMaxMatchingWeighted_VertexAndEdgeWeighted.h"
+#include "generalMaxMatchingWeighted_VertexAndEdgeWeighted_Random.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -45,7 +49,10 @@ void testGeneralMaxMatchingWeighted() {
         auto ans1 = GeneralMaxMatchingWithVertexAndEdgeWeight2<int>::calcMaxMatching(N, vertexWeight, edges);
         auto ans2 = GeneralMaxMatchingWithVertexAndEdgeWeight<int>::calcMaxMatching(N, vertexWeight, edges);
         auto ans2k = GeneralMaxMatchingWithVertexAndEdgeWeight<int>::calcMaxMatching(N, vertexWeight, edges, K);
+        auto ans3 = RandomizedGeneralMaxMatchingWithVertexAndEdgeWeight::calcMaxMatching1(N, vertexWeight, edges, K, 100);
+        auto ans4 = RandomizedGeneralMaxMatchingWithVertexAndEdgeWeight::calcMaxMatching2(N, vertexWeight, edges, K, 100);
         assert(ans1 == 27 && ans2 == 27 && ans2k == 27);
+        assert(ans3 == 27 && ans4 == 27);
     }
 
     cout << "OK" << endl;
