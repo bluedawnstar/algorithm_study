@@ -5,6 +5,9 @@ struct MatrixMod {
     int N;
     vector<vector<int>> mat;
 
+    MatrixMod() : N(0) {
+    }
+
     explicit MatrixMod(int _N) : N(_N), mat(_N, vector<int>(_N)) {
     }
 
@@ -76,6 +79,12 @@ struct MatrixMod {
     MatrixMod<mod>& init() {
         for (int i = 0; i < N; i++)
             fill(mat[i].begin(), mat[i].end(), 0);
+        return *this;
+    }
+
+    MatrixMod<mod>& init(int n) {
+        N = n;
+        mat = vector<vector<int>>(n, vector<int>(n));
         return *this;
     }
 

@@ -32,4 +32,5 @@ int main(void) {
     TEST(TransformOperationByAddOrMult);
     TEST(ProuhetTarryEscottProblem);
     TEST(InversionCounter);
+    TEST(MatrixPowerSum);
 }

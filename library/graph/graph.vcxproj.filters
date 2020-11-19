@@ -111,6 +111,9 @@
     <ClCompile Include="bipartiteWeightedMatching.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="generalMaxMatchingWeighted.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -225,6 +228,24 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bipartiteWeightedMatching.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingWeighted.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingWeighted2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingWeighted_VertexAndEdgeWeighted_Random.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingRandomized.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="generalMaxMatchingAlgebraic.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
