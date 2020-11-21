@@ -166,6 +166,7 @@
     <ClCompile Include="matrixPowerSum.cpp" />
     <ClCompile Include="prouhetTarryEscottProblem.cpp" />
     <ClCompile Include="roundRobinTournament.cpp" />
+    <ClCompile Include="simplex.cpp" />
     <ClCompile Include="simpsonIntegration.cpp" />
     <ClCompile Include="sternBrocot-fractionFinder.cpp" />
     <ClCompile Include="sternBrocotSequence.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="multinomialTheorem.h" />
     <ClInclude Include="prouhetTarryEscottProblem.h" />
     <ClInclude Include="roundRobinTournament.h" />
+    <ClInclude Include="simplex.h" />
     <ClInclude Include="simpsonIntegration.h" />
     <ClInclude Include="sternBrocot-fractionFinder.h" />
     <ClInclude Include="sternBrocot-fractionFinder2.h" />
