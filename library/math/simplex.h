@@ -2,13 +2,19 @@
 
 /*
   <LP(Linear Program) solver>
-  Maximize  c^T x
-  - subject to Ax <= b, x >= 0
+    Maximize  c^T x
+    - subject to Ax <= b, x >= 0
 
-  - time complexity: O(2^n). O(M*N^2) in experiment. dependent on the modeling.
+    - time complexity: O(2^n). O(M*N^2) in experiment. dependent on the modeling.
 
-  from https://github.com/kth-competitive-programming/kactl/blob/master/content/numerical/Simplex.h
-  from https://github.com/koosaga/DeobureoMinkyuParty/blob/master/teamnote.pdf
+    from https://github.com/kth-competitive-programming/kactl/blob/master/content/numerical/Simplex.h
+    from https://github.com/koosaga/DeobureoMinkyuParty/blob/master/teamnote.pdf
+
+  <How to solve>
+    result = Simplex(A, b, c).solve(x);
+
+    - input  : A, b, c
+    - output : result, x
 */
 struct Simplex {
     using T = double;
