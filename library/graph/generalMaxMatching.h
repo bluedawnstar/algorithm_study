@@ -3,6 +3,10 @@
 /*
   Blossom Algorithm - general matching for undirected graph
   - O(V^3)
+
+  https://en.wikipedia.org/wiki/Blossom_algorithm
+  https://www.secmem.org/blog/2020/04/18/Blossom/
+  https://blog.kyouko.moe/20?category=767011
 */
 struct GeneralMaxMatching {
     int N;
