@@ -34,4 +34,5 @@ int main(void) {
     TEST(InversionCounter);
     TEST(MatrixPowerSum);
     TEST(Simplex);
+    TEST(SimplexPolygonChain);
 }
