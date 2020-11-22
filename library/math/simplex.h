@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-  <LP(Linear Program) solver>
+  <LP(Linear Programming) solver>
     Maximize  c^T x
     - subject to Ax <= b, x >= 0
 
@@ -87,7 +87,7 @@ struct Simplex {
             for (int i = 0; i < m; i++) {
                 if (B[i] == -1) {
                     int s = 0;
-                    for (int j = 1; j < n + 1; j++) {
+                    for (int j = 1; j <= n; j++) {
                         if (s == -1 || make_pair(D[i][j], N[j]) < make_pair(D[i][s], N[s]))
                             s = j;
                     }
@@ -96,27 +96,29 @@ struct Simplex {
             }
         }
 
-        bool ok = simplex(1);
+        if (!simplex(1))
+            return INF;
+
         x = vector<T>(n);
         for (int i = 0; i < m; i++) {
             if (B[i] < n)
                 x[B[i]] = D[i][n + 1];
         }
 
-        return ok ? D[m][n + 1] : INF;
+        return D[m][n + 1];
     }
 
 private:
     void pivot(int r, int s) {
-        T* a = D[r].data();
-        T inv = 1 / a[s];
+        T inv = 1 / D[r][s];
         for (int i = 0; i < m + 2; i++) {
             if (i != r && abs(D[i][s]) > EPSILON) {
-                T *b = D[i].data();
-                T inv2 = b[s] * inv;
-                for (int j = 0; j < n + 2; j++)
-                    b[j] -= a[j] * inv2;
-                b[s] = a[s] * inv2;
+                T inv2 = D[i][s] * inv;
+                for (int j = 0; j < n + 2; j++) {
+                    if (j != s)
+                        D[i][j] -= D[r][j] * inv2;
+                }
+                D[i][s] = D[r][s] * inv2;
             }
         }
         for (int j = 0; j < n + 2; j++) {
@@ -133,9 +135,9 @@ private:
 
     bool simplex(int phase) {
         int x = m + phase - 1;
-        for (;;) {
+        while (true) {
             int s = -1;
-            for (int j = 0; j < n + 1; j++) {
+            for (int j = 0; j <= n; j++) {
                 if (N[j] != -phase) {
                     if (s == -1 || make_pair(D[x][j], N[j]) < make_pair(D[x][s], N[s]))
                         s = j;

@@ -20,7 +20,7 @@ using namespace std;
 void testSimplex() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Linear Program (Simplex) ------------------------------" << endl;
+    cout << "--- Linear Programming (Simplex) ------------------------------" << endl;
     {
         vector<vector<double>> A{
             {  1, -1 },
