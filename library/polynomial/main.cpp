@@ -23,4 +23,5 @@ int main(void) {
     TEST(PowerSeries);
     TEST(PentagonalNumber);
     TEST(PolynomialSum);
+    TEST(ModComplex);
 }
