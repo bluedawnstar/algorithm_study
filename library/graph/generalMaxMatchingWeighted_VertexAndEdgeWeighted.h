@@ -51,7 +51,7 @@ struct GeneralMaxMatchingWithVertexAndEdgeWeight {
         return res.first;
     }
 
-    // Linear Program (Simplex), O(N^3)
+    // Linear Programming (Simplex), O(N^3)
     // - from https://www.codechef.com/viewsolution/39445510
     static long long calcMaxMatchingWithSimplex(int N, const vector<T>& vertexWeight,
         vector<tuple<int, int, T>> edges, int K = numeric_limits<int>::max()) {
