@@ -150,6 +150,7 @@
     <ClCompile Include="diophantineEquation.cpp" />
     <ClCompile Include="discreteEquations.cpp" />
     <ClCompile Include="discreteLog.cpp" />
+    <ClCompile Include="discreteSqrt.cpp" />
     <ClCompile Include="eulerTheorem.cpp" />
     <ClCompile Include="factor.cpp" />
     <ClCompile Include="factorialMod.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="discreteLog.h" />
     <ClInclude Include="discreteLogFast.h" />
     <ClInclude Include="discreteRoot.h" />
+    <ClInclude Include="discreteSqrt.h" />
     <ClInclude Include="eulerTheorem-coprimePairs.h" />
     <ClInclude Include="eulerTheorem-gcdOfAllPairs.h" />
     <ClInclude Include="eulerTheorem-PillaiArithmeticalFunction.h" />

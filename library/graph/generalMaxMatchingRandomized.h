@@ -29,7 +29,7 @@ struct RandomizedGeneralMaxMatching {
     }
 
     // Randomized Algorithm : O(N * tryCount)
-    int calcMaxMatching(int tryCount = 10) {
+    int calcMaxMatching(int tryCount = 100) {
         link = vector<int>(N, -1);
         visitTime = vector<int>(N);
         currTime = 0;

@@ -3,7 +3,7 @@
 // from https://www.hackerearth.com/challenges/competitive/july-circuits-19/algorithm/something-additive-for-you-4e9342a9/submission/28663751/
 // from https://github.com/e-maxx-eng/e-maxx-eng-aux/blob/master/src/polynomial.cpp
 
-template <typename T = long long, int mod = 1000000007>
+template <typename T = long long, int mod = 1'000'000'007>
 struct ModInt {
     typedef T   type;
     static const int mod_value = mod;
@@ -98,18 +98,30 @@ struct ModInt {
     bool operator <(const ModInt& rhs) { return value < rhs.value; }
 
     ModInt inverse() const {
-        return pow(*this, mod - 2);
+        return pow(mod - 2);
     }
 
     template <typename U>
-    friend ModInt pow(const ModInt& a, const U& b) {
-        //assert(b >= 0);
-        ModInt x = a, res = 1;
-        U p = b;
+    ModInt pow(U p) const {
+        //assert(p >= 0);
+        ModInt x = *this, res = 1;
         while (p > 0) {
             if (p & 1)
                 res *= x;
-            x *= x;
+            x = x * x;
+            p >>= 1;
+        }
+        return res;
+    }
+
+    template <typename U>
+    friend ModInt pow(ModInt x, U p) {
+        //assert(p >= 0);
+        ModInt res = 1;
+        while (p > 0) {
+            if (p & 1)
+                res *= x;
+            x = x * x;
             p >>= 1;
         }
         return res;

@@ -184,7 +184,7 @@ struct RandomizedGeneralMaxMatchingWithVertexAndEdgeWeight {
             edges.emplace_back(u, u + N, vertexW[u]);
 
         //static mt19937 eng(0xCD0F);
-        static mt19937 eng(chrono::steady_clock::now().time_since_epoch().count());
+        static mt19937 eng(static_cast<unsigned int>(chrono::steady_clock::now().time_since_epoch().count()));
 
         long long res = 0;
         for (int t = 0; t < tryCount; t++) {
@@ -240,7 +240,7 @@ struct RandomizedGeneralMaxMatchingWithVertexAndEdgeWeight {
         }
 
         //static mt19937 eng(0xCD0F);
-        static mt19937 eng(chrono::steady_clock::now().time_since_epoch().count());
+        static mt19937 eng(static_cast<unsigned int>(chrono::steady_clock::now().time_since_epoch().count()));
 
         long long res = 0;
         for (int t = 0; t < tryCount; t++) {

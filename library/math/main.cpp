@@ -33,4 +33,6 @@ int main(void) {
     TEST(ProuhetTarryEscottProblem);
     TEST(InversionCounter);
     TEST(MatrixPowerSum);
+    TEST(Simplex);
+    TEST(SimplexPolygonChain);
 }
