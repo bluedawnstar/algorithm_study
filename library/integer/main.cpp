@@ -32,4 +32,5 @@ int main(void) {
     TEST(Int128);
     TEST(DiscreteLog);
     TEST(SubsetXOR);
+    TEST(DiscreteSqrt);
 }
