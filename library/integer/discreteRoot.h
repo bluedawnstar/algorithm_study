@@ -5,11 +5,12 @@
 // find x satisfying  x^a = b (mod mod), mod is a prime number
 template <typename T>
 struct DiscreteRoot {
+    // O(mod * log^2(mod) + sqrt(mod) * log(mod))
     static T rootAny(T a, T b, T mod) {
         if (a == 0)
             return -1;
-        T g = generator(mod);
-        T sq = T(sqrt(mod)) + 1;
+        T g = generator(mod);       // 
+        T sq = T(sqrt(mod)) + 1;    // 
 
         vector<pair<T, T>> dec(sq);
         for (T i = 1; i <= sq; i++)
