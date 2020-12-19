@@ -171,6 +171,9 @@
     <ClCompile Include="pairCounterWithBitwiseOperation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="permutationCountByDivisibleAdjacentPairCount.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -372,6 +375,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="pairCounterWithBitwiseOperation.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="permutationCountByDivisibleAdjacentPairCount.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

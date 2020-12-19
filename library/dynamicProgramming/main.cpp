@@ -53,6 +53,7 @@ int main(void) {
     TEST(SameDistanceTripleCounterOnTree);
     TEST(IndependentEdgeSetOnTree);
     TEST(PairCounterWithBitwiseOperation);
+    TEST(PermutationCounterByDivisibleAdjacentPairCount);
     //--- problems
     TEST(ChefAndSum);
 }
