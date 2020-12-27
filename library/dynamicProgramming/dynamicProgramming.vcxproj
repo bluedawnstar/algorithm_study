@@ -152,6 +152,7 @@
     <ClCompile Include="digitDP_IncreasingDigitSequence.cpp" />
     <ClCompile Include="digitDP_PalindromicNumber.cpp" />
     <ClCompile Include="gridConnectedComponentCounter.cpp" />
+    <ClCompile Include="gridMultistepPathCounterWithObstacles.cpp" />
     <ClCompile Include="gridPathCounterWithObstacles.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="maxProfit.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="digitDP_IncreasingDigitSequenceNaive.h" />
     <ClInclude Include="digitDP_PalindromicNumber.h" />
     <ClInclude Include="gridConnectedComponentCounter.h" />
+    <ClInclude Include="gridMultistepPathCounterWithObstacles.h" />
     <ClInclude Include="gridPathCounterWithObstacles.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />

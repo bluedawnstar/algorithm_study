@@ -47,6 +47,7 @@ int main(void) {
     TEST(BracketChangeCounter);
     TEST(SquareSubsets);
     TEST(GridPathCounterWithObstacles);
+    TEST(GridMultistepPathCounterWithObstacles);
     TEST(MaxWeightOfAllConcatenatedStrings);
     TEST(GridConnectedComponentCounter);
     TEST(LongestZigzagSubsequence);
