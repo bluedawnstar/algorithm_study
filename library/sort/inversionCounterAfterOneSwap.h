@@ -38,7 +38,7 @@ struct InversionCounterAfterOneSwap {
         }
     };
 
-    // O(N*log(MAX_VALUE))
+    // O(N^2*log(MAX_VALUE))
     static long long count(const vector<int>& A) {
         int N = int(A.size());
         int maxX = *max_element(A.begin(), A.end());
@@ -50,6 +50,10 @@ struct InversionCounterAfterOneSwap {
             for (int j = i + 1; j < N; j++) {
                 if (A[i] > A[j]) {
                     totalInversionCount++;
+                    // A[i] > { A[i+a], A[i+b], A[i+c], ... } > A[j], i < { i+a, i+b, i+c, ... } < j
+                    //     { A[i], A[i+a] }, { A[i], A[i+b] }, { A[i], A[i+c] }, ...
+                    //   + { A[i+a], A[j] }, { A[i+b], A[j] }, { A[i+c], A[j] }, ...
+                    //   + { A[i], A[j] }
                     reducibleInversionCount = max(reducibleInversionCount, bit.sumRange(A[j] + 1, A[i] - 1) * 2 + 1);
                 }
                 bit.add(A[j], 1);
@@ -59,3 +63,6 @@ struct InversionCounterAfterOneSwap {
         return totalInversionCount - reducibleInversionCount;
     }
 };
+
+// <Related problems>
+// https://www.hackerearth.com/practice/data-structures/advanced-data-structures/fenwick-binary-indexed-trees/practice-problems/algorithm/move-minimization-8a9d3991
