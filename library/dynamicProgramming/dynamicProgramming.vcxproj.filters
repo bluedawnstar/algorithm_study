@@ -180,6 +180,9 @@
     <ClCompile Include="treeDP_TreePathDecompositionCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="problems\distinctValueSetCounterOfLinearCombination.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="treeDP_TreePathDecompositionCounter.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\distinctValueSetCounterOfLinearCombination.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

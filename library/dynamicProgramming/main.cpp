@@ -58,4 +58,5 @@ int main(void) {
     TEST(TreePathDecompositionCounter);
     //--- problems
     TEST(ChefAndSum);
+    TEST(DistinctValueSetCounterOfLinearCombination);
 }
