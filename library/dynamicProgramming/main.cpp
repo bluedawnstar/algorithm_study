@@ -55,6 +55,7 @@ int main(void) {
     TEST(IndependentEdgeSetOnTree);
     TEST(PairCounterWithBitwiseOperation);
     TEST(PermutationCounterByDivisibleAdjacentPairCount);
+    TEST(TreePathDecompositionCounter);
     //--- problems
     TEST(ChefAndSum);
 }
