@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="mexSet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="wythoffGame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -30,11 +27,11 @@
     <ClCompile Include="minimumKnightMoves.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mexTrie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mexSet.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="mexBitSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -48,6 +45,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="minimumKnightMoves.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mexTrie.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

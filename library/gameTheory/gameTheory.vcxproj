@@ -147,14 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mexSet.cpp" />
+    <ClCompile Include="mexTrie.cpp" />
     <ClCompile Include="minimumKnightMoves.cpp" />
     <ClCompile Include="pirateGame.cpp" />
     <ClCompile Include="wythoffGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mexBitSet.h" />
-    <ClInclude Include="mexSet.h" />
+    <ClInclude Include="mexTrie.h" />
     <ClInclude Include="minimumKnightMoves.h" />
     <ClInclude Include="pirateGame.h" />
     <ClInclude Include="pirateGameExtended.h" />

@@ -40,22 +40,12 @@ struct MexTrie {
         }
     }
 
-    bool exists(int x) const {
-        Node* v = root;
-        for (int i = 30; i >= 0; i--) {
-            int b = (x >> i) & 1;
-            if (v->child[b] == nullptr)
-                return false;
-            v = v->child[b];
-        }
-        return true;
-    }
-
-    int mex(int x) const {
+    // return mex{A[0]^xorAdd, A[1]^xorAdd, ..., A[n-1]^xorAdd}
+    int mex(int xorAdd = 0) const {
         Node *v = root;
         int m = 0;
         for (int i = 30; i >= 0; i--) {
-            int b = (x >> i) & 1;
+            int b = (xorAdd >> i) & 1;
             if (v->child[b] == nullptr)
                 return m;
 
@@ -79,21 +69,15 @@ private:
         nodes.push_back(p);
         return p;
     }
-};
 
-struct MexSet {
-    int globalX = 0;
-    MexTrie T;
-
-    void insert(int x) {
-        T.insert(x);
-    }
-
-    void xorAll(int x) {
-        globalX ^= x;
-    }
-
-    int get() const {
-        return T.mex(globalX);
+    bool exists(int x) const {
+        Node* v = root;
+        for (int i = 30; i >= 0; i--) {
+            int b = (x >> i) & 1;
+            if (v->child[b] == nullptr)
+                return false;
+            v = v->child[b];
+        }
+        return true;
     }
 };
