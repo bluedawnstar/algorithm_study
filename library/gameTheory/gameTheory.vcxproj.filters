@@ -30,6 +30,9 @@
     <ClCompile Include="mexTrie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="grundyOnTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mexBitSet.h">
@@ -48,6 +51,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mexTrie.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="grundyOnTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

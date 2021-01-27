@@ -10,4 +10,5 @@ int main(void) {
     TEST(WythoffGame);
     TEST(PirateGame);
     TEST(MinimumKnightMoves);
+    TEST(GrundyOnTree);
 }

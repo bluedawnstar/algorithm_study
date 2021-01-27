@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="grundyOnTree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mexTrie.cpp" />
     <ClCompile Include="minimumKnightMoves.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="wythoffGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="grundyOnTree.h" />
     <ClInclude Include="mexBitSet.h" />
     <ClInclude Include="mexTrie.h" />
     <ClInclude Include="minimumKnightMoves.h" />
