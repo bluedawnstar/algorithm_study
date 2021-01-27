@@ -46,9 +46,9 @@ private:
     /*
         grundy number G
 
-        G[u] = mex{ G[state0][v0] ^ G[state0][v1] ^ ...,
-                    G[state1][v0] ^ G[state0][v1] ^ ...,
-                    G[state2][v0] ^ G[state0][v1] ^ ...,
+        G[u] = mex{ G[state0][v0] ^ G[state0][v1] ^ ... ^ G[state0][v_i] ^ ...,
+                    G[state1][v0] ^ G[state1][v1] ^ ... ^ G[state0][v_j] ^ ...,
+                    G[state2][v0] ^ G[state2][v1] ^ ... ^ G[state0][v_k] ^ ...,
                     ...
                   }
     */
