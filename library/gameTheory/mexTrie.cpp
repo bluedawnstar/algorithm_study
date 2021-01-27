@@ -1,4 +1,5 @@
 #include <functional>
+#include <array>
 #include <vector>
 #include <algorithm>
 
@@ -19,7 +20,7 @@ using namespace std;
 #include "../common/profile.h"
 
 static int getMex(const vector<int>& in, int globalXor = 0) {
-    MexTrie mex;
+    MexTrie<> mex;
     for (auto x : in)
         mex.insert(x);
     int ans1 = mex.mex(globalXor);
