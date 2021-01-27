@@ -155,8 +155,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grundyOnTree.h" />
+    <ClInclude Include="grundyOnTree2.h" />
     <ClInclude Include="mexBitSet.h" />
     <ClInclude Include="mexTrie.h" />
+    <ClInclude Include="mexTriePersistent.h" />
     <ClInclude Include="minimumKnightMoves.h" />
     <ClInclude Include="pirateGame.h" />
     <ClInclude Include="pirateGameExtended.h" />

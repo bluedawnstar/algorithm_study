@@ -3,18 +3,20 @@
 // https://www.hackerearth.com/practice/algorithms/graphs/depth-first-search/practice-problems/algorithm/tree-game-2-e6796bef/description/
 
 template <int MaxBitN = 31>
-struct GrundyOnTree {
+struct GrundyOnTree2 {
     int N;
     vector<vector<int>> edges;
 
-    vector<MexTrie<MaxBitN>> mexTrie;
+    PersistentMexTrie<MaxBitN> mexTrie;
+    vector<int> roots;
+
     vector<int> lazy;
     vector<int> grundy; // grundy[u] = grundy number of sub-tree of u
 
-    GrundyOnTree() : N(0) {
+    GrundyOnTree2() : N(0) {
     }
 
-    explicit GrundyOnTree(int n) {
+    explicit GrundyOnTree2(int n) {
         init(n);
     }
 
@@ -22,7 +24,9 @@ struct GrundyOnTree {
         N = n;
         edges = vector<vector<int>>(n);
 
-        mexTrie = vector<MexTrie<MaxBitN>>(n);
+        mexTrie.init();
+        roots = vector<int>(n);
+
         lazy = vector<int>(n);
         grundy = vector<int>(n);
     }
@@ -71,14 +75,15 @@ private:
                 continue;
             lazy[v] ^= childGrundy ^ grundy[v];
             // small-to-large
-            if (mexTrie[v].size() > mexTrie[u].size()) {
-                swap(mexTrie[u], mexTrie[v]);
+            if (mexTrie.count(roots[v]) > mexTrie.count(roots[u])) {
+                swap(roots[u], roots[v]);
                 swap(lazy[u], lazy[v]);
             }
             // merge
-            mexTrie[u].merge(mexTrie[v], lazy[u] ^ lazy[v]);
+            //roots[u] = mexTrie.merge(roots[u], roots[v], lazy[u] ^ lazy[v]);
+            roots[u] = mexTrie.mergeMove(roots[u], roots[v], lazy[u] ^ lazy[v]);
         }
-        grundy[u] = mexTrie[u].mex(lazy[u]);
-        mexTrie[u].insert(childGrundy ^ lazy[u]);
+        grundy[u] = mexTrie.mex(roots[u], lazy[u]);
+        roots[u] = mexTrie.insert(roots[u], childGrundy ^ lazy[u]).first;
     }
 };
