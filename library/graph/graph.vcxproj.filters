@@ -114,6 +114,9 @@
     <ClCompile Include="generalMaxMatchingWeighted.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="directedMinimumSpanningTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -246,6 +249,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="generalMaxMatchingAlgebraic.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="directedMinimumSpanningTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

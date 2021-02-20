@@ -37,4 +37,5 @@ int main(void) {
     TEST(GlobalMinCutUnweightedKarger);
     TEST(BipartiteWeightedMaching);
     TEST(GeneralMaxMatchingWeighted);
+    TEST(DirectedMST);
 }
