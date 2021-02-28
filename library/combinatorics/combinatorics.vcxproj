@@ -155,9 +155,9 @@
     <ClCompile Include="latinSquare.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxMatchingInMatrix.cpp" />
-    <ClCompile Include="minManhattanDistanceSet.cpp" />
     <ClCompile Include="nextCombination.cpp" />
     <ClCompile Include="nextPermutation.cpp" />
+    <ClCompile Include="problems\minManhattanDistanceSet.cpp" />
     <ClCompile Include="pruferCode.cpp" />
     <ClCompile Include="stirlingNumber.cpp" />
   </ItemGroup>
@@ -175,9 +175,9 @@
     <ClInclude Include="kirchhoffTheorem.h" />
     <ClInclude Include="latinSquare.h" />
     <ClInclude Include="maxMatchingInMatrix.h" />
-    <ClInclude Include="minManhattanDistanceSet.h" />
     <ClInclude Include="nextCombination.h" />
     <ClInclude Include="nextPermutation.h" />
+    <ClInclude Include="problems\minManhattanDistanceSet.h" />
     <ClInclude Include="pruferCode.h" />
     <ClInclude Include="stirlingNumber.h" />
   </ItemGroup>
