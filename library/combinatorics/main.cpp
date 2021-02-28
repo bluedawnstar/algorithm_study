@@ -18,4 +18,5 @@ int main(void) {
     TEST(LatinSquare);
     TEST(MaxMatchingInMatrix);
     TEST(IntegerPartition);
+    TEST(MinManhattanDistanceSet);
 }
