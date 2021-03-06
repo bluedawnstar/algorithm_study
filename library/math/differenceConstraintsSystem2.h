@@ -1,5 +1,24 @@
 #pragma once
 
+/*
+    1. Systems of Inequalities (system of difference constraints)
+
+       Path p = (v1, v2, ..., vn)
+
+          x[2] - x[1] <= w[1,2]
+          x[3] - x[2] <= w[2,3]
+          ...
+          x[n] - x[n-1] <= w[n-1,n]
+
+      <=>
+                          n
+          x[n] - x[1] <= SUM { w[i-1,i] } = w(p)
+                         i=2
+
+      ==>
+
+          x[n] - x[1] <= (the weight of the shortest path from v1 to vn)
+*/
 struct DifferenceConstraintsSystem2 {
     int N;                                  // the number of variables
     vector<int> curValues;                  // current values of variables
