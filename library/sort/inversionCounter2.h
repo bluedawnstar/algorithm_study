@@ -29,6 +29,7 @@ struct InversionCounter2 {
         }
     };
 
+    // O(N*log(MAX_VALUE))
     static long long count(vector<int>& A) {
         int maxN = *max_element(A.begin(), A.end());
         BIT bit(maxN);

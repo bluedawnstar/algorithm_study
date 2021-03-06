@@ -34,5 +34,8 @@ int main(void) {
     TEST(InversionCounter);
     TEST(MatrixPowerSum);
     TEST(Simplex);
+    TEST(DifferenceConstraintsSystem);
+    TEST(DifferenceConstraintsSystem2);
+    //--- problems
     TEST(SimplexPolygonChain);
 }

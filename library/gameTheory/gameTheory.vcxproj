@@ -146,15 +146,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="grundyOnTree.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mexSet.cpp" />
+    <ClCompile Include="mexTrie.cpp" />
     <ClCompile Include="minimumKnightMoves.cpp" />
     <ClCompile Include="pirateGame.cpp" />
     <ClCompile Include="wythoffGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="grundyOnTree.h" />
+    <ClInclude Include="grundyOnTree2.h" />
     <ClInclude Include="mexBitSet.h" />
-    <ClInclude Include="mexSet.h" />
+    <ClInclude Include="mexTrie.h" />
+    <ClInclude Include="mexTriePersistent.h" />
     <ClInclude Include="minimumKnightMoves.h" />
     <ClInclude Include="pirateGame.h" />
     <ClInclude Include="pirateGameExtended.h" />

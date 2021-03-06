@@ -111,6 +111,12 @@
     <ClCompile Include="problems\simplex_polygonChain.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="differenceConstraintsSystem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="differenceConstraintsSystem2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -235,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="problems\simplex_polygonChain.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="differenceConstraintsSystem.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="differenceConstraintsSystem2.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

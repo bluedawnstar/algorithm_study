@@ -154,8 +154,10 @@
     <ClCompile Include="bipartiteWeightedMatching.cpp" />
     <ClCompile Include="blockCutTree.cpp" />
     <ClCompile Include="bridgeBlockTree.cpp" />
+    <ClCompile Include="chordalGraph_CliqueTree.cpp" />
     <ClCompile Include="chordalGraph.cpp" />
     <ClCompile Include="dagMinPathCover.cpp" />
+    <ClCompile Include="directedMinimumSpanningTree.cpp" />
     <ClCompile Include="dominatorTree.cpp" />
     <ClCompile Include="eulerianDigraph.cpp" />
     <ClCompile Include="generalMaxMatchingWeighted.cpp" />
@@ -193,7 +195,9 @@
     <ClInclude Include="blockCutTree.h" />
     <ClInclude Include="bridgeBlockTree.h" />
     <ClInclude Include="chordalGraph.h" />
+    <ClInclude Include="chordalGraph_CliqueTree.h" />
     <ClInclude Include="dagMinPathCover.h" />
+    <ClInclude Include="directedMinimumSpanningTree.h" />
     <ClInclude Include="dominatorTree.h" />
     <ClInclude Include="eulerianDigraph.h" />
     <ClInclude Include="generalMaxMatchingAlgebraic.h" />

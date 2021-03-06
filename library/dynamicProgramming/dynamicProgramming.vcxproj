@@ -152,6 +152,7 @@
     <ClCompile Include="digitDP_IncreasingDigitSequence.cpp" />
     <ClCompile Include="digitDP_PalindromicNumber.cpp" />
     <ClCompile Include="gridConnectedComponentCounter.cpp" />
+    <ClCompile Include="gridMultistepPathCounterWithObstacles.cpp" />
     <ClCompile Include="gridPathCounterWithObstacles.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="maxProfit.cpp" />
@@ -160,7 +161,9 @@
     <ClCompile Include="pairCounterWithBitwiseOperation.cpp" />
     <ClCompile Include="palindromicPartitioning.cpp" />
     <ClCompile Include="partitionProblemMultiple.cpp" />
+    <ClCompile Include="permutationCountByDivisibleAdjacentPairCount.cpp" />
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
+    <ClCompile Include="problems\distinctValueSetCounterOfLinearCombination.cpp" />
     <ClCompile Include="problems\integer_ChefAndSum.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="subsequenceSpecial.cpp" />
     <ClCompile Include="treeDP_independentEdgeSetOnTree.cpp" />
     <ClCompile Include="treeDP_sameDistanceTripleCounte.cpp" />
+    <ClCompile Include="treeDP_TreePathDecompositionCounter.cpp" />
     <ClCompile Include="twoSameSumSubset.cpp" />
     <ClCompile Include="longestZigzagSubsequence.cpp" />
   </ItemGroup>
@@ -208,6 +212,7 @@
     <ClInclude Include="digitDP_IncreasingDigitSequenceNaive.h" />
     <ClInclude Include="digitDP_PalindromicNumber.h" />
     <ClInclude Include="gridConnectedComponentCounter.h" />
+    <ClInclude Include="gridMultistepPathCounterWithObstacles.h" />
     <ClInclude Include="gridPathCounterWithObstacles.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />
@@ -221,7 +226,9 @@
     <ClInclude Include="palindromicPartitioning.h" />
     <ClInclude Include="palindromicSubstringEx.h" />
     <ClInclude Include="partitionProblemMultiple.h" />
+    <ClInclude Include="permutationCountByDivisibleAdjacentPairCount.h" />
     <ClInclude Include="powerSumOfAllCombinations_NTT.h" />
+    <ClInclude Include="problems\distinctValueSetCounterOfLinearCombination.h" />
     <ClInclude Include="problems\integer_ChefAndSum.h" />
     <ClInclude Include="problems\integer_ChefAndSum2.h" />
     <ClInclude Include="selectBlock2xN.h" />
@@ -264,6 +271,7 @@
     <ClInclude Include="treeDP_independentEdgeSetOnTree.h" />
     <ClInclude Include="treeDP_independentEdgeSetOnTreeMod2.h" />
     <ClInclude Include="treeDP_sameDistanceTripleCounter.h" />
+    <ClInclude Include="treeDP_TreePathDecompositionCounter.h" />
     <ClInclude Include="twoSameSumSubset.h" />
     <ClInclude Include="longestZigzagSubsequence.h" />
   </ItemGroup>

@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="inversionCounter.cpp" />
+    <ClCompile Include="inversionCounterAfterOneSwap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sort.cpp" />
     <ClCompile Include="sqrtSort.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="hilbertOrder.h" />
     <ClInclude Include="inversionCounter.h" />
     <ClInclude Include="inversionCounter2.h" />
+    <ClInclude Include="inversionCounterAfterOneSwap.h" />
     <ClInclude Include="sortHeap.h" />
     <ClInclude Include="sortMerge.h" />
     <ClInclude Include="sortQuick.h" />

@@ -27,6 +27,9 @@
     <ClCompile Include="inversionCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="inversionCounterAfterOneSwap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sortHeap.h">
@@ -48,6 +51,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="hilbertOrder.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inversionCounterAfterOneSwap.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
