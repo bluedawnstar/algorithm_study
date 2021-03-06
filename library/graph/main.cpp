@@ -32,6 +32,7 @@ int main(void) {
     TEST(PathCount);
     TEST(BridgeBlockTree);
     TEST(ChordalGraph);
+    TEST(ChordalGraphToCliqueTree);
     TEST(ShortestPathWithWildcard);
     TEST(SpecialMST);
     TEST(GlobalMinCutUnweightedKarger);
