@@ -17,9 +17,9 @@ inline int clz(unsigned x) {
 }
 
 inline int clz(unsigned long long x) {
-#if defined(_M_X64)
     if (!x)
         return 64;
+#if defined(_M_X64)
     return int(_lzcnt_u64(x));
 #elif defined(__GNUC__)
     return __builtin_clzll(x);
