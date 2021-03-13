@@ -12,9 +12,9 @@ struct PersistentBSTRangeSum {
 
         int     cnt;
 
-        KeyT    key;
-        KeyT    value;
-        KeyT    sum;
+        KeyTT   key;
+        ValueT  value;
+        ValueT  sum;
 
         void init(KeyT key, ValueT value) {
             left = nullptr;
