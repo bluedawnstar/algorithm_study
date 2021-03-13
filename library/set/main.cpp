@@ -14,7 +14,7 @@ int main(void) {
     TEST(UndoableUnionFind);
     TEST(BitSet);
     TEST(BitSetRangeUpdate);
-    TEST(RangeSet);
+    TEST(DynamicRangeSet);
     TEST(LineSegmentSet1D);
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);

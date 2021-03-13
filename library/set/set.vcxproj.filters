@@ -27,9 +27,6 @@
     <ClCompile Include="veniceSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="rangeSet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="simpleHashMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -69,6 +66,9 @@
     <ClCompile Include="unionFindUndoable.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="rangeSetDynamic.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -87,9 +87,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="veniceSet.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="rangeSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="simpleHashMap.h">
@@ -138,6 +135,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="unionFindUndoable.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rangeSetDynamic.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

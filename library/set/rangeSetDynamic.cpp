@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "rangeSet.h"
+#include "rangeSetDynamic.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -17,14 +17,14 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testRangeSet() {
+void testDynamicRangeSet() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Range Set ------------------------" << endl;
     {
         int N = 10;
         vector<pair<int, int>> gt;
-        RangeSet<int> rangeSet;
+        DynamicRangeSet<int> rangeSet;
         for (int i = 0; i < N; i++) {
             int L = RandInt32::get();
             int R = RandInt32::get();

@@ -1,10 +1,10 @@
 #pragma once
 
 template <typename T>
-struct RangeSet : public map<T, T> {
+struct DynamicRangeSet : public map<T, T> {
     bool mergeAdjacentRange;
 
-    explicit RangeSet(bool mergeAdjacentRange = true) : mergeAdjacentRange(mergeAdjacentRange) {
+    explicit DynamicRangeSet(bool mergeAdjacentRange = true) : mergeAdjacentRange(mergeAdjacentRange) {
     }
 
     // return the first range to include 'x' if exists, O(logN)
