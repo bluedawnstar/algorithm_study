@@ -166,6 +166,7 @@
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="polygonDiameter.cpp" />
     <ClCompile Include="polygonInt.cpp" />
+    <ClCompile Include="problems\convexHull_visibleVerticalLine.cpp" />
     <ClCompile Include="vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +190,7 @@
     <ClInclude Include="polygon.h" />
     <ClInclude Include="polygonDiameter.h" />
     <ClInclude Include="polygonInt.h" />
+    <ClInclude Include="problems\convexHull_visibleVerticalLine.h" />
     <ClInclude Include="vec2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
