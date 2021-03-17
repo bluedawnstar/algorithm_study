@@ -1,6 +1,7 @@
 #pragma once
 
 /*
+https://www.codechef.com/problems/PAPARAZI
                +
        +       |   +
        |   +   |   |   +
