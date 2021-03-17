@@ -56,6 +56,7 @@ int main(void) {
     TEST(PairCounterWithBitwiseOperation);
     TEST(PermutationCounterByDivisibleAdjacentPairCount);
     TEST(TreePathDecompositionCounter);
+    TEST(TopologicalOrderOnDAGLikeReversedTree);
     //--- problems
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);

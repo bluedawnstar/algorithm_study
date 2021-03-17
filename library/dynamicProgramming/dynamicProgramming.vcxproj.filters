@@ -183,6 +183,9 @@
     <ClCompile Include="problems\distinctValueSetCounterOfLinearCombination.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="treeDP_topologicalOrderCount.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="problems\distinctValueSetCounterOfLinearCombination.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="treeDP_topologicalOrderCount.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
