@@ -20,7 +20,7 @@ using namespace std;
 void testDynamicRangeSet() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Range Set ------------------------" << endl;
+    cout << "--- Dynamic Range Set ------------------------" << endl;
     {
         int N = 10;
         vector<pair<int, int>> gt;
