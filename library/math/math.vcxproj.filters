@@ -117,6 +117,9 @@
     <ClCompile Include="differenceConstraintsSystem2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="problems\transformMatrix.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="differenceConstraintsSystem2.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\transformMatrix.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

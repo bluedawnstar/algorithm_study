@@ -167,6 +167,7 @@
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="matrixPowerSum.cpp" />
     <ClCompile Include="problems\simplex_polygonChain.cpp" />
+    <ClCompile Include="problems\transformMatrix.cpp" />
     <ClCompile Include="prouhetTarryEscottProblem.cpp" />
     <ClCompile Include="roundRobinTournament.cpp" />
     <ClCompile Include="simplex.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="matrixPowerSum.h" />
     <ClInclude Include="multinomialTheorem.h" />
     <ClInclude Include="problems\simplex_polygonChain.h" />
+    <ClInclude Include="problems\transformMatrix.h" />
     <ClInclude Include="prouhetTarryEscottProblem.h" />
     <ClInclude Include="roundRobinTournament.h" />
     <ClInclude Include="simplex.h" />
