@@ -34,9 +34,14 @@ void testRangeBasedDenseGraph() {
         RangeBasedDenseGraph solver;
         solver.build(6, from, to);
 
-        int ans = solver.shortestPath(1, 2);
+        RangeBasedDenseGraph2 solver2;
+        solver2.build(6, from, to);
+
+        int ans1 = solver.shortestPath(1, 2);
+        int ans2 = solver2.shortestPath(1, 2);
         int gt = 2;
-        assert(ans == gt);
+        assert(ans1 == gt);
+        assert(ans2 == gt);
     }
     {
         vector<pair<int, int>> from{
@@ -49,9 +54,14 @@ void testRangeBasedDenseGraph() {
         RangeBasedDenseGraph solver;
         solver.build(7, from, to);
 
-        int ans = solver.shortestPath(3, 4);
+        RangeBasedDenseGraph2 solver2;
+        solver2.build(7, from, to);
+
+        int ans1 = solver.shortestPath(3, 4);
+        int ans2 = solver2.shortestPath(3, 4);
         int gt = -1;
-        assert(ans == gt);
+        assert(ans1 == gt);
+        assert(ans2 == gt);
     }
     {
         vector<pair<int, int>> from{
@@ -64,9 +74,14 @@ void testRangeBasedDenseGraph() {
         RangeBasedDenseGraph solver;
         solver.build(3, from, to);
 
-        int ans = solver.shortestPath(2, 2);
+        RangeBasedDenseGraph2 solver2;
+        solver2.build(3, from, to);
+
+        int ans1 = solver.shortestPath(2, 2);
+        int ans2 = solver2.shortestPath(2, 2);
         int gt = 0;
-        assert(ans == gt);
+        assert(ans1 == gt);
+        assert(ans2 == gt);
     }
 
     cout << "OK!" << endl;
