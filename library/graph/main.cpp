@@ -39,4 +39,5 @@ int main(void) {
     TEST(BipartiteWeightedMaching);
     TEST(GeneralMaxMatchingWeighted);
     TEST(DirectedMST);
+    TEST(RangeBasedDenseGraph);
 }

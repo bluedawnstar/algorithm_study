@@ -175,6 +175,7 @@
     <ClCompile Include="minimumSpanningTree.cpp" />
     <ClCompile Include="pathCount.cpp" />
     <ClCompile Include="problems\specialMST.cpp" />
+    <ClCompile Include="rangeBasedDenseGraph.cpp" />
     <ClCompile Include="reachableAllPair.cpp" />
     <ClCompile Include="sat2.cpp" />
     <ClCompile Include="shortestPathAllPair.cpp" />
@@ -222,6 +223,8 @@
     <ClInclude Include="minimumSpanningTree.h" />
     <ClInclude Include="pathCount.h" />
     <ClInclude Include="problems\specialMST.h" />
+    <ClInclude Include="rangeBasedDenseGraph.h" />
+    <ClInclude Include="rangeBasedDenseGraph2.h" />
     <ClInclude Include="reachableAllPair.h" />
     <ClInclude Include="sat2.h" />
     <ClInclude Include="shortestPathAllPair.h" />
