@@ -40,4 +40,5 @@ int main(void) {
     TEST(GeneralMaxMatchingWeighted);
     TEST(DirectedMST);
     TEST(RangeBasedDenseGraph);
+    TEST(ShortestPathGraph);
 }

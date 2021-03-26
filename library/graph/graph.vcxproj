@@ -179,6 +179,7 @@
     <ClCompile Include="reachableAllPair.cpp" />
     <ClCompile Include="sat2.cpp" />
     <ClCompile Include="shortestPathAllPair.cpp" />
+    <ClCompile Include="shortestPathGraphOneSource.cpp" />
     <ClCompile Include="shortestPathOneSource.cpp" />
     <ClCompile Include="shortestPathOneSourceWithWildcard.cpp" />
   </ItemGroup>
@@ -228,6 +229,7 @@
     <ClInclude Include="reachableAllPair.h" />
     <ClInclude Include="sat2.h" />
     <ClInclude Include="shortestPathAllPair.h" />
+    <ClInclude Include="shortestPathGraphOneSource.h" />
     <ClInclude Include="shortestPathOneSource.h" />
     <ClInclude Include="shortestPathOneSourceWithWildcard.h" />
     <ClInclude Include="wheelGraph.h" />
