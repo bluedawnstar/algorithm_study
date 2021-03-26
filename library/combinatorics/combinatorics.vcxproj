@@ -152,6 +152,7 @@
     <ClCompile Include="deBruijnSequence.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="kirchhoffTheorem.cpp" />
+    <ClCompile Include="labeledGraphCounter.cpp" />
     <ClCompile Include="latinSquare.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxMatchingInMatrix.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="kirchhoffTheorem.h" />
+    <ClInclude Include="labeledGraphCounter.h" />
     <ClInclude Include="latinSquare.h" />
     <ClInclude Include="maxMatchingInMatrix.h" />
     <ClInclude Include="nextCombination.h" />
