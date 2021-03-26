@@ -28,7 +28,7 @@ struct ShortestPathWithWildcard {
     }
 
     // add edges to directed graph
-    void addEdge(int u, int v, int w) {
+    void addEdge(int u, int v, T w) {
         edges[u].emplace_back(v, w);
         edges[v].emplace_back(u, w);
     }
