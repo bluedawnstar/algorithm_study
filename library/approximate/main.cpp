@@ -7,4 +7,6 @@ using namespace std;
 
 int main(void) {
     TEST(KMeans);
+    //--- problems
+    TEST(GuessCheater);
 }
