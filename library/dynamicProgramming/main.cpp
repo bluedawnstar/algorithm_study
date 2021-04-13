@@ -60,4 +60,5 @@ int main(void) {
     //--- problems
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);
+    TEST(IntervalSum);
 }

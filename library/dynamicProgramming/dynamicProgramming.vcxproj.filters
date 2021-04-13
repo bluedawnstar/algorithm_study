@@ -186,6 +186,9 @@
     <ClCompile Include="treeDP_topologicalOrderCount.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="problems\intervalSum.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -403,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="treeDP_topologicalOrderCount.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\intervalSum.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
