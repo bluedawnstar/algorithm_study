@@ -165,7 +165,7 @@
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
     <ClCompile Include="problems\distinctValueSetCounterOfLinearCombination.cpp" />
     <ClCompile Include="problems\integer_ChefAndSum.cpp" />
-    <ClCompile Include="problems\intervalSum.cpp" />
+    <ClCompile Include="problems\intervalSumTopK.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
@@ -233,7 +233,7 @@
     <ClInclude Include="problems\distinctValueSetCounterOfLinearCombination.h" />
     <ClInclude Include="problems\integer_ChefAndSum.h" />
     <ClInclude Include="problems\integer_ChefAndSum2.h" />
-    <ClInclude Include="problems\intervalSum.h" />
+    <ClInclude Include="problems\intervalSumTopK.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />

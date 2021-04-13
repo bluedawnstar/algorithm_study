@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "intervalSum.h"
+#include "intervalSumTopK.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using namespace std;
 #include "../../common/iostreamhelper.h"
 #include "../../common/profile.h"
 
-void testIntervalSum() {
+void testIntervalSumTopK() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Interval Sum ------------------------" << endl;
