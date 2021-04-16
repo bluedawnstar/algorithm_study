@@ -80,41 +80,21 @@ struct PairCounterWithBitwiseOperation {
 
     //---
 
-    // O(M*logM), M = 2^bitcount(target)
+    // O(N^2)
     // return the number of pairs with bitwise OR target in an array
     static long long countPairsWithOrDP(const vector<int>& A, int target) {
-        int maxX = max(target, *max_element(A.begin(), A.end()));
-        int N = 1;
-        while (N <= maxX)
-            N <<= 1;
+        long long res = 0;
 
-        vector<int> count(N);
-        for (auto x : A)
-            ++count[x];
-
-        long long ans = count[target];
-#if 0
-        int mask = target;
-        for (int bit = (mask & -mask); bit; bit = (mask & -mask)) {
-            mask &= mask - 1;
-#else
-        for (int bit = 1; bit < N; bit <<= 1) {
-            if ((target & bit) == 0)
-                continue;
-#endif
-            for (int i = target; i > 0; i = (i - 1) & target) {
-                if (i & bit)
-                    count[i] += count[i ^ bit];
+        int N = int(A.size());
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if ((A[i] | A[j]) == target) {
+                    res++;
+                }
             }
         }
-        for (int i = target; i > 0; i = (i - 1) & target) {
-            if (popcount(i) & 1)
-                ans -= (1ll * count[i] * (count[i] - 1));
-            else
-                ans += (1ll * count[i] * (count[i] - 1));
-        }
-        ans += (1ll * count[0] * (count[0] - 1));
-        return ans;
+
+        return res;
     }
 
     //---
