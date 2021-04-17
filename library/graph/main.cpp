@@ -17,6 +17,8 @@ int main(void) {
     TEST(MinPathCoverDAG);
     TEST(BipartiteMaching);
     TEST(BipartiteGraphCheck);
+    TEST(BipartiteGraphMaxMatchingInMatrix);
+    TEST(BipartiteGraphTransformMatrixWithFlip);
     TEST(GeneralMaxMatching);
     TEST(MinimumSpanningTree);
     TEST(Hungarian);

@@ -150,6 +150,7 @@
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartiteGraphCheck.cpp" />
+    <ClCompile Include="bipartiteGraph_transformMatrixWithFlip.cpp" />
     <ClCompile Include="bipartiteMatching.cpp" />
     <ClCompile Include="bipartiteWeightedMatching.cpp" />
     <ClCompile Include="blockCutTree.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="graphColoring.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxIndependentSet.cpp" />
+    <ClCompile Include="bipartiteGraph_maxMatchingInMatrix.cpp" />
     <ClCompile Include="minimumSpanningTree.cpp" />
     <ClCompile Include="pathCount.cpp" />
     <ClCompile Include="problems\specialMST.cpp" />
@@ -189,6 +191,7 @@
     <ClInclude Include="basicUndirectedGraph_Bridge.h" />
     <ClInclude Include="basicUndirectedGraph_CutVertex.h" />
     <ClInclude Include="bcc.h" />
+    <ClInclude Include="bipartiteGraph_transformMatrixWithFlip.h" />
     <ClInclude Include="bipartiteMatchingKuhnArray.h" />
     <ClInclude Include="bipartiteGraphCheck.h" />
     <ClInclude Include="bipartiteMatchingKuhn.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="assignmentProblem.h" />
     <ClInclude Include="graphColoring.h" />
     <ClInclude Include="maxIndependentSet.h" />
+    <ClInclude Include="bipartiteGraph_maxMatchingInMatrix.h" />
     <ClInclude Include="minimumSpanningTree.h" />
     <ClInclude Include="pathCount.h" />
     <ClInclude Include="problems\specialMST.h" />
