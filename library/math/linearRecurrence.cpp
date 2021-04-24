@@ -93,10 +93,11 @@ void testLinearRecurrence() {
                     xx = (xx + 1ll * X2[n - j] * C[j]) % MOD;
                 X2.push_back(int(xx));
 
-                auto ans = rec.getNth(K * 2 + i);
-                if (X2.back() != ans)
-                    cout << "Mismatched : " << ans << ", " << X2.back() << endl;
-                assert(X2.back() == ans);
+                auto ans1 = rec.getNth(K * 2 + i);
+                auto ans2 = rec.getNthFast(K * 2 + i);
+                if (X2.back() != ans1 || X2.back() != ans2)
+                    cout << "Mismatched : " << ans1 << ", " << ans2 << ", " << X2.back() << endl;
+                assert(X2.back() == ans1 && X2.back() == ans2);
             }
         }
     }
