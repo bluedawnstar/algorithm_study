@@ -22,7 +22,7 @@
     <ProjectGuid>{CAACEF45-5E18-40B3-AD98-6E72E7B9442F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>polynomial</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

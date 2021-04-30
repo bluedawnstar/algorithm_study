@@ -14,6 +14,10 @@
     find the smallest number of operations required to transform A to O
 
   https://www.codechef.com/problems/PAIRFLIP
+  https://discuss.codechef.com/t/pairflip-editorial/87830
+
+  https://codeforces.com/problemset/problem/858/F?locale=en
+  https://codeforces.com/blog/entry/54604
 */
 struct TransformMatrixWithFlip {
     int N, M;

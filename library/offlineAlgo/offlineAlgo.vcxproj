@@ -22,7 +22,7 @@
     <ProjectGuid>{0A572372-187F-4B0E-8951-47F51CE93F8A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>offlineAlgo</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

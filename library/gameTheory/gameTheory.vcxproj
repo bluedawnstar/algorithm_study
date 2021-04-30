@@ -22,7 +22,7 @@
     <ProjectGuid>{75CB0423-E435-46BD-9F15-3BE59E770205}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>gameTheory</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -22,7 +22,7 @@
     <ProjectGuid>{31120ED1-C50C-4B47-B7D5-3E559C5C0B9A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>computationalGeometry</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
