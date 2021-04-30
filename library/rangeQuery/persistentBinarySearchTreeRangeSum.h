@@ -12,7 +12,7 @@ struct PersistentBSTRangeSum {
 
         int     cnt;
 
-        KeyTT   key;
+        KeyT   key;
         ValueT  value;
         ValueT  sum;
 
