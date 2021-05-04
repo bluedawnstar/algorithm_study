@@ -185,7 +185,7 @@ private:
 // qry = { (left index of input points, right index of input points, an index of 'ans'), ... }
 inline void solveRangeMaxDist(MergeSortTreeConvexHull& tree, vector<long long>& ans, vector<tuple<int, int, int>>& qry) {
     // MO's algorithm
-    int blockN = int(sqrt(qry.size()));
+    int blockN = int(sqrt(double(qry.size())));
     sort(qry.begin(), qry.end(), [blockN](const auto& l, const auto& r) {
         if (get<0>(l) / blockN != get<0>(r) / blockN)
             return get<0>(l) / blockN < get<0>(r) / blockN;

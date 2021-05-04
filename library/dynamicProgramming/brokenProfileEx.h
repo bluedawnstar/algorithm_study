@@ -55,7 +55,7 @@ struct BrokenProfileTileL {
         this->W = W;
         this->H = H;
 
-        dp.assign(W + 1, vector<long long>(1 << H));
+        dp.assign(W + 1, vector<long long>(size_t(1) << H));
 
         dp[0][0] = 1;
         for (int x = 0; x < W; ++x)

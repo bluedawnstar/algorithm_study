@@ -52,7 +52,7 @@ void testDiophantineEquation() {
             long long c = RandInt32::get() % N + 1;
             long long i, j;
             if (DiophantineEquation2::solveDiophantine(a, b, c, i, j)) {
-                int y = a * i - b * j;
+                long long y = a * i - b * j;
                 if (y != c) {
                     cout << "Mismatched at " << i << " : " << a << " * i - " << b << " * j = " << c << endl;
                     cout << "          " << a << " * " << i << " - " << b << " * " << j << " = " << y << endl;

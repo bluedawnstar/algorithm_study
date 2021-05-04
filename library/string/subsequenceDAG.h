@@ -29,7 +29,7 @@ struct SubsequenceDAG {
         init(maxN);
     }
 
-    SubsequenceDAG(const string& s) {
+    explicit SubsequenceDAG(const string& s) {
         init(int(s.length()));
         build(s);
     }

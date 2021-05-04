@@ -55,7 +55,7 @@ struct SuffixArray {
         build(s, n);
     }
 
-    SuffixArray(const string& s) {
+    explicit SuffixArray(const string& s) {
         build(s);
     }
 

@@ -15,7 +15,7 @@ struct MOAlgorithm {
         for (int i = 0; i < int(Q.size()); i++)
             qry.emplace_back(Q[i].first, Q[i].second, i);
 
-        const int blockN = int(ceil(sqrt(in.size())));
+        const int blockN = int(ceil(sqrt(double(in.size()))));
         sort(qry.begin(), qry.end(), [blockN](const auto& l, const auto& r) {
 #if 0
             if (get<0>(l) / blockN != get<0>(r) / blockN)

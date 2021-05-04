@@ -382,10 +382,9 @@ void testSplayRangeQuery() {
                     int v1 = accumulate(vec.begin(), vec.end(), 0);
                     int v2 = spt.query(0, spt.size() - 1);
                     if (v1 != v2) {
-                        accumulate(vec.begin(), vec.end(), 0);
-                        spt.query(0, spt.size() - 1);
+                        cout << "Mismatched at " << __LINE__ << " : " << v1 << ", " << v2 << endl;
                     }
-                    assert(accumulate(vec.begin(), vec.end(), 0) == spt.query(0, spt.size() - 1));
+                    assert(v1 == v2);
                 }
                 break;
             case 2: // query
@@ -405,11 +404,9 @@ void testSplayRangeQuery() {
                     int v1 = accumulate(vec.begin() + left, vec.begin() + right + 1, 0);
                     int v2 = spt.query(left, right);
                     if (v1 != v2) {
-                        accumulate(vec.begin() + left, vec.begin() + right + 1, 0);
-                        spt.query(left, right);
+                        cout << "Mismatched at " << __LINE__ << " : " << v1 << ", " << v2 << endl;
                     }
                     assert(v1 == v2);
-                    assert(accumulate(vec.begin(), vec.end(), 0) == spt.query(0, spt.size() - 1));
                 }
                 break;
             }
