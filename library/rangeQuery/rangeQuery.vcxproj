@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="binarySearchTreeRangeSum.cpp" />
+    <ClCompile Include="bitTrieForest.cpp" />
     <ClCompile Include="disjointSparseTable.cpp" />
     <ClCompile Include="dynamicSegmentTree.cpp" />
     <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
@@ -218,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
+    <ClInclude Include="bitTrieForest.h" />
     <ClInclude Include="longestIncreasingStep.h" />
     <ClInclude Include="longestIncreasingSubsequence.h" />
     <ClInclude Include="longestIncreasingSubsequenceOnline.h" />

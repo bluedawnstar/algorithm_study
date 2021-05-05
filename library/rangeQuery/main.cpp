@@ -74,4 +74,5 @@ int main(void) {
     TEST(SegmentTreePrimeFactorXorRollingHash);
     TEST(LongestIncreasingSubsequence);
     TEST(LongestIncreasingStep);
+    TEST(BitTrieForest);
 }
