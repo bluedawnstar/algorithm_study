@@ -198,6 +198,9 @@
     <ClCompile Include="treePathVertexWeightVectorDot.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="treeCentroidDecompositionSolverWithUpdate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h">
@@ -411,6 +414,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="treePathVertexWeightVectorDot.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="treeCentroidDecompositionSolverWithUpdate.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
