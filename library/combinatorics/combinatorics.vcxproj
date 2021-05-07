@@ -22,32 +22,32 @@
     <ProjectGuid>{E480E986-2B4C-4627-A02A-92646EFE4B4A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>combinatorics</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -152,6 +152,7 @@
     <ClCompile Include="deBruijnSequence.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="kirchhoffTheorem.cpp" />
+    <ClCompile Include="labeledGraphCounter.cpp" />
     <ClCompile Include="latinSquare.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxMatchingInMatrix.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="kirchhoffTheorem.h" />
+    <ClInclude Include="labeledGraphCounter.h" />
     <ClInclude Include="latinSquare.h" />
     <ClInclude Include="maxMatchingInMatrix.h" />
     <ClInclude Include="nextCombination.h" />

@@ -22,32 +22,32 @@
     <ProjectGuid>{1D2CD661-8434-4A38-B6C7-EB5CDE462941}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>graph</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -150,6 +150,7 @@
     <ClCompile Include="basicUndirectedGraph.cpp" />
     <ClCompile Include="bcc.cpp" />
     <ClCompile Include="bipartiteGraphCheck.cpp" />
+    <ClCompile Include="bipartiteGraph_transformMatrixWithFlip.cpp" />
     <ClCompile Include="bipartiteMatching.cpp" />
     <ClCompile Include="bipartiteWeightedMatching.cpp" />
     <ClCompile Include="blockCutTree.cpp" />
@@ -172,12 +173,15 @@
     <ClCompile Include="graphColoring.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maxIndependentSet.cpp" />
+    <ClCompile Include="bipartiteGraph_maxMatchingInMatrix.cpp" />
     <ClCompile Include="minimumSpanningTree.cpp" />
     <ClCompile Include="pathCount.cpp" />
     <ClCompile Include="problems\specialMST.cpp" />
+    <ClCompile Include="rangeBasedDenseGraph.cpp" />
     <ClCompile Include="reachableAllPair.cpp" />
     <ClCompile Include="sat2.cpp" />
     <ClCompile Include="shortestPathAllPair.cpp" />
+    <ClCompile Include="shortestPathGraphOneSource.cpp" />
     <ClCompile Include="shortestPathOneSource.cpp" />
     <ClCompile Include="shortestPathOneSourceWithWildcard.cpp" />
   </ItemGroup>
@@ -187,6 +191,7 @@
     <ClInclude Include="basicUndirectedGraph_Bridge.h" />
     <ClInclude Include="basicUndirectedGraph_CutVertex.h" />
     <ClInclude Include="bcc.h" />
+    <ClInclude Include="bipartiteGraph_transformMatrixWithFlip.h" />
     <ClInclude Include="bipartiteMatchingKuhnArray.h" />
     <ClInclude Include="bipartiteGraphCheck.h" />
     <ClInclude Include="bipartiteMatchingKuhn.h" />
@@ -219,12 +224,16 @@
     <ClInclude Include="assignmentProblem.h" />
     <ClInclude Include="graphColoring.h" />
     <ClInclude Include="maxIndependentSet.h" />
+    <ClInclude Include="bipartiteGraph_maxMatchingInMatrix.h" />
     <ClInclude Include="minimumSpanningTree.h" />
     <ClInclude Include="pathCount.h" />
     <ClInclude Include="problems\specialMST.h" />
+    <ClInclude Include="rangeBasedDenseGraph.h" />
+    <ClInclude Include="rangeBasedDenseGraph2.h" />
     <ClInclude Include="reachableAllPair.h" />
     <ClInclude Include="sat2.h" />
     <ClInclude Include="shortestPathAllPair.h" />
+    <ClInclude Include="shortestPathGraphOneSource.h" />
     <ClInclude Include="shortestPathOneSource.h" />
     <ClInclude Include="shortestPathOneSourceWithWildcard.h" />
     <ClInclude Include="wheelGraph.h" />

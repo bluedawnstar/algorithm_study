@@ -419,10 +419,9 @@ void testTreapRangeQuery() {
                     int v1 = accumulate(vec.begin(), vec.end(), 0);
                     int v2 = tr.query(0, tr.size() - 1);
                     if (v1 != v2) {
-                        accumulate(vec.begin(), vec.end(), 0);
-                        tr.query(0, tr.size() - 1);
+                        cout << "Mismatched at " << __LINE__ << " : " << v1 << ", " << v2 << endl;
                     }
-                    assert(accumulate(vec.begin(), vec.end(), 0) == tr.query(0, tr.size() - 1));
+                    assert(v1 == v2);
                 }
                 break;
             case 2: // query
@@ -442,11 +441,9 @@ void testTreapRangeQuery() {
                     int v1 = accumulate(vec.begin() + left, vec.begin() + right + 1, 0);
                     int v2 = tr.query(left, right);
                     if (v1 != v2) {
-                        accumulate(vec.begin() + left, vec.begin() + right + 1, 0);
-                        tr.query(left, right);
+                        cout << "Mismatched at " << __LINE__ << " : " << v1 << ", " << v2 << endl;
                     }
                     assert(v1 == v2);
-                    assert(accumulate(vec.begin(), vec.end(), 0) == tr.query(0, tr.size() - 1));
                 }
                 break;
             }

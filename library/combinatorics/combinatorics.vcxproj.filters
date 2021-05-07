@@ -60,6 +60,9 @@
     <ClCompile Include="problems\minManhattanDistanceSet.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="labeledGraphCounter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="problems\minManhattanDistanceSet.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="labeledGraphCounter.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -99,7 +99,7 @@ void testPairCounterWithBitwiseOperation() {
             auto ans2 = PairCounterWithBitwiseOperation::countPairsWithAndDP(A, 0);
 
             if (gt != ans1 || gt != ans2) {
-                cout << "Mismatch : " << ans1 << ", " << ans2 << ", " << gt << endl;
+                cout << "Mismatch at " << __LINE__ << " : " << ans1 << ", " << ans2 << ", " << gt << endl;
                 cout << "           A = " << A << endl;
             }
             assert(ans1 == gt && ans2 == gt);
@@ -126,7 +126,7 @@ void testPairCounterWithBitwiseOperation() {
             auto ans = PairCounterWithBitwiseOperation::countPairsWithAndDP(A, target);
 
             if (gt != ans) {
-                cout << "Mismatch : " << ans << ", " << gt << endl;
+                cout << "Mismatch at " << __LINE__ << " : " << ans << ", " << gt << endl;
                 cout << "           A = " << A << ", target = " << target << endl;
             }
             assert(ans == gt);
@@ -137,11 +137,11 @@ void testPairCounterWithBitwiseOperation() {
 #ifndef _DEBUG
         const int N = 1'000;
         const int MAXX = 1'000;
-        const int T = 10;
+        const int T = 100;
 #else
         const int N = 100;
         const int MAXX = 100;
-        const int T = 3;
+        const int T = 10;
 #endif
         for (int tt = 0; tt < T; tt++) {
             vector<int> A(N);
@@ -154,7 +154,7 @@ void testPairCounterWithBitwiseOperation() {
             auto ans = PairCounterWithBitwiseOperation::countPairsWithOrDP(A, target);
 
             if (gt != ans) {
-                cout << "Mismatch : " << ans << ", " << gt << endl;
+                cout << "Mismatch at " << __LINE__ << " : " << ans << ", " << gt << endl;
                 cout << "           A = " << A << ", target = " << target << endl;
             }
             assert(ans == gt);
@@ -182,7 +182,7 @@ void testPairCounterWithBitwiseOperation() {
             auto ans = PairCounterWithBitwiseOperation::countPairsWithXOR(A, target);
 
             if (gt != ans) {
-                cout << "Mismatch : " << ans << ", " << gt << endl;
+                cout << "Mismatch at " << __LINE__ << " : " << ans << ", " << gt << endl;
                 cout << "           A = " << A << ", target = " << target << endl;
             }
             assert(ans == gt);
@@ -198,7 +198,7 @@ void testPairCounterWithBitwiseOperation() {
             auto ans = PairCounterWithBitwiseOperation::countPairsWithXOR(A, target);
 
             if (gt != ans) {
-                cout << "Mismatch : " << ans << ", " << gt << endl;
+                cout << "Mismatch at " << __LINE__ << " : " << ans << ", " << gt << endl;
                 cout << "           A = " << A << ", target = " << target << endl;
             }
             assert(ans == gt);

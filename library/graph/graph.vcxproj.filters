@@ -120,6 +120,18 @@
     <ClCompile Include="chordalGraph_CliqueTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="rangeBasedDenseGraph.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="shortestPathGraphOneSource.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="bipartiteGraph_maxMatchingInMatrix.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="bipartiteGraph_transformMatrixWithFlip.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bcc.h">
@@ -258,6 +270,21 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="chordalGraph_CliqueTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rangeBasedDenseGraph.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rangeBasedDenseGraph2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="shortestPathGraphOneSource.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bipartiteGraph_maxMatchingInMatrix.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bipartiteGraph_transformMatrixWithFlip.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

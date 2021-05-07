@@ -55,6 +55,7 @@ int main(void) {
     TEST(KthDistance);
     TEST(CentroidDecompositionSolver);
     TEST(CentroidDecompositionSolverDiviceAndConquer);
+    TEST(CentroidDecompositionSolverWithUpdate);
     TEST(TreeCentroidDecompositionSolverDivideAndConquer_XorDistance);
     TEST(UniqueValueCounterInDistanceOfSubtree);
     TEST(TreeReordering);

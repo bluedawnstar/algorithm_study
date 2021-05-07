@@ -1,97 +1,95 @@
 #pragma once
 
-template <typename T>
-struct RangeSet : public map<T, T> {
-    bool mergeAdjacentRange;
+// for query to find overlapped ranges
 
-    explicit RangeSet(bool mergeAdjacentRange = true) : mergeAdjacentRange(mergeAdjacentRange) {
+// inclusive operation
+template <typename T, T INF = 0x3f3f3f3f>
+struct RangeSet {
+    int N;
+    vector<pair<T, T>> ranges;
+
+    vector<int> order;      // sorted order by (left, right)
+    vector<T> maxRight;     // maxRight[i] = max{ ranges[order[0]].second, ranges[order[1]].second, ..., ranges[order[i]].second }
+    set<pair<T, int>> S;    // (left, index of order)
+    vector<int> next, prev; // next[index of order] = index of order;
+
+    // ranges[i] = (left, right), inclusive
+    void build(vector<pair<T, T>>&& ranges) {
+        this->ranges = ranges;
+        build();
     }
 
-    // return the first range to include 'x' if exists, O(logN)
-    typename map<T,T>::const_iterator get(T x) const {
-        auto it = this->upper_bound(x);
-        if (it == this->begin())
-            return this->end();
-
-        --it;
-        if (it->second < x)
-            return this->end();
-
-        return it;
+    void build(const vector<pair<T, T>>& ranges) {
+        this->ranges = ranges;
+        build();
     }
 
-    // return the first range to include 'x' if exists, O(logN)
-    typename map<T, T>::iterator get(T x) {
-        auto it = this->upper_bound(x);
-        if (it == this->begin())
-            return this->end();
-
-        --it;
-        if (it->second < x)
-            return this->end();
-
-        return it;
-    }
-
-    vector<pair<T, T>> get() const {
-        vector<pair<T, T>> res;
-        res.reserve(this->size());
-
-        for (auto it = this->begin(), itEnd = this->end(); it != itEnd; ++it)
-            res.push_back(*it);
-
-        return res;
+    void build(const pair<T, T> ranges[], int n) {
+        this->ranges.assign(ranges, ranges + n);
+        build();
     }
 
 
-    // inclusive [left, right], O(logN)
-    bool exist(T left, T right) const {
-        const auto it = get(left);
-        return it != this->end() && it->first <= right && right <= it->second;
-    }
+    // get overlapped ranges
+    // - overlapped[i] = index of ranges, inclusive
+    void getOverlapped(T left, T right, vector<int>& overlapped) const {
+        overlapped.clear();
 
-    // inclusive [left, right], O(logN)
-    void insert(T left, T right) {
-        auto itL = this->upper_bound(left);
-        auto itR = this->upper_bound(right + mergeAdjacentRange);
-
-        if (itL != this->begin()) {
-            --itL;
-            if (itL->second < left - mergeAdjacentRange)
-                ++itL;
+        auto it = S.lower_bound(make_pair(right + 1, -1));
+        for (int i = prev[it->second]; i >= 0 && left <= maxRight[i]; i = prev[i]) {
+            int v = order[i];
+            if (left <= ranges[v].second && ranges[v].first <= right)
+                overlapped.push_back(v);
         }
-
-        if (itL != itR) {
-            left = min(left, itL->first);
-            right = max(right, prev(itR)->second);
-            this->erase(itL, itR);
-        }
-
-        (*this)[left] = right;
     }
 
-    // inclusive [l, r], O(logN)
-    void remove(T left, T right) {
-        auto itL = this->upper_bound(left);
-        auto itR = this->upper_bound(right);
+    // get and erase overlapped ranges
+    // - overlapped[i] = index of ranges, inclusive
+    // amortized O(logN)
+    void popOverlapped(T left, T right, vector<int>& overlapped) {
+        overlapped.clear();
 
-        if (itL != this->begin()) {
-            --itL;
-            if (itL->second < left)
-                ++itL;
+        auto it = S.lower_bound(make_pair(right + 1, -1));
+        for (int i = prev[it->second]; i >= 0 && left <= maxRight[i]; i = prev[i]) {
+            int v = order[i];
+            if (left <= ranges[v].second && ranges[v].first <= right) {
+                overlapped.push_back(v);
+
+                prev[next[i]] = prev[i];
+                if (prev[i] >= 0)
+                    next[prev[i]] = next[i];
+                S.erase(make_pair(ranges[v].first, i));
+            }
         }
+    }
 
-        if (itL == itR)
-            return;
+private:
+    // O(N*logN)
+    void build() {
+        N = int(ranges.size());
 
-        T tL = min(left, itL->first);
-        T tR = max(right, prev(itR)->second);
+        order = vector<int>(N);
+        maxRight = vector<int>(N);
+        next = vector<int>(N);
+        prev = vector<int>(N + 1);
+        S.clear();
 
-        this->erase(itL, itR);
-        if (tL < left)
-            (*this)[tL] = left - 1;
+        iota(order.begin(), order.end(), 0);
+        sort(order.begin(), order.end(), [this](int a, int b) {
+            return ranges[a] < ranges[b];
+        });
 
-        if (right < tR)
-            (*this)[right + 1] = tR;
+        maxRight[0] = ranges[order[0]].second;
+        prev[0] = -1;
+        next[0] = 1;
+        S.emplace(ranges[order[0]].first, 0);
+        for (int i = 1; i < N; i++) {
+            maxRight[i] = max(maxRight[i - 1], ranges[order[i]].second);
+            prev[i] = i - 1;
+            next[i] = i + 1;
+            S.emplace(ranges[order[i]].first, i);
+        }
+        prev[N] = N - 1;
+        S.emplace(INF, N);
     }
 };

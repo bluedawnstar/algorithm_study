@@ -22,32 +22,32 @@
     <ProjectGuid>{3E90458D-0A6A-48BE-87EF-570266E0CD15}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>string</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -162,6 +162,7 @@
     <ClCompile Include="palindromicNumber.cpp" />
     <ClCompile Include="patternSubsequence.cpp" />
     <ClCompile Include="periodicSubstringWeightSumOfAllSubstrings.cpp" />
+    <ClCompile Include="prefixFunctionTree.cpp" />
     <ClCompile Include="reverseSubstringsBetweenParentheses.cpp" />
     <ClCompile Include="rleString.cpp" />
     <ClCompile Include="simpleSubstring.cpp" />
@@ -219,6 +220,8 @@
     <ClInclude Include="palindromicSubstringLongest_manacher.h" />
     <ClInclude Include="patternSubsequence.h" />
     <ClInclude Include="periodicSubstringWeightSumOfAllSubstrings.h" />
+    <ClInclude Include="prefixFunctionTree.h" />
+    <ClInclude Include="prefixFunctionTreeAlgo.h" />
     <ClInclude Include="reverseSubstringsBetweenParentheses.h" />
     <ClInclude Include="rleString.h" />
     <ClInclude Include="simpleSubstring.h" />

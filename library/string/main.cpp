@@ -34,6 +34,7 @@ int main(void) {
     TEST(SearchRabinKarp);
     TEST(SearchZAlgorithm);
     TEST(PrefixFunction);
+    TEST(PrefixFunctionTree);
     TEST(Subsequence);
     TEST(SubsequenceLCS);
     TEST(LyndonFactorization);

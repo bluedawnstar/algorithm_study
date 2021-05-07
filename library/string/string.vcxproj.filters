@@ -168,6 +168,9 @@
     <ClCompile Include="onlineZ.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="prefixFunctionTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -360,6 +363,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="onlineZ.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunctionTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixFunctionTreeAlgo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

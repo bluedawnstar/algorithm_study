@@ -38,4 +38,5 @@ int main(void) {
     TEST(DifferenceConstraintsSystem2);
     //--- problems
     TEST(SimplexPolygonChain);
+    TEST(TransformMatrix);
 }

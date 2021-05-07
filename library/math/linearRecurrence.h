@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../polynomial/polyFFTMod3.h"
+
 // Berlekamp-Massey
 //  https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm
 //  https://codeforces.com/blog/entry/61306
@@ -110,8 +112,8 @@ struct LinearRecurrence {
 
         for (; n; n >>= 1) {
             if (n & 1)
-                s = mult(s, t);
-            t = mult(t, t);
+                s = multSlow(s, t);
+            t = multSlow(t, t);
         }
 
         long long res = 0;
@@ -121,6 +123,37 @@ struct LinearRecurrence {
         return T(res % mod);
     }
 
+    // Kitamasa, O(K*logK*logN)
+    T getNthFast(long long n) {
+        if (n < int(X.size()))
+            return X[n];
+
+        int m = int(C.size());
+        if (m == 0)
+            return T(0);
+
+        vector<int> s{ 1 };             // result
+        vector<int> t{ 0, 1 };          // t = { x^1, x^2, x^4, ... }
+        vector<int> f(C.size() + 1);    // f(x) = x^K - SUM C(i)*x^i
+        f.back() = 1;
+        for (int i = 0; i < m; i++)
+            f[i] = MOD - C[m - i - 1];
+
+        for (; n; n >>= 1) {
+            if (n & 1) {
+                s = move(PolyFFTMod3<MOD>::divmod(PolyFFTMod3<MOD>::multiply(s, t), f).second); // s = s * t % f;
+            }
+            t = move(PolyFFTMod3<MOD>::divmod(PolyFFTMod3<MOD>::multiply(t, t), f).second);     // t = t * t % f;
+        }
+
+        long long res = 0;
+        for (int i = 0; i < m; i++)
+            res += 1ll * s[i] * X[i] % mod;
+
+        return T(res % mod);
+    }
+
+
     static T guessNthTerm(const vector<T>& x, long long n) {
         if (n < (long long)x.size())
             return x[n];
@@ -128,6 +161,15 @@ struct LinearRecurrence {
         LinearRecurrence<T,mod> rec(x);
         return rec.getNth(n);
     }
+
+    static T guessNthTermFast(const vector<T>& x, long long n) {
+        if (n < (long long)x.size())
+            return x[n];
+
+        LinearRecurrence<T, mod> rec(x);
+        return rec.getNthFast(n);
+    }
+
 
     // Minimal polynomial of matrix A
     // 
@@ -225,11 +267,10 @@ private:
         return modPow(x, mod - 2);
     }
 
-    vector<T> mult(const vector<T>& v, const vector<T>& w) {
+    vector<T> multSlow(const vector<T>& v, const vector<T>& w) {
         int m = int(v.size());
         vector<T> t(2 * m);
 
-        //TODO: optimize with FFT for big K
         for (int j = 0; j < m; j++) {
             for (int k = 0; k < m; k++) {
                 t[j + k] += T(1ll * v[j] * w[k] % mod);

@@ -136,7 +136,7 @@ private:
         int xxor = 0;
         vector<vector<int>> dist(logH);
         for (int i = 0; i < logH; i++)
-            dist[i].resize(1 << i);
+            dist[i].resize(size_t(1) << i);
 
         for (int j = 0, k = 0; j <= maxDepth; j += 64, k++) {
             auto bits = all.values[k];
