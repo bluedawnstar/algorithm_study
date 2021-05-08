@@ -147,7 +147,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="binarySearchTreeRangeSum.cpp" />
-    <ClCompile Include="bitTrieForest.cpp" />
     <ClCompile Include="disjointSparseTable.cpp" />
     <ClCompile Include="dynamicSegmentTree.cpp" />
     <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
@@ -160,8 +159,8 @@
     <ClCompile Include="fenwickTreeXor.cpp" />
     <ClCompile Include="gcdOnSubsegments.cpp" />
     <ClCompile Include="generalizedBIT.cpp" />
-    <ClCompile Include="intTrie.cpp" />
-    <ClCompile Include="intTriePersistent.cpp" />
+    <ClCompile Include="intTrieForest.cpp" />
+    <ClCompile Include="intTrieForestPersistent.cpp" />
     <ClCompile Include="consecutiveSubarray_RangeMax.cpp" />
     <ClCompile Include="consecutiveSubarray_DivideCombineTree.cpp" />
     <ClCompile Include="longestIncreasingStep.cpp" />
@@ -219,7 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearchTreeRangeSum.h" />
-    <ClInclude Include="bitTrieForest.h" />
+    <ClInclude Include="intTrieForestRangeSum.h" />
     <ClInclude Include="longestIncreasingStep.h" />
     <ClInclude Include="longestIncreasingSubsequence.h" />
     <ClInclude Include="longestIncreasingSubsequenceOnline.h" />
@@ -239,8 +238,8 @@
     <ClInclude Include="fenwickTreeXor.h" />
     <ClInclude Include="gcdOnSubsegments.h" />
     <ClInclude Include="generalizedBIT.h" />
-    <ClInclude Include="intTrie.h" />
-    <ClInclude Include="intTriePersistent.h" />
+    <ClInclude Include="intTrieForest.h" />
+    <ClInclude Include="intTrieForestPersistent.h" />
     <ClInclude Include="consecutiveSubarray_RangeMax.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTree.h" />
     <ClInclude Include="mergeSortTree.h" />
