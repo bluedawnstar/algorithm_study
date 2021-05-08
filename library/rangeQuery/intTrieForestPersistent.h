@@ -12,30 +12,19 @@
 
   2. how to use
     1) build a tree
-        vector<int> roots(N + 1);
-        PersistentIntTrieForest<int> trie(BIT_SIZE, ...);
-        #############..........
-        IntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return ...; }, [](int a, int b) { return ...; });
+       vector<int> roots(N + 1);
+       PersistentIntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return ...; }, [](int a, int b) { return ...; });
 
-        int root = trie.build(...);
-        //...
-        trie.insert(root, ...);
-        //...
-        int ans = trie.query(root, L, R, 0, [](int a, int b) { return ... });
-*
-   <How To Use>
-
-    1. build tries
-
-       trie.clear();
-
-       roots[0] = -1;
+       int root = trie.build(...);
        for (int i = 0; i < N; i++)
-           roots[i + 1] = trie.add(roots[i], values[i]);
+           roots[i + 1] = trie.insert(roots[i], values[i], values[i]);
+           //roots[i + 1] = trie.insert(roots[i], keys[i], values[i]);
 
-    2. query in range [L, R]
+    2) query in range [L, R]
        bool exists = trie.exist(roots[L], roots[R + 1], x);
        auto result = trie.findMaxXor(roots[L], roots[R + 1], k);
+       //...
+       int ans = trie.query(root, L, R, 0, [](int a, int b) { return ... });
 */
 // Related problems
 // https://www.codechef.com/problems/XORMIN
