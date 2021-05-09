@@ -69,8 +69,7 @@ struct ReverseSparseTable {
             return defaultValue;
 
         int k = H[right - left];
-        const vector<T>& mink = value[k];
-        return mergeOp(mink[left + (1 << k)], mink[right]);
+        return mergeOp(value[k][left + (1 << k)], value[k][right]);
     }
 
     // O(log(right - left + 1)), inclusive

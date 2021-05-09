@@ -40,12 +40,12 @@ struct SparseTableMinIndex {
         for (int i = 1; i < int(value.size()); i++) {
             vector<int>& prev = value[i - 1];
             vector<int>& curr = value[i];
-            for (int v = 0; v < n; v++) {
-                int v2 = v + (1 << (i - 1));
-                if (v2 < n)
-                    curr[v] = (in[prev[v]] < in[prev[v2]]) ? prev[v] : prev[v2];
+            for (int j = 0; j < n; j++) {
+                int j2 = j + (1 << (i - 1));
+                if (j2 < n)
+                    curr[j] = (in[prev[j]] < in[prev[j2]]) ? prev[j] : prev[j2];
                 else
-                    curr[v] = prev[v];
+                    curr[j] = prev[j];
             }
         }
     }
@@ -62,11 +62,10 @@ struct SparseTableMinIndex {
             return left;    //invalid range
 
         int k = H[right - left];
-        const vector<int>& mink = value[k];
 
-        if (in[mink[left]] < in[mink[right - (1 << k)]])
-            return mink[left];
+        if (in[value[k][left]] < in[value[k][right - (1 << k)]])
+            return value[k][left];
         else
-            return mink[right - (1 << k)];
+            return value[k][right - (1 << k)];
     }
 };

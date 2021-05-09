@@ -31,14 +31,12 @@ struct SparseTableMin {
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 
-        for (int i = 1; i < int(value.size()); i++) {
-            vector<int>& prev = value[i - 1];
-            vector<int>& curr = value[i];
-            for (int v = 0; v < n; v++) {
-                if (v + (1 << (i - 1)) < n)
-                    curr[v] = min(prev[v], prev[v + (1 << (i - 1))]);
+        for (int i = 1, step = 1; i < int(value.size()); i++, step <<= 1) {
+            for (int j = 0; j < n; j++) {
+                if (j + step < n)
+                    value[i][j] = min(value[i - 1][j], value[i - 1][j + step]);
                 else
-                    curr[v] = prev[v];
+                    value[i][j] = value[i - 1][j];
             }
         }
     }
@@ -55,7 +53,6 @@ struct SparseTableMin {
             return INT_MAX;
 
         int k = H[right - left];
-        const vector<int>& mink = value[k];
-        return min(mink[left], mink[right - (1 << k)]);
+        return min(value[k][left], value[k][right - (1 << k)]);
     }
 };

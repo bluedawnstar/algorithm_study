@@ -50,14 +50,12 @@ struct SparseTable {
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 
-        for (int i = 1; i < int(value.size()); i++) {
-            vector<T>& prev = value[i - 1];
-            vector<T>& curr = value[i];
-            for (int v = 0; v < n; v++) {
-                if (v + (1 << (i - 1)) < n)
-                    curr[v] = mergeOp(prev[v], prev[v + (1 << (i - 1))]);
+        for (int i = 1, step = 1; i < int(value.size()); i++, step <<= 1) {
+            for (int j = 0; j < n; j++) {
+                if (j + step < n)
+                    value[i][j] = mergeOp(value[i - 1][j], value[i - 1][j + step]);
                 else
-                    curr[v] = prev[v];
+                    value[i][j] = value[i - 1][j];
             }
         }
     }
@@ -74,8 +72,7 @@ struct SparseTable {
             return defaultValue;
 
         int k = H[right - left];
-        const vector<T>& mink = value[k];
-        return mergeOp(mink[left], mink[right - (1 << k)]);
+        return mergeOp(value[k][left], value[k][right - (1 << k)]);
     }
 
     // O(log(right - left + 1)), inclusive
