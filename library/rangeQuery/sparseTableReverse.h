@@ -74,23 +74,22 @@ struct ReverseSparseTable {
 
     // O(log(right - left + 1)), inclusive
     T queryNoOverlap(int left, int right) const {
-        left--;
-        if (right <= left)
+        int rangeSize = right - --left;
+        if (rangeSize < 0)
             return defaultValue;
 
         T res = defaultValue;
-
-        int length = right - left;
-        while (length) {
+        while (rangeSize) {
 #ifndef __GNUC__
-            int i = int(_tzcnt_u32(length));
+            int i = int(_tzcnt_u32(rangeSize));
 #else
-            int i = __builtin_ctz(length);
+            int i = __builtin_ctz(rangeSize);
 #endif
-            left += (1 << i);
+            //int i = H[rangeSize & -rangeSize];
+            left += rangeSize & -rangeSize;
             res = mergeOp(res, value[i][left]);
 
-            length &= length - 1;
+            rangeSize &= rangeSize - 1;
         }
 
         return res;

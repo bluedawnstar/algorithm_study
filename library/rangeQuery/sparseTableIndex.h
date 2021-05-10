@@ -88,28 +88,27 @@ struct SparseTableIndex {
 
     // O(log(right - left + 1)), inclusive
     int queryNoOverlap(int left, int right) const {
-        right++;
-        if (right <= left)
+        int rangeSize = right - left + 1;
+        if (rangeSize < 0)
             return -1;
 
         T val = defaultValue;
         int res = -1;
-
-        int length = right - left;
-        while (length) {
+        while (rangeSize) {
 #ifndef __GNUC__
-            int i = int(_tzcnt_u32(length));
+            int i = int(_tzcnt_u32(rangeSize));
 #else
-            int i = __builtin_ctz(length);
+            int i = __builtin_ctz(rangeSize);
 #endif
-            right -= (1 << i);
+            //int i = H[rangeSize & -rangeSize];
 
-            int idx = value[i][right];
+            int idx = value[i][left];
             val = mergeOp(val, in[idx]);
             if (val == in[idx])
                 res = idx;
 
-            length &= length - 1;
+            left += rangeSize & -rangeSize;
+            rangeSize &= rangeSize - 1;
         }
 
         return res;
