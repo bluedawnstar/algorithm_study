@@ -75,7 +75,7 @@ struct ReverseSparseTable {
     // O(log(right - left + 1)), inclusive
     T queryNoOverlap(int left, int right) const {
         int rangeSize = right - --left;
-        if (rangeSize < 0)
+        if (rangeSize <= 0)
             return defaultValue;
 
         T res = defaultValue;
