@@ -54,14 +54,14 @@ struct SparseTableIndex {
         for (int i = 1; i < int(value.size()); i++) {
             vector<T>& prev = value[i - 1];
             vector<T>& curr = value[i];
-            for (int v = 0; v < n; v++) {
-                int v2 = v + (1 << (i - 1));
-                if (v2 < n) {
-                    T a = in[prev[v]];
-                    T b = in[prev[v2]];
-                    curr[v] = (mergeOp(a, b) == a) ? prev[v] : prev[v2];
+            for (int j = 0; j < n; j++) {
+                int j2 = j + (1 << (i - 1));
+                if (j2 < n) {
+                    T a = in[prev[j]];
+                    T b = in[prev[j2]];
+                    curr[j] = (mergeOp(a, b) == a) ? prev[j] : prev[j2];
                 } else {
-                    curr[v] = prev[v];
+                    curr[j] = prev[j];
                 }
             }
         }
@@ -80,37 +80,35 @@ struct SparseTableIndex {
             return -1;
 
         int k = H[right - left];
-        const vector<int>& mink = value[k];
 
-        int a = mink[left];
-        int b = mink[right - (1 << k)];
+        int a = value[k][left];
+        int b = value[k][right - (1 << k)];
         return (mergeOp(in[a], in[b]) == in[a]) ? a : b;
     }
 
     // O(log(right - left + 1)), inclusive
     int queryNoOverlap(int left, int right) const {
-        right++;
-        if (right <= left)
+        int rangeSize = right - left + 1;
+        if (rangeSize <= 0)
             return -1;
 
         T val = defaultValue;
         int res = -1;
-
-        int length = right - left;
-        while (length) {
+        while (rangeSize) {
 #ifndef __GNUC__
-            int i = int(_tzcnt_u32(length));
+            int i = int(_tzcnt_u32(rangeSize));
 #else
-            int i = __builtin_ctz(length);
+            int i = __builtin_ctz(rangeSize);
 #endif
-            right -= (1 << i);
+            //int i = H[rangeSize & -rangeSize];
 
-            int idx = value[i][right];
+            int idx = value[i][left];
             val = mergeOp(val, in[idx]);
             if (val == in[idx])
                 res = idx;
 
-            length &= length - 1;
+            left += rangeSize & -rangeSize;
+            rangeSize &= rangeSize - 1;
         }
 
         return res;

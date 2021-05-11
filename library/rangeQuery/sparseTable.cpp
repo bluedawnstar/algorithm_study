@@ -24,7 +24,7 @@ using namespace std;
 void testSparseTable() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- Sparse Table ----------------------------------------" << endl;
+    cout << "--- Sparse Table ----------------------------------------" << endl;
 
     cout << "*** RMQ ***" << endl;
     {

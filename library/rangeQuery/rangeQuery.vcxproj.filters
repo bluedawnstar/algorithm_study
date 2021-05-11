@@ -165,10 +165,10 @@
     <ClCompile Include="sparseTableSimpleRMQ.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="intTrie.cpp">
+    <ClCompile Include="intTrieForest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="intTriePersistent.cpp">
+    <ClCompile Include="intTrieForestPersistent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp">
@@ -220,9 +220,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="longestIncreasingStep.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="bitTrieForest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -404,10 +401,10 @@
     <ClInclude Include="sparseTableSimpleRMQ.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="intTrie.h">
+    <ClInclude Include="intTrieForest.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="intTriePersistent.h">
+    <ClInclude Include="intTrieForestPersistent.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h">
@@ -479,7 +476,7 @@
     <ClInclude Include="longestIncreasingStep.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bitTrieForest.h">
+    <ClInclude Include="intTrieForestRangeSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

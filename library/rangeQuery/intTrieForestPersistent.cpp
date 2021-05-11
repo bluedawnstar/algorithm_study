@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "intTriePersistent.h"
+#include "intTrieForestPersistent.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -17,10 +17,10 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testIntTriePersistent() {
+void testIntTrieForestPersistent() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Persistent Integer Trie (Binary Trie) -------------------" << endl;
+    cout << "--- Persistent Integer Trie Forest (Binary Trie) -------------------" << endl;
     {
         int N = 10000;
         int T = 100;
@@ -32,13 +32,13 @@ void testIntTriePersistent() {
 #endif
 
         while (T-- > 0) {
-            vector<int> in(N);
+            vector<pair<int,int>> in(N);
             unordered_set<int> S;
-            PersistentIntTrie<int> trie(BIT_SIZE, [](int x) { return x; }, [](int a, int b) { return a; });
+            PersistentIntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return a; }, [](int a, int b) { return a; });
 
             for (int i = 0; i < N; i++) {
-                in[i] = RandInt32::get() & mask;
-                S.insert(in[i]);
+                in[i].first = in[i].second = RandInt32::get() & mask;
+                S.insert(in[i].first);
             }
             sort(in.begin(), in.end());
 
@@ -67,16 +67,16 @@ void testIntTriePersistent() {
 #endif
 
         while (T-- > 0) {
-            vector<int> in(N);
+            vector<pair<int, int>> in(N);
             unordered_set<int> S;
-            PersistentIntTrie<int> trie(BIT_SIZE, [](int x) { return x; }, [](int a, int b) { return a; });
+            PersistentIntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return a; }, [](int a, int b) { return a; });
 
             int root = -1;
 
             for (int i = 0; i < N; i++) {
-                in[i] = RandInt32::get() & mask;
-                S.insert(in[i]);
-                root = trie.add(root, in[i]);
+                in[i].first = in[i].second = RandInt32::get() & mask;
+                S.insert(in[i].first);
+                root = trie.insert(root, in[i].first, in[i].second);
             }
 
             for (int i = 0; i <= mask; i++) {
@@ -102,15 +102,15 @@ void testIntTriePersistent() {
 #endif
 
         while (T-- > 0) {
-            vector<int> in(N);
-            PersistentIntTrie<int> trie(BIT_SIZE, [](int x) { return x; }, [](int a, int b) { return a; });
+            vector<pair<int, int>> in(N);
+            PersistentIntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return a; }, [](int a, int b) { return a; });
 
             vector<int> roots(N + 1);
             roots[0] = -1;
 
             for (int i = 0; i < N; i++) {
-                in[i] = RandInt32::get() & mask;
-                roots[i + 1] = trie.add(roots[i], in[i]);
+                in[i].first = in[i].second = RandInt32::get() & mask;
+                roots[i + 1] = trie.insert(roots[i], in[i].first, in[i].second);
             }
 
             for (int i = 0; i < N; i++) {
@@ -119,11 +119,11 @@ void testIntTriePersistent() {
                 if (L > R)
                     swap(L, R);
 
-                int K = in[RandInt32::get() % N];
+                int K = in[RandInt32::get() % N].first;
 
                 bool gt = false;
                 for (int i = L; i <= R; i++) {
-                    if (in[i] == K) {
+                    if (in[i].first == K) {
                         gt = true;
                         break;
                     }
@@ -152,11 +152,11 @@ void testIntTriePersistent() {
 #endif
 
         while (T-- > 0) {
-            vector<int> in(N);
-            PersistentIntTrie<int> trie(BIT_SIZE, [](int x) { return x; }, [](int a, int b) { return a; });
+            vector<pair<int, int>> in(N);
+            PersistentIntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return a; }, [](int a, int b) { return a; });
 
             for (int i = 0; i < N; i++)
-                in[i] = RandInt32::get() & mask;
+                in[i].first = in[i].second = RandInt32::get() & mask;
             sort(in.begin(), in.end());
 
             int root = trie.build(in);
@@ -170,7 +170,7 @@ void testIntTriePersistent() {
 
                 int maxXor = 0;
                 for (int j = 0; j < N; j++) {
-                    int t = in[j] ^ K;
+                    int t = in[j].first ^ K;
                     maxXor = max(maxXor, t);
                 }
 
@@ -196,15 +196,15 @@ void testIntTriePersistent() {
 #endif
 
         while (T-- > 0) {
-            vector<int> in(N);
-            PersistentIntTrie<int> trie(BIT_SIZE, [](int x) { return x; }, [](int a, int b) { return a; });
+            vector<pair<int, int>> in(N);
+            PersistentIntTrieForest<int,int> trie(BIT_SIZE, [](int a, int b) { return a; }, [](int a, int b) { return a; });
 
             vector<int> roots(N + 1);
             roots[0] = -1;
 
             for (int i = 0; i < N; i++) {
-                in[i] = RandInt32::get() & mask;
-                roots[i + 1] = trie.add(roots[i], in[i]);
+                in[i].first = in[i].second = RandInt32::get() & mask;
+                roots[i + 1] = trie.insert(roots[i], in[i].first, in[i].second);
             }
 
             for (int i = 0; i < Q; i++) {
@@ -221,7 +221,7 @@ void testIntTriePersistent() {
 
                 int maxXor = 0;
                 for (int j = L; j <= R; j++) {
-                    int t = in[j] ^ K;
+                    int t = in[j].first ^ K;
                     maxXor = max(maxXor, t);
                 }
 

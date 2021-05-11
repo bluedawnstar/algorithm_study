@@ -59,8 +59,8 @@ int main(void) {
     TEST(RedBlackTreeRangeSum);
     TEST(BinarySearchTreeRangeSum);
     TEST(PersistentBinarySearchTreeRangeSum);
-    TEST(IntTrie);
-    TEST(IntTriePersistent);
+    TEST(IntTrieForest);
+    TEST(IntTrieForestPersistent);
     TEST(KTimesValueCounter);
     TEST(UniqueValueCounter);
     TEST(VectorRangeCount);
@@ -74,5 +74,4 @@ int main(void) {
     TEST(SegmentTreePrimeFactorXorRollingHash);
     TEST(LongestIncreasingSubsequence);
     TEST(LongestIncreasingStep);
-    TEST(BitTrieForest);
 }

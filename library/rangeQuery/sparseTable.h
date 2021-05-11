@@ -50,14 +50,12 @@ struct SparseTable {
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 
-        for (int i = 1; i < int(value.size()); i++) {
-            vector<T>& prev = value[i - 1];
-            vector<T>& curr = value[i];
-            for (int v = 0; v < n; v++) {
-                if (v + (1 << (i - 1)) < n)
-                    curr[v] = mergeOp(prev[v], prev[v + (1 << (i - 1))]);
+        for (int i = 1, step = 1; i < int(value.size()); i++, step <<= 1) {
+            for (int j = 0; j < n; j++) {
+                if (j + step < n)
+                    value[i][j] = mergeOp(value[i - 1][j], value[i - 1][j + step]);
                 else
-                    curr[v] = prev[v];
+                    value[i][j] = value[i - 1][j];
             }
         }
     }
@@ -74,29 +72,27 @@ struct SparseTable {
             return defaultValue;
 
         int k = H[right - left];
-        const vector<T>& mink = value[k];
-        return mergeOp(mink[left], mink[right - (1 << k)]);
+        return mergeOp(value[k][left], value[k][right - (1 << k)]);
     }
 
     // O(log(right - left + 1)), inclusive
     T queryNoOverlap(int left, int right) const {
-        right++;
-        if (right <= left)
+        int rangeSize = right - left + 1;
+        if (rangeSize <= 0)
             return defaultValue;
 
         T res = defaultValue;
-
-        int length = right - left;
-        while (length) {
+        while (rangeSize) {
 #ifndef __GNUC__
-            int i = int(_tzcnt_u32(length));
+            int i = int(_tzcnt_u32(rangeSize));
 #else
-            int i = __builtin_ctz(length);
+            int i = __builtin_ctz(rangeSize);
 #endif
-            right -= (1 << i);
-            res = mergeOp(res, value[i][right]);
+            //int i = H[rangeSize & -rangeSize];
+            res = mergeOp(res, value[i][left]);
 
-            length &= length - 1;
+            left += rangeSize & -rangeSize;
+            rangeSize &= rangeSize - 1;
         }
 
         return res;

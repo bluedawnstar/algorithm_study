@@ -1,29 +1,31 @@
 #pragma once
 
-
 /*
-    Bit Trie Forest for Range-Sum
+  Integer Trie Forest for Range-sum
+
+  1. Precondition
+    - KeyT must be an integer type  (ex: int, long long, ...)
 */
-template <typename T>
-struct BitTrieForest {
+template <typename KeyT = int, typename ValueT = int>
+struct IntTrieForestRangeSum {
     struct Node {
-        int next[2];
-        T value;
+        int next[2];    // (L, R)
+        ValueT value;
 
         Node() : value(0) {
             next[0] = next[1] = -1;
         }
 
-        explicit Node(T value) : value(value) {
+        explicit Node(ValueT value) : value(value) {
             next[0] = next[1] = -1;
         }
 
-        void init(int value) {
+        void init(ValueT value) {
             next[0] = next[1] = -1;
-            this->sum = value;
+            this->value = value;
         }
 
-        void add(T x) {
+        void add(ValueT x) {
             value += x;
         }
     };
@@ -31,10 +33,10 @@ struct BitTrieForest {
     int bitN;
     vector<Node> nodes;
 
-    BitTrieForest() : bitN(0) {
+    IntTrieForestRangeSum() : bitN(0) {
     }
 
-    explicit BitTrieForest(int bitSize) : bitN(bitSize) {
+    explicit IntTrieForestRangeSum(int bitSize) : bitN(bitSize) {
     }
 
     void clear() {
@@ -52,10 +54,10 @@ struct BitTrieForest {
     }
 
     // O(bitN)
-    void insert(int root, int x, T value) {
+    void insert(int root, KeyT x, ValueT value) {
         int cur = root;
         for (int i = bitN - 1; i >= 0; i--) {
-            int bit = (x >> i) & 1;
+            int bit = int((x >> i) & 1);
             if (nodes[cur].next[bit] < 0) {
                 int tmp = newNode();
                 nodes[cur].next[bit] = tmp;
@@ -67,12 +69,15 @@ struct BitTrieForest {
 
 
     // O(bitN)
-    pair<T, bool> get(int root, int x) {
+    pair<ValueT, bool> get(int root, KeyT x) {
+        if (x & ~((KeyT(1) << bitN) - 1))
+            return make_pair(ValueT(0), false);
+
         int cur = root;
         for (int i = bitN - 1; i >= 0; i--) {
-            int bit = (x >> i) & 1;
+            int bit = int((x >> i) & 1);
             if (nodes[cur].next[bit] < 0)
-                return make_pair(T(0), false);
+                return make_pair(ValueT(0), false);
             else
                 cur = nodes[cur].next[bit];
         }
@@ -80,11 +85,14 @@ struct BitTrieForest {
     }
 
     // inclusive, (i <= x), O(bitN)
-    T sumLessThanOrEqual(int root, int x) {
+    ValueT sumLessThanOrEqual(int root, KeyT x) {
+        if (x & ~((KeyT(1) << bitN) - 1))
+            return 0;
+
         int cur = root;
-        T ans = 0;
+        ValueT ans = 0;
         for (int i = bitN - 1; i >= 0; i--) {
-            int bit = (x >> i) & 1;
+            int bit = int((x >> i) & 1);
             if (bit == 1 && nodes[cur].next[0] >= 0)
                 ans += nodes[nodes[cur].next[0]].value;
             if (nodes[cur].next[bit] < 0)
@@ -97,11 +105,14 @@ struct BitTrieForest {
     }
 
     // inclusive, (x <= i), O(bitN)
-    T sumGreaterThanOrEqual(int root, int x) {
+    ValueT sumGreaterThanOrEqual(int root, KeyT x) {
+        if (x & ~((KeyT(1) << bitN) - 1))
+            return 0;
+
         int cur = root;
-        T ans = 0;
+        ValueT ans = 0;
         for (int i = bitN - 1; i >= 0; i--) {
-            int bit = (x >> i) & 1;
+            int bit = int((x >> i) & 1);
             if (bit == 0 && nodes[cur].next[1] >= 0)
                 ans += nodes[nodes[cur].next[1]].value;
             if (nodes[cur].next[bit] < 0)
@@ -114,7 +125,7 @@ struct BitTrieForest {
     }
 
     // inclusive, (left <= i <= right), O(bitN)
-    T sumRange(int root, int left, int right) {
+    ValueT sumRange(int root, KeyT left, KeyT right) {
         return sumLessThanOrEqual(root, right) - sumLessThanOrEqual(root, left - 1);
     }
 

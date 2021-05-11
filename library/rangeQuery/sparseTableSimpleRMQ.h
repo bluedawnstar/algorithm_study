@@ -24,11 +24,9 @@ struct SimpleSparseTableRMQ {
         values.assign(H, v);
         for (int i = 1; i < H; i++) {
             int d = 1 << (i - 1);
-            auto& prev = values[i - 1];
-            auto& curr = values[i];
             for (int j = 0; j < N - d; j++)
-                //curr[j] = min(prev[j], prev[min(N - 1, j + d)]);
-                curr[j] = min(prev[j], prev[j + d]);
+                //values[i][j] = min(values[i - 1][j], values[i - 1][min(N - 1, j + d)]);
+                values[i][j] = min(values[i - 1][j], values[i - 1][j + d]);
         }
     }
 
