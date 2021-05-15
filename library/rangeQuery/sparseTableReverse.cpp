@@ -29,7 +29,7 @@ void testReverseSparseTable() {
     // RMQ
     {
         auto sparseTable = makeReverseSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
-        RMQ rmq(vector<int>{6, 1, 4, 3, 7, 1});
+        RMQ<int> rmq(vector<int>{6, 1, 4, 3, 7, 1});
 
         int ans, ansRMQ;
 

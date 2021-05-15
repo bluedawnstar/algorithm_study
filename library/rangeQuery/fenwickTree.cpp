@@ -32,8 +32,46 @@ static int lowerBoundSlow(vector<int>& v, int k) {
     return int(v.size());
 }
 
+void testCaseFenwickTree(int N, int X, int T) {
+    vector<int> in(N);
+    for (int i = 0; i < N; i++)
+        in[i] = RandInt32::get() % X;
+
+    FenwickTree<int> fenwick(in);
+    {
+        FenwickTree<int> ft;
+        ft.init(N);
+        for (int i = 0; i < N; i++)
+            ft.add(i, in[i]);
+
+        if (fenwick.tree != ft.tree) {
+            cerr << "Mismatched tree structure at " << __LINE__ << " in " << __FILE__ << endl;
+        }
+        assert(fenwick.tree == ft.tree);
+    }
+    for (int i = 0; i < T; i++) {
+        if ((RandInt32::get() & 1) == 0) {
+            int idx = RandInt32::get() % N;
+            int val = RandInt32::get() % X;
+            fenwick.add(idx, val - in[idx]);
+            in[idx] = val;
+        } else {
+            int L = RandInt32::get() % N;
+            int R = RandInt32::get() % N;
+            if (L > R)
+                swap(L, R);
+            int ans = fenwick.sumRange(L, R);
+            int gt = sumSlow(in, L, R);
+            if (ans != gt) {
+                cerr << "Mismatched (" << L << ", " << R << ") : ans = " << ans << ", gt = " << gt << endl;
+            }
+            assert(ans == gt);
+        }
+    }
+}
+
 void testFenwickTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- FenwickTree (Binary Indexed Tree) -------------------" << endl;
     {
@@ -109,6 +147,13 @@ void testFenwickTree() {
             }
         }
     }
+    cout << "OK!" << endl;
+    testCaseFenwickTree(1024  , 100, 10000);
+    cout << "OK!" << endl;
+    testCaseFenwickTree(1024-1, 100, 10000);
+    cout << "OK!" << endl;
+    testCaseFenwickTree(1024+1, 100, 10000);
+    cout << "OK!" << endl;
     cout << "*** lower bound test" << endl;
     {
         int N = 1000;
@@ -132,6 +177,5 @@ void testFenwickTree() {
             assert(ans == gt);
         }
     }
-
     cout << "OK!" << endl;
 }

@@ -86,7 +86,7 @@ void testSchieberVishkinRMQ() {
 
         PROFILE_START(0);
         {
-            RMQ rmq(value);
+            RMQ<int> rmq(value);
 
             int ansSum = 0;
             for (auto q : query)

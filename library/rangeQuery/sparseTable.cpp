@@ -29,7 +29,7 @@ void testSparseTable() {
     cout << "*** RMQ ***" << endl;
     {
         auto sparseTable = makeSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
-        RMQ rmq(vector<int>{6, 1, 4, 3, 7, 1});
+        RMQ<int> rmq(vector<int>{6, 1, 4, 3, 7, 1});
 
         int ans, ansRMQ;
 
@@ -110,7 +110,7 @@ void testSparseTable() {
         cout << "*** Range Minimum Query (Segment Tree's special version) ***" << endl;
         res = 0;
         start = clock();
-        RMQ rmq(T);
+        RMQ<int> rmq(T);
         for (int i = 0; i < TN; i++) {
             for (auto& it : Q) {
                 res += rmq.query(it.first, it.second);
