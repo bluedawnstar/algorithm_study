@@ -12,7 +12,7 @@ struct DistinctSubstringCounterWithSuffixArray {
     int currSuffixPos;
 
     SuffixArray<MaxCharN,BaseChar> SA;
-    RMQ         addedSuffix;    // suffix string poistion
+    RMQ<int>    addedSuffix;    // suffix string poistion
     vector<int> revSA;          // suffix string position to suffix array index
 
     FenwickTreeMultAdd<T>   fsum;

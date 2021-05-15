@@ -82,19 +82,19 @@ struct SegmentTree {
         tree.assign(size * 4, defaultValue);
     }
 
-    // O(NlogN)
+    // O(N)
     T build(T value, int n) {
         init(n);
         return buildSub(value, 0, n - 1, 1);
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const T arr[], int n) {
         init(n);
         return buildSub(arr, 0, n - 1, 1);
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const vector<T>& v) {
         return build(&v[0], int(v.size()));
     }
@@ -110,7 +110,7 @@ struct SegmentTree {
         return updateSub(index, newValue, 1, 0, N - 1);
     }
 
-    // inclusive, O(KlogN)
+    // inclusive, O(|right - left| + logN)
     T update(int left, int right, T newValue) {
         return updateSub(left, right, newValue, 1, 0, N - 1);
     }

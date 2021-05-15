@@ -59,21 +59,29 @@ struct FenwickTree {
         tree = vector<T>(n + 1);
     }
 
-    // O(NlogN)
+
+    // O(N)
     void build(T value, int n) {
-        init(n);
-        for (int i = 0; i < n; i++)
-            add(i, value);
+        tree = vector<T>(n + 1, value);
+        tree[0] = T(0);
+        for (int step = 2; step <= n; step <<= 1) {
+            for (int i = step >> 1, j = step; j <= n; i += step, j += step)
+                tree[j] += tree[i];
+        }
     }
 
-    // O(NlogN)
+    // O(N)
     void build(const T arr[], int n) {
-        init(n);
-        for (int i = 0; i < n; i++)
-            add(i, arr[i]);
+        tree.clear();
+        tree.push_back(T(0));
+        tree.insert(tree.end(), arr, arr + n);
+        for (int step = 2; step <= n; step <<= 1) {
+            for (int i = step >> 1, j = step; j <= n; i += step, j += step)
+                tree[j] += tree[i];
+        }
     }
 
-    // O(NlogN)
+    // O(N)
     void build(const vector<T>& v) {
         build(&v[0], int(v.size()));
     }

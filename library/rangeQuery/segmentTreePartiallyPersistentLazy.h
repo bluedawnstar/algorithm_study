@@ -87,7 +87,7 @@ struct PartiallyPersistentSegmentTreeLazy {
     }
 
 
-    // O(NlogN)
+    // O(N)
     T build(T value, int n) {
         init(n);
 
@@ -97,7 +97,7 @@ struct PartiallyPersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const T arr[], int n) {
         init(n);
 
@@ -107,7 +107,7 @@ struct PartiallyPersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const vector<T>& v) {
         return build(&v[0], int(v.size()));
     }
@@ -121,7 +121,7 @@ struct PartiallyPersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(max(right - left + 1, logN))
     T updateRange(int left, int right, T newValue) {
         auto t = updateRangeSub(trees.back(), left, right, newValue, 0, N - 1);
         trees.push_back(t.second);

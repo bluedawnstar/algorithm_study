@@ -19,6 +19,15 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+static int getMin(const vector<int>& v, int L, int R) {
+    int res = v[L];
+    while (++L <= R) {
+        if (res > v[L])
+            res = v[L];
+    }
+    return res;
+}
+
 static int sumSlow(vector<int>& v, int L, int R) {
     int res = 0;
     while (L <= R)
@@ -36,14 +45,39 @@ static int lowerBoundSlow(vector<int>& v, int k) {
     return int(v.size());
 }
 
-void testSegmentTree() {
-    return; //TODO: if you want to test, make this line a comment.
+static void testRMQ(int N, int T) {
+    vector<int> value(N);
+    for (int i = 0; i < N; i++)
+        value[i] = RandInt32::get();
 
-    cout << "-- Segment Tree ----------------------------------------" << endl;
+    vector<pair<int, int>> query(T);
+    for (int i = 0; i < T; i++) {
+        int L = RandInt32::get() % N;
+        int R = RandInt32::get() % N;
+        if (L > R)
+            swap(L, R);
+        query[i].first = L;
+        query[i].second = R;
+    }
+
+    RMQ<int> rmq(value);
+    for (int i = 0; i < T; i++) {
+        int ans = rmq.query(query[i].first, query[i].second);
+        int gt = getMin(value, query[i].first, query[i].second);
+        if (ans != gt)
+            cout << "Mismatch at " << i << ": " << ans << ", " << gt << endl;
+        assert(ans == gt);
+    }
+}
+
+void testSegmentTree() {
+    //return; //TODO: if you want to test, make this line a comment.
+
+    cout << "--- Segment Tree -------------------------------------" << endl;
     {
         auto segTree = makeSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
         auto segTree2 = makeSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
-        RMQ rmq(vector<int>{6, 5, 4, 3, 2, 1});
+        RMQ<int> rmq(vector<int>{6, 5, 4, 3, 2, 1});
 
         int ans, ansRMQ;
 
@@ -82,6 +116,11 @@ void testSegmentTree() {
         //cout << ans << endl;
         assert(ans == 2);
     }
+    testRMQ(1, 1);
+    testRMQ(2, 2);
+    testRMQ(1024, 1000);
+    testRMQ(1024 + 1, 1000);
+    testRMQ(1024 - 1, 1000);
     cout << "OK!" << endl;
     {
         int N = 1000;
@@ -164,7 +203,7 @@ void testSegmentTree() {
         PROFILE_START(1);
         {
             int res = 0;
-            RMQ rmq(T);
+            RMQ<int> rmq(T);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += rmq.query(it.first, it.second);

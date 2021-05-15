@@ -18,7 +18,7 @@ struct MergeSortTree {
     }
 
 
-    // O(NlogN)
+    // O(N)
     void build(const T arr[], int n) {
         N = n;
         tree.resize(n * 4);

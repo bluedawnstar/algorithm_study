@@ -46,7 +46,7 @@ void testSegmentTreePersistent() {
     {
         auto segTree = makePersistentSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return a + b; });
         auto segTree2 = makePersistentSegmentTree(vector<int>{6, 5, 4, 3, 2, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
-        RMQ rmq(vector<int>{6, 5, 4, 3, 2, 1});
+        RMQ<int> rmq(vector<int>{6, 5, 4, 3, 2, 1});
 
         int ans, ansRMQ;
 
@@ -280,7 +280,7 @@ void testSegmentTreePersistent() {
         PROFILE_START(1);
         {
             int res = 0;
-            RMQ rmq(T);
+            RMQ<int> rmq(T);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
                     res += rmq.query(it.first, it.second);

@@ -34,6 +34,7 @@ struct DisjointSparseTable {
     }
 
 
+    // O(NlogN)
     void build(const T a[], int n) {
         RealN = n;
         N = 1;
