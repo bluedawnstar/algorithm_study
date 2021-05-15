@@ -98,27 +98,12 @@ struct GeneralizedBIT {
 
     // inclusive (0 <= pos < N), O(logN)
     void add(int pos, T val) {
-        update(pos, query(pos) + val);
+        update(pos, val, [](int prevVal, int newVal) { return prevVal + newVal; });
     }
 
     // inclusive (0 <= pos < N), O(logN)
     void update(int pos, T val) {
-        int curr = pos & ~1;
-        int prev = pos | 1;
-
-        if (pos & 1)
-            treeR[prev] = val;
-        else
-            tree[prev] = val;
-
-        int mask = 2;
-        for (curr |= mask; curr <= N; prev = curr, curr = (curr & (curr - 1)) | mask) {
-            if (prev & mask)
-                treeR[curr] = mergeOp(tree[prev], treeR[prev]);
-            else
-                tree[curr] = mergeOp(tree[prev], treeR[prev]);
-            mask <<= 1;
-        }
+        update(pos, val, [](int prevVal, int newVal) { return newVal; });
     }
 
     // inclusive (0 <= pos < N), O(logN)
@@ -131,7 +116,7 @@ struct GeneralizedBIT {
         if (pos & 1)
             treeR[prev] = updateOp(treeR[prev], val);
         else
-            tree[prev] = updateOp(treeR[prev], val);;
+            tree[prev] = updateOp(tree[prev], val);;
 
         int mask = 2;
         for (curr |= mask; curr <= N; prev = curr, curr = (curr & (curr - 1)) | mask) {
@@ -143,24 +128,26 @@ struct GeneralizedBIT {
         }
     }
 
+
     // O(|right - left| + logN)
     void add(int left, int right, T val) {
-        for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
-            tree[L] += val;
-
-        for (int L = left | 1, R = right; L <= R; L += 2)
-            treeR[L] += val;
-
-        rebuild(left, right);
+        update(left, right, val, [](int prevVal, int newVal) { return prevVal + newVal; });
     }
 
     // O(|right - left| + logN)
     void update(int left, int right, T val) {
+        update(left, right, val, [](int prevVal, int newVal) { return newVal; });
+    }
+
+    // O(|right - left| + logN)
+    template <typename UpdateOp = function<T(T, T)>>
+    // - updateOp(prev value, new value)
+    void update(int left, int right, T val, const UpdateOp& updateOp) {
         for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
-            tree[L] = val;
+            tree[L] = updateOp(tree[L], val);
 
         for (int L = left | 1, R = right; L <= R; L += 2)
-            treeR[L] = val;
+            treeR[L] = updateOp(treeR[L], val);
 
         rebuild(left, right);
     }
