@@ -9,13 +9,13 @@
    - [Generalized Fenwick Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/generalizedBIT.h "Generalized Fenwick Tree")
    - [Partially Persistent Fenwick Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/fenwickTreePersistent.h "Partially Persistent Fenwick Tree")
 
-    |     Name                       | Build    | Add      | Add Range | Update      | Update Range  | Sum         | Sum Range   | General Query | General Query Range | Persistent  |
-    |:------------------------------:|:--------:|:--------:|:---------:|:-----------:|:-------------:|:-----------:|:-----------:|:-------------:|:-------------------:|:-----------:|
-    | FenwickTree                    | O(nlogn) | O(logn)  |    -      | O(logn)     |      -        | O(logn)     | O(logn)     |       -       |         -           |     X       |
-    | FenwickTreeMultAdd             | O(nlogn) | O(logn)  | O(logn)   | O(logn)     |  O(logn)      | O(logn)     | O(logn)     |       -       |         -           |     X       |
-    | FenwickTreeXor                 | O(nlogn) | O(logn)  |    -      | O(logn)     |      -        | O(logn)     | O(logn)     |       -       |         -           |     X       |
-    | GeneralizedBIT                 | O(nlogn) | O(logn)  | O(klogn)  | O(logn)     |  O(klogn)     | O(logn)     | O(logn)     |    O(logn)    |       O(logn)       |     X       |
-    | PartiallyPersistentFenwickTree |          | O(logn)  |    -      | O((logn)^2) |      -        | O((logn)^2) | O((logn)^2) |       -       |         -           |     O       |
+    |     Name                       | Build | Add     | Add Range   | Update      | Update Range | Sum         | Sum Range   | General Query | General Query Range | Persistent  |
+    |:------------------------------:|:-----:|:-------:|:-----------:|:-----------:|:------------:|:-----------:|:-----------:|:-------------:|:-------------------:|:-----------:|
+    | FenwickTree                    | O(n)  | O(logn) |    -        | O(logn)     |     -        | O(logn)     | O(logn)     |       -       |         -           |     X       |
+    | FenwickTreeMultAdd             |  -    | O(logn) | O(logn)     | O(logn)     | O(logn)      | O(logn)     | O(logn)     |       -       |         -           |     X       |
+    | FenwickTreeXor                 | O(n)  | O(logn) |    -        | O(logn)     |     -        | O(logn)     | O(logn)     |       -       |         -           |     X       |
+    | GeneralizedBIT                 | O(n)  | O(logn) | O(k + logn) | O(logn)     | O(k + logn)  | O(logn)     | O(logn)     |    O(logn)    |       O(logn)       |     X       |
+    | PartiallyPersistentFenwickTree |  -    | O(logn) |    -        | O((logn)^2) |     -        | O((logn)^2) | O((logn)^2) |       -       |         -           |     O       |
 
  - Segment Trees - general operation
    - [Segment Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/segmentTree.h "Segment Tree")
@@ -26,14 +26,14 @@
    - [Persistent Segment Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/segmentTreePersistent.h "Persistent Segment Tree")
    - [Persistent Segment Tree - Lazy Update](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/segmentTreePersistentLazy.h "Persistent Segment Tree - Lazy Update")
 
-    |     Name                       | Build    | Add      | Add Range | Update      | Update Range  | Query   | Query Range | Persistent  |
-    |:------------------------------:|:--------:|:--------:|:---------:|:-----------:|:-------------:|:-------:|:-----------:|:-----------:|
-    | SegmentTree                    | O(nlogn) |    -     |    -      | O(logn)     |  O(klogn)     | O(logn) |   O(logn)   |     X       |
-    | SegmentTreeLazy                | O(nlogn) |    -     |    -      | O(logn)     |  O(logn)      | O(logn) |   O(logn)   |     X       |
-    | CompactSegmentTree             | O(nlogn) | O(logn)  | O(klogn)  | O(logn)     |  O(klogn)     | O(logn) |   O(logn)   |     X       |
-    | CompactSegmentTreeLazy         | O(nlogn) | O(logn)  | O(logn)   | O(logn)     |  O(logn)      | O(logn) |   O(logn)   |     X       |
-    | PersistentSegmentTree          | O(nlogn) |    -     |    -      | O(logn)     |  O(klogn)     | O(logn) |   O(logn)   |     O       |
-    | PersistentSegmentTreeLazy      | O(nlogn) |    -     |    -      | O(logn)     |  O(logn)      | O(logn) |   O(logn)   |     O       |
+    |     Name                       | Build | Add     | Add Range      | Update  | Update Range | Query Range | Persistent  |
+    |:------------------------------:|:-----:|:-------:|:--------------:|:-------:|:------------:|:-----------:|:-----------:|
+    | SegmentTree                    | O(n)  |    -    |    -           | O(logn) | O(k + logn)  |   O(logn)   |     X       |
+    | SegmentTreeLazy                | O(n)  |    -    |    -           | O(logn) | O(logn)      |   O(logn)   |     X       |
+    | CompactSegmentTree             | O(n)  | O(logn) | O(k + logn)    | O(logn) | O(k + logn)  |   O(logn)   |     X       |
+    | CompactSegmentTreeLazy         | O(n)  | O(logn) | O(logn)        | O(logn) | O(logn)      |   O(logn)   |     X       |
+    | PersistentSegmentTree          | O(n)  |    -    |    -           | O(logn) | O(k + logn)  |   O(logn)   |     O       |
+    | PersistentSegmentTreeLazy      | O(n)  |    -    |    -           | O(logn) | O(logn)      |   O(logn)   |     O       |
 
  - Segment Trees - special operation
    - [Segment Tree for RMQ](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/segmentTreeRMQ.h "Segment Tree for RMQ")
@@ -47,17 +47,17 @@
    - [Li Chao Tree for Lower Envelope of line segments](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/segmentTreeLineSegment2DMin.h "Li Chao Tree for Lower Envelope of line segments")
    - [Li Chao Tree for Upper Envelope of line segments](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/segmentTreeLineSegment2DMax.h "Li Chao Tree for Upper Envelope of line segments")
 
-    |     Name                                   | Build    | Add      | Add Range | Update      | Update Range  | Query   | Query Range | Persistent  |
-    |:------------------------------------------:|:--------:|:--------:|:---------:|:-----------:|:-------------:|:-------:|:-----------:|:-----------:|
-    | SegmentTreeRMQ                             | O(nlogn) |    -     |    -      | O(logn)     |     -         | O(logn) |   O(logn)   |     X       |
-    | SegmentTreeMaxSubarray                     | O(nlogn) |    -     |    -      | O(logn)     |  O(klogn)     | O(1)    |   O(logn)   |     X       |
-    | SegmentTreeLine1D                          | O(nlogn) | O(logn)  |  O(logn)  |    -        |     -         | O(logn) |   O(logn)   |     X       |
-    | SegmentTreeLine2DMin (Li Chao Tree)        | O(nlogX) | O(logX)  |    -      |    -        |     -         | O(logX) |     -       |     X       |
-    | SegmentTreeLine2DMax (Li Chao Tree)        | O(nlogX) | O(logX)  |    -      |    -        |     -         | O(logX) |     -       |     X       |
-    | SegmentTreeLine2DArrayMin (Li Chao Tree)   | O(nlogn) | O(logn)  |    -      |    -        |     -         | O(logn) |     -       |     X       |
-    | SegmentTreeLine2DArrayMax (Li Chao Tree)   | O(nlogn) | O(logn)  |    -      |    -        |     -         | O(logn) |     -       |     X       |
-    | SegmentTreeLineSegment2DMin (Li Chao Tree) | O(nlogn) | O(logn)  |    -      |    -        |     -         | O(logn) |     -       |     X       |
-    | SegmentTreeLineSegment2DMax (Li Chao Tree) | O(nlogn) | O(logn)  |    -      |    -        |     -         | O(logn) |     -       |     X       |
+    |     Name                                   | Build    | Add      | Add Range | Update  | Update Range | Query   | Query Range | Persistent  |
+    |:------------------------------------------:|:--------:|:--------:|:---------:|:-------:|:------------:|:-------:|:-----------:|:-----------:|
+    | SegmentTreeRMQ                             | O(n)     |    -     |    -      | O(logn) |     -        | O(1)    |   O(logn)   |     X       |
+    | SegmentTreeMaxSubarray                     | O(n)     |    -     |    -      | O(logn) | O(k + logn)  | O(1)    |   O(logn)   |     X       |
+    | SegmentTreeLine1D                          | O(n)     | O(logn)  |  O(logn)  |    -    |     -        | O(logn) |   O(logn)   |     X       |
+    | SegmentTreeLine2DMin (Li Chao Tree)        | O(nlogX) | O(logX)  |    -      |    -    |     -        | O(logX) |     -       |     X       |
+    | SegmentTreeLine2DMax (Li Chao Tree)        | O(nlogX) | O(logX)  |    -      |    -    |     -        | O(logX) |     -       |     X       |
+    | SegmentTreeLine2DArrayMin (Li Chao Tree)   | O(nlogn) | O(logn)  |    -      |    -    |     -        | O(logn) |     -       |     X       |
+    | SegmentTreeLine2DArrayMax (Li Chao Tree)   | O(nlogn) | O(logn)  |    -      |    -    |     -        | O(logn) |     -       |     X       |
+    | SegmentTreeLineSegment2DMin (Li Chao Tree) | O(nlogn) | O(logn)  |    -      |    -    |     -        | O(logn) |     -       |     X       |
+    | SegmentTreeLineSegment2DMax (Li Chao Tree) | O(nlogn) | O(logn)  |    -      |    -    |     -        | O(logn) |     -       |     X       |
 
  - Sparse Table
    - [Sparse Table](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sparseTable.h "Sparse Table")
@@ -68,25 +68,25 @@
    - [Disjoint Sparse Table](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/disjointSparseTable.h "Disjoint Sparse Table")
    - [Sparse Table - 2D](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sparseTable2D.h "Sparse Table - 2D")
 
-    |     Name            | Build    | Sum     | Sum Range | Query   | Query Range  |
-    |:-------------------:|:--------:|:-------:|:---------:|:-------:|:------------:|
-    | SparseTable         | O(nlogn) | O(logn) | O(logn)   |  O(1)   |   O(1)       |
-    | SparseTableIndex    | O(nlogn) | O(logn) | O(logn)   |  O(1)   |   O(1)       |
-    | SparseTableMin      | O(nlogn) | O(logn) | O(logn)   |  O(1)   |   O(1)       |
-    | SparseTableMinIndex | O(nlogn) | O(logn) | O(logn)   |  O(1)   |   O(1)       |
-    | ReverseSparseTable  | O(nlogn) | O(logn) | O(logn)   |  O(1)   |   O(1)       |
-    | DisjointSparseTable | O(nlogn) |  O(1)   |  O(1)     |  O(1)   |   O(1)       |
+    |     Name            | Build    | Sum     | Sum Range | Query | Query Range |
+    |:-------------------:|:--------:|:-------:|:---------:|:-----:|:-----------:|
+    | SparseTable         | O(nlogn) | O(logn) |  O(logn)  | O(1)  |    O(1)     |
+    | SparseTableIndex    | O(nlogn) | O(logn) |  O(logn)  | O(1)  |    O(1)     |
+    | SparseTableMin      | O(nlogn) | O(logn) |  O(logn)  | O(1)  |    O(1)     |
+    | SparseTableMinIndex | O(nlogn) | O(logn) |  O(logn)  | O(1)  |    O(1)     |
+    | ReverseSparseTable  | O(nlogn) | O(logn) |  O(logn)  | O(1)  |    O(1)     |
+    | DisjointSparseTable | O(nlogn) |  O(1)   |   O(1)    | O(1)  |    O(1)     |
 
  - Sqrt Decomposition
    - [MO's Algorithm](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/MOAlgorithm.h "MO's algorithm")
    - [Sqrt-decomposition](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtDecomposition.h "Sqrt-decomposition")
    - [Sqrt-decomposition for sum](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtDecompositionSum.h "Sqrt-decomposition for sum")
 
-    |     Name                   | Build | Add        | Add Range  | Update      | Update Range  | Query      | Query Range |
-    |:--------------------------:|:-----:|:----------:|:----------:|:-----------:|:-------------:|:----------:|:-----------:|
-    | Sqrt-decomposition         | O(n)  | O(sqrt(n)) | O(sqrt(n)) | O(sqrt(n))  |  O(sqrt(n))   | O(sqrt(n)) | O(sqrt(n))  |
-    | Sqrt-decomposition for sum | O(n)  | O(sqrt(n)) | O(sqrt(n)) | O(sqrt(n))  |  O(sqrt(n))   | O(sqrt(n)) | O(sqrt(n))  |
-    | MO's algorithm             |   -   |     -      |     -      |     -       |      -        | O(sqrt(n)) | O(sqrt(n))  |
+    |     Name                   | Build | Add        | Add Range  | Update     | Update Range | Query      | Query Range |
+    |:--------------------------:|:-----:|:----------:|:----------:|:----------:|:------------:|:----------:|:-----------:|
+    | Sqrt-decomposition         | O(n)  | O(sqrt(n)) | O(sqrt(n)) | O(sqrt(n)) |  O(sqrt(n))  | O(sqrt(n)) | O(sqrt(n))  |
+    | Sqrt-decomposition for sum | O(n)  | O(sqrt(n)) | O(sqrt(n)) | O(sqrt(n)) |  O(sqrt(n))  | O(sqrt(n)) | O(sqrt(n))  |
+    | MO's algorithm             |   -   |     -      |     -      |     -      |      -       | O(sqrt(n)) | O(sqrt(n))  |
 
  - Misc
    - [Sqrt Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtTree.h "Sqrt Tree")
