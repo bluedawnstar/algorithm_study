@@ -45,7 +45,7 @@ struct PersistentSegmentTree {
     }
 
 
-    // O(NlogN)
+    // O(N)
     T build(T value, int n) {
         init(n);
 
@@ -55,7 +55,7 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const T arr[], int n) {
         init(n);
 
@@ -64,7 +64,7 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const vector<T>& v) {
         return build(&v[0], int(v.size()));
     }
@@ -80,7 +80,7 @@ struct PersistentSegmentTree {
         return updateSub(trees.back(), index, newValue, 0, N - 1);
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(|right - left| + logN)
     T updateRange(int left, int right, T newValue) {
         return updateRangeSub(trees.back(), left, right, newValue, 0, N - 1);
     }
@@ -92,7 +92,7 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(|right - left| + logN)
     T upgradeRange(int left, int right, T newValue) {
         auto t = upgradeRangeSub(trees.back(), left, right, newValue, 0, N - 1);
         trees.push_back(t.second);
@@ -120,7 +120,7 @@ struct PersistentSegmentTree {
         return updateSub(trees[historyIndex], index, newValue, 0, N - 1);
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(|right - left| + logN)
     T updateRange(int historyIndex, int left, int right, T newValue) {
         return updateRangeSub(trees[historyIndex], left, right, newValue, 0, N - 1);
     }
@@ -132,7 +132,7 @@ struct PersistentSegmentTree {
         return t.first;
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(|right - left| + logN)
     T upgradeRange(int historyIndex, int left, int right, T newValue) {
         auto t = upgradeRangeSub(trees[historyIndex], left, right, newValue, 0, N - 1);
         trees.push_back(t.second);

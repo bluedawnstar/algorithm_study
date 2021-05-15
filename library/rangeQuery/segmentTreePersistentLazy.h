@@ -51,7 +51,7 @@ struct PersistentSegmentTreeLazy {
     }
 
 
-    // O(NlogN)
+    // O(N)
     T build(T value, int n) {
         init(n);
 
@@ -62,7 +62,7 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const T arr[], int n) {
         init(n);
 
@@ -73,7 +73,7 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // O(NlogN)
+    // O(N)
     T build(const vector<T>& v) {
         return build(&v[0], int(v.size()));
     }
@@ -89,7 +89,7 @@ struct PersistentSegmentTreeLazy {
         return updateSub(int(treesLazy.size()) - 1, trees.back(), index, newValue, 0, N - 1);
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(max(right - left + 1, logN))
     T updateRange(int left, int right, T newValue) {
         return updateRangeSub(int(treesLazy.size()) - 1, trees.back(), left, right, newValue, 0, N - 1);
     }
@@ -102,7 +102,7 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(max(right - left + 1, logN))
     T upgradeRange(int left, int right, T newValue) {
         treesLazy.push_back(treesLazy.back());
         auto t = upgradeRangeSub(int(treesLazy.size()) - 1, trees.back(), left, right, newValue, 0, N - 1);
@@ -131,7 +131,7 @@ struct PersistentSegmentTreeLazy {
         return updateSub(historyIndex, trees[historyIndex], index, newValue, 0, N - 1);
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(max(right - left + 1, logN))
     T updateRange(int historyIndex, int left, int right, T newValue) {
         return updateRangeSub(historyIndex, trees[historyIndex], left, right, newValue, 0, N - 1);
     }
@@ -144,7 +144,7 @@ struct PersistentSegmentTreeLazy {
         return t.first;
     }
 
-    // inclusive, O(klogN)
+    // inclusive, O(max(right - left + 1, logN))
     T upgradeRange(int historyIndex, int left, int right, T newValue) {
         treesLazy.push_back(treesLazy[historyIndex]);
         auto t = upgradeeRangeSub(int(treesLazy.size()) - 1, trees[historyIndex], left, right, newValue, 0, N - 1);
