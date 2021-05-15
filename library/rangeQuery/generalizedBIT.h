@@ -2,7 +2,6 @@
 
 //--------- Generalized Binary Indexed Tree (Generalized Fenwick Tree) --------------------------------
 
-// This data structure was invented by Youngman Ro. (youngman.ro@gmail.com, 2018/3)
 template <typename T, typename MergeOp = function<T(T, T)>>
 struct GeneralizedBIT {
     int N;                  // 
@@ -43,21 +42,48 @@ struct GeneralizedBIT {
         treeR = vector<T>(N + 1, defaultValue);
     }
 
-    // O(NlogN)
+
+    // O(N)
     void build(T value, int n) {
-        init(n);
-        for (int i = 0; i < n; i++)
-            initUpdate(i, value);
+        N = n;
+
+        tree = vector<T>(N + 1, value);
+        treeR = vector<T>(N + 1, value);
+        tree[0] = defaultValue;
+        treeR.back() = defaultValue;
+        for (int step = 2; step <= n; step <<= 1) {
+            int i, j;
+            for (i = step >> 1, j = step; j <= n; i += step, j += step) {
+                tree[j] = mergeOp(tree[j], tree[i]);
+                treeR[i & (i - 1)] = mergeOp(treeR[i & (i - 1)], treeR[i]);
+            }
+            if (i < n)
+                treeR[i & (i - 1)] = mergeOp(treeR[i & (i - 1)], treeR[i]);
+        }
     }
 
-    // O(NlogN)
+    // O(N)
     void build(const T arr[], int n) {
-        init(n);
-        for (int i = 0; i < n; i++)
-            initUpdate(i, arr[i]);
+        N = n;
+        tree.clear();
+        treeR.clear();
+
+        tree.push_back(defaultValue);
+        tree.insert(tree.end(), arr, arr + n);
+        treeR.insert(treeR.end(), arr, arr + n);
+        treeR.push_back(defaultValue);
+        for (int step = 2; step <= n; step <<= 1) {
+            int i, j;
+            for (i = step >> 1, j = step; j <= n; i += step, j += step) {
+                tree[j] = mergeOp(tree[j], tree[i]);
+                treeR[i & (i - 1)] = mergeOp(treeR[i & (i - 1)], treeR[i]);
+            }
+            if (i < n)
+                treeR[i & (i - 1)] = mergeOp(treeR[i & (i - 1)], treeR[i]);
+        }
     }
 
-    // O(NlogN)
+    // O(N)
     void build(const vector<T>& v) {
         build(&v[0], int(v.size()));
     }
@@ -95,7 +121,29 @@ struct GeneralizedBIT {
         }
     }
 
-    // O(klogN)
+    // inclusive (0 <= pos < N), O(logN)
+    // - updateOp(prev value, new value)
+    template <typename UpdateOp = function<T(T,T)>>
+    void update(int pos, T val, const UpdateOp& updateOp) {
+        int curr = pos & ~1;
+        int prev = pos | 1;
+
+        if (pos & 1)
+            treeR[prev] = updateOp(treeR[prev], val);
+        else
+            tree[prev] = updateOp(treeR[prev], val);;
+
+        int mask = 2;
+        for (curr |= mask; curr <= N; prev = curr, curr = (curr & (curr - 1)) | mask) {
+            if (prev & mask)
+                treeR[curr] = mergeOp(tree[prev], treeR[prev]);
+            else
+                tree[curr] = mergeOp(tree[prev], treeR[prev]);
+            mask <<= 1;
+        }
+    }
+
+    // O(|right - left| + logN)
     void add(int left, int right, T val) {
         for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
             tree[L] += val;
@@ -106,7 +154,7 @@ struct GeneralizedBIT {
         rebuild(left, right);
     }
 
-    // O(klogN)
+    // O(|right - left| + logN)
     void update(int left, int right, T val) {
         for (int L = (left + 1) | 1, R = right + 1; L <= R; L += 2)
             tree[L] = val;
@@ -202,15 +250,7 @@ struct GeneralizedBIT {
     }
 
 private:
-    void initUpdate(int pos, T val) {
-        for (int i = pos + 1; i <= N; i += i & -i)
-            tree[i] = mergeOp(tree[i], val);
-
-        for (int i = pos; i > 0; i &= i - 1)
-            treeR[i] = mergeOp(treeR[i], val);
-    }
-
-    // O(klogN)
+    // O(|right - left| + logN)
     void rebuild(int left, int right) {
         int mask = 2;
 
