@@ -128,9 +128,6 @@ struct SegmentTree {
 private:
     // inclusive
     T buildSub(const T arr[], int left, int right, int node) {
-        if (left > right)
-            return defaultValue;
-
         if (left == right)
             return tree[node] = arr[left];
 
@@ -143,9 +140,6 @@ private:
 
     // inclusive
     T buildSub(T value, int left, int right, int node) {
-        if (left > right)
-            return defaultValue;
-
         if (left == right)
             return tree[node] = value;
 

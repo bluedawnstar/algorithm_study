@@ -173,9 +173,6 @@ private:
 
     // inclusive
     pair<T, int> buildSub(T initValue, int left, int right) {
-        if (left > right)
-            return make_pair(defaultValue, -1);
-
         if (left == right)
             return make_pair(initValue, addNode(initValue));
 
@@ -188,9 +185,6 @@ private:
 
     // inclusive
     pair<T, int> buildSub(const T arr[], int left, int right) {
-        if (left > right)
-            return make_pair(defaultValue, -1);
-
         if (left == right)
             return make_pair(arr[left], addNode(arr[left]));
 
