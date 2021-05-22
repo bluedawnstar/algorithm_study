@@ -36,6 +36,7 @@ int main(void) {
     TEST(Simplex);
     TEST(DifferenceConstraintsSystem);
     TEST(DifferenceConstraintsSystem2);
+    TEST(PythagoreanTriples);
     //--- problems
     TEST(SimplexPolygonChain);
     TEST(TransformMatrix);
