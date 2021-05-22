@@ -16,9 +16,9 @@ using namespace std;
 #include <numeric>
 #include <unordered_set>
 #include <iostream>
-#include "../common/iostreamhelper.h"
-#include "../common/profile.h"
-#include "../common/rand.h"
+#include "../../common/iostreamhelper.h"
+#include "../../common/profile.h"
+#include "../../common/rand.h"
 
 // https://www.hackerrank.com/contests/hourrank-31/challenges/save-the-queen/problem
 

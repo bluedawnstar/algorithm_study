@@ -147,16 +147,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="binarySearch.cpp" />
-    <ClCompile Include="coverTime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parallelBinarySearch.cpp" />
     <ClCompile Include="parallelBinarySearchRecursive.cpp" />
+    <ClCompile Include="problems\coverTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarySearch.h" />
-    <ClInclude Include="coverTime.h" />
     <ClInclude Include="parallelBinarySearch.h" />
     <ClInclude Include="parallelBinarySearchRecursive.h" />
+    <ClInclude Include="problems\coverTime.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
