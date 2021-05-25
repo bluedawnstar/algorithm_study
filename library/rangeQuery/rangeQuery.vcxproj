@@ -178,6 +178,7 @@
     <ClCompile Include="redBlackTreeRangeSum.cpp" />
     <ClCompile Include="segmentTreeBeats.cpp" />
     <ClCompile Include="segmentTreeCompactLazyEx.cpp" />
+    <ClCompile Include="segmentTreeLineIntegralLazy.cpp" />
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="segmentTreeBeatsMax.h" />
     <ClInclude Include="segmentTreeBeatsMin.h" />
     <ClInclude Include="segmentTreeBeatsMinMax.h" />
+    <ClInclude Include="segmentTreeLineIntegralLazy.h" />
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h" />
     <ClInclude Include="segmentTreePersistent-UniqueValueCounter.h" />
     <ClInclude Include="segmentTreePersistentLazySimple.h" />
