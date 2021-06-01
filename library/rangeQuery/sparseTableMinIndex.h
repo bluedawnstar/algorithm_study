@@ -61,11 +61,11 @@ struct SparseTableMinIndex {
         if (right <= left)
             return left;    //invalid range
 
-        int k = H[right - left];
+        int level = H[right - left];
 
-        if (in[value[k][left]] < in[value[k][right - (1 << k)]])
-            return value[k][left];
+        if (in[value[level][left]] < in[value[level][right - (1 << level)]])
+            return value[level][left];
         else
-            return value[k][right - (1 << k)];
+            return value[level][right - (1 << level)];
     }
 };

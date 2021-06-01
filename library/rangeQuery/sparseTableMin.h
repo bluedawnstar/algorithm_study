@@ -52,7 +52,7 @@ struct SparseTableMin {
         if (right <= left)
             return INT_MAX;
 
-        int k = H[right - left];
-        return min(value[k][left], value[k][right - (1 << k)]);
+        int level = H[right - left];
+        return min(value[level][left], value[level][right - (1 << level)]);
     }
 };

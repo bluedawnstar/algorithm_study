@@ -36,10 +36,10 @@ struct SimpleSparseTableRMQ {
         //assert(L <= R);
         R++;
 #ifndef __GNUC__
-        int depth = 31 - _lzcnt_u32((unsigned int)(R - L));
+        int level = 31 - _lzcnt_u32(static_cast<unsigned int>(R - L));
 #else
-        int depth = 31 - __builtin_clz((unsigned int)(R - L));
+        int level = 31 - __builtin_clz(static_cast<unsigned int>(R - L));
 #endif
-        return min(values[depth][L], values[depth][R - (1 << depth)]);
+        return min(values[level][L], values[level][R - (1 << level)]);
     }
 };

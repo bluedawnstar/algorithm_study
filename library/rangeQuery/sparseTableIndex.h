@@ -79,10 +79,10 @@ struct SparseTableIndex {
         if (right <= left)
             return -1;
 
-        int k = H[right - left];
+        int level = H[right - left];
 
-        int a = value[k][left];
-        int b = value[k][right - (1 << k)];
+        int a = value[level][left];
+        int b = value[level][right - (1 << level)];
         return (mergeOp(in[a], in[b]) == in[a]) ? a : b;
     }
 
@@ -94,21 +94,17 @@ struct SparseTableIndex {
 
         T val = defaultValue;
         int res = -1;
-        while (rangeSize) {
-#ifndef __GNUC__
-            int i = int(_tzcnt_u32(rangeSize));
-#else
-            int i = __builtin_ctz(rangeSize);
-#endif
-            //int i = H[rangeSize & -rangeSize];
+        while (rangeSize > 0) {
+            int lastBit = rangeSize & -rangeSize;
+            int level = H[lastBit];
 
-            int idx = value[i][left];
+            int idx = value[level][left];
             val = mergeOp(val, in[idx]);
             if (val == in[idx])
                 res = idx;
 
-            left += rangeSize & -rangeSize;
-            rangeSize &= rangeSize - 1;
+            left += lastBit;
+            rangeSize -= lastBit;
         }
 
         return res;

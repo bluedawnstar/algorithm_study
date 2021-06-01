@@ -1,10 +1,5 @@
 #pragma once
 
-#ifndef __GNUC__
-#include <intrin.h>
-#endif
-#include <immintrin.h>
-
 #include <vector>
 #include <functional>
 
@@ -68,11 +63,11 @@ struct SparseTable {
     // O(1), inclusive
     T query(int left, int right) const {
         right++;
-        if (right <= left)
+        if (left >= right)
             return defaultValue;
 
-        int k = H[right - left];
-        return mergeOp(value[k][left], value[k][right - (1 << k)]);
+        int level = H[right - left];
+        return mergeOp(value[level][left], value[level][right - (1 << level)]);
     }
 
     // O(log(right - left + 1)), inclusive
@@ -82,17 +77,13 @@ struct SparseTable {
             return defaultValue;
 
         T res = defaultValue;
-        while (rangeSize) {
-#ifndef __GNUC__
-            int i = int(_tzcnt_u32(rangeSize));
-#else
-            int i = __builtin_ctz(rangeSize);
-#endif
-            //int i = H[rangeSize & -rangeSize];
-            res = mergeOp(res, value[i][left]);
+        while (rangeSize > 0) {
+            int lastBit = rangeSize & -rangeSize;
+            int level = H[lastBit];
+            res = mergeOp(res, value[level][left]);
 
-            left += rangeSize & -rangeSize;
-            rangeSize &= rangeSize - 1;
+            left += lastBit;
+            rangeSize -= lastBit;
         }
 
         return res;

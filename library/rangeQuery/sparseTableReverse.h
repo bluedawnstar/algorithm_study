@@ -1,10 +1,5 @@
 #pragma once
 
-#ifndef __GNUC__
-#include <intrin.h>
-#endif
-#include <immintrin.h>
-
 #include <vector>
 #include <functional>
 
@@ -68,8 +63,8 @@ struct ReverseSparseTable {
         if (right <= left)
             return defaultValue;
 
-        int k = H[right - left];
-        return mergeOp(value[k][left + (1 << k)], value[k][right]);
+        int level = H[right - left];
+        return mergeOp(value[level][left + (1 << level)], value[level][right]);
     }
 
     // O(log(right - left + 1)), inclusive
@@ -79,17 +74,14 @@ struct ReverseSparseTable {
             return defaultValue;
 
         T res = defaultValue;
-        while (rangeSize) {
-#ifndef __GNUC__
-            int i = int(_tzcnt_u32(rangeSize));
-#else
-            int i = __builtin_ctz(rangeSize);
-#endif
-            //int i = H[rangeSize & -rangeSize];
-            left += rangeSize & -rangeSize;
-            res = mergeOp(res, value[i][left]);
+        while (rangeSize > 0) {
+            int lastBit = rangeSize & -rangeSize;
+            int level = H[lastBit];
 
-            rangeSize &= rangeSize - 1;
+            left += lastBit;
+            res = mergeOp(res, value[level][left]);
+
+            rangeSize -= lastBit;
         }
 
         return res;
