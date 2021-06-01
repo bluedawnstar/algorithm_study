@@ -8,9 +8,13 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeRMQ.h"
 #include "sparseTable.h"
+#include "sparseTableFast.h"
 #include "sparseTableIndex.h"
+#include "sparseTableIndexFast.h"
 #include "sparseTableMin.h"
+#include "sparseTableMinFast.h"
 #include "sparseTableMinIndex.h"
+#include "sparseTableMinIndexFast.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -22,13 +26,33 @@ using namespace std;
 #include "../common/rand.h"
 
 void testSparseTable() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Sparse Table ----------------------------------------" << endl;
 
     cout << "*** RMQ ***" << endl;
     {
         auto sparseTable = makeSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
+        RMQ<int> rmq(vector<int>{6, 1, 4, 3, 7, 1});
+
+        int ans, ansRMQ;
+
+        ans = sparseTable.query(2, 5);
+        cout << ans << endl;
+
+        ansRMQ = rmq.query(2, 5);
+        assert(ans == ansRMQ);
+
+        ans = sparseTable.query(0, 3);
+        cout << ans << endl;
+
+        ansRMQ = rmq.query(0, 3);
+        assert(ans == ansRMQ);
+
+        cout << "OK!" << endl;
+    }
+    {
+        auto sparseTable = makeFastSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
         RMQ<int> rmq(vector<int>{6, 1, 4, 3, 7, 1});
 
         int ans, ansRMQ;
@@ -62,6 +86,7 @@ void testSparseTable() {
         }
 
         auto sparseTable2 = makeSparseTable<int>(inSum, [](int a, int b) { return a + b; }, 0);
+        auto sparseTable3 = makeFastSparseTable<int>(inSum, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < 10000; i++) {
             int left = RandInt32::get() % N;
@@ -71,7 +96,9 @@ void testSparseTable() {
 
             int ans1 = prefixSum[right + 1] - prefixSum[left];
             int ans2 = sparseTable2.queryNoOverlap(left, right);
+            int ans3 = sparseTable3.queryNoOverlap(left, right);
             assert(ans1 == ans2);
+            assert(ans1 == ans3);
         }
         cout << "OK!" << endl;
     }
@@ -125,6 +152,17 @@ void testSparseTable() {
         for (int i = 0; i < TN; i++) {
             for (auto& it : Q) {
                 res += st.query(it.first, it.second);
+            }
+        }
+        cout << "elapsed time(" << res << ") : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
+
+        cout << "*** Fast Sparse Table ***" << endl;
+        res = 0;
+        start = clock();
+        FastSparseTableMin fst(T);
+        for (int i = 0; i < TN; i++) {
+            for (auto& it : Q) {
+                res += fst.query(it.first, it.second);
             }
         }
         cout << "elapsed time(" << res << ") : " << double(clock() - start) / CLOCKS_PER_SEC << endl;

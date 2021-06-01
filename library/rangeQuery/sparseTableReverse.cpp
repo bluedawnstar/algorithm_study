@@ -8,6 +8,7 @@ using namespace std;
 #include "segmentTree.h"
 #include "segmentTreeRMQ.h"
 #include "sparseTableReverse.h"
+#include "sparseTableReverseFast.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -23,12 +24,26 @@ using namespace std;
 #include "sparseTableMin.h"
 
 void testReverseSparseTable() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "-- Reverse Sparse Table --------------------------------" << endl;
     // RMQ
     {
         auto sparseTable = makeReverseSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
+        RMQ<int> rmq(vector<int>{6, 1, 4, 3, 7, 1});
+
+        int ans, ansRMQ;
+
+        ans = sparseTable.query(2, 5);
+        ansRMQ = rmq.query(2, 5);
+        assert(ans == ansRMQ);
+
+        ans = sparseTable.query(0, 3);
+        ansRMQ = rmq.query(0, 3);
+        assert(ans == ansRMQ);
+    }
+    {
+        auto sparseTable = makeFastReverseSparseTable<int>(vector<int>{6, 1, 4, 3, 7, 1}, [](int a, int b) { return min(a, b); }, INT_MAX);
         RMQ<int> rmq(vector<int>{6, 1, 4, 3, 7, 1});
 
         int ans, ansRMQ;
@@ -55,6 +70,7 @@ void testReverseSparseTable() {
         }
 
         auto sparseTable = makeReverseSparseTable<int>(inSum, [](int a, int b) { return a + b; }, 0);
+        auto sparseTable2 = makeFastReverseSparseTable<int>(inSum, [](int a, int b) { return a + b; }, 0);
 
         for (int i = 0; i < 10000; i++) {
             int left = RandInt32::get() % N;
@@ -64,7 +80,9 @@ void testReverseSparseTable() {
 
             int ans1 = prefixSum[right + 1] - prefixSum[left];
             int ans2 = sparseTable.queryNoOverlap(left, right);
+            int ans3 = sparseTable2.queryNoOverlap(left, right);
             assert(ans1 == ans2);
+            assert(ans1 == ans3);
         }
     }
     cout << "OK!" << endl;
@@ -116,6 +134,21 @@ void testReverseSparseTable() {
                 cout << "It's just for preventing optimization" << endl;
         }
         PROFILE_STOP(1);
+
+        PROFILE_START(2);
+        {
+            int res = 0;
+
+            auto st = makeFastReverseSparseTable(T, [](int a, int b) { return min(a, b); }, INT_MAX);
+            for (int i = 0; i < TN; i++) {
+                for (auto& it : Q) {
+                    res += st.query(it.first, it.second);
+                }
+            }
+            if (res == 0)
+                cout << "It's just for preventing optimization" << endl;
+        }
+        PROFILE_STOP(2);
     }
 
     cout << "OK!" << endl;

@@ -264,6 +264,11 @@
     <ClInclude Include="segmentTreePrimeFactorXorRollingHash.h" />
     <ClInclude Include="segmentTreeSubsetXor.h" />
     <ClInclude Include="dynamicSegmentTreeForest.h" />
+    <ClInclude Include="sparseTableFast.h" />
+    <ClInclude Include="sparseTableIndexFast.h" />
+    <ClInclude Include="sparseTableMinFast.h" />
+    <ClInclude Include="sparseTableMinIndexFast.h" />
+    <ClInclude Include="sparseTableReverseFast.h" />
     <ClInclude Include="sparseTableSimpleRMQ.h" />
     <ClInclude Include="schieberVishkinRMQ.h" />
     <ClInclude Include="mergeSortTree2DPoint.h" />

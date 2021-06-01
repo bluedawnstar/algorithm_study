@@ -485,6 +485,21 @@
     <ClInclude Include="segmentTreeLineIntegralLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="sparseTableFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableMinFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableIndexFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableMinIndexFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableReverseFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">
