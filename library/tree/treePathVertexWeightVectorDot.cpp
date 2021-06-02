@@ -51,7 +51,7 @@ static vector<long long> makeGT(TreePathVertexWeightVectorDot& tree, const vecto
 void testTreePathVertexWeightVectorDot() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Tree Path - Vertext Weight Vector Dot -----------------------" << endl;
+    cout << "--- Tree Path - Vertex Weight Vector Dot -----------------------" << endl;
     {
         const int T = 10;
         const int N = 1'000;

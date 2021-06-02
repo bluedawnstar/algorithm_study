@@ -222,6 +222,9 @@
     <ClCompile Include="longestIncreasingStep.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="segmentTreeLineIntegralLazy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -477,6 +480,24 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="intTrieForestRangeSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeLineIntegralLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableMinFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableIndexFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableMinIndexFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sparseTableReverseFast.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

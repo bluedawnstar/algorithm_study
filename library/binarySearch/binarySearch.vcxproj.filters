@@ -13,12 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\problems">
+      <UniqueIdentifier>{234e3246-4428-45b7-8744-155e33e68f7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="coverTime.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="parallelBinarySearch.cpp">
@@ -30,11 +30,11 @@
     <ClCompile Include="binarySearch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="problems\coverTime.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="coverTime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="parallelBinarySearch.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -43,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="binarySearch.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\coverTime.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

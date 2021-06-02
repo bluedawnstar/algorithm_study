@@ -9,5 +9,6 @@ int main(void) {
     TEST(BinarySearch);
     TEST(ParallelBinarySearch);
     TEST(ParallelBinarySearchRecursive);
+    //--- problems
     TEST(CoverTime);
 }

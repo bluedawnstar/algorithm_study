@@ -6,7 +6,7 @@ struct ProuhetTarryEscottProblem {
     // result = [0, ..., 2^(k+1) - 1]
     // ex) k = 3, { 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0 } <- bitCount(i) % 2
     static vector<bool> generateThueMorseSequence(int k) {
-        vector<bool> res(1 << (k + 1));
+        vector<bool> res(size_t(1) << (k + 1));
 
 #if 0
         bool value = false;

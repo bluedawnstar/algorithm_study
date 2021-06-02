@@ -26,6 +26,9 @@ void testBinarySearch() {
     {
         int N = 100000;
         int T = 100;
+#ifdef _DEBUG
+        N = 1000;
+#endif
 
         while (T-- > 0) {
             vector<int> v(N);
@@ -65,6 +68,9 @@ void testBinarySearch() {
     {
         int N = 100000;
         int T = 100;
+#ifdef _DEBUG
+        N = 1000;
+#endif
 
         while (T-- > 0) {
             vector<int> v(N);
@@ -102,9 +108,14 @@ void testBinarySearch() {
         }
     }
     {
-        int T = 1000000;
+        int T = 1'000'000;
         const int RANGE = 100;
-        for (int N = 10000000; N <= 100000000; N += 10000000) {
+#ifndef _DEBUG
+        for (int N = 10'000'000; N <= 100'000'000; N += 10'000'000) {
+#else
+        T = 100'000;
+        for (int N = 10'000'000; N <= 10'000'000; N += 10'000'000) {
+#endif
             cout << "*** N = " << N << endl;
 
             vector<int> v(N);

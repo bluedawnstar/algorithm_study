@@ -47,9 +47,20 @@ struct IntTrieForest {
     UpdateOp    updateOp;
     vector<Node> nodes;
 
+    IntTrieForest() : bitN(0) {
+    }
+
     IntTrieForest(int bitN, MergeOp mergeOp, UpdateOp updateOp)
         : bitN(bitN), mergeOp(mergeOp), updateOp(updateOp) {
     }
+
+
+    void init(int bitN, MergeOp mergeOp, UpdateOp updateOp) {
+        this->bitN = bitN;
+        this->mergeOp = mergeOp;
+        this->updateOp = updateOp;
+    }
+
 
     void clear() {
         nodes.clear();

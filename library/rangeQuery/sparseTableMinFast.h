@@ -1,20 +1,25 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 //--------- RMQ (Range Minimum Query) - Min Sparse Table ----------------------
 
-struct SparseTableMin {
+struct FastSparseTableMin {
     int N;
+    int H;
     vector<vector<int>> value;
-    vector<int> H;
 
-    SparseTableMin() {
+    FastSparseTableMin() {
     }
 
-    SparseTableMin(const int a[], int n) {
+    FastSparseTableMin(const int a[], int n) {
         build(a, n);
     }
 
-    explicit SparseTableMin(const vector<int>& a) {
+    explicit FastSparseTableMin(const vector<int>& a) {
         build(a);
     }
 
@@ -22,16 +27,17 @@ struct SparseTableMin {
     void build(const int a[], int n) {
         this->N = n;
 
-        H.resize(n + 1);
-        H[1] = 0;
-        for (int i = 2; i < int(H.size()); i++)
-            H[i] = H[i >> 1] + 1;
+#ifndef __GNUC__
+        H = 32 - _lzcnt_u32((N << 1) - 1);
+#else
+        H = 32 - __builtin_clz((N << 1) - 1);
+#endif
 
-        value.assign(H.back() + 1, vector<int>(n));
+        value.assign(H, vector<int>(n));
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 
-        for (int i = 1, step = 1; i < int(value.size()); i++, step <<= 1) {
+        for (int i = 1, step = 1; i < H; i++, step <<= 1) {
             for (int j = 0; j < n; j++) {
                 if (j + step < n)
                     value[i][j] = min(value[i - 1][j], value[i - 1][j + step]);
@@ -52,7 +58,11 @@ struct SparseTableMin {
         if (right <= left)
             return INT_MAX;
 
-        int level = H[right - left];
+#ifndef __GNUC__
+        int level = 31 - _lzcnt_u32(static_cast<unsigned int>(right - left));
+#else
+        int level = 31 - __builtin_clz(static_cast<unsigned int>(right - left));
+#endif
         return min(value[level][left], value[level][right - (1 << level)]);
     }
 };

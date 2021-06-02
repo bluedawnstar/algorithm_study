@@ -71,7 +71,7 @@ static void testRMQ(int N, int T) {
 }
 
 void testSegmentTree() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Segment Tree -------------------------------------" << endl;
     {

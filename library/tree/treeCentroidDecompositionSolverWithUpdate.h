@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 /*
   1. how to use
 
@@ -148,11 +153,22 @@ struct TreeCentroidDecompositionSolverWithUpdate {
         if (dist <= 0)
             return node;
 
+#if 0
         for (int i = 0; dist > 0; i++) {
             if (dist & 1)
                 node = P[i][node];
             dist >>= 1;
         }
+#else
+        for (; dist; dist &= dist - 1) {
+#ifndef __GNUC__
+            int i = static_cast<int>(_tzcnt_u32(static_cast<unsigned>(dist)));
+#else
+            int i = __builtin_ctz(static_cast<unsigned>(dist));
+#endif
+            node = P[i][node];
+        }
+#endif
 
         return node;
     }
@@ -166,9 +182,17 @@ struct TreeCentroidDecompositionSolverWithUpdate {
         if (A == B)
             return A;
 
+#if 0
         int bitCnt = 0;
         for (int x = level[A]; x; x >>= 1)
             bitCnt++;
+#else
+#ifndef __GNUC__
+        int bitCnt = 32 - static_cast<int>(__lzcnt(static_cast<unsigned>(level[A])));
+#else
+        int bitCnt = 32 - __builtin_clz(static_cast<unsigned>(level[A]));
+#endif
+#endif
 
         for (int i = bitCnt - 1; i >= 0; i--) {
             if (P[i][A] > 0 && P[i][A] != P[i][B]) {

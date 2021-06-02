@@ -1,22 +1,27 @@
 #pragma once
 
+#ifndef __GNUC__
+#include <intrin.h>
+#endif
+#include <immintrin.h>
+
 //--------- RMQ (Range Minimum Query) - Min Sparse Table ----------------------
 // handing indexes instread of real values
-struct SparseTableMinIndex {
+struct FastSparseTableMinIndex {
     int N;
+    int H;
     vector<vector<int>> value;
-    vector<int> H;
 
     vector<int> in;
 
-    SparseTableMinIndex() {
+    FastSparseTableMinIndex() {
     }
 
-    SparseTableMinIndex(const int a[], int n) {
+    FastSparseTableMinIndex(const int a[], int n) {
         build(a, n);
     }
 
-    explicit SparseTableMinIndex(const vector<int>& a) {
+    explicit FastSparseTableMinIndex(const vector<int>& a) {
         build(a);
     }
 
@@ -24,20 +29,21 @@ struct SparseTableMinIndex {
     void build(const int a[], int n) {
         this->N = n;
 
+#ifndef __GNUC__
+        H = 32 - _lzcnt_u32((N << 1) - 1);
+#else
+        H = 32 - __builtin_clz((N << 1) - 1);
+#endif
+
         in.resize(n);
         for (int i = 0; i < n; i++)
             in[i] = a[i];
 
-        H.resize(n + 1);
-        H[1] = 0;
-        for (int i = 2; i < int(H.size()); i++)
-            H[i] = H[i >> 1] + 1;
-
-        value.assign(H.back() + 1, vector<int>(n));
+        value.assign(H, vector<int>(n));
         for (int i = 0; i < n; i++)
             value[0][i] = i;
 
-        for (int i = 1; i < int(value.size()); i++) {
+        for (int i = 1; i < H; i++) {
             vector<int>& prev = value[i - 1];
             vector<int>& curr = value[i];
             for (int j = 0; j < n; j++) {
@@ -61,8 +67,11 @@ struct SparseTableMinIndex {
         if (right <= left)
             return left;    //invalid range
 
-        int level = H[right - left];
-
+#ifndef __GNUC__
+        int level = 31 - _lzcnt_u32(static_cast<unsigned int>(right - left));
+#else
+        int level = 31 - __builtin_clz(static_cast<unsigned int>(right - left));
+#endif
         if (in[value[level][left]] < in[value[level][right - (1 << level)]])
             return value[level][left];
         else

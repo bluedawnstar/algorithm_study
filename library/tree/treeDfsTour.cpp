@@ -18,7 +18,7 @@ using namespace std;
 #include "../common/profile.h"
 
 void testDfsTour() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- DFS Tour Tree -----------------------------" << endl;
     {

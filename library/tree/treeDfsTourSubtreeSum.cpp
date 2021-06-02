@@ -36,7 +36,7 @@ static int dfsSum(DfsTourTreeSubtreeSum<int>& tree, vector<int>& values, int u, 
 }
 
 void testDfsTourTreeSubtreeSum() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Tree Subtree Sum -----------------------------" << endl;
     {

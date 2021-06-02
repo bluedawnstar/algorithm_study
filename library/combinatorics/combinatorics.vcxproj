@@ -171,6 +171,7 @@
     <ClInclude Include="combMod.h" />
     <ClInclude Include="combModExt.h" />
     <ClInclude Include="combModDP.h" />
+    <ClInclude Include="comb_gridPathCounter.h" />
     <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="kirchhoffTheorem.h" />

@@ -188,9 +188,6 @@ private:
 
     // inclusive
     int buildSub(const T arr[], int left, int right, int node) {
-        if (left > right)
-            return 0;
-
         if (left == right) {
             tree[node].init(arr[left]);
             return node;
@@ -207,9 +204,6 @@ private:
 
     // inclusive
     int buildSub(T value, int left, int right, int node) {
-        if (left > right)
-            return 0;
-
         if (left == right) {
             tree[node].init(value);
             return node;
