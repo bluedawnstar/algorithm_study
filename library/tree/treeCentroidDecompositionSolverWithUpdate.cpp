@@ -21,7 +21,7 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-#include "../rangeQuery/bitTrieForest.h"
+#include "../rangeQuery/intTrieForest.h"
 
 
 // https://www.codechef.com/problems/RWALKS
@@ -35,7 +35,7 @@ struct RandomWalkQueriesSolver {
     vector<int> prefixProb;
     vector<int> prefixProbInv;
 
-    BitTrieForest<long long> trie;
+    IntTrieForest<int, long long> trie;
     vector<int> add;
     vector<int> sub;
     vector<int> addSrc;
@@ -43,7 +43,7 @@ struct RandomWalkQueriesSolver {
 
     void init(int n) {
         tree.init(n);
-        trie.init(tree.logN);
+        trie.init(tree.logN, [](long long a, long long b) { return a + b; }, [](long long a, long long b) { return b; });
 
         inv = vector<int>(n + 1);
         prefixProb = vector<int>(n + 1);
@@ -68,9 +68,9 @@ struct RandomWalkQueriesSolver {
         sub = vector<int>(tree.N);
         addSrc = vector<int>(tree.N);
         for (int i = 0; i < tree.N; i++) {
-            add[i] = trie.createTrie();
-            sub[i] = trie.createTrie();
-            addSrc[i] = trie.createTrie();
+            add[i] = trie.build();
+            sub[i] = trie.build();
+            addSrc[i] = trie.build();
         }
 
         tree.build(0);
@@ -110,13 +110,19 @@ struct RandomWalkQueriesSolver {
             [this](int ctOpNode, int u, int ctNode, int dist) -> long long {
                 long long res = 0;
                 if (u == ctNode) {
-                    res += trie.sumGreaterThanOrEqual(add[ctOpNode], dist) % mod;
-                    res += trie.sumGreaterThanOrEqual(addSrc[ctOpNode], dist) % mod;
+                    //res += trie.sumGreaterThanOrEqual(add[ctOpNode], dist) % mod;
+                    //res += trie.sumGreaterThanOrEqual(addSrc[ctOpNode], dist) % mod;
+                    res += trie.query(add[ctOpNode], dist, tree.N, 0ll, [](long long a, long long b) { return a + b; }) % mod;
+                    res += trie.query(addSrc[ctOpNode], dist, tree.N, 0ll, [](long long a, long long b) { return a + b; }) % mod;
                 } else {
                     // src -> ctNode -> u
-                    res += trie.sumGreaterThanOrEqual(add[ctOpNode], dist) % mod * getMidProb(ctNode, u) % mod;
+                    //res += trie.sumGreaterThanOrEqual(add[ctOpNode], dist) % mod * getMidProb(ctNode, u) % mod;
+                    res += trie.query(add[ctOpNode], dist, tree.N, 0ll, [](long long a, long long b) { return a + b; }) % mod
+                           * getMidProb(ctNode, u) % mod;
                     // ctNode -> u
-                    res += trie.sumGreaterThanOrEqual(addSrc[ctOpNode], dist) % mod * getProb(ctNode, u) % mod;
+                    //res += trie.sumGreaterThanOrEqual(addSrc[ctOpNode], dist) % mod * getProb(ctNode, u) % mod;
+                    res += trie.query(addSrc[ctOpNode], dist, tree.N, 0ll, [](long long a, long long b) { return a + b; }) % mod
+                           * getProb(ctNode, u) % mod;
                 }
                 return res;
             },
@@ -125,7 +131,9 @@ struct RandomWalkQueriesSolver {
                 long long res = 0;
                 if (u != ctNode) {
                     // src -> ctNode -> u
-                    res = trie.sumGreaterThanOrEqual(sub[ctOpNode], dist) % mod * getMidProb(ctNode, u) % mod;
+                    //res = trie.sumGreaterThanOrEqual(sub[ctOpNode], dist) % mod * getMidProb(ctNode, u) % mod;
+                    res = trie.query(sub[ctOpNode], dist, tree.N, 0ll, [](long long a, long long b) { return a + b; }) % mod
+                          * getMidProb(ctNode, u) % mod;
                 }
                 return res;
             }

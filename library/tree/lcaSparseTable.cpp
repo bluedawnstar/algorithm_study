@@ -17,9 +17,9 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testLcaSparseTable() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- LCA with Sparse Table -----------------------------------" << endl;
+    cout << "--- LCA with Sparse Table -----------------------------------" << endl;
     
     vector<int> parent(100), level(100);
     iota(parent.begin(), parent.end(), 1);

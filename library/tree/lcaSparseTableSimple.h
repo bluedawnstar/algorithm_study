@@ -2,13 +2,13 @@
 
 // It's not handle level (or depth) information
 struct LcaSparseTableSimple {
-    int                 mN;         // the number of vertex
-    int                 mLogN;      // 
-    vector<vector<int>> mP;         // mP[0][n] points to the parent
+    int                 N;          // the number of vertex
+    int                 logN;       // 
+    vector<vector<int>> P;          // P[0][n] points to the parent
                                     // parent & acestors
     LcaSparseTableSimple() {
-        mN = 0;
-        mLogN = 0;
+        N = 0;
+        logN = 0;
     }
 
     LcaSparseTableSimple(int N) {
@@ -25,33 +25,33 @@ struct LcaSparseTableSimple {
 
 
     void init(int N) {
-        mN = N;
-        mLogN = int(log2(N)) + 1;
-        mP.resize(mLogN);
-        for (int i = 0; i < mLogN; i++)
-            mP[i].resize(mN);
+        N = N;
+        logN = int(log2(N)) + 1;
+        P.resize(logN);
+        for (int i = 0; i < logN; i++)
+            P[i].resize(N);
     }
 
     // O(NlogN)
     void build(const vector<int>& A) {
         init(int(A.size()));
-        copy(A.begin(), A.end(), mP[0].begin());
+        copy(A.begin(), A.end(), P[0].begin());
         build();
     }
 
     // O(NlogN)
     void build(const int A[], int N) {
         init(N);
-        copy(A, A + N, mP[0].begin());
+        copy(A, A + N, P[0].begin());
         build();
     }
 
     // O(NlogN)
     void build() {
-        for (int i = 1; i < mLogN; i++) {
-            for (int j = 0; j < mN; j++) {
-                int pp = mP[i - 1][j];
-                mP[i][j] = pp < 0 ? pp : mP[i - 1][pp];
+        for (int i = 1; i < logN; i++) {
+            for (int j = 0; j < N; j++) {
+                int pp = P[i - 1][j];
+                P[i][j] = pp < 0 ? pp : P[i - 1][pp];
             }
         }
     }
@@ -62,11 +62,22 @@ struct LcaSparseTableSimple {
         if (dist <= 0)
             return x;
 
+#if 0
         for (int i = 0; dist > 0; i++) {
             if (dist & 1)
-                x = mP[i][x];
+                x = P[i][x];
             dist >>= 1;
         }
+#else
+        for (; dist; dist &= dist - 1) {
+#ifndef __GNUC__
+            int i = static_cast<int>(_tzcnt_u32(static_cast<unsigned>(dist)));
+#else
+            int i = __builtin_ctz(static_cast<unsigned>(dist));
+#endif
+            x = P[i][x];
+        }
+#endif
 
         return x;
     }
@@ -76,13 +87,13 @@ struct LcaSparseTableSimple {
         if (A == B)
             return A;
 
-        for (int i = mLogN - 1; i >= 0; i--) {
-            if (mP[i][A] > 0 && mP[i][A] != mP[i][B]) {
-                A = mP[i][A];
-                B = mP[i][B];
+        for (int i = logN - 1; i >= 0; i--) {
+            if (P[i][A] > 0 && P[i][A] != P[i][B]) {
+                A = P[i][A];
+                B = P[i][B];
             }
         }
 
-        return mP[0][A];
+        return P[0][A];
     }
 };

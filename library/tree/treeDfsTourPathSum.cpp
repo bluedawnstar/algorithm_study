@@ -67,7 +67,7 @@ static bool isConnectedNaive(DfsTourTreePathSum<int>& tree, unordered_set<long l
 }
 
 void testDfsTourTreePathSum() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Tree Path Sum -----------------------------" << endl;
     cout << "SET test..." << endl;

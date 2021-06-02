@@ -29,7 +29,7 @@ using namespace std;
 
 // https://algospot.com/judge/problem/read/NAVI
 void testHeavyLightDecomposition_org() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     int T ;
     cin >> T;
