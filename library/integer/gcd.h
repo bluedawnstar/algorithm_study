@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <immintrin.h>
 
 // recursive
@@ -126,4 +127,26 @@ inline unsigned long long gcdFast(unsigned long long p, unsigned long long q) {
 #else
     return gcd(p, q);
 #endif
+}
+
+//---
+
+template <typename T>
+inline T reduce(const char a[], int length, T b) {
+    T res = 0;
+
+    for (int i = 0; i < length; i++)
+        res = (res * 10 + a[i] - '0') % b;
+
+    return res;
+}
+
+template <typename T>
+inline T gcdLarge(T p, const char q[], int length) {
+    return gcd(p, reduce(q, length, p));
+}
+
+template <typename T>
+inline T gcdLarge(T p, const string& q) {
+    return gcd(p, reduce(q.c_str(), int(q.length()), p));
 }
