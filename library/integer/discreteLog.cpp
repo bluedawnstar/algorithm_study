@@ -22,7 +22,7 @@ using namespace std;
 const int MOD = 1000000007;
 
 void testDiscreteLog() {
-    //return; //TODO: if you want to test, make this line a comment.
+    return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Discrete Log -----------------------" << endl;
     {
