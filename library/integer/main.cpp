@@ -33,4 +33,5 @@ int main(void) {
     TEST(DiscreteLog);
     TEST(SubsetXOR);
     TEST(DiscreteSqrt);
+    TEST(PrimeFactorSimple);
 }
