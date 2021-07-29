@@ -102,6 +102,9 @@
     <ClCompile Include="discreteSqrt.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="primeFactorSimple.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gcd.h">
@@ -216,6 +219,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="discreteSqrt.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeFactorSimple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

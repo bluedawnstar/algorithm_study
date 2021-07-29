@@ -167,6 +167,7 @@
     <ClCompile Include="primalityTestInt64.cpp" />
     <ClCompile Include="primeFactor.cpp" />
     <ClCompile Include="primeFactorInt64.cpp" />
+    <ClCompile Include="primeFactorSimple.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />
     <ClCompile Include="primitiveRoot.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="primalityTestInt64.h" />
     <ClInclude Include="primeFactor.h" />
     <ClInclude Include="primeFactorInt64.h" />
+    <ClInclude Include="primeFactorSimple.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
     <ClInclude Include="primitiveRoot.h" />

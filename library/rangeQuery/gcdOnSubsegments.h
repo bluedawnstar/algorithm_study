@@ -2,7 +2,7 @@
 
 struct GcdOnSubsegments {
     // O(N*(logX)^2)
-    // result[L] = { (R0 + 1, gcd(L, R0)), (R1 + 1, gcd(L, R1)), (R2 + 1, gcd(L, R2)), ... }
+    // result[L] = { (R0 + 1, gcd(L,...,R0)), (R1 + 1, gcd(L,...,R1)), (R2 + 1, gcd(L,...,R2)), ... }
     template <typename T>
     static vector<vector<pair<int, T>>> buildLeftAligned(const vector<T>& values) {
         int N = int(values.size());
@@ -31,7 +31,7 @@ struct GcdOnSubsegments {
     }
 
     // O(N*(logX)^2)
-    // result[R] = { ..., (L2 - 1, gcd(L2, R)), (L1 - 1, gcd(L1, R)), (L0 - 1, gcd(L0, R)) }
+    // result[R] = { ..., (L2 - 1, gcd(L2,...,R)), (L1 - 1, gcd(L1,...,R)), (L0 - 1, gcd(L0,...,R)) }
     template <typename T>
     static vector<vector<pair<int, T>>> buildRightAligned(const vector<T>& values) {
         int N = int(values.size());

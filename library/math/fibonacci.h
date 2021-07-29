@@ -6,21 +6,31 @@
 /*
 <Important properties>
 
-F(n + 2) = F(n) + F(n + 1)     (F(0) = 0, F(1) = 1, F(2) = 1, ...)
-F(n - 2) = F(n) - F(n - 1)
-F(-n) = (-1)^(n+1) * F(n)
+  F(0) = 0, F(1) = 1, F(2) = 1, F(3) = 2, ..., F(n) = F(n - 2) + F(n - 1)
 
-| F(k + 2) | = | 1  1 | | F(k + 1) |
-| F(k + 1) |   | 1  0 | |   F(k)   |
+1. basic properties
+   F(n + 2) = F(n) + F(n + 1)
+   F(n - 2) = F(n) - F(n - 1)
+   F(-n) = (-1)^(n+1) * F(n)
 
-A^n = | 1  1 |n = | F(n + 1)    F(n)   |
-      | 1  0 |    |   F(n)    F(n - 1) |
+2. Cassini's identities
+   F(n)^2 - F(n + 1)*F(n - 1) = (-1)^(n - 1)
 
-| F(m + n + 1)  F(m + n)   | = A^(m + n) = | F(m + 1)  F(m)   | | F(n + 1)  F(n)   |
-|   F(m + n)  F(m + n - 1) |               |   F(m)  F(m - 1) | |   F(n)  F(n - 1) |
+3. divisibility properties
+   gcd(F(n), F(m)) = F(gcd(n,m))
 
-F(m + n - 1) = F(m) * F(n) + F(m - 1) * F(n - 1)
-F(m + n) = F(m) * F(n + 1) + F(m - 1) * F(n)
+4. maxtrix form
+   | F(k + 2) | = | 1  1 | | F(k + 1) |
+   | F(k + 1) |   | 1  0 | |   F(k)   |
+
+   A^n = | 1  1 |n = | F(n + 1)    F(n)   |
+         | 1  0 |    |   F(n)    F(n - 1) |
+
+   | F(m + n + 1)  F(m + n)   | = A^(m + n) = | F(m + 1)  F(m)   | | F(n + 1)  F(n)   |
+   |   F(m + n)  F(m + n - 1) |               |   F(m)  F(m - 1) | |   F(n)  F(n - 1) |
+
+   F(m + n - 1) = F(m) * F(n) + F(m - 1) * F(n - 1)
+   F(m + n) = F(m) * F(n + 1) + F(m - 1) * F(n)
 */
 
 // fibonacci(n) = | F(n + 1)   F(n)   |

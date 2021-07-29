@@ -93,6 +93,12 @@ void testGcd() {
         cout << "extGcd(" << a << ", " << b << ") = " << make_pair(x, y) << endl;
     }
     {
+        assert(gcdLarge(2 * 2 * 2 * 2 * 2, to_string(3 * 3 * 3)) == 1);
+        assert(gcdLarge(2 * 3 * 2 * 3 * 7, to_string(3 * 3 * 3)) == 9);
+        int a = 134232, b = 93231;
+        assert(gcdLarge(b, to_string(a)) == gcd(a, b));
+    }
+    {
 #ifdef _DEBUG
         int N = 100000;
 #else
