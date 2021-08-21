@@ -28,11 +28,6 @@ struct DisjointSparseTable {
         build(a);
     }
 
-    DisjointSparseTable(DisjointSparseTable&& rhs)
-        : ReadN(rhs.RealN), N(rhs.N), value(std::move(rhs.value)), H(std::move(rhs.H)),
-        mergeOp(std::move(rhs.mergeOp)), defaultValue(rhs.defaultValue) {
-    }
-
 
     // O(NlogN)
     void build(const T a[], int n) {
@@ -50,19 +45,16 @@ struct DisjointSparseTable {
         for (int i = 0; i < n; i++)
             value[0][i] = a[i];
 
-        vector<T>& A = value[0];    // range is 2
         for (int h = 1, range = 4; range <= N; h++, range <<= 1) {
             int half = range >> 1;
-
-            vector<T>& curr = value[h];
             for (int i = half; i < N; i += range) {
-                curr[i - 1] = A[i - 1];
+                value[h][i - 1] = value[0][i - 1];
                 for (int j = i - 2; j >= i - half; j--)
-                    curr[j] = mergeOp(A[j], curr[j + 1]);
+                    value[h][j] = mergeOp(value[h][j + 1], value[0][j]);
 
-                curr[i] = A[i];
+                value[h][i] = value[0][i];
                 for (int j = i + 1; j < i + half; j++)
-                    curr[j] = mergeOp(curr[j - 1], A[j]);
+                    value[h][j] = mergeOp(value[h][j - 1], value[0][j]);
             }
         }
     }
@@ -79,6 +71,24 @@ struct DisjointSparseTable {
 
         int h = H[left ^ right];
         return mergeOp(value[h][left], value[h][right]);
+    }
+
+    // O(N)
+    void update(int index, T x) {
+        value[0][index] = x;
+        for (int h = 1, range = 4; range <= N; h++, range <<= 1) {
+            int half = range >> 1;
+            int start = index & ~(range - 1);
+            if ((index & half) == 0) { // suffix
+                value[h][index] = (index + 1 < (start | half)) ? mergeOp(value[h][index + 1], x) : x;
+                for (int i = index - 1; i >= start; i--)
+                    value[h][i] = mergeOp(value[h][i + 1], value[0][i]);
+            } else { // prefix
+                value[h][index] = (index > (start | half)) ? mergeOp(value[h][index - 1], x) : x;
+                for (int i = index + 1, next = start + range; i < next; i++)
+                    value[h][i] = mergeOp(value[h][i - 1], value[0][i]);
+            }
+        }
     }
 };
 
