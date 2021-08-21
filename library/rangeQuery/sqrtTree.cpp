@@ -21,7 +21,7 @@ using namespace std;
 
 #include "segmentTree.h"
 #include "segmentTreeCompact.h"
-#include "disjointSparseTable.h"
+#include "sparseTableDisjoint.h"
 #include "sparseTable.h"
 
 static const int MOD = 1000000007;
@@ -41,9 +41,9 @@ static int mult(const vector<int>& A, int L, int R, int mod) {
 }
 
 void testSqrtTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Sqrt-Tree -----------------------------" << endl;
+    cout << "--- Sqrt-Tree ------------------------" << endl;
     // Sum
     {
         int N = 10000;
@@ -112,80 +112,14 @@ void testSqrtTree() {
             }
         }
     }
-    // Sum with block update
-    {
-        int N = 10000;
-        int T = 100;
-
-        vector<int> in(N);
-        for (int i = 0; i < N; i++)
-            in[i] = RandInt32::get() % 100;
-
-        auto tree = makeSqrtTree<int>(in, [](int a, int b) { return a + b; }, 0);
-
-        for (int i = 0; i < T; i++) {
-            int left = RandInt32::get() % N;
-            int right = RandInt32::get() % N;
-            if (left > right)
-                swap(left, right);
-
-            {
-                int ans1 = sum(in, left, right);
-                int ans2 = tree.query(left, right);
-                assert(ans1 == ans2);
-            }
-            {
-                int val = RandInt32::get() % 100;
-
-                fill(in.begin() + left, in.begin() + right + 1, val);
-                tree.update(left, right, val);
-                int ans1 = sum(in, left, right);
-                int ans2 = tree.query(left, right);
-                assert(ans1 == ans2);
-            }
-        }
-    }
-    // Multiplication with block update
-    {
-        int N = 10000;
-        int T = 100;
-
-        vector<int> in(N);
-        for (int i = 0; i < N; i++)
-            in[i] = RandInt32::get() % MOD;
-
-        auto tree = makeSqrtTree<int>(in, [](int a, int b) { return int(1ll * a * b % MOD); }, 1);
-
-        for (int i = 0; i < T; i++) {
-            int left = RandInt32::get() % N;
-            int right = RandInt32::get() % N;
-            if (left > right)
-                swap(left, right);
-
-            {
-                int ans1 = mult(in, left, right, MOD);
-                int ans2 = tree.query(left, right);
-                assert(ans1 == ans2);
-            }
-            {
-                int val = RandInt32::get() % MOD;
-
-                fill(in.begin() + left, in.begin() + right + 1, val);
-                tree.update(left, right, val);
-                int ans1 = mult(in, left, right, MOD);
-                int ans2 = tree.query(left, right);
-                assert(ans1 == ans2);
-            }
-        }
-    }
-    cout << "*** Speed Test ***" << endl;
+    cout << "*** Speed Test for Query ***" << endl;
     // Sparse Table ~ Disjoint Sparse Table > Sqrt Tree >> Compact Segment Tree (x3) >>> Segment Tree (x15)
     {
-        int N = 1000000;
-        int T = 1000000;
+        int N = 1'000'000;
+        int T = 1'000'000;
 #ifdef _DEBUG
-        N = 1000;
-        T = 1000;
+        N = 1'000;
+        T = 1'000;
 #endif
 
         vector<int> in(N);
@@ -199,7 +133,7 @@ void testSqrtTree() {
             Q.push_back({ min(a, b), max(a, b) });
         }
 
-        cout << "--- Segment Tree ---" << endl;
+        cout << "* Segment Tree" << endl;
         PROFILE_START(0);
         {
             int res = 0;
@@ -213,7 +147,7 @@ void testSqrtTree() {
         }
         PROFILE_STOP(0);
 
-        cout << "--- Compact Segment Tree ---" << endl;
+        cout << "* Compact Segment Tree" << endl;
         PROFILE_START(1);
         {
             int res = 0;
@@ -227,7 +161,7 @@ void testSqrtTree() {
         }
         PROFILE_STOP(1);
 
-        cout << "--- Disjoint Sparse Table ---" << endl;
+        cout << "* Disjoint Sparse Table" << endl;
         PROFILE_START(2);
         {
             int res = 0;
@@ -241,7 +175,7 @@ void testSqrtTree() {
         }
         PROFILE_STOP(2);
 
-        cout << "--- Sparse Table ---" << endl;
+        cout << "* Sparse Table" << endl;
         PROFILE_START(3);
         {
             int res = 0;
@@ -255,15 +189,14 @@ void testSqrtTree() {
         }
         PROFILE_STOP(3);
 
-
-        cout << "--- Sqrt-Tree ---" << endl;
+        cout << "* Sqrt-Tree" << endl;
         PROFILE_START(4);
         {
             int res = 0;
-            auto seg = makeSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto tree = makeSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
-                    res += seg.query(it.first, it.second);
+                    res += tree.query(it.first, it.second);
                 }
             }
             cout << "result = " << res << endl;
@@ -272,11 +205,11 @@ void testSqrtTree() {
     }
     cout << "*** Speed Test for Update & Query ***" << endl;
     {
-        int N = 100000;
-        int T = 100000;
+        int N = 100'000;
+        int T = 100'000;
 #ifdef _DEBUG
-        N = 1000;
-        T = 1000;
+        N = 1'000;
+        T = 1'000;
 #endif
 
         vector<int> in(N);
@@ -290,7 +223,7 @@ void testSqrtTree() {
             Q.emplace_back(a, b);
         }
 
-        cout << "--- Segment Tree ---" << endl;
+        cout << "* Segment Tree" << endl;
         PROFILE_START(0);
         {
             int res = 0;
@@ -304,7 +237,7 @@ void testSqrtTree() {
         }
         PROFILE_STOP(0);
 
-        cout << "--- Compact Segment Tree ---" << endl;
+        cout << "* Compact Segment Tree" << endl;
         PROFILE_START(1);
         {
             int res = 0;
@@ -318,17 +251,17 @@ void testSqrtTree() {
         }
         PROFILE_STOP(1);
 
-        cout << "--- Sqrt-Tree ---" << endl;
+        cout << "* Sqrt-Tree" << endl;
         PROFILE_START(2);
         {
             int res = 0;
-            auto seg = makeSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
+            auto tree = makeSqrtTree(in, [](int a, int b) { return min(a, b); }, INT_MAX);
             for (int i = 0; i < 10; i++) {
                 for (auto& it : Q) {
-                    seg.update(it.first, it.second);
+                    tree.update(it.first, it.second);
                 }
             }
-            cout << "result = " << seg.query(0, N - 1) << endl;
+            cout << "result = " << tree.query(0, N - 1) << endl;
         }
         PROFILE_STOP(2);
     }

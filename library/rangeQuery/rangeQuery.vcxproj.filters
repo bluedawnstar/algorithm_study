@@ -69,10 +69,7 @@
     <ClCompile Include="segmentTreeLineSegment2DSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="disjointSparseTable.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="sqrtTree.cpp">
+    <ClCompile Include="sparseTableDisjoint.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="fenwickTreePersistent.cpp">
@@ -100,12 +97,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="sqrtDecompositionSum.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="sqrtTreeCompact.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="sqrtTreeFast.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="offlineRMQ.cpp">
@@ -225,6 +216,9 @@
     <ClCompile Include="segmentTreeLineIntegralLazy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sqrtTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -305,10 +299,7 @@
     <ClInclude Include="segmentTreeLineSegment2DMinSum.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="disjointSparseTable.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="sqrtTree.h">
+    <ClInclude Include="sparseTableDisjoint.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fenwickTreePersistent.h">
@@ -336,12 +327,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sqrtDecompositionSum.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="sqrtTreeCompact.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="sqrtTreeFast.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="offlineRMQ.h">
@@ -498,6 +483,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sparseTableReverseFast.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sqrtTree.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,30 +1,29 @@
 #pragma once
 
-// https://e-maxx-eng.appspot.com/data_structures/sqrt-tree.html
+#include <vector>
+#include <functional>
+
+// ref: https://cp-algorithms.com/data_structures/sqrt-tree.html
 
 template <typename T, typename MergeOp = function<T(T, T)>>
 struct SqrtTree {
-    int N;
-    int H;
-    vector<T> value;                // 
+    int                 N;
+    int                 blockSize;
+    int                 blockCount;
 
-    vector<int> layers;             // layer -> log
-    vector<int> onLayer;            // log -> layer
+    vector<T>           prefix;             // prefix array
+    vector<T>           suffix;             // suffix array
 
-    vector<vector<T>> prefix;       // right side, A[L..i]
-    vector<vector<T>> suffix;       // left side, A[i..R]
-    vector<vector<T>> between;      // left and right side, A[i..j] (L <= i <= j <= R)
+    // disjoint sparse tables
+    vector<int>         H;
+    vector<vector<T>>   blockSpTable;       // disjoint sparse table of block values
+    vector<vector<T>>   spTablesOfBlocks;   // disjoint sparse tables of each blocks
 
-    MergeOp mergeOp;
-    T       defaultValue;
+    MergeOp             mergeOp;
+    T                   defaultValue;
 
     explicit SqrtTree(MergeOp op, T dfltValue = T())
         : mergeOp(op), defaultValue(dfltValue) {
-    }
-
-    SqrtTree(int n, const T& val, MergeOp op, T dfltValue = T())
-        : mergeOp(op), defaultValue(dfltValue) {
-        build(n, val);
     }
 
     SqrtTree(const T a[], int n, MergeOp op, T dfltValue = T())
@@ -39,225 +38,198 @@ struct SqrtTree {
 
 
     // O(N*loglogN)
-    void build(int n, const T& val) {
+    void build(const T a[], int n) {
         N = n;
-        value.assign(n, val);
-        buildTree(n);
+
+        int sqrtN = int(sqrt(n));
+        blockSize = 1;
+        while (blockSize < sqrtN)
+            blockSize <<= 1;
+        blockCount = (N + blockSize - 1) / blockSize;
+
+        buildPrefixSuffix(a, n);
+        buildSparseTable(a, n);
     }
 
-    // O(N*loglogN)
-    void build(const T arr[], int n) {
-        N = n;
-        value.assign(arr, arr + n);
-        buildTree(n);
+    void build(const vector<T>& a) {
+        build(&a[0], int(a.size()));
     }
 
-    void build(const vector<T>& v) {
-        build(&v[0], int(v.size()));
-    }
-
-
-    void rebuild() {
-        buildSub(0, 0, N - 1);
-    }
-
-    void rebuild(int left, int right) {
-        updateSub(0, 0, N - 1, left, right);
-    }
-
-    //--- update
-
-    // O(N), inclusive
-    void update(int index, const T& val) {
-        value[index] = val;
-        updateSub(0, 0, N - 1, index);
-    }
-
-    // O(N*loglogN), inclusive
-    void update(int left, int right, const T& val) {
-        for (int i = left; i <= right; i++)
-            value[i] = val;
-        updateSub(0, 0, N - 1, left, right);
-    }
-
-    //--- query
 
     // O(1), inclusive
     T query(int left, int right) const {
         if (left == right)
-            return value[left];
+            return spTablesOfBlocks[0][left];
 
-        if (left + 1 == right)
-            return mergeOp(value[left], value[right]);
+        int blockL = left / blockSize;
+        int blockR = right / blockSize;
 
-        int layer = onLayer[sizeof(int) * 8 - clz(left ^ right)];
-        int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
+        if (blockL == blockR) {
+            int h = H[left ^ right];
+            return mergeOp(spTablesOfBlocks[h][left], spTablesOfBlocks[h][right]);
+        }
 
-        int lBound = (left >> layers[layer]) << layers[layer];
-        int lBlock = ((left - lBound) >> sizeLog) + 1;
-        int rBlock = ((right - lBound) >> sizeLog) - 1;
+        T res = mergeOp(suffix[left], prefix[right]);
+        if (blockL + 1 < blockR) {
+            if (++blockL == --blockR)
+                res = mergeOp(res, blockSpTable[0][blockL]);
+            else {
+                int h = H[blockL ^ blockR];
+                res = mergeOp(res, mergeOp(blockSpTable[h][blockL], blockSpTable[h][blockR]));
+            }
+        }
+        return res;
+    }
 
-        T ans = suffix[layer][left];
-        if (lBlock <= rBlock)
-            ans = mergeOp(ans, between[layer][lBound + (lBlock << countLog) + rBlock]);
-
-        return mergeOp(ans, prefix[layer][right]);
+    // O(sqrt(N))
+    void update(int index, T x) {
+        spTablesOfBlocks[0][index] = x;
+        updatePrefixSuffix(index);
+        updateSparseTable(index);
     }
 
 private:
-    void buildTree(int n) {
-        H = 0;
-        while ((1 << H) < n)
-            H++;
+    // O(N)
+    void buildPrefixSuffix(const T a[], int n) {
+        prefix.resize(N);
+        suffix.resize(N);
+        for (int i = 0; i < blockCount; i++) {
+            int first = i * blockSize;
+            int last = min(first + blockSize, N) - 1;
 
-        onLayer.assign(H + 1, 0);
+            prefix[first] = a[first];
+            for (int j = first + 1; j <= last; j++)
+                prefix[j] = mergeOp(prefix[j - 1], a[j]);
 
-        layers.clear();
-        for (int i = H; i > 1; i = (i + 1) >> 1) {
-            onLayer[i] = int(layers.size());
-            layers.push_back(i);
-        }
-
-        for (int i = H - 1; i >= 0; i--) {
-            onLayer[i] = max(onLayer[i], onLayer[i + 1]);
-        }
-
-        prefix.assign(layers.size(), vector<T>(n));
-        suffix.assign(layers.size(), vector<T>(n));
-        between.assign(layers.size(), vector<T>(size_t(1) << H));
-
-        buildSub(0, 0, n - 1);
-    }
-
-    void buildPrefixSuffix(int layer, int left, int right) {
-        prefix[layer][left] = value[left];
-        for (int i = left + 1; i <= right; i++) {
-            prefix[layer][i] = mergeOp(prefix[layer][i - 1], value[i]);
-        }
-
-        suffix[layer][right] = value[right];
-        for (int i = right - 1; i >= left; i--) {
-            suffix[layer][i] = mergeOp(value[i], suffix[layer][i + 1]);
+            suffix[last] = a[last];
+            for (int j = last - 1; j >= first; j--)
+                suffix[j] = mergeOp(suffix[j + 1], a[j]);
         }
     }
 
-    void buildBetween(int layer, int left, int right, int sizeLog, int countLog) {
-        int count = (right - left) / (1 << sizeLog) + 1;
+    void buildSparseTable(vector<vector<T>>& table) {
+        int column = int(table[0].size());
+        for (int h = 1, range = 4; h < int(table.size()); h++, range <<= 1) {
+            int half = range >> 1;
+            for (int i = half; i < column; i += range) {
+                table[h][i - 1] = table[0][i - 1];
+                for (int j = i - 2; j >= i - half; j--)
+                    table[h][j] = mergeOp(table[h][j + 1], table[0][j]);
 
-        for (int i = 0; i < count; i++) {
-            T ans = defaultValue;
-            for (int j = i; j < count; j++) {
-                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
-                between[layer][left + (i << countLog) + j] = ans;
+                table[h][i] = table[0][i];
+                for (int j = i + 1; j < i + half; j++)
+                    table[h][j] = mergeOp(table[h][j - 1], table[0][j]);
             }
         }
     }
 
-    void updateBetween(int layer, int left, int right, int blockIndex, int sizeLog, int countLog) {
-        int rightIndex = (right - left) / (1 << sizeLog);
+    // O(N*log(sqrt(N))
+    void buildSparseTable(const T a[], int n) {
+        int blockN = 1;
+        while (blockN < blockCount)
+            blockN <<= 1;
 
-        for (int i = 0; i <= blockIndex; i++) {
-            T ans = defaultValue;
-            if (i < blockIndex)
-                ans = between[layer][left + (i << countLog) + blockIndex - 1];
-            for (int j = blockIndex; j <= rightIndex; j++) {
-                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
-                between[layer][left + (i << countLog) + j] = ans;
+        H.resize(max(blockN, blockSize));
+        H[1] = 0;
+        for (int i = 2; i < int(H.size()); i++)
+            H[i] = H[i >> 1] + 1;
+
+        //-- block sparse table - O(sqrt(N)*log(sqrt(N))
+        blockSpTable.assign(H[blockN - 1] + 1, vector<T>(blockN, defaultValue));
+        for (int i = 0; i < blockCount; i++)
+            blockSpTable[0][i] = suffix[i * blockSize];
+
+        buildSparseTable(blockSpTable);
+
+        //-- sparse tables of blocks - O(N*log(sqrt(N))
+        spTablesOfBlocks.assign(H[blockSize - 1] + 1, vector<T>(blockSize * blockCount, defaultValue));
+        for (int i = 0; i < n; i++)
+            spTablesOfBlocks[0][i] = a[i];
+
+        buildSparseTable(spTablesOfBlocks);
+    }
+
+
+    // O(sqrt(N))
+    void updatePrefixSuffix(int index) {
+        int blockIndex = index / blockSize;
+
+        int first = blockIndex * blockSize;
+        int last = min(first + blockSize, N) - 1;
+
+        prefix[index] = (index > first) ? mergeOp(prefix[index - 1], spTablesOfBlocks[0][index]) : spTablesOfBlocks[0][index];
+        for (int j = index + 1; j <= last; j++)
+            prefix[j] = mergeOp(prefix[j - 1], spTablesOfBlocks[0][j]);
+
+        suffix[index] = (index < last) ? mergeOp(suffix[index + 1], spTablesOfBlocks[0][index]) : spTablesOfBlocks[0][index];
+        for (int j = last - 1; j >= first; j--)
+            suffix[j] = mergeOp(suffix[j + 1], spTablesOfBlocks[0][j]);
+    }
+
+    void updateSparseTable(vector<vector<T>>& table, int index) {
+        for (int h = 1, range = 4; h < int(table.size()); h++, range <<= 1) {
+            int half = range >> 1;
+            int start = index & ~(range - 1);
+            if ((index & half) == 0) { // suffix
+                table[h][index] = (index + 1 < (start | half)) ? mergeOp(table[h][index + 1], table[0][index])
+                                                               : table[0][index];
+                for (int i = index - 1; i >= start; i--)
+                    table[h][i] = mergeOp(table[h][i + 1], table[0][i]);
+            } else { // prefix
+                table[h][index] = (index > (start | half)) ? mergeOp(table[h][index - 1], table[0][index])
+                                                           : table[0][index];
+                for (int i = index + 1, next = start + range; i < next; i++)
+                    table[h][i] = mergeOp(table[h][i - 1], table[0][i]);
             }
         }
     }
 
-    void updateBetween(int layer, int left, int right, int blockIndexL, int blockIndexR, int sizeLog, int countLog) {
-        int rightIndex = (right - left) / (1 << sizeLog);
+    // O(sqrt(N))
+    void updateSparseTable(int index) {
+        int blockIndex = index / blockSize;
 
-        for (int i = 0; i <= blockIndexR; i++) {
-            T ans = defaultValue;
-            if (i < blockIndexL)
-                ans = between[layer][left + (i << countLog) + blockIndexL - 1];
-            for (int j = max(i, blockIndexL); j <= rightIndex; j++) {
-                ans = mergeOp(ans, suffix[layer][left + (j << sizeLog)]);
-                between[layer][left + (i << countLog) + j] = ans;
-            }
-        }
-    }
+        //-- block sparse table - O(sqrt(N))
+        blockSpTable[0][blockIndex] = suffix[blockIndex * blockSize];
+        updateSparseTable(blockSpTable, blockIndex);
 
-
-    void buildSub(int layer, int left, int right) {
-        if (layer >= int(layers.size()))
-            return;
-
-        int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
-        int size = 1 << sizeLog;
-
-        for (int L = left; L <= right; L += size) {
-            int R = min(L + size - 1, right);
-            buildPrefixSuffix(layer, L, R);
-            buildSub(layer + 1, L, R);
-        }
-
-        buildBetween(layer, left, right, sizeLog, countLog);
-    }
-
-    void updateSub(int layer, int left, int right, int index) {
-        if (layer >= int(layers.size()))
-            return;
-
-        int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
-        int size = 1 << sizeLog;
-        
-        int blockIndex = (index - left) / size;
-
-        int L = left + blockIndex * size;
-        int R = min(L + size - 1, right);
-        buildPrefixSuffix(layer, L, R);
-        updateBetween(layer, left, right, blockIndex, sizeLog, countLog);
-        updateSub(layer + 1, L, R, index);
-    }
-
-    void updateSub(int layer, int left, int right, int indexLeft, int indexRight) {
-        if (layer >= int(layers.size()))
-            return;
-
-        int sizeLog = (layers[layer] + 1) >> 1;
-        int countLog = layers[layer] >> 1;
-        int size = 1 << sizeLog;
-
-        int blockIndexL = (max(left, indexLeft) - left) / size;
-        int blockIndexR = (min(right, indexRight) - left) / size;
-        for (int L = left + blockIndexL * size, maxL = left + blockIndexR * size; L <= maxL; L += size) {
-            int R = min(L + size - 1, right);
-            buildPrefixSuffix(layer, L, R);
-            updateSub(layer + 1, L, R, indexLeft, indexRight);
-        }
-
-        updateBetween(layer, left, right, blockIndexL, blockIndexR, sizeLog, countLog);
-    }
-
-    static int clz(int x) {
-        if (!x)
-            return 32;
-#ifndef __GNUC__
-        return int(__lzcnt(unsigned(x)));
-#else
-        return __builtin_clz(unsigned(x));
-#endif
+        //-- sparse tables of blocks - O(sqrt(N))
+        updateSparseTable(spTablesOfBlocks, index);
     }
 };
 
 template <typename T, typename MergeOp>
-SqrtTree<T, MergeOp> makeSqrtTree(int n, const T& val, MergeOp op, T dfltValue = T()) {
-    return SqrtTree<T, MergeOp>(n, val, op, dfltValue);
+inline SqrtTree<T, MergeOp> makeSqrtTree(MergeOp op, T dfltValue = T()) {
+    return SqrtTree<T, MergeOp>(op, dfltValue);
 }
 
 template <typename T, typename MergeOp>
-SqrtTree<T, MergeOp> makeSqrtTree(const vector<T>& arr, MergeOp op, T dfltValue = T()) {
+inline SqrtTree<T, MergeOp> makeSqrtTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
+    return SqrtTree<T, MergeOp>(arr, size, op, dfltValue);
+}
+
+template <typename T, typename MergeOp>
+inline SqrtTree<T, MergeOp> makeSqrtTree(const vector<T>& arr, MergeOp op, T dfltValue = T()) {
     return SqrtTree<T, MergeOp>(arr, op, dfltValue);
 }
 
-template <typename T, typename MergeOp>
-SqrtTree<T, MergeOp> makeSqrtTree(const T arr[], int size, MergeOp op, T dfltValue = T()) {
-    return SqrtTree<T, MergeOp>(arr, size, op, dfltValue);
-}
+/* example
+    1) Min SqrtTree (RMQ)
+        auto sqrtTree = makeSqrtTree<int>(v, [](int a, int b) { return min(a, b); }, INT_MAX);
+        ...
+        sqrtTree.query(left, right);
+
+    2) Max SqrtTree
+        auto sqrtTree = makeSqrtTree<int>(v, [](int a, int b) { return max(a, b); });
+        ...
+        sqrtTree.query(left, right);
+
+    3) GCD SqrtTree
+        auto sqrtTree = makeSqrtTree<int>(v, [](int a, int b) { return gcd(a, b); });
+        ...
+        sqrtTree.query(left, right);
+
+    4) Sum SqrtTree
+        auto sqrtTree = makeSqrtTree<int>(v, [](int a, int b) { return a + b; });
+        ...
+        sqrtTree.query(left, right);
+*/

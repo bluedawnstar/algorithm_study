@@ -147,7 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="binarySearchTreeRangeSum.cpp" />
-    <ClCompile Include="disjointSparseTable.cpp" />
+    <ClCompile Include="sparseTableDisjoint.cpp" />
     <ClCompile Include="dynamicSegmentTree.cpp" />
     <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
     <ClCompile Include="fenwickTree.cpp" />
@@ -211,8 +211,6 @@
     <ClCompile Include="sqrtDecomposition.cpp" />
     <ClCompile Include="sqrtDecompositionSum.cpp" />
     <ClCompile Include="sqrtTree.cpp" />
-    <ClCompile Include="sqrtTreeCompact.cpp" />
-    <ClCompile Include="sqrtTreeFast.cpp" />
     <ClCompile Include="vectorRangeCount.cpp" />
     <ClCompile Include="vectorRangeQuery.cpp" />
     <ClCompile Include="vectorRangeSum.cpp" />
@@ -225,7 +223,7 @@
     <ClInclude Include="longestIncreasingSubsequenceOnline.h" />
     <ClInclude Include="segmentTreeCompactLazyEx.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
-    <ClInclude Include="disjointSparseTable.h" />
+    <ClInclude Include="sparseTableDisjoint.h" />
     <ClInclude Include="dynamicSegmentTree.h" />
     <ClInclude Include="dynamicSegmentTreeEx.h" />
     <ClInclude Include="dynamicSegmentTreeMaxSubarray.h" />
@@ -304,8 +302,6 @@
     <ClInclude Include="sqrtDecomposition.h" />
     <ClInclude Include="sqrtDecompositionSum.h" />
     <ClInclude Include="sqrtTree.h" />
-    <ClInclude Include="sqrtTreeCompact.h" />
-    <ClInclude Include="sqrtTreeFast.h" />
     <ClInclude Include="vectorRangeCount.h" />
     <ClInclude Include="vectorRangeQuery.h" />
     <ClInclude Include="vectorRangeSum.h" />
