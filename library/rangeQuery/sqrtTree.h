@@ -123,7 +123,7 @@ private:
         }
     }
 
-    // O(N*log(sqrt(N))
+    // O(N*loglogN)
     void buildSparseTable(const T a[], int n) {
         int blockN = 1;
         while (blockN < blockCount)
