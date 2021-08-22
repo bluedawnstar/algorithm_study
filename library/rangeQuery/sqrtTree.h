@@ -37,7 +37,7 @@ struct SqrtTree {
     }
 
 
-    // O(N*loglogN)
+    // O(N*logN)
     void build(const T a[], int n) {
         N = n;
 
@@ -123,7 +123,7 @@ private:
         }
     }
 
-    // O(N*loglogN)
+    // O(N*logN)
     void buildSparseTable(const T a[], int n) {
         int blockN = 1;
         while (blockN < blockCount)
@@ -134,14 +134,14 @@ private:
         for (int i = 2; i < int(H.size()); i++)
             H[i] = H[i >> 1] + 1;
 
-        //-- block sparse table - O(sqrt(N)*log(sqrt(N))
+        //-- block sparse table - O(sqrt(N)*logN)
         blockSpTable.assign(H[blockN - 1] + 1, vector<T>(blockN, defaultValue));
         for (int i = 0; i < blockCount; i++)
             blockSpTable[0][i] = suffix[i * blockSize];
 
         buildSparseTable(blockSpTable);
 
-        //-- sparse tables of blocks - O(N*log(sqrt(N))
+        //-- sparse tables of blocks - O(N*logN)
         spTablesOfBlocks.assign(H[blockSize - 1] + 1, vector<T>(blockSize * blockCount, defaultValue));
         for (int i = 0; i < n; i++)
             spTablesOfBlocks[0][i] = a[i];
