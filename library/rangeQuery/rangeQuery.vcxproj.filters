@@ -132,9 +132,6 @@
     <ClCompile Include="mergeSortTreeCompactWithSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="keyRangeCommandDecomposerSimple.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="redBlackTreeRangeSum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -363,9 +360,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeSortTreeCompactWithSum.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="keyRangeCommandDecomposerSimple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="redBlackTreeRangeSum.h">
