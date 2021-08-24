@@ -9,7 +9,7 @@ template <typename T, typename MergeOp = function<T(T, T)>>
 struct DisjointSparseTable {
     int                 RealN;
     int                 N;
-    vector<vector<T>>   value;
+    vector<vector<T>>   table;
     vector<int>         H;
     MergeOp             mergeOp;
     T                   defaultValue;
@@ -41,20 +41,20 @@ struct DisjointSparseTable {
         for (int i = 2; i < N; i++)
             H[i] = H[i >> 1] + 1;
 
-        value.assign(H.back() + 1, vector<T>(N, defaultValue));
+        table.assign(H.back() + 1, vector<T>(N, defaultValue));
         for (int i = 0; i < n; i++)
-            value[0][i] = a[i];
+            table[0][i] = a[i];
 
         for (int h = 1, range = 4; range <= N; h++, range <<= 1) {
             int half = range >> 1;
             for (int i = half; i < N; i += range) {
-                value[h][i - 1] = value[0][i - 1];
+                table[h][i - 1] = table[0][i - 1];
                 for (int j = i - 2; j >= i - half; j--)
-                    value[h][j] = mergeOp(value[h][j + 1], value[0][j]);
+                    table[h][j] = mergeOp(table[h][j + 1], table[0][j]);
 
-                value[h][i] = value[0][i];
+                table[h][i] = table[0][i];
                 for (int j = i + 1; j < i + half; j++)
-                    value[h][j] = mergeOp(value[h][j - 1], value[0][j]);
+                    table[h][j] = mergeOp(table[h][j - 1], table[0][j]);
             }
         }
     }
@@ -67,26 +67,26 @@ struct DisjointSparseTable {
     // O(1), inclusive
     T query(int left, int right) const {
         if (left == right)
-            return value[0][left];
+            return table[0][left];
 
         int h = H[left ^ right];
-        return mergeOp(value[h][left], value[h][right]);
+        return mergeOp(table[h][left], table[h][right]);
     }
 
     // O(N)
     void update(int index, T x) {
-        value[0][index] = x;
+        table[0][index] = x;
         for (int h = 1, range = 4; range <= N; h++, range <<= 1) {
             int half = range >> 1;
             int start = index & ~(range - 1);
             if ((index & half) == 0) { // suffix
-                value[h][index] = (index + 1 < (start | half)) ? mergeOp(value[h][index + 1], x) : x;
+                table[h][index] = (index + 1 < (start | half)) ? mergeOp(table[h][index + 1], x) : x;
                 for (int i = index - 1; i >= start; i--)
-                    value[h][i] = mergeOp(value[h][i + 1], value[0][i]);
+                    table[h][i] = mergeOp(table[h][i + 1], table[0][i]);
             } else { // prefix
-                value[h][index] = (index > (start | half)) ? mergeOp(value[h][index - 1], x) : x;
+                table[h][index] = (index > (start | half)) ? mergeOp(table[h][index - 1], x) : x;
                 for (int i = index + 1, next = start + range; i < next; i++)
-                    value[h][i] = mergeOp(value[h][i - 1], value[0][i]);
+                    table[h][i] = mergeOp(table[h][i - 1], table[0][i]);
             }
         }
     }
