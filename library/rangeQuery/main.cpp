@@ -40,8 +40,6 @@ int main(void) {
     TEST(SegmentTreeLineSegment2D);
     TEST(SegmentTreeLineSegment2DSum);
     TEST(SqrtTree);
-    TEST(CompactSqrtTree);
-    TEST(FastSqrtTree);
     TEST(MergeSortTree);
     TEST(MergeSortTreeWithSum);
     TEST(MergeSortTreeIndex);
@@ -55,7 +53,6 @@ int main(void) {
     TEST(SegmentTreeBitFlip);
     TEST(OfflineRMQ);
     TEST(SchieberVishkinRMQ);
-    TEST(KeyRangeCommandDecomposerSimple);
     TEST(RedBlackTreeRangeSum);
     TEST(BinarySearchTreeRangeSum);
     TEST(PersistentBinarySearchTreeRangeSum);

@@ -90,13 +90,9 @@
 
  - Misc
    - [Sqrt Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtTree.h "Sqrt Tree")
-   - [Compact Sqrt Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtTreeCompact.h "Compact Sqrt Tree")
-   - [Sqrt Tree for Fast Update](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/sqrtTreeFast.h "Sqrt Tree for Fast Update")
    - [Merge Sort Tree](https://github.com/bluedawnstar/algorithm_study/blob/master/library/rangeQuery/mergeSortTree.h "Merge Sort Tree")
 
-    |     Name        | Build       | Add  | Add Range | Update      | Update Range            | kth - Range        | Count Range | Query  | Query Range |
-    |:---------------:|:-----------:|:----:|:---------:|:-----------:|:-----------------------:|:------------------:|:-----------:|:------:|:-----------:|
-    | SqrtTree        | O(nloglogn) |  -   |     -     | O(n)        | O(nloglogn)             |       -            |      -      |  O(1)  | O(1)        |
-    | CompactSqrtTree | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O((k + sqrt(n))loglogn) |       -            |      -      |  O(1)  | O(sqrt(n))  |
-    | FastSqrtTree    | O(nloglogn) |  -   |     -     | O(sqrt(n))  | O((k + sqrt(n))loglogn) |       -            |      -      |  O(1)  | O(1)        |
-    | MergeSortTree   | O(nlogn)    |  -   |     -     |     -       |       -                 | O((logn)^2 * logX) | O((logn)^2) |    -   |    -        |
+    |     Name        | Build     | Add  | Add Range | Update      | Update Range            | kth - Range        | Count Range | Query  | Query Range |
+    |:---------------:|:---------:|:----:|:---------:|:-----------:|:-----------------------:|:------------------:|:-----------:|:------:|:-----------:|
+    | SqrtTree        | O(nlogn)  |  -   |     -     | O(sqrt(n))  |       -                 |       -            |      -      |  O(1)  | O(1)        |
+    | MergeSortTree   | O(nlogn)  |  -   |     -     |     -       |       -                 | O((logn)^2 * logX) | O((logn)^2) |    -   |    -        |
