@@ -151,6 +151,7 @@
     <ClCompile Include="mexTrie.cpp" />
     <ClCompile Include="minimumKnightMoves.cpp" />
     <ClCompile Include="pirateGame.cpp" />
+    <ClCompile Include="subarrayMexCounter.cpp" />
     <ClCompile Include="wythoffGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="minimumKnightMoves.h" />
     <ClInclude Include="pirateGame.h" />
     <ClInclude Include="pirateGameExtended.h" />
+    <ClInclude Include="subarrayMexCounter.h" />
     <ClInclude Include="wythoffGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
