@@ -162,7 +162,7 @@ private:
             prefix[j] = mergeOp(prefix[j - 1], spTablesOfBlocks[0][j]);
 
         suffix[index] = (index < last) ? mergeOp(suffix[index + 1], spTablesOfBlocks[0][index]) : spTablesOfBlocks[0][index];
-        for (int j = last - 1; j >= first; j--)
+        for (int j = index - 1; j >= first; j--)
             suffix[j] = mergeOp(suffix[j + 1], spTablesOfBlocks[0][j]);
     }
 
