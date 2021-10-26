@@ -171,6 +171,9 @@
     <ClCompile Include="prefixFunctionTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="triePersistent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -369,6 +372,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="prefixFunctionTreeAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="triePersistent.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="trieAMPersistent.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

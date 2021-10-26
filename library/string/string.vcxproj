@@ -194,6 +194,7 @@
     <ClCompile Include="trie.cpp" />
     <ClCompile Include="trieAM.cpp" />
     <ClCompile Include="searchZAlgorithm.cpp" />
+    <ClCompile Include="triePersistent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ahoCorasick.h" />
@@ -262,6 +263,8 @@
     <ClInclude Include="trie.h" />
     <ClInclude Include="trieAM.h" />
     <ClInclude Include="searchZAlgorithm.h" />
+    <ClInclude Include="trieAMPersistent.h" />
+    <ClInclude Include="triePersistent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

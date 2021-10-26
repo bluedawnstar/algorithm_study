@@ -57,4 +57,5 @@ int main(void) {
     TEST(SuffixArrayAlgoPrefixCounter);
     TEST(PeriodicSubstringWeightSumOfAllSubstrings);
     TEST(OnlineZ);
+    TEST(TriePersistent);
 }

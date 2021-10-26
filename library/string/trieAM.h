@@ -9,7 +9,7 @@
 
 //--- Array Mapped Trie -------------------------------------------------------
 
-template <int MaxCharN = 26, int BaseChar = 'a'>
+template <int BaseChar = 'a'>
 struct TrieAM {
     static const size_t AllocBlockSize = 128;
     static constexpr int ch2i(char ch) {
