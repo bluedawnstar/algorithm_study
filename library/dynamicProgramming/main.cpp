@@ -62,4 +62,5 @@ int main(void) {
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);
     TEST(IntervalSumTopK);
+    TEST(DigitDP_SamePrefixSuffixDigitSum);
 }

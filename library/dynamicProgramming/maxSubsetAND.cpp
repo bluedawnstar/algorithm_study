@@ -44,8 +44,13 @@ void testMaxSubsetAND() {
 
     cout << "--- Max Subset AND ------------------------" << endl;
     {
+#ifdef _DEBUG
+        const int MINX = 110;
+        const int MAXX = 128;
+#else
         const int MINX = 1000;
         const int MAXX = 1024;
+#endif
         for (int R = MINX; R <= MAXX; R++) {
             for (int L = MINX; L <= R; L++) {
                 for (int K = 1; K <= R - L + 1; K++) {

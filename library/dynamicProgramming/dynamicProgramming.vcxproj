@@ -164,6 +164,7 @@
     <ClCompile Include="partitionProblemMultiple.cpp" />
     <ClCompile Include="permutationCountByDivisibleAdjacentPairCount.cpp" />
     <ClCompile Include="powerSumOfAllCombinations.cpp" />
+    <ClCompile Include="problems\digitDP_SamePrefixSuffixDigitSum.cpp" />
     <ClCompile Include="problems\distinctValueSetCounterOfLinearCombination.cpp" />
     <ClCompile Include="problems\integer_ChefAndSum.cpp" />
     <ClCompile Include="problems\intervalSumTopK.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="partitionProblemMultiple.h" />
     <ClInclude Include="permutationCountByDivisibleAdjacentPairCount.h" />
     <ClInclude Include="powerSumOfAllCombinations_NTT.h" />
+    <ClInclude Include="problems\digitDP_SamePrefixSuffixDigitSum.h" />
     <ClInclude Include="problems\distinctValueSetCounterOfLinearCombination.h" />
     <ClInclude Include="problems\integer_ChefAndSum.h" />
     <ClInclude Include="problems\integer_ChefAndSum2.h" />
