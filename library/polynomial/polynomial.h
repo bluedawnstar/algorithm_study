@@ -636,7 +636,7 @@ namespace algebra {
             poly ans = T(1);
             size_t a = 1;
             while (a < n) {
-                poly C = ans.log(a << 1).divXK(a) - substr(a, a << 1);
+                poly C = ans.ln(a << 1).divXK(a) - substr(a, a << 1);
                 ans -= (ans * C).modXK(a).mulXK(a);
                 a <<= 1;
             }
