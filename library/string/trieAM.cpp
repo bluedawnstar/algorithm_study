@@ -33,7 +33,7 @@ static string makeRandomString(int n) {
 void testTrieAM() {
     return; //TODO: if you want to test, make this line a comment.
 
-    cout << "-- Array Mapped Trie ---------------------------------" << endl;
+    cout << "--- Array Mapped Trie ---------------------------------" << endl;
     {
         TrieAM<> trie;
 

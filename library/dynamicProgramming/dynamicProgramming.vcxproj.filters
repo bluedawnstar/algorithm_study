@@ -189,6 +189,12 @@
     <ClCompile Include="problems\intervalSumTopK.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="maxSubsetAND.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="problems\digitDP_SamePrefixSuffixDigitSum.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -408,6 +414,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="problems\intervalSumTopK.h">
+      <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="maxSubsetAND.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\digitDP_SamePrefixSuffixDigitSum.h">
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>

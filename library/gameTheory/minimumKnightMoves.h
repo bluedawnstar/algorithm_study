@@ -1,7 +1,7 @@
 #pragma once
 
 // In an infinite chess board,
-//   the minimum number of steps needd to move the knight from (0, 0) to (x, y)
+//   the minimum number of steps needed to move the knight from (0, 0) to (x, y)
 
 struct MinimumKnightMove {
     static const int INF = 0x3f3f3f3f;

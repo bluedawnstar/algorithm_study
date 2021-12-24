@@ -57,8 +57,10 @@ int main(void) {
     TEST(PermutationCounterByDivisibleAdjacentPairCount);
     TEST(TreePathDecompositionCounter);
     TEST(TopologicalOrderOnDAGLikeReversedTree);
+    TEST(MaxSubsetAND);
     //--- problems
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);
     TEST(IntervalSumTopK);
+    TEST(DigitDP_SamePrefixSuffixDigitSum);
 }

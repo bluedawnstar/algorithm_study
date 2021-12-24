@@ -11,4 +11,5 @@ int main(void) {
     TEST(PirateGame);
     TEST(MinimumKnightMoves);
     TEST(GrundyOnTree);
+    TEST(SubarrayMexCounter);
 }

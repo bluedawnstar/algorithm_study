@@ -122,7 +122,7 @@ struct SegmentTree {
     //         S          ^
     // O(logN)
     int lowerBound(const function<bool(T)>& f) const {
-        return lowerBoundSub(f, T(0), 1, 0, N - 1);
+        return lowerBoundSub(f, defaultValue, 1, 0, N - 1);
     }
 
 private:

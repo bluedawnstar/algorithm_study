@@ -1,14 +1,14 @@
 #pragma once
 
-// return maximum value of f(x) in inclusive range [lo,hi]
-inline double findMaxWithTernary(double lo, double hi, function<double(double)> f) {
+// return (argmax F(x), max F(x)) in [lo, hi], inclusive
+inline pair<double,double> ternarySearchMax(double lo, double hi, const function<double(double)>& F) {
     for (int i = 0; i < 100; i++) {
         double a = (2 * lo + hi) / 3.0;
         double b = (lo + 2 * hi) / 3.0;
-        if (f(a) > f(b))
+        if (F(a) > F(b))
             hi = b;
         else
             lo = a;
     }
-    return (lo + hi) / 2.0;
+    return make_pair((lo + hi) / 2.0, F((lo + hi) / 2.0));
 }
