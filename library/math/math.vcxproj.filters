@@ -123,6 +123,9 @@
     <ClCompile Include="pythagoreanTriples.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ternarySearch3D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="matrix.h">
@@ -261,6 +264,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="pythagoreanTriples_finder.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ternarySearch3D.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

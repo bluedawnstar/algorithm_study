@@ -178,6 +178,7 @@
     <ClCompile Include="sternBrocotTree.cpp" />
     <ClCompile Include="sumOfPower.cpp" />
     <ClCompile Include="ternarySearch.cpp" />
+    <ClCompile Include="ternarySearch3D.cpp" />
     <ClCompile Include="transformOperationByAddOrMult.cpp" />
     <ClCompile Include="triangle.cpp" />
     <ClCompile Include="weightedMedian.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="sumOfPower.h" />
     <ClInclude Include="sumOfPowerFast.h" />
     <ClInclude Include="ternarySearch.h" />
+    <ClInclude Include="ternarySearch3D.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="weightedMedian.h" />
     <ClInclude Include="transformOperationByAddOrMult.h" />

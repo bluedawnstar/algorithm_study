@@ -17,10 +17,18 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testTernarySearch() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Ternary Search -----------------------" << endl;
-    cout << findMaxWithTernary(-100, 100, [](double x) { return -x*x + 4 * x - 7; }) << endl;
+    {
+        const double EPSILON = 1e-4;
+
+        auto ans = ternarySearchMax(-100, 100, [](double x) { return -x * x + 4 * x - 7; });
+
+        if (abs(ans.first - 2) > EPSILON || abs(ans.second - -3) > EPSILON)
+            cout << "Mismatched : ans = " << ans << ", gt = (2, -3)" << endl;
+        assert(abs(ans.first - 2) <= EPSILON && abs(ans.second - -3) <= EPSILON);
+    }
 
     cout << "OK!" << endl;
 }
