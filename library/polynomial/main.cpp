@@ -24,4 +24,5 @@ int main(void) {
     TEST(PentagonalNumber);
     TEST(PolynomialSum);
     TEST(ModComplex);
+    TEST(PolynomialProduct);
 }
