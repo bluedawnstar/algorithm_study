@@ -145,6 +145,7 @@
     <ClCompile Include="avlTree.cpp" />
     <ClCompile Include="benchmarkBST.cpp" />
     <ClCompile Include="binarySearchTree.cpp" />
+    <ClCompile Include="BKTree.cpp" />
     <ClCompile Include="lcaTarjan.cpp" />
     <ClCompile Include="perfectTreeLevelSize.cpp" />
     <ClCompile Include="problems\specialTreeOnGrid.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="allocator.h" />
     <ClInclude Include="avlTree.h" />
     <ClInclude Include="binarySearchTree.h" />
+    <ClInclude Include="BKTree.h" />
     <ClInclude Include="lcaTarjan.h" />
     <ClInclude Include="perfectTreeLevelSize.h" />
     <ClInclude Include="problems\specialTreeOnGrid.h" />
