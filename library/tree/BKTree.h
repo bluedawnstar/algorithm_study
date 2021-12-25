@@ -1,10 +1,5 @@
 #pragma once
 
-const int THRESHOLD = 2;    //* the lowest threshold we desire in our calculation of edit distance
-const int MAX_DISTANCE = 20;//* maximum edit distance
-
-typedef function<int(const string&, const string&)> DistanceOp;
-
 // Burkhard-Keller Tree
 // https://en.wikipedia.org/wiki/BK-tree
 // https://www.geeksforgeeks.org/bk-tree-introduction-implementation/
@@ -13,19 +8,20 @@ typedef function<int(const string&, const string&)> DistanceOp;
 //#define USE_MAP
 #endif
 
+template <int MaxDistance = 20, typename DistanceOp = function<int(const string&, const string&)>>
 struct BKTree {
     struct Node {
         string word;
 
 #ifndef USE_MAP
-        int next[MAX_DISTANCE];  // 
+        int next[MaxDistance];  // 
 
         Node() {
-            fill(next, next + MAX_DISTANCE, -1);
+            fill(next, next + MaxDistance, -1);
         }
 
         explicit Node(string x) : word(x) {
-            fill(next, next + MAX_DISTANCE, -1);
+            fill(next, next + MaxDistance, -1);
         }
 #else
         map<int, int> next;
@@ -107,7 +103,7 @@ private:
             res.push_back(curr);
 
         int start = max(0, dist - threshold);
-        int end = min(MAX_DISTANCE, dist + threshold + 1);
+        int end = min(MaxDistance, dist + threshold + 1);
 #ifndef USE_MAP
         for (int i = start; i < end; i++)
             dfsSearchSimilarWords(res, nodes[curr].next[i], s, threshold);

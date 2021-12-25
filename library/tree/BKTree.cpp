@@ -51,7 +51,7 @@ void testBKTree() {
             "hell", "help", "shell", "smell", "fell", "felt", "oops", "pop", "oouch", "halt"
         };
 
-        BKTree tree(minEditDistance);
+        BKTree<> tree(minEditDistance);
 
         for (auto& it : dictionary)
             tree.add(it);
