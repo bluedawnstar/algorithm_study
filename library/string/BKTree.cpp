@@ -7,6 +7,8 @@
 using namespace std;
 
 #include "BKTree.h"
+#include "BKTreeMap.h"
+#include "BKTreeAM.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -72,6 +74,61 @@ void testBKTree() {
         }
         assert(ans2 == gt2);
     }
+    cout << "OK!" << endl;
+    {
+        // dictionary words
+        vector<string> dictionary{
+            "hell", "help", "shell", "smell", "fell", "felt", "oops", "pop", "oouch", "halt"
+        };
 
+        BKTreeMap<> tree(minEditDistance);
+
+        for (auto& it : dictionary)
+            tree.add(it);
+
+        string s1 = "ops";
+        auto ans1 = tree.searchSimilarWords(s1);
+        auto gt1 = vector<string>{ "oops", "pop" };
+        if (ans1 != gt1) {
+            cout << "Mismatched : key = \"" << s1 << "\", ans = " << ans1 << ", gt = " << gt1 << endl;
+        }
+        assert(ans1 == gt1);
+
+        string s2 = "helt";
+        auto ans2 = tree.searchSimilarWords(s2);
+        auto gt2 = vector<string>{ "hell", "help", "shell", "fell", "felt", "halt" };
+        if (ans2 != gt2) {
+            cout << "Mismatched : key = \"" << s1 << "\", ans = " << ans1 << ", gt = " << gt1 << endl;
+        }
+        assert(ans2 == gt2);
+    }
+    cout << "OK!" << endl;
+    {
+        // dictionary words
+        vector<string> dictionary{
+            "hell", "help", "shell", "smell", "fell", "felt", "oops", "pop", "oouch", "halt"
+        };
+
+        BKTreeAM<> tree(minEditDistance);
+
+        for (auto& it : dictionary)
+            tree.add(it);
+
+        string s1 = "ops";
+        auto ans1 = tree.searchSimilarWords(s1);
+        auto gt1 = vector<string>{ "oops", "pop" };
+        if (ans1 != gt1) {
+            cout << "Mismatched : key = \"" << s1 << "\", ans = " << ans1 << ", gt = " << gt1 << endl;
+        }
+        assert(ans1 == gt1);
+
+        string s2 = "helt";
+        auto ans2 = tree.searchSimilarWords(s2);
+        auto gt2 = vector<string>{ "hell", "help", "shell", "fell", "felt", "halt" };
+        if (ans2 != gt2) {
+            cout << "Mismatched : key = \"" << s1 << "\", ans = " << ans1 << ", gt = " << gt1 << endl;
+        }
+        assert(ans2 == gt2);
+    }
     cout << "OK!" << endl;
 }

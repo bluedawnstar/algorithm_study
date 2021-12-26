@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="ahoCorasick.cpp" />
     <ClCompile Include="ahoCorasickAM.cpp" />
+    <ClCompile Include="BKTree.cpp" />
     <ClCompile Include="bracketSequencesBalanced.cpp" />
     <ClCompile Include="burrowsWheelerTransform.cpp" />
     <ClCompile Include="compressedTrie.cpp" />
@@ -200,6 +201,9 @@
     <ClInclude Include="ahoCorasick.h" />
     <ClInclude Include="ahoCorasickAM.h" />
     <ClInclude Include="ahoCorasickPatternWeightSum.h" />
+    <ClInclude Include="BKTree.h" />
+    <ClInclude Include="BKTreeAM.h" />
+    <ClInclude Include="BKTreeMap.h" />
     <ClInclude Include="bracketSequencesBalanced.h" />
     <ClInclude Include="bracketSequencesBalanced2.h" />
     <ClInclude Include="burrowsWheelerTransform.h" />

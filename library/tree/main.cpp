@@ -60,7 +60,6 @@ int main(void) {
     TEST(UniqueValueCounterInDistanceOfSubtree);
     TEST(TreeReordering);
     TEST(TreePathVertexWeightVectorDot);
-    TEST(BKTree);
 
     TEST(BenchmarkBST);
     //--- problems
