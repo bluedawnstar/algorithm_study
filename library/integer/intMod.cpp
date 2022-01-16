@@ -44,9 +44,9 @@ void testIntMod() {
         }
     }
     {
-        auto ans1 = factorialModNaive(25, 29);
-        auto ans2 = factorialModWilson(25, 29);
-        auto ans3 = factorialMod(25, 29);
+        auto ans1 = FactorialMod::factorialNaive(25, 29);
+        auto ans2 = FactorialMod::factorialWilson(25, 29);
+        auto ans3 = FastFactorialMod::factorial(25, 29);
         assert(ans1 == ans2);
         assert(ans1 == ans3);
         assert(ans1 == 5);
