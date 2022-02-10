@@ -63,4 +63,5 @@ int main(void) {
     TEST(DistinctValueSetCounterOfLinearCombination);
     TEST(IntervalSumTopK);
     TEST(DigitDP_SamePrefixSuffixDigitSum);
+    TEST(KnapsackAndBinarySearchExample1);
 }

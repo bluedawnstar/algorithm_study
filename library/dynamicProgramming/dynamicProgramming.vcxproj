@@ -168,6 +168,7 @@
     <ClCompile Include="problems\distinctValueSetCounterOfLinearCombination.cpp" />
     <ClCompile Include="problems\integer_ChefAndSum.cpp" />
     <ClCompile Include="problems\intervalSumTopK.cpp" />
+    <ClCompile Include="problems\knapsackAndBinarySearch_example1.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />

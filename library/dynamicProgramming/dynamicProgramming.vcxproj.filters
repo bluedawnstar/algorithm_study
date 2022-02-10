@@ -195,6 +195,9 @@
     <ClCompile Include="problems\digitDP_SamePrefixSuffixDigitSum.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="problems\knapsackAndBinarySearch_example1.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
