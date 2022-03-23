@@ -28,6 +28,11 @@ void testCalendar() {
             if (day1 % 7 != day2 % 7)
                 cout << "Mismatched : " << (day1 % 7) << ", " << (day2 % 7) << endl;
             assert(day1 % 7 == day2 % 7);
+
+            long long day3 = Calendar::getTotalDays(400 + i, 1, 1);
+            if (day1 % 7 != day3 % 7)
+                cout << "Mismatched : " << (day1 % 7) << ", " << (day3 % 7) << endl;
+            assert(day1 % 7 == day3 % 7);
         }
     }
     {
