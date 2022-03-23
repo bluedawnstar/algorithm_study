@@ -4,6 +4,9 @@
 
 using namespace std;
 
+#include "sortBubble.h"
+#include "sortSelection.h"
+#include "sortInsertion.h"
 #include "sortHeap.h"
 #include "sortMerge.h"
 #include "sortQuick.h"
@@ -23,7 +26,7 @@ void testSort() {
 
     cout << "--- sort ---------------------------------" << endl;
     {
-        int N = 100000;
+        int N = 10000;
         int T = 100;
 
 #ifdef _DEBUG
@@ -36,6 +39,18 @@ void testSort() {
             vin[i] = RandInt32::get();
 
         for (int i = 0; i < T; i++) {
+            auto vout00 = vin;
+            BubbleSort<int>::sort(vout00);
+
+            auto vout01 = vin;
+            BubbleSort<int>::sort2(vout01);
+
+            auto voutSel = vin;
+            SelectionSort<int>::sort(voutSel);
+
+            auto voutIns = vin;
+            InsertionSort<int>::sort(voutIns);
+
             auto vout1 = vin;
             MaxHeap<int>::sort(vout1);
 
@@ -54,20 +69,29 @@ void testSort() {
             auto vout4_2 = vin;
             QuickSort3way<int>::sort2(vout4_2);
 
-            if (vout1 != vout2 || vout1 != vout3 || vout1 != vout3_3 || vout1 != vout4 || vout1 != vout4_2)
+            if (vout00 != vout1 || vout01 != vout1
+                || voutSel != vout1
+                || voutIns != vout1
+                || vout2 != vout1
+                || vout3 != vout1 || vout3_3 != vout1
+                || vout4 != vout1 || vout4_2 != vout1)
                 cout << "ERROR : mismatched!" << endl;
 
-            assert(vout1 == vout2);
-            assert(vout1 == vout3);
-            assert(vout1 == vout3_3);
-            assert(vout1 == vout4);
-            assert(vout1 == vout4_2);
+            assert(vout00 == vout1);
+            assert(vout01 == vout1);
+            assert(voutSel == vout1);
+            assert(voutIns == vout1);
+            assert(vout2 == vout1);
+            assert(vout3 == vout1);
+            assert(vout3_3 == vout1);
+            assert(vout4 == vout1);
+            assert(vout4_2 == vout1);
         }
     }
     cout << "OK!" << endl;
     cout << "--- speed test #1" << endl;
     {
-        int N = 1000000;
+        int N = 100000;
         int T = 100;
 
 #ifdef _DEBUG
@@ -79,63 +103,92 @@ void testSort() {
         for (int i = 0; i < N; i++)
             vin[i] = RandInt32::get();
 
-        cout << "Heap sort..." << endl;
-        PROFILE_START(0);
-        auto vout1 = vin;
+        /*
+        cout << "Bubble sort #1..." << endl;
+        PROFILE_START(bubble_1);
+        auto vout10 = vin;
         for (int i = 0; i < T; i++) {
-            vout1 = vin;
-            MaxHeap<int>::sort(vout1);
+            vout10 = vin;
+            BubbleSort<int>::sort(vout10);
         }
-        PROFILE_STOP(0);
+        PROFILE_STOP(bubble_1);
 
-        cout << "Merge sort..." << endl;
-        PROFILE_START(1);
+        cout << "Bubble sort #2..." << endl;
+        PROFILE_START(bubble_2);
+        auto vout11 = vin;
+        for (int i = 0; i < T; i++) {
+            vout11 = vin;
+            BubbleSort<int>::sort(vout11);
+        }
+        PROFILE_STOP(bubble_2);
+        */
+
+        cout << "Insertion sort..." << endl;
+        PROFILE_START(insertion);
+        auto voutIns = vin;
+        for (int i = 0; i < T; i++) {
+            voutIns = vin;
+            InsertionSort<int>::sort(voutIns);
+        }
+        PROFILE_STOP(insertion);
+
+        cout << "Heap sort..." << endl;
+        PROFILE_START(heap);
         auto vout2 = vin;
         for (int i = 0; i < T; i++) {
             vout2 = vin;
-            MergeSort<int>::sort(vout2);
+            MaxHeap<int>::sort(vout2);
         }
-        PROFILE_STOP(1);
+        PROFILE_STOP(heap);
 
-        cout << "Quick sort..." << endl;
-        PROFILE_START(2);
+        cout << "Merge sort..." << endl;
+        PROFILE_START(merge);
         auto vout3 = vin;
         for (int i = 0; i < T; i++) {
             vout3 = vin;
-            QuickSort<int>::sort(vout3);
+            MergeSort<int>::sort(vout3);
         }
-        PROFILE_STOP(2);
+        PROFILE_STOP(merge);
 
-        cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(3);
-        auto vout3_3 = vin;
-        for (int i = 0; i < T; i++) {
-            vout3_3 = vin;
-            QuickSort<int>::sort3(vout3_3);
-        }
-        PROFILE_STOP(3);
-
-        cout << "3-way Quick sort..." << endl;
-        PROFILE_START(4);
+        cout << "Quick sort..." << endl;
+        PROFILE_START(quick);
         auto vout4 = vin;
         for (int i = 0; i < T; i++) {
             vout4 = vin;
-            QuickSort3way<int>::sort(vout4);
+            QuickSort<int>::sort(vout4);
         }
-        PROFILE_STOP(4);
+        PROFILE_STOP(quick);
+
+        cout << "Quick sort with MED3..." << endl;
+        PROFILE_START(quick_med3);
+        auto vout4_3 = vin;
+        for (int i = 0; i < T; i++) {
+            vout4_3 = vin;
+            QuickSort<int>::sort3(vout4_3);
+        }
+        PROFILE_STOP(quick_med3);
+
+        cout << "3-way Quick sort..." << endl;
+        PROFILE_START(quick_3way);
+        auto vout5 = vin;
+        for (int i = 0; i < T; i++) {
+            vout5 = vin;
+            QuickSort3way<int>::sort(vout5);
+        }
+        PROFILE_STOP(quick_3way);
 
         cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(5);
-        auto vout4_2 = vin;
+        PROFILE_START(quick_3way_med3);
+        auto vout5_2 = vin;
         for (int i = 0; i < T; i++) {
-            vout4_2 = vin;
-            QuickSort3way<int>::sort2(vout4_2);
+            vout5_2 = vin;
+            QuickSort3way<int>::sort2(vout5_2);
         }
-        PROFILE_STOP(5);
+        PROFILE_STOP(quick_3way_med3);
     }
     cout << "--- speed test #2" << endl;
     {
-        int N = 1000000;
+        int N = 100000;
         int T = 100;
 
 #ifdef _DEBUG
@@ -147,63 +200,92 @@ void testSort() {
         for (int i = 0; i < N; i++)
             vin[i] = RandInt32::get() % (N / 10);
 
+        /*
+        cout << "Bubble sort #1..." << endl;
+        PROFILE_START(bubble_1);
+        auto vout10 = vin;
+        for (int i = 0; i < T; i++) {
+            vout10 = vin;
+            BubbleSort<int>::sort(vout10);
+        }
+        PROFILE_STOP(bubble_1);
+
+        cout << "Bubble sort #2..." << endl;
+        PROFILE_START(bubble_2);
+        auto vout11 = vin;
+        for (int i = 0; i < T; i++) {
+            vout11 = vin;
+            BubbleSort<int>::sort(vout11);
+        }
+        PROFILE_STOP(bubble_2);
+        */
+
+        cout << "Insertion sort..." << endl;
+        PROFILE_START(insertion);
+        auto voutIns = vin;
+        for (int i = 0; i < T; i++) {
+            voutIns = vin;
+            InsertionSort<int>::sort(voutIns);
+        }
+        PROFILE_STOP(insertion);
+
         cout << "Heap sort..." << endl;
-        PROFILE_START(0);
+        PROFILE_START(heap);
         auto vout1 = vin;
         for (int i = 0; i < T; i++) {
             vout1 = vin;
             MaxHeap<int>::sort(vout1);
         }
-        PROFILE_STOP(0);
+        PROFILE_STOP(heap);
 
         cout << "Merge sort..." << endl;
-        PROFILE_START(1);
+        PROFILE_START(merge);
         auto vout2 = vin;
         for (int i = 0; i < T; i++) {
             vout2 = vin;
             MergeSort<int>::sort(vout2);
         }
-        PROFILE_STOP(1);
+        PROFILE_STOP(merge);
 
         cout << "Quick sort..." << endl;
-        PROFILE_START(2);
+        PROFILE_START(quick);
         auto vout3 = vin;
         for (int i = 0; i < T; i++) {
             vout3 = vin;
             QuickSort<int>::sort(vout3);
         }
-        PROFILE_STOP(2);
+        PROFILE_STOP(quick);
 
         cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(3);
+        PROFILE_START(quick_med3);
         auto vout3_3 = vin;
         for (int i = 0; i < T; i++) {
             vout3_3 = vin;
             QuickSort<int>::sort3(vout3_3);
         }
-        PROFILE_STOP(3);
+        PROFILE_STOP(quick_med3);
 
         cout << "3-way Quick sort..." << endl;
-        PROFILE_START(4);
+        PROFILE_START(quick_3way);
         auto vout4 = vin;
         for (int i = 0; i < T; i++) {
             vout4 = vin;
             QuickSort3way<int>::sort(vout4);
         }
-        PROFILE_STOP(4);
+        PROFILE_STOP(quick_3way);
 
         cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(5);
+        PROFILE_START(quick_3way_med3);
         auto vout4_2 = vin;
         for (int i = 0; i < T; i++) {
             vout4_2 = vin;
             QuickSort3way<int>::sort2(vout4_2);
         }
-        PROFILE_STOP(5);
+        PROFILE_STOP(quick_3way_med3);
     }
     cout << "--- speed test #3" << endl;
     {
-        int N = 1000000;
+        int N = 100000;
         int T = 100;
 
 #ifdef _DEBUG
@@ -215,59 +297,88 @@ void testSort() {
         for (int i = 0; i < N; i++)
             vin[i] = RandInt32::get() % (N / 100);
 
+        /*
+        cout << "Bubble sort #1..." << endl;
+        PROFILE_START(bubble_1);
+        auto vout10 = vin;
+        for (int i = 0; i < T; i++) {
+            vout10 = vin;
+            BubbleSort<int>::sort(vout10);
+        }
+        PROFILE_STOP(bubble_1);
+
+        cout << "Bubble sort #2..." << endl;
+        PROFILE_START(bubble_2);
+        auto vout11 = vin;
+        for (int i = 0; i < T; i++) {
+            vout11 = vin;
+            BubbleSort<int>::sort(vout11);
+        }
+        PROFILE_STOP(bubble_2);
+        */
+
+        cout << "Insertion sort..." << endl;
+        PROFILE_START(insertion);
+        auto voutIns = vin;
+        for (int i = 0; i < T; i++) {
+            voutIns = vin;
+            InsertionSort<int>::sort(voutIns);
+        }
+        PROFILE_STOP(insertion);
+
         cout << "Heap sort..." << endl;
-        PROFILE_START(0);
+        PROFILE_START(heap);
         auto vout1 = vin;
         for (int i = 0; i < T; i++) {
             vout1 = vin;
             MaxHeap<int>::sort(vout1);
         }
-        PROFILE_STOP(0);
+        PROFILE_STOP(heap);
 
         cout << "Merge sort..." << endl;
-        PROFILE_START(1);
+        PROFILE_START(merge);
         auto vout2 = vin;
         for (int i = 0; i < T; i++) {
             vout2 = vin;
             MergeSort<int>::sort(vout2);
         }
-        PROFILE_STOP(1);
+        PROFILE_STOP(merge);
 
         cout << "Quick sort..." << endl;
-        PROFILE_START(2);
+        PROFILE_START(quick);
         auto vout3 = vin;
         for (int i = 0; i < T; i++) {
             vout3 = vin;
             QuickSort<int>::sort(vout3);
         }
-        PROFILE_STOP(2);
+        PROFILE_STOP(quick);
 
         cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(3);
+        PROFILE_START(quick_med3);
         auto vout3_3 = vin;
         for (int i = 0; i < T; i++) {
             vout3_3 = vin;
             QuickSort<int>::sort3(vout3_3);
         }
-        PROFILE_STOP(3);
+        PROFILE_STOP(quick_med3);
 
         cout << "3-way Quick sort..." << endl;
-        PROFILE_START(4);
+        PROFILE_START(quick_3way);
         auto vout4 = vin;
         for (int i = 0; i < T; i++) {
             vout4 = vin;
             QuickSort3way<int>::sort(vout4);
         }
-        PROFILE_STOP(4);
+        PROFILE_STOP(quick_3way);
 
         cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(5);
+        PROFILE_START(quick_3way_med3);
         auto vout4_2 = vin;
         for (int i = 0; i < T; i++) {
             vout4_2 = vin;
             QuickSort3way<int>::sort2(vout4_2);
         }
-        PROFILE_STOP(5);
+        PROFILE_STOP(quick_3way_med3);
     }
     cout << "OK!" << endl;
 }

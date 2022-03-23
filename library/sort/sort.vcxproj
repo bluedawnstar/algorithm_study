@@ -159,10 +159,13 @@
     <ClInclude Include="inversionCounter2.h" />
     <ClInclude Include="inversionCounterAfterOneSwap.h" />
     <ClInclude Include="problems\smallestBinaryArrayWithInversions.h" />
+    <ClInclude Include="sortBubble.h" />
     <ClInclude Include="sortHeap.h" />
+    <ClInclude Include="sortInsertion.h" />
     <ClInclude Include="sortMerge.h" />
     <ClInclude Include="sortQuick.h" />
     <ClInclude Include="sortQuick3way.h" />
+    <ClInclude Include="sortSelection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
