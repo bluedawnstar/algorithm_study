@@ -13,6 +13,10 @@
    F(n - 2) = F(n) - F(n - 1)
    F(-n) = (-1)^(n+1) * F(n)
 
+    n
+   SUM F(i) = F(n+2) - 1
+   i=1
+
 2. Cassini's identities
    F(n)^2 - F(n + 1)*F(n - 1) = (-1)^(n - 1)
 
