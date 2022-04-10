@@ -74,5 +74,20 @@
     <ClInclude Include="sortInsertion.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="sortShell.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeBottomUp.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeEnhanced.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeEnhanced2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeEnhanced3.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
