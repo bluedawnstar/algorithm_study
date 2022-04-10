@@ -8,8 +8,8 @@ struct InversionCounter {
             return 0ll;
 
         vector<T> copyed(data, data + size);
-        unique_ptr<T> buff(new T[size]);
-        return count(copyed.data(), 0, size - 1, buff.get());
+        unique_ptr<T> aux(new T[size]);
+        return count(copyed.data(), 0, size - 1, aux.get());
     }
 
     static long long count(const vector<T>& data) {
@@ -17,51 +17,39 @@ struct InversionCounter {
     }
 
 private:
-    static long long mergeInplace(T data[], int left, int mid, int right, T buff[]) {
-        memcpy(buff, data + mid + 1, (right - mid) * sizeof(T));
-
-        T* dest = data + right;
-
-        T*  fst = data + mid;
-        int fstN = mid - left + 1;
-
-        int sndN = right - mid;
-        T*  snd = buff + sndN - 1;
+    static long long merge(T data[], int lo, int mid, int hi, T aux[]) {
+        for (int i = lo, j = 0; i <= mid; i++, j++)
+            aux[j] = data[i];
 
         long long res = 0;
-
         int cnt = 0;
-        if (fstN > 0 && sndN > 0) {
-            while (true) {
-                if (*snd < *fst) {
-                    *dest-- = *fst--;
-                    ++cnt;
-                    if (--fstN <= 0)
-                        break;
-                } else {
-                    *dest-- = *snd--;
-                    res += cnt;
-                    if (--sndN <= 0)
-                        break;
-                }
+
+        int i = mid + 1, j = 0, k = lo;
+        while (i <= hi && j <= mid - lo) {
+            if (aux[j] <= data[i]) {
+                data[k++] = aux[j++];
+                res += cnt;
+            } else {
+                data[k++] = data[i++];
+                cnt++;
             }
         }
 
-        if (sndN > 0) {
-            memcpy(data + left, buff, sndN * sizeof(T));
-            res += 1ll * cnt * sndN;
+        while (j <= mid - lo) {
+            data[k++] = aux[j++];
+            res += cnt;
         }
 
         return res;
     }
 
-    static long long count(T data[], int left, int right, T buff[]) {
+    static long long count(T data[], int lo, int hi, T aux[]) {
         long long res = 0;
-        if (left < right) {
-            int mid = (left + right) / 2;
-            res += count(data, left, mid, buff);
-            res += count(data, mid + 1, right, buff);
-            res += mergeInplace(data, left, mid, right, buff);
+        if (lo < hi) {
+            int mid = (lo + hi) / 2;
+            res += count(data, lo, mid, aux);
+            res += count(data, mid + 1, hi, aux);
+            res += merge(data, lo, mid, hi, aux);
         }
         return res;
     }
