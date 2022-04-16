@@ -162,6 +162,7 @@
     <ClInclude Include="sortBubble.h" />
     <ClInclude Include="sortHeap.h" />
     <ClInclude Include="sortInsertion.h" />
+    <ClInclude Include="sortIntro.h" />
     <ClInclude Include="sortMerge.h" />
     <ClInclude Include="sortMergeEnhanced.h" />
     <ClInclude Include="sortMergeEnhanced2.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="sortSelection.h" />
     <ClInclude Include="sortShell.h" />
     <ClInclude Include="sortMergeBottomUp.h" />
+    <ClInclude Include="sortTim.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
