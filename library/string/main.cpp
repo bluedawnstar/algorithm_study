@@ -58,4 +58,5 @@ int main(void) {
     TEST(PeriodicSubstringWeightSumOfAllSubstrings);
     TEST(OnlineZ);
     TEST(TriePersistent);
+    TEST(BKTree);
 }

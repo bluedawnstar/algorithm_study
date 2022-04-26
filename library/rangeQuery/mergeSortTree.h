@@ -22,7 +22,7 @@ struct MergeSortTree {
     void build(const T arr[], int n) {
         N = n;
         tree.resize(n * 4);
-        buildSub(arr, 0, n - 1, 0);
+        buildSub(arr, 0, n - 1, 1);
     }
 
     void build(const vector<T>& v) {
@@ -32,12 +32,12 @@ struct MergeSortTree {
 
     // O((logN)^2), inclusive (0 <= left <= right < N)
     int countLessThanOrEqual(int left, int right, T val) const {
-        return countLessThanOrEqualSub(left, right, val, 0, 0, N - 1);
+        return countLessThanOrEqualSub(left, right, val, 1, 0, N - 1);
     }
 
     // O(logN)
     int countLessThanOrEqual(T val) const {
-        return countLessThanOrEqualSub(tree[0], val);
+        return countLessThanOrEqualSub(tree[1], val);
     }
 
     // count a value k, O((logN)^2), inclusive (0 <= left <= right < N)
@@ -60,12 +60,12 @@ struct MergeSortTree {
         return countLessThanOrEqual(valHigh) - countLessThanOrEqual(valLow - 1);
     }
 
-    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k <= valHigh - valLow)
-    T kth(int left, int right, int k, T valLow, T valHigh) const {
+    // O((logN)^2 * logA), inclusive (0 <= left <= right < N, 0 <= k)
+    T kth(int left, int right, T valLow, T valHigh, int k) const {
         T lo = valLow, hi = valHigh;
         while (lo <= hi) {
             T mid = lo + (hi - lo) / 2;
-            if (countLessThanOrEqual(left, right, mid) >= k + 1)
+            if (count(left, right, valLow, mid) > k)
                 hi = mid - 1;
             else
                 lo = mid + 1;
@@ -75,7 +75,7 @@ struct MergeSortTree {
 
     // O(1), inclusive (0 <= k < N)
     T kth(int k) const {
-        return tree[0][k];
+        return tree[1][k];
     }
 
 

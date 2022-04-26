@@ -17,14 +17,52 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include "../common/iostreamhelper.h"
+#include "../common/rand.h"
 #include "../common/profile.h"
 
 const int MOD = 1000000007;
 
 void testDiscreteLog() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Discrete Log -----------------------" << endl;
+    {
+        int T = 2;
+        int M = 1000000009;
+        for (int i = 0; i < T; i++) {
+            long long a = RandInt64::get();
+            int x = RandInt64::get() % M;
+            long long b = modPow(a, (long long)x, (long long)M);
+            auto ans = DiscreteLog::solve32bit(a, b, M);
+            if (ans < 0) {
+                cout << "[" << i << "] Can't find answer : " << a << "^x = " << b << " (mod " << M << ")" << endl;
+            } else {
+                if (modPow(a, (long long)ans, (long long)M) != b) {
+                    cout << "[" << i << "] Wrong answer : " << a << "^x = " << b << " (mod " << M << ")" << endl;
+                }
+                assert(modPow(a, (long long)ans, (long long)M) == b);
+            }
+        }
+    }
+    {
+        int T = 2;
+        long long M = 100000015277ll;
+        for (int i = 0; i < T; i++) {
+            long long a = RandInt64::get() % M;
+            long long x = RandInt64::get() % M;
+            long long b = modPow(a, x, M);
+            auto ans = DiscreteLog::solve64bit(a, b, M);
+            if (ans < 0) {
+                cout << "[" << i << "] Can't find answer : " << a << "^x = " << b << " (mod " << M << ")" << endl;
+            } else {
+                if (modPow(a, ans, M) != b) {
+                    cout << "[" << i << "] Wrong answer : " << a << "^x = " << b << " (mod " << M << ")" << endl;
+                }
+                assert(modPow(a, ans, M) == b);
+            }
+        }
+    }
+    cout << "OK!" << endl;
     {
         FastDiscreteLog dsc;
 

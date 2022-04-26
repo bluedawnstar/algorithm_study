@@ -1,13 +1,16 @@
 #pragma once
 
 template <typename T>
-struct MergeSort {
+struct MergeSortBottomUp {
     static void sort(T data[], int size) {
         if (size <= 1)
             return;
 
         unique_ptr<T> aux(new T[size]);
-        recSort(data, 0, size - 1, aux.get());
+        for (int sz = 1; sz < size; sz = sz * 2) {
+            for (int lo = 0; lo + sz < size; lo += sz * 2)
+                merge(data, lo, lo + sz - 1, min(lo + sz * 2 - 1, size - 1), aux.get());
+        }
     }
 
     static void sort(vector<T>& data) {
@@ -29,14 +32,5 @@ private:
 
         while (j <= mid - lo)
             data[k++] = aux[j++];
-    }
-
-    static void recSort(T data[], int lo, int hi, T aux[]) {
-        if (lo < hi) {
-            int mid = (lo + hi) / 2;
-            recSort(data, lo, mid, aux);
-            recSort(data, mid + 1, hi, aux);
-            merge(data, lo, mid, hi, aux);
-        }
     }
 };

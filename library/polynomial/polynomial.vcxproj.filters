@@ -72,6 +72,9 @@
     <ClCompile Include="modComplex.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="polynomialProduct.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="convolution.h">
@@ -189,6 +192,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="modComplex.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="polynomialProduct.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

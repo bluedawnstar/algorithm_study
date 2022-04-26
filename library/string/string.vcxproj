@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="ahoCorasick.cpp" />
     <ClCompile Include="ahoCorasickAM.cpp" />
+    <ClCompile Include="BKTree.cpp" />
     <ClCompile Include="bracketSequencesBalanced.cpp" />
     <ClCompile Include="burrowsWheelerTransform.cpp" />
     <ClCompile Include="compressedTrie.cpp" />
@@ -200,6 +201,9 @@
     <ClInclude Include="ahoCorasick.h" />
     <ClInclude Include="ahoCorasickAM.h" />
     <ClInclude Include="ahoCorasickPatternWeightSum.h" />
+    <ClInclude Include="BKTree.h" />
+    <ClInclude Include="BKTreeAM.h" />
+    <ClInclude Include="BKTreeMap.h" />
     <ClInclude Include="bracketSequencesBalanced.h" />
     <ClInclude Include="bracketSequencesBalanced2.h" />
     <ClInclude Include="burrowsWheelerTransform.h" />

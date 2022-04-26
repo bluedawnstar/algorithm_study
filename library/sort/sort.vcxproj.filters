@@ -65,5 +65,35 @@
     <ClInclude Include="problems\smallestBinaryArrayWithInversions.h">
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
+    <ClInclude Include="sortBubble.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortSelection.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortInsertion.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortShell.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeBottomUp.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeEnhanced.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeEnhanced2.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortMergeEnhanced3.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortTim.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortIntro.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

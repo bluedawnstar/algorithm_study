@@ -81,7 +81,7 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
     {
         int K = RandInt32::get() % (R - L + 1);
         int gt = kth(in, L, R, K);
-        int ans = tree.kth(L, R, K, 0, numeric_limits<int>::max());
+        int ans = tree.kth(L, R, 0, numeric_limits<int>::max(), K);
         if (ans != gt) {
             cout << "GT = " << gt << ", " << "ans = " << ans << endl;
         }
@@ -140,7 +140,7 @@ static void test(vector<int>& in, MergeSortTree<int>& tree, int N, int L, int R,
 }
 
 void testMergeSortTree() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Merge Sort Tree ----------------------------------------------" << endl;
 
