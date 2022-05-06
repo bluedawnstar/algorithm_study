@@ -18,7 +18,7 @@ https://www.spoj.com/problems/MOD/
 
   <=>  D * a^(x-cnt) = B (mod C)
 */
-// find x satisfying  a^x = b (mod mod), a and m need not be coprime!
+// find x satisfying  a^x = b (mod m), a and m need not be coprime!
 struct FastDiscreteLog {
     const int N = 100000;
     const int mod = 99991;
