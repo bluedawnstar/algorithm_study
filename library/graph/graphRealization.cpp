@@ -18,26 +18,30 @@ using namespace std;
 #include "../common/rand.h"
 
 void testGraphRealization() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Graph Realization ----------------" << endl;
     {
         // possible
         vector<int> d{ 1, 2, 3, 4, 5, 5, 6, 7, 8, 9 };
-        int ans1 = GraphRealization::possibleSlow(d);
-        int ans2 = GraphRealization::possible(d);
-        int ans3 = GraphRealization::possibleFast(d);
+        bool ans1 = GraphRealization::possibleSlow(d);
+        bool ans2 = GraphRealization::possible(d);
+        bool ans3 = GraphRealization::possibleFast(d);
+        bool ans4 = GraphRealization::existGraph(d);
         assert(ans1 == ans2);
         assert(ans1 == ans3);
+        assert(ans1 == ans4);
     }
     {
         // impossible
         vector<int> d{ 1, 2, 3, 4, 4, 6, 6, 7, 8, 9 };
-        int ans1 = GraphRealization::possibleSlow(d);
-        int ans2 = GraphRealization::possible(d);
-        int ans3 = GraphRealization::possibleFast(d);
+        bool ans1 = GraphRealization::possibleSlow(d);
+        bool ans2 = GraphRealization::possible(d);
+        bool ans3 = GraphRealization::possibleFast(d);
+        bool ans4 = GraphRealization::existGraph(d);
         assert(ans1 == ans2);
         assert(ans1 == ans3);
+        assert(ans1 == ans4);
     }
     {
         const int MAXD = 1000;
@@ -69,16 +73,20 @@ void testGraphRealization() {
             bool ans1 = GraphRealization::possibleSlow(d);
             bool ans2 = GraphRealization::possible(d);
             bool ans3 = GraphRealization::possibleFast(d);
+            bool ans4 = GraphRealization::existGraph(d);
             if (ans1 != ans2)
                 cout << "Mismatched " << ans1 << ", " << ans2 << endl;
             if (ans1 != ans3)
                 cout << "Mismatched " << ans1 << ", " << ans3 << endl;
+            if (ans1 != ans4)
+                cout << "Mismatched " << ans1 << ", " << ans4 << endl;
             assert(ans1 == ans2);
             assert(ans1 == ans3);
+            assert(ans1 == ans4);
         }
     }
     {
-        int N = 100000;
+        int N = 10000;
 #ifdef _DEBUG
         N = 1000;
 #endif
@@ -108,15 +116,22 @@ void testGraphRealization() {
         bool ans3 = GraphRealization::possibleFast(d);
         PROFILE_STOP(2);
 
+        PROFILE_START(3);
+        bool ans4 = GraphRealization::existGraph(d);
+        PROFILE_STOP(3);
+
         if (ans1 != ans2)
             cout << "Mismatched " << ans1 << ", " << ans2 << endl;
         if (ans1 != ans3)
             cout << "Mismatched " << ans1 << ", " << ans3 << endl;
+        if (ans1 != ans4)
+            cout << "Mismatched " << ans1 << ", " << ans4 << endl;
         assert(ans1 == ans2);
         assert(ans1 == ans3);
+        assert(ans1 == ans4);
     }
     {
-        int N = 100000;
+        int N = 10000;
 #ifdef _DEBUG
         N = 1000;
 #endif
@@ -136,12 +151,19 @@ void testGraphRealization() {
         bool ans3 = GraphRealization::possibleFast(d);
         PROFILE_STOP(2);
 
+        PROFILE_START(3);
+        bool ans4 = GraphRealization::existGraph(d);
+        PROFILE_STOP(3);
+
         if (ans1 != ans2)
             cout << "Mismatched " << ans1 << ", " << ans2 << endl;
         if (ans1 != ans3)
             cout << "Mismatched " << ans1 << ", " << ans3 << endl;
+        if (ans1 != ans4)
+            cout << "Mismatched " << ans1 << ", " << ans4 << endl;
         assert(ans1 == ans2);
         assert(ans1 == ans3);
+        assert(ans1 == ans4);
     }
 
     cout << "OK" << endl;
