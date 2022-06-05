@@ -29,7 +29,11 @@ struct QuickSort {
     }
 
 private:
+    // modified Hoare
     static void sortSub(T data[], int left, int right) {
+        if (left >= right)
+            return;
+
         T pivot = data[(left + right) / 2];
 
         int i = left;
@@ -37,7 +41,7 @@ private:
         while (i <= j) {
             while (data[i] < pivot)
                 i++;
-            while (pivot < data[j])
+            while (data[j] > pivot)
                 j--;
 
             if (i < j)
@@ -46,20 +50,22 @@ private:
                 i++;
         }
 
-        if (left < j)
-            sortSub(data, left, j);
-        if (j + 1 < right)
-            sortSub(data, j + 1, right);
+        sortSub(data, left, j);
+        sortSub(data, j + 1, right);
     }
 
+    // Hoare
     static void sortSub2(T data[], int left, int right) {
+        if (left >= right)
+            return;
+
         T pivot = data[(left + right) / 2];
 
         int i = left - 1;
         int j = right + 1;
         while (true) {
             do i++; while (data[i] < pivot);
-            do j--; while (pivot < data[j]);
+            do j--; while (data[j] > pivot);
 
             if (i < j)
                 swap(data[i], data[j]);
@@ -67,10 +73,8 @@ private:
                 break;
         }
 
-        if (left < j)
-            sortSub2(data, left, j);
-        if (j + 1 < right)
-            sortSub2(data, j + 1, right);
+        sortSub2(data, left, j);
+        sortSub2(data, j + 1, right);
     }
 
     //---
@@ -97,14 +101,18 @@ private:
 #undef MED3
     }
 
+    // Hore with MED3
     static void sortSub3(T data[], int left, int right) {
+        if (left >= right)
+            return;
+
         T pivot = data[choosePivot(data, left, right)];
 
         int i = left - 1;
         int j = right + 1;
         while (true) {
             do i++; while (data[i] < pivot);
-            do j--; while (pivot < data[j]);
+            do j--; while (data[j] > pivot);
 
             if (i < j)
                 swap(data[i], data[j]);
@@ -112,9 +120,7 @@ private:
                 break;
         }
 
-        if (left < j)
-            sortSub3(data, left, j);
-        if (j + 1 < right)
-            sortSub3(data, j + 1, right);
+        sortSub3(data, left, j);
+        sortSub3(data, j + 1, right);
     }
 };

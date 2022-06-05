@@ -27,6 +27,7 @@ int main(void) {
     TEST(DynamicUpperEnvelope);
     TEST(MaxHanhattanDistanceOfAllPairs);
     TEST(ConvexFunctions);
+    TEST(Circle);
     //--- problems
     TEST(ConvexHullVisibleVerticalLine);
 }

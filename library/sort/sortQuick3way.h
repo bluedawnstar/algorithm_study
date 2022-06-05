@@ -24,7 +24,7 @@ struct QuickSort3way {
 
 private:
     static void sortSub(T data[], int left, int right) {
-        if (right <= left)
+        if (left >= right)
             return;
 
         int i = left - 1, j = right;
@@ -80,7 +80,7 @@ private:
     }
 
     static void sortSub2(T data[], int left, int right) {
-        if (right <= left)
+        if (left >= right)
             return;
 
         int pivot = choosePivot(data, left, right);
