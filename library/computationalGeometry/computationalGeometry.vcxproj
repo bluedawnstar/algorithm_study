@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="circle.cpp" />
     <ClCompile Include="closestPair.cpp" />
     <ClCompile Include="convexHull.cpp" />
     <ClCompile Include="convexHullEx.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="circle.h" />
     <ClInclude Include="closestPair.h" />
     <ClInclude Include="convexHull.h" />
     <ClInclude Include="convexHullEx.h" />
