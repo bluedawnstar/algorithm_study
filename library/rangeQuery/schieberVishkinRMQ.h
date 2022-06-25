@@ -7,21 +7,24 @@
 
 template <typename T, typename CompareT = less<T>>
 struct SchieberVishkinRMQ {
-    CompareT compare;
+    function<bool(T, T)> lessOp;
 
     vector<unsigned int> indices;
     vector<unsigned int> inlabel;
     vector<unsigned int> ascendant;
     vector<unsigned int> head;
 
-    SchieberVishkinRMQ() {
+    SchieberVishkinRMQ(const function<bool(T, T)>& lessOp = less<T>())
+            : lessOp(lessOp) {
     }
 
-    SchieberVishkinRMQ(const T value[], int N) {
+    SchieberVishkinRMQ(const T value[], int N, const function<bool(T, T)>& lessOp = less<T>())
+            : lessOp(lessOp) {
         build(value, N);
     }
 
-    explicit SchieberVishkinRMQ(const vector<T>& value) {
+    explicit SchieberVishkinRMQ(const vector<T>& value, const function<bool(T, T)>& lessOp = less<T>())
+            : lessOp(lessOp) {
         build(value);
     }
 
@@ -34,7 +37,7 @@ struct SchieberVishkinRMQ {
         // build Cartesian Tree
         for (int i = 0, top = 0; i < N; ++i) {
             int last = -1;
-            while (top > 0 && compare(value[i], value[stk[top - 1]]))
+            while (top > 0 && lessOp(value[i], value[stk[top - 1]]))
                 last = stk[--top];
 
             if (top > 0)
