@@ -1,4 +1,5 @@
 #include <functional>
+#include <vector>
 
 using namespace std;
 
@@ -24,19 +25,28 @@ void testCalendar() {
         assert(Calendar::getTotalDays(1, 1, 1) % 7 == 1);
         for (int i = 1; i <= 800; i++) {
             long long day1 = Calendar::getTotalDays(i, 1, 1);
-            long long day2 = Calendar::getTotalDays(800 + i, 1, 1);
+            long long day2 = Calendar::getTotalDays(400 + i, 1, 1);
             if (day1 % 7 != day2 % 7)
                 cout << "Mismatched : " << (day1 % 7) << ", " << (day2 % 7) << endl;
             assert(day1 % 7 == day2 % 7);
-
-            long long day3 = Calendar::getTotalDays(400 + i, 1, 1);
-            if (day1 % 7 != day3 % 7)
-                cout << "Mismatched : " << (day1 % 7) << ", " << (day3 % 7) << endl;
-            assert(day1 % 7 == day3 % 7);
         }
     }
     {
-        int T = 10000;
+        int year = 2022;
+        int month = 6;
+        int day = 28;
+        auto days = Calendar::getTotalDays(year, month, day);
+
+        auto date = Calendar::convertTotalDaysToDate(days);
+        if (year != get<0>(date) || month != get<1>(date) || day != get<2>(date))
+            cout << "Mismatched : " << year << "/" << month << "/" << day << ", "
+                                    << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
+    }
+    {
+        int T = 1000000;
+#ifdef _DEBUG
+        T = 10000;
+#endif
         while (T-- > 0) {
             int year = RandInt32::get() % 99999 + 1;
             int month = RandInt32::get() % 12 + 1;
@@ -55,11 +65,17 @@ void testCalendar() {
                 day = min(day, 30);
             }
 
-            long long day1 = Calendar::getTotalDays(year, month, day);
-            long long day2 = Calendar::getTotalDaysSimple(year, month, day);
-            if (day1 != day2)
-                cout << "Mismatched : " << day1 << ", " << day2 << endl;
-            assert(day1 == day2);
+            long long days1 = Calendar::getTotalDays(year, month, day);
+            long long days2 = Calendar::getTotalDaysSimple(year, month, day);
+            if (days1 != days2)
+                cout << "Mismatched : " << days1 << ", " << days2 << endl;
+            assert(days1 == days2);
+
+            auto date = Calendar::convertTotalDaysToDate(days1);
+            if (year != get<0>(date) || month != get<1>(date) || day != get<2>(date))
+                cout << "Mismatched : " << year << "/" << month << "/" << day << ", "
+                                        << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
+            assert(year == get<0>(date) && month == get<1>(date) && day == get<2>(date));
         }
     }
 
