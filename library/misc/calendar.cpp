@@ -32,15 +32,37 @@ void testCalendar() {
         }
     }
     {
-        int year = 2022;
-        int month = 6;
-        int day = 28;
-        auto days = Calendar::getTotalDays(year, month, day);
+        vector<tuple<int, int, int>> testSet{
+            { 2022, 6, 28 },
+            { 2020, 1, 1 },
+            { 2020, 12, 31 },
+            { 2021, 1, 1 },
+            { 2021, 12, 31 },
+            { 2022, 1, 1 },
+            { 2022, 12, 31 },
+            { 2023, 1, 1 },
+            { 2023, 12, 31 },
+            { 2020, 2, 29 },
+            { 2020, 3, 1 },
+            { 2021, 2, 28 },
+            { 2021, 3, 1 },
+            { 2022, 2, 28 },
+            { 2022, 3, 1 },
+            { 2023, 2, 28 },
+            { 2023, 3, 1 },
+            { 2024, 2, 29 },
+            { 2024, 3, 1 },
+        };
+        int year, month, day;
+        for (auto it : testSet) {
+            tie(year, month, day) = it;
+            auto days = Calendar::getTotalDays(year, month, day);
 
-        auto date = Calendar::convertTotalDaysToDate(days);
-        if (year != get<0>(date) || month != get<1>(date) || day != get<2>(date))
-            cout << "Mismatched : " << year << "/" << month << "/" << day << ", "
-                                    << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
+            auto date = Calendar::convertTotalDaysToDate(days);
+            if (year != get<0>(date) || month != get<1>(date) || day != get<2>(date))
+                cout << "Mismatched : " << year << "/" << month << "/" << day << ", "
+                                        << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
+        }
     }
     {
         int T = 1000000;
