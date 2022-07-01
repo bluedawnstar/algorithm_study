@@ -38,7 +38,7 @@ void testTreeMO() {
         L--;
         R--;
 
-        if (tree.mVisTime[L].first > tree.mVisTime[R].first)
+        if (tree.visTime[L].first > tree.visTime[R].first)
             swap(L, R);
         Q.push_back(make_pair(L, R));
     }
