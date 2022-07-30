@@ -64,4 +64,5 @@ int main(void) {
     TEST(IntervalSumTopK);
     TEST(DigitDP_SamePrefixSuffixDigitSum);
     TEST(KnapsackAndBinarySearchExample1);
+    TEST(MaxSubsequenceLinearWeightedSum);
 }

@@ -169,6 +169,7 @@
     <ClCompile Include="problems\integer_ChefAndSum.cpp" />
     <ClCompile Include="problems\intervalSumTopK.cpp" />
     <ClCompile Include="problems\knapsackAndBinarySearch_example1.cpp" />
+    <ClCompile Include="problems\maxSubsequenceLinearWeightedSum.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="problems\integer_ChefAndSum.h" />
     <ClInclude Include="problems\integer_ChefAndSum2.h" />
     <ClInclude Include="problems\intervalSumTopK.h" />
+    <ClInclude Include="problems\maxSubsequenceLinearWeightedSum.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />
