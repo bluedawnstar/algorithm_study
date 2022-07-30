@@ -18,6 +18,7 @@ using namespace std;
 #include "suffixArray.h"
 #include "suffixArrayAlgo.h"
 #include "suffixArraySimple.h"
+#include "suffixArray_naive.h"
 
 static string makeRandomString(int n) {
     string s;

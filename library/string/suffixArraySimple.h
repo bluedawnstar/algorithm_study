@@ -51,6 +51,9 @@ struct SimpleSuffixArray {
     vector<int> saToGroup;
     vector<int> sa;
 
+    SimpleSuffixArray() {
+    }
+
     explicit SimpleSuffixArray(const string& s) {
         buildNaive(s);
     }

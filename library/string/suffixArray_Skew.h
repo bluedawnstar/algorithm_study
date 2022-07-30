@@ -1,6 +1,6 @@
 #pragma once
 
-// "Simple linear work suffix array construction", J. Karkkainen and P. Sanders.
+// "Simple linear work suffix array construction", J. Karkkainen and P. Sanders., 2003
 // Skew method, O(N)
 
 template <typename T = char, int MaxCharN = 26, int BaseChar = 'a'>

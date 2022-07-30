@@ -392,5 +392,11 @@
     <ClInclude Include="BKTreeMap.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="suffixArray_ManberMyers_simple.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="suffixArray_naive.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ using namespace std;
 #include "suffixArray.h"
 #include "suffixArrayAlgo.h"
 #include "suffixArraySimple.h"
+#include "suffixArray_naive.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
