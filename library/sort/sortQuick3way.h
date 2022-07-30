@@ -1,117 +1,101 @@
 #pragma once
+#pragma once
 
-// 3-way Quicksort
-//   "Quicksort with 3-way partitioning is optimal for random keys with duplicates." - Sedgewick-Bentley
+#include <functional>
 
 template <typename T>
 struct QuickSort3way {
-    static void sort(T data[], int size) {
-        sortSub(data, 0, size - 1);
+    function<pair<int, int>(T[], int, int)> partition;
+
+    QuickSort3way(const function<pair<int, int>(T[], int, int)>& partition) : partition(partition) {
     }
 
-    static void sort(vector<T>& data) {
-        sortSub(data.data(), 0, int(data.size()) - 1);
+    void sort(T data[], int n) {
+        sortRec(data, 0, n - 1);
     }
 
-
-    static void sort2(T data[], int size) {
-        sortSub2(data, 0, size - 1);
-    }
-
-    static void sort2(vector<T>& data) {
-        sortSub2(data.data(), 0, int(data.size()) - 1);
-    }
-
-private:
-    static void sortSub(T data[], int left, int right) {
-        if (left >= right)
-            return;
-
-        int i = left - 1, j = right;
-        int p = left - 1, q = right;
-        while(true) {
-            while (data[++i] < data[right])
-                ;
-            while (data[right] < data[--j]) {
-                if (j == left)
-                    break;
-            }
-            if (i >= j)
-                break;
-            swap(data[i], data[j]);
-            if (data[i] == data[right])
-                swap(data[++p], data[i]);
-            if (data[j] == data[right])
-                swap(data[--q], data[j]);
-        }
-        swap(data[i], data[right]);
-        j = i - 1;
-        i = i + 1;
-        for (int k = left; k < p; k++)
-            swap(data[k], data[j--]);
-        for (int k = right - 1; k > q; k--)
-            swap(data[k], data[i++]);
-        sortSub(data, left, j);
-        sortSub(data, i, right);
+    void sort(vector<T>& data) {
+        sortRec(data.data(), 0, int(data.size()) - 1);
     }
 
     //---
 
-    static int choosePivot(const T data[], int left, int right) {
-#define KEY(idx)    data[idx]
-#define MED3(a,b,c) (KEY(a) < KEY(b) ? (KEY(b) < KEY(c) ? (b) : KEY(a) < KEY(c) ? (c) : (a)) \
-                                     : (KEY(b) > KEY(c) ? (b) : KEY(a) > KEY(c) ? (c) : (a)))
-        int n = right - left + 1;
-        int mid = (left + right) >> 1;
-        if (n > 7) {
-            int lo = left;
-            int hi = left + n - 1;
-            if (n > 40) {
-                int s = n >> 3;
-                lo = MED3(lo, lo + s, lo + s + s);
-                mid = MED3(mid - s, mid, mid + s);
-                hi = MED3(hi - s - s, hi - s, hi);
-            }
-            mid = MED3(lo, mid, hi);
-        }
-        return mid;
-#undef KEY
-#undef MED3
+    void sort2(T data[], int n) {
+        sortRec2(data, 0, n - 1);
     }
 
-    static void sortSub2(T data[], int left, int right) {
-        if (left >= right)
+    void sort2(vector<T>& data) {
+        sortRec2(data.data(), 0, int(data.size()) - 1);
+    }
+
+private:
+    void sortRec(T data[], int lo, int hi) {
+        if (lo >= hi)
             return;
 
-        int pivot = choosePivot(data, left, right);
-        if (pivot != right)
-            swap(data[pivot], data[right]);
+        int lt, gt;
+        tie(lt, gt) = partition(data, lo, hi);
 
-        int i = left - 1, j = right;
-        int p = left - 1, q = right;
-        while(true) {
-            while (data[++i] < data[right])
-                ;
-            while (data[right] < data[--j]) {
-                if (j == left)
-                    break;
-            }
-            if (i >= j)
-                break;
-            swap(data[i], data[j]);
-            if (data[i] == data[right])
-                swap(data[++p], data[i]);
-            if (data[j] == data[right])
-                swap(data[--q], data[j]);
+        sortRec(data, lo, lt - 1);
+        if (data[lt] < data[gt])
+            sortRec(data, lt + 1, gt - 1);
+        sortRec(data, gt + 1, hi);
+    }
+
+    //---
+
+    void sortRec2(T data[], int lo, int hi) {
+        if (lo >= hi)
+            return;
+
+        if (hi - lo < 16) {
+            insertionSort(data + lo, hi - lo + 1);
+            return;
         }
-        swap(data[i], data[right]);
-        j = i - 1;
-        i = i + 1;
-        for (int k = left; k < p; k++)
-            swap(data[k], data[j--]);
-        for (int k = right - 1; k > q; k--)
-            swap(data[k], data[i++]);
-        sortSub2(data, left, j);
-        sortSub2(data, i, right);
+
+        int lt, gt;
+        tie(lt, gt) = partition(data, lo, hi);
+
+        sortRec(data, lo, lt - 1);
+        if (data[lt] < data[gt])
+            sortRec(data, lt + 1, gt - 1);
+        sortRec(data, gt + 1, hi);
+    }
+
+    static void insertionSort(T data[], int size) {
+        for (int i = 1; i < size; i++) {
+            int tmp = data[i];
+
+            int j;
+            for (j = i - 1; j >= 0 && data[j] > tmp; j--)
+                data[j + 1] = data[j];
+
+            data[j + 1] = tmp;
+        }
     }
 };
+
+template <typename T, typename Fn>
+inline void quickSort3way(T data[], int n, Fn& partition) {
+    QuickSort3way<T> qs(partition);
+    qs.sort(data, n);
+}
+
+template <typename T, typename Fn>
+inline void quickSort3way(vector<T>& data, Fn& partition) {
+    QuickSort3way<T> qs(partition);
+    qs.sort(data);
+}
+
+
+template <typename T, typename Fn>
+inline void quickSort3way2(T data[], int n, Fn& partition) {
+    QuickSort3way<T> qs(partition);
+    qs.sort2(data, n);
+}
+
+template <typename T, typename Fn>
+inline void quickSort3way2(vector<T>& data, Fn& partition) {
+    QuickSort3way<T> qs(partition);
+    qs.sort2(data);
+}
