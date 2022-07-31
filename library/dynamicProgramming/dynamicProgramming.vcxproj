@@ -155,6 +155,7 @@
     <ClCompile Include="gridMultistepPathCounterWithObstacles.cpp" />
     <ClCompile Include="gridPathCounterWithObstacles.cpp" />
     <ClCompile Include="integerPartition.cpp" />
+    <ClCompile Include="longestNonPeakSubsequence.cpp" />
     <ClCompile Include="maxProfit.cpp" />
     <ClCompile Include="maxSubsetAND.cpp" />
     <ClCompile Include="maxWeightOfAllConcatenatedStrings.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="steinerTree.cpp" />
     <ClCompile Include="subsequence.cpp" />
     <ClCompile Include="subsequenceSpecial.cpp" />
+    <ClCompile Include="subsequenceSum.cpp" />
     <ClCompile Include="treeDP_independentEdgeSetOnTree.cpp" />
     <ClCompile Include="treeDP_sameDistanceTripleCounte.cpp" />
     <ClCompile Include="treeDP_topologicalOrderCount.cpp" />
@@ -222,6 +224,7 @@
     <ClInclude Include="gridPathCounterWithObstacles.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />
+    <ClInclude Include="longestNonPeakSubsequence.h" />
     <ClInclude Include="maxProfit.h" />
     <ClInclude Include="maxProfitFast.h" />
     <ClInclude Include="maxProfitFast2.h" />
@@ -278,6 +281,7 @@
     <ClInclude Include="steinerTree.h" />
     <ClInclude Include="subsequence.h" />
     <ClInclude Include="subsequenceSpecial.h" />
+    <ClInclude Include="subsequenceSum.h" />
     <ClInclude Include="treeDP_independentEdgeSetOnTree.h" />
     <ClInclude Include="treeDP_independentEdgeSetOnTreeMod2.h" />
     <ClInclude Include="treeDP_sameDistanceTripleCounter.h" />

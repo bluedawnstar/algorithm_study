@@ -58,6 +58,8 @@ int main(void) {
     TEST(TreePathDecompositionCounter);
     TEST(TopologicalOrderOnDAGLikeReversedTree);
     TEST(MaxSubsetAND);
+    TEST(SubsequenceSum);
+    TEST(LongestNonPeakSubsequence);
     //--- problems
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);

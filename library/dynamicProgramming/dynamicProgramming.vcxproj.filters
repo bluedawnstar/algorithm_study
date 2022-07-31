@@ -201,6 +201,12 @@
     <ClCompile Include="problems\maxSubsequenceLinearWeightedSum.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="subsequenceSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="longestNonPeakSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -430,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="problems\maxSubsequenceLinearWeightedSum.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="subsequenceSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestNonPeakSubsequence.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
