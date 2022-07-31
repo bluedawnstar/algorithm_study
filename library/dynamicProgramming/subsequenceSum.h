@@ -1,5 +1,6 @@
 #pragma once
 
+// https://www.hackerearth.com/problem/algorithm/sum-of-all-20d12a15/
 /*
     Sum of all the subsequences of the given number
 
@@ -14,6 +15,7 @@ struct SubsequenceSum {
     vector<int> pow2;
     vector<int> pow11;
 
+    // O(maxN)
     void prepare(int maxN) {
         pow2 = vector<int>(maxN + 1);
         pow11 = vector<int>(maxN + 1);
@@ -26,6 +28,7 @@ struct SubsequenceSum {
         }
     }
 
+    // O(N)
     int solve(string s) {
         reverse(s.begin(), s.end());
         int N = int(s.length());

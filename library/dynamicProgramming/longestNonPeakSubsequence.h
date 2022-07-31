@@ -1,5 +1,6 @@
 #pragma once
 
+// https://www.hackerearth.com/practice/data-structures/advanced-data-structures/segment-trees/practice-problems/algorithm/avoid-maxima-minima-8221ea6c/
 /*
     A peak is a local maximum or a local minimum.
     - local maximum:  A[i-1] < A[i] > A[i + 1]  ,  0 < i < N - 1

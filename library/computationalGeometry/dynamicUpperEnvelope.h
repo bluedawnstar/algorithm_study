@@ -22,7 +22,7 @@ struct DynamicUpperEnvelope {
     
     void add(long long m, long long b) {
         auto y = lines.insert({ m, b });
-        y->succ = [=] {
+        y->succ = [this,y]() {
             return next(y) == lines.end() ? nullptr : &*next(y);
         };
 
