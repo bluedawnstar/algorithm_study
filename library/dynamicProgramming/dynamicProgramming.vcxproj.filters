@@ -207,6 +207,9 @@
     <ClCompile Include="longestNonPeakSubsequence.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="problems\smallerStringCounter.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -442,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="longestNonPeakSubsequence.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\smallerStringCounter.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

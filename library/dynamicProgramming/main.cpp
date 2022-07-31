@@ -67,4 +67,5 @@ int main(void) {
     TEST(DigitDP_SamePrefixSuffixDigitSum);
     TEST(KnapsackAndBinarySearchExample1);
     TEST(MaxSubsequenceLinearWeightedSum);
+    TEST(SmallerStringCounter);
 }
