@@ -9,13 +9,16 @@
     2. ...
 */
 
-template <typename T, typename CompareT = less<T>>
+template <typename T>
 struct OfflineRMQ {
-    CompareT compare;
+    function<bool(T, T)> lessOp;
 
     vector<int> next;   // the previous of the queries with the same end position
     vector<int> head;   // the last of the queries with the same end position
     vector<int> parent; // 
+
+    OfflineRMQ(const function<bool(T, T)>& lessOp = less<T>()) : lessOp(lessOp) {
+    }
 
     // O(N + Q)
     // query[i] = { left, right }, inclusive
@@ -38,7 +41,7 @@ struct OfflineRMQ {
 
         // update the values of the queries with right 'i'
         for (int i = 0, top = 0; i < N; ++i) {
-            while (top > 0 && compare(value[i], value[stack[top - 1]]))
+            while (top > 0 && lessOp(value[i], value[stack[top - 1]]))
                 parent[stack[--top]] = i;
 
             stack[top++] = i;

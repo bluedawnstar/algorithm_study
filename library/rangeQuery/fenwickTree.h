@@ -146,7 +146,7 @@ struct FenwickTree {
 
     //--- lower bound
 
-    // PRECONDITION: tree's values are monotonically increasing (ex: positive values)
+    // PRECONDITION: tree's values are monotonically increasing and positive (tree[i] >= 0)
     // returns min(i | sum[0, i] >= sum)
     // O(logN)
     int lowerBound(T sum) {

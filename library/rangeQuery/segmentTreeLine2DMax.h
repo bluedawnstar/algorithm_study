@@ -1,7 +1,7 @@
 #pragma once
 
 // Li Chao Segment Tree
-// https://e-maxx-eng.appspot.com/geometry/convex_hull_trick.html
+// https://cp-algorithms.com/geometry/convex_hull_trick.html
 struct SegmentTreeLine2DMax {
     static const long long INF = 0x3f3f3f3f3f3f3f3fll;
 

@@ -253,6 +253,8 @@
     <ClInclude Include="suffixArraySimple.h" />
     <ClInclude Include="suffixArray_LarssonSadakane.h" />
     <ClInclude Include="suffixArray_ManberMyers.h" />
+    <ClInclude Include="suffixArray_ManberMyers_simple.h" />
+    <ClInclude Include="suffixArray_naive.h" />
     <ClInclude Include="suffixArray_Skew.h" />
     <ClInclude Include="suffixRollingHash.h" />
     <ClInclude Include="suffixSparseTable.h" />

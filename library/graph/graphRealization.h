@@ -1,7 +1,7 @@
 #pragma once
 
 struct GraphRealization {
-    // Erdos-Gallai theorem (https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Gallai_theorem)
+    //--- Erdos-Gallai theorem (https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Gallai_theorem)
 
     // O(N^2)
     static bool possibleSlow(const vector<int>& degree) {
@@ -84,6 +84,37 @@ struct GraphRealization {
     }
 
 
-    // Havel-Hakimi algorithm (https://en.wikipedia.org/wiki/Havel%E2%80%93Hakimi_algorithm)
-    // TODO: implement 
+    //--- Havel-Hakimi algorithm (https://en.wikipedia.org/wiki/Havel%E2%80%93Hakimi_algorithm)
+
+    // O(N^2)
+    static bool existGraph(vector<int> degree) {
+        int N = int(degree.size());
+
+        sort(degree.begin(), degree.end(), greater<>());
+
+        vector<int> aux(N);
+        for (int i = 0; i < N && degree[i] > 0; ) {
+            int v = degree[i++];
+
+            int right = i + v;
+            if (right > N || degree[right - 1] <= 0)
+                return false;
+
+            // copy
+            memcpy(aux.data(), degree.data() + i, sizeof(degree[0]) * v);
+
+            // merge
+            int j = 0, k = i;
+            while (j < v && right < N) {
+                if (aux[j] > degree[right])
+                    degree[k++] = aux[j++] - 1;
+                else
+                    degree[k++] = degree[right++];
+            }
+            while (j < v)
+                degree[k++] = aux[j++] - 1;
+        }
+
+        return true;
+    }
 };

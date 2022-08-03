@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tuple>
+
 struct Calendar {
     static bool isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
@@ -24,7 +26,6 @@ struct Calendar {
         return res;
     }
 
-
     // magical algorithm
     // https://leetcode.com/problems/number-of-days-between-two-dates/discuss/517582/Python-Magical-Formula
     // http://www.ams.org/publicoutreach/feature-column/fcarc-time?fbclid=IwAR3XPF5qaGqb-oFrWlkGJT1TC56jWMwzJNbN6LathIswnyDAenBOzdREqjk
@@ -38,7 +39,39 @@ struct Calendar {
     }
 
 
-    // [INFO] The combination of month, day, and day of the week repeats every 800 years.
-    // 1.1.1 = 801.1.1 = monday
+    static tuple<int, int, int> convertTotalDaysToDate(long long totalDays) {
+        int year;
+        {
+            int lo = 0, hi = numeric_limits<int>::max();
+            while (lo <= hi) {
+                int mid = (lo + hi) >> 1;
+                if (getTotalDaysSimple(mid, 12, 31) >= totalDays)
+                    hi = mid - 1;
+                else
+                    lo = mid + 1;
+            }
+            year = lo;
+        }
+
+        long long days = getTotalDaysSimple(year, 1, 1) - 1;
+
+        vector<int> mdays{
+            31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+        };
+        if (isLeapYear(year))
+            mdays[1]++;
+
+        int i;
+        for (i = 0; i < 12; i++) {
+            if (totalDays <= days + mdays[i])
+                break;
+            days += mdays[i];
+        }
+        return make_tuple(year, i + 1, static_cast<int>(totalDays - days));
+    }
+
+
+    // [INFO] The combination of month, day, and day of the week repeats every 400 years. ((365 * 400 + 97) % 7 = 0)
+    // 1.1.1 = 401.1.1 = monday
     // day of the week : 0 - sunday, 1 - monday, ..., 6 - saturday
 };

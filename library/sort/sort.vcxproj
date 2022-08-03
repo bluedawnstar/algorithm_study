@@ -158,6 +158,7 @@
     <ClInclude Include="inversionCounter.h" />
     <ClInclude Include="inversionCounter2.h" />
     <ClInclude Include="inversionCounterAfterOneSwap.h" />
+    <ClInclude Include="partition.h" />
     <ClInclude Include="problems\smallestBinaryArrayWithInversions.h" />
     <ClInclude Include="sortBubble.h" />
     <ClInclude Include="sortHeap.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="sortMergeEnhanced2.h" />
     <ClInclude Include="sortMergeEnhanced3.h" />
     <ClInclude Include="sortQuick.h" />
+    <ClInclude Include="partition3way.h" />
     <ClInclude Include="sortQuick3way.h" />
     <ClInclude Include="sortSelection.h" />
     <ClInclude Include="sortShell.h" />

@@ -216,6 +216,9 @@
     <ClCompile Include="sqrtTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mergeSortTreeCompactWithLiChaoTree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fenwickTree.h">
@@ -480,6 +483,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sqrtTree.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mergeSortTreeCompactWithLiChaoTreeMin.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mergeSortTreeCompactWithLiChaoTreeMax.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

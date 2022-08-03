@@ -47,7 +47,7 @@
     <ClInclude Include="sortQuick.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="sortQuick3way.h">
+    <ClInclude Include="partition3way.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="inversionCounter.h">
@@ -93,6 +93,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sortIntro.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="partition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sortQuick3way.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

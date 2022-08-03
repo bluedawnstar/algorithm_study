@@ -198,6 +198,18 @@
     <ClCompile Include="problems\knapsackAndBinarySearch_example1.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="problems\maxSubsequenceLinearWeightedSum.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
+    <ClCompile Include="subsequenceSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="longestNonPeakSubsequence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="problems\smallerStringCounter.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -423,6 +435,18 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="problems\digitDP_SamePrefixSuffixDigitSum.h">
+      <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\maxSubsequenceLinearWeightedSum.h">
+      <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="subsequenceSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="longestNonPeakSubsequence.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\smallerStringCounter.h">
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>

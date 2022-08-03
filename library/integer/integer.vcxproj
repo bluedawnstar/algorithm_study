@@ -146,6 +146,7 @@
     <ClCompile Include="bit.cpp" />
     <ClCompile Include="chineseRemainderTheorem.cpp" />
     <ClCompile Include="chineseRemainderTheorem-like.cpp" />
+    <ClCompile Include="circularMove.cpp" />
     <ClCompile Include="digit.cpp" />
     <ClCompile Include="diophantineEquation.cpp" />
     <ClCompile Include="discreteEquations.cpp" />
@@ -177,6 +178,8 @@
     <ClInclude Include="bigint.h" />
     <ClInclude Include="bit.h" />
     <ClInclude Include="chineseRemainderTheorem.h" />
+    <ClInclude Include="circularMove.h" />
+    <ClInclude Include="circularMoveDP.h" />
     <ClInclude Include="digit.h" />
     <ClInclude Include="diophantineEquation.h" />
     <ClInclude Include="diophantineEquation2.h" />

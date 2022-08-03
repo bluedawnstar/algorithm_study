@@ -51,7 +51,7 @@ struct MaxFlowDinic {
         }
     }
 
-    // O(min(V^2 * E, E * flow))
+    // O(V^2 * E)
     T calcMaxFlow(int s, int t) {
         //clearFlow();
 

@@ -42,7 +42,7 @@ struct MaxFlowEdmondsKarp {
         }
     }
 
-    // O(min(V * E^2, E * flow))
+    // O(V * E^2)
     T calcMaxFlow(int s, int t) {
         //clearFlow();
 

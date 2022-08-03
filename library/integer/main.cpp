@@ -34,4 +34,5 @@ int main(void) {
     TEST(SubsetXOR);
     TEST(DiscreteSqrt);
     TEST(PrimeFactorSimple);
+    TEST(CircularMove);
 }

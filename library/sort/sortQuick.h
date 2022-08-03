@@ -1,120 +1,131 @@
 #pragma once
 
+#include <functional>
+
 template <typename T>
 struct QuickSort {
-    static void sort(T data[], int size) {
-        sortSub(data, 0, size - 1);
+    function<pair<int, int>(T[], int, int)> partition;
+
+    QuickSort(const function<pair<int, int>(T[], int, int)>& partition) : partition(partition) {
     }
 
-    static void sort(vector<T>& data) {
-        sortSub(data.data(), 0, int(data.size()) - 1);
+    void sort(T data[], int n) {
+        sortRec(data, 0, n - 1);
     }
 
-
-    static void sort2(T data[], int size) {
-        sortSub2(data, 0, size - 1);
-    }
-
-    static void sort2(vector<T>& data) {
-        sortSub2(data.data(), 0, int(data.size()) - 1);
-    }
-
-
-    static void sort3(T data[], int size) {
-        sortSub3(data, 0, size - 1);
-    }
-
-    static void sort3(vector<T>& data) {
-        sortSub3(data.data(), 0, int(data.size()) - 1);
-    }
-
-private:
-    static void sortSub(T data[], int left, int right) {
-        T pivot = data[(left + right) / 2];
-
-        int i = left;
-        int j = right;
-        while (i <= j) {
-            while (data[i] < pivot)
-                i++;
-            while (pivot < data[j])
-                j--;
-
-            if (i < j)
-                swap(data[i++], data[j--]);
-            else
-                i++;
-        }
-
-        if (left < j)
-            sortSub(data, left, j);
-        if (j + 1 < right)
-            sortSub(data, j + 1, right);
-    }
-
-    static void sortSub2(T data[], int left, int right) {
-        T pivot = data[(left + right) / 2];
-
-        int i = left - 1;
-        int j = right + 1;
-        while (true) {
-            do i++; while (data[i] < pivot);
-            do j--; while (pivot < data[j]);
-
-            if (i < j)
-                swap(data[i], data[j]);
-            else
-                break;
-        }
-
-        if (left < j)
-            sortSub2(data, left, j);
-        if (j + 1 < right)
-            sortSub2(data, j + 1, right);
+    void sort(vector<T>& data) {
+        sortRec(data.data(), 0, int(data.size()) - 1);
     }
 
     //---
 
-    static int choosePivot(const T data[], int left, int right) {
-#define KEY(idx)    data[idx]
-#define MED3(a,b,c) (KEY(a) < KEY(b) ? (KEY(b) < KEY(c) ? (b) : KEY(a) < KEY(c) ? (c) : (a)) \
-                                     : (KEY(b) > KEY(c) ? (b) : KEY(a) > KEY(c) ? (c) : (a)))
-        int n = right - left + 1;
-        int mid = (left + right) >> 1;
-        if (n > 7) {
-            int lo = left;
-            int hi = left + n - 1;
-            if (n > 40) {
-                int s = n >> 3;
-                lo = MED3(lo, lo + s, lo + s + s);
-                mid = MED3(mid - s, mid, mid + s);
-                hi = MED3(hi - s - s, hi - s, hi);
-            }
-            mid = MED3(lo, mid, hi);
-        }
-        return mid;
-#undef KEY
-#undef MED3
+    void sort2(T data[], int n) {
+        sortRec2(data, 0, n - 1);
     }
 
-    static void sortSub3(T data[], int left, int right) {
-        T pivot = data[choosePivot(data, left, right)];
+    void sort2(vector<T>& data) {
+        sortRec2(data.data(), 0, int(data.size()) - 1);
+    }
 
-        int i = left - 1;
-        int j = right + 1;
-        while (true) {
-            do i++; while (data[i] < pivot);
-            do j--; while (pivot < data[j]);
+    //---
 
-            if (i < j)
-                swap(data[i], data[j]);
+    // quick select
+    void select(T data[], int n, int nth) {
+        if (nth < 0 || nth >= n)
+            return;
+
+        int lo = 0, hi = n - 1;
+        while (lo < hi) {
+            int leftLast, rightFirst;
+            tie(leftLast, rightFirst) = partition(data, lo, hi);
+
+            if (nth <= leftLast)
+                hi = leftLast;
+            else if (nth >= rightFirst)
+                lo = rightFirst;
             else
                 break;
         }
+    }
 
-        if (left < j)
-            sortSub3(data, left, j);
-        if (j + 1 < right)
-            sortSub3(data, j + 1, right);
+    void select(vector<T>& data, int nth) {
+        select(data.data(), int(data.size()), nth);
+    }
+
+private:
+    void sortRec(T data[], int lo, int hi) {
+        if (lo >= hi)
+            return;
+
+        int leftLast, rightFirst;
+        tie(leftLast, rightFirst) = partition(data, lo, hi);
+
+        sortRec(data, lo, leftLast);
+        sortRec(data, rightFirst, hi);
+    }
+
+    //---
+
+    void sortRec2(T data[], int lo, int hi) {
+        if (hi - lo < 16) {
+            insertionSort(data + lo, hi - lo + 1);
+            return;
+        }
+
+        int leftLast, rightFirst;
+        tie(leftLast, rightFirst) = partition(data, lo, hi);
+
+        sortRec2(data, lo, leftLast);
+        sortRec2(data, rightFirst, hi);
+    }
+
+    static void insertionSort(T data[], int size) {
+        for (int i = 1; i < size; i++) {
+            int tmp = data[i];
+
+            int j;
+            for (j = i - 1; j >= 0 && data[j] > tmp; j--)
+                data[j + 1] = data[j];
+
+            data[j + 1] = tmp;
+        }
     }
 };
+
+template <typename T, typename Fn>
+inline void quickSort(T data[], int n, Fn& partition) {
+    QuickSort<T> qs(partition);
+    qs.sort(data, n);
+}
+
+template <typename T, typename Fn>
+inline void quickSort(vector<T>& data, Fn& partition) {
+    QuickSort<T> qs(partition);
+    qs.sort(data);
+}
+
+
+template <typename T, typename Fn>
+inline void quickSort2(T data[], int n, Fn& partition) {
+    QuickSort<T> qs(partition);
+    qs.sort2(data, n);
+}
+
+template <typename T, typename Fn>
+inline void quickSort2(vector<T>& data, Fn& partition) {
+    QuickSort<T> qs(partition);
+    qs.sort2(data);
+}
+
+
+template <typename T, typename Fn>
+inline void quickSelect(T data[], int n, int nth, Fn& partition) {
+    QuickSort<T> qs(partition);
+    qs.select(data, n, nth);
+}
+
+template <typename T, typename Fn>
+inline void quickSelect(vector<T>& data, int nth, Fn& partition) {
+    QuickSort<T> qs(partition);
+    qs.select(data, nth);
+}

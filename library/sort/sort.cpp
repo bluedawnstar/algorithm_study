@@ -1,4 +1,5 @@
 #include <memory>
+#include <functional>
 #include <vector>
 #include <algorithm>
 
@@ -19,6 +20,9 @@ using namespace std;
 #include "sortQuick3way.h"
 #include "sortIntro.h"
 
+#include "partition.h"
+#include "partition3way.h"
+
 /////////// For Testing ///////////////////////////////////////////////////////
 
 #include <cassert>
@@ -27,6 +31,64 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 #include "../common/rand.h"
+
+template <typename T>
+static bool checkSorted(const vector<T>& v) {
+    for (int i = 1; i < int(v.size()); i++) {
+        if (v[i - 1] > v[i])
+            return false;
+    }
+    return true;
+}
+
+template <typename T>
+static T getNth(vector<T> v, int nth) {
+    sort(v.begin(), v.end());
+    return v[nth];
+}
+
+
+#define CHECK(v)        do {                     \
+                            if (!checkSorted(v)) \
+                                cout << "ERROR at line " << __LINE__ << " : not sorted!" << endl; \
+                        } while (false)
+
+#define RUN1(method)    do {                \
+                            auto v = vin;   \
+                            method;         \
+                            if (!checkSorted(v)) \
+                                cout << "ERROR at line " << __LINE__ << " : not sorted!" << endl; \
+                        } while (false)
+
+#define RUN2(method, k) do {                \
+                            auto v = vin;   \
+                            method;         \
+                            if (v[k] != getNth(vin, k)) \
+                                cout << "ERROR at line " << __LINE__ << " : invalid value!" << endl; \
+                        } while (false)
+
+#define PROFILE(name, method)   \
+                        do {    \
+                            auto v = vin; \
+                            PROFILE_START(name); \
+                            for (int i = 0; i < T; i++) {   \
+                                v = vin;                    \
+                                method;                     \
+                            }                               \
+                            cout << "... ";                 \
+                            PROFILE_STOP(name);             \
+                            CHECK(v);                       \
+                        } while (false)
+
+#define SPEED(name, method)                         \
+                        do {                        \
+                            auto v = vin;           \
+                            PROFILE_HI_START(name); \
+                            method;                 \
+                            cout << "... ";         \
+                            PROFILE_HI_STOP(name);  \
+                            CHECK(v);               \
+                        } while (false)
 
 
 void testSort() {
@@ -47,91 +109,68 @@ void testSort() {
             vin[i] = RandInt32::get();
 
         for (int i = 0; i < T; i++) {
-            auto vout00 = vin;
-            BubbleSort<int>::sort(vout00);
-            auto vout01 = vin;
-            BubbleSort<int>::sort2(vout01);
+            RUN1(BubbleSort<int>::sort(v));
+            RUN1(BubbleSort<int>::sort2(v));
+            RUN1(SelectionSort<int>::sort(v));
+            RUN1(InsertionSort<int>::sort(v));
+            RUN1(ShellSort<int>::sort(v));
+            RUN1(MaxHeap<int>::sort(v));
+            RUN1(MergeSort<int>::sort(v));
+            RUN1(MergeSortBottomUp<int>::sort(v));
+            RUN1(MergeSortEnhanced<int>::sort(v));
+            RUN1(MergeSortEnhanced2<int>::sort(v));
+            RUN1(MergeSortEnhanced3<int>::sort(v));
+            RUN1(quickSort(v, partitionHoare<int>));
+            RUN1(quickSort(v, partitionHoare2<int>));
+            RUN1(quickSort(v, partitionHoareWithMED3<int>));
+            RUN1(quickSort(v, partitionLomuto<int>));
+            RUN1(quickSort(v, partitionLomutoWithMED3<int>));
+            RUN1(quickSort2(v, partitionHoare<int>));
+            RUN1(quickSort2(v, partitionHoare2<int>));
+            RUN1(quickSort2(v, partitionHoareWithMED3<int>));
+            RUN1(quickSort2(v, partitionLomuto<int>));
+            RUN1(quickSort2(v, partitionLomutoWithMED3<int>));
+            RUN1(quickSort(v, partitionDijkstra3way<int>));
+            RUN1(quickSort(v, partitionDijkstra3wayWithMED3<int>));
+            RUN1(quickSort2(v, partitionDijkstra3way<int>));
+            RUN1(quickSort2(v, partitionDijkstra3wayWithMED3<int>));
+            RUN1(quickSort(v, partitionBentleyMcIlroy3way<int>));
+            RUN1(quickSort2(v, partitionBentleyMcIlroy3way<int>));
+            RUN1(quickSort3way(v, partitionDualPivot3way<int>));
+            RUN1(quickSort3way2(v, partitionDualPivot3way<int>));
+            RUN1(introSort(v, partitionHoare<int>));
+            RUN1(introSort(v, partitionHoare2<int>));
+            RUN1(introSort(v, partitionHoareWithMED3<int>));
+            RUN1(TimSort<int>::sort(v));
+        }
+    }
+    cout << "OK!" << endl;
+    {
+        int N = 10000;
+        int T = 100;
 
-            auto voutSel = vin;
-            SelectionSort<int>::sort(voutSel);
+#ifdef _DEBUG
+        N = 1000;
+        T = 10;
+#endif
 
-            auto voutIns = vin;
-            InsertionSort<int>::sort(voutIns);
+        vector<int> vin(N);
+        for (int i = 0; i < N; i++)
+            vin[i] = RandInt32::get();
 
-            auto voutShell = vin;
-            ShellSort<int>::sort(voutShell);
-
-            auto voutHeap = vin;
-            MaxHeap<int>::sort(voutHeap);
-
-            auto voutMerge1 = vin;
-            MergeSort<int>::sort(voutMerge1);
-            auto voutMerge2 = vin;
-            MergeSortBottomUp<int>::sort(voutMerge2);
-            auto voutMerge3 = vin;
-            MergeSortEnhanced<int>::sort(voutMerge3);
-            auto voutMerge4 = vin;
-            MergeSortEnhanced2<int>::sort(voutMerge4);
-            auto voutMerge5 = vin;
-            MergeSortEnhanced3<int>::sort(voutMerge5);
-
-            auto voutQuick1 = vin;
-            QuickSort<int>::sort(voutQuick1);
-            auto voutQuick2 = vin;
-            QuickSort<int>::sort2(voutQuick2);
-            auto voutQuick3 = vin;
-            QuickSort<int>::sort3(voutQuick3);
-
-            auto voutIntro1 = vin;
-            IntroSort<int>::sort(voutIntro1);
-            auto voutIntro2 = vin;
-            IntroSort<int>::sort2(voutIntro2);
-            auto voutIntro3 = vin;
-            IntroSort<int>::sort3(voutIntro3);
-
-            auto voutQuick3way1 = vin;
-            QuickSort3way<int>::sort(voutQuick3way1);
-            auto voutQuick3way2 = vin;
-            QuickSort3way<int>::sort2(voutQuick3way2);
-
-            auto voutTim = vin;
-            TimSort<int>::sort(voutTim);
-
-            if (vout00 != voutHeap || vout01 != voutHeap
-                || voutSel != voutHeap
-                || voutIns != voutHeap
-                || voutShell != voutHeap
-                || voutMerge1 != voutHeap || voutMerge2 != voutHeap || voutMerge3 != voutHeap || voutMerge4 != voutHeap || voutMerge5 != voutHeap
-                || voutQuick1 != voutHeap || voutQuick2 != voutHeap || voutQuick3 != voutHeap
-                || voutIntro1 != voutHeap || voutIntro2 != voutHeap || voutIntro3 != voutHeap
-                || voutQuick3way1 != voutHeap || voutQuick3way2 != voutHeap
-                || voutTim != voutHeap)
-                cout << "ERROR : mismatched!" << endl;
-
-            assert(vout00 == voutHeap);
-            assert(vout01 == voutHeap);
-            assert(voutSel == voutHeap);
-            assert(voutIns == voutHeap);
-            assert(voutShell == voutHeap);
-            assert(voutMerge1 == voutHeap);
-            assert(voutMerge2 == voutHeap);
-            assert(voutMerge3 == voutHeap);
-            assert(voutMerge4 == voutHeap);
-            assert(voutMerge5 == voutHeap);
-            assert(voutQuick1 == voutHeap);
-            assert(voutQuick2 == voutHeap);
-            assert(voutQuick3 == voutHeap);
-            assert(voutQuick3way1 == voutHeap);
-            assert(voutQuick3way2 == voutHeap);
-            assert(voutIntro1 == voutHeap);
-            assert(voutIntro2 == voutHeap);
-            assert(voutIntro3 == voutHeap);
-            assert(vout5 == voutHeap);
+        for (int i = 0; i < T; i++) {
+            for (int j = 0; j < N; j += N / 10) {
+                RUN2(quickSelect(v, j, partitionHoare<int>), j);
+                RUN2(quickSelect(v, j, partitionHoare2<int>), j);
+                RUN2(quickSelect(v, j, partitionHoareWithMED3<int>), j);
+                RUN2(quickSelect(v, j, partitionLomuto<int>), j);
+                RUN2(quickSelect(v, j, partitionLomutoWithMED3<int>), j);
+            }
         }
     }
     cout << "OK!" << endl;
 
-    cout << "--- speed test #1" << endl;
+    cout << "--- speed test #1 - randomized data" << endl;
     {
         int N = 100000;
         int T = 100;
@@ -145,197 +184,86 @@ void testSort() {
         for (int i = 0; i < N; i++)
             vin[i] = RandInt32::get();
 
-        /*
-        cout << "Bubble sort #1..." << endl;
-        PROFILE_START(bubble_1);
-        auto voutBubble1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble1 = vin;
-            BubbleSort<int>::sort(voutBubble1);
-        }
-        PROFILE_STOP(bubble_1);
-
-        cout << "Bubble sort #2..." << endl;
-        PROFILE_START(bubble_2);
-        auto voutBubble2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble2 = vin;
-            BubbleSort<int>::sort(voutBubble2);
-        }
-        PROFILE_STOP(bubble_2);
-        */
-
         //cout << "Insertion sort..." << endl;
-        //PROFILE_START(insertion);
-        //auto voutIns = vin;
-        //for (int i = 0; i < T; i++) {
-        //    voutIns = vin;
-        //    InsertionSort<int>::sort(voutIns);
-        //}
-        //PROFILE_STOP(insertion);
+        //PROFILE(insertion, InsertionSort<int>::sort(v));
 
         cout << "Shellsort..." << endl;
-        PROFILE_START(shell);
-        auto voutShell = vin;
-        for (int i = 0; i < T; i++) {
-            voutShell = vin;
-            ShellSort<int>::sort(voutShell);
-        }
-        PROFILE_STOP(shell);
+        PROFILE(shell, ShellSort<int>::sort(v));
 
         cout << "Heap sort..." << endl;
-        PROFILE_START(heap);
-        auto voutHeap = vin;
-        for (int i = 0; i < T; i++) {
-            voutHeap = vin;
-            MaxHeap<int>::sort(voutHeap);
-        }
-        PROFILE_STOP(heap);
-
+        PROFILE(heap, MaxHeap<int>::sort(v));
         cout << "Merge sort..." << endl;
-        PROFILE_START(merge);
-        auto voutMerge1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge1 = vin;
-            MergeSort<int>::sort(voutMerge1);
-        }
-        PROFILE_STOP(merge);
-
+        PROFILE(merge, MergeSort<int>::sort(v));
         cout << "Merge sort (bottom-up)..." << endl;
-        PROFILE_START(merge_bottom_up);
-        auto voutMerge2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge2 = vin;
-            MergeSortBottomUp<int>::sort(voutMerge2);
-        }
-        PROFILE_STOP(merge_bottom_up);
-
+        PROFILE(merge_bottom_up, MergeSortBottomUp<int>::sort(v));
         cout << "Merge sort (enhanced)..." << endl;
-        PROFILE_START(merge_enhanced);
-        auto voutMerge3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge3 = vin;
-            MergeSortEnhanced<int>::sort(voutMerge3);
-        }
-        PROFILE_STOP(merge_enhanced);
-
+        PROFILE(merge_enhanced, MergeSortEnhanced<int>::sort(v));
         cout << "Merge sort (enhanced2)..." << endl;
-        PROFILE_START(merge_enhanced2);
-        auto voutMerge4 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge4 = vin;
-            MergeSortEnhanced2<int>::sort(voutMerge4);
-        }
-        PROFILE_STOP(merge_enhanced2);
-
+        PROFILE(merge_enhanced2, MergeSortEnhanced2<int>::sort(v));
         cout << "Merge sort (enhanced3)..." << endl;
-        PROFILE_START(merge_enhanced3);
-        auto voutMerge5 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge5 = vin;
-            MergeSortEnhanced3<int>::sort(voutMerge5);
-        }
-        PROFILE_STOP(merge_enhanced3);
+        PROFILE(merge_enhanced3, MergeSortEnhanced3<int>::sort(v));
 
-        cout << "Quick sort..." << endl;
-        PROFILE_START(quick1);
-        auto voutQuick1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick1 = vin;
-            QuickSort<int>::sort(voutQuick1);
-        }
-        PROFILE_STOP(quick1);
+        cout << "Quick sort with Hoare..." << endl;
+        PROFILE(quick_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort with Hoare2..." << endl;
+        PROFILE(quick_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort with Hoare MED3..." << endl;
+        PROFILE(quick_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort with Lomuto ..." << endl;
+        PROFILE(quick_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort with Lomuto MED3..." << endl;
+        PROFILE(quick_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort 2..." << endl;
-        PROFILE_START(quick2);
-        auto voutQuick2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick2 = vin;
-            QuickSort<int>::sort(voutQuick2);
-        }
-        PROFILE_STOP(quick2);
+        cout << "Quick sort2 with Hoare..." << endl;
+        PROFILE(quick2_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort2 with Hoare2..." << endl;
+        PROFILE(quick2_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort2 with Hoare MED3..." << endl;
+        PROFILE(quick2_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort2 with Lomuto ..." << endl;
+        PROFILE(quick2_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort2 with Lomuto MED3..." << endl;
+        PROFILE(quick2_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(quick_med3);
-        auto voutQuick3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3 = vin;
-            QuickSort<int>::sort3(voutQuick3);
-        }
-        PROFILE_STOP(quick_med3);
+        cout << "Quick sort with Dijkstra 3-way..." << endl;
+        PROFILE(quick_3way, quickSort(v, partitionDijkstra3way<int>));
+        cout << "Quick sort with Dijkstra 3-way..." << endl;
+        PROFILE(quick_3way_med3, quickSort(v, partitionDijkstra3wayWithMED3<int>));
+        cout << "Quick sort2 with Dijkstra 3-way..." << endl;
+        PROFILE(quick2_3way, quickSort2(v, partitionDijkstra3way<int>));
+        cout << "Quick sort2 with Dijkstra 3-way..." << endl;
+        PROFILE(quick2_3way_med3, quickSort2(v, partitionDijkstra3wayWithMED3<int>));
 
-        cout << "3-way Quick sort..." << endl;
-        PROFILE_START(quick_3way);
-        auto voutQuick3way1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3way1 = vin;
-            QuickSort3way<int>::sort(voutQuick3way1);
-        }
-        PROFILE_STOP(quick_3way);
+        cout << "Quick sort with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick_bent_3way, quickSort(v, partitionBentleyMcIlroy3way<int>));
+        cout << "Quick sort2 with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick2_bent_3way, quickSort2(v, partitionBentleyMcIlroy3way<int>));
 
-        cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(quick_3way_med3);
-        auto voutQuick3way2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3way2 = vin;
-            QuickSort3way<int>::sort2(voutQuick3way2);
-        }
-        PROFILE_STOP(quick_3way_med3);
+        cout << "Quick sort with Dual Pivot 3-way..." << endl;
+        PROFILE(quick_dual_pivot_3way, quickSort3way(v, partitionDualPivot3way<int>));
+        cout << "Quick sort2 with Dual Pivot 3-way..." << endl;
+        PROFILE(quick2_dual_pivot_3way, quickSort3way2(v, partitionDualPivot3way<int>));
 
-        cout << "Introsort 1..." << endl;
-        PROFILE_START(intro1);
-        auto voutIntro1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro1 = vin;
-            IntroSort<int>::sort(voutIntro1);
-        }
-        PROFILE_STOP(intro1);
+        cout << "IntroSort with Hoare..." << endl;
+        PROFILE(introsort_hoare, introSort(v, partitionHoare<int>));
+        cout << "IntroSort with Hoare2..." << endl;
+        PROFILE(introsort_hoare2, introSort(v, partitionHoare2<int>));
+        cout << "IntroSort with Hoare MED3..." << endl;
+        PROFILE(introsort_hoare_med3, introSort(v, partitionHoareWithMED3<int>));
+        cout << "IntroSort with Lomuto ..." << endl;
+        PROFILE(introsort_lomuto, introSort(v, partitionLomuto<int>));
+        cout << "IntroSort with Lomuto MED3..." << endl;
+        PROFILE(introsort_lomuto_med3, introSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Introsort 2..." << endl;
-        PROFILE_START(intro2);
-        auto voutIntro2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro2 = vin;
-            IntroSort<int>::sort(voutIntro2);
-        }
-        PROFILE_STOP(intro2);
-
-        cout << "Introsort 3..." << endl;
-        PROFILE_START(intro3);
-        auto voutIntro3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro3 = vin;
-            IntroSort<int>::sort(voutIntro3);
-        }
-        PROFILE_STOP(intro3);
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way, introSort(v, partitionDijkstra3way<int>));
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way_med3, introSort(v, partitionDijkstra3wayWithMED3<int>));
 
         cout << "Tim sort..." << endl;
-        PROFILE_START(tim);
-        auto voutTim = vin;
-        for (int i = 0; i < T; i++) {
-            voutTim = vin;
-            TimSort<int>::sort(voutTim);
-        }
-        PROFILE_STOP(tim);
-
-        if (voutShell != voutHeap
-            || voutShell != voutMerge1
-            || voutShell != voutMerge2
-            || voutShell != voutMerge3
-            || voutShell != voutMerge4
-            || voutShell != voutMerge5
-            || voutShell != voutQuick1
-            || voutShell != voutQuick2
-            || voutShell != voutQuick3
-            || voutShell != voutQuick3way1
-            || voutShell != voutQuick3way2
-            || voutShell != voutIntro1
-            || voutShell != voutIntro2
-            || voutShell != voutIntro3
-            || voutShell != voutTim)
-            cout << "ERROR : mismatched!" << endl;
+        PROFILE(tim, TimSort<int>::sort(v));
     }
-    cout << "--- speed test #2" << endl;
+    cout << "--- speed test #2 - 10x duplicated" << endl;
     {
         int N = 100000;
         int T = 100;
@@ -349,197 +277,86 @@ void testSort() {
         for (int i = 0; i < N; i++)
             vin[i] = RandInt32::get() % (N / 10);
 
-        /*
-        cout << "Bubble sort #1..." << endl;
-        PROFILE_START(bubble_1);
-        auto voutBubble1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble1 = vin;
-            BubbleSort<int>::sort(voutBubble1);
-        }
-        PROFILE_STOP(bubble_1);
-
-        cout << "Bubble sort #2..." << endl;
-        PROFILE_START(bubble_2);
-        auto voutBubble2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble2 = vin;
-            BubbleSort<int>::sort(voutBubble2);
-        }
-        PROFILE_STOP(bubble_2);
-        */
-
         //cout << "Insertion sort..." << endl;
-        //PROFILE_START(insertion);
-        //auto voutIns = vin;
-        //for (int i = 0; i < T; i++) {
-        //    voutIns = vin;
-        //    InsertionSort<int>::sort(voutIns);
-        //}
-        //PROFILE_STOP(insertion);
+        //PROFILE(insertion, InsertionSort<int>::sort(v));
 
         cout << "Shellsort..." << endl;
-        PROFILE_START(shell);
-        auto voutShell = vin;
-        for (int i = 0; i < T; i++) {
-            voutShell = vin;
-            ShellSort<int>::sort(voutShell);
-        }
-        PROFILE_STOP(shell);
+        PROFILE(shell, ShellSort<int>::sort(v));
 
         cout << "Heap sort..." << endl;
-        PROFILE_START(heap);
-        auto vout1 = vin;
-        for (int i = 0; i < T; i++) {
-            vout1 = vin;
-            MaxHeap<int>::sort(vout1);
-        }
-        PROFILE_STOP(heap);
-
+        PROFILE(heap, MaxHeap<int>::sort(v));
         cout << "Merge sort..." << endl;
-        PROFILE_START(merge);
-        auto vout2 = vin;
-        for (int i = 0; i < T; i++) {
-            vout2 = vin;
-            MergeSort<int>::sort(vout2);
-        }
-        PROFILE_STOP(merge);
-
+        PROFILE(merge, MergeSort<int>::sort(v));
         cout << "Merge sort (bottom-up)..." << endl;
-        PROFILE_START(merge_bottom_up);
-        auto vout2_1 = vin;
-        for (int i = 0; i < T; i++) {
-            vout2_1 = vin;
-            MergeSortBottomUp<int>::sort(vout2_1);
-        }
-        PROFILE_STOP(merge_bottom_up);
-
+        PROFILE(merge_bottom_up, MergeSortBottomUp<int>::sort(v));
         cout << "Merge sort (enhanced)..." << endl;
-        PROFILE_START(merge_enhanced);
-        auto vout2_2 = vin;
-        for (int i = 0; i < T; i++) {
-            vout2_2 = vin;
-            MergeSortEnhanced<int>::sort(vout2_2);
-        }
-        PROFILE_STOP(merge_enhanced);
-
+        PROFILE(merge_enhanced, MergeSortEnhanced<int>::sort(v));
         cout << "Merge sort (enhanced2)..." << endl;
-        PROFILE_START(merge_enhanced2);
-        auto vout2_3 = vin;
-        for (int i = 0; i < T; i++) {
-            vout2_3 = vin;
-            MergeSortEnhanced2<int>::sort(vout2_3);
-        }
-        PROFILE_STOP(merge_enhanced2);
-
+        PROFILE(merge_enhanced2, MergeSortEnhanced2<int>::sort(v));
         cout << "Merge sort (enhanced3)..." << endl;
-        PROFILE_START(merge_enhanced3);
-        auto vout2_4 = vin;
-        for (int i = 0; i < T; i++) {
-            vout2_4 = vin;
-            MergeSortEnhanced3<int>::sort(vout2_4);
-        }
-        PROFILE_STOP(merge_enhanced3);
+        PROFILE(merge_enhanced3, MergeSortEnhanced3<int>::sort(v));
 
-        cout << "Quick sort..." << endl;
-        PROFILE_START(quick1);
-        auto voutQuick1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick1 = vin;
-            QuickSort<int>::sort(voutQuick1);
-        }
-        PROFILE_STOP(quick1);
+        cout << "Quick sort with Hoare..." << endl;
+        PROFILE(quick_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort with Hoare2..." << endl;
+        PROFILE(quick_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort with Hoare MED3..." << endl;
+        PROFILE(quick_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort with Lomuto ..." << endl;
+        PROFILE(quick_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort with Lomuto MED3..." << endl;
+        PROFILE(quick_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort 2..." << endl;
-        PROFILE_START(quick2);
-        auto voutQuick2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick2 = vin;
-            QuickSort<int>::sort(voutQuick2);
-        }
-        PROFILE_STOP(quick2);
+        cout << "Quick sort2 with Hoare..." << endl;
+        PROFILE(quick2_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort2 with Hoare2..." << endl;
+        PROFILE(quick2_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort2 with Hoare MED3..." << endl;
+        PROFILE(quick2_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort2 with Lomuto ..." << endl;
+        PROFILE(quick2_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort2 with Lomuto MED3..." << endl;
+        PROFILE(quick2_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(quick_med3);
-        auto vout3_1 = vin;
-        for (int i = 0; i < T; i++) {
-            vout3_1 = vin;
-            QuickSort<int>::sort3(vout3_1);
-        }
-        PROFILE_STOP(quick_med3);
+        cout << "Quick sort with 3-way..." << endl;
+        PROFILE(quick_3way, quickSort(v, partitionDijkstra3way<int>));
+        cout << "Quick sort with 3-way..." << endl;
+        PROFILE(quick_3way_med3, quickSort(v, partitionDijkstra3wayWithMED3<int>));
+        cout << "Quick sort2 with 3-way..." << endl;
+        PROFILE(quick2_3way, quickSort2(v, partitionDijkstra3way<int>));
+        cout << "Quick sort2 with 3-way..." << endl;
+        PROFILE(quick2_3way_med3, quickSort2(v, partitionDijkstra3wayWithMED3<int>));
 
-        cout << "3-way Quick sort..." << endl;
-        PROFILE_START(quick_3way);
-        auto vout3_2 = vin;
-        for (int i = 0; i < T; i++) {
-            vout3_2 = vin;
-            QuickSort3way<int>::sort(vout3_2);
-        }
-        PROFILE_STOP(quick_3way);
+        cout << "Quick sort with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick_bent_3way, quickSort(v, partitionBentleyMcIlroy3way<int>));
+        cout << "Quick sort2 with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick2_bent_3way, quickSort2(v, partitionBentleyMcIlroy3way<int>));
 
-        cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(quick_3way_med3);
-        auto vout3_3 = vin;
-        for (int i = 0; i < T; i++) {
-            vout3_3 = vin;
-            QuickSort3way<int>::sort2(vout3_3);
-        }
-        PROFILE_STOP(quick_3way_med3);
+        cout << "Quick sort with Dual Pivot 3-way..." << endl;
+        PROFILE(quick_dual_pivot_3way, quickSort3way(v, partitionDualPivot3way<int>));
+        cout << "Quick sort2 with Dual Pivot 3-way..." << endl;
+        PROFILE(quick2_dual_pivot_3way, quickSort3way2(v, partitionDualPivot3way<int>));
 
-        cout << "Introsort 1..." << endl;
-        PROFILE_START(intro1);
-        auto voutIntro1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro1 = vin;
-            IntroSort<int>::sort(voutIntro1);
-        }
-        PROFILE_STOP(intro1);
+        cout << "IntroSort with Hoare..." << endl;
+        PROFILE(introsort_hoare, introSort(v, partitionHoare<int>));
+        cout << "IntroSort with Hoare2..." << endl;
+        PROFILE(introsort_hoare2, introSort(v, partitionHoare2<int>));
+        cout << "IntroSort with Hoare MED3..." << endl;
+        PROFILE(introsort_hoare_med3, introSort(v, partitionHoareWithMED3<int>));
+        cout << "IntroSort with Lomuto ..." << endl;
+        PROFILE(introsort_lomuto, introSort(v, partitionLomuto<int>));
+        cout << "IntroSort with Lomuto MED3..." << endl;
+        PROFILE(introsort_lomuto_med3, introSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Introsort 2..." << endl;
-        PROFILE_START(intro2);
-        auto voutIntro2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro2 = vin;
-            IntroSort<int>::sort(voutIntro2);
-        }
-        PROFILE_STOP(intro2);
-
-        cout << "Introsort 3..." << endl;
-        PROFILE_START(intro3);
-        auto voutIntro3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro3 = vin;
-            IntroSort<int>::sort(voutIntro3);
-        }
-        PROFILE_STOP(intro3);
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way, introSort(v, partitionDijkstra3way<int>));
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way_med3, introSort(v, partitionDijkstra3wayWithMED3<int>));
 
         cout << "Tim sort..." << endl;
-        PROFILE_START(tim);
-        auto voutTim = vin;
-        for (int i = 0; i < T; i++) {
-            voutTim = vin;
-            TimSort<int>::sort(voutTim);
-        }
-        PROFILE_STOP(tim);
-
-        if (voutShell != vout1
-            || voutShell != vout2
-            || voutShell != vout2_1
-            || voutShell != vout2_2
-            || voutShell != vout2_3
-            || voutShell != vout2_4
-            || voutShell != voutQuick1
-            || voutShell != voutQuick2
-            || voutShell != voutIntro1
-            || voutShell != voutIntro2
-            || voutShell != voutIntro3
-            || voutShell != vout3_1
-            || voutShell != vout3_2
-            || voutShell != vout3_3
-            || voutShell != voutTim)
-            cout << "ERROR : mismatched!" << endl;
+        PROFILE(tim, TimSort<int>::sort(v));
     }
-    cout << "--- speed test #3" << endl;
+    cout << "--- speed test #3 - 100x duplicated" << endl;
     {
         int N = 100000;
         int T = 100;
@@ -553,199 +370,88 @@ void testSort() {
         for (int i = 0; i < N; i++)
             vin[i] = RandInt32::get() % (N / 100);
 
-        /*
-        cout << "Bubble sort #1..." << endl;
-        PROFILE_START(bubble_1);
-        auto voutBubble1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble1 = vin;
-            BubbleSort<int>::sort(voutBubble1);
-        }
-        PROFILE_STOP(bubble_1);
-
-        cout << "Bubble sort #2..." << endl;
-        PROFILE_START(bubble_2);
-        auto voutBubble2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble2 = vin;
-            BubbleSort<int>::sort(voutBubble2);
-        }
-        PROFILE_STOP(bubble_2);
-        */
-
         //cout << "Insertion sort..." << endl;
-        //PROFILE_START(insertion);
-        //auto voutIns = vin;
-        //for (int i = 0; i < T; i++) {
-        //    voutIns = vin;
-        //    InsertionSort<int>::sort(voutIns);
-        //}
-        //PROFILE_STOP(insertion);
+        //PROFILE(insertion, InsertionSort<int>::sort(v));
 
         cout << "Shellsort..." << endl;
-        PROFILE_START(shell);
-        auto voutShell = vin;
-        for (int i = 0; i < T; i++) {
-            voutShell = vin;
-            ShellSort<int>::sort(voutShell);
-        }
-        PROFILE_STOP(shell);
+        PROFILE(shell, ShellSort<int>::sort(v));
 
         cout << "Heap sort..." << endl;
-        PROFILE_START(heap);
-        auto voutHeap = vin;
-        for (int i = 0; i < T; i++) {
-            voutHeap = vin;
-            MaxHeap<int>::sort(voutHeap);
-        }
-        PROFILE_STOP(heap);
-
+        PROFILE(heap, MaxHeap<int>::sort(v));
         cout << "Merge sort..." << endl;
-        PROFILE_START(merge);
-        auto voutMerge1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge1 = vin;
-            MergeSort<int>::sort(voutMerge1);
-        }
-        PROFILE_STOP(merge);
-
+        PROFILE(merge, MergeSort<int>::sort(v));
         cout << "Merge sort (bottom-up)..." << endl;
-        PROFILE_START(merge_bottom_up);
-        auto voutMerge2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge2 = vin;
-            MergeSortBottomUp<int>::sort(voutMerge2);
-        }
-        PROFILE_STOP(merge_bottom_up);
-
+        PROFILE(merge_bottom_up, MergeSortBottomUp<int>::sort(v));
         cout << "Merge sort (enhanced)..." << endl;
-        PROFILE_START(merge_enhanced);
-        auto voutMerge3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge3 = vin;
-            MergeSortEnhanced<int>::sort(voutMerge3);
-        }
-        PROFILE_STOP(merge_enhanced);
-
+        PROFILE(merge_enhanced, MergeSortEnhanced<int>::sort(v));
         cout << "Merge sort (enhanced2)..." << endl;
-        PROFILE_START(merge_enhanced2);
-        auto voutMerge4 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge4 = vin;
-            MergeSortEnhanced2<int>::sort(voutMerge4);
-        }
-        PROFILE_STOP(merge_enhanced2);
-
+        PROFILE(merge_enhanced2, MergeSortEnhanced2<int>::sort(v));
         cout << "Merge sort (enhanced3)..." << endl;
-        PROFILE_START(merge_enhanced3);
-        auto voutMerge5 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge5 = vin;
-            MergeSortEnhanced3<int>::sort(voutMerge5);
-        }
-        PROFILE_STOP(merge_enhanced3);
+        PROFILE(merge_enhanced3, MergeSortEnhanced3<int>::sort(v));
 
-        cout << "Quick sort..." << endl;
-        PROFILE_START(quick1);
-        auto voutQuick1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick1 = vin;
-            QuickSort<int>::sort(voutQuick1);
-        }
-        PROFILE_STOP(quick1);
+        cout << "Quick sort with Hoare..." << endl;
+        PROFILE(quick_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort with Hoare2..." << endl;
+        PROFILE(quick_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort with Hoare MED3..." << endl;
+        PROFILE(quick_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort with Lomuto ..." << endl;
+        PROFILE(quick_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort with Lomuto MED3..." << endl;
+        PROFILE(quick_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort 2..." << endl;
-        PROFILE_START(quick2);
-        auto voutQuick2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick2 = vin;
-            QuickSort<int>::sort(voutQuick2);
-        }
-        PROFILE_STOP(quick2);
+        cout << "Quick sort2 with Hoare..." << endl;
+        PROFILE(quick2_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort2 with Hoare2..." << endl;
+        PROFILE(quick2_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort2 with Hoare MED3..." << endl;
+        PROFILE(quick2_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort2 with Lomuto ..." << endl;
+        PROFILE(quick2_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort2 with Lomuto MED3..." << endl;
+        PROFILE(quick2_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(quick_med3);
-        auto voutQuick3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3 = vin;
-            QuickSort<int>::sort3(voutQuick3);
-        }
-        PROFILE_STOP(quick_med3);
+        cout << "Quick sort with 3-way..." << endl;
+        PROFILE(quick_3way, quickSort(v, partitionDijkstra3way<int>));
+        cout << "Quick sort with 3-way..." << endl;
+        PROFILE(quick_3way_med3, quickSort(v, partitionDijkstra3wayWithMED3<int>));
+        cout << "Quick sort2 with 3-way..." << endl;
+        PROFILE(quick2_3way, quickSort2(v, partitionDijkstra3way<int>));
+        cout << "Quick sort2 with 3-way..." << endl;
+        PROFILE(quick2_3way_med3, quickSort2(v, partitionDijkstra3wayWithMED3<int>));
 
-        cout << "3-way Quick sort..." << endl;
-        PROFILE_START(quick_3way);
-        auto voutQuick3way1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3way1 = vin;
-            QuickSort3way<int>::sort(voutQuick3way1);
-        }
-        PROFILE_STOP(quick_3way);
+        cout << "Quick sort with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick_bent_3way, quickSort(v, partitionBentleyMcIlroy3way<int>));
+        cout << "Quick sort2 with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick2_bent_3way, quickSort2(v, partitionBentleyMcIlroy3way<int>));
 
-        cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(quick_3way_med3);
-        auto voutQuick3way2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3way2 = vin;
-            QuickSort3way<int>::sort2(voutQuick3way2);
-        }
-        PROFILE_STOP(quick_3way_med3);
+        cout << "Quick sort with Dual Pivot 3-way..." << endl;
+        PROFILE(quick_dual_pivot_3way, quickSort3way(v, partitionDualPivot3way<int>));
+        cout << "Quick sort2 with Dual Pivot 3-way..." << endl;
+        PROFILE(quick2_dual_pivot_3way, quickSort3way2(v, partitionDualPivot3way<int>));
 
-        cout << "Introsort 1..." << endl;
-        PROFILE_START(intro1);
-        auto voutIntro1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro1 = vin;
-            IntroSort<int>::sort(voutIntro1);
-        }
-        PROFILE_STOP(intro1);
+        cout << "IntroSort with Hoare..." << endl;
+        PROFILE(introsort_hoare, introSort(v, partitionHoare<int>));
+        cout << "IntroSort with Hoare2..." << endl;
+        PROFILE(introsort_hoare2, introSort(v, partitionHoare2<int>));
+        cout << "IntroSort with Hoare MED3..." << endl;
+        PROFILE(introsort_hoare_med3, introSort(v, partitionHoareWithMED3<int>));
+        cout << "IntroSort with Lomuto ..." << endl;
+        PROFILE(introsort_lomuto, introSort(v, partitionLomuto<int>));
+        cout << "IntroSort with Lomuto MED3..." << endl;
+        PROFILE(introsort_lomuto_med3, introSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Introsort 2..." << endl;
-        PROFILE_START(intro2);
-        auto voutIntro2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro2 = vin;
-            IntroSort<int>::sort(voutIntro2);
-        }
-        PROFILE_STOP(intro2);
-
-        cout << "Introsort 3..." << endl;
-        PROFILE_START(intro3);
-        auto voutIntro3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro3 = vin;
-            IntroSort<int>::sort(voutIntro3);
-        }
-        PROFILE_STOP(intro3);
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way, introSort(v, partitionDijkstra3way<int>));
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way_med3, introSort(v, partitionDijkstra3wayWithMED3<int>));
 
         cout << "Tim sort..." << endl;
-        PROFILE_START(tim);
-        auto voutTim = vin;
-        for (int i = 0; i < T; i++) {
-            voutTim = vin;
-            TimSort<int>::sort(voutTim);
-        }
-        PROFILE_STOP(tim);
-
-        if (voutShell != voutHeap
-            || voutShell != voutMerge1
-            || voutShell != voutMerge2
-            || voutShell != voutMerge3
-            || voutShell != voutMerge4
-            || voutShell != voutMerge5
-            || voutShell != voutQuick1
-            || voutShell != voutQuick2
-            || voutShell != voutQuick3
-            || voutShell != voutQuick3way1
-            || voutShell != voutQuick3way2
-            || voutShell != voutIntro1
-            || voutShell != voutIntro2
-            || voutShell != voutIntro3
-            || voutShell != voutTim)
-            cout << "ERROR : mismatched!" << endl;
+        PROFILE(tim, TimSort<int>::sort(v));
     }
     cout << "OK!" << endl;
 
-    cout << "--- speed test #4" << endl;
+    cout << "--- speed test #4 - almost sorted" << endl;
     {
         int N = 100000;
         int T = 100;
@@ -765,195 +471,84 @@ void testSort() {
             swap(vin[a], vin[b]);
         }
 
-        /*
-        cout << "Bubble sort #1..." << endl;
-        PROFILE_START(bubble_1);
-        auto voutBubble1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble1 = vin;
-            BubbleSort<int>::sort(voutBubble1);
-        }
-        PROFILE_STOP(bubble_1);
-
-        cout << "Bubble sort #2..." << endl;
-        PROFILE_START(bubble_2);
-        auto voutBubble2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutBubble2 = vin;
-            BubbleSort<int>::sort(voutBubble2);
-        }
-        PROFILE_STOP(bubble_2);
-        */
-
         //cout << "Insertion sort..." << endl;
-        //PROFILE_START(insertion);
-        //auto voutIns = vin;
-        //for (int i = 0; i < T; i++) {
-        //    voutIns = vin;
-        //    InsertionSort<int>::sort(voutIns);
-        //}
-        //PROFILE_STOP(insertion);
+        //PROFILE(insertion, InsertionSort<int>::sort(v));
 
         cout << "Shellsort..." << endl;
-        PROFILE_START(shell);
-        auto voutShell = vin;
-        for (int i = 0; i < T; i++) {
-            voutShell = vin;
-            ShellSort<int>::sort(voutShell);
-        }
-        PROFILE_STOP(shell);
+        PROFILE(shell, ShellSort<int>::sort(v));
 
         cout << "Heap sort..." << endl;
-        PROFILE_START(heap);
-        auto voutHeap = vin;
-        for (int i = 0; i < T; i++) {
-            voutHeap = vin;
-            MaxHeap<int>::sort(voutHeap);
-        }
-        PROFILE_STOP(heap);
-
+        PROFILE(heap, MaxHeap<int>::sort(v));
         cout << "Merge sort..." << endl;
-        PROFILE_START(merge);
-        auto voutMerge1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge1 = vin;
-            MergeSort<int>::sort(voutMerge1);
-        }
-        PROFILE_STOP(merge);
-
+        PROFILE(merge, MergeSort<int>::sort(v));
         cout << "Merge sort (bottom-up)..." << endl;
-        PROFILE_START(merge_bottom_up);
-        auto voutMerge2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge2 = vin;
-            MergeSortBottomUp<int>::sort(voutMerge2);
-        }
-        PROFILE_STOP(merge_bottom_up);
-
+        PROFILE(merge_bottom_up, MergeSortBottomUp<int>::sort(v));
         cout << "Merge sort (enhanced)..." << endl;
-        PROFILE_START(merge_enhanced);
-        auto voutMerge3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge3 = vin;
-            MergeSortEnhanced<int>::sort(voutMerge3);
-        }
-        PROFILE_STOP(merge_enhanced);
-
+        PROFILE(merge_enhanced, MergeSortEnhanced<int>::sort(v));
         cout << "Merge sort (enhanced2)..." << endl;
-        PROFILE_START(merge_enhanced2);
-        auto voutMerge4 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge4 = vin;
-            MergeSortEnhanced2<int>::sort(voutMerge4);
-        }
-        PROFILE_STOP(merge_enhanced2);
-
+        PROFILE(merge_enhanced2, MergeSortEnhanced2<int>::sort(v));
         cout << "Merge sort (enhanced3)..." << endl;
-        PROFILE_START(merge_enhanced3);
-        auto voutMerge5 = vin;
-        for (int i = 0; i < T; i++) {
-            voutMerge5 = vin;
-            MergeSortEnhanced3<int>::sort(voutMerge5);
-        }
-        PROFILE_STOP(merge_enhanced3);
+        PROFILE(merge_enhanced3, MergeSortEnhanced3<int>::sort(v));
 
-        cout << "Quick sort..." << endl;
-        PROFILE_START(quick1);
-        auto voutQuick1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick1 = vin;
-            QuickSort<int>::sort(voutQuick1);
-        }
-        PROFILE_STOP(quick1);
+        cout << "Quick sort with Hoare..." << endl;
+        PROFILE(quick_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort with Hoare2..." << endl;
+        PROFILE(quick_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort with Hoare MED3..." << endl;
+        PROFILE(quick_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort with Lomuto ..." << endl;
+        PROFILE(quick_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort with Lomuto MED3..." << endl;
+        PROFILE(quick_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort 2..." << endl;
-        PROFILE_START(quick2);
-        auto voutQuick2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick2 = vin;
-            QuickSort<int>::sort(voutQuick2);
-        }
-        PROFILE_STOP(quick2);
+        cout << "Quick sort2 with Hoare..." << endl;
+        PROFILE(quick2_hoare, quickSort(v, partitionHoare<int>));
+        cout << "Quick sort2 with Hoare2..." << endl;
+        PROFILE(quick2_hoare2, quickSort(v, partitionHoare2<int>));
+        cout << "Quick sort2 with Hoare MED3..." << endl;
+        PROFILE(quick2_hoare_med3, quickSort(v, partitionHoareWithMED3<int>));
+        cout << "Quick sort2 with Lomuto ..." << endl;
+        PROFILE(quick2_lomuto, quickSort(v, partitionLomuto<int>));
+        cout << "Quick sort2 with Lomuto MED3..." << endl;
+        PROFILE(quick2_lomuto_med3, quickSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Quick sort with MED3..." << endl;
-        PROFILE_START(quick_med3);
-        auto voutQuick3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3 = vin;
-            QuickSort<int>::sort3(voutQuick3);
-        }
-        PROFILE_STOP(quick_med3);
+        cout << "Quick sort with 3-way..." << endl;
+        PROFILE(quick_3way, quickSort(v, partitionDijkstra3way<int>));
+        cout << "Quick sort with 3-way..." << endl;
+        PROFILE(quick_3way_med3, quickSort(v, partitionDijkstra3wayWithMED3<int>));
+        cout << "Quick sort2 with 3-way..." << endl;
+        PROFILE(quick2_3way, quickSort2(v, partitionDijkstra3way<int>));
+        cout << "Quick sort2 with 3-way..." << endl;
+        PROFILE(quick2_3way_med3, quickSort2(v, partitionDijkstra3wayWithMED3<int>));
 
-        cout << "3-way Quick sort..." << endl;
-        PROFILE_START(quick_3way);
-        auto voutQuick3way1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3way1 = vin;
-            QuickSort3way<int>::sort(voutQuick3way1);
-        }
-        PROFILE_STOP(quick_3way);
+        cout << "Quick sort with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick_bent_3way, quickSort(v, partitionBentleyMcIlroy3way<int>));
+        cout << "Quick sort2 with Bentley-McIlroy 3-way..." << endl;
+        PROFILE(quick2_bent_3way, quickSort2(v, partitionBentleyMcIlroy3way<int>));
 
-        cout << "3-way Quick sort with MED3..." << endl;
-        PROFILE_START(quick_3way_med3);
-        auto voutQuick3way2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutQuick3way2 = vin;
-            QuickSort3way<int>::sort2(voutQuick3way2);
-        }
-        PROFILE_STOP(quick_3way_med3);
+        cout << "Quick sort with Dual Pivot 3-way..." << endl;
+        PROFILE(quick_dual_pivot_3way, quickSort3way(v, partitionDualPivot3way<int>));
+        cout << "Quick sort2 with Dual Pivot 3-way..." << endl;
+        PROFILE(quick2_dual_pivot_3way, quickSort3way2(v, partitionDualPivot3way<int>));
 
-        cout << "Introsort 1..." << endl;
-        PROFILE_START(intro1);
-        auto voutIntro1 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro1 = vin;
-            IntroSort<int>::sort(voutIntro1);
-        }
-        PROFILE_STOP(intro1);
+        cout << "IntroSort with Hoare..." << endl;
+        PROFILE(introsort_hoare, introSort(v, partitionHoare<int>));
+        cout << "IntroSort with Hoare2..." << endl;
+        PROFILE(introsort_hoare2, introSort(v, partitionHoare2<int>));
+        cout << "IntroSort with Hoare MED3..." << endl;
+        PROFILE(introsort_hoare_med3, introSort(v, partitionHoareWithMED3<int>));
+        cout << "IntroSort with Lomuto ..." << endl;
+        PROFILE(introsort_lomuto, introSort(v, partitionLomuto<int>));
+        cout << "IntroSort with Lomuto MED3..." << endl;
+        PROFILE(introsort_lomuto_med3, introSort(v, partitionLomutoWithMED3<int>));
 
-        cout << "Introsort 2..." << endl;
-        PROFILE_START(intro2);
-        auto voutIntro2 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro2 = vin;
-            IntroSort<int>::sort(voutIntro2);
-        }
-        PROFILE_STOP(intro2);
-
-        cout << "Introsort 3..." << endl;
-        PROFILE_START(intro3);
-        auto voutIntro3 = vin;
-        for (int i = 0; i < T; i++) {
-            voutIntro3 = vin;
-            IntroSort<int>::sort(voutIntro3);
-        }
-        PROFILE_STOP(intro3);
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way, introSort(v, partitionDijkstra3way<int>));
+        cout << "IntroSort with 3-way..." << endl;
+        PROFILE(introsort_3way_med3, introSort(v, partitionDijkstra3wayWithMED3<int>));
 
         cout << "Tim sort..." << endl;
-        PROFILE_START(tim);
-        auto voutTim = vin;
-        for (int i = 0; i < T; i++) {
-            voutTim = vin;
-            TimSort<int>::sort(voutTim);
-        }
-        PROFILE_STOP(tim);
-
-        if (voutShell != voutHeap
-            || voutShell != voutMerge1
-            || voutShell != voutMerge2
-            || voutShell != voutMerge3
-            || voutShell != voutMerge4
-            || voutShell != voutMerge5
-            || voutShell != voutQuick1
-            || voutShell != voutQuick2
-            || voutShell != voutQuick3
-            || voutShell != voutQuick3way1
-            || voutShell != voutQuick3way2
-            || voutShell != voutIntro1
-            || voutShell != voutIntro2
-            || voutShell != voutIntro3
-            || voutShell != voutTim)
-            cout << "ERROR : mismatched!" << endl;
+        PROFILE(tim, TimSort<int>::sort(v));
     }
     cout << "OK!" << endl;
 
@@ -963,72 +558,23 @@ void testSort() {
     {
         //for (int N = 10; N <= 10'000'000; N *= 10) {
         int N = 10'000'000;
-        {
-            vector<int> vin(N);
-            for (int i = 0; i < N; i++)
-                vin[i] = RandInt32::get();
+        vector<int> vin(N);
+        for (int i = 0; i < N; i++)
+            vin[i] = RandInt32::get();
 
-            cout << "-- N = " << N << endl;
+        cout << "-- N = " << N << endl;
 
-            //auto voutIns = vin;
-            //PROFILE_HI_START(insertion);
-            //InsertionSort<int>::sort(voutIns);
-            //PROFILE_HI_STOP(insertion);
-
-            auto voutShell = vin;
-            PROFILE_HI_START(shell);
-            ShellSort<int>::sort(voutShell);
-            PROFILE_HI_STOP(shell);
-
-            auto voutHeap = vin;
-            PROFILE_HI_START(heap);
-            MaxHeap<int>::sort(voutHeap);
-            PROFILE_HI_STOP(heap);
-
-            auto voutMerge = vin;
-            PROFILE_HI_START(merge);
-            MergeSort<int>::sort(voutMerge);
-            PROFILE_HI_STOP(merge);
-
-            auto voutMerge2 = vin;
-            PROFILE_HI_START(merge_bottom_up);
-            MergeSortBottomUp<int>::sort(voutMerge2);
-            PROFILE_HI_STOP(merge_bottom_up);
-
-            auto voutMerge3 = vin;
-            PROFILE_HI_START(merge_enhanced);
-            MergeSortEnhanced<int>::sort(voutMerge3);
-            PROFILE_HI_STOP(merge_enhanced);
-
-            auto voutMerge4 = vin;
-            PROFILE_HI_START(merge_enhanced2);
-            MergeSortEnhanced2<int>::sort(voutMerge4);
-            PROFILE_HI_STOP(merge_enhanced2);
-
-            auto voutMerge5 = vin;
-            PROFILE_HI_START(merge_enhanced3);
-            MergeSortEnhanced3<int>::sort(voutMerge5);
-            PROFILE_HI_STOP(merge_enhanced3);
-
-            auto voutQuick = vin;
-            PROFILE_HI_START(quick);
-            QuickSort<int>::sort(voutQuick);
-            PROFILE_HI_STOP(quick);
-
-            auto voutTim = vin;
-            PROFILE_START(tim);
-            TimSort<int>::sort(voutTim);
-            PROFILE_STOP(tim);
-
-            if (//voutIns != voutShell ||
-                voutShell != voutHeap ||
-                voutHeap != voutMerge ||
-                voutMerge != voutQuick ||
-                voutMerge2 != voutQuick ||
-                voutMerge3 != voutQuick ||
-                voutShell != voutTim)
-                cout << "ERROR : mismatched!" << endl;
-        }
+        //SPEED(insertion, InsertionSort<int>::sort(v));
+        SPEED(shell, ShellSort<int>::sort(v));
+        SPEED(heap, MaxHeap<int>::sort(v));
+        SPEED(merge, MergeSort<int>::sort(v));
+        SPEED(merge_bottom_up, MergeSortBottomUp<int>::sort(v));
+        SPEED(merge_enhanced, MergeSortEnhanced<int>::sort(v));
+        SPEED(merge_enhanced2, MergeSortEnhanced2<int>::sort(v));
+        SPEED(merge_enhanced3, MergeSortEnhanced3<int>::sort(v));
+        SPEED(quick, quickSort(v, partitionHoare2<int>));
+        SPEED(quick_lomuto, quickSort(v, partitionLomuto<int>));
+        SPEED(tim, TimSort<int>::sort(v));
     }
 #endif
 }

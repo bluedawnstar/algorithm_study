@@ -58,10 +58,14 @@ int main(void) {
     TEST(TreePathDecompositionCounter);
     TEST(TopologicalOrderOnDAGLikeReversedTree);
     TEST(MaxSubsetAND);
+    TEST(SubsequenceSum);
+    TEST(LongestNonPeakSubsequence);
     //--- problems
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);
     TEST(IntervalSumTopK);
     TEST(DigitDP_SamePrefixSuffixDigitSum);
     TEST(KnapsackAndBinarySearchExample1);
+    TEST(MaxSubsequenceLinearWeightedSum);
+    TEST(SmallerStringCounter);
 }

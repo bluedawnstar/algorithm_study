@@ -1,6 +1,6 @@
 #pragma once
 
-// "Suffix arrays: A new method for on-line string searches", Udi Manber and Gene Myers
+// "Suffix arrays: A new method for on-line string searches", Udi Manber and Gene Myers, 1993
 // Doubling algorithm (Manber, Myers)
 
 #if 1
@@ -135,6 +135,7 @@ private:
 #else
 //--- type #2
 // from https://apps.topcoder.com/forums/?module=RevisionHistory&messageID=1171511
+template <int MaxCharN = 26, int BaseChar = 'a'>
 struct SuffixArrayManberMyers {
     // O(NlogN)
     static vector<int> build(const char* str, int n) {
