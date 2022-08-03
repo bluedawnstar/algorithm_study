@@ -150,6 +150,8 @@ struct FenwickTree {
     // returns min(i | sum[0, i] >= sum)
     // O(logN)
     int lowerBound(T sum) {
+        --sum;
+
         int N = int(tree.size()) - 1;
 
         int blockSize = N;
@@ -165,7 +167,7 @@ struct FenwickTree {
             }
         }
 
-        return lo - (sum == 0);
+        return lo;
     }
 };
 
