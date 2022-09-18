@@ -172,6 +172,7 @@
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />
     <ClCompile Include="primitiveRoot.cpp" />
+    <ClCompile Include="problems\lcmCounter.cpp" />
     <ClCompile Include="subsetXor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
     <ClInclude Include="primitiveRoot.h" />
+    <ClInclude Include="problems\lcmCounter.h" />
     <ClInclude Include="subsetXor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

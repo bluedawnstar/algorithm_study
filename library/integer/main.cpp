@@ -35,4 +35,6 @@ int main(void) {
     TEST(DiscreteSqrt);
     TEST(PrimeFactorSimple);
     TEST(CircularMove);
+    //--- problems
+    TEST(LcmCounter);
 }
