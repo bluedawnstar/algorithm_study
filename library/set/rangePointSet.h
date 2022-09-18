@@ -1,11 +1,11 @@
 #pragma once
 
 template <typename T>
-struct LineSegmentSet1D {
+struct RangePointSet {
     map<T, T> lines;
     T covered = 0;                      // covered length
 
-    LineSegmentSet1D() : covered(0) {
+    RangePointSet() : covered(0) {
     }
 
     void clear() {
@@ -38,11 +38,11 @@ struct LineSegmentSet1D {
     // inclusive [left, right], O(logN)
     void add(T left, T right) {
         auto itL = lines.upper_bound(left);
-        auto itR = lines.upper_bound(right);
+        auto itR = lines.upper_bound(right + 1);
 
         if (itL != lines.begin()) {
             --itL;
-            if (itL->second < left)
+            if (itL->second < left - 1)
                 ++itL;
         }
 
@@ -50,12 +50,12 @@ struct LineSegmentSet1D {
             left = min(left, itL->first);
             right = max(right, prev(itR)->second);
             for (auto it = itL; it != itR; ++it)
-                covered -= it->second - it->first;
+                covered -= it->second - it->first + 1;
             lines.erase(itL, itR);
         }
 
         lines[left] = right;
-        covered += right - left;
+        covered += right - left + 1;
     }
 
     // inclusive [l, r], O(logN)
@@ -76,17 +76,17 @@ struct LineSegmentSet1D {
         T tR = max(right, prev(itR)->second);
 
         for (auto it = itL; it != itR; ++it)
-            covered -= it->second - it->first;
+            covered -= it->second - it->first + 1;
         lines.erase(itL, itR);
 
         if (tL < left) {
             lines[tL] = left - 1;
-            covered += left - 1 - tL;
+            covered += left - tL;
         }
 
         if (right < tR) {
             lines[right + 1] = tR;
-            covered += tR - right - 1;
+            covered += tR - right;
         }
     }
 

@@ -1,73 +1,119 @@
 #pragma once
 
-// covered range : x1 <= x < x2  (exclude x2)
+template <typename T>
 struct LineSegmentSet1D {
-    set<tuple<int, int, int>> lines;    // (x2, x1, delta), no overlap
-    int covered;                        // covered length
+    map<T, T> lines;
+    T covered = 0;                      // covered length
 
     LineSegmentSet1D() : covered(0) {
     }
 
-    int getCovered() const {
+    void clear() {
+        lines.clear();
+        covered = 0;
+    }
+
+    T getCovered() const {
         return covered;
     }
 
-    int add(int x1, int x2) {
-        return add(x1, x2, 1);
+
+    vector<pair<T, T>> get() const {
+        vector<pair<T, T>> res;
+        res.reserve(lines.size());
+
+        for (auto it = lines.begin(), itEnd = lines.end(); it != itEnd; ++it)
+            res.push_back(*it);
+
+        return res;
     }
 
-    int remove(int x1, int x2) {
-        return add(x1, x2, -1);
+
+    // inclusive [left, right], O(logN)
+    bool exist(T left, T right) const {
+        const auto it = get(left);
+        return it != lines.end() && it->first <= right && right <= it->second;
     }
 
-    // x1 <= x < x2, d is -1 or 1
-    // worst case O(NlogN), but normally O(logN)
-    int add(int x1, int x2, int d) {
-        auto it = lines.lower_bound(make_tuple(x1, x1, 0));
-        while (it != lines.end()) {
-            int y2, y1, yd;
-            tie(y2, y1, yd) = *it;
+    // inclusive [left, right], O(logN)
+    void add(T left, T right) {
+        auto itL = lines.upper_bound(left);
+        auto itR = lines.upper_bound(right);
 
-            if (x2 <= y1)
-                break;
-
-            auto curr = it++;
-            lines.erase(curr);
-            covered -= y2 - y1;
-
-            // ****----+
-            //     +-------+
-            if (x1 != y1) {
-                int l = min(x1, y1);
-                int r = max(x1, y1);
-                lines.emplace(r, l, x1 < y1 ? d : yd);
-                covered += r - l;
-                x1 = y1 = r;
-            }
-
-            // +---*****
-            //     *****---+
-            if (yd + d > 0) {
-                lines.emplace(min(x2, y2), x1, yd + d);
-                covered += min(x2, y2) - x1;
-            }
-            x1 = y1 = min(x2, y2);
-
-            // +-------+
-            //     +----****
-            if (y1 < y2) {
-                lines.emplace(y2, y1, yd);
-                covered += y2 - y1;
-                break;
-            }
-        }
-        // +-------+
-        //     +----****
-        if (x1 < x2) {
-            lines.emplace(x2, x1, d);
-            covered += x2 - x1;
+        if (itL != lines.begin()) {
+            --itL;
+            if (itL->second < left)
+                ++itL;
         }
 
-        return covered;
+        if (itL != itR) {
+            left = min(left, itL->first);
+            right = max(right, prev(itR)->second);
+            for (auto it = itL; it != itR; ++it)
+                covered -= it->second - it->first;
+            lines.erase(itL, itR);
+        }
+
+        lines[left] = right;
+        covered += right - left;
+    }
+
+    // inclusive [l, r], O(logN)
+    void remove(T left, T right) {
+        auto itL = lines.upper_bound(left);
+        auto itR = lines.upper_bound(right);
+
+        if (itL != lines.begin()) {
+            --itL;
+            if (itL->second < left)
+                ++itL;
+        }
+
+        if (itL == itR)
+            return;
+
+        T tL = min(left, itL->first);
+        T tR = max(right, prev(itR)->second);
+
+        for (auto it = itL; it != itR; ++it)
+            covered -= it->second - it->first;
+        lines.erase(itL, itR);
+
+        if (tL < left) {
+            lines[tL] = left - 1;
+            covered += left - 1 - tL;
+        }
+
+        if (right < tR) {
+            lines[right + 1] = tR;
+            covered += tR - right - 1;
+        }
+    }
+
+private:
+    // return the first range to include 'x' if exists, O(logN)
+    typename map<T, T>::const_iterator get(T x) const {
+        auto it = lines.upper_bound(x);
+        if (it == lines.begin())
+            return lines.end();
+
+        --it;
+        if (it->second < x)
+            return lines.end();
+
+        return it;
+    }
+
+    // return the first range to include 'x' if exists, O(logN)
+    typename map<T, T>::iterator get(T x) {
+        auto it = lines.upper_bound(x);
+        if (it == lines.begin())
+            return lines.end();
+
+        --it;
+        if (it->second < x)
+            return lines.end();
+
+        return it;
     }
 };

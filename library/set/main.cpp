@@ -16,6 +16,7 @@ int main(void) {
     TEST(BitSetRangeUpdate);
     TEST(DynamicRangeSet);
     TEST(RangeSet);
+    TEST(RangePointSet);
     TEST(LineSegmentSet1D);
     TEST(SimpleHashMap);
     TEST(HashMapHAMT);
