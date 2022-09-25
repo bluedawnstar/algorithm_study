@@ -8,6 +8,7 @@ using namespace std;
 int main(void) {
     TEST(PrimeNumberBasic);
     TEST(PrimeNumberEratosthenes);
+    TEST(PrimeNumberLinearSieve);
     TEST(Gcd);
     TEST(IntMod);
     TEST(FactorialMod);
@@ -35,4 +36,6 @@ int main(void) {
     TEST(DiscreteSqrt);
     TEST(PrimeFactorSimple);
     TEST(CircularMove);
+    //--- problems
+    TEST(LcmCounter);
 }

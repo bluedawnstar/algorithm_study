@@ -4,11 +4,11 @@
 
 struct PrimeFactorizerInt64 {
     int N;
-    MinFactors minFactors;
+    SmallestPrimeFactors spf;
 
     void init(int n) {
         N = n;
-        minFactors.build(N);
+        spf.build(N);
     }
 
     vector<pair<long long, int>> factorize(long long n) {
@@ -52,7 +52,7 @@ protected:
 
         if (n <= N) {
             while (n != 1) {
-                int p = minFactors.minFactors[int(n)];
+                int p = spf.spf[int(n)];
                 while (n % p == 0) {
                     n /= p;
                     s[m++] = p;
@@ -77,7 +77,7 @@ protected:
 
     bool millerRabin(long long n) {
         if (n <= N)
-            return minFactors.minFactors[int(n)] == n;
+            return spf.spf[int(n)] == n;
         return !witness(28087, n);
     }
 

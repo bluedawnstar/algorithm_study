@@ -72,6 +72,9 @@
     <ClCompile Include="rangeSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="rangePointSet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unionFind.h">
@@ -144,6 +147,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="rangeSet.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="rangePointSet.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

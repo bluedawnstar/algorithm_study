@@ -20,39 +20,39 @@ void testPrimeFactor() {
 
     clock_t start;
 
-    MinFactors minFactors;
-    minFactors.build(100);
+    SmallestPrimeFactors spf;
+    spf.build(100);
 
     cout << "--- test isPrimeNumber() from 0 to 100 ---" << endl;
     for (int i = 0; i <= 100; i++) {
-        if (minFactors.isPrimeNumber(i))
+        if (spf.isPrimeNumber(i))
             cout << i << ", ";
     }
     cout << endl;
 
     cout << "--- test getPrimeFactors() from 0 to 100 ---" << endl;
     for (int i = 0; i <= 100; i++)
-        cout << i << ": " << minFactors.getPrimeFactors(i) << endl;
+        cout << i << ": " << spf.getPrimeFactors(i) << endl;
 
     PrimeFactors pf;
     cout << "--- test getPrimeFactors2() from 0 to 100 ---" << endl;
     for (int i = 0; i <= 100; i++) {
-        pf.build(minFactors, i);
+        pf.build(spf, i);
         cout << i << ": " << pf.primeFactors << endl;
     }
 
     cout << "--- performance test about prime number functions ---" << endl;
 
-    minFactors.build(NN);
+    spf.build(NN);
 
     start = clock();
     for (int i = 0; i <= NN; i++)
-        minFactors.getPrimeFactors(i);
+        spf.getPrimeFactors(i);
     cout << "getPrimeFactors()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 
     start = clock();
     for (int i = 0; i <= NN; i++) {
-        PrimeFactors pf(minFactors, i);
+        PrimeFactors pf(spf, i);
     }
     cout << "getPrimeFactors2()'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 }

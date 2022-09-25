@@ -68,14 +68,14 @@ inline int mobius(int n) {
 
 // PRECONDITION: n >= 1
 // mobius function in [0, n], inclusive, O(N)
-inline vector<int> mobiusSeive(int n, const MinFactors& minFactors) {
+inline vector<int> mobiusSeive(int n, const SmallestPrimeFactors& spf) {
     vector<int> res(n + 1);
     if (n > 0)
         res[1] = 1;
 
     for (int i = 2; i <= n; i++) {
-        int w = minFactors.minFactors[i];
-        res[i] = (minFactors.minFactors[i / w] == w) ? 0 : -res[i / w];
+        int w = spf.spf[i];
+        res[i] = (spf.spf[i / w] == w) ? 0 : -res[i / w];
     }
 
     return res;
@@ -84,7 +84,7 @@ inline vector<int> mobiusSeive(int n, const MinFactors& minFactors) {
 // PRECONDITION: n >= 1
 // mobius function in [0, n], inclusive, O(N loglogN)
 inline vector<int> mobiusSeive(int n) {
-    MinFactors factors;
+    SmallestPrimeFactors factors;
     factors.build(n);
     return mobiusSeive(n, factors);
 }
