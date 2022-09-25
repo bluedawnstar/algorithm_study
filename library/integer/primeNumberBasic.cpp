@@ -94,7 +94,7 @@ void testPrimeNumberBasic() {
     {
         vector<int> primes;
         vector<PrimeFactors> primeFactors;
-        PrimeFactors::buildAll(100, primes, primeFactors);
+        buildAll(100, primes, primeFactors);
         for (int i = 0; i < 100; i++)
             cout << primeFactors[i].primeFactors << endl;
     }
@@ -120,7 +120,7 @@ void testPrimeNumberBasic() {
     {
         vector<int> primes;
         vector<PrimeFactors> primeFactors;
-        PrimeFactors::buildAll(NN, primes, primeFactors);
+        buildAll(NN, primes, primeFactors);
     }
     cout << "getPrimeFactors(n,primes,factors)'s elapsed time from 1 to " << NN << " = " << double(clock() - start) / CLOCKS_PER_SEC << " sec" << endl;
 

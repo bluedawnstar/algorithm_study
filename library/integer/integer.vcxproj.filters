@@ -242,5 +242,14 @@
     <ClInclude Include="problems\lcmCounter.h">
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
+    <ClInclude Include="primeFactorsSmallest.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeFactors.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="primeFactorsSmallestLinearSieve.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

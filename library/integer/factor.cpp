@@ -45,8 +45,8 @@ void testFactor() {
     }
     cout << "--- getAllFactorCount() -------------------------" << endl;
     {
-        MinFactors minFactors(NN);
-        vector<int> factorCount = minFactors.getAllFactorCount();
+        SmallestPrimeFactors spf(NN);
+        vector<int> factorCount = spf.getAllFactorCount();
         for (int i = 0; i <= NN; i++) {
             cout << "(" << i << ": " << factorCount[i] << "), ";
         }
@@ -89,11 +89,11 @@ void testFactor() {
 #endif
     cout << "--- performance test of getAllFactorCountXXX() --" << endl;
     {
-        MinFactors minFactors(NN);
+        SmallestPrimeFactors spf(NN);
 
         clock_t start = clock();
         for (int i = 0; i < 100000; i++)
-            minFactors.getAllFactorCount();
+            spf.getAllFactorCount();
         cout << "elapsed time of getAllFactorCount() : " << double(clock() - start) / CLOCKS_PER_SEC << endl;
 
         start = clock();

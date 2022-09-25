@@ -212,12 +212,15 @@
     <ClInclude Include="primalityTestInt64.h" />
     <ClInclude Include="primeFactor.h" />
     <ClInclude Include="primeFactorInt64.h" />
+    <ClInclude Include="primeFactors.h" />
+    <ClInclude Include="primeFactorsSmallest.h" />
     <ClInclude Include="primeFactorSimple.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
     <ClInclude Include="primitiveRoot.h" />
     <ClInclude Include="problems\lcmCounter.h" />
     <ClInclude Include="subsetXor.h" />
+    <ClInclude Include="primeFactorsSmallestLinearSieve.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
