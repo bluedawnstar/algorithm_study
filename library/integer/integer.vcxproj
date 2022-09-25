@@ -171,6 +171,7 @@
     <ClCompile Include="primeFactorSimple.cpp" />
     <ClCompile Include="primeNumberBasic.cpp" />
     <ClCompile Include="primeNumberEratosthenes.cpp" />
+    <ClCompile Include="primeNumberLinearSieve.cpp" />
     <ClCompile Include="primitiveRoot.cpp" />
     <ClCompile Include="problems\lcmCounter.cpp" />
     <ClCompile Include="subsetXor.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="primeFactorSimple.h" />
     <ClInclude Include="primeNumberBasic.h" />
     <ClInclude Include="primeNumberEratosthenes.h" />
+    <ClInclude Include="primeNumberLinearSieve.h" />
     <ClInclude Include="primitiveRoot.h" />
     <ClInclude Include="problems\lcmCounter.h" />
     <ClInclude Include="subsetXor.h" />

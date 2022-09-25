@@ -57,13 +57,4 @@ void testPrimeNumberEratosthenes() {
         assert(check(v, L, v2, 0, R - L + 1));
     }
     cout << "OK!" << endl;
-
-    cout << "--- performance test about eratosthenes ---" << endl;
-    {
-        PROFILE_START(0);
-        vector<bool> p = eratosthenes(NN);
-        if (p.empty())
-            cerr << "error!" << endl;
-        PROFILE_STOP(0);
-    }
 }
