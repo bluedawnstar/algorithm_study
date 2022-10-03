@@ -210,6 +210,9 @@
     <ClCompile Include="problems\smallerStringCounter.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="treeDP_traversalKnapsack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -448,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="problems\smallerStringCounter.h">
       <Filter>소스 파일\problems</Filter>
+    </ClInclude>
+    <ClInclude Include="treeDP_traversalKnapsack.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

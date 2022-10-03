@@ -51,15 +51,17 @@ int main(void) {
     TEST(MaxWeightOfAllConcatenatedStrings);
     TEST(GridConnectedComponentCounter);
     TEST(LongestZigzagSubsequence);
-    TEST(SameDistanceTripleCounterOnTree);
-    TEST(IndependentEdgeSetOnTree);
     TEST(PairCounterWithBitwiseOperation);
     TEST(PermutationCounterByDivisibleAdjacentPairCount);
-    TEST(TreePathDecompositionCounter);
-    TEST(TopologicalOrderOnDAGLikeReversedTree);
     TEST(MaxSubsetAND);
     TEST(SubsequenceSum);
     TEST(LongestNonPeakSubsequence);
+
+    TEST(SameDistanceTripleCounterOnTree);
+    TEST(IndependentEdgeSetOnTree);
+    TEST(TreePathDecompositionCounter);
+    TEST(TopologicalOrderOnDAGLikeReversedTree);
+    TEST(TraversalKnapsackOnTree);
     //--- problems
     TEST(ChefAndSum);
     TEST(DistinctValueSetCounterOfLinearCombination);

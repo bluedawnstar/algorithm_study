@@ -207,6 +207,7 @@
     <ClCompile Include="treeDP_independentEdgeSetOnTree.cpp" />
     <ClCompile Include="treeDP_sameDistanceTripleCounte.cpp" />
     <ClCompile Include="treeDP_topologicalOrderCount.cpp" />
+    <ClCompile Include="treeDP_traversalKnapsack.cpp" />
     <ClCompile Include="treeDP_TreePathDecompositionCounter.cpp" />
     <ClCompile Include="twoSameSumSubset.cpp" />
     <ClCompile Include="longestZigzagSubsequence.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="subsequenceSum.h" />
     <ClInclude Include="treeDP_independentEdgeSetOnTree.h" />
     <ClInclude Include="treeDP_independentEdgeSetOnTreeMod2.h" />
+    <ClInclude Include="treeDP_traversalKnapsack.h" />
     <ClInclude Include="treeDP_sameDistanceTripleCounter.h" />
     <ClInclude Include="treeDP_topologicalOrderCount.h" />
     <ClInclude Include="treeDP_TreePathDecompositionCounter.h" />
