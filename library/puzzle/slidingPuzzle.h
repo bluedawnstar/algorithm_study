@@ -6,7 +6,6 @@
     rowN >= 2, colN >= 2
 */
 class SlidingPuzzle {
-public:
     enum Direction {
         dirUp,
         dirDown,
