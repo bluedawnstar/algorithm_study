@@ -199,8 +199,6 @@ public:
             return solveC3();
         else
             return solveC2();
-
-        return false;
     }
 
 private:
