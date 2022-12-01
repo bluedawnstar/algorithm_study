@@ -256,6 +256,10 @@ public:
 
     //-- solution
 
+    long long countInversions() const {
+        return InversionCounter::count(board);
+    }
+
     bool canSolve() const {
         auto inversionSum = InversionCounter::count(board);
 #if 0
