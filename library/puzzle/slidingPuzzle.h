@@ -13,6 +13,56 @@ class SlidingPuzzle {
         dirRight
     };
 
+    struct InversionCounter {
+        struct BIT {
+            vector<int> tree;
+
+            explicit BIT(int n) : tree(n + 1) {
+            }
+
+            long long sum(int pos) const {
+                pos++;
+
+                long long res = 0;
+                while (pos > 0) {
+                    res += tree[pos];
+                    pos &= pos - 1;
+                }
+
+                return res;
+            }
+
+            void add(int pos, int val) {
+                pos++;
+
+                while (pos < int(tree.size())) {
+                    tree[pos] += val;
+                    pos += pos & -pos;
+                }
+            }
+        };
+
+        // O(R*C*log(R*C))
+        static long long count(const vector<vector<int>>& board) {
+            int rowN = int(board.size());
+            int colN = int(board[0].size());
+
+            BIT bit(rowN * colN);
+
+            long long res = 0;
+            for (int i = rowN - 1; i >= 0; i--) {
+                for (int j = colN - 1; j >= 0; j--) {
+                    if (board[i][j] > 0) {
+                        res += bit.sum(board[i][j] - 1);
+                        bit.add(board[i][j], 1);
+                    }
+                }
+            }
+
+            return res;
+        }
+    };
+
 public:
     SlidingPuzzle(int rowN, int colN) : rowN(rowN), colN(colN), board(rowN, vector<int>(colN)), locked(rowN, vector<char>(colN)) {
         init();
@@ -26,8 +76,23 @@ public:
                 locked[i][j] = 0;
             }
         }
-        board[rowN - 1][colN - 1] = 0;
 
+        board[rowN - 1][colN - 1] = 0;
+        holeRow = rowN - 1;
+        holeCol = colN - 1;
+    }
+
+    void initToUnsolvableState() {
+        int k = 1;
+        for (int i = 0; i < rowN; i++) {
+            for (int j = 0; j < colN; j++) {
+                board[i][j] = k++;
+                locked[i][j] = 0;
+            }
+        }
+        swap(board[rowN - 1][colN - 2], board[rowN - 2][colN - 1]);
+
+        board[rowN - 1][colN - 1] = 0;
         holeRow = rowN - 1;
         holeCol = colN - 1;
     }
@@ -190,6 +255,20 @@ public:
 
 
     //-- solution
+
+    bool canSolve() const {
+        auto inversionSum = InversionCounter::count(board);
+#if 0
+        // even polarity
+        if (colN % 2)
+            return (inversionSum % 2) == 0;
+        else
+            return ((inversionSum + (rowN - 1 - holeRow)) % 2) == 0;
+#else
+        // even polarity
+        return ((inversionSum + (rowN - 1 - holeRow) * (colN - 1)) % 2) == 0;
+#endif
+    }
 
     bool solve() {
         if (rowN <= 1 || colN <= 1)
