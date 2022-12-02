@@ -70,4 +70,5 @@ int main(void) {
     TEST(KnapsackAndBinarySearchExample1);
     TEST(MaxSubsequenceLinearWeightedSum);
     TEST(SmallerStringCounter);
+    TEST(SpecialSubarrayFactorization);
 }

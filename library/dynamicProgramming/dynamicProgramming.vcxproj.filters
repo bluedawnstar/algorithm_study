@@ -213,6 +213,9 @@
     <ClCompile Include="treeDP_traversalKnapsack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="problems\specialSubarrayFactorization.cpp">
+      <Filter>소스 파일\problems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="steinerTree.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="treeDP_traversalKnapsack.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="problems\specialSubarrayFactorization.h">
+      <Filter>소스 파일\problems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

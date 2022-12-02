@@ -172,6 +172,7 @@
     <ClCompile Include="problems\knapsackAndBinarySearch_example1.cpp" />
     <ClCompile Include="problems\maxSubsequenceLinearWeightedSum.cpp" />
     <ClCompile Include="problems\smallerStringCounter.cpp" />
+    <ClCompile Include="problems\specialSubarrayFactorization.cpp" />
     <ClCompile Include="selectBlock2xN.cpp" />
     <ClCompile Include="longestCommonSubsequenceBit.cpp" />
     <ClCompile Include="bitonicTour.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="problems\intervalSumTopK.h" />
     <ClInclude Include="problems\maxSubsequenceLinearWeightedSum.h" />
     <ClInclude Include="problems\smallerStringCounter.h" />
+    <ClInclude Include="problems\specialSubarrayFactorization.h" />
     <ClInclude Include="selectBlock2xN.h" />
     <ClInclude Include="longestCommonSubsequenceBit.h" />
     <ClInclude Include="bitonicTour.h" />
