@@ -36,6 +36,9 @@
     <ClCompile Include="problems\smallestBinaryArrayWithInversions.cpp">
       <Filter>소스 파일\problems</Filter>
     </ClCompile>
+    <ClCompile Include="minSwapsToSort.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sortHeap.h">
@@ -99,6 +102,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sortQuick3way.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="minSwapsToSort.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
