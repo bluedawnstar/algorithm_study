@@ -73,4 +73,5 @@ int main(void) {
     TEST(LongestIncreasingStep);
     TEST(SegmentTreeLineIntegralLazy);
     TEST(CompactMergeSortTreeWithLiChaoTree);
+    TEST(PrefixMinSum);
 }
