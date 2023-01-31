@@ -17,7 +17,7 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 
 void testPersistentFenwickTreeMultAdd() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- PersistentFenwickTreeMultAdd --------------------------------------" << endl;
 
@@ -41,6 +41,10 @@ void testPersistentFenwickTreeMultAdd() {
     ans = fenwick.sumRange(t2, 3, 34);
     cout << "fenwick.sum(3, 34) = " << ans << endl;
     assert(ans == 20);
+
+    ans = fenwick.sumRange(t1, 3, 34);
+    cout << "fenwick.sum(t1, 3, 34) = " << ans << endl;
+    assert(ans == 10);
 
     cout << "OK!" << endl;
 }
