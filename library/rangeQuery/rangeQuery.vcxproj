@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="binarySearchTreeRangeSum.cpp" />
     <ClCompile Include="mergeSortTreeCompactWithLiChaoTree.cpp" />
+    <ClCompile Include="prefixMinSum.cpp" />
     <ClCompile Include="sparseTableDisjoint.cpp" />
     <ClCompile Include="dynamicSegmentTree.cpp" />
     <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="longestIncreasingSubsequenceOnline.h" />
     <ClInclude Include="mergeSortTreeCompactWithLiChaoTreeMax.h" />
     <ClInclude Include="mergeSortTreeCompactWithLiChaoTreeMin.h" />
+    <ClInclude Include="prefixMinSum.h" />
     <ClInclude Include="segmentTreeCompactLazyEx.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
     <ClInclude Include="sparseTableDisjoint.h" />

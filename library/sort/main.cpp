@@ -10,6 +10,7 @@ int main(void) {
     TEST(Sort);
     TEST(InversionCounter);
     TEST(InversionCounterAfterOneSwap);
+    TEST(MinSwapsToSort);
     //--- problems
     TEST(SmallestBinaryArrayWithInversions);
 }

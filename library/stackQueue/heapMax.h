@@ -45,11 +45,21 @@ struct MaxHeap {
         return true;
     }
 
+
+    void push(int maxSize, T x) {
+        if (size() < maxSize) {
+            push(x);
+        } else if (x < heap[1]) {
+            heap[1] = x;
+            siftDown(1);
+        }
+    }
+
     //--- heap
 
     // O(logN)
     void siftUp(int index) {
-        for (int i = index; i > 1 && (heap[i / 2] <= heap[i]); i /= 2)
+        for (int i = index; (i > 1) && (heap[i / 2] < heap[i]); i /= 2)
             swap(heap[i / 2], heap[i]);
     }
 
@@ -60,7 +70,7 @@ struct MaxHeap {
             if (j + 1 < N && heap[j] < heap[j + 1])
                 j++;
 
-            if (heap[j] <= heap[i])
+            if (heap[i] >= heap[j])
                 break;
 
             swap(heap[i], heap[j]);
