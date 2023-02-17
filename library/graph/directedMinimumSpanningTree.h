@@ -25,13 +25,11 @@ struct DirectedMST {
     }
 
     ~DirectedMST() {
-        clearNodes();
     }
 
     void init(int n) {
         N = n;
         edges.clear();
-        clearNodes();
     }
 
     // add an edge of u -> v 
@@ -50,13 +48,12 @@ struct DirectedMST {
     // - if no MST exists, return (-1, {})
     // O(E*logV)
     pair<T, vector<int>> mst(int root) {
-        clearNodes();
+        HeapNodes nodes;
+        vector<Node*> heap(N);
+        for (auto& e : edges)
+            heap[e.v] = Node::merge(heap[e.v], nodes.createNode(e));
 
         RollbackUF uf(N);
-        vector<Node*> heap(N);
-
-        for (auto& e : edges)
-            heap[e.v] = Node::merge(heap[e.v], createNode(e));
 
         T res = 0;
         vector<int> seen(N, -1), path(N), parent(N);
@@ -97,10 +94,9 @@ struct DirectedMST {
         for (int i = 0; i < int(cycs.size()); i++) {
             auto u = get<0>(cycs[i]);
             auto t = get<1>(cycs[i]);
-            auto& comp = get<2>(cycs[i]);
             uf.rollback(t);
             Edge inEdge = in[u];
-            for (auto& e : comp)
+            for (auto& e : get<2>(cycs[i]))
                 in[uf.find(e.v)] = e;
             in[uf.find(inEdge.v)] = inEdge;
         }
@@ -157,7 +153,7 @@ private:
     struct Node {
         Edge key;
         Node *l, *r;
-        T delta;
+        T    delta;
 
         void init(const Edge& e) {
             key = e;
@@ -200,15 +196,18 @@ private:
         }
     };
 
-    vector<Node*> nodes;
-    Node* createNode(const Edge& e) {
-        nodes.push_back(new Node{ e, nullptr, nullptr, 0 });
-        return nodes.back();
-    }
+    struct HeapNodes {
+        vector<Node*> nodes;
 
-    void clearNodes() {
-        for (auto* p : nodes)
-            delete p;
-        nodes.clear();
-    }
+        ~HeapNodes() {
+            for (auto* p : nodes)
+                delete p;
+            nodes.clear();
+        }
+
+        Node* createNode(const Edge& e) {
+            nodes.push_back(new Node{ e, nullptr, nullptr, 0 });
+            return nodes.back();
+        }
+    };
 };
