@@ -59,4 +59,5 @@ int main(void) {
     TEST(OnlineZ);
     TEST(TriePersistent);
     TEST(BKTree);
+    TEST(PrefixAutomaton);
 }

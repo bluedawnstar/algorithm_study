@@ -163,6 +163,7 @@
     <ClCompile Include="palindromicNumber.cpp" />
     <ClCompile Include="patternSubsequence.cpp" />
     <ClCompile Include="periodicSubstringWeightSumOfAllSubstrings.cpp" />
+    <ClCompile Include="prefixAutomaton.cpp" />
     <ClCompile Include="prefixFunctionTree.cpp" />
     <ClCompile Include="reverseSubstringsBetweenParentheses.cpp" />
     <ClCompile Include="rleString.cpp" />
@@ -225,6 +226,8 @@
     <ClInclude Include="palindromicSubstringLongest_manacher.h" />
     <ClInclude Include="patternSubsequence.h" />
     <ClInclude Include="periodicSubstringWeightSumOfAllSubstrings.h" />
+    <ClInclude Include="prefixAutomaton.h" />
+    <ClInclude Include="prefixAutomatonAlgo.h" />
     <ClInclude Include="prefixFunctionTree.h" />
     <ClInclude Include="prefixFunctionTreeAlgo.h" />
     <ClInclude Include="reverseSubstringsBetweenParentheses.h" />
