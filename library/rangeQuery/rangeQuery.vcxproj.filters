@@ -105,13 +105,10 @@
     <ClCompile Include="schieberVishkinRMQ.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="segmentTreePersistent.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="segmentTreePartiallyPersistentLazy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="segmentTreePersistentSimple.cpp">
+    <ClCompile Include="segmentTreePersistent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="mergeSortTree2DPoint.cpp">
@@ -162,7 +159,7 @@
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="segmentTreePersistentLazySimple.cpp">
+    <ClCompile Include="segmentTreePersistentLazy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="fenwickTreeMultAddPersistent.cpp">
@@ -220,6 +217,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="prefixMinSum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="segmentTreeLazyWithBase.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -338,16 +338,10 @@
     <ClInclude Include="schieberVishkinRMQ.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="segmentTreePersistent.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="segmentTreePersistentLazy.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="segmentTreePartiallyPersistentLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="segmentTreePersistentSimple.h">
+    <ClInclude Include="segmentTreePersistent.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="mergeSortTree2DPoint.h">
@@ -398,7 +392,7 @@
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="segmentTreePersistentLazySimple.h">
+    <ClInclude Include="segmentTreePersistentLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="fenwickTreeMultAddPersistent.h">
@@ -495,6 +489,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="prefixMinSum.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="segmentTreeLazyWithBase.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
