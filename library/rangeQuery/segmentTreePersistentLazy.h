@@ -1,113 +1,107 @@
 #pragma once
 
-// PersistentSegmentTreeLazy supports full persistent functions,
-//  but the upgrade functions is very slower than PartiallyPersistentSegmentTreeLazy.
-//
-// It is available when queries and updates are significantly more than upgrades.
-
-
 // The first 'node' number is 1, not 0
 // Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') are started from 0
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct PersistentSegmentTreeLazy {
     struct Node {
-        int     id;
-        T       value;
-        int     left;
-        int     right;
+        T   value;
+        int L;
+        int R;
+
+        T   lazy;
+
+        Node() {
+        }
+
+        Node(T value, T lazy) : value(value), L(-1), R(-1), lazy(lazy) {
+        }
+
+        Node(T value, int L, int R, T lazy) : value(value), L(L), R(R), lazy(lazy) {
+        }
     };
 
-    int             N;              // the size of array
+    int             N;
     vector<Node>    nodes;
-    vector<int>     trees;          // roots
-    vector<unordered_map<int, T>> treesLazy;
+    int             initRoot;
 
     T               defaultValue;
     MergeOp         mergeOp;
     BlockOp         blockOp;
 
     PersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dflt = T())
-        : N(0), nodes(), trees(), treesLazy(), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+            : N(0), nodes(), initRoot(-1), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    }
+
+    PersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dflt = T())
+            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(defaultValue, n);
     }
 
     PersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(value, n);
     }
 
-    PersistentSegmentTreeLazy(const T arr[], int n, MergeOp mop, BlockOp bop, T dflt = T())
+    PersistentSegmentTreeLazy(const T A[], int n, MergeOp mop, BlockOp bop, T dflt = T())
+            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+        build(A, n);
+    }
+
+    PersistentSegmentTreeLazy(const vector<T>& A, MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
-        build(arr, n);
+        build(A);
     }
 
-    PersistentSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dflt = T())
-        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
-        build(v);
+    // return root node index
+    int build(T value, int n) {
+        nodes.clear();
+
+        N = n;
+        nodes.reserve(N * 4);
+        return initRoot = recBuild(value, 0, N - 1);
     }
 
+    int build(const T A[], int n) {
+        nodes.clear();
 
-    int getHistorySize() const {
-        return int(trees.size());
+        N = n;
+        nodes.reserve(N * 4);
+        return initRoot = recBuild(A, 0, N - 1);
     }
 
-
-    // O(N)
-    T build(T value, int n) {
-        init(n);
-
-        treesLazy.resize(1);
-        auto t = initSub(value, 0, n - 1, 1);
-        trees.push_back(t.second);
-
-        return t.first;
+    int build(int n) {
+        return build(defaultValue, n);
     }
 
-    // O(N)
-    T build(const T arr[], int n) {
-        init(n);
-
-        treesLazy.resize(1);
-        auto t = buildSub(arr, 0, n - 1, 1);
-        trees.push_back(t.second);
-
-        return t.first;
+    int build(const vector<T>& A) {
+        return build(A.data(), int(A.size()));
     }
 
-    // O(N)
-    T build(const vector<T>& v) {
-        return build(&v[0], int(v.size()));
+    //---
+
+    int getInitRoot() const {
+        return initRoot;
     }
 
-
-    // inclusive, O(logN)
-    T query(int left, int right) {
-        return querySub(int(treesLazy.size()) - 1, trees.back(), left, right, 0, N - 1);
+    // return root node index, O(logN)
+    int set(int root, int index, T val) {
+        return recSet(root, 0, N - 1, index, index, val);
     }
 
-    // inclusive, O(logN)
-    T update(int index, T newValue) {
-        return updateSub(int(treesLazy.size()) - 1, trees.back(), index, newValue, 0, N - 1);
+    // return root node index, O(logN)
+    int update(int root, int index, T val) {
+        return recUpdate(root, 0, N - 1, index, index, val);
     }
 
-    // inclusive, O(max(right - left + 1, logN))
-    T updateRange(int left, int right, T newValue) {
-        return updateRangeSub(int(treesLazy.size()) - 1, trees.back(), left, right, newValue, 0, N - 1);
+    // return root node index, O(logN)
+    int update(int root, int left, int right, T val) {
+        return recUpdate(root, 0, N - 1, left, right, val);
     }
 
-    // inclusive, O(logN)
-    T upgrade(int index, T newValue) {
-        treesLazy.push_back(treesLazy.back());
-        auto t = upgradeSub(int(treesLazy.size()) - 1, trees.back(), index, newValue, 0, N - 1);
-        trees.push_back(t.second);
-        return t.first;
-    }
-
-    // inclusive, O(max(right - left + 1, logN))
-    T upgradeRange(int left, int right, T newValue) {
-        treesLazy.push_back(treesLazy.back());
-        auto t = upgradeRangeSub(int(treesLazy.size()) - 1, trees.back(), left, right, newValue, 0, N - 1);
-        trees.push_back(t.second);
-        return t.first;
+    // O(logN)
+    T query(int root, int left, int right) {
+        return recQuery(root, 0, N - 1, left, right);
     }
 
     // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
@@ -115,267 +109,196 @@ struct PersistentSegmentTreeLazy {
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
     // O(logN)
-    int lowerBound(const function<bool(T)>& f) {
-        return lowerBoundSub(int(treesLazy.size()) - 1, f, defaultValue, trees.back(), 0, N - 1);
-    }
-
-    //--- with history ---
-
-    // inclusive, O(logN)
-    T query(int historyIndex, int left, int right) {
-        return querySub(historyIndex, trees[historyIndex], left, right, 0, N - 1);
-    }
-
-    // inclusive, O(logN)
-    T update(int historyIndex, int index, T newValue) {
-        return updateSub(historyIndex, trees[historyIndex], index, newValue, 0, N - 1);
-    }
-
-    // inclusive, O(max(right - left + 1, logN))
-    T updateRange(int historyIndex, int left, int right, T newValue) {
-        return updateRangeSub(historyIndex, trees[historyIndex], left, right, newValue, 0, N - 1);
-    }
-
-    // inclusive, O(logN)
-    T upgrade(int historyIndex, int index, T newValue) {
-        treesLazy.push_back(treesLazy[historyIndex]);
-        auto t = upgradeSub(int(treesLazy.size()) - 1, trees[historyIndex], index, newValue, 0, N - 1);
-        trees.push_back(t.second);
-        return t.first;
-    }
-
-    // inclusive, O(max(right - left + 1, logN))
-    T upgradeRange(int historyIndex, int left, int right, T newValue) {
-        treesLazy.push_back(treesLazy[historyIndex]);
-        auto t = upgradeeRangeSub(int(treesLazy.size()) - 1, trees[historyIndex], left, right, newValue, 0, N - 1);
-        trees.push_back(t.second);
-        return t.first;
-    }
-
-    // PRECONDITION: tree's range operation is monotonically increasing or decreasing (positive / negative sum, min, max, gcd, lcm, ...)
-    // lower bound where f(x) is true in [0, N)
-    //   f(x): xxxxxxxxxxxOOOOOOOO
-    //         S          ^
-    // O(logN)
-    int lowerBound(int historyIndex, const function<bool(T)>& f) {
-        return lowerBoundSub(historyIndex, f, defaultValue, trees[historyIndex], 0, N - 1);
+    int lowerBound(int root, const function<bool(T)>& f) {
+        return recLowerBound(root, f, defaultValue, 0, N - 1);
     }
 
 private:
-    void init(int n) {
-        N = n;
-        trees.clear();
-        treesLazy.clear();
-        trees.reserve(N);
-
-        nodes.clear();
-        nodes.reserve(N * 4);
+    int recBuild(T value, int nodeLeft, int nodeRight) {
+        if (nodeLeft == nodeRight) {
+            nodes.emplace_back(value, -1, -1, defaultValue);
+        } else {
+            int mid = (nodeLeft + nodeRight) >> 1;
+            int L = recBuild(value, nodeLeft, mid);
+            int R = recBuild(value, mid + 1, nodeRight);
+            nodes.emplace_back(mergeOp(nodes[L].value, nodes[R].value), L, R, defaultValue);
+        }
+        return int(nodes.size()) - 1;
     }
 
-    int addNode(int id, T value) {
-        int i = int(nodes.size());
-        nodes.push_back({ id, value, -1, -1 });
-        return i;
+    int recBuild(const T A[], int nodeLeft, int nodeRight) {
+        if (nodeLeft == nodeRight) {
+            nodes.emplace_back(A[nodeLeft], -1, -1, defaultValue);
+        } else {
+            int mid = (nodeLeft + nodeRight) >> 1;
+            int L = recBuild(A, nodeLeft, mid);
+            int R = recBuild(A, mid + 1, nodeRight);
+            nodes.emplace_back(mergeOp(nodes[L].value, nodes[R].value), L, R, defaultValue);
+        }
+        return int(nodes.size()) - 1;
     }
 
-    int addNode(int id, T value, int left, int right) {
-        int i = int(nodes.size());
-        nodes.push_back({ id, value, left, right });
-        return i;
+    //---
+
+    int add(T value, int L, int R, T lazy) {
+        nodes.emplace_back(value, L, R, lazy);
+        return int(nodes.size()) - 1;
     }
 
-    // inclusive
-    pair<T, int> initSub(T initValue, int left, int right, int node) {
-        if (left == right)
-            return make_pair(initValue, addNode(node, initValue));
+    int pushDown(int node, int nodeLeft, int nodeRight, T val) {
+        if (val == defaultValue)
+            return node;
 
-        int mid = left + (right - left) / 2;
-        auto L = initSub<U>(initValue, left, mid, node * 2);
-        auto R = initSub<U>(initValue, mid + 1, right, node * 2 + 1);
-        auto value = mergeOp(L.first, R.first);
-        return make_pair(value, addNode(node, value, L.second, R.second));
+        T value = nodes[node].value;
+
+        if (nodeLeft == nodeRight)
+            return add(mergeOp(value, val), -1, -1, defaultValue);
+
+        return add(mergeOp(value, blockOp(val, nodeRight - nodeLeft + 1)),
+                   nodes[node].L,
+                   nodes[node].R,
+                   mergeOp(nodes[node].lazy, val));
     }
 
-    // inclusive
-    pair<T, int> buildSub(const T arr[], int left, int right, int node) {
-        if (left == right)
-            return make_pair(arr[left], addNode(node, arr[left]));
+    int recSet(int node, int nodeLeft, int nodeRight, int indexL, int indexR, T val) {
+        if (indexR < nodeLeft || nodeRight < indexL)
+            return node;
 
-        int mid = left + (right - left) / 2;
-        auto L = buildSub(arr, left, mid, node * 2);
-        auto R = buildSub(arr, mid + 1, right, node * 2 + 1);
-        auto value = mergeOp(L.first, R.first);
-        return make_pair(value, addNode(node, value, L.second, R.second));
+        if (nodeLeft == nodeRight)
+            return add(val, -1, -1, defaultValue);
+
+        T value = nodes[node].value;
+        int L = nodes[node].L;
+        int R = nodes[node].R;
+        T lazy = nodes[node].lazy;
+
+        if (indexL <= nodeLeft && nodeRight <= indexR) {
+            value = mergeOp(value, blockOp(val, nodeRight - nodeLeft + 1));
+            lazy = mergeOp(lazy, val);
+        } else {
+            int mid = (nodeLeft + nodeRight) >> 1;
+            if (lazy != defaultValue) {
+                L = pushDown(L, nodeLeft, mid, lazy);
+                R = pushDown(R, mid + 1, nodeRight, lazy);
+                lazy = defaultValue;
+            }
+            L = recSet(L, nodeLeft, mid, indexL, indexR, val);
+            R = recSet(R, mid + 1, nodeRight, indexL, indexR, val);
+            value = mergeOp(nodes[L].value, nodes[R].value);
+        }
+        return add(value, L, R, lazy);
     }
 
-    T querySub(int historyIndex, int node, int left, int right, int nodeLeft, int nodeRight) {
-        if (right < nodeLeft || nodeRight < left)
+    int recUpdate(int node, int nodeLeft, int nodeRight, int indexL, int indexR, T val) {
+        if (indexR < nodeLeft || nodeRight < indexL)
+            return node;
+
+        T value = nodes[node].value;
+
+        if (nodeLeft == nodeRight)
+            return add(mergeOp(value, val), -1, -1, defaultValue);
+
+        int L = nodes[node].L;
+        int R = nodes[node].R;
+        T lazy = nodes[node].lazy;
+
+        if (indexL <= nodeLeft && nodeRight <= indexR) {
+            value = mergeOp(value, blockOp(val, nodeRight - nodeLeft + 1));
+            lazy = mergeOp(lazy, val);
+        } else {
+            int mid = (nodeLeft + nodeRight) >> 1;
+            if (lazy != defaultValue) {
+                L = pushDown(L, nodeLeft, mid, lazy);
+                R = pushDown(R, mid + 1, nodeRight, lazy);
+                lazy = defaultValue;
+            }
+            L = recUpdate(L, nodeLeft, mid, indexL, indexR, val);
+            R = recUpdate(R, mid + 1, nodeRight, indexL, indexR, val);
+            value = mergeOp(nodes[L].value, nodes[R].value);
+        }
+        return add(value, L, R, lazy);
+    }
+
+    T recQuery(int node, int nodeLeft, int nodeRight, int indexL, int indexR) {
+        if (indexR < nodeLeft || nodeRight < indexL)
             return defaultValue;
 
-        if (left <= nodeLeft && nodeRight <= right)
+        if (indexL <= nodeLeft && nodeRight <= indexR)
             return nodes[node].value;
 
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        int mid = (nodeLeft + nodeRight) >> 1;
+        int L = nodes[node].L;
+        int R = nodes[node].R;
+        T lazy = nodes[node].lazy;
+        if (lazy != defaultValue) {
+            L = pushDown(L, nodeLeft, mid, lazy);
+            R = pushDown(R, mid + 1, nodeRight, lazy);
 
-        auto it = treesLazy[historyIndex].find(nodes[node].id);
-        if (it != treesLazy[historyIndex].end()) {
-            pushDown(historyIndex, nodes[node].left, it->second, nodeLeft, mid);
-            pushDown(historyIndex, nodes[node].right, it->second, mid + 1, nodeRight);
-            treesLazy[historyIndex].erase(it);
-        }
-        return mergeOp(querySub(historyIndex, nodes[node].left, left, right, nodeLeft, mid),
-                       querySub(historyIndex, nodes[node].right, left, right, mid + 1, nodeRight));
-    }
-
-    T updateSub(int historyIndex, int node, int index, T newValue, int nodeLeft, int nodeRight) {
-        if (index < nodeLeft || nodeRight < index)
-            return node >= 0 ? nodes[node].value : defaultValue;
-
-        if (nodeLeft == nodeRight)
-            return nodes[node].value = newValue;
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-
-        auto it = treesLazy[historyIndex].find(nodes[node].id);
-        if (it != treesLazy[historyIndex].end()) {
-            pushDown(historyIndex, nodes[node].left, it->second, nodeLeft, mid);
-            pushDown(historyIndex, nodes[node].right, it->second, mid + 1, nodeRight);
-            treesLazy[historyIndex].erase(it);
-        }
-        return nodes[p].value = mergeOp(updateSub(historyIndex, nodes[node].left, index, newValue, nodeLeft, mid),
-                                        updateSub(historyIndex, nodes[node].right, index, newValue, mid + 1, nodeRight));
-    }
-
-    T updateRangeSub(int historyIndex, int node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
-        if (right < nodeLeft || nodeRight < left)
-            return node >= 0 ? nodes[node].value : defaultValue;
-
-        if (nodeLeft == nodeRight)
-            return nodes[node].value = newValue;
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-
-        auto it = treesLazy[historyIndex].find(nodes[node].id);
-        if (it != treesLazy[historyIndex].end()) {
-            pushDown(historyIndex, nodes[node].left, it->second, nodeLeft, mid);
-            pushDown(historyIndex, nodes[node].right, it->second, mid + 1, nodeRight);
-            treesLazy[historyIndex].erase(it);
+            nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
+            nodes[node].L = L;
+            nodes[node].R = R;
+            nodes[node].lazy = defaultValue;
         }
 
-        if (left <= nodeLeft && nodeRight <= right) {
-            treesLazy[historyIndex][nodes[node].id] = newValue;
-            return nodes[node].value = blockOp(newValue, nodeRight - nodeLeft + 1);
-        }
-
-        return nodes[node].value = mergeOp(updateRangeSub(historyIndex, nodes[node].left, left, right, newValue, nodeLeft, mid),
-                                           updateRangeSub(historyIndex, nodes[node].right, left, right, newValue, mid + 1, nodeRight));
+        return mergeOp(recQuery(L, nodeLeft, mid, indexL, indexR),
+                       recQuery(R, mid + 1, nodeRight, indexL, indexR));
     }
 
-    pair<T, int> upgradeSub(int historyIndex, int node, int index, T newValue, int nodeLeft, int nodeRight) {
-        if (index < nodeLeft || nodeRight < index)
-            return make_pair(node >= 0 ? nodes[node].value : defaultValue, node);
-
-        if (nodeLeft == nodeRight)
-            return make_pair(newValue, addNode(nodes[node].id, newValue, nodes[node].left, nodes[node].right));
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-
-        auto it = treesLazy[historyIndex].find(nodes[node].id);
-        if (it != treesLazy[historyIndex].end()) {
-            auto L = pushDownUpgrade(historyIndex, nodes[node].left, it->second, nodeLeft, mid);
-            auto R = pushDownUpgrade(historyIndex, nodes[node].right, it->second, mid + 1, nodeRight);
-            node = addNode(nodes[node].id, nodes[node].value, L.second, R.second);
-            treesLazy[historyIndex].erase(it);
-        }
-
-        auto L = upgradeSub(historyIndex, nodes[node].left, index, newValue, nodeLeft, mid);
-        auto R = upgradeSub(historyIndex, nodes[node].right, index, newValue, mid + 1, nodeRight);
-        T value = mergeOp(L.first, R.first);
-        return make_pair(value, addNode(nodes[node].id, value, L.second, R.second));
-    }
-
-    pair<T, int> upgradeRangeSub(int historyIndex, int node, int left, int right, T newValue, int nodeLeft, int nodeRight) {
-        if (right < nodeLeft || nodeRight < left)
-            return make_pair(node >= 0 ? nodes[node].value : defaultValue, node);
-
-        if (nodeLeft == nodeRight)
-            return make_pair(newValue, addNode(nodes[node].id, newValue, nodes[node].left, nodes[node].right));
-
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
-
-        auto it = treesLazy[historyIndex].find(nodes[node].id);
-        if (it != treesLazy[historyIndex].end()) {
-            auto L = pushDownUpgrade(historyIndex, nodes[node].left, it->second, nodeLeft, mid);
-            auto R = pushDownUpgrade(historyIndex, nodes[node].right, it->second, mid + 1, nodeRight);
-            node = addNode(nodes[node].id, nodes[node].value, L.second, R.second);
-            treesLazy[historyIndex].erase(it);
-        }
-
-        if (left <= nodeLeft && nodeRight <= right) {
-            treesLazy[historyIndex][nodes[node].id] = newValue;
-            T value = blockOp(newValue, nodeRight - nodeLeft + 1);
-            return make_pair(value, addNode(nodes[node].id, value, nodes[node].left, nodes[node].right));
-        }
-
-        auto L = upgradeRangeSub(historyIndex, nodes[node].left, left, right, newValue, nodeLeft, mid);
-        auto R = upgradeRangeSub(historyIndex, nodes[node].right, left, right, newValue, mid + 1, nodeRight);
-        T value = mergeOp(L.first, R.first);
-        return make_pair(value, addNode(nodes[node].id, value, L.second, R.second));
-    }
-
-    T pushDown(int historyIndex, int p, T newValue, int nodeLeft, int nodeRight) {
-        if (nodeLeft == nodeRight)
-            return nodes[p].value = newValue;
-
-        treesLazy[historyIndex][nodes[p].id] = newValue;
-        return nodes[p].value = blockOp(newValue, nodeRight - nodeLeft + 1);
-    }
-
-    pair<T, int> pushDownUpgrade(int historyIndex, int p, T newValue, int nodeLeft, int nodeRight) {
-        if (nodeLeft == nodeRight)
-            return make_pair(newValue, addNode(nodes[p].id, newValue, nodes[p].left, nodes[p].right));
-
-        treesLazy[historyIndex][nodes[p].id] = newValue;
-        T value = blockOp(newValue, nodeRight - nodeLeft + 1);
-        return make_pair(value, addNode(nodes[p].id, value, nodes[p].left, nodes[p].right));
-    }
-
-
-    int lowerBoundSub(int historyIndex, const function<bool(T)>& f, T delta, int node, int nodeLeft, int nodeRight) {
+    int recLowerBound(int node, const function<bool(T)>& f, T delta, int nodeLeft, int nodeRight) {
         if (nodeLeft > nodeRight)
             return nodeLeft;
 
         if (nodeLeft == nodeRight)
             return nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1);
 
-        int mid = nodeLeft + (nodeRight - nodeLeft) / 2;
+        int mid = (nodeLeft + nodeRight) >> 1;
+        int L = nodes[node].L;
+        int R = nodes[node].R;
+        T lazy = nodes[node].lazy;
+        if (lazy != defaultValue) {
+            L = pushDown(L, nodeLeft, mid, lazy);
+            R = pushDown(R, mid + 1, nodeRight, lazy);
 
-        auto it = treesLazy[historyIndex].find(nodes[node].id);
-        if (it != treesLazy[historyIndex].end()) {
-            pushDown(historyIndex, nodes[node].left, it->second, nodeLeft, mid);
-            pushDown(historyIndex, nodes[node].right, it->second, mid + 1, nodeRight);
-            treesLazy[historyIndex].erase(it);
+            nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
+            nodes[node].L = L;
+            nodes[node].R = R;
+            nodes[node].lazy = defaultValue;
         }
 
-        auto val = mergeOp(delta, nodes[nodes[node].left].value);
+        auto val = mergeOp(delta, nodes[L].value);
         if (f(val))
-            return lowerBoundSub(historyIndex, f, delta, nodes[node].left, nodeLeft, mid);
+            return recLowerBound(L, f, delta, nodeLeft, mid);
         else
-            return lowerBoundSub(historyIndex, f, val, nodes[node].right, mid + 1, nodeRight);
+            return recLowerBound(R, f, val, mid + 1, nodeRight);
     }
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dfltValue = T()) {
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dfltValue = T()) {
     return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const vector<T>& v, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(v, mop, bop, dfltValue);
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makePersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(n, mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp> makePersistentSegmentTreeLazy(const T arr[], int size, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(arr, size, mop, bop, dfltValue);
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makePersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(value, n, mop, bop, dfltValue);
+}
+
+template <typename T, typename MergeOp, typename BlockOp>
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makePersistentSegmentTreeLazy(const T A[], int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(A, n, mop, bop, dfltValue);
+}
+
+template <typename T, typename MergeOp, typename BlockOp>
+inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makePersistentSegmentTreeLazy(const vector<T>& A, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(A, mop, bop, dfltValue);
 }
