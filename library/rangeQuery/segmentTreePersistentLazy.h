@@ -1,7 +1,5 @@
 #pragma once
 
-// The first 'node' number is 1, not 0
-// Others('left', 'right', 'nodeLeft', 'nodeRight', 'index') are started from 0
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
 struct PersistentSegmentTreeLazy {
     struct Node {
@@ -234,7 +232,7 @@ private:
             L = pushDown(L, nodeLeft, mid, lazy);
             R = pushDown(R, mid + 1, nodeRight, lazy);
 
-            nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
+            //nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
             nodes[node].L = L;
             nodes[node].R = R;
             nodes[node].lazy = defaultValue;
@@ -259,7 +257,7 @@ private:
             L = pushDown(L, nodeLeft, mid, lazy);
             R = pushDown(R, mid + 1, nodeRight, lazy);
 
-            nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
+            //nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
             nodes[node].L = L;
             nodes[node].R = R;
             nodes[node].lazy = defaultValue;
