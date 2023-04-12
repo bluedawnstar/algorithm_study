@@ -150,6 +150,9 @@
     <ClCompile Include="mergeSortTreeCompactWithLiChaoTree.cpp" />
     <ClCompile Include="prefixMinSum.cpp" />
     <ClCompile Include="segmentTreeLazyWithBase.cpp" />
+    <ClCompile Include="segmentTreePersistentLazyRollbackable.cpp" />
+    <ClCompile Include="segmentTreePersistentLazyRollbackableWithBase.cpp" />
+    <ClCompile Include="segmentTreePersistentLazyWithBase.cpp" />
     <ClCompile Include="sparseTableDisjoint.cpp" />
     <ClCompile Include="dynamicSegmentTree.cpp" />
     <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
@@ -228,6 +231,9 @@
     <ClInclude Include="segmentTreeCompactLazyEx.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
     <ClInclude Include="segmentTreeLazyWithBase.h" />
+    <ClInclude Include="segmentTreePersistentLazyRollbackable.h" />
+    <ClInclude Include="segmentTreePersistentLazyRollbackableWithBase.h" />
+    <ClInclude Include="segmentTreePersistentLazyWithBase.h" />
     <ClInclude Include="sparseTableDisjoint.h" />
     <ClInclude Include="dynamicSegmentTree.h" />
     <ClInclude Include="dynamicSegmentTreeEx.h" />

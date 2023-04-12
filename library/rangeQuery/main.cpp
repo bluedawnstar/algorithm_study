@@ -20,7 +20,12 @@ int main(void) {
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
     TEST(SegmentTreePartiallyPersistent);
+    TEST(SegmentTreePartiallyPersistent);
     TEST(SegmentTreePersistentLazy);
+    TEST(RollbackableSegmentTreePersistentLazy);
+    TEST(SegmentTreeLazyWithBase);
+    TEST(PersistentSegmentTreeLazyWithBase);
+    TEST(RollbackablePersistentSegmentTreeLazyWithBase);
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);
@@ -73,5 +78,4 @@ int main(void) {
     TEST(SegmentTreeLineIntegralLazy);
     TEST(CompactMergeSortTreeWithLiChaoTree);
     TEST(PrefixMinSum);
-    TEST(SegmentTreeLazyWithBase);
 }
