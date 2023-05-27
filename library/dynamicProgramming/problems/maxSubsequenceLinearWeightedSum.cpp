@@ -17,8 +17,6 @@ void testMaxSubsequenceLinearWeightedSum() {
 
     cout << "--- Max Linear Weighted Sum of Subsequences ----------------" << endl;
     {
-        MaxSubsequenceLinearWeightedSum<long long> solver;
-
         vector<vector<int>> testCases{
             { -29, -34, 97, 37, 57 },
             { 60, 5, 8, 45, 89, -88, 75, 25, 98, -15, 12, -3, -16, -42 },

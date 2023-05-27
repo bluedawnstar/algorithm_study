@@ -39,7 +39,7 @@
     <ClCompile Include="knapsack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="bitDP.cpp">
+    <ClCompile Include="bitDP_SumOverSubsets.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="maxProductSumOfSubarray.cpp">
@@ -233,7 +233,7 @@
     <ClInclude Include="knapsack.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bitDP.h">
+    <ClInclude Include="bitDP_SumOverSubsets.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="maxProductSumOfSubarray.h">
