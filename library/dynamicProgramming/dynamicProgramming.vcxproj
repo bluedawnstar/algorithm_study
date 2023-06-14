@@ -146,7 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bitDP.cpp" />
+    <ClCompile Include="bitDP_SumOverSubsets.cpp" />
     <ClCompile Include="bracketChangeCounter.cpp" />
     <ClCompile Include="digitDP_100sum.cpp" />
     <ClCompile Include="digitDP_IncreasingDigitSequence.cpp" />
@@ -214,7 +214,7 @@
     <ClCompile Include="longestZigzagSubsequence.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bitDP.h" />
+    <ClInclude Include="bitDP_SumOverSubsets.h" />
     <ClInclude Include="bracketChangeCounter.h" />
     <ClInclude Include="digitCounter.h" />
     <ClInclude Include="digitDPFast.h" />

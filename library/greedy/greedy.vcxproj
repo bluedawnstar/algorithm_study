@@ -148,9 +148,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nonoverlappingIntervals.cpp" />
+    <ClCompile Include="scheduleWithDeadline.cpp" />
+    <ClCompile Include="unitTimeSchedulerWithCooldownPeriod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="nonoverlappingIntervals.h" />
+    <ClInclude Include="scheduleWithDeadline.h" />
+    <ClInclude Include="unitTimeSchedulerWithCooldownPeriod.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

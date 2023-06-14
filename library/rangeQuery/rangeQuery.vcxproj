@@ -149,6 +149,10 @@
     <ClCompile Include="binarySearchTreeRangeSum.cpp" />
     <ClCompile Include="mergeSortTreeCompactWithLiChaoTree.cpp" />
     <ClCompile Include="prefixMinSum.cpp" />
+    <ClCompile Include="segmentTreeLazyWithBase.cpp" />
+    <ClCompile Include="segmentTreePersistentLazyRollbackable.cpp" />
+    <ClCompile Include="segmentTreePersistentLazyRollbackableWithBase.cpp" />
+    <ClCompile Include="segmentTreePersistentLazyWithBase.cpp" />
     <ClCompile Include="sparseTableDisjoint.cpp" />
     <ClCompile Include="dynamicSegmentTree.cpp" />
     <ClCompile Include="dynamicSegmentTreeMaxSubarray.cpp" />
@@ -182,7 +186,7 @@
     <ClCompile Include="segmentTreeLineIntegralLazy.cpp" />
     <ClCompile Include="segmentTreePersistent-KTimesValueCounter.cpp" />
     <ClCompile Include="segmentTreePersistent-UniqueValueCounter.cpp" />
-    <ClCompile Include="segmentTreePersistentLazySimple.cpp" />
+    <ClCompile Include="segmentTreePersistentLazy.cpp" />
     <ClCompile Include="segmentTreePrimeFactorXorRollingHash.cpp" />
     <ClCompile Include="segmentTreeSubsetXor.cpp" />
     <ClCompile Include="dynamicSegmentTreeForest.cpp" />
@@ -205,7 +209,6 @@
     <ClCompile Include="segmentTreeMaxSubarray.cpp" />
     <ClCompile Include="segmentTreePartiallyPersistentLazy.cpp" />
     <ClCompile Include="segmentTreePersistent.cpp" />
-    <ClCompile Include="segmentTreePersistentSimple.cpp" />
     <ClCompile Include="sparseTable.cpp" />
     <ClCompile Include="sparseTable2D.cpp" />
     <ClCompile Include="sparseTableReverse.cpp" />
@@ -227,6 +230,10 @@
     <ClInclude Include="prefixMinSum.h" />
     <ClInclude Include="segmentTreeCompactLazyEx.h" />
     <ClInclude Include="consecutiveSubarray_DivideCombineTreeWithLCA.h" />
+    <ClInclude Include="segmentTreeLazyWithBase.h" />
+    <ClInclude Include="segmentTreePersistentLazyRollbackable.h" />
+    <ClInclude Include="segmentTreePersistentLazyRollbackableWithBase.h" />
+    <ClInclude Include="segmentTreePersistentLazyWithBase.h" />
     <ClInclude Include="sparseTableDisjoint.h" />
     <ClInclude Include="dynamicSegmentTree.h" />
     <ClInclude Include="dynamicSegmentTreeEx.h" />
@@ -261,7 +268,7 @@
     <ClInclude Include="segmentTreeLineIntegralLazy.h" />
     <ClInclude Include="segmentTreePersistent-KTimesValueCounter.h" />
     <ClInclude Include="segmentTreePersistent-UniqueValueCounter.h" />
-    <ClInclude Include="segmentTreePersistentLazySimple.h" />
+    <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="segmentTreePrimeFactorXorRollingHash.h" />
     <ClInclude Include="segmentTreeSubsetXor.h" />
     <ClInclude Include="dynamicSegmentTreeForest.h" />
@@ -291,10 +298,8 @@
     <ClInclude Include="segmentTreeLineSegment2DMin.h" />
     <ClInclude Include="segmentTreeLineSegment2DMinSum.h" />
     <ClInclude Include="segmentTreeMaxSubarray.h" />
-    <ClInclude Include="segmentTreePersistent.h" />
-    <ClInclude Include="segmentTreePersistentLazy.h" />
     <ClInclude Include="segmentTreePartiallyPersistentLazy.h" />
-    <ClInclude Include="segmentTreePersistentSimple.h" />
+    <ClInclude Include="segmentTreePersistent.h" />
     <ClInclude Include="segmentTreeRMQ.h" />
     <ClInclude Include="sparseTable.h" />
     <ClInclude Include="sparseTable2D.h" />

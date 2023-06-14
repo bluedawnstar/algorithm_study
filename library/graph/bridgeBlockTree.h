@@ -125,10 +125,10 @@ struct BridgeBlockTree {
         }
     };
 
-    int N;
-    vector<vector<int>> edges;
-    vector<vector<int>> components;
-    vector<int> nodeToComp;         // tree node id to component id
+    int N;                          // the number of tree nodes (components)
+    vector<vector<int>> edges;      // tree
+    vector<vector<int>> components; // graph nodes in a tree node (component)
+    vector<int> nodeToComp;         // graph node to tree node
 
     UndirectedGraph graph;          // original graph and bridge information
 

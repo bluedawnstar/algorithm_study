@@ -177,6 +177,9 @@
     <ClCompile Include="BKTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="prefixAutomaton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distinctSubstringCounter.h">
@@ -396,6 +399,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="suffixArray_naive.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixAutomaton.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="prefixAutomatonAlgo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

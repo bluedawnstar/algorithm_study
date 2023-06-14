@@ -117,6 +117,9 @@
     <ClCompile Include="primeNumberLinearSieve.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="subsetAnd.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gcd.h">
@@ -255,6 +258,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="primeNumberLinearSieve.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="subsetAnd.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

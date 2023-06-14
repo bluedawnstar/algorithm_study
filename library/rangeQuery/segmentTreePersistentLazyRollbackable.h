@@ -1,7 +1,7 @@
 #pragma once
 
 template <typename T, typename MergeOp = function<T(T, T)>, typename BlockOp = function<T(T, int)>>
-struct PersistentSegmentTreeLazy {
+struct RollbackablePersistentSegmentTreeLazy {
     struct Node {
         T   value;
         int L;
@@ -27,26 +27,26 @@ struct PersistentSegmentTreeLazy {
     MergeOp         mergeOp;
     BlockOp         blockOp;
 
-    PersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dflt = T())
-            : N(0), nodes(), initRoot(-1), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    RollbackablePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dflt = T())
+        : N(0), nodes(), initRoot(-1), defaultValue(dflt), mergeOp(mop), blockOp(bop) {
     }
 
-    PersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dflt = T())
-            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    RollbackablePersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(defaultValue, n);
     }
 
-    PersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
-            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    RollbackablePersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(value, n);
     }
 
-    PersistentSegmentTreeLazy(const T A[], int n, MergeOp mop, BlockOp bop, T dflt = T())
-            : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
+    RollbackablePersistentSegmentTreeLazy(const T A[], int n, MergeOp mop, BlockOp bop, T dflt = T())
+        : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(A, n);
     }
 
-    PersistentSegmentTreeLazy(const vector<T>& A, MergeOp mop, BlockOp bop, T dflt = T())
+    RollbackablePersistentSegmentTreeLazy(const vector<T>& A, MergeOp mop, BlockOp bop, T dflt = T())
         : defaultValue(dflt), mergeOp(mop), blockOp(bop) {
         build(A);
     }
@@ -97,8 +97,8 @@ struct PersistentSegmentTreeLazy {
         return recUpdate(root, 0, N - 1, left, right, val);
     }
 
-    // O(logN)
-    T query(int root, int left, int right) {
+    // return (query_result, new_root), O(logN)
+    pair<T, int> query(int root, int left, int right) {
         return recQuery(root, 0, N - 1, left, right);
     }
 
@@ -106,9 +106,19 @@ struct PersistentSegmentTreeLazy {
     // lower bound where f(x) is true in [0, N)
     //   f(x): xxxxxxxxxxxOOOOOOOO
     //         S          ^
-    // O(logN)
-    int lowerBound(int root, const function<bool(T)>& f) {
+    // return (lower_bound, new_root), O(logN)
+    pair<int, int> lowerBound(int root, const function<bool(T)>& f) {
         return recLowerBound(root, f, defaultValue, 0, N - 1);
+    }
+
+    //---
+
+    int checkPoint() {
+        return int(nodes.size());
+    }
+
+    void rollback(int chk) {
+        nodes.resize(chk);
     }
 
 private:
@@ -153,9 +163,9 @@ private:
             return add(mergeOp(value, val), -1, -1, defaultValue);
 
         return add(mergeOp(value, blockOp(val, nodeRight - nodeLeft + 1)),
-                   nodes[node].L,
-                   nodes[node].R,
-                   mergeOp(nodes[node].lazy, val));
+            nodes[node].L,
+            nodes[node].R,
+            mergeOp(nodes[node].lazy, val));
     }
 
     int recSet(int node, int nodeLeft, int nodeRight, int indexL, int indexR, T val) {
@@ -217,12 +227,12 @@ private:
         return add(value, L, R, lazy);
     }
 
-    T recQuery(int node, int nodeLeft, int nodeRight, int indexL, int indexR) {
+    pair<T, int> recQuery(int node, int nodeLeft, int nodeRight, int indexL, int indexR) {
         if (indexR < nodeLeft || nodeRight < indexL)
-            return defaultValue;
+            return make_pair(defaultValue, node);
 
         if (indexL <= nodeLeft && nodeRight <= indexR)
-            return nodes[node].value;
+            return make_pair(nodes[node].value, node);
 
         int mid = (nodeLeft + nodeRight) >> 1;
         int L = nodes[node].L;
@@ -231,23 +241,23 @@ private:
         if (lazy != defaultValue) {
             L = pushDown(L, nodeLeft, mid, lazy);
             R = pushDown(R, mid + 1, nodeRight, lazy);
-
-            //nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
-            nodes[node].L = L;
-            nodes[node].R = R;
-            nodes[node].lazy = defaultValue;
         }
 
-        return mergeOp(recQuery(L, nodeLeft, mid, indexL, indexR),
-                       recQuery(R, mid + 1, nodeRight, indexL, indexR));
+        auto resL = recQuery(L, nodeLeft, mid, indexL, indexR);
+        auto resR = recQuery(R, mid + 1, nodeRight, indexL, indexR);
+        if (resL.second != nodes[node].L || resR.second != nodes[node].R) {
+            nodes.emplace_back(nodes[node].value, resL.second, resR.second, defaultValue);
+            node = int(nodes.size()) - 1;
+        }
+        return make_pair(mergeOp(resL.first, resR.first), node);
     }
 
-    int recLowerBound(int node, const function<bool(T)>& f, T delta, int nodeLeft, int nodeRight) {
+    pair<int, int> recLowerBound(int node, const function<bool(T)>& f, T delta, int nodeLeft, int nodeRight) {
         if (nodeLeft > nodeRight)
-            return nodeLeft;
+            return make_pair(nodeLeft, node);
 
         if (nodeLeft == nodeRight)
-            return nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1);
+            return make_pair(nodeLeft + (f(mergeOp(delta, nodes[node].value)) ? 0 : 1), node);
 
         int mid = (nodeLeft + nodeRight) >> 1;
         int L = nodes[node].L;
@@ -256,47 +266,49 @@ private:
         if (lazy != defaultValue) {
             L = pushDown(L, nodeLeft, mid, lazy);
             R = pushDown(R, mid + 1, nodeRight, lazy);
-
-            //nodes[node].value = mergeOp(nodes[L].value, nodes[R].value);
-            nodes[node].L = L;
-            nodes[node].R = R;
-            nodes[node].lazy = defaultValue;
         }
 
+        int res;
         auto val = mergeOp(delta, nodes[L].value);
-        if (f(val))
-            return recLowerBound(L, f, delta, nodeLeft, mid);
-        else
-            return recLowerBound(R, f, val, mid + 1, nodeRight);
+        if (f(val)) {
+            tie(res, L) = recLowerBound(L, f, delta, nodeLeft, mid);
+        } else {
+            tie(res, R) = recLowerBound(R, f, val, mid + 1, nodeRight);
+        }
+        if (L != nodes[node].L || R != nodes[node].R) {
+            nodes.emplace_back(nodes[node].value, L, R, defaultValue);
+            node = int(nodes.size()) - 1;
+        }
+        return make_pair(res, node);
     }
 };
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
-makePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
+inline RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makeRollbackablePersistentSegmentTreeLazy(MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>(mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
-makePersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(n, mop, bop, dfltValue);
+inline RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makeRollbackablePersistentSegmentTreeLazy(int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>(n, mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
-makePersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(value, n, mop, bop, dfltValue);
+inline RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makeRollbackablePersistentSegmentTreeLazy(T value, int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>(value, n, mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
-makePersistentSegmentTreeLazy(const T A[], int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(A, n, mop, bop, dfltValue);
+inline RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makeRollbackablePersistentSegmentTreeLazy(const T A[], int n, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>(A, n, mop, bop, dfltValue);
 }
 
 template <typename T, typename MergeOp, typename BlockOp>
-inline PersistentSegmentTreeLazy<T, MergeOp, BlockOp>
-makePersistentSegmentTreeLazy(const vector<T>& A, MergeOp mop, BlockOp bop, T dfltValue = T()) {
-    return PersistentSegmentTreeLazy<T, MergeOp, BlockOp>(A, mop, bop, dfltValue);
+inline RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>
+makeRollbackablePersistentSegmentTreeLazy(const vector<T>& A, MergeOp mop, BlockOp bop, T dfltValue = T()) {
+    return RollbackablePersistentSegmentTreeLazy<T, MergeOp, BlockOp>(A, mop, bop, dfltValue);
 }

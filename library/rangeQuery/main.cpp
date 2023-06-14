@@ -20,8 +20,12 @@ int main(void) {
     TEST(SegmentTree);
     TEST(SegmentTreePersistent);
     TEST(SegmentTreePartiallyPersistent);
-    TEST(SegmentTreePersistentSimple);
-    TEST(SegmentTreePersistentLazySimple);
+    TEST(SegmentTreePartiallyPersistent);
+    TEST(SegmentTreePersistentLazy);
+    TEST(RollbackableSegmentTreePersistentLazy);
+    TEST(SegmentTreeLazyWithBase);
+    TEST(PersistentSegmentTreeLazyWithBase);
+    TEST(RollbackablePersistentSegmentTreeLazyWithBase);
     TEST(SegmentTreeCompact);
     TEST(SegmentTreeCompactLazy);
     TEST(SegmentTreeCompactLazyAdd);

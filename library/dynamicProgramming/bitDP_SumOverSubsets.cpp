@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "bitDP.h"
+#include "bitDP_SumOverSubsets.h"
 
 
 /////////// For Testing ///////////////////////////////////////////////////////
