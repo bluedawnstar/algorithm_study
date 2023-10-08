@@ -16,11 +16,26 @@ using namespace std;
 #include "../common/profile.h"
 
 void testLongestIncreasingSubsequence() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Longest Increasing Subsequence ------------------------" << endl;
     {
-        vector<int> v{ 10, 22, 9, 33, 21, 50, 41, 60, 80 };
+        vector<int> v{ 10, 22, 9, 34, 33, 21, 50, 34, 60, 90,  80 };
+        /*
+                |  10  22   9  34  33  21  50  34  60  90  80  
+         -------+--------------------------------------------------
+             9  |           1
+            10  |   1
+            21  |                       2
+            22  |       2 
+            33  |                   3
+            34  |               3
+            41  |                               4
+            50  |                           4
+            60  |                                   5
+            80  |                                           6
+            90  |                                       6
+        */
         int len = LIS::findLength(v);
         assert(len == 6);
 
@@ -29,6 +44,11 @@ void testLongestIncreasingSubsequence() {
 
         cout << "smallest = " << smallest << endl;
         cout << "biggest = " << biggest << endl;
+
+        auto smallestGT = vector<int>{ 10, 22, 33, 34, 60, 80 };
+        auto biggestGT = vector<int>{ 10, 22, 34, 50, 60, 90 };
+        assert(smallest == smallestGT);
+        assert(biggest == biggestGT);
     }
     {
         vector<int> v{ 1, 3, 2, 7, 4, 11, 4, 12, 4, 2, 1, 9, 10 };
