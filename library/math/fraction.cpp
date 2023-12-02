@@ -46,23 +46,6 @@ ostream& operator <<(ostream& os, const Fraction<T>& f) {
     return os;
 }
 
-static struct TestData {
-    long long from, to;
-    long long num, denom;
-} sIn[] = {
-    { 1, 10, 22, 7 },
-    { 482480, 1196809, 3126535, 995207 },
-    { 359407, 835582, 1146408, 364913 },
-    { 622459, 1367716, 4272943, 1360120 },
-    { 646699, 1108000, 3126535, 995207 },
-    { 819345, 1327749, 3126535, 995207 },
-    { 450214, 458009, 1438862, 458004 },
-    { 476934, 927416, 2292816, 729826 },
-    { 724574, 1347684, 3126535, 995207 },
-    { 766766, 1488720, 4272943, 1360120 },
-    { 16706, 61598, 104348, 33215 }
-};
-
 template <typename T>
 static T gcd(T p, T q) {
     if (p < q)
@@ -79,7 +62,7 @@ static T gcd(T p, T q) {
 }
 
 void testFraction() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
     
     cout << "--------- testFraction() -----------------" << endl;
     {
@@ -103,14 +86,42 @@ void testFraction() {
     }
 
     //--- test continued fraction ---------------------------------------------
+
     cout << "*** PI's fractions" << endl;
     {
+        // https://oeis.org/A001203
         // [3; 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2, 1, 84, 2]
         vector<long long> piA = vector<long long>{ 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2, 1, 84, 2, };
         auto v = continuedFraction(piA);
         for (auto it : v) {
             cout << it.first << "/" << it.second << endl;
         }
+
+        vector<long long> coeff = getCoefficientsOfContinuedFraction(v.back().first, v.back().second, int(piA.size()));
+        if (coeff != piA) {
+            cout << "Mismatched : " << coeff << endl;
+        }
+        assert(coeff == piA);
+    }
+    {
+        // https://oeis.org/A001203
+        // [3; 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14]
+        vector<int> gt = vector<int>{ 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14 };
+
+        vector<int> coeff = getCoefficientsOfContinuedFraction<double, int>(M_PI, int(gt.size()));
+        if (coeff != gt) {
+            cout << "Mismatched : " << coeff << endl;
+        }
+        assert(coeff == gt);
+    }
+    {
+        vector<int> gt = vector<int>{ 4, 2, 6, 7 };
+
+        vector<int> coeff = getCoefficientsOfContinuedFraction(415, 93, int(gt.size()));
+        if (coeff != gt) {
+            cout << "Mismatched : " << coeff << endl;
+        }
+        assert(coeff == gt);
     }
     cout << "OK!" << endl;
 }
