@@ -31,27 +31,27 @@ struct LIS {
         if (n <= 0)
             return {};
 
+        vector<pair<T, int>> dp;        // dp[i] = (value, index)
         vector<int> prev(n);            // 
-        vector<pair<T, int>> lis;       // lis[i] = (value, index)
 
         prev[0] = -1;
-        lis.emplace_back(v[0], 0);
+        dp.emplace_back(v[0], 0);
         for (int i = 1; i < n; i++) {
-            if (lis.back().first < v[i]) {
-                prev[i] = lis.back().second;
-                lis.emplace_back(v[i], i);
+            if (dp.back().first < v[i]) {
+                prev[i] = dp.back().second;
+                dp.emplace_back(v[i], i);
             } else {
-                int j = int(lower_bound(lis.begin(), lis.end(), make_pair(v[i], -1)) - lis.begin());
+                int j = int(lower_bound(dp.begin(), dp.end(), make_pair(v[i], -1)) - dp.begin());
                 if (j == 0)
                     prev[i] = -1;
                 else
-                    prev[i] = lis[j - 1].second;
-                lis[j] = make_pair(v[i], i);
+                    prev[i] = dp[j - 1].second;
+                dp[j] = make_pair(v[i], i);
             }
         }
 
         vector<T> res;
-        for (int i = lis.back().second; i >= 0; i = prev[i])
+        for (int i = dp.back().second; i >= 0; i = prev[i])
             res.push_back(v[i]);
         reverse(res.begin(), res.end());
 
@@ -71,35 +71,35 @@ struct LIS {
         if (n <= 0)
             return {};
 
+        vector<T> dp;                           // 
         vector<int> prev(n);                    // 
-        vector<T> lis;                          // 
-        vector<vector<pair<T, int>>> lis2;      // lis2[i] = { (value, index), ... }
+        vector<vector<pair<T, int>>> dp2;       // dp2[i] = { (value, index), ... }
 
         prev[0] = -1;
-        lis.push_back(v[0]);
-        lis2.push_back({ { -v[0], 0 } });
+        dp.push_back(v[0]);
+        dp2.push_back({ { -v[0], 0 } });
         for (int i = 1; i < n; i++) {
             int j = -1;
-            if (lis.back() < v[i]) {
-                j = int(lis.size());
-                lis.push_back(v[i]);
-                lis2.push_back({});
+            if (dp.back() < v[i]) {
+                j = int(dp.size());
+                dp.push_back(v[i]);
+                dp2.push_back({});
             } else {
-                j = int(lower_bound(lis.begin(), lis.end(), v[i]) - lis.begin());
-                lis[j] = v[i];
+                j = int(lower_bound(dp.begin(), dp.end(), v[i]) - dp.begin());
+                dp[j] = v[i];
             }
 
             if (j == 0) {
                 prev[i] = -1;
             } else {
-                int k = int(upper_bound(lis2[j - 1].begin(), lis2[j - 1].end(), make_pair(-v[i], -1)) - lis2[j - 1].begin());
-                prev[i] = lis2[j - 1][k].second;
+                int k = int(upper_bound(dp2[j - 1].begin(), dp2[j - 1].end(), make_pair(-v[i], n)) - dp2[j - 1].begin());
+                prev[i] = dp2[j - 1][k].second;
             }
-            lis2[j].emplace_back(-v[i], i);
+            dp2[j].emplace_back(-v[i], i);
         }
 
         vector<T> res;
-        for (int i = lis2.back().front().second; i >= 0; i = prev[i])
+        for (int i = dp2.back().front().second; i >= 0; i = prev[i])
             res.push_back(v[i]);
         reverse(res.begin(), res.end());
 
