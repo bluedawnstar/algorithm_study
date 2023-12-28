@@ -227,6 +227,7 @@
     <ClInclude Include="gridPathCounterWithObstacles.h" />
     <ClInclude Include="integerPartition.h" />
     <ClInclude Include="knapsack2.h" />
+    <ClInclude Include="longestIncreasingSubsequenceKth.h" />
     <ClInclude Include="longestNonPeakSubsequence.h" />
     <ClInclude Include="maxProfit.h" />
     <ClInclude Include="maxProfitFast.h" />
