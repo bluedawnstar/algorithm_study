@@ -461,5 +461,8 @@
     <ClInclude Include="problems\specialSubarrayFactorization.h">
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
+    <ClInclude Include="longestIncreasingSubsequenceKth.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
