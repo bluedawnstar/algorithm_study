@@ -230,7 +230,7 @@
     <ClInclude Include="palindromicSubstring.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="knapsack.h">
+    <ClInclude Include="knapsack01.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="bitDP_SumOverSubsets.h">
@@ -329,7 +329,7 @@
     <ClInclude Include="partitionProblemMultiple.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="knapsack2.h">
+    <ClInclude Include="knapsack_Algo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="digitCounter.h">
@@ -462,6 +462,12 @@
       <Filter>소스 파일\problems</Filter>
     </ClInclude>
     <ClInclude Include="longestIncreasingSubsequenceKth.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="knapsackBounded.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="knapsackUnbounded.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

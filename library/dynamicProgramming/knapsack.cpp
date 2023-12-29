@@ -3,9 +3,10 @@
 
 using namespace std;
 
-#include "knapsack.h"
-#include "knapsack2.h"
-
+#include "knapsack01.h"
+#include "knapsackBounded.h"
+#include "knapsackUnbounded.h"
+#include "knapsack_Algo.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -24,15 +25,15 @@ void testKnapsack() {
         vector<int> value{ 60, 100, 120 };
         vector<int> weight{ 10, 20, 30 };
         int W = 50;
-        assert(knapsackNaive(weight, value, W) == 220);
-        assert(knapsack(weight, value, W) == 220);
-        assert(knapsack(weight, value, W, 200) == 220);
+        assert(Knapsack01::knapsackNaive(weight, value, W) == 220);
+        assert(Knapsack01::knapsack(weight, value, W) == 220);
+        assert(Knapsack01::knapsack(weight, value, W, 200) == 220);
     }
     {
         vector<int> value{ 10, 30, 20 };
         vector<int> weight{ 5, 10, 15 };
         int W = 100;
-        assert(unboundedKnapsack(weight, value, W) == 300);
+        assert(UnboundedKnapsack::knapsack(weight, value, W) == 300);
     }
     {
         vector<int> A{ 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 14, 23, 37, 61, 9 };
