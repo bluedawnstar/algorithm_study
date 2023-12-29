@@ -93,6 +93,7 @@ void testLongestIncreasingSubsequence() {
 
         LisDAG<int> tr(0x3f3f3f3f, A);
         assert(tr.getTotalCount() == KthLIS::countLIS(A));
+        assert(tr.getTotalCount() == LIS::countLIS(A));
 
         auto list = tr.findAll();
         sort(list.begin(), list.end());
@@ -122,7 +123,9 @@ void testLongestIncreasingSubsequence() {
 
             long long count1 = dag.getTotalCount();
             long long count2 = KthLIS::countLIS(A);
+            long long count3 = LIS::countLIS(A);
             assert(count1 == count2);
+            assert(count1 == count3);
 
             auto smallest = LIS::findFirst(A);
             auto biggest = LIS::findLast(A);
