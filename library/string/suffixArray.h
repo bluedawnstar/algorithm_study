@@ -98,7 +98,7 @@ struct SuffixArray {
         return suffixArrayRev[index];
     }
 
-    // inclusive (left index to Suffix Array, left index to Suffix Array) -- not suffix index
+    // inclusive (left index to Suffix Array, right index to Suffix Array) -- not suffix index
     int lcp(int left, int right) const {
         if (left == right)
             return int(suffixArray.size()) - suffixArray[left];
