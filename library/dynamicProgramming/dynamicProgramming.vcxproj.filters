@@ -332,9 +332,6 @@
     <ClInclude Include="knapsack_Algo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="digitCounter.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="powerSumOfAllCombinations_NTT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>

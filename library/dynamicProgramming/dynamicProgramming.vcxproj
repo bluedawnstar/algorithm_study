@@ -216,7 +216,6 @@
   <ItemGroup>
     <ClInclude Include="bitDP_SumOverSubsets.h" />
     <ClInclude Include="bracketChangeCounter.h" />
-    <ClInclude Include="digitCounter.h" />
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="digitDP_100sum.h" />
     <ClInclude Include="digitDP_IncreasingDigitSequence.h" />
