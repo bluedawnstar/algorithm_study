@@ -180,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="bigint.h" />
     <ClInclude Include="bit.h" />
+    <ClInclude Include="bitCounter.h" />
     <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="circularMove.h" />
     <ClInclude Include="circularMoveDP.h" />
