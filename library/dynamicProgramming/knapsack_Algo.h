@@ -1,8 +1,41 @@
 #pragma once
 
+// Unbounded Knapsack
+struct CombinationCounter {
+    // https://leetcode.com/problems/coin-change-ii/description/
+    // O(n*target)
+    static int countWithoutOrder(vector<int>& units, int target) {
+        int n = int(units.size());
+
+        vector<int> dp(target + 1);
+        dp[0] = 1;
+        for (int i = 0; i < n; i++) {
+            int w = units[i];
+            for (int j = w; j <= target; j++) {
+                dp[j] += dp[j - w];
+            }
+        }
+        return dp[target];
+    }
+
+    // https://leetcode.com/problems/combination-sum-iv/description/
+    // O(n*target)
+    static int countWithOrder(vector<int>& units, int target) {
+        int n = int(units.size());
+
+        vector<int> dp(target + 1);
+        dp[0] = 1;
+        for (int j = 1; j <= target; j++) {
+            for (int i = 0; i < n; i++) {
+                if (j >= units[i])
+                    dp[j] += dp[j - units[i]];
+            }
+        }
+        return dp[target];
+    }
+};
+
 // https://leetcode.com/problems/last-stone-weight-ii/
-
-
 /*
     <minimum last value>
 

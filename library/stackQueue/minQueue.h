@@ -8,7 +8,7 @@ struct MinQueue {
     deque<T> queueMin;
 
     size_t size() const {
-        return stack.size();
+        return queue.size();
     }
 
     bool empty() const {

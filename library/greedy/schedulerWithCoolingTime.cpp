@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "unitTimeSchedulerWithCooldownPeriod.h"
+#include "schedulerWithCoolingTime.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -16,18 +16,18 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void testUnitTimeSchedulerWithCooldownPeriod() {
+void testSchedulerWithCoolingTime() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Unit-time Task Scheduler with Cooldown Period -------------------------" << endl;
+    cout << "--- Task Scheduler with Cooling Time -------------------------" << endl;
     {
         vector<int> in{ 'A', 'A', 'A', 'B', 'B', 'B' };
         int gt = 8;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::leastInterval(in, 2);
-        auto ans2 = UnitTimeTaskSchedulerWithCooldownPeriod::scheduleForLeastInterval(in, 2);
+        auto ans = TaskSchedulerWithCoolingTime::leastIntervalToFinishAllTasks(in, 2);
+        auto ans2 = TaskSchedulerWithCoolingTime::scheduleForLeastIntervalToFinishAllTasks(in, 2);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
-        if (!UnitTimeTaskSchedulerWithCooldownPeriod::isValidSchedule(ans2, 2)
+        if (!TaskSchedulerWithCoolingTime::isValidTaskSequence(ans2, 2)
             || int(ans2.size()) != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans2 << ", " << gt << endl;
         assert(ans == gt);
@@ -36,11 +36,11 @@ void testUnitTimeSchedulerWithCooldownPeriod() {
     {
         vector<int> in{ 'A', 'A', 'A', 'A', 'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
         int gt = 16;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::leastInterval(in, 2);
-        auto ans2 = UnitTimeTaskSchedulerWithCooldownPeriod::scheduleForLeastInterval(in, 2);
+        auto ans = TaskSchedulerWithCoolingTime::leastIntervalToFinishAllTasks(in, 2);
+        auto ans2 = TaskSchedulerWithCoolingTime::scheduleForLeastIntervalToFinishAllTasks(in, 2);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
-        if (!UnitTimeTaskSchedulerWithCooldownPeriod::isValidSchedule(ans2, 2)
+        if (!TaskSchedulerWithCoolingTime::isValidTaskSequence(ans2, 2)
             || int(ans2.size()) != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans2 << ", " << gt << endl;
         assert(ans == gt);
@@ -49,11 +49,11 @@ void testUnitTimeSchedulerWithCooldownPeriod() {
     {
         vector<int> in{ 'A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', 'C', 'D', 'D', 'E' };
         int gt = 12;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::leastInterval(in, 2);
-        auto ans2 = UnitTimeTaskSchedulerWithCooldownPeriod::scheduleForLeastInterval(in, 2);
+        auto ans = TaskSchedulerWithCoolingTime::leastIntervalToFinishAllTasks(in, 2);
+        auto ans2 = TaskSchedulerWithCoolingTime::scheduleForLeastIntervalToFinishAllTasks(in, 2);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
-        if (!UnitTimeTaskSchedulerWithCooldownPeriod::isValidSchedule(ans2, 2)
+        if (!TaskSchedulerWithCoolingTime::isValidTaskSequence(ans2, 2)
             || int(ans2.size()) != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans2 << ", " << gt << endl;
         assert(ans == gt);
@@ -64,11 +64,11 @@ void testUnitTimeSchedulerWithCooldownPeriod() {
             'A', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
         int gt = 31;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::leastInterval(in, 29);
-        auto ans2 = UnitTimeTaskSchedulerWithCooldownPeriod::scheduleForLeastInterval(in, 29);
+        auto ans = TaskSchedulerWithCoolingTime::leastIntervalToFinishAllTasks(in, 29);
+        auto ans2 = TaskSchedulerWithCoolingTime::scheduleForLeastIntervalToFinishAllTasks(in, 29);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
-        if (!UnitTimeTaskSchedulerWithCooldownPeriod::isValidSchedule(ans2, 29)
+        if (!TaskSchedulerWithCoolingTime::isValidTaskSequence(ans2, 29)
             || int(ans2.size()) != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans2 << ", " << gt << endl;
         assert(ans == gt);
@@ -78,7 +78,7 @@ void testUnitTimeSchedulerWithCooldownPeriod() {
     {
         vector<int> in{ 'A', 'A', 'A', 'B', 'B', 'B' };
         int gt = 4;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::calcRequiredIdlesWithFixedOrder(in, 1);
+        auto ans = TaskSchedulerWithCoolingTime::calcRequiredIdlesToFinishAllTasksWithFixedOrder(in, 1);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
         assert(ans == gt);
@@ -86,7 +86,7 @@ void testUnitTimeSchedulerWithCooldownPeriod() {
     {
         vector<int> in{ 'A', 'B', 'A', 'B', 'A', 'B' };
         int gt = 0;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::calcRequiredIdlesWithFixedOrder(in, 1);
+        auto ans = TaskSchedulerWithCoolingTime::calcRequiredIdlesToFinishAllTasksWithFixedOrder(in, 1);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
         assert(ans == gt);
@@ -94,7 +94,7 @@ void testUnitTimeSchedulerWithCooldownPeriod() {
     {
         vector<int> in{ 'A', 'B', 'A', 'B', 'A', 'B' };
         int gt = 2;
-        auto ans = UnitTimeTaskSchedulerWithCooldownPeriod::calcRequiredIdlesWithFixedOrder(in, 2);
+        auto ans = TaskSchedulerWithCoolingTime::calcRequiredIdlesToFinishAllTasksWithFixedOrder(in, 2);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
         assert(ans == gt);

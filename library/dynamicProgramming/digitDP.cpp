@@ -6,7 +6,7 @@ using namespace std;
 
 #include "digitDP.h"
 #include "digitDPFast.h"
-#include "digitCounter.h"
+#include "../integer/digitCounter.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 

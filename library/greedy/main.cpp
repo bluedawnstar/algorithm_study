@@ -7,6 +7,7 @@ using namespace std;
 
 int main(void) {
     TEST(NonoverlappingIntervals);
-    TEST(ScheduleWithDeadline);
-    TEST(UnitTimeSchedulerWithCooldownPeriod);
+    TEST(SchedulerWithDeadline);
+    TEST(SchedulerWithCoolingTime);
+    TEST(SchedulerWithCoolingTimeWithoutIdle);
 }

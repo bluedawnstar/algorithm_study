@@ -216,7 +216,6 @@
   <ItemGroup>
     <ClInclude Include="bitDP_SumOverSubsets.h" />
     <ClInclude Include="bracketChangeCounter.h" />
-    <ClInclude Include="digitCounter.h" />
     <ClInclude Include="digitDPFast.h" />
     <ClInclude Include="digitDP_100sum.h" />
     <ClInclude Include="digitDP_IncreasingDigitSequence.h" />
@@ -226,7 +225,9 @@
     <ClInclude Include="gridMultistepPathCounterWithObstacles.h" />
     <ClInclude Include="gridPathCounterWithObstacles.h" />
     <ClInclude Include="integerPartition.h" />
-    <ClInclude Include="knapsack2.h" />
+    <ClInclude Include="knapsack_Algo.h" />
+    <ClInclude Include="knapsackBounded.h" />
+    <ClInclude Include="knapsackUnbounded.h" />
     <ClInclude Include="longestIncreasingSubsequenceKth.h" />
     <ClInclude Include="longestNonPeakSubsequence.h" />
     <ClInclude Include="maxProfit.h" />
@@ -267,7 +268,7 @@
     <ClInclude Include="dynamicUpperEnvelope.h" />
     <ClInclude Include="editDistance.h" />
     <ClInclude Include="eggDropping.h" />
-    <ClInclude Include="knapsack.h" />
+    <ClInclude Include="knapsack01.h" />
     <ClInclude Include="optimizationKnuth.h" />
     <ClInclude Include="longestCommonSubsequence.h" />
     <ClInclude Include="longestCommonSubsequenceCyclic.h" />

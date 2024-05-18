@@ -263,5 +263,11 @@
     <ClInclude Include="subsetAnd.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="digitCounter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="bitCounter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

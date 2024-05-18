@@ -180,10 +180,12 @@
   <ItemGroup>
     <ClInclude Include="bigint.h" />
     <ClInclude Include="bit.h" />
+    <ClInclude Include="bitCounter.h" />
     <ClInclude Include="chineseRemainderTheorem.h" />
     <ClInclude Include="circularMove.h" />
     <ClInclude Include="circularMoveDP.h" />
     <ClInclude Include="digit.h" />
+    <ClInclude Include="digitCounter.h" />
     <ClInclude Include="diophantineEquation.h" />
     <ClInclude Include="diophantineEquation2.h" />
     <ClInclude Include="discreteEquations.h" />

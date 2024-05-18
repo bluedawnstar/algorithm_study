@@ -21,10 +21,13 @@
     <ClCompile Include="nonoverlappingIntervals.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="scheduleWithDeadline.cpp">
+    <ClCompile Include="schedulerWithDeadline.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="unitTimeSchedulerWithCooldownPeriod.cpp">
+    <ClCompile Include="schedulerWithCoolingTime.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="schedulerWithCoolingTimeWithoutIdle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +35,13 @@
     <ClInclude Include="nonoverlappingIntervals.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="scheduleWithDeadline.h">
+    <ClInclude Include="schedulerWithDeadline.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="unitTimeSchedulerWithCooldownPeriod.h">
+    <ClInclude Include="schedulerWithCoolingTime.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="schedulerWithCoolingTimeWithoutIdle.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

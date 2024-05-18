@@ -22,7 +22,40 @@ struct LIS {
     static int findLength(const vector<T>& v) {
         return findLength(v.data(), int(v.size()));
     }
-    
+
+    // forward, O(NlogN)
+    template <typename T>
+    static long long countLIS(const vector<T>& A) {
+        int N = int(A.size());
+
+        vector<int> dp;
+        vector<vector<pair<T, long long>>> dp2; // dp2 = { (value, count), ... }
+
+        auto compValue = [](const T& a, const pair<T, long long>& b) {
+            return a > b.first;
+        };
+
+        for (int i = 0, j = 0; i < N; i++) {
+            if (dp.empty() || dp.back() < A[i]) {
+                j = int(dp.size());
+                dp.push_back(A[i]);
+                dp2.emplace_back(vector<pair<T, long long>>{ { numeric_limits<T>::max(), 0ll } });
+            } else {
+                j = int(lower_bound(dp.begin(), dp.end(), A[i]) - dp.begin());
+                dp[j] = A[i];
+            }
+
+            long long cnt = 1;
+            if (j > 0) {
+                int first = int(upper_bound(dp2[j - 1].begin(), dp2[j - 1].end(), A[i], compValue) - dp2[j - 1].begin());
+                cnt = dp2[j - 1].back().second - dp2[j - 1][first - 1].second;
+            }
+            dp2[j].emplace_back(A[i], dp2[j].back().second + cnt);
+        }
+
+        return dp2.back().back().second;
+    }
+
     //---
 
     // lexicographically first LIS, O(NlogN)
@@ -73,7 +106,7 @@ struct LIS {
 
         vector<T> dp;                           // 
         vector<int> prev(n);                    // 
-        vector<vector<pair<T, int>>> dp2;       // dp2[i] = { (value, index), ... }
+        vector<vector<pair<T, int>>> dp2;       // dp2[i] = { (-value, index), ... }
 
         prev[0] = -1;
         dp.push_back(v[0]);
