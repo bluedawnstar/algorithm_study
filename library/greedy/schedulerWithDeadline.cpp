@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "scheduleWithDeadline.h"
+#include "schedulerWithDeadline.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -17,14 +17,14 @@ using namespace std;
 #include "../common/iostreamhelper.h"
 #include "../common/profile.h"
 
-void testScheduleWithDeadline() {
+void testSchedulerWithDeadline() {
     //return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- Schedule with Deadline ------------------------------" << endl;
+    cout << "--- Task Scheduler with Deadline ------------------------------" << endl;
     {
         vector<pair<int, int>> in{ { 100, 200 }, { 200, 1300 }, { 1000, 1250 }, { 2000, 3200 } };
         int gt = 3;
-        auto ans = ScheduleWithDeadline::schedule(in);
+        auto ans = TaskSchedulerWithDeadline::scheduleForMaxWorks(in);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
         assert(ans == gt);
@@ -32,7 +32,7 @@ void testScheduleWithDeadline() {
     {
         vector<pair<int, int>> in{ { 1, 2 } };
         int gt = 1;
-        auto ans = ScheduleWithDeadline::schedule(in);
+        auto ans = TaskSchedulerWithDeadline::scheduleForMaxWorks(in);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
         assert(ans == gt);
@@ -40,7 +40,7 @@ void testScheduleWithDeadline() {
     {
         vector<pair<int, int>> in{ { 3, 2 }, { 4, 3 } };
         int gt = 0;
-        auto ans = ScheduleWithDeadline::schedule(in);
+        auto ans = TaskSchedulerWithDeadline::scheduleForMaxWorks(in);
         if (ans != gt)
             cout << "invalid answer at " << __LINE__ << " : " << ans << ", " << gt << endl;
         assert(ans == gt);
