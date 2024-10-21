@@ -68,6 +68,13 @@ void testSearchPrefixFunction() {
         cout << kmp("aaaaaaaa", "a") << endl;                           // (0, 1, 2, 3, 4, 5, 6, 7)
         cout << kmp("aaaaaaaa", "aaa") << endl;                         // (0, 1, 2, 3, 4, 5)
         cout << kmp("xabcabcabcabcx", "abc") << endl;                   // (1, 4, 7, 10)
+
+        assert(getMaxOverlapLength("dcbabcd", "abcdefg") == 4);
+        assert(getMaxOverlapLength("dcbabce", "abcdefg") == 0);
+        assert(getMaxOverlapLength("dcbabcd", "abcd") == 4);
+        assert(getMaxOverlapLength("dcbabcd", "bcd") == 3);
+        assert(getMaxOverlapLength("abcd", "abcdefg") == 4);
+        assert(getMaxOverlapLength("abc", "abcdefg") == 3);
     }
     {
         string S = "AABAACAADAABAABA", key = "AABA";

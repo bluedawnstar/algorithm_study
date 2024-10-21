@@ -145,12 +145,15 @@ inline int getMaxOverlapLength(const string& a, const string& b) {
             j = pi[j - 1];
 
         if (a[i] == b[j]) {
-            if (j == m - 1)
+            if (i + 1 == n)
+                return j + 1;
+
+            if (j + 1 == m)
                 j = pi[j];
             else
                 j++;
         }
     }
 
-    return j;
+    return 0;
 }
