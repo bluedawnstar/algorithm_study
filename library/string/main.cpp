@@ -32,7 +32,7 @@ int main(void) {
     TEST(Hashing);
     TEST(SearchPrefixFunction);
     TEST(SearchRabinKarp);
-    TEST(SearchZAlgorithm);
+    TEST(SearchZFunction);
     TEST(PrefixFunction);
     TEST(PrefixFunctionTree);
     TEST(Subsequence);
