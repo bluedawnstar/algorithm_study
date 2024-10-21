@@ -45,7 +45,7 @@ inline vector<int> kmpL(const string& s, const string& p) {
 
         if (s[i] == p[j]) {
             res.push_back(j + 1);
-            if (j == m - 1) {
+            if (j + 1 == m) {
                 // p is found at (i - m + 1)
                 j = pi[j];
             } else {
@@ -71,7 +71,7 @@ inline vector<int> kmp(const string& s, const string& p) {
             j = pi[j - 1];
 
         if (s[i] == p[j]) {
-            if (j == m - 1) {
+            if (j + 1 == m) {
                 res.push_back(i - m + 1);
                 j = pi[j];
             } else {
@@ -94,7 +94,7 @@ inline vector<int> kmp(const string& s, const string& p, const vector<int>& pi) 
             j = pi[j - 1];
 
         if (s[i] == p[j]) {
-            if (j == m - 1) {
+            if (j + 1 == m) {
                 res.push_back(i - m + 1);
                 j = pi[j];
             } else {
