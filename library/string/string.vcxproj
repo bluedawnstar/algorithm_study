@@ -195,7 +195,7 @@
     <ClCompile Include="suffixTrieAM.cpp" />
     <ClCompile Include="trie.cpp" />
     <ClCompile Include="trieAM.cpp" />
-    <ClCompile Include="searchZAlgorithm.cpp" />
+    <ClCompile Include="searchZFunction.cpp" />
     <ClCompile Include="triePersistent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +232,8 @@
     <ClInclude Include="prefixFunctionTreeAlgo.h" />
     <ClInclude Include="reverseSubstringsBetweenParentheses.h" />
     <ClInclude Include="rleString.h" />
+    <ClInclude Include="searchPrefixFunctionAlgo.h" />
+    <ClInclude Include="searchZFunctionAlgo.h" />
     <ClInclude Include="simpleSubstring.h" />
     <ClInclude Include="stringMatchingWithFFT.h" />
     <ClInclude Include="subsequenceCheck.h" />
@@ -271,7 +273,7 @@
     <ClInclude Include="suffixTrieAM.h" />
     <ClInclude Include="trie.h" />
     <ClInclude Include="trieAM.h" />
-    <ClInclude Include="searchZAlgorithm.h" />
+    <ClInclude Include="searchZFunction.h" />
     <ClInclude Include="trieAMPersistent.h" />
     <ClInclude Include="triePersistent.h" />
   </ItemGroup>
