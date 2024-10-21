@@ -72,7 +72,7 @@
     <ClCompile Include="searchRabinKarp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="searchZAlgorithm.cpp">
+    <ClCompile Include="searchZFunction.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="searchPrefixFunction.cpp">
@@ -233,7 +233,7 @@
     <ClInclude Include="searchRabinKarp.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="searchZAlgorithm.h">
+    <ClInclude Include="searchZFunction.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="searchPrefixFunction.h">
@@ -405,6 +405,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="prefixAutomatonAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="searchZFunctionAlgo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="searchPrefixFunctionAlgo.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
