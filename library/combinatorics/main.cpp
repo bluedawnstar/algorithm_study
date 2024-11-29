@@ -19,6 +19,7 @@ int main(void) {
     TEST(MaxMatchingInMatrix);
     TEST(IntegerPartition);
     TEST(LabeledGraphCounter);
+    TEST(BurnsideLemma);
     //--- problems
     TEST(MinManhattanDistanceSet);
 }
