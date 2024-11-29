@@ -42,6 +42,7 @@ T phi(T n) {
     return res;
 }
 
+// O(sqrt(N))
 template <typename T>
 T phiFast(T n) {
     T res = n;
@@ -80,16 +81,18 @@ T phiFast(T n, const vector<T>& primes) {
         return res;
 
     int idx = 0;
-    T pf = primes[0];
+    T p = primes[0];
 
-    while (pf * pf <= n) {
-        if (n % pf == 0) {
+    while (p * p <= n) {
+        if (n % p == 0) {
             do {
-                n /= pf;
-            } while (n % pf == 0);
-            res -= res / pf;
+                n /= p;
+            } while (n % p == 0);
+            res -= res / p;
         }
-        pf = primes[++idx];
+        if (++idx >= int(primes.size()))
+            break;
+        p = primes[idx];
     }
 
     if (n > 1)
@@ -103,8 +106,8 @@ template <typename T>
 T phiFastest(T n, const vector<T>& primeFactors) {
     T res = n;
 
-    for (auto p : primeFactors)
-        res -= res / p;
+    for (auto pf : primeFactors)
+        res -= res / pf;
 
     return res;
 }

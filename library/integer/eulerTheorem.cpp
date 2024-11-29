@@ -10,6 +10,7 @@ using namespace std;
 #include "eulerTheoremEx.h"
 #include "eulerTheorem-coprimePairs.h"
 #include "eulerTheorem-gcdOfAllPairs.h"
+#include "eulerPhi.h"
 
 #include "primeFactor.h"
 #include "primeNumberBasic.h"
@@ -106,18 +107,25 @@ static long long calcGcdSumOfAllPairsMod(int n) {
 }
 
 void testEulerTheorem() {
-    return; //TODO: if you want to test, make this line a comment.
+    //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Euler Theorem -----------------------" << endl;
     {
         //int N = 1000000009;
         int N = 1009;
+
+        EulerPhi ep(N);
+
         for (int i = 1; i <= N; i++) {
             auto ans1 = phi(i);
             auto ans2 = phiFast(i);
+            auto ans3 = ep.phiFast(i);
             if (ans1 != ans2)
                 cerr << "Mismatched!" << endl;
             assert(ans1 == ans2);
+            if (ans1 != ans3)
+                cerr << "Mismatched!" << endl;
+            assert(ans1 == ans3);
         }
     }
     {
@@ -125,12 +133,17 @@ void testEulerTheorem() {
 #ifdef _DEBUG
         n = 10000;
 #endif
+        EulerPhi ep(n);
         auto ans = phiAll(n);
         for (int i = 0; i <= n; i++) {
             int gt = phi(i);
+            auto ans2 = ep.phiFast(i);
             if (ans[i] != gt)
                 cout << "Mismatched at " << i << " : " << ans[i] << ", " << gt << endl;
             assert(ans[i] == gt);
+            if (ans2 != gt)
+                cout << "Mismatched at " << i << " : " << ans2 << ", " << gt << endl;
+            assert(ans2 == gt);
         }
     }
     {
