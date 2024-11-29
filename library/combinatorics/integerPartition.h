@@ -55,14 +55,14 @@ struct IntegerPartition {
             long long p = 0;
 
             for (int j = 1;;) {
-                int k = j * (3 * j - 1) / 2;    // k = j*(3*j - 1) / 2,  j = 1, -1, 2, -2, 3, -3, ...
-                if (k > i)
+                int g = j * (3 * j - 1) / 2;    // g = j*(3*j - 1) / 2,  j = 1, -1, 2, -2, 3, -3, ...
+                if (g > i)
                     break;
 
                 if (j & 1)
-                    p += dp[i - k];
+                    p += dp[i - g];
                 else
-                    p -= dp[i - k];
+                    p -= dp[i - g];
 
                 if (j <= 0)
                     j = 1 - j;
