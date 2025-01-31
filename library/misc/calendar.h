@@ -34,10 +34,9 @@ struct Calendar {
             month += 12;
             year--;
         }
-        auto res = 365ll * year + year / 4 + year / 400 - year / 100 + day + (153 * month + 8) / 5;
+        auto res = 365ll * year + year / 4 + year / 400 - year / 100 + (153 * month + 8) / 5 + day;
         return res - 399;
     }
-
 
     static tuple<int, int, int> convertTotalDaysToDate(long long totalDays) {
         int year;
@@ -68,6 +67,85 @@ struct Calendar {
             days += mdays[i];
         }
         return make_tuple(year, i + 1, static_cast<int>(totalDays - days));
+    }
+
+    static tuple<int, int, int> convertTotalDaysToDate2(long long totalDays) {
+#if 0
+        int year;
+        {
+            int y400 = totalDays / (365 * 400 + 97);
+            int d400 = totalDays % (365 * 400 + 97);
+
+            year = y400 * 400 + d400 / 366;
+            if (getTotalDaysSimple(year, 12, 31) < totalDays)
+                year++;
+            if (getTotalDaysSimple(year, 12, 31) < totalDays)
+                year++;
+        }
+        long long days = getTotalDaysSimple(year, 1, 1) - 1;
+#else
+        int year = static_cast<int>((totalDays - 1) * (1.0 / 365.2425)) + 1;
+        long long days = getTotalDaysSimple(year, 12, 31);
+        if (days < totalDays)
+            year++;
+        else
+            days -= 365 + isLeapYear(year);
+#endif
+
+#if 0
+        static const int s_mdays[2][12]{
+            { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+            { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
+        };
+        const int* mdays = s_mdays[isLeapYear(year)];
+
+        int i;
+        for (i = 0; i < 12; i++) {
+            if (totalDays <= days + mdays[i])
+                break;
+            days += mdays[i];
+        }
+        return std::make_tuple(year, i + 1, static_cast<int>(totalDays - days));
+#else
+        static const int s_mdays[2][13]{
+            { 0,
+              31,
+              31 + 28,
+              31 + 28 + 31,
+              31 + 28 + 31 + 30,
+              31 + 28 + 31 + 30 + 31,
+              31 + 28 + 31 + 30 + 31 + 30,
+              31 + 28 + 31 + 30 + 31 + 30 + 31,
+              31 + 28 + 31 + 30 + 31 + 30 + 31 + 31,
+              31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
+              31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+              31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
+              31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31 },
+            { 0,
+              31,
+              31 + 29,
+              31 + 29 + 31,
+              31 + 29 + 31 + 30,
+              31 + 29 + 31 + 30 + 31,
+              31 + 29 + 31 + 30 + 31 + 30,
+              31 + 29 + 31 + 30 + 31 + 30 + 31,
+              31 + 29 + 31 + 30 + 31 + 30 + 31 + 31,
+              31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30,
+              31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31,
+              31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30,
+              31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + 31 }
+        };
+        const int* mdays = s_mdays[isLeapYear(year)];
+
+        int i;
+        for (i = static_cast<int>((totalDays - days + 30) / 31); i <= 12; i++) {
+            if (totalDays <= days + mdays[i]) {
+                days += mdays[i - 1];
+                break;
+            }
+        }
+        return std::make_tuple(year, i, static_cast<int>(totalDays - days));
+#endif
     }
 
 

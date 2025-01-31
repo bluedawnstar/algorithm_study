@@ -63,6 +63,12 @@
     <ClCompile Include="labeledGraphCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="burnsideLemma.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="burnsideLemma_coloringNecklaceMod.h">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -125,5 +131,19 @@
     <ClInclude Include="comb_gridPathCounter.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="burnsideLemma_coloringNecklace.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="burnsideLemma_coloringNecklaceNonUniformFixedPosition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="burnsideLemma_coloringAllNecklacesMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="burnsideLemma.md">
+      <Filter>소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>

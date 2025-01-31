@@ -17,6 +17,11 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
+ostream& operator <<(ostream& os, const tuple<int, int, int>& val) {
+    os << "(" << get<0>(val) << "," << get<1>(val) << "," << get<2>(val) << ")";
+    return os;
+}
+
 void testCalendar() {
     //return; //TODO: if you want to test, make this line a comment.
 
@@ -27,9 +32,44 @@ void testCalendar() {
             long long day1 = Calendar::getTotalDays(i, 1, 1);
             long long day2 = Calendar::getTotalDays(400 + i, 1, 1);
             if (day1 % 7 != day2 % 7)
-                cout << "Mismatched : " << (day1 % 7) << ", " << (day2 % 7) << endl;
+                cout << "Mismatched at " << __LINE__ << " : " << (day1 % 7) << ", " << (day2 % 7) << endl;
             assert(day1 % 7 == day2 % 7);
         }
+    }
+    {
+        long long maxDays = Calendar::getTotalDays(10000, 12, 31);
+
+        for (long long t = 1; t <= maxDays; t++) {
+            auto date1 = Calendar::convertTotalDaysToDate(t);
+            auto date2 = Calendar::convertTotalDaysToDate2(t);
+            if (date1 != date2)
+                cout << "Mismatched at " << __LINE__ << " : t = " << t << ", " << date1 << date2 << endl;
+            assert(date1 == date2);
+
+            int y = get<0>(date1);
+            int m = get<1>(date1);
+            int d = get<2>(date1);
+            auto t1 = Calendar::getTotalDays(y, m, d);
+            auto t2 = Calendar::getTotalDaysSimple(y, m, d);
+            if (t != t1 || t != t2)
+                cout << "Mismatched at " << __LINE__ << " : t=" << t << ", t1=" << t1 << ", t2=" << t2 << endl;
+            assert(t == t1);
+            assert(t == t2);
+        }
+    }
+    {
+        long long epoch = Calendar::getTotalDays(1970, 1, 1);
+        auto date = Calendar::convertTotalDaysToDate(epoch);
+
+        cout << "epoch(1970, 1, 1) = " << epoch << endl;
+        int y = get<0>(date);
+        int m = get<1>(date);
+        int d = get<2>(date);
+        if (y != 1970 || m != 1 || d != 1)
+            cout << "Mismatched at " << __LINE__ << " : y=" << y << ", m=" << m << ", d=" << d << endl;
+        assert(y == 1970);
+        assert(m == 1);
+        assert(d == 1);
     }
     {
         vector<tuple<int, int, int>> testSet{
@@ -60,8 +100,9 @@ void testCalendar() {
 
             auto date = Calendar::convertTotalDaysToDate(days);
             if (year != get<0>(date) || month != get<1>(date) || day != get<2>(date))
-                cout << "Mismatched : " << year << "/" << month << "/" << day << ", "
-                                        << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
+                cout << "Mismatched at " << __LINE__ << " : "
+                                         << year << "/" << month << "/" << day << ", "
+                                         << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
         }
     }
     {
@@ -90,13 +131,14 @@ void testCalendar() {
             long long days1 = Calendar::getTotalDays(year, month, day);
             long long days2 = Calendar::getTotalDaysSimple(year, month, day);
             if (days1 != days2)
-                cout << "Mismatched : " << days1 << ", " << days2 << endl;
+                cout << "Mismatched at " << __LINE__ << " : " << days1 << ", " << days2 << endl;
             assert(days1 == days2);
 
             auto date = Calendar::convertTotalDaysToDate(days1);
             if (year != get<0>(date) || month != get<1>(date) || day != get<2>(date))
-                cout << "Mismatched : " << year << "/" << month << "/" << day << ", "
-                                        << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
+                cout << "Mismatched at " << __LINE__ << " : "
+                                         << year << "/" << month << "/" << day << ", "
+                                         << get<0>(date) << "/" << get<1>(date) << "/" << get<2>(date) << endl;
             assert(year == get<0>(date) && month == get<1>(date) && day == get<2>(date));
         }
     }

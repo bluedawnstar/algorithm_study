@@ -146,7 +146,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="burnsideLemma_coloringNecklaceMod.h" />
     <ClCompile Include="catalanNumber.cpp" />
+    <ClCompile Include="burnsideLemma.cpp" />
     <ClCompile Include="comb.cpp" />
     <ClCompile Include="combModExt.cpp" />
     <ClCompile Include="deBruijnSequence.cpp" />
@@ -164,8 +166,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bellNumber.h" />
+    <ClInclude Include="burnsideLemma_coloringAllNecklacesMod.h" />
+    <ClInclude Include="burnsideLemma_coloringNecklaceNonUniformFixedPosition.h" />
     <ClInclude Include="catalanNumber.h" />
     <ClInclude Include="cayleyFormula.h" />
+    <ClInclude Include="burnsideLemma_coloringNecklace.h" />
     <ClInclude Include="comb.h" />
     <ClInclude Include="combDP.h" />
     <ClInclude Include="combMod.h" />
@@ -183,6 +188,9 @@
     <ClInclude Include="problems\minManhattanDistanceSet.h" />
     <ClInclude Include="pruferCode.h" />
     <ClInclude Include="stirlingNumber.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="burnsideLemma.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

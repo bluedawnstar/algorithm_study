@@ -193,6 +193,7 @@
     <ClInclude Include="discreteLogFast.h" />
     <ClInclude Include="discreteRoot.h" />
     <ClInclude Include="discreteSqrt.h" />
+    <ClInclude Include="eulerPhi.h" />
     <ClInclude Include="eulerTheorem-coprimePairs.h" />
     <ClInclude Include="eulerTheorem-gcdOfAllPairs.h" />
     <ClInclude Include="eulerTheorem-PillaiArithmeticalFunction.h" />
