@@ -17,8 +17,6 @@ using namespace std;
 
 #include <cassert>
 #include "../common/iostreamhelper.h"
-#include "../common/profile.h"
-#include "../common/rand.h"
 
 static ostream& operator <<(ostream& os, const vector<vector<int>>& rhs) {
     os << "{ ";
@@ -43,6 +41,14 @@ static void solve(int line, const vector<string>& in, const vector<vector<int>>&
     assert(ans == gt);
 }
 
+static void solve0(int line, const vector<string>& in) {
+    auto res = SudokuSolver::solve(in);
+    if (res.second != 0) {
+        cout << "Mismatched at " << line << " : the number of solutions = " << res.second << endl;
+    }
+    assert(res.second == 0);
+}
+
 static void solve2(int line, const vector<string>& in) {
     auto res = SudokuSolver::solve(in);
     if (res.second != 2) {
@@ -55,6 +61,35 @@ void testSudokuSolver() {
     //return; //TODO: if you want to test, make this line a comment.
 
     cout << "--- Sudoku Solver ------------------------" << endl;
+    cout << "*** solve with basic method" << endl;
+    {
+        vector<string> in{
+            "__2___9__",
+            "32______7",
+            "51__438__",
+            "____3___1",
+            "7__614__3",
+            "2___7____",
+            "__315__26",
+            "1______98",
+            "__6___4__"
+        };
+        solve0(__LINE__, in);   // no solution
+    }
+    {
+        vector<string> in{
+            "__2___9__",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+            "_________",
+        };
+        solve2(__LINE__, in);   // two or more solutions
+    }
     // medium
     {
         vector<string> in{
@@ -133,6 +168,7 @@ void testSudokuSolver() {
         };
         solve(__LINE__, in, gt);
     }
+    cout << "*** solve with basic and backtracking methods" << endl;
     // hardest
     {
         // from https://www.sudokuwiki.org/Arto_Inkala_Sudoku
@@ -194,7 +230,7 @@ void testSudokuSolver() {
 
                 auto x = in[i][j];
                 in[i][j] = '_';
-                solve2(__LINE__, in);
+                solve2(__LINE__, in);   // two or more solutions
                 in[i][j] = x;
             }
         }
