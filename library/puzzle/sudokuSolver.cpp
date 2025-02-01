@@ -31,30 +31,31 @@ static ostream& operator <<(ostream& os, const vector<vector<int>>& rhs) {
 
 static void solve(int line, const vector<string>& in, const vector<vector<int>>& gt) {
     auto res = SudokuSolver::solve(in);
-    auto ans = res.first.get(int(0));
+    auto ans = get<0>(res).get<int>();
     if (ans != gt) {
-        cout << "Mismatched at " << line << " : the number of solutions = " << res.second << endl
+        cout << "Mismatched at " << line << " : the number of solutions = " << get<1>(res) << endl
              << "ans = " << endl << ans << endl
              << "gt = " << endl << gt << endl;
     }
-    assert(res.second == 1);
+    cout << "difficulty = " << get<2>(res) << endl;
+    assert(get<1>(res) == 1);
     assert(ans == gt);
 }
 
 static void solve0(int line, const vector<string>& in) {
     auto res = SudokuSolver::solve(in);
-    if (res.second != 0) {
-        cout << "Mismatched at " << line << " : the number of solutions = " << res.second << endl;
+    if (get<1>(res) != 0) {
+        cout << "Mismatched at " << line << " : the number of solutions = " << get<1>(res) << endl;
     }
-    assert(res.second == 0);
+    assert(get<1>(res) == 0);
 }
 
 static void solve2(int line, const vector<string>& in) {
     auto res = SudokuSolver::solve(in);
-    if (res.second != 2) {
-        cout << "Mismatched at " << line << " : the number of solutions = " << res.second << endl;
+    if (get<1>(res) != 2) {
+        cout << "Mismatched at " << line << " : the number of solutions = " << get<1>(res) << endl;
     }
-    assert(res.second == 2);
+    assert(get<1>(res) == 2);
 }
 
 void testSudokuSolver() {

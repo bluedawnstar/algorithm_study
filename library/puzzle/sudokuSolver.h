@@ -3,6 +3,7 @@
 class SudokuBoard {
 public:
     SudokuBoard() : board(9) {
+        fill(0);
     }
 
     const array<int8_t, 9>& operator[](int row) const {
@@ -11,6 +12,11 @@ public:
 
     array<int8_t, 9>& operator[](int row) {
         return board[row];
+    }
+
+    void fill(int x) {
+        for (int i = 0; i < 9; i++)
+            board[i].fill(static_cast<int8_t>(x));
     }
 
     bool isSolved() const {
@@ -46,6 +52,7 @@ private:
 class SudokuDigitCounter {
 public:
     SudokuDigitCounter() : cnt(9) {
+        fill(0);
     }
 
     const array<int8_t, 9>& operator[](int index) const {
@@ -68,10 +75,7 @@ private:
 class SudokuDigitFlag {
 public:
     SudokuDigitFlag() : flag(9) {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++)
-                flag[i][j] = BIT_FLAG_ALL;
-        }
+        init();
     }
 
     const array<int16_t, 9>& operator[](int index) const {
@@ -80,6 +84,13 @@ public:
 
     array<int16_t, 9>& operator[](int index) {
         return flag[index];
+    }
+
+    void init() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++)
+                flag[i][j] = BIT_FLAG_ALL;
+        }
     }
 
 private:
@@ -91,10 +102,16 @@ private:
 
 class SudokuState {
 public:
-    bool set(const vector<string>& in) {
+    void init() {
+        board.fill(0);
+        candidateFlag.init();
         candidateRows.fill(9);
         candidateCols.fill(9);
         candidateSquares.fill(9);
+    }
+
+    bool set(const vector<string>& in) {
+        init();
 
         bool res = true;
         for (int i = 0; i < 9; i++) {
@@ -110,17 +127,15 @@ public:
         return res;
     }
 
-    template <typename T>
-    bool set(const vector<vector<T>>& in) {
-        candidateRows.fill(9);
-        candidateCols.fill(9);
-        candidateSquares.fill(9);
+    template <typename VV>
+    bool set(const VV& in) {
+        init();
 
         bool res = true;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (1 <= in[i][j] && in[i][j] <= 9) {
-                    if (!update(i, j, static_cast<int8_t>(in[i][j])))
+                    if (!update(i, j, static_cast<int>(in[i][j])))
                         res = false;
                 } else {
                     board[i][j] = 0;
@@ -130,6 +145,10 @@ public:
         return res;
     }
 
+
+    const SudokuBoard& getBoard() const {
+        return board;
+    }
 
     bool isSolved() const {
         return board.isSolved();
@@ -298,8 +317,8 @@ public:
         set(in);
     }
 
-    template <typename T>
-    SudokuSolver(const vector<vector<T>>& in) {
+    template <typename VV>
+    SudokuSolver(const VV& in) {
         set(in);
     }
 
@@ -307,18 +326,18 @@ public:
         return inputValid = input.set(in);
     }
 
-    template <typename T>
-    bool set(const vector<vector<T>>& in) {
+    template <typename VV>
+    bool set(const VV& in) {
         return inputValid = input.set(in);
     }
 
     //---
 
-    // return (a_solution, solution_count)
+    // return (a_solution, solution_count, backtracking_depth)
     //   solotion_count: 0 - no solution, 1 - unique solution, 2 - two or more solutions
-    pair<SudokuBoard, int> solve() const {
+    tuple<SudokuBoard,int,int> solve() const {
         auto state = input;
-        pair<SudokuBoard, int> result(state.board, 0);
+        tuple<SudokuBoard, int, int> result(state.board, 0, 0);
 
         if (!inputValid)
             return result;
@@ -340,8 +359,8 @@ public:
             }
 
             if (solved) {
-                if (++result.second == 1)
-                    result.first = state.board;
+                if (++get<1>(result) == 1)
+                    get<0>(result) = state.board;
                 return ssrSolved;
             }
 
@@ -355,6 +374,8 @@ public:
 
         // step #2 : find solution(s) with backtracking
         vector<pair<int, int>> order = state.getTrialOrder();
+        get<2>(result) = static_cast<int>(order.size());
+
         function<bool(SudokuState&, int)> dfs;
         dfs = [&dfs, &order, &simpleSolver, &result](SudokuState& prevState, int depth) -> bool {
             int row = order[depth].first;
@@ -378,7 +399,7 @@ public:
                 switch (simpleSolver(newState)) {
                 case ssrSolved:
                     // backtracking stops if thre are two or more solutions
-                    if (result.second >= 2)
+                    if (get<1>(result) >= 2)
                         return true;
                     break;
                 case ssrNotSolved:
@@ -396,13 +417,17 @@ public:
 
     //---
 
-    static pair<SudokuBoard, int> solve(const vector<string>& in) {
+    // return (a_solution, solution_count, backtracking_depth)
+    //   solotion_count: 0 - no solution, 1 - unique solution, 2 - two or more solutions
+    static tuple<SudokuBoard,int,int> solve(const vector<string>& in) {
         SudokuSolver solver(in);
         return solver.solve();
     }
 
-    template <typename T>
-    static pair<SudokuBoard, int> solve(const vector<vector<T>>& in) {
+    // return (a_solution, solution_count, backtracking_depth)
+    //   solotion_count: 0 - no solution, 1 - unique solution, 2 - two or more solutions
+    template <typename VV>
+    static tuple<SudokuBoard,int,int> solve(const VV& in) {
         SudokuSolver solver(in);
         return solver.solve();
     }
