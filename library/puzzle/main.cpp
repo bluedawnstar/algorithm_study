@@ -8,4 +8,5 @@ using namespace std;
 int main(void) {
     TEST(SlidingPuzzle);
     TEST(SudokuSolver);
+    TEST(SudokuGenerator);
 }

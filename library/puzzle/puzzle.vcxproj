@@ -129,10 +129,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="slidingPuzzle.cpp" />
+    <ClCompile Include="sudokuGenerator.cpp" />
     <ClCompile Include="sudokuSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="slidingPuzzle.h" />
+    <ClInclude Include="sudokuGenerator.h" />
     <ClInclude Include="sudokuSolver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
