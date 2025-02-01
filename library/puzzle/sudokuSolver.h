@@ -61,10 +61,6 @@ public:
             cnt[i].fill(static_cast<int8_t>(x));
     }
 
-    bool add(int index, int digit) {
-        return ++cnt[index][digit - 1] <= 1;
-    }
-
 private:
     vector<array<int8_t, 9>> cnt;   // [index][digit - 1] = the number of a digit
 };
@@ -144,10 +140,11 @@ public:
         if (board[row][col] == x)
             return true;
 
-        if (board[row][col] > 0 || (candidateFlag[row][col] & (1 << (x - 1))) == 0)
+        int flag = getCandidateFlag(row, col);
+        if (board[row][col] > 0 || (flag & (1 << (x - 1))) == 0)
             return false;
 
-        clearCandidateFlagWithMask(row, col, candidateFlag[row][col]);
+        clearCandidateFlagWithMask(row, col, flag); // clear all flags of cell(row, col)
         board[row][col] = x;            // must set board[row][col] before calling updateRow(), updateCol() and updateSquare()
         return updateRow(row, x)
             && updateCol(col, x)
@@ -162,7 +159,7 @@ public:
                 if (board[i][j] > 0)
                     continue;
 
-                int flag = candidateFlag[i][j];
+                int flag = getCandidateFlag(i, j);
                 if (flag == 0)
                     return -1;
 
@@ -203,10 +200,10 @@ public:
             }
         }
         sort(res.begin(), res.end(), [this](const pair<int, int>& a, const pair<int, int>& b) {
-            int bitA = SudokuState::bitCount(candidateFlag[a.first][a.second]);
-            int bitB = SudokuState::bitCount(candidateFlag[b.first][b.second]);
-            if (bitA != bitB)
-                return bitA < bitB;
+            int bitCntA = SudokuState::bitCount(candidateFlag[a.first][a.second]);
+            int bitCntB = SudokuState::bitCount(candidateFlag[b.first][b.second]);
+            if (bitCntA != bitCntB)
+                return bitCntA < bitCntB;
             if (a.first != b.first)
                 return a.first < b.first;
             return a.second < b.second;
@@ -227,7 +224,7 @@ private:
             candidateCols[col][x]--;
             candidateSquares[(row / 3) * 3 + (col / 3)][x]--;
         }
-        return candidateFlag[row][col] != 0 || board[row][col] > 0; // return is_valid_cell?
+        return candidateFlag[row][col] != 0 || board[row][col] > 0; // return if the cell is valid
     }
 
     void clearCandidateFlagWithMask(int row, int col, int mask) {
@@ -359,10 +356,9 @@ public:
         // step #2 : find solution(s) with backtracking
         vector<pair<int, int>> order = state.getTrialOrder();
         function<bool(SudokuState&, int)> dfs;
-        dfs = [&dfs, &order, &result, &simpleSolver](SudokuState& prevState, int depth) -> bool {
-            int row, col;
-            row = order[depth].first;
-            col = order[depth].second;
+        dfs = [&dfs, &order, &simpleSolver, &result](SudokuState& prevState, int depth) -> bool {
+            int row = order[depth].first;
+            int col = order[depth].second;
             while (prevState.board[row][col] > 0) {
                 if (++depth >= static_cast<int>(order.size()))
                     return false;
@@ -370,7 +366,7 @@ public:
                 col = order[depth].second;
             }
 
-            for (int x = 1, flag = static_cast<int>(prevState.getCandidateFlag(row, col)); flag; x++, flag >>= 1) {
+            for (int x = 1, flag = prevState.getCandidateFlag(row, col); flag; x++, flag >>= 1) {
                 if ((flag & 1) == 0)
                     continue;
 
