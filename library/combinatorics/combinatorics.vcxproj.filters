@@ -24,9 +24,6 @@
     <ClCompile Include="comb.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="combModExt.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="nextCombination.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -69,6 +66,12 @@
     <ClCompile Include="burnsideLemma_coloringNecklaceMod.h">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="combModGeneral.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="combModCRT.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="comb.h">
@@ -81,9 +84,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="combDP.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="combModExt.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="nextCombination.h">
@@ -138,6 +138,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="burnsideLemma_coloringAllNecklacesMod.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="combModGeneral.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="combModCRT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

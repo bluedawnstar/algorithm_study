@@ -9,9 +9,9 @@ https://cp-algorithms.com/combinatorics/binomial-coefficients.html
 
 1. Basic formula
 
-                       n!
+                    n!
     C(n, k) = ---------------
-                  k! * (n - k)!
+               k! * (n - k)!
 
             = C(n - 1, k) + C(n - 1, k - 1)
 
