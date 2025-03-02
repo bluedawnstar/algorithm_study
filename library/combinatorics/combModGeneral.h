@@ -11,15 +11,14 @@ struct CombModGeneral {
     vector<long long> g;            // g[x] = PRODUCT{i / gcd(g[i], M)}
                                     //        1<=i<=x
 
-    // nCr (n <= maxN), P is prime factors
+    // O(N * |PF_M| * logN), |PF_M| = the number of prime factors of M
     CombModGeneral(int maxN, long long M) : M(M) {
         P = CombModGeneral::getPrimeFactors(M);
         cntSum.assign(P.size(), vector<int>(maxN + 2, 0));
         g.assign(maxN + 2, 0);
 
-        const int PN = int(P.size());   // the number of prime factors
+        const int PN = int(P.size());
 
-        // make factorial, power, g and c table
         g[0] = 1;
         for (int x = 1; x <= maxN; x++) {
             int x2 = x;
@@ -32,7 +31,7 @@ struct CombModGeneral {
         }
     }
 
-    // O(logM)
+    // O(|PF_M| * logn + (logM)^2)
     long long comb(int n, int r) {
         if (n < r)
             return 0;
@@ -56,6 +55,7 @@ struct CombModGeneral {
         return mulPF * g[n] % M * modInv(g[r], M) % M * modInv(g[n - r], M) % M;
     }
 
+    // O(n * (|PF_M| * logn + (logM)^2))
     vector<long long> buildCombTable(int n) {
         vector<long long> res(n + 1);
         res[0] = res[n] = 1;
@@ -79,6 +79,7 @@ struct CombModGeneral {
         return res;
     }
 
+    // O(n * (|PF_M| * logn + logM))
     static vector<long long> buildCombTable(int n, int M) {
         vector<long long> res(n + 1);
         res[0] = res[n] = 1;

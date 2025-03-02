@@ -69,9 +69,7 @@ struct CombModCRT {
 #else
             for (int nn = n, rr = r; nn != 0 && rr != 0 && nn != rr; nn /= mod, rr /= mod) {
                 // C = C * comb(nn % mod, rr % mod) % mod
-                const int nnR = nn % mod;
-                const int rrR = rr % mod;
-                C = int(1ll * C * modComb(nnR, rrR, mod) % mod);
+                C = int(1ll * C * modComb(nn % mod, rr % mod, mod) % mod);
             }
 #endif
             R[i] = C;
