@@ -27,19 +27,7 @@
     <ClCompile Include="minStack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="mergeableHeap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="queueWith2Stacks.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="heapMax.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="heapLazy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="medianFinder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,19 +41,7 @@
     <ClInclude Include="minStack.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="mergeableHeap.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="queueWith2Stacks.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="heapMax.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="heapLazy.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="medianFinder.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

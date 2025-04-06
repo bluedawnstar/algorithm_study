@@ -6,8 +6,8 @@ using namespace std;
                             test##ModuleName()
 
 int main(void) {
-    TEST(LargestRectangle);
-    TEST(MinStack);
-    TEST(MinQueue);
-    TEST(QueueWith2Stacks);
+    TEST(MergeableHeap);
+    TEST(MaxHeap);
+    TEST(HeapLazy);
+    TEST(MedianFinder);
 }

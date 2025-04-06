@@ -153,6 +153,7 @@
     <ClCompile Include="schedulerWithCoolingTime.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="matroid.h" />
     <ClInclude Include="nonoverlappingIntervals.h" />
     <ClInclude Include="schedulerWithCoolingTimeWithoutIdle.h" />
     <ClInclude Include="schedulerWithDeadline.h" />
