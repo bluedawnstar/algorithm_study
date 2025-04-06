@@ -148,7 +148,9 @@
   <ItemGroup>
     <ClCompile Include="heapMax.cpp" />
     <ClCompile Include="largestRectangle.cpp" />
+    <ClCompile Include="heapLazy.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="medianFinder.cpp" />
     <ClCompile Include="mergeableHeap.cpp" />
     <ClCompile Include="minQueue.cpp" />
     <ClCompile Include="minStack.cpp" />
@@ -157,6 +159,8 @@
   <ItemGroup>
     <ClInclude Include="heapMax.h" />
     <ClInclude Include="largestRectangle.h" />
+    <ClInclude Include="heapLazy.h" />
+    <ClInclude Include="medianFinder.h" />
     <ClInclude Include="mergeableHeap.h" />
     <ClInclude Include="minQueue.h" />
     <ClInclude Include="minStack.h" />

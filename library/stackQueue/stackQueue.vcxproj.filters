@@ -36,6 +36,12 @@
     <ClCompile Include="heapMax.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="heapLazy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="medianFinder.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="largestRectangle.h">
@@ -54,6 +60,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="heapMax.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="heapLazy.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="medianFinder.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

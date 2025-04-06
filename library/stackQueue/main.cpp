@@ -12,4 +12,6 @@ int main(void) {
     TEST(MergeableHeap);
     TEST(QueueWith2Stacks);
     TEST(MaxHeap);
+    TEST(HeapLazy);
+    TEST(MedianFinder);
 }
