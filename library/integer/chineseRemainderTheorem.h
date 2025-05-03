@@ -8,14 +8,14 @@
 // https://forthright48.com/chinese-remainder-theorem-part-2-non-coprime-moduli/
 
 /*
-중국인의 나머지 정리는, 어떤 수 x를 서로소인 m1, m2, m3, ..., mn으로 각각 나눴을 때 나머지가 r1, r2, r3, ..., rn 이라고 할 때
-x는 m1* m2 * m3 * ... * mn 의 modular 연산 안에서 해가 유일하다는 것을 말한다.
+중국인의 나머지 정리는, 어떤 수 x를 서로소인 m_1, m_2, m_3, ..., m_n으로 각각 나눴을 때 나머지가 r_1, r_2, r_3, ..., r_n 이라고 할 때
+x는 m_1 * m_2 * m_3 * ... * m_n 의 modular 연산 안에서 해가 유일하다는 것을 말한다.
 이 x를 구하는 과정은 다음과 같다.
 
-1) m = m1 * m2 * m3 * ... * mn이라고 할때, nk = m / mk라고 하자.
-   nk * sk = 1 (mod mk) 인 sk를 구한다(1 <= k <= n)
+1) m = m_1 * m_2 * m_3 * ... * m_n이라고 할때, n_k = m / m_k라고 하자.
+   n_k * s_k = 1 (mod m_k) 인 s_k를 구한다(1 <= k <= n)
    (Modular Multiplicative Inverse)
-2) x = r1 * n1 * s1 + r2 * n2 * s2 + ... + rk * nk * sk + ... + rn * nn * sn (mod m)
+2) x = r_1 * n_1 * s_1 + r_2 * n_2 * s_2 + ... + r_k * n_k * s_k + ... + r_n * n_n * s_n (mod m)
 */
 
 // find minimum X (vector version)

@@ -150,7 +150,8 @@
     <ClCompile Include="catalanNumber.cpp" />
     <ClCompile Include="burnsideLemma.cpp" />
     <ClCompile Include="comb.cpp" />
-    <ClCompile Include="combModExt.cpp" />
+    <ClCompile Include="combModCRT.cpp" />
+    <ClCompile Include="combModGeneral.cpp" />
     <ClCompile Include="deBruijnSequence.cpp" />
     <ClCompile Include="integerPartition.cpp" />
     <ClCompile Include="kirchhoffTheorem.cpp" />
@@ -174,8 +175,9 @@
     <ClInclude Include="comb.h" />
     <ClInclude Include="combDP.h" />
     <ClInclude Include="combMod.h" />
-    <ClInclude Include="combModExt.h" />
+    <ClInclude Include="combModCRT.h" />
     <ClInclude Include="combModDP.h" />
+    <ClInclude Include="combModGeneral.h" />
     <ClInclude Include="comb_gridPathCounter.h" />
     <ClInclude Include="deBruijnSequence.h" />
     <ClInclude Include="integerPartition.h" />

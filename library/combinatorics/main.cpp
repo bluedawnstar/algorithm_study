@@ -7,7 +7,8 @@ using namespace std;
 
 int main(void) {
     TEST(Comb);
-    TEST(CombModExt);
+    TEST(CombModGeneral);
+    TEST(CombModCRT);
     TEST(NextCombination);
     TEST(NextPermutation);
     TEST(DeBruijnSequence);

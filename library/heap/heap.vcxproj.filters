@@ -3,11 +3,11 @@
   <ItemGroup>
     <Filter Include="소스 파일">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -15,36 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="heapLazy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="heapMax.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="nonoverlappingIntervals.cpp">
+    <ClCompile Include="medianFinder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="schedulerWithDeadline.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="schedulerWithCoolingTime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="schedulerWithCoolingTimeWithoutIdle.cpp">
+    <ClCompile Include="mergeableHeap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="nonoverlappingIntervals.h">
+    <ClInclude Include="heapLazy.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="schedulerWithDeadline.h">
+    <ClInclude Include="heapMax.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="schedulerWithCoolingTime.h">
+    <ClInclude Include="medianFinder.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="schedulerWithCoolingTimeWithoutIdle.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="matroid.h">
+    <ClInclude Include="mergeableHeap.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

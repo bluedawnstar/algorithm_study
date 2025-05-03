@@ -1,9 +1,10 @@
 #include <vector>
-#include <algorithm>
+#include <queue>
+#include <functional>
 
 using namespace std;
 
-#include "heapMax.h"
+#include "heapLazy.h"
 
 /////////// For Testing ///////////////////////////////////////////////////////
 
@@ -18,10 +19,10 @@ using namespace std;
 #include "../common/profile.h"
 #include "../common/rand.h"
 
-void testMaxHeap() {
-    //return; //TODO: if you want to test, make this line a comment.
+void testHeapLazy() {
+    return; //TODO: if you want to test, make this line a comment.
 
-    cout << "--- max heap ------------------------" << endl;
+    cout << "--- lazy heap ------------------------" << endl;
     {
         const int T = 1000;
         const int N = 1000;
@@ -31,7 +32,9 @@ void testMaxHeap() {
             for (int i = 0; i < N; i++)
                 in[i] = RandInt32::get();
 
-            MaxHeap<int> heap(in.data(), int(in.size()));
+            HeapLazy<int> heap;
+            for (auto x : in)
+                heap.push(x);
             vector<int> out;
             while (!heap.empty()) {
                 out.push_back(heap.top());
@@ -55,7 +58,7 @@ void testMaxHeap() {
             for (int i = 0; i < N; i++)
                 in[i] = RandInt32::get();
 
-            MaxHeap<int> heap;
+            HeapLazy<int> heap;
             for (int i = 0; i < N; i++)
                 heap.push(in[i]);
 
@@ -83,7 +86,7 @@ void testMaxHeap() {
             for (int i = 0; i < N; i++)
                 in[i] = RandInt32::get();
 
-            MaxHeap<int> heap1;
+            HeapLazy<int> heap1;
             for (int i = 0; i < N; i++) {
                 heap1.push(in[i]);
                 if (heap1.size() > K)
@@ -96,33 +99,17 @@ void testMaxHeap() {
             }
             reverse(out1.begin(), out1.end());
 
-            //---
-
-            MaxHeap<int> heap2;
-            for (int i = 0; i < N; i++) {
-                heap2.push(K, in[i]);
-            }
-            vector<int> out2;
-            while (!heap2.empty()) {
-                out2.push_back(heap2.top());
-                heap2.pop();
-            }
-            reverse(out2.begin(), out2.end());
-
             sort(in.begin(), in.end());
             vector<int> gt(in.begin(), in.begin() + K);
             if (out1 != gt) {
                 cout << "Mismatched at " << __LINE__ << endl;
             }
-            if (out2 != gt) {
-                cout << "Mismatched at " << __LINE__ << endl;
-            }
-            assert(out1 == gt && out2 == gt);
+            assert(out1 == gt);
         }
     }
     {
         const int T = 1000;
-        const int N = 10000;
+        const int N = 1000;
         const int K = 100;
 
         vector<vector<int>> in(T, vector<int>(N));
@@ -131,42 +118,31 @@ void testMaxHeap() {
                 in[t][i] = RandInt32::get();
         }
 
-        PROFILE_START(push_pop_1);
+        PROFILE_START(push_pop);
         for (int t = 0; t < T; t++) {
-            MaxHeap<int> heap2;
+            HeapLazy<int> heap;
             for (int i = 0; i < N; i++) {
-                heap2.push(K, in[t][i]);
+                heap.push(in[t][i]);
+                if (heap.size() > K)
+                    heap.pop();
             }
-            if (heap2.size() != K)
+            if (heap.size() != K)
                 cout << "Mismatched!" << endl;
         }
-        PROFILE_STOP(push_pop_1);
+        PROFILE_STOP(push_pop);
 
-        PROFILE_START(push_pop_2);
+        PROFILE_START(stl);
         for (int t = 0; t < T; t++) {
-            MaxHeap<int> heap1;
+            priority_queue<int> heap;
             for (int i = 0; i < N; i++) {
-                heap1.push(in[t][i]);
-                if (heap1.size() > K)
-                    heap1.pop();
+                heap.push(in[t][i]);
+                if (heap.size() > K)
+                    heap.pop();
             }
-            if (heap1.size() != K)
+            if (heap.size() != K)
                 cout << "Mismatched!" << endl;
         }
-        PROFILE_STOP(push_pop_2);
-
-        PROFILE_START(stl_3);
-        for (int t = 0; t < T; t++) {
-            priority_queue<int> heap3;
-            for (int i = 0; i < N; i++) {
-                heap3.push(in[t][i]);
-                if (heap3.size() > K)
-                    heap3.pop();
-            }
-            if (heap3.size() != K)
-                cout << "Mismatched!" << endl;
-        }
-        PROFILE_STOP(stl_3);
+        PROFILE_STOP(stl);
     }
     cout << "OK!" << endl;
 }
