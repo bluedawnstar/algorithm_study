@@ -295,10 +295,8 @@ inline int findNext(const GeneralizedBIT<T, MergeOp>& gbit, int start, const fun
             if (f(gbit.tree[pos]))
                 return pos - 1;
         }
-        if (pos <= gbit.N && f(gbit.treeR[pos])) {
+        if (pos <= gbit.N && f(gbit.treeR[pos]))
             return pos;
-            pos += pos & -pos;
-        }
 
         while (pos <= gbit.N && !f(gbit.treeR[pos]))
             pos += pos & -pos;
