@@ -1,6 +1,7 @@
 #include <cmath>
 #include <vector>
 #include <string>
+#include <functional>
 #include <algorithm>
 
 using namespace std;

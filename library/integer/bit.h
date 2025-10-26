@@ -9,10 +9,12 @@
 inline int clz(unsigned x) {
     if (!x)
         return 32;
-#ifndef __GNUC__
+#if defined(_MSC_VER)
     return int(_lzcnt_u32(x));
-#else
+#elif defined(__GNUC__)
     return __builtin_clz(x);
+#else
+#error "TODO: implement!"
 #endif
 }
 
@@ -35,10 +37,12 @@ inline int clz(unsigned long long x) {
 inline int ctz(unsigned x) {
     if (!x)
         return 32;
-#ifndef __GNUC__
+#if defined(_MSC_VER)
     return int(_tzcnt_u32(x));
-#else
+#elif defined(__GNUC__)
     return __builtin_ctz(x);
+#else
+#error "TODO: implement!"
 #endif
 }
 
@@ -59,18 +63,17 @@ inline int ctz(unsigned long long x) {
 
 // pop count
 inline int popcount(unsigned x) {
-#ifndef __GNUC__
+#if defined(_MSC_VER)
     return int(__popcnt(x));
-    /*
+#elif defined(__GNUC__)
+    return __builtin_popcount(x);
+#else
     x = x - ((x >> 1) & 0x55555555);
     x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
     x = (x + (x >> 4)) & 0x0F0F0F0F;
     x = x + (x >> 8);
     x = x + (x >> 16);
     return x & 0x0000003F;
-    */
-#else
-    return __builtin_popcount(x);
 #endif
 }
 
@@ -87,7 +90,14 @@ inline int popcount(unsigned long long x) {
 // last '1' bit
 template <typename T>
 inline T getLastBit(T x) {
-    return x & -x;
+    /*
+    * ex)    x = 00110100
+    *   ~(x-1) = 11001100
+    *   -----------------
+    *          & 00000100
+    */
+    return x & ~(x - 1);
+    //return x & -x;
 }
 
 template <typename T>
@@ -129,23 +139,21 @@ inline vector<T> getAllForwardSubmasks(T mask) {
 }
 
 // O(3^n)
-inline void foreachAllBackwardSubmasksOfAllMasks(int n) {
+inline void foreachAllBackwardSubmasksOfAllMasks(int n, const function<void(int)>& fn) {
     for (int m = 0; m < (1 << n); m++) {
         for (int s = m; s; s = (s - 1) & m) {
-            //... do something!...
+            fn(s);
         }
-        //... do something!...
+        fn(0);
     }
 }
 
 // O(3^n)
-inline void foreachAllForwardSubmasksOfAllMasks(int n) {
+inline void foreachAllForwardSubmasksOfAllMasks(int n, const function<void(int)>& fn) {
     for (int m = 0; m < (1 << n); m++) {
         for (int s = m; s; s = (s - 1) & m) {
-            int submask = s ^ m;
-            //... do something!...
+            fn(s ^ m);
         }
-        int submask = m;
-        //... do something!...
+        fn(m);
     }
 }
