@@ -1,38 +1,22 @@
 #pragma once
 
-template <int MaxCharN = 26, int BaseChar = 'a'>
+template <int R = 26, int BaseChar = 'a'>
 struct PersistentTrie {
-    static constexpr int ch2i(char ch) {
+    static constexpr int toIndex(char ch) {
         return ch - BaseChar;
     }
 
     struct Node {
-        int leafCount;
-        int parent;
-        int children[MaxCharN];
+        bool terminal;
+        int  children[R];
 
-        explicit Node(int parent = -1) {
-            init(parent);
+        Node() {
+            init();
         }
 
-        void init(int parent = -1) {
-            this->leafCount = 0;
-            this->parent = parent;
-            memset(this->children, -1, sizeof(this->children));
-        }
-
-        bool isLeaf() const {
-            return leafCount > 0;
-        }
-
-        bool isEmpty() const {
-            if (leafCount > 0)
-                return false;
-            for (int i = 0; i < MaxCharN; i++) {
-                if (children[i] >= 0)
-                    return false;
-            }
-            return true;
+        void init() {
+            terminal = false;
+            memset(children, -1, sizeof(children));
         }
     };
 
@@ -41,83 +25,61 @@ struct PersistentTrie {
 
     PersistentTrie() {
         initRoot = 0;
-        nodes.emplace_back(-1);
+        nodes.emplace_back(Node{});
     }
 
     int init() {
         nodes.clear();
-        nodes.emplace_back(-1);
+        nodes.emplace_back(Node{});
         return initRoot = 0;
     }
 
-
-    // return (new root, true if it's a new string).
-    pair<int,bool> insert(int root, const string& s) {
-        return insert(root, s.c_str(), int(s.length()));
-    }
-
-    // return (new root, true if it's a new string).
-    pair<int,bool> insert(int root, const char* s, int len) {
-        if (len <= 0)
-            return make_pair(root, false);
+    // return new root
+    int insert(int root, const string& s) {
+        if (s.empty())
+            return root;
 
         root = cloneNode(root);
         int cur = root;
-        for (int i = 0; i < len; i++) {
-            int idx = ch2i(s[i]);
-            int next = cloneNode(nodes[cur].children[idx], cur);
-            nodes[cur].children[idx] = next;
-            cur = next;
+        for (int i = 0; i < int(s.length()); i++) {
+            int next = toIndex(s[i]);
+            int nextNode = cloneNode(nodes[cur].children[next]);
+            nodes[cur].children[next] = nextNode;
+            cur = nextNode;
         }
-        return make_pair(root, ++nodes[cur].leafCount == 1);
+        nodes[cur].terminal = true;
+        return root;
     }
-
 
     // return exactly matched word
     int find(int root, const string& s) const {
-        return find(root, s.c_str(), int(s.length()));
-    }
-
-    // return exactly matched word
-    int find(int root, const char* s, int len) const {
-        if (len <= 0)
+        auto res = findLongestPrefix(root, s);
+        if (res.first != int(s.length()))
             return -1;
-
-        int cur = root;
-        for (int i = 0; i < len && cur >= 0; i++) {
-            int idx = ch2i(s[i]);
-            cur = nodes[cur].children[idx];
-        }
-        return (cur >= 0 && nodes[cur].leafCount > 0) ? cur : -1;
-    }
-
-
-    // prefix matching
-    // return (prefix_matching_length, word_matched?)
-    pair<int, bool> search(int root, const string& s) const {
-        return search(root, s.c_str(), int(s.length()));
+        return nodes[res.second].terminal ? res.second : -1;
     }
 
     // prefix matching
-    // return (prefix_matching_length, word_matched?)
-    pair<int, bool> search(int root, const char* s, int len) const {
-        if (len <= 0)
-            return make_pair(0, false);
-
+    // return (prefix_matching_length, node_id)
+    pair<int, int> findLongestPrefix(int root, const string& s) const {
         int cur = root;
-        for (int i = 0; i < len; i++) {
-            int idx = ch2i(s[i]);
-            cur = nodes[cur].children[idx];
-            if (cur < 0)
-                return make_pair(i, false);
+        if (s.empty())
+            return make_pair(0, cur);
+
+        int i;
+        for (i = 0; i < int(s.length()); i++) {
+            int next = toIndex(s[i]);
+            if (nodes[cur].children[next] < 0)
+                break;
+            cur = nodes[cur].children[next];
         }
-        return make_pair(len, nodes[cur].isLeaf());
+        return make_pair(i, cur);
     }
 
 private:
-    int allocNode(int parent = -1) {
+    int allocNode() {
         int res = int(nodes.size());
-        nodes.emplace_back(parent);
+        nodes.emplace_back(Node{});
         return res;
     }
 
@@ -126,16 +88,6 @@ private:
         nodes.resize(nodes.size() + 1);
         if (src >= 0)
             nodes.back() = nodes[src];
-        return res;
-    }
-
-    int cloneNode(int src, int parent) {
-        int res = int(nodes.size());
-        nodes.resize(nodes.size() + 1);
-        if (src >= 0) {
-            nodes.back() = nodes[src];
-            nodes.back().parent = parent;
-        }
         return res;
     }
 };

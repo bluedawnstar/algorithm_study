@@ -1,279 +1,244 @@
 #pragma once
 
-#include "trie.h"
+#include "blockAllocator.h"
 
 //--- Compressed Trie ---------------------------------------------------------
 
-template <int MaxCharN = 26, int BaseChar = 'a'>
+template <int R = 26, int BaseChar = 'a'>
 struct CompressedTrie {
-    static const size_t AllocBlockSize = 128;
-    static constexpr int ch2i(char ch) {
+    static const int AllocBlockSizeBit = 10;
+    static constexpr int toIndex(char ch) {
         return ch - BaseChar;
     }
 
     struct Node {
-        const char* text;
-        int     textLen;
-        int     leafCount;
-        Node*   parent;
-        Node*   children[MaxCharN];
+        string          text;
+        bool            terminal;
+        unsigned char   childrenCount;
+        Node*           children[R];
 
-        void init(Node* parent = nullptr) {
-            this->text = nullptr;
-            this->textLen = 0;
-            this->leafCount = 0;
-            this->parent = parent;
-            memset(this->children, 0, sizeof(this->children));
+        Node() {
+            init();
+        }
+
+        void init() {
+            terminal = false;
+            childrenCount = 0;
+            memset(children, 0, sizeof(children));
         }
 
         bool isLeaf() const {
-            return leafCount > 0;
+            return childrenCount == 0;
         }
 
-        bool isEmpty() const {
-            if (leafCount > 0)
-                return false;
-            for (int i = 0; i < MaxCharN; i++) {
+        int countChildren() const {
+            return static_cast<int>(childrenCount);
+        }
+
+        void setChild(int index, Node* child) {
+            if (!children[index])
+                childrenCount++;
+            children[index] = child;
+        }
+
+        void resetChild(int index) {
+            if (children[index])
+                childrenCount--;
+            children[index] = nullptr;
+        }
+
+        Node* findFirstChild() const {
+            for (int i = 0; i < R; i++) {
                 if (children[i])
-                    return false;
+                    return children[i];
             }
-            return true;
+            return nullptr;
+        }
+
+        void mergeFrom(const Node* p) {
+            text += p->text;
+            terminal = p->terminal;
+            childrenCount = p->childrenCount;
+            memcpy(children, p->children, sizeof(children));
         }
     };
 
-    Node mRoot;
+    Node root;
 
     CompressedTrie() {
-        mRoot.init();
-        mFreeNode = nullptr;
+        freeNodeList = nullptr;
     }
 
     void clear() {
-        for (int i = 0; i < MaxCharN; i++) {
-            if (mRoot.children[i]) {
-                deleteNode(mRoot.children[i]);
-                mRoot.children[i] = nullptr;
+        for (int i = 0; i < R; i++) {
+            if (root.children[i]) {
+                deleteNode(root.children[i]);
+                root.children[i] = nullptr;
             }
         }
     }
 
-    // return true if it's a new string.
+    // return true if it's a new string
     bool insert(const string& s) {
-        return insert(&s[0], int(s.length()));
-    }
-
-    // return true if it's a new string.
-    bool insert(const char* s, int len) {
-        if (len <= 0)
+        if (s.empty())
             return false;
 
-        Node* p = &mRoot;
+        Node* prev = nullptr;
+        Node* curr = &root;
+        for (int i = 0; i < int(s.length()); i += int(curr->text.length())) {
+            int next = toIndex(s[i]);
 
-        int idx = ch2i(s[0]);
-        if (!p->children[idx]) {
-            p = p->children[idx] = allocNode(p);
-            p->text = s;
-            p->textLen = len;
-        } else {
-            p = p->children[idx];
-            for (int i = 0; i < len; ) {
+            prev = curr;
+            curr = curr->children[next];
+            if (!curr) {
+                curr = allocNode();
+                curr->text = s.substr(i);
+                prev->setChild(next, curr);
+            } else {
                 int j;
-                for (j = 0; j < p->textLen && i < len; i++, j++) {
-                    if (s[i] != p->text[j])
+                for (j = 1; i + j < int(s.length()) && j < int(curr->text.length()); j++) {
+                    if (s[i + j] != curr->text[j])
                         break;
                 }
-                //assert(j > 0);
-
-                if (j < p->textLen)
-                    p = split(p, j);
-
-                if (i < len) {
-                    idx = ch2i(s[i]);
-                    if (!p->children[idx]) {
-                        // add new node
-                        p = p->children[idx] = allocNode(p);
-                        p->text = s + i;
-                        p->textLen = len - i;
-                        break;
-                    } else {
-                        p = p->children[idx];
-                    }
+                if (j < int(curr->text.length())) {
+                    curr = split(curr, j);
+                    prev->setChild(next, curr);
                 }
             }
         }
-        return ++p->leafCount == 1;
+
+        if (curr->terminal)
+            return false;
+
+        curr->terminal = true;
+        return true;
+    }
+
+    // delete a exactly matched word
+    bool erase(const string& s) {
+        if (s.empty())
+            return false;
+        return erase(&root, s, 0);
     }
 
     // return exactly matched word
     Node* find(const string& s) const {
-        return find(&s[0], int(s.length()));
-    }
-
-    // return exactly matched word
-    Node* find(const char* s, int len) const {
-        if (len <= 0)
+        auto [totalLen, node, lastLen] = findLongestPrefix(s);
+        if (totalLen != int(s.length()))
             return nullptr;
-
-        Node* p = mRoot.children[ch2i(s[0])];
-        for (int i = 0; p; ) {
-            for (int j = 0; j < p->textLen; i++, j++) {
-                if (i >= len || s[i] != p->text[j])
-                    return nullptr;
-            }
-            if (i >= len)
-                break;
-
-            p = p->children[ch2i(s[i])];
-        }
-
-        return (p && p->leafCount > 0) ? p : nullptr;
+        return totalLen == s.length() && node->terminal ? node : nullptr;
     }
 
     // prefix matching
-    // return (prefix_matching_length, word_matched?)
-    pair<int, bool> search(const string& s) const {
-        return search(&s[0], int(s.length()));
-    }
+    // return (prefix_matching_length, last_node, matching_length_in_the_last_node)
+    tuple<int, Node*, int> findLongestPrefix(const string& s) const {
+        Node* curr = const_cast<Node*>(&root);
+        if (s.empty())
+            return make_tuple(0, curr, 0);
 
-    // prefix matching
-    // return (prefix_matching_length, word_matched?)
-    pair<int, bool> search(const char* s, int len) const {
-        if (len <= 0)
-            return make_pair(0, false);
-
-        Node* p = mRoot.children[ch2i(s[0])];
-        int i = 0;
-        while (p) {
-            for (int j = 0; j < p->textLen; i++, j++) {
-                if (i >= len || s[i] != p->text[j])
-                    return make_pair(i, false);
-            }
-            if (i >= len)
+        int i, j;
+        for (i = 0; i < int(s.length()); ) {
+            int next = toIndex(s[i]);
+            if (!curr->children[next])
                 break;
+            curr = curr->children[next];
 
-            p = p->children[ch2i(s[i])];
-        }
-
-        return make_pair(i, p && p->leafCount > 0);
-    }
-
-    // remove a exactly matched word, but the real node is not deleted
-    bool remove(const string& s) {
-        return remove(&s[0], int(s.length()));
-    }
-
-    // remove a exactly matched word, but the real node is not deleted
-    bool remove(const char* s, int len) {
-        Node* p = find(s, len);
-        if (!p)
-            return false;
-
-        p->leafCount--;
-
-        return true;
-    }
-
-    // delete a exactly matched word
-    bool erase(const string& s, bool all = false, bool merge = true) {
-        return erase(&s[0], int(s.length()), all, merge);
-    }
-
-    // delete a exactly matched word
-    bool erase(const char* s, int len, bool all = false, bool merge = true) {
-        if (len <= 0)
-            return false;
-
-        Node* p = find(s, len);
-        if (!p)
-            return false;
-
-        if (all)
-            p->leafCount = 0;
-        else
-            p->leafCount--;
-
-        if (p->isEmpty()) {
-            Node* del = p;
-            p = p->parent;
-            p->children[ch2i(del->text[0])] = nullptr;
-            freeNode(del);
-
-            if (merge && !p->isLeaf() && p != &mRoot) {
-                // If there is only one child of parent, the parent is merged to the child.
-                int idx = -1, cnt = 0;
-                for (int i = 0; i < MaxCharN; i++) {
-                    if (p->children[i]) {
-                        idx = i;
-                        cnt++;
-                    }
-                }
-                if (cnt == 1) {
-                    Node* parent = p->parent;
-                    Node* child = p->children[idx];
-
-                    child->text -= p->textLen;
-                    child->textLen += p->textLen;
-
-                    idx = ch2i(p->text[0]);
-                    parent->children[idx] = child;
-                    child->parent = parent;
-
-                    freeNode(p);
-                }
+            for (i++, j = 1; i < int(s.length()) && j < int(curr->text.length()); i++, j++) {
+                if (s[i] != curr->text[j])
+                    break;
             }
+            if (j < int(curr->text.length()))
+                break;
         }
-
-        return true;
+        return make_tuple(i, curr, j);
     }
 
 private:
-    Allocator<Node, AllocBlockSize> mAlloc;
-    Node* mFreeNode;
+    BlockAllocator<Node, AllocBlockSizeBit> allocator;
+    Node* freeNodeList = nullptr;
 
     Node* allocNode(Node* parent = nullptr) {
         Node* p = nullptr;
-        if (mFreeNode) {
-            p = mFreeNode;
-            mFreeNode = mFreeNode->parent;
-            p->init(parent);
+        if (freeNodeList) {
+            p = freeNodeList;
+            freeNodeList = freeNodeList->children[0];
+            p->init();
         } else {
-            p = mAlloc.alloc();
-            p->init(parent);
+            p = allocator.alloc();
+            p->init();
         }
 
         return p;
     }
 
     void freeNode(Node* node) {
-        node->parent = mFreeNode;
-        mFreeNode = node;
+        node->children[0] = freeNodeList;
+        freeNodeList = node;
     }
 
     void deleteNode(Node* p) {
         if (!p)
             return;
 
-        for (int i = 0; i < MaxCharN; i++) {
+        for (int i = 0; i < R; i++) {
             if (p->children[i])
                 deleteNode(p->children[i]);
         }
-
         freeNode(p);
     }
 
-    Node* split(Node* node, int offset) {
-        Node* newNode = allocNode(node->parent);
-        newNode->text = node->text;
-        newNode->textLen = offset;
-        newNode->children[ch2i(node->text[offset])] = node;
-        newNode->parent->children[ch2i(newNode->text[0])] = newNode;
-        //assert(newNode->textLen > 0);
+    //---
 
-        node->text += offset;
-        node->textLen -= offset;
-        node->parent = newNode;
-        //assert(node->textLen > 0);
+    Node* split(Node* node, int position) {
+        Node* newNode = allocNode();
+
+        auto s = std::move(node->text);
+
+        newNode->text = s.substr(0, position);
+        newNode->setChild(toIndex(s[position]), node);
+        node->text = s.substr(position);
 
         return newNode;
+    }
+
+    // return removed
+    bool erase(Node* node, const string& s, int index) {
+        if (index >= int(s.length())) {
+            if (!node->terminal)
+                return false;
+
+            node->terminal = false;
+            if (node->countChildren() == 1 && node != &root) {
+                auto* childNode = node->findFirstChild();
+                node->mergeFrom(childNode);
+                freeNode(childNode);
+            }
+            return true;
+        }
+
+        int next = toIndex(s[index]);
+        auto* nextNode = node->children[next];
+        if (!nextNode)
+            return false;
+
+        int i, j;
+        for (i = index + 1, j = 1; i < int(s.length()) && j < int(nextNode->text.length()); i++, j++) {
+            if (s[i] != nextNode->text[j])
+                break;
+        }
+        if (j < int(nextNode->text.length()))
+            return false;
+
+        auto res = erase(nextNode, s, i);
+        if (res && !nextNode->terminal && nextNode->isLeaf()) {
+            node->resetChild(next);
+            freeNode(nextNode);
+            if (!node->terminal && node->countChildren() == 1 && node != &root) {
+                auto* childNode = node->findFirstChild();
+                node->mergeFrom(childNode);
+                freeNode(childNode);
+            }
+        }
+        return res;
     }
 };

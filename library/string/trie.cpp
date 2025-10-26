@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstring>
 #include <string>
+#include <vector>
 #include <stack>
 #include <memory>
 #include <algorithm>
@@ -26,60 +27,66 @@ void testTrie() {
 
     Trie<> trie;
 
-    const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
+    string keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
     for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++)
-        trie.insert(keys[i], int(strlen(keys[i])));
+        trie.insert(keys[i]);
 
-    assert(trie.find("the", int(strlen("the")))->leafCount == 1);
-    assert(trie.find("these", int(strlen("these"))) == nullptr);
-    assert(trie.find("their", int(strlen("their")))->leafCount == 1);
-    assert(trie.find("thaw", int(strlen("thaw"))) == nullptr);
+    assert(trie.find("the")->terminal);
+    assert(trie.find("these") == nullptr);
+    assert(trie.find("their")->terminal);
+    assert(trie.find("thaw") == nullptr);
 
-    trie.insert("the", int(strlen("the")));
-    trie.insert("these", int(strlen("these")));
-    trie.insert("their", int(strlen("their")));
-    trie.insert("thaw", int(strlen("thaw")));
+    assert(trie.insert("the") == false);
+    assert(trie.insert("these") == true);
+    assert(trie.insert("their") == false);
+    assert(trie.insert("thaw") == true);
 
-    assert(trie.find("the", int(strlen("the")))->leafCount == 2);
-    assert(trie.find("these", int(strlen("these")))->leafCount == 1);
-    assert(trie.find("their", int(strlen("their")))->leafCount == 2);
-    assert(trie.find("thaw", int(strlen("thaw")))->leafCount == 1);
+    assert(trie.find("the")->terminal);
+    assert(trie.find("these")->terminal);
+    assert(trie.find("their")->terminal);
+    assert(trie.find("thaw")->terminal);
 
-    trie.remove("the", int(strlen("the")));
-    trie.remove("these", int(strlen("these")));
-    trie.remove("their", int(strlen("their")));
-    trie.remove("thaw", int(strlen("thaw")));
+    assert(trie.erase("th") == false);
+    assert(trie.erase("these") == true);
+    assert(trie.erase("thei") == false);
+    assert(trie.erase("theirs") == false);
+    assert(trie.erase("thaw") == true);
 
-    assert(trie.find("the", int(strlen("the")))->leafCount == 1);
-    assert(trie.find("these", int(strlen("these"))) == nullptr);
-    assert(trie.find("their", int(strlen("their")))->leafCount == 1);
-    assert(trie.find("thaw", int(strlen("thaw"))) == nullptr);
+    assert(trie.find("the")->terminal);
+    assert(trie.find("these") == nullptr);
+    assert(trie.find("their")->terminal);
+    assert(trie.find("thaw") == nullptr);
 
-    trie.insert("the", int(strlen("the")));
-    trie.insert("these", int(strlen("these")));
-    trie.insert("their", int(strlen("their")));
-    trie.insert("thaw", int(strlen("thaw")));
+    assert(trie.insert("the") == false);
+    assert(trie.insert("these") == true);
+    assert(trie.insert("their") == false);
+    assert(trie.insert("thaw") == true);
 
-    assert(trie.find("the", int(strlen("the")))->leafCount == 2);
-    assert(trie.find("these", int(strlen("these")))->leafCount == 1);
-    assert(trie.find("their", int(strlen("their")))->leafCount == 2);
-    assert(trie.find("thaw", int(strlen("thaw")))->leafCount == 1);
+    assert(trie.find("the")->terminal);
+    assert(trie.find("these")->terminal);
+    assert(trie.find("their")->terminal);
+    assert(trie.find("thaw")->terminal);
 
-    trie.erase("the", int(strlen("the")));
-    trie.erase("these", int(strlen("these")));
-    trie.erase("their", int(strlen("their")));
-    trie.erase("thaw", int(strlen("thaw")));
+    assert(trie.erase("thee") == false);
+    assert(trie.erase("these") == true);
+    assert(trie.erase("thei") == false);
+    assert(trie.erase("thaw") == true);
 
-    assert(trie.find("the", int(strlen("the")))->leafCount == 1);
-    assert(trie.find("these", int(strlen("these"))) == nullptr);
-    assert(trie.find("their", int(strlen("their")))->leafCount == 1);
-    assert(trie.find("thaw", int(strlen("thaw"))) == nullptr);
+    assert(trie.find("the")->terminal);
+    assert(trie.find("these") == nullptr);
+    assert(trie.find("their")->terminal);
+    assert(trie.find("thaw") == nullptr);
 
-    assert(trie.search("t", int(strlen("t"))) == make_pair(1, false));
-    assert(trie.search("th", int(strlen("th"))) == make_pair(2, false));
-    assert(trie.search("the", int(strlen("the"))) == make_pair(3, true));
-    assert(trie.search("thei", int(strlen("thei"))) == make_pair(4, false));
-    assert(trie.search("their", int(strlen("their"))) == make_pair(5, true));
+    auto t = trie.findLongestPrefix("t");
+    assert(t.first == 1 && !t.second->terminal);
+    t = trie.findLongestPrefix("th");
+    assert(t.first == 2 && !t.second->terminal);
+    t = trie.findLongestPrefix("the");
+    assert(t.first == 3 && t.second->terminal);
+    t = trie.findLongestPrefix("thei");
+    assert(t.first == 4 && !t.second->terminal);
+    t = trie.findLongestPrefix("their");
+    assert(t.first == 5 && t.second->terminal);
 
     cout << "OK!" << endl;
 }

@@ -23,98 +23,98 @@ void testTriePersistent() {
     {
         PersistentTrie<> trie;
 
-        const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
+        string keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
         vector<int> roots;
         roots.push_back(0);
         for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++) {
-            auto res = trie.insert(roots.back(), keys[i], int(strlen(keys[i])));
-            roots.push_back(res.first);
+            auto res = trie.insert(roots.back(), keys[i]);
+            roots.push_back(res);
         }
 
         int node;
         {
-            node = trie.find(roots.back(), "the", int(strlen("the")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(roots.back(), "these", int(strlen("these")));
+            node = trie.find(roots.back(), "the");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "these");
             assert(node == -1);
-            node = trie.find(roots.back(), "their", int(strlen("their")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(roots.back(), "thaw", int(strlen("thaw")));
+            node = trie.find(roots.back(), "their");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "thaw");
             assert(node == -1);
         }
         int root1 = roots.back();
-        roots.push_back(trie.insert(roots.back(), "the", int(strlen("the"))).first);
-        roots.push_back(trie.insert(roots.back(), "these", int(strlen("these"))).first);
-        roots.push_back(trie.insert(roots.back(), "their", int(strlen("their"))).first);
-        roots.push_back(trie.insert(roots.back(), "thaw", int(strlen("thaw"))).first);
+        roots.push_back(trie.insert(roots.back(), "the"));
+        roots.push_back(trie.insert(roots.back(), "these"));
+        roots.push_back(trie.insert(roots.back(), "their"));
+        roots.push_back(trie.insert(roots.back(), "thaw"));
         {
-            node = trie.find(root1, "the", int(strlen("the")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(root1, "these", int(strlen("these")));
+            node = trie.find(root1, "the");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(root1, "these");
             assert(node == -1);
-            node = trie.find(root1, "their", int(strlen("their")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(root1, "thaw", int(strlen("thaw")));
+            node = trie.find(root1, "their");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(root1, "thaw");
             assert(node == -1);
         }
         {
-            node = trie.find(roots.back(), "the", int(strlen("the")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 2);
-            node = trie.find(roots.back(), "these", int(strlen("these")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(roots.back(), "their", int(strlen("their")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 2);
-            node = trie.find(roots.back(), "thaw", int(strlen("thaw")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
+            node = trie.find(roots.back(), "the");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "these");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "their");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "thaw");
+            assert(node >= 0 && trie.nodes[node].terminal);
         }
     }
     cout << "OK!" << endl;
     {
         PersistentTrieAM<> trie;
 
-        const char* keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
+        string keys[] = { "the", "a", "there", "answer", "any", "by", "bye", "their" };
         vector<int> roots;
         roots.push_back(0);
         for (int i = 0; i < sizeof(keys) / sizeof(keys[0]); i++) {
-            auto res = trie.insert(roots.back(), keys[i], int(strlen(keys[i])));
-            roots.push_back(res.first);
+            auto res = trie.insert(roots.back(), keys[i]);
+            roots.push_back(res);
         }
 
         int node;
         {
-            node = trie.find(roots.back(), "the", int(strlen("the")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(roots.back(), "these", int(strlen("these")));
+            node = trie.find(roots.back(), "the");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "these");
             assert(node == -1);
-            node = trie.find(roots.back(), "their", int(strlen("their")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(roots.back(), "thaw", int(strlen("thaw")));
+            node = trie.find(roots.back(), "their");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "thaw");
             assert(node == -1);
         }
         int root1 = roots.back();
-        roots.push_back(trie.insert(roots.back(), "the", int(strlen("the"))).first);
-        roots.push_back(trie.insert(roots.back(), "these", int(strlen("these"))).first);
-        roots.push_back(trie.insert(roots.back(), "their", int(strlen("their"))).first);
-        roots.push_back(trie.insert(roots.back(), "thaw", int(strlen("thaw"))).first);
+        roots.push_back(trie.insert(roots.back(), "the"));
+        roots.push_back(trie.insert(roots.back(), "these"));
+        roots.push_back(trie.insert(roots.back(), "their"));
+        roots.push_back(trie.insert(roots.back(), "thaw"));
         {
-            node = trie.find(root1, "the", int(strlen("the")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(root1, "these", int(strlen("these")));
+            node = trie.find(root1, "the");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(root1, "these");
             assert(node == -1);
-            node = trie.find(root1, "their", int(strlen("their")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(root1, "thaw", int(strlen("thaw")));
+            node = trie.find(root1, "their");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(root1, "thaw");
             assert(node == -1);
         }
         {
-            node = trie.find(roots.back(), "the", int(strlen("the")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 2);
-            node = trie.find(roots.back(), "these", int(strlen("these")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
-            node = trie.find(roots.back(), "their", int(strlen("their")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 2);
-            node = trie.find(roots.back(), "thaw", int(strlen("thaw")));
-            assert(node >= 0 && trie.nodes[node].leafCount == 1);
+            node = trie.find(roots.back(), "the");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "these");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "their");
+            assert(node >= 0 && trie.nodes[node].terminal);
+            node = trie.find(roots.back(), "thaw");
+            assert(node >= 0 && trie.nodes[node].terminal);
         }
     }
     cout << "OK!" << endl;
