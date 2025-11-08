@@ -126,7 +126,7 @@ struct CompressedTrie {
         auto [totalLen, node, lastLen] = findLongestPrefix(s);
         if (totalLen != int(s.length()))
             return nullptr;
-        return totalLen == s.length() && node->terminal ? node : nullptr;
+        return lastLen == node->text.length() && node->terminal ? node : nullptr;
     }
 
     // prefix matching
